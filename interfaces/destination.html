@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Destination · Vibelandia experience | VIBELANDIA SING 9</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a12; color: #e8e6e3; min-height: 100vh; line-height: 1.6; font-size: 16px; padding-top: env(safe-area-inset-top); }
+    .header-strip {
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.08) 50%, rgba(0, 212, 255, 0.08) 100%);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+      padding: 0.6rem 1rem;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem;
+    }
+    .header-strip a { color: #d4af37; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    .header-strip a:hover { text-decoration: underline; }
+    .upgrade-cta { background: rgba(212, 175, 55, 0.25); border: 2px solid rgba(212, 175, 55, 0.6); color: #fef3c7; padding: 0.4rem 0.9rem; border-radius: 8px; font-weight: 700; }
+    .upgrade-cta:hover { background: rgba(212, 175, 55, 0.4); text-decoration: none; }
+    .sep { color: #78716c; margin: 0 0.25rem; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 1.5rem 2rem; }
+    .top-links { margin-bottom: 1rem; }
+    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
+    .hero-img { width: 100%; max-height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 1.25rem; background: #1e293b; }
+    .destination-title { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 600; color: #e8e6e3; margin-bottom: 0.25rem; }
+    .destination-activity { font-size: 1rem; color: #94a3b8; margin-bottom: 1rem; }
+    .hybrid-copy { padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 1.5rem; }
+    .hybrid-copy p { margin-bottom: 0.75rem; color: #cbd5e1; font-size: 0.95rem; }
+    .booking-options { margin: 1.5rem 0; }
+    .booking-options h3 { font-size: 1rem; font-weight: 600; color: #d4af37; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+    .option-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .option-card {
+      background: rgba(0, 212, 255, 0.08);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 12px;
+      padding: 1.25rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .option-card:hover { border-color: rgba(212, 175, 55, 0.5); background: rgba(212, 175, 55, 0.08); }
+    .option-card.gold { border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.06); }
+    .option-card.gold:hover { border-color: rgba(212, 175, 55, 0.6); background: rgba(212, 175, 55, 0.12); }
+    .option-card h4 { font-size: 1rem; color: #e8e6e3; margin-bottom: 0.35rem; }
+    .option-card p { font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.75rem; }
+    .option-card a { display: inline-block; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+    .option-card .btn-trad { background: #334155; color: #e2e8f0; border: 1px solid #475569; }
+    .option-card .btn-trad:hover { background: #475569; color: #fff; }
+    .option-card .btn-ours { background: linear-gradient(135deg, #d4af37, #b8860b); color: #0c0c0c; border: 2px solid rgba(212, 175, 55, 0.8); }
+    .option-card .btn-ours:hover { opacity: 0.95; }
+    .visit-partner-wrap { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.12); text-align: center; }
+    .visit-partner-wrap p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 0.5rem; }
+    .visit-partner-wrap a { color: #00d4ff; text-decoration: none; font-weight: 600; }
+    .visit-partner-wrap a:hover { color: #d4af37; text-decoration: underline; }
+    .back-catalog { margin-bottom: 1rem; }
+    .back-catalog a { color: #00d4ff; text-decoration: none; font-size: 0.9rem; }
+    .back-catalog a:hover { color: #d4af37; text-decoration: underline; }
+    .ticker-wrap { background: #0c0a09; border-top: 2px solid rgba(212, 175, 55, 0.5); padding: 0.5rem 0; overflow: hidden; }
+    .ticker { display: flex; width: max-content; animation: tick 40s linear infinite; }
+    .ticker span { padding: 0 1.5rem; font-size: 0.8rem; font-weight: 600; color: #d4af37; white-space: nowrap; }
+    .ticker span::after { content: ' · '; color: rgba(212, 175, 55, 0.4); }
+    @keyframes tick { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .loading, .not-found { text-align: center; padding: 2rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+
+  <header class="header-strip">
+    <a href="upgrade-awareness-to-sing9-now.html" class="upgrade-cta">Upgrade to SING 9 Awareness OS</a>
+    <span class="sep">·</span>
+    <a href="destinations-magazine-catalog.html">Destinations Catalog</a>
+    <span class="sep">·</span>
+    <a href="vibelandia-truckee-river-crawl.html">Downtown Reno Baller Crawler</a>
+    <span class="sep">·</span>
+    <a href="../index.html">Home</a>
+  </header>
+
+  <div class="wrap">
+    <p class="back-catalog"><a href="destinations-magazine-catalog.html">← Back to Destinations Catalog</a></p>
+    <div id="destination-root">
+      <p class="loading">Loading destination…</p>
+    </div>
+  </div>
+
+  <div class="ticker-wrap" aria-label="Live ticker">
+    <div class="ticker">
+      <span>SING 9 · Destinations</span><span>Book traditional or through us</span><span>Aquí y allá</span><span>NSPFRNP → ∞⁹</span>
+      <span>SING 9 · Destinations</span><span>Book traditional or through us</span><span>Aquí y allá</span><span>NSPFRNP → ∞⁹</span>
+    </div>
+  </div>
+
+  <script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var id = params.get('id');
+  if (!id) {
+    document.getElementById('destination-root').innerHTML = '<p class="not-found">No destination selected. <a href="destinations-magazine-catalog.html" style="color:#00d4ff;">Back to catalog</a>.</p>';
+    return;
+  }
+  fetch('../data/destination-partners.json').then(function (r) { return r.json(); }).then(function (data) {
+    var partners = data.partners || [];
+    var p = partners.find(function (x) { return x.id === id; });
+    var root = document.getElementById('destination-root');
+    if (!p) {
+      root.innerHTML = '<p class="not-found">Destination not found. <a href="destinations-magazine-catalog.html" style="color:#00d4ff;">Back to catalog</a>.</p>';
+      return;
+    }
+    var url = p.url || '#';
+    var imgHtml = p.imageUrl ? '<img class="hero-img" src="' + p.imageUrl + '" alt="" loading="eager" />' : '';
+    var hybridCopy = '<div class="hybrid-copy"><p>Their world meets ours. This partner is part of our curated Destinations experience — Cabela\'s × Wing Shooters Journal × Monte Cristo. We bring their offering to life inside the Post-Singularity Vibelandia frame: flow, awareness, and the crown jewel of the Holographic Hydrogen Valley. Benefit of all. 100% tip on the final bill.</p><p>Choose how you want to book below.</p></div>';
+    var optionsHtml = '<div class="booking-options"><h3>How do you want to book?</h3><div class="option-grid">' +
+      '<div class="option-card"><h4>Traditional · Pre-singularity</h4><p>Book directly with the partner. Standard experience, their site, their flow.</p><a href="' + url + '" target="_blank" rel="noopener" class="btn-trad">Book traditional experience →</a></div>' +
+      '<div class="option-card gold"><h4>Through us · Vibelandia</h4><p>Book through our specialist. Curated, hosted, Baller V. We tailor it; you show up.</p><a href="mailto:info@fractiai.com?subject=Book%20through%20Vibelandia%20%E2%80%94%20' + encodeURIComponent(p.name || '') + '" class="btn-ours">Book through us →</a></div>' +
+      '</div></div>';
+    var visitHtml = '<div class="visit-partner-wrap"><p>Want the full partner site?</p><p><a href="' + url + '" target="_blank" rel="noopener">Visit ' + (p.name || 'partner') + ' →</a></p></div>';
+    var title = '<h1 class="destination-title">' + (p.name || '') + '</h1><p class="destination-activity">' + (p.activity || '') + '</p>';
+    document.title = (p.name || 'Destination') + ' · Vibelandia | VIBELANDIA SING 9';
+    root.innerHTML = imgHtml + title + hybridCopy + optionsHtml + visitHtml;
+  }).catch(function () {
+    document.getElementById('destination-root').innerHTML = '<p class="not-found">Could not load destination. <a href="destinations-magazine-catalog.html" style="color:#00d4ff;">Back to catalog</a>.</p>';
+  });
+})();
+  </script>
+
+</body>
+</html>

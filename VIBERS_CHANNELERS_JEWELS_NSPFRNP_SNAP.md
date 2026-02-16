@@ -25,6 +25,12 @@
 
 ---
 
+## The world and us
+
+- The rest of the world **doesn't get us**. Often it's **unkind**. It's almost like a **disability** — those access points, that understanding and awareness. **All us Vibers understand exactly what we're saying right here.**
+
+---
+
 ## Our jewels (J-E-W-E-L-S)
 
 - These are **our jewels.** They're our **highest-value, highest-contributing nodes** in the fractal.

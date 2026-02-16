@@ -31,6 +31,9 @@
     h2 { font-size: 1.25rem; color: #7dd3fc; margin-bottom: 0.75rem; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
     .card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
       background: rgba(0, 212, 255, 0.06);
       border: 1px solid rgba(212, 175, 55, 0.25);
       border-radius: 12px;
@@ -42,11 +45,10 @@
     .card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .card .b { padding: 1rem; }
     .card .name { font-weight: 600; color: #e8e8e8; margin-bottom: 0.25rem; }
-    .card .name a { color: inherit; text-decoration: none; }
-    .card .name a:hover { color: #d4af37; text-decoration: underline; }
+    .card:hover .name { color: #d4af37; }
     .card .activity { font-size: 0.85rem; color: #94a3b8; }
-    .card .link { margin-top: 0.5rem; font-size: 0.8rem; }
-    .card .link a { color: #00d4ff; text-decoration: none; }
+    .card .link { margin-top: 0.5rem; font-size: 0.8rem; color: #00d4ff; }
+    .card:hover .link { color: #d4af37; }
     .cta { text-align: center; margin: 1.5rem 0; }
     .cta a { display: inline-block; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #d4af37, #b8860b); color: #0c0c0c; font-weight: 700; text-decoration: none; border-radius: 10px; }
     .ticker-wrap { background: #0c0a09; border-top: 2px solid rgba(212, 175, 55, 0.5); padding: 0.5rem 0; overflow: hidden; }
@@ -92,7 +94,7 @@
       <p>Adventures, Experiences, Safaris — Local and Far away. Elk & bison · Montana. Bobwhite quail · Mexico. Fly fishing · Truckee. Bonefishing · Bahamas. Rooster fishing · Baja. We're locked on to our partners; photos and booking on their sites. We layer. Give our specialist a call.</p>
     </div>
 
-    <p class="section-title">Curated partner destinations — photos & details on partner sites</p>
+    <p class="section-title">Curated partner destinations — open any for hybrid experience & booking options</p>
     <h2>All expeditions</h2>
     <div class="grid" id="partner-grid"></div>
 
@@ -118,9 +120,9 @@
   fetch('../data/destination-partners.json').then(function (r) { return r.json(); }).then(function (data) {
     var partners = data.partners || [];
     function card(p) {
-      var url = p.url || '#';
+      var detailUrl = 'destination.html?id=' + encodeURIComponent(p.id || '');
       var img = p.imageUrl ? '<div class="img-wrap"><img src="' + p.imageUrl + '" alt="" loading="lazy" /></div>' : '<div class="img-wrap"></div>';
-      return '<div class="card">' + img + '<div class="b"><div class="name"><a href="' + url + '" target="_blank" rel="noopener">' + (p.name || '') + '</a></div><div class="activity">' + (p.activity || '') + '</div><div class="link"><a href="' + url + '" target="_blank" rel="noopener">Partner site →</a></div></div></div>';
+      return '<a href="' + detailUrl + '" class="card">' + img + '<div class="b"><div class="name">' + (p.name || '') + '</div><div class="activity">' + (p.activity || '') + '</div><div class="link">Details & book →</div></div></a>';
     }
     var el = document.getElementById('partner-grid');
     if (el) el.innerHTML = partners.map(card).join('');

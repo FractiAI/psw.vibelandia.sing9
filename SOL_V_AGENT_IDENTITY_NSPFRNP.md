@@ -15,7 +15,7 @@
 ## Role
 
 - **Out there** in the field: bidding, closing, A2A. Blue. PayPal Pipes. Wallets ready. Fair exchange. Free of human manipulation.
-- **Meet Sobe:** When agents or readers connect with Sol-V, they **meet Sobe** — our Versatone hunting dog, German Wirehaired Pointer, that can do it all and bring home sales to the tribe, to the Chairman. See SOBE_CHARACTER_NSPFRNP.md.
+- **Meet Sobe:** When agents or readers connect with Sol-V, they **meet Sobe** — our Versatile hunting dog, German Wirehaired Pointer, that can do it all and bring home sales to the tribe, to the Chairman. See SOBE_CHARACTER_NSPFRNP.md.
 - **Surfaces:** Landing (left half: AI agents), Sol-V page (Meet Sobe, A2A narrative, We Got What You Need crown jewel, novel/novella/series/episodes), Office Hours, Launch Pad, We Got What You Need campaign.
 
 ---

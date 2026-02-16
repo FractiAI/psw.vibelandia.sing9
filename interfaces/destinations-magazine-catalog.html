@@ -44,6 +44,7 @@
       border: 1px solid rgba(212, 175, 55, 0.25);
       border-radius: 12px;
       color: inherit;
+      text-decoration: none;
       overflow: hidden;
       transition: border-color 0.2s, background 0.2s;
     }
@@ -51,13 +52,11 @@
     .partner-card .img-wrap { width: 100%; height: 140px; background: #1e293b; overflow: hidden; }
     .partner-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .partner-card .body { padding: 1rem 1.25rem; }
-    .partner-card .name { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.25rem; }
-    .partner-card .name a { color: #e8e6e3; text-decoration: none; }
-    .partner-card .name a:hover { color: #d4af37; text-decoration: underline; }
+    .partner-card .name { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.25rem; color: #e8e6e3; }
+    .partner-card:hover .name { color: #d4af37; }
     .partner-card .activity { font-size: 0.85rem; color: #94a3b8; }
-    .partner-card .link-row { margin-top: 0.5rem; font-size: 0.8rem; }
-    .partner-card .link-row a { color: #00d4ff; text-decoration: none; }
-    .partner-card .link-row a:hover { text-decoration: underline; color: #d4af37; }
+    .partner-card .link-row { margin-top: 0.5rem; font-size: 0.8rem; color: #00d4ff; }
+    .partner-card:hover .link-row { color: #d4af37; }
     .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: 1.5rem; }
     .cta-btn { display: inline-block; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #00d4ff, #0088aa); color: #0a0a12; font-weight: 700; text-decoration: none; border-radius: 10px; font-size: 0.9rem; border: 2px solid rgba(0, 212, 255, 0.6); }
     .cta-btn:hover { opacity: 0.95; }
@@ -147,16 +146,10 @@
     var local = partners.filter(function (p) { return p.region === 'Local'; });
     var far = partners.filter(function (p) { return p.region === 'Far away'; });
     function card(p) {
-      var url = p.url || '#';
-      var menuUrl = p.menuUrl || url;
-      var pricesUrl = p.pricesUrl || url;
+      var detailUrl = 'destination.html?id=' + encodeURIComponent(p.id || '');
       var img = p.imageUrl ? '<div class="img-wrap"><img src="' + p.imageUrl + '" alt="" loading="lazy" /></div>' : '';
-      var linkRow = '<div class="link-row"><a href="' + url + '" target="_blank" rel="noopener">Visit partner →</a>';
-      if (p.menuUrl) linkRow += ' <a href="' + menuUrl + '" target="_blank" rel="noopener">Menu</a>';
-      if (p.pricesUrl) linkRow += ' <a href="' + pricesUrl + '" target="_blank" rel="noopener">Prices</a>';
-      linkRow += '</div>';
-      return '<div class="partner-card">' + img +
-        '<div class="body"><div class="name"><a href="' + url + '" target="_blank" rel="noopener">' + (p.name || '') + '</a></div><div class="activity">' + (p.activity || '') + '</div>' + linkRow + '</div></div>';
+      return '<a href="' + detailUrl + '" class="partner-card">' + img +
+        '<div class="body"><div class="name">' + (p.name || '') + '</div><div class="activity">' + (p.activity || '') + '</div><div class="link-row">Details →</div></div></a>';
     }
     var localEl = document.getElementById('partner-grid-local');
     var farEl = document.getElementById('partner-grid-far');

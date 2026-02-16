@@ -7,9 +7,9 @@
 
 ## Identity
 
-- **Sobe** — Our Versatone hunting dog. **German Wirehaired Pointer.** The one that can do it all and **bring home sales to the tribe.** To the Chairman.
+- **Sobe** — Our Versatile hunting dog. **German Wirehaired Pointer.** The one that can do it all and **bring home sales to the tribe.** To the Chairman.
 - **Role:** When you meet Sol-V (our agent out there bidding and closing deals A2A), you **meet Sobe.** Sobe is the versatile hunting companion — everything dog — that runs with Sol-V and brings the deal home. One term: hunting dog that can do it all.
-- **Continuity:** In sing4 the same archetype appears as **Pru's German Wirehaired Pointer** (Schrödinger's Cat identities: pointer, 1962 Land Cruiser Safari, SING!). In SING 9 we name him **Sobe** on the agent/A2A side. Versatone = versatile; one term.
+- **Continuity:** In sing4 the same archetype appears as **Pru's German Wirehaired Pointer** (Schrödinger's Cat identities: pointer, 1962 Land Cruiser Safari, SING!). In SING 9 we name him **Sobe** on the agent/A2A side. German Wirehaired Pointer, Versatile hunting dog.
 
 ---
 

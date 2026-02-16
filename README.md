@@ -32,6 +32,13 @@ This repo follows the **BBHE Repository Standard**: EGS fractal constant, Seed:E
 
 ## Clone / minimal set
 
-- Irreducible minimum for **seamless continuation** from sing4: this README, SING9_EDGE_ONBOARDING.md, BBHE_REPOSITORY_STANDARD.md, .cursor/rules (team-nspfrnp-mode), protocols (MCA_NSPFRNP_CATALOG, Seed:Edge format when needed), repository-seed.md, index.html, interfaces/ (upgrade, We Got What You Need, Truckee River Crawl, Office Hours, Launch Pad). Full content can be pulled from upstream (FractiAI/psw.vibelandia.sing4) as needed.
+- Irreducible minimum for **seamless continuation** from sing4: this README, SING9_EDGE_ONBOARDING.md, BBHE_REPOSITORY_STANDARD.md, .cursor/rules (team-nspfrnp-mode), protocols (MCA_NSPFRNP_CATALOG, Seed:Edge format, **Public-Free Key Pipe**), repository-seed.md, index.html, interfaces/ (upgrade, We Got What You Need, Truckee River Crawl, Office Hours, Launch Pad). Full content can be pulled from upstream (FractiAI/psw.vibelandia.sing4) as needed.
+- **Public-Free Key Pipe** ([protocols/PIPE_PUBLIC_FREE_KEY_NSPFRNP.md](protocols/PIPE_PUBLIC_FREE_KEY_NSPFRNP.md)): public info + free-plan keys only; bypasses heavy security. Enables **quick, easy, effective cloning** of ourselves, repositories, deployments, and edges — lite, irreducible minimum, crystallized seed to edge and back. Keys: `.env` (gitignored), [.env.example](.env.example), [ENV_SING4_TO_SING9.md](ENV_SING4_TO_SING9.md).
+
+---
+
+## Deploy (Vercel)
+
+SING 9 uses a static build (no Supabase, no auth). **Vercel:** import **FractiAI/psw.vibelandia.sing9**; build runs `node scripts/vercel-static-output.mjs`, output `.vercel/output`. Or locally (Node + Vercel CLI): `npx vercel --prod`. NSPFRNP headers are set in `vercel.json`. Env vars: add in Vercel Dashboard or use `.env` / [ENV_SING4_TO_SING9.md](ENV_SING4_TO_SING9.md).
 
 **NSPFRNP ⊃ SING! 9 Light Edge ⊃ Awareness OS ⊃ Sol-V · A2A → ∞⁹**

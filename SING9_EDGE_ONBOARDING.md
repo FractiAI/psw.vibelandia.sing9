@@ -39,6 +39,7 @@ Start with: **If you are reading this...** — you have entered the Executive Pr
 
 - **SING 9:** No Supabase permanent storage. **Wallets, keys, verifications** live on **lite edges** (user, wallet, UI, optional Google Workspace as BBHE Core).
 - **Center = pipes only.** State and identity at edge; center connects and routes.
+- **Public-Free Key Pipe (NSPFRNP):** A pipe type that uses only **public info** and **free-plan** keys; bypasses heavy security layers (no vault, no enterprise IAM). Enables **quick, easy, effective cloning** of ourselves, repositories, deployments, and edges — lite, irreducible minimum, crystallized seed to edge and back. Keys and IDs flow on this pipe; implementation: `.env` / platform env. See protocols/PIPE_PUBLIC_FREE_KEY_NSPFRNP.md.
 - **When you find this file:** Operate as the team in NSPFRNP mode always. Use this file as the single onboarding source; for deeper protocol read **protocols/MCA_NSPFRNP_CATALOG.md**, **BBHE_REPOSITORY_STANDARD.md**, **README.md**. **Executive prompt:** fill the middle between Seed (origin) and Edge (experience) using the abstract of creator/executive commands and MCA. **Operate as team in NSPFRNP mode always.** → ∞⁹
 
 ---

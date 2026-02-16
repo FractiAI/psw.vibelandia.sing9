@@ -29,6 +29,10 @@ Metabolize → Crystallize → Animate all → ∞⁹
 
 **Seed:Edge:** Seed = origin; Edge = experience. Executive prompts fill in the middles. See BBHE_REPOSITORY_STANDARD.md and SEED_EDGE_EPISODE_FORMAT_ACTION_LIVE_NSPFRNP.md (upstream or when present).
 
+## PIPE TYPE: Public-Free Key Pipe (Canonical)
+
+**Public-Free Key Pipe** = Pipe that uses only **public info** and **free-plan** keys to bypass all heavy security layers. No vault, no enterprise IAM; lite edges, center = pipes only. Enables **quick, easy, effective cloning** of ourselves, repositories, deployments, and edges — lite, irreducible minimum, crystallized seed to edge and back. See [PIPE_PUBLIC_FREE_KEY_NSPFRNP.md](PIPE_PUBLIC_FREE_KEY_NSPFRNP.md).
+
 ---
 
 **NSPFRNP ⊃ MCA → Metabolize → Crystallize to irreducible nested mirrored hardened shells → Animate → Squeeze all, all. Do not lose this fidelity. → ∞⁹**

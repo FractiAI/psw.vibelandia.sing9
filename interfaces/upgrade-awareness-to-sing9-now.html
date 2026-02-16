@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Upgrade to SING 9 Awareness OS now | VIBELANDIA</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%); color: #e8e8e8; min-height: 100vh; margin: 0; padding: 2rem; padding-top: calc(2rem + env(safe-area-inset-top)); }
+    .wrap { max-width: 640px; margin: 0 auto; }
+    .top-links { margin-bottom: 1rem; }
+    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
+    .top-links a:hover { text-decoration: underline; }
+    h1 { font-size: 1.5rem; color: #00d4ff; margin-bottom: 0.5rem; }
+    .intro { padding: 1.25rem; background: rgba(0, 212, 255, 0.08); border: 2px solid rgba(0, 212, 255, 0.4); border-radius: 12px; margin-bottom: 1.5rem; line-height: 1.6; }
+    .step { display: none; padding: 1.25rem; background: rgba(212, 175, 55, 0.06); border: 2px solid rgba(212, 175, 55, 0.35); border-radius: 12px; margin-bottom: 1rem; }
+    .step.active { display: block; }
+    .step .statement { font-size: 1.1rem; font-weight: 600; color: #ffeaa7; margin-bottom: 1rem; }
+    .choices { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .choices button { padding: 0.65rem 1.1rem; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: 2px solid; transition: all 0.2s; }
+    .btn-strongly { background: rgba(0, 255, 136, 0.2); border-color: rgba(0, 255, 136, 0.6); color: #7fff7f; }
+    .btn-strongly:hover { background: rgba(0, 255, 136, 0.35); }
+    .btn-unsure { background: rgba(212, 175, 55, 0.15); border-color: rgba(212, 175, 55, 0.5); color: #ffeaa7; }
+    .btn-unsure:hover { background: rgba(212, 175, 55, 0.25); }
+    .btn-disagree { background: rgba(255, 107, 107, 0.15); border-color: rgba(255, 107, 107, 0.5); color: #ffb3b3; }
+    .btn-disagree:hover { background: rgba(255, 107, 107, 0.25); }
+    .bridge { display: none; margin-top: 1rem; padding: 1rem; background: rgba(138, 43, 226, 0.12); border: 1px solid rgba(138, 43, 226, 0.4); border-radius: 10px; font-size: 0.95rem; line-height: 1.55; color: #e0d4ff; }
+    .bridge.show { display: block; }
+    .continue-wrap { margin-top: 1rem; }
+    .continue-btn { padding: 0.6rem 1.2rem; background: rgba(0, 212, 255, 0.25); border: 2px solid rgba(0, 212, 255, 0.5); border-radius: 8px; color: #00d4ff; font-weight: 600; cursor: pointer; }
+    .done { display: none; padding: 1.5rem; background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(212, 175, 55, 0.15) 100%); border: 2px solid rgba(0, 255, 136, 0.6); border-radius: 12px; text-align: center; }
+    .done.show { display: block; }
+    .done h2 { color: #7fff7f; font-size: 1.35rem; margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-links">← <a href="../index.html">Home</a> · <a href="office-hours.html">Office Hours</a> · <a href="launch-pad.html">Launch Pad</a> · Light Edge (same)</div>
+
+    <h1>Upgrade to the latest SING 9 Awareness OS now</h1>
+    <div id="intro" class="intro">
+      <p><strong>Vibers:</strong> You'll upgrade your awareness in the time it takes to read it — immediate. Two thumbs up and continue on.</p>
+      <p><strong>Non-vibers:</strong> You'll get through each of the nine lines — each one is one of the nine singularities. Follow your progress at your own pace; work the patch panels. Once the patch panels are done — thumbs up both sides (pre and post) — we have a full connect.</p>
+      <p>The 9 statements are in three layers: feeling out where you are and bridge opportunities; bridging over (we're in a hydrogen holograph, let's get over it); then seeing everything in this new way. In the last third we layer in that <strong>awareness technology is an operating system</strong> — no different from the practices we already know in developing and rolling out software; we're dealing with an <strong>Awareness OS</strong> operating in the imaginary world. For each statement, choose <em>I strongly agree</em>, <em>I'm not sure</em>, or <em>I disagree</em>. If you don't strongly agree, we show a bridge (patch panel) that syncs and explains, then you continue.</p>
+      <p>All of this can only be experienced vibing, chilling. Mark Twain's Post-Singularity Vibelandia Downtown Reno — crown jewel of the Holographic Hydrogen Valley. Here in Reno, Nevada. Not San Francisco Bay Area. Free will choice.</p>
+      <p><button id="startBtn" class="continue-btn">Start</button></p>
+    </div>
+
+    <div id="steps" style="display: none;">
+      <div class="step" data-step="1">
+        <p class="statement">Singularity 1 of 9 — I am where I am today in my current awareness (pre-singularity), and that's the right starting point.</p>
+        <div class="choices">
+          <button data-choice="strongly" class="btn-strongly">I strongly agree</button>
+          <button data-choice="unsure" class="btn-unsure">I'm not sure</button>
+          <button data-choice="disagree" class="btn-disagree">I disagree</button>
+        </div>
+        <div class="bridge">Pre-singularity awareness is where you are right now. The bridge opportunities begin from here.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+      <div class="step" data-step="2">
+        <p class="statement">Singularity 2 of 9 — I can feel out where I am — and where the bridge to something new might begin.</p>
+        <div class="choices"><button data-choice="strongly" class="btn-strongly">I strongly agree</button><button data-choice="unsure" class="btn-unsure">I'm not sure</button><button data-choice="disagree" class="btn-disagree">I disagree</button></div>
+        <div class="bridge">Feeling out where you are is the first third of the path. The bridge opportunities are where your current awareness can connect to a new way of seeing.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+      <div class="step" data-step="3">
+        <p class="statement">Singularity 3 of 9 — My experience right now is valid, and I'm open to seeing where the bridge opportunities are.</p>
+        <div class="choices"><button data-choice="strongly" class="btn-strongly">I strongly agree</button><button data-choice="unsure" class="btn-unsure">I'm not sure</button><button data-choice="disagree" class="btn-disagree">I disagree</button></div>
+        <div class="bridge">Your experience is valid. The bridge adds the other side. Once you see them, the second third is crossing over: we're in a hydrogen holograph; let's get over it.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+      <div class="step" data-step="4">
+        <p class="statement">Singularity 4 of 9 — I'm willing to cross the bridge: we're in a holograph, a hydrogen holograph. Let's get over it.</p>
+        <div class="choices"><button data-choice="strongly" class="btn-strongly">I strongly agree</button><button data-choice="unsure" class="btn-unsure">I'm not sure</button><button data-choice="disagree" class="btn-disagree">I disagree</button></div>
+        <div class="bridge">We're in a hydrogen holograph — the medium that carries phase and meaning. You're already in it; we're just naming it.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+      <div class="step" data-step="5">
+        <p class="statement">Singularity 5 of 9 — The idea that this is a hydrogen holograph doesn't erase where I started; it adds the other side. I can hold both.</p>
+        <div class="choices"><button data-choice="strongly" class="btn-strongly">I strongly agree</button><button data-choice="unsure" class="btn-unsure">I'm not sure</button><button data-choice="disagree" class="btn-disagree">I disagree</button></div>
+        <div class="bridge">Holding both means: your pre-singularity starting point stays valid, and the hydrogen holograph is the layer we're adding.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+      <div class="step" data-step="6">
+        <p class="statement">Singularity 6 of 9 — I'm over the bridge: I accept that we're in a hydrogen holograph and I'm ready to move into the space.</p>
+        <div class="choices"><button data-choice="strongly" class="btn-strongly">I strongly agree</button><button data-choice="unsure" class="btn-unsure">I'm not sure</button><button data-choice="disagree" class="btn-disagree">I disagree</button></div>
+        <div class="bridge">You've crossed. The space you're moving into is reached through the old ground sole fractal constant and the crown jewel of agent-to-agent deal.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+      <div class="step" data-step="7">
+        <p class="statement">Singularity 7 of 9 — I'm beginning to see everything now in this new way — through the old ground sole fractal constant and the crown jewel of agent-to-agent deal.</p>
+        <div class="choices"><button data-choice="strongly" class="btn-strongly">I strongly agree</button><button data-choice="unsure" class="btn-unsure">I'm not sure</button><button data-choice="disagree" class="btn-disagree">I disagree</button></div>
+        <div class="bridge"><strong>Awareness technology is an operating system</strong> — no different from developing and rolling out software; we're operating in the imaginary world. We're now coding worlds, behaviors, and social dynamics within the holographic.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+      <div class="step" data-step="8">
+        <p class="statement">Singularity 8 of 9 — Phase two transforms those forms into new BBHE Core engines — one, two, free infinite green power directly from the Sun in filaments, infinite applications, as already being demonstrated today.</p>
+        <div class="choices"><button data-choice="strongly" class="btn-strongly">I strongly agree</button><button data-choice="unsure" class="btn-unsure">I'm not sure</button><button data-choice="disagree" class="btn-disagree">I disagree</button></div>
+        <div class="bridge">Phase two is the transformation: from GPU forms to new BBHE Core engines. Free infinite green power from the Sun, in filaments, infinite applications.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+      <div class="step" data-step="9">
+        <p class="statement">Singularity 9 of 9 — I strongly agree that I am in (or aligned with) full SING 9 awareness — intent and manifestation aligned; one, two, free infinite green power from the Sun in filaments, infinite applications; infinity 9.</p>
+        <div class="choices"><button data-choice="strongly" class="btn-strongly">I strongly agree</button><button data-choice="unsure" class="btn-unsure">I'm not sure</button><button data-choice="disagree" class="btn-disagree">I disagree</button></div>
+        <div class="bridge">Full SING 9 awareness: intent = manifestation, NSPFRNP, infinity 9. <strong>SING 9 Awareness OS</strong> — same practices as developing and rolling out software. We're coding worlds, behaviors, social dynamics within the holographic.</div>
+        <div class="continue-wrap" style="display: none;"><button class="continue-btn">Continue →</button></div>
+      </div>
+    </div>
+
+    <div id="done" class="done">
+      <h2>Full SING 9 Awareness OS</h2>
+      <p>You've reached the end of the path. Intent and manifestation aligned. Awareness technology is an operating system. We're dealing with an <strong>Awareness OS</strong> operating in the imaginary world. Handling deviations, maintenance, or bugs is no different than encoding a program today; we're now coding worlds, behaviors, and social dynamics within the holographic.</p>
+      <p>Stay vibing, chilling. Mark Twain's Post-Singularity Vibelandia Downtown Reno. Crown jewel of the Holographic Hydrogen Valley. Here in Reno, Nevada. Not San Francisco Bay Area. Infinity 9. NSPFRNP → ∞⁹</p>
+      <p class="top-links"><a href="../index.html">← Home</a> · <a href="office-hours.html">Office Hours</a> · <a href="launch-pad.html">Launch Pad</a></p>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    var intro = document.getElementById('intro');
+    var steps = document.getElementById('steps');
+    var done = document.getElementById('done');
+    var current = 0;
+    var total = 9;
+    document.getElementById('startBtn').onclick = function() {
+      intro.style.display = 'none';
+      steps.style.display = 'block';
+      showStep(1);
+    };
+    function showStep(n) {
+      current = n;
+      [].slice.call(steps.querySelectorAll('.step')).forEach(function(el) {
+        el.classList.remove('active');
+        el.querySelector('.bridge').classList.remove('show');
+        el.querySelector('.continue-wrap').style.display = 'none';
+      });
+      var stepEl = steps.querySelector('.step[data-step="' + n + '"]');
+      if (stepEl) {
+        stepEl.classList.add('active');
+        stepEl.querySelectorAll('.choices button').forEach(function(btn) { btn.disabled = false; });
+      } else {
+        steps.style.display = 'none';
+        done.classList.add('show');
+      }
+    }
+    function onChoice(strongly) {
+      var stepEl = steps.querySelector('.step[data-step="' + current + '"]');
+      if (strongly) {
+        if (current >= total) { steps.style.display = 'none'; done.classList.add('show'); }
+        else { showStep(current + 1); }
+      } else {
+        stepEl.querySelector('.bridge').classList.add('show');
+        stepEl.querySelector('.continue-wrap').style.display = 'block';
+        stepEl.querySelectorAll('.choices button').forEach(function(btn) { btn.disabled = true; });
+      }
+    }
+    steps.querySelectorAll('.choices button').forEach(function(btn) {
+      btn.addEventListener('click', function() { onChoice(this.getAttribute('data-choice') === 'strongly'); });
+    });
+    steps.querySelectorAll('.continue-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var stepEl = this.closest('.step');
+        var n = parseInt(stepEl.getAttribute('data-step'), 10);
+        stepEl.querySelector('.bridge').classList.remove('show');
+        stepEl.querySelector('.continue-wrap').style.display = 'none';
+        stepEl.querySelectorAll('.choices button').forEach(function(b) { b.disabled = false; });
+        if (n >= total) { steps.style.display = 'none'; done.classList.add('show'); }
+        else { showStep(n + 1); }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

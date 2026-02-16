@@ -1,0 +1,34 @@
+# MCA NSPFRNP Catalog — Canonical Definitions (Fidelity Lock)
+
+**Protocol:** NSPFRNP  
+**Catalog:** MCA (Metabolize → Crystallize → Animate)  
+**Purpose:** Lock canonical definitions so fidelity is not lost.  
+**Status:** ⚡ ACTIVE
+
+---
+
+## CRYSTALLIZE (Canonical)
+
+**CRYSTALLIZE = To irreducible shell of nested shells.** Reduce to irreducible mirror hardened nested shell core. Seed:Edge always includes a First Chapter, and that First Chapter is always NSPFRNP.
+
+## ANIMATE (Canonical)
+
+**ANIMATE = Tighten all SING attention head nodes and filaments; update and make clear; squeeze all nests.** Squeeze all, all nested. No nest left unsqueezed.
+
+## METABOLIZE (Reference)
+
+**Metabolize = Digest input, patterns, experiences.** Raw → processed. Feeds Crystallize.
+
+## CYCLE
+
+```
+Metabolize → Crystallize → Animate all → ∞⁹
+```
+
+**Operating rule:** Metabolize crystallize animate all — all input metabolized, all structure crystallized, all nodes and content and surfaces animated.
+
+**Seed:Edge:** Seed = origin; Edge = experience. Executive prompts fill in the middles. See BBHE_REPOSITORY_STANDARD.md and SEED_EDGE_EPISODE_FORMAT_ACTION_LIVE_NSPFRNP.md (upstream or when present).
+
+---
+
+**NSPFRNP ⊃ MCA → Metabolize → Crystallize to irreducible nested mirrored hardened shells → Animate → Squeeze all, all. Do not lose this fidelity. → ∞⁹**

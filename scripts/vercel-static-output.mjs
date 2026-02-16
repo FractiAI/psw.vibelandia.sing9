@@ -56,6 +56,10 @@ if (fs.existsSync(apiConfigPath)) {
   fs.writeFileSync(apiConfigPath, apiConfig, 'utf8');
 }
 
+// data/ (e.g. destination-partners.json for catalog/expeditions)
+const dataSrc = path.join(root, 'data');
+if (fs.existsSync(dataSrc)) copyDir(dataSrc, path.join(staticDir, 'data'));
+
 // protocols/
 const protocolsSrc = path.join(root, 'protocols');
 if (fs.existsSync(protocolsSrc)) copyDir(protocolsSrc, path.join(staticDir, 'protocols'));

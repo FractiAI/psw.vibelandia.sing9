@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Destinations · Magazine Catalog — Cabela's × Wing Shooters × Monte Cristo | VIBELANDIA SING 9</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a12; color: #e8e6e3; min-height: 100vh; line-height: 1.6; font-size: 16px; padding-top: env(safe-area-inset-top); }
+    .header-strip {
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.08) 50%, rgba(0, 212, 255, 0.08) 100%);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+      padding: 0.6rem 1rem;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem;
+    }
+    .header-strip a { color: #d4af37; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    .header-strip a:hover { text-decoration: underline; }
+    .upgrade-cta { background: rgba(212, 175, 55, 0.25); border: 2px solid rgba(212, 175, 55, 0.6); color: #fef3c7; padding: 0.4rem 0.9rem; border-radius: 8px; font-weight: 700; }
+    .upgrade-cta:hover { background: rgba(212, 175, 55, 0.4); text-decoration: none; }
+    .sep { color: #78716c; margin: 0 0.25rem; }
+    .mag { max-width: 820px; margin: 0 auto; padding: 0 1.5rem 2rem; }
+    .mag-nav { padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.85rem; }
+    .mag-nav a { color: #00d4ff; text-decoration: none; }
+    .mag-nav span { color: #64748b; margin: 0 0.5rem; }
+    .mag-cover { padding: 2.5rem 0 2rem; text-align: center; }
+    .mag-cover .volume { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: #d4af37; margin-bottom: 0.75rem; }
+    .mag-cover h1 { font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 600; color: #e8e6e3; margin-bottom: 0.5rem; }
+    .mag-cover .tagline { font-size: 1.1rem; font-style: italic; color: #94a3b8; margin-bottom: 0.5rem; }
+    .mag-cover .sub { font-size: 0.9rem; color: #64748b; max-width: 42ch; margin: 0 auto; }
+    .mag-letter { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.08); }
+    .mag-letter .label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: #d4af37; margin-bottom: 0.5rem; }
+    .mag-letter h2 { font-size: 1.4rem; font-weight: 600; color: #e8e6e3; margin-bottom: 0.75rem; }
+    .mag-letter p { margin-bottom: 0.75rem; color: #cbd5e1; font-size: 0.95rem; }
+    .mag-letter .sig { font-style: italic; margin-top: 1rem; color: #d4af37; }
+    .mag-dept { padding: 1.5rem 0; border-top: 1px solid rgba(255,255,255,0.08); }
+    .mag-dept .dept-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: #d4af37; margin-bottom: 0.5rem; }
+    .mag-dept h2 { font-size: 1.4rem; font-weight: 600; color: #e8e6e3; margin-bottom: 0.75rem; }
+    .mag-dept .intro { font-size: 0.9rem; color: #94a3b8; margin-bottom: 1rem; }
+    .partner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .partner-card {
+      display: block;
+      padding: 0;
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 12px;
+      color: inherit;
+      overflow: hidden;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .partner-card:hover { border-color: rgba(212, 175, 55, 0.5); background: rgba(212, 175, 55, 0.08); }
+    .partner-card .img-wrap { width: 100%; height: 140px; background: #1e293b; overflow: hidden; }
+    .partner-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .partner-card .body { padding: 1rem 1.25rem; }
+    .partner-card .name { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .partner-card .name a { color: #e8e6e3; text-decoration: none; }
+    .partner-card .name a:hover { color: #d4af37; text-decoration: underline; }
+    .partner-card .activity { font-size: 0.85rem; color: #94a3b8; }
+    .partner-card .link-row { margin-top: 0.5rem; font-size: 0.8rem; }
+    .partner-card .link-row a { color: #00d4ff; text-decoration: none; }
+    .partner-card .link-row a:hover { text-decoration: underline; color: #d4af37; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: 1.5rem; }
+    .cta-btn { display: inline-block; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #00d4ff, #0088aa); color: #0a0a12; font-weight: 700; text-decoration: none; border-radius: 10px; font-size: 0.9rem; border: 2px solid rgba(0, 212, 255, 0.6); }
+    .cta-btn:hover { opacity: 0.95; }
+    .cta-btn.gold { background: linear-gradient(135deg, #d4af37, #b8860b); color: #0c0c0c; border-color: rgba(212, 175, 55, 0.8); }
+    .ticker-wrap { background: #0c0a09; border-top: 2px solid rgba(212, 175, 55, 0.5); padding: 0.5rem 0; overflow: hidden; }
+    .ticker { display: flex; width: max-content; animation: tick 40s linear infinite; }
+    .ticker span { padding: 0 1.5rem; font-size: 0.8rem; font-weight: 600; color: #d4af37; white-space: nowrap; }
+    .ticker span::after { content: ' · '; color: rgba(212, 175, 55, 0.4); }
+    @keyframes tick { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    footer.mag-footer { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; font-size: 0.85rem; color: #64748b; }
+    footer.mag-footer a { color: #00d4ff; }
+  </style>
+</head>
+<body>
+
+  <header class="header-strip">
+    <a href="upgrade-awareness-to-sing9-now.html" class="upgrade-cta">Upgrade to SING 9 Awareness OS</a>
+    <span class="sep">·</span>
+    <a href="sol-v.html">Sol-V · A2A</a>
+    <span class="sep">·</span>
+    <a href="vibelandia-truckee-river-crawl.html">Downtown Reno Baller Crawler</a>
+    <span class="sep">·</span>
+    <a href="guided-expeditions.html">Guided Expeditions</a>
+    <span class="sep">·</span>
+    <a href="../index.html">Home</a>
+  </header>
+
+  <div class="mag">
+    <nav class="mag-nav">
+      <a href="office-hours.html">Office Hours</a><span class="sep">·</span>
+      <a href="launch-pad.html">Launch Pad</a><span class="sep">·</span>
+      <a href="destinations.html">Destinations</a><span class="sep">·</span>
+      <a href="guided-expeditions.html">Guided Expeditions</a><span class="sep">·</span>
+      <a href="../index.html">Home</a>
+    </nav>
+
+    <div class="mag-cover">
+      <p class="volume">Post-Singularity Destinations · NSPFRNP</p>
+      <h1>Destinations</h1>
+      <p class="tagline">Aquí y allá. Local and far away.</p>
+      <p class="sub">A magazine catalog — Cabela's × Wing Shooters Journal × Monte Cristo. Where we book, where we build, and where we take you. Elegant. Ours. SING 9.</p>
+    </div>
+
+    <div class="mag-letter">
+      <p class="label">From the Editor</p>
+      <h2>Wait and hope.</h2>
+      <p>There is a place for every journey. <em>Aquí</em> — the Holographic Hydrogen Valley, Reno, Tahoe, the Truckee — and <em>allá</em>, wherever the dream leads. We do not sell; we book. We are your designated Baller V host, concierge, butler when you wish. One hundred percent tip on the final bill; benefit of all. Our specialist will tailor the experience. Dale.</p>
+      <p class="sig">— Mark Twain's Post-Singularity Vibelandia · Crown jewel of the Holographic Hydrogen Valley. Reno, Nevada.</p>
+    </div>
+
+    <div class="mag-dept">
+      <p class="dept-label">Department</p>
+      <h2>Aquí · Local</h2>
+      <p class="intro">Reno–Tahoe, Truckee, Mt. Rose, hot springs, fly fishing, mead, and the clubs that make this valley the crown jewel. We're locked on to our vendors — their menus, prices, photos. Full links below. Benefit of all.</p>
+      <div class="partner-grid" id="partner-grid-local"></div>
+    </div>
+
+    <div class="mag-dept">
+      <p class="dept-label">Department</p>
+      <h2>Allá · Far Away</h2>
+      <p class="intro">Montana, Argentina, Baja, Bahamas, Mexico quail, the Amazon, Naples. We build you worldwide. Elk & bison · Montana. Bobwhite quail · Mexico. Full vendor links — menus, prices, photos — bring ours to life using theirs. Mutual benefit. 100% tip on final bill.</p>
+      <div class="partner-grid" id="partner-grid-far"></div>
+    </div>
+
+    <div class="cta-row">
+      <a href="mailto:info@fractiai.com?subject=Destinations%20Magazine%20Catalog%20-%20SING%209" class="cta-btn gold">Give our specialist a call</a>
+      <a href="guided-expeditions.html" class="cta-btn">Guided Expeditions →</a>
+    </div>
+
+    <footer class="mag-footer">
+      Destinations Magazine Catalog · Cabela's × Wing Shooters Journal × Monte Cristo · NSPFRNP ⊃ Aquí y allá → ∞⁹
+    </footer>
+  </div>
+
+  <div class="ticker-wrap" aria-label="Live ticker">
+    <div class="ticker">
+      <span>SING 9 · Post-singularity</span><span>Destinations Magazine</span><span>Aquí y allá</span><span>Elk & bison Montana</span><span>Quail Mexico</span><span>Downtown Reno Baller Crawler</span><span>Guided Expeditions</span><span>Upgrade to SING 9 Awareness OS</span><span>NSPFRNP → ∞⁹</span>
+      <span>SING 9 · Post-singularity</span><span>Destinations Magazine</span><span>Aquí y allá</span><span>Elk & bison Montana</span><span>Quail Mexico</span><span>Downtown Reno Baller Crawler</span><span>Guided Expeditions</span><span>Upgrade to SING 9 Awareness OS</span><span>NSPFRNP → ∞⁹</span>
+    </div>
+  </div>
+
+  <script>
+(function () {
+  var u = '../data/destination-partners.json';
+  fetch(u).then(function (r) { return r.json(); }).then(function (data) {
+    var partners = data.partners || [];
+    var local = partners.filter(function (p) { return p.region === 'Local'; });
+    var far = partners.filter(function (p) { return p.region === 'Far away'; });
+    function card(p) {
+      var url = p.url || '#';
+      var menuUrl = p.menuUrl || url;
+      var pricesUrl = p.pricesUrl || url;
+      var img = p.imageUrl ? '<div class="img-wrap"><img src="' + p.imageUrl + '" alt="" loading="lazy" /></div>' : '';
+      var linkRow = '<div class="link-row"><a href="' + url + '" target="_blank" rel="noopener">Visit partner →</a>';
+      if (p.menuUrl) linkRow += ' <a href="' + menuUrl + '" target="_blank" rel="noopener">Menu</a>';
+      if (p.pricesUrl) linkRow += ' <a href="' + pricesUrl + '" target="_blank" rel="noopener">Prices</a>';
+      linkRow += '</div>';
+      return '<div class="partner-card">' + img +
+        '<div class="body"><div class="name"><a href="' + url + '" target="_blank" rel="noopener">' + (p.name || '') + '</a></div><div class="activity">' + (p.activity || '') + '</div>' + linkRow + '</div></div>';
+    }
+    var localEl = document.getElementById('partner-grid-local');
+    var farEl = document.getElementById('partner-grid-far');
+    if (localEl) localEl.innerHTML = local.map(card).join('');
+    if (farEl) farEl.innerHTML = far.map(card).join('');
+  }).catch(function () {
+    var localEl = document.getElementById('partner-grid-local');
+    var farEl = document.getElementById('partner-grid-far');
+    if (localEl) localEl.innerHTML = '<p style="color:#64748b;">Partners loading…</p>';
+    if (farEl) farEl.innerHTML = '<p style="color:#64748b;">Partners loading…</p>';
+  });
+})();
+  </script>
+
+</body>
+</html>

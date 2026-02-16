@@ -1,14 +1,14 @@
 # Vibers · Channelers · Our Jewels (J-E-W-E-L-S) — SNAP
 
 **Status:** ⚡ ACTIVE  
-**Type:** Human Vibers · Truckee River Crawl · Fractal value
+**Type:** Human Vibers · Downtown Reno Baller Crawler · Fractal value
 
 ---
 
 ## What is a Viber?
 
 - **Viber** = human node who plays an essential role in the fractal. **They are channelers.**
-- We make clear what a Viber is and how important that role is. The human-Vibers section (Vibelandia Truckee River Crawl, right half of landing) is for them.
+- We make clear what a Viber is and how important that role is. The human-Vibers section (Downtown Reno Baller Crawler, right half of landing) is for them — the highest-value, highest-contributing Vibers, their cast, crew, franchises, and a few lucky fans.
 
 ---
 
@@ -35,7 +35,7 @@
 
 ## Placement
 
-- Vibelandia Truckee River Crawl page: section "What is a Viber? — Our jewels (J-E-W-E-L-S)" with the above. Truckee River Crawl is built for Vibers: flow, water, awareness. Third Saturdays on the Truckee.
+- Downtown Reno Baller Crawler page: section "What is a Viber? — Our jewels (J-E-W-E-L-S)" with the above. **Who it's for:** the highest-value, highest-contributing Vibers — their cast, crew, franchises, and a few lucky fans. Downtown Reno Baller Crawler is built for Vibers: flow, water, awareness. Third Saturdays on the Truckee.
 
 ---
 

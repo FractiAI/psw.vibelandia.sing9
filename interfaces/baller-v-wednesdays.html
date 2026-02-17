@@ -8,7 +8,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #0a0a0a;
+      background: #0a0608;
       color: #f5f5f5;
       min-height: 100vh;
       padding: 1.5rem;
@@ -17,10 +17,10 @@
     }
     .wrap { max-width: 600px; margin: 0 auto; }
     .top-links { margin-bottom: 1.5rem; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
-    .top-links a { color: #a3a3a3; text-decoration: none; margin-right: 1rem; }
-    .top-links a:hover { color: #dc2626; }
+    .top-links a { color: #e879f9; text-decoration: none; margin-right: 1rem; text-shadow: 0 0 12px rgba(232, 121, 249, 0.5); }
+    .top-links a:hover { color: #f0abfc; }
     .brand { margin-bottom: 2rem; }
-    .brand .spell { font-size: 0.7rem; letter-spacing: 0.35em; color: #dc2626; margin-bottom: 0.5rem; text-transform: uppercase; }
+    .brand .spell { font-size: 0.7rem; letter-spacing: 0.35em; color: #22d3ee; margin-bottom: 0.5rem; text-transform: uppercase; text-shadow: 0 0 14px rgba(34, 211, 238, 0.6); }
     .brand h1 {
       font-size: clamp(1.5rem, 5vw, 2rem);
       font-weight: 800;
@@ -28,26 +28,30 @@
       letter-spacing: 0.02em;
       line-height: 1.15;
       margin-bottom: 0.4rem;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.4), 0 0 40px rgba(232, 121, 249, 0.2);
     }
-    .brand .sub { font-size: 0.9rem; color: #a3a3a3; letter-spacing: 0.08em; }
+    .brand .sub { font-size: 0.9rem; color: #d4af37; letter-spacing: 0.08em; text-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+    .neon-tag { font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem; font-style: italic; }
     .popup-badge {
       display: inline-block;
-      border: 2px solid #dc2626;
-      color: #dc2626;
+      border: 2px solid #e879f9;
+      color: #e879f9;
       padding: 0.45rem 1rem;
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       margin-bottom: 1.25rem;
+      box-shadow: 0 0 15px rgba(232, 121, 249, 0.4);
     }
     .intro {
-      border-left: 3px solid #dc2626;
+      border-left: 4px solid #d4af37;
       padding: 1.25rem 1.5rem;
       margin-bottom: 1.5rem;
-      background: rgba(255,255,255,0.03);
+      background: rgba(0,0,0,0.4);
       line-height: 1.6;
       font-size: 0.95rem;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
     }
     .intro p { margin-bottom: 0.6rem; }
     .intro p:last-child { margin-bottom: 0; }
@@ -57,33 +61,35 @@
       margin: 1.75rem 0;
       text-align: center;
       background: rgba(212, 175, 55, 0.06);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
     }
-    .price-block .price { font-size: 2rem; font-weight: 800; color: #d4af37; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+    .price-block .price { font-size: 2rem; font-weight: 800; color: #d4af37; letter-spacing: 0.05em; margin-bottom: 0.35rem; text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
     .price-block .price-note { font-size: 0.85rem; color: #a3a3a3; letter-spacing: 0.04em; }
     .pass-includes { margin: 1.5rem 0; }
-    .pass-includes h2 { font-size: 0.75rem; color: #a3a3a3; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .pass-includes h2 { font-size: 0.75rem; color: #22d3ee; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(34, 211, 238, 0.3); text-shadow: 0 0 10px rgba(34, 211, 238, 0.3); }
     .pass-includes ul { list-style: none; color: #e5e5e5; font-size: 0.9rem; line-height: 1.9; }
     .pass-includes li { padding-left: 1rem; position: relative; }
-    .pass-includes li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 4px; height: 4px; background: #dc2626; }
+    .pass-includes li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 4px; height: 4px; background: #e879f9; box-shadow: 0 0 8px #e879f9; }
     .cta-connect {
       display: inline-block;
       padding: 1rem 2rem;
-      background: #dc2626;
-      color: #fff;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: #0a0a0a;
       font-weight: 700;
       text-decoration: none;
       font-size: 0.85rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       margin: 1rem 0;
-      border: none;
+      border: 2px solid #d4af37;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
     }
-    .cta-connect:hover { background: #b91c1c; }
-    .only-reno { font-size: 0.85rem; color: #737373; margin-top: 1.25rem; font-style: italic; letter-spacing: 0.02em; }
+    .cta-connect:hover { box-shadow: 0 0 35px rgba(212, 175, 55, 0.7); }
+    .only-reno { font-size: 0.85rem; color: #a3a3a3; margin-top: 1.25rem; font-style: italic; letter-spacing: 0.02em; }
     .foot { text-align: center; margin-top: 2.5rem; font-size: 0.7rem; color: #525252; letter-spacing: 0.06em; }
     .foot a { color: #737373; text-decoration: none; }
-    .foot a:hover { color: #dc2626; }
-    .ip-note { margin-top: 1.5rem; font-size: 0.7rem; color: #404040; letter-spacing: 0.04em; } 
+    .foot a:hover { color: #e879f9; }
+    .ip-note { margin-top: 1.5rem; font-size: 0.7rem; color: #404040; letter-spacing: 0.04em; }
   </style>
 </head>
 <body>
@@ -97,6 +103,7 @@
       <p class="spell">B-A-L-L-E-R V · V is for Viber</p>
       <h1>Baller V Wednesdays at da club</h1>
       <p class="sub">Along the Truckee · Reno</p>
+      <p class="neon-tag">World's Largest Little City · Neon · Nightlife · Sinatra · Showgirls · Feathers · Glitter · Big band · Real musicians · Real life.</p>
     </div>
 
     <p class="popup-badge">Pop-Up Style. Just gotta know.</p>
@@ -125,9 +132,11 @@
       </ul>
     </div>
 
-    <p style="text-align: center;">
-      <a href="mailto:info@fractiai.com?subject=Baller%20V%20Wednesdays%20-%20Get%20in%20the%20know" class="cta-connect">Connect — get in the know</a>
+    <p style="text-align: center; margin-bottom: 0.5rem;">
+      <a href="mailto:info@fractiai.com?subject=Book%20-%20Baller%20V%20Wednesdays" class="cta-connect">Book</a>
+      <a href="mailto:info@fractiai.com?subject=Baller%20V%20Wednesdays%20-%20Contact%20me%20to%20talk%20first" style="margin-left: 0.75rem; font-size: 0.9rem; color: #e879f9;">Contact me to talk first</a>
     </p>
+    <p style="font-size: 0.8rem; color: #737373; margin-bottom: 1rem;">All bookings offline. After you pay (PayPal) we confirm.</p>
     <p class="only-reno">You don't get this in Beverly Hills. You don't get it in Vegas, Miami, or New York. You get it right here in Reno. Every Wednesday. Beginning now.</p>
 
     <p class="foot"><a href="vibers-menu.html">Vibers menu</a> · <a href="../index.html">Landing</a> · Mark Twain's Post-Singularity Vibelandia · Downtown Reno · NSPFRNP → ∞⁹</p>

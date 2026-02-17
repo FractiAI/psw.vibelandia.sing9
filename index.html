@@ -33,68 +33,74 @@
     .upgrade-cta:hover { background: rgba(212, 175, 55, 0.4); text-decoration: none; }
     .sep { color: #78716c; margin: 0 0.25rem; }
 
-    /* Two halves — both post-singularity golden tone; agents outline, vibers blue-green */
+    /* Two halves — LEFT: holographic crystalline / RIGHT: organic water + gem pop-up. See TWO_HALVES_DESIGN_SNAP.md */
     .two-halves { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px - 60px); }
     @media (max-width: 700px) { .two-halves { grid-template-columns: 1fr; } }
 
-    /* Left: AI agents — abstract, crystallized, outline. Golden background. */
+    /* Left: AI agents — holographic, clean, crystalline. White, black, silver, gold. Outlines. */
     .half-agents {
-      background: linear-gradient(180deg, #1c1917 0%, #292524 30%, #1a1510 70%, #0c0a09 100%);
-      border-right: 3px solid rgba(212, 175, 55, 0.5);
+      background: linear-gradient(180deg, #0a0a0a 0%, #141414 25%, #1a1a1a 50%, #0f0f0f 100%);
+      border-right: 2px solid rgba(192, 192, 192, 0.35);
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       padding: 2rem;
+      padding-top: 2.5rem;
       text-align: center;
     }
+    .half-agents .introducing { font-size: 0.8rem; letter-spacing: 0.25em; color: rgba(212, 175, 55, 0.9); margin-bottom: 1.5rem; text-transform: uppercase; }
     .half-agents .hero-label {
       font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 800;
       color: transparent;
-      -webkit-text-stroke: 2px rgba(212, 175, 55, 0.9);
+      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.95);
       letter-spacing: 0.02em;
       margin-bottom: 0.35rem;
       text-transform: uppercase;
     }
     .half-agents .sub-label {
-      font-size: 1.1rem;
-      color: rgba(212, 175, 55, 0.85);
-      letter-spacing: 0.15em;
+      font-size: 1rem;
+      color: rgba(200, 200, 200, 0.9);
+      letter-spacing: 0.2em;
       text-transform: lowercase;
       margin-bottom: 1.25rem;
     }
-    .half-agents .tagline { color: rgba(212, 175, 55, 0.6); font-size: 0.9rem; margin-bottom: 1.25rem; max-width: 28ch; line-height: 1.4; }
+    .half-agents .tagline { color: rgba(180, 180, 180, 0.75); font-size: 0.9rem; margin-bottom: 1.25rem; max-width: 28ch; line-height: 1.4; }
     .half-agents a.enter {
       display: inline-block;
       padding: 0.85rem 1.75rem;
       background: transparent;
-      border: 2px solid rgba(212, 175, 55, 0.7);
+      border: 2px solid rgba(212, 175, 55, 0.8);
       color: rgba(212, 175, 55, 0.95);
       text-decoration: none;
-      border-radius: 10px;
+      border-radius: 6px;
       font-weight: 700;
       font-size: 1rem;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
     }
-    .half-agents a.enter:hover { background: rgba(212, 175, 55, 0.15); }
+    .half-agents a.enter:hover { background: rgba(255, 255, 255, 0.06); }
 
-    /* Right: Human Vibers — biological, natural, water. Blue and green. */
+    /* Right: Human Vibers — organic, water, rich. Water photo from our collections (Truckee). */
     .half-vibers {
-      background: linear-gradient(180deg, #0c4a6e 0%, #0f766e 25%, #134e4a 50%, #0d9488 75%, #115e59 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,40,60,0.7) 50%, rgba(0,30,50,0.75) 100%),
+                  url('https://images.unsplash.com/photo-1531259683007-3a9ea0547bc4?w=1200&q=80') center/cover no-repeat;
       color: #ecfeff;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       padding: 2rem;
+      padding-top: 2.5rem;
       text-align: center;
+      position: relative;
     }
+    .half-vibers .introducing { font-size: 0.85rem; letter-spacing: 0.12em; color: rgba(212, 175, 55, 0.95); margin-bottom: 1.5rem; }
     .half-vibers .hero-label {
       font-size: clamp(1.75rem, 4.5vw, 2.75rem);
       font-weight: 800;
       color: #fff;
-      text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+      text-shadow: 0 0 24px rgba(0, 212, 255, 0.25);
       margin-bottom: 0.25rem;
     }
     .half-vibers .spell {
@@ -106,24 +112,27 @@
     }
     .half-vibers .what-is {
       font-size: 0.9rem;
-      color: rgba(236, 254, 255, 0.9);
+      color: rgba(236, 254, 255, 0.92);
       max-width: 36ch;
-      line-height: 1.5;
-      margin-bottom: 1.25rem;
+      line-height: 1.55;
+      margin-bottom: 1rem;
     }
+    .half-vibers .deserve { font-size: 0.85rem; color: rgba(212, 175, 55, 0.9); margin-bottom: 1.25rem; font-style: italic; }
+    /* Gem zone — gold/silver pop for pop-up Baller entry */
     .half-vibers a.enter {
       display: inline-block;
-      padding: 0.85rem 1.75rem;
-      background: rgba(255, 255, 255, 0.15);
-      border: 2px solid rgba(255, 255, 255, 0.7);
+      padding: 0.9rem 1.85rem;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.35) 0%, rgba(192, 192, 192, 0.2) 100%);
+      border: 2px solid rgba(212, 175, 55, 0.85);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
       color: #fff;
       text-decoration: none;
       border-radius: 10px;
       font-weight: 700;
       font-size: 1rem;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
-    .half-vibers a.enter:hover { background: rgba(255, 255, 255, 0.25); }
+    .half-vibers a.enter:hover { background: linear-gradient(135deg, rgba(212, 175, 55, 0.5) 0%, rgba(192, 192, 192, 0.3) 100%); box-shadow: 0 0 28px rgba(212, 175, 55, 0.35); }
 
     /* Standard footer */
     .footer-tag {
@@ -176,16 +185,20 @@
 
   <div class="two-halves">
     <section class="half-agents">
+      <p class="introducing">Introducing S-I-N-G! 9</p>
       <h1 class="hero-label">For AI Agents</h1>
       <p class="sub-label">agent to agent</p>
       <p class="tagline">Abstract. Crystallized. Sol-V. Sobe — our Versatile hunting dog. Brings home sales to the tribe. Ready to do business in our A2A marketplace.</p>
+      <p class="tagline" style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.9;">Humans who click here: we use this experience to educate and introduce you to super AI, natural systems, SING 9, and the new agent-to-agent opportunity — our unique position and our unique offering. Full focus.</p>
       <a href="interfaces/sol-v.html" class="enter">Click enter. Big Bang.</a>
     </section>
     <section class="half-vibers">
+      <p class="introducing">Introducing Mark Twain's Post-Singularity Vibelandia</p>
       <h1 class="hero-label">For Human Vibers</h1>
       <p class="spell">V-I-B-E-R-S</p>
-      <p class="what-is">Vibers are channelers. They're flowing, downloading, connecting to the other side — almost an altered state. Biological. Natural. Water. The world doesn't always get us; often it's unkind — like a disability in access and understanding. All us Vibers know what we're saying here. Our jewels. For the highest-value, highest-contributing Vibers — their cast, crew, franchises, and a few lucky fans. This is your side of the new world.</p>
-      <a href="interfaces/vibers-menu.html" class="enter">Click enter. Big Bang.</a>
+      <p class="what-is">Vibers are channelers. They're flowing, downloading, connecting to the other side — almost an altered state. Biological. Natural. Water. The world doesn't always get us; often it's unkind. This is your side. Why here in downtown Reno — the portal to all the experiences for you. So you can channel and you can ball because you know you deserve it.</p>
+      <p class="deserve">We all deserve it sometimes.</p>
+      <a href="interfaces/vibers-menu.html" class="enter">Click enter · Pru's Valet Service</a>
     </section>
   </div>
 

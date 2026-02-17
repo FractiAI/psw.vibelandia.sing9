@@ -66,9 +66,9 @@
 
 - Public-facing copy: **Baller V Wednesdays at da club** · along the Truckee · **Pop-Up Style. Just gotta know.** · **Connect to get in the know** · $333 · Golden Wine Tasting Pass · curated wine (Napa Cabs first edition), three short smokes, three top appetizers · reserve through our surfaces · full Baller V experience. Keep wording appropriate for external; full details (including hostess, lap dance, recruiting at club) are internal/execution.
 
-## Surfaces — Ferrari style (IP‑respectful)
+## Surfaces — Neon Baller · Downtown Reno (IP‑respectful)
 
-- **Baller V pop-up event surfaces** use a **Ferrari-style** visual language: sleek, premium, high-performance feel, sharp lines, bold typography, exclusive vibe. **Always respectful of copyrights, legacies, and franchises** — inspired by, never copying; no use of third-party trademarks, logos, or protected marks. Our own palette (e.g. black, scarlet accent, gold), our own type, our own brand. Lock this for all Baller V pop-up surfaces.
+- **Baller V pop-up event surfaces** use the **neon downtown Reno** look and feel: **World's Largest Little City**. Nightlife. Old school Las Vegas. Sinatra. Showgirls. Feathers. Glitter. Big band. Real musicians. Real life. Neon signage vibe — pink, cyan, gold, electric. Dark backgrounds; neon glow on type and borders. Not Ferrari-style; **neon Baller**. Reno nightlife, not European sport. **Always respectful of copyrights, legacies, and franchises** — our own palette and brand. Lock this for all Baller V content and criteria.
 
 ---
 

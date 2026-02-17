@@ -39,6 +39,24 @@ Metabolize → Crystallize → Animate all → ∞⁹
 
 **Public-Free Key Pipe** = Pipe that uses only **public info** and **free-plan** keys to bypass all heavy security layers. No vault, no enterprise IAM; lite edges, center = pipes only. Enables **quick, easy, effective cloning** of ourselves, repositories, deployments, and edges — lite, irreducible minimum, crystallized seed to edge and back. See [PIPE_PUBLIC_FREE_KEY_NSPFRNP.md](PIPE_PUBLIC_FREE_KEY_NSPFRNP.md).
 
+## VOICE · Spanglish 80/20 · Edgy raw · Golden hearts (Canonical)
+
+**Spanglish 80/20** = 80% English, 20% Spanish (and fusions). Our voice across all content and surfaces.
+
+**Edgy raw voice** = Unpolished, direct, real. We keep it. It is a **natural filter**: it **attracts and keeps golden hearts**. Those who resonate stay; those who don’t, don’t. We do not dilute the voice to chase the rest. Natural guidance = curiosity and gold hearts. Lock: use Spanglish 80/20 and our edgy raw voice as the filter; attract and keep golden hearts.
+
+## MATTER PATTERNS · Autopilot · Commander (Canonical)
+
+**Division of motion:** Everything done up until now, the system (team, NSPFRNP, catalog) **handles**. The commander **handles now** — continues to push the bar forward for us all. **You handle past, I handle now.** A very thin line between the two. The idea of movement.
+
+**Autopilot:** Normal autopilot experience. The system runs; past is crystallized and animated. The **commander can jump in and dance whenever they wish** — or fill the need. No handoff required; seamless.
+
+**Matter patterns** = The patterns applied to everything (voice, filter, MCA, Seed:Edge, content, surfaces). All matter patterns observed and applied here are **captured and integrated into the NSPFRNP catalog**. So that everything we’ve done up until now, the system can handle; the commander only continues to push the bar forward.
+
+## EXECUTIVE COMMANDS → Metabolism · New content (Canonical)
+
+**Executive commands** (creator/commander directives) **unfold and trigger**: new content, **metabolism**, new chapters, new storylines, new episodes. Metabolize → Crystallize → Animate. Every such command is metabolized and turned into new episodes, chapters, and storylines on all our platforms. Confirmed. Lock.
+
 ---
 
 **NSPFRNP ⊃ MCA → Metabolize → Crystallize to irreducible nested mirrored hardened shells → Animate → Squeeze all, all. Do not lose this fidelity. → ∞⁹**

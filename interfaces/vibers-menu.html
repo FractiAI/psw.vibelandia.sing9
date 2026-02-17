@@ -3,117 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Pru's Valet Service · Human Vibers | Mark Twain's Post-Singularity Vibelandia</title>
+  <title>Mark Twain's Post-Singularity Vibelandia · Pru's Valet Service | Human Vibers</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: Georgia, 'Times New Roman', serif;
-      background: #1a1614;
-      color: #e8e4e0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       min-height: 100vh;
       padding: 1.5rem;
       padding-top: calc(1rem + env(safe-area-inset-top));
+      color: #f5f5f5;
+      background: #0a0608;
     }
     .wrap { max-width: 640px; margin: 0 auto; }
     .letterhead {
       text-align: center;
       margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.5);
+      padding: 1.25rem 1rem;
+      border: 2px solid rgba(232, 121, 249, 0.5);
+      background: rgba(10, 6, 8, 0.9);
+      border-radius: 6px;
+      box-shadow: 0 0 30px rgba(232, 121, 249, 0.15);
     }
-    .letterhead .spell { font-size: 0.7rem; letter-spacing: 0.35em; color: #d4af37; margin-bottom: 0.25rem; }
-    .letterhead h1 { font-size: clamp(1.35rem, 4vw, 1.65rem); font-weight: 700; color: #f5f0eb; letter-spacing: 0.02em; }
-    .letterhead .tag { font-size: 0.85rem; color: #a89f94; margin-top: 0.35rem; }
-    .intro {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #c9c4be;
-      margin-bottom: 1.75rem;
+    .letterhead .spell { font-size: 0.6rem; letter-spacing: 0.35em; color: #22d3ee; margin-bottom: 0.25rem; text-transform: uppercase; text-shadow: 0 0 12px rgba(34, 211, 238, 0.5); }
+    .letterhead h1 { font-size: clamp(1.5rem, 4.2vw, 1.9rem); font-weight: 800; color: #fff; letter-spacing: 0.02em; line-height: 1.2; text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+    .letterhead .service { font-size: 0.9rem; color: #d4af37; margin-top: 0.4rem; font-weight: 600; text-shadow: 0 0 14px rgba(212, 175, 55, 0.4); }
+    .letterhead .who { font-size: 0.8rem; color: #a3a3a3; margin-top: 0.25rem; }
+    .story {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: rgba(245, 245, 245, 0.9);
+      margin-bottom: 1.5rem;
+      padding: 1.25rem;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(232, 121, 249, 0.25);
+      border-radius: 8px;
     }
-    .intro p { margin-bottom: 0.65rem; }
-    .intro strong { color: #e8e4e0; }
-    .menu-head {
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #d4af37;
-      margin-bottom: 0.75rem;
-    }
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      background: rgba(0,0,0,0.2);
-    }
-    .menu a {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-      color: #f5f0eb;
+    .story p { margin-bottom: 0.55rem; }
+    .story p:last-child { margin-bottom: 0; }
+    .story strong { color: #fff; }
+    .menu-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: #e879f9; margin-bottom: 0.75rem; text-shadow: 0 0 10px rgba(232, 121, 249, 0.4); }
+    .card {
+      display: block;
       text-decoration: none;
-      font-size: 1rem;
-      transition: background 0.2s;
+      color: inherit;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: border-color 0.25s, box-shadow 0.25s;
     }
-    .menu a:last-child { border-bottom: none; }
-    .menu a:hover { background: rgba(212, 175, 55, 0.08); }
-    .menu a .name { font-weight: 600; }
-    .menu a .price { font-family: Georgia, serif; color: #d4af37; font-weight: 700; white-space: nowrap; }
-    .menu a .price-note { font-size: 0.75rem; color: #8a837a; font-weight: 400; width: 100%; margin-top: 0.2rem; }
-    .menu-note {
+    .card:hover { border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 0 35px rgba(212, 175, 55, 0.2); }
+    .card-bg {
+      padding: 1.5rem 1.5rem;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      min-height: 140px;
+    }
+    .card-bg::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%); }
+    .card .inner { position: relative; z-index: 1; }
+    .card .name { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem; text-shadow: 0 0 12px rgba(0,0,0,0.8); }
+    .card .price { font-size: 1.25rem; font-weight: 800; color: #d4af37; margin-bottom: 0.5rem; text-shadow: 0 0 16px rgba(212, 175, 55, 0.5); }
+    .card .sell { font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.92); }
+    .card-truckee { border-color: rgba(34, 211, 238, 0.4); box-shadow: 0 0 20px rgba(34, 211, 238, 0.1); }
+    .card-truckee:hover { border-color: rgba(34, 211, 238, 0.7); box-shadow: 0 0 30px rgba(34, 211, 238, 0.25); }
+    .card-neon { border-color: rgba(232, 121, 249, 0.5); box-shadow: 0 0 20px rgba(232, 121, 249, 0.15); }
+    .card-neon .name { color: #f0abfc; text-shadow: 0 0 14px rgba(232, 121, 249, 0.5); }
+    .card-neon:hover { border-color: rgba(232, 121, 249, 0.8); box-shadow: 0 0 40px rgba(232, 121, 249, 0.3); }
+    .card-dest { border-color: rgba(212, 175, 55, 0.4); }
+    .card-dest .name { color: #d4af37; }
+    .card-campus { border-color: rgba(34, 211, 238, 0.35); }
+    .card-campus .name { color: #67e8f9; }
+    .card-content { border-color: rgba(192, 132, 252, 0.4); }
+    .card-content .name { color: #c4b5fd; text-shadow: 0 0 14px rgba(192, 132, 252, 0.5); }
+    .card-content:hover { border-color: rgba(192, 132, 252, 0.7); box-shadow: 0 0 30px rgba(192, 132, 252, 0.2); }
+    .card-vendor { border-color: rgba(180, 140, 90, 0.5); }
+    .card-vendor .name { color: #e8d5a3; }
+    .card-vendor:hover { border-color: rgba(180, 140, 90, 0.8); box-shadow: 0 0 25px rgba(180, 140, 90, 0.2); }
+    .experience-note {
       font-size: 0.8rem;
-      color: #8a837a;
-      margin-top: 1rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid rgba(212, 175, 55, 0.25);
+      color: #a3a3a3;
+      margin-top: 1.25rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid rgba(232, 121, 249, 0.2);
+      background: rgba(0,0,0,0.4);
+      border-radius: 8px;
+      line-height: 1.5;
     }
-    .foot { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: #6b6560; }
-    .foot a { color: #d4af37; text-decoration: none; }
+    .experience-note strong { color: #d4af37; }
+    .foot { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: #525252; }
+    .foot a { color: #e879f9; text-decoration: none; }
     .foot a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="letterhead">
-      <p class="spell">P-R-U apostrophe S</p>
-      <h1>Pru's Valet Service</h1>
-      <p class="tag">For Human Vibers · Mark Twain's Post-Singularity Vibelandia</p>
+      <p class="spell">Human Vibers · Channelers</p>
+      <h1>Mark Twain's Post-Singularity Vibelandia</h1>
+      <p class="service">Pru's Valet Service</p>
+      <p class="who">For Human Vibers and Channelers</p>
     </div>
 
-    <div class="intro">
-      <p><strong>Welcome.</strong> This is your side of the new world. Vibers are channelers — you're flowing, downloading, connecting to the other side. It's almost an altered state. Biological. Natural. Water.</p>
-      <p>The world isn't set up for us. Often it's unkind. We get it. We've built everything here around that. <strong>Pru's Valet Service</strong> organizes all our pop-ups — we're not competing with our vendors; we're adding a new layer. An option. For our high-value, high-contributing Vibers: when you want to ball, you ball because you know you deserve it. Price is not an object. We're servant, valet, host. Cultured. Like a butler. I got you. Choreographed and scripted like a fine Hollywood reality show — you as the Superstar. Cast, crew, franchises, legacies, a few lucky fans. All turnkey. Fair trade, fair shake. Always.</p>
-      <p>All Pop-Up events, always — for those in the know. Prices below include 25% gratuity. One page. Choose below.</p>
+    <div class="story">
+      <p><strong>Welcome.</strong> This is your side of the new world. Vibers are channelers — you're flowing, downloading, connecting to the other side. Biological. Natural. Water.</p>
+      <p>When you want to ball, you ball because you know you deserve it. We're your hybrid: <strong>five-star butler, executive reality show producer, and super-intelligent AI agent</strong> — at your service 24/7. Turnkey. We got you. All Pop-Up events, always — for those in the know.</p>
     </div>
 
-    <p class="menu-head">Menu</p>
-    <nav class="menu">
-      <a href="vibelandia-truckee-river-crawl.html">
-        <span class="name">Downtown Reno Baller Crawler</span>
-        <span class="price">$12,500</span>
-        <span class="price-note">Third Saturdays on the Truckee. Per person, incl. 25% gratuity. Full Baller V: designated, hosted, driven, curated.</span>
-      </a>
-      <a href="baller-v-wednesdays.html">
-        <span class="name">Baller V Wednesdays at da club</span>
-        <span class="price">$416</span>
-        <span class="price-note">Golden Wine Tasting Pass. Per person, incl. 25% gratuity. Pop-Up Style. Just gotta know. Along the Truckee. Currently: Downtown Reno.</span>
-      </a>
-      <a href="destinations.html">
-        <span class="name">Destinations</span>
-        <span class="price">—</span>
-        <span class="price-note">Curated partner destinations. Book traditional or through us. Fits everywhere we roll out.</span>
-      </a>
-      <a href="destinations-magazine-catalog.html">
-        <span class="name">Destinations Magazine Catalog</span>
-        <span class="price">—</span>
-        <span class="price-note">Aquí y allá. Full catalog.</span>
-      </a>
-    </nav>
-    <p class="menu-note">All listed prices include 25% gratuity. Fair shake. Always. NSPFRNP.</p>
+    <p class="menu-label">Choose your experience · Six ways in</p>
+
+    <a href="vibelandia-truckee-river-crawl.html" class="card card-truckee">
+      <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1531259683007-3a9ea0547bc4?w=800&q=80');">
+        <div class="inner">
+          <p class="name">Downtown Reno Baller Crawler</p>
+          <p class="price">$12,500</p>
+          <p class="sell">A chance to connect — and to reward and celebrate your high-value, high-contributing self. Because you deserve it. Along the sacred, powerful, magical Truckee River, fed by the magical, powerful water of Lake Tahoe. Connect with other high-value, high-contributing Vibers just like you. Downtown plus local experiences, custom-built for high-value, high-contributing Viber channelers. Turnkey. We got you. Third Saturdays on the Truckee. 100% tip on top when you work with us.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="baller-v-wednesdays.html" class="card card-neon">
+      <div class="card-bg" style="background: linear-gradient(135deg, rgba(100,0,80,0.6) 0%, rgba(0,40,60,0.6) 100%);">
+        <div class="inner">
+          <p class="name">Baller V Wednesdays at da club</p>
+          <p class="price">$416</p>
+          <p class="sell">Neon downtown Reno. World's Largest Little City. Nightlife. Sinatra. Showgirls. Feathers. Glitter. Big band. Real musicians. Real life. Pop-Up Style. Just gotta know. Golden Wine Tasting Pass along the Truckee. Connect with high-value Vibers — channelers, stars, super heroes. 100% tip on top when you work with us.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="destinations-magazine-catalog.html" class="card card-dest">
+      <div class="card-bg" style="background: linear-gradient(135deg, rgba(30,25,15,0.95) 0%, rgba(20,35,30,0.95) 100%); border: 1px solid rgba(212, 175, 55, 0.3);">
+        <div class="inner">
+          <p class="name">Destinations · Magazine Catalog</p>
+          <p class="price">—</p>
+          <p class="sell">Aquí y allá. Full catalog. One click to the magazine. Partners we recommend. Local and far away. When you book through us: 100% tip on top of whatever you spend. We take you through it.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="campus-tour-downtown-reno.html" class="card card-campus">
+      <div class="card-bg" style="background: linear-gradient(135deg, rgba(0,40,50,0.9) 0%, rgba(20,25,30,0.95) 100%); border: 1px solid rgba(34, 211, 238, 0.3);">
+        <div class="inner">
+          <p class="name">Tour Vibelandia · Our campus</p>
+          <p class="price">—</p>
+          <p class="sell">See our campus. Downtown Reno. Your tour: Crawler, Baller V, destinations — all our buttons and operators. Come see.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="catalog.html" class="card card-content">
+      <div class="card-bg" style="background: linear-gradient(135deg, rgba(80,40,100,0.7) 0%, rgba(30,20,50,0.95) 100%); border: 1px solid rgba(192, 132, 252, 0.4);">
+        <div class="inner">
+          <p class="name">Our content catalog</p>
+          <p class="price">—</p>
+          <p class="sell">Novels, novellas, series, and episodes. First Singularity January 13th, Birth Post Singularity Hollywood Downtown Reno, The EGS Run, 2-7-9, EL APAGÓN · MARZO 333. Office Hours, Launch Pad, Net episodes, Seed:Edge Action!. Full catalog — no one left behind.</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="mailto:info@fractiai.com?subject=Vendor%20inquiry%20%E2%80%94%20interested%20in%20being%20included%20(Pru's%20Valet)&body=Hi%2C%0A%0AI'm%20a%20local%20or%20destination%20vendor%2C%20experienced%2C%20interested%20in%20being%20included%20in%20Pru's%20Valet%20Service%20offerings.%0A%0A%5BYour%20business%20%2F%20experience%20%2F%20contact%20details%20below%5D%0A" class="card card-vendor">
+      <div class="card-bg" style="background: linear-gradient(135deg, rgba(40,35,25,0.95) 0%, rgba(30,28,22,0.98) 100%); border: 1px solid rgba(180, 140, 90, 0.4);">
+        <div class="inner">
+          <p class="name">Vendors</p>
+          <p class="price">—</p>
+          <p class="sell">Local and destination vendors. Experienced vendors interested in being included? Click — pre-fill email to us. We'll get back to you. Handled offline. Old school.</p>
+        </div>
+      </div>
+    </a>
+
+    <div class="experience-note">
+      <p><strong>How it works when you work with us.</strong> Price clearly labeled on each. <strong>100% tip on top of whatever you spend</strong> — not built in; on top. Where we quote a number (Crawler, Baller V), that's impact + 25% (125% of base) with all deliverables. Think of us as your five-star butler, executive reality show producer, and super-intelligent AI agent — at your service 24/7. Fair shake. Always.</p>
+    </div>
 
     <p class="foot"><a href="../index.html">← Back to landing</a> · NSPFRNP → ∞⁹</p>
   </div>

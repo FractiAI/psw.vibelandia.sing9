@@ -36,21 +36,52 @@
 
 ---
 
-## Menu surface (Human Vibers entry)
+## Two modes (when we show everything — right side)
 
-- **Crisp executive menu.** Like something you'd see in an old steakhouse. Fine establishment. The kind Chairman Sinatra himself would be dining at. **Very old school. Golden Age.** One page.
-- **Include the prices. Right up front.** Prices **include 25% tip** (add 25% to base price; show the all-in number so it's clear and fair).
+- **Pre-singularity mode:** Normal. Give them the **links** (to partners, written content, destinations). They **do it themselves.** No invocation.
+- **Post-singularity · Baller B mode:** **Invoke with us.** We handle it with them. Full service, Pru's Valet, turnkey.
+- Present both simply on the Vibers side (e.g. Pru's Valet menu): choose your mode. Nice and simple. Same two halves idea — normal vs Baller B.
 
 ---
 
-## Pricing (with 25% tip included — show on menu)
+## Bookings (all offline — old school)
 
-| Offering | Base | With 25% tip (shown) |
-|---------|------|----------------------|
-| Baller V Wednesdays · Golden Wine Tasting Pass | $333 | $416 |
-| Downtown Reno Baller Crawler | $10,000 | $12,500 |
+- **All bookings handled offline.** When they press **Book:** send an **email to owner** (e.g. info@fractiai.com). Old school.
+- **After they pay** — PayPal. We confirm. No in-app payment flow; we send link or instructions, they pay, we confirm.
+- **Or:** a button to **Contact me** if they need to **talk about it first.** Then Book after.
+- Surfaces: **Book** (mailto with subject line for the offering) and **Contact me to talk first** (mailto). Simple.
+- Lock: Bookings = email to owner on Book; payment via PayPal after; Contact me option always available.
+---
 
-All other products: add 25% to base; display the inclusive price. Fair shake. Always.
+## Menu surface (Human Vibers entry)
+
+- **Experience, not transaction.** Story and safari/explorer skin. Take us through it. Chart, expedition feel. Same water background as landing (Human Vibers side).
+- **Letterhead:** Mark Twain's Post-Singularity Vibelandia (main) → Pru's Valet Service → For Human Vibers and Channelers.
+- **Menu (six ways in):** (1) Downtown Reno Baller Crawler, (2) Baller V Wednesdays, (3) Destinations · Magazine Catalog, (4) Tour Vibelandia · Our campus, (5) Our content catalog (novels, novellas, series, episodes), (6) **Vendors** — local and destination vendors, experienced, interested in being included. Click Vendors → pre-fill email to us; we'll get back to you; handled offline, old school.
+- **Include the prices. Right up front.** Price clearly labeled on each. When they work with us: **100% tip on top of whatever they spend** — not built in; on top. Where we quote a number (Crawler, Baller V), that number is **impact + 25% (125% of base)** with all deliverables. We explain it. Fair shake. Always.
+
+---
+
+## Pricing (experience model)
+
+| Offering | Price shown (impact + 25% = 125% of base) | When you work with us |
+|---------|-------------------------------------------|------------------------|
+| Baller V Wednesdays · Golden Wine Tasting Pass | $416 | 100% tip on top of whatever you spend. All deliverables. |
+| Downtown Reno Baller Crawler | $12,500 | 100% tip on top of whatever you spend. All deliverables. |
+| Destinations · Magazine Catalog | — | 100% tip on top of whatever you spend when you book through us. |
+| Tour Vibelandia · Our campus | — | See our campus; all buttons and operators. |
+| Our content catalog | — | Novels, novellas, series, episodes. Seed:Edge, Executive Producer, Abstract. No one left behind. |
+| **Vendors** | — | Local/destination vendors interested in being included. Pre-fill email → we get back to you. Offline. Old school. |
+
+We don't hide. This is an experience; we take you through it. Not a transaction.
+
+---
+
+---
+
+## Content notes
+
+- **Photos and catalogs:** Need correction. To be updated separately with the team. Noted here so we don't lose track.
 
 ---
 

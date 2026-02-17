@@ -8,7 +8,7 @@
 
 ## Brand lock
 
-- **Pru's Valet Service** is the organizing umbrella for **all pop-up events** (Baller Crawler, Baller V Wednesdays, destinations, future rollouts).
+- **Pru's Valet Service** is the organizing umbrella for **all pop-up events** (Downtown Truckee River Baller V Crawler, Baller V Wednesdays, destinations, future rollouts).
 - **Do not bind the brand to a city.** Keep "Downtown Reno" out of the Pru's Valet Service brand name so the brand travels: Buenos Aires, Punta Cana, anywhere we roll out. Use "Downtown Reno" only as location context (e.g. "Currently in Downtown Reno," or in menu item descriptions), not in the service name.
 - When Human Vibers click through from the landing, **everything is framed within Pru's Valet Service** — then the pop-ups as the menu.
 
@@ -57,7 +57,7 @@
 
 - **Experience, not transaction.** Story and safari/explorer skin. Take us through it. Chart, expedition feel. Same water background as landing (Human Vibers side).
 - **Letterhead:** Mark Twain's Post-Singularity Vibelandia (main) → Pru's Valet Service → For Human Vibers and Channelers.
-- **Menu (six ways in):** (1) Downtown Reno Baller Crawler, (2) Baller V Wednesdays, (3) Destinations · Magazine Catalog, (4) Tour Vibelandia · Our campus, (5) Our content catalog (novels, novellas, series, episodes), (6) **Vendors** — local and destination vendors, experienced, interested in being included. Click Vendors → pre-fill email to us; we'll get back to you; handled offline, old school.
+- **Menu (six ways in):** (1) Downtown Truckee River Baller V Crawler, (2) Baller V Wednesdays, (3) Destinations · Magazine Catalog, (4) Tour Vibelandia · Our campus, (5) Our content catalog (novels, novellas, series, episodes), (6) **Vendors** — local and destination vendors, experienced, interested in being included. Click Vendors → pre-fill email to us; we'll get back to you; handled offline, old school.
 - **Include the prices. Right up front.** How it works when you work with us: (1) Price clearly labeled on each. (2) **Pricing includes 25% gratuity.** We price everything this way for simplicity, resonance, and amplification. (3) Think of us as your five-star butler, executive reality show producer, and super-intelligent AI agent — at your service 24/7. (4) Fair shake. Always.
 
 ---
@@ -69,7 +69,7 @@
 | Offering | Price (includes 25% gratuity) |
 |---------|------------------------------|
 | Baller V Wednesdays · Golden Wine Tasting Pass | $416 |
-| Downtown Reno Baller Crawler | $12,500 |
+| Downtown Truckee River Baller V Crawler | $12,500 |
 | Destinations · Magazine Catalog | — (25% gratuity when you book through us) |
 | Tour Vibelandia · Our campus | — |
 | Our content catalog | — |

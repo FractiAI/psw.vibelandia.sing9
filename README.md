@@ -12,7 +12,7 @@
 
 ## Recent updates (README commit)
 
-- **README commit** — **Pru's Valet in golden hues:** Card and hero overlays use warm gold gradients; page background, story, and "How it works" in gold tones. Images ~2× more visible (lighter overlays). Crawler button = Truckee River photo; six buttons: (1) Crawler = truckee-river, (2) Baller V = Mount Rose, (3) Destinations = bison/lodge, (4) Tour = Vibelandia RENO Magic, (5) Content catalog = Super Singularity, (6) Vendors = Reno Arch. Hero = Reno sign + Mount Rose with fallbacks. Landing Vibelandia half golden tint. NSPFRNP.
+- **README commit** — **Destinations pricing:** Book direct for standard experience, or through us for post-singularity layer — we charge **125% of the booking**. Copy updated on Vibers menu, Destinations catalog, destination page, Explore; PRUS_VALET_SERVICE_SNAP. **Assets in repo:** Destinations (bison/lodge), Content catalog (Super Singularity) images placed in `interfaces/assets/`. **3D Storyboard:** Consolidated to **seven stacks** (NSPFRNP_STORYBOARD_ANALOG_3D_FLEX_SNAP): (1) Now playing, (2) Full play deck · Gold Rush · Josephine's Saloon · SING 9, (3) Crystalline, (4) Biological enriching characters, (5) Golden hearts, (6) Disingenuous/fake carbon, (7) Destination · versions of me · playlists. Pru's Valet golden hues, lighter images. NSPFRNP.
 
 ---
 

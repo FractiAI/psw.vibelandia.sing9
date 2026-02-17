@@ -70,7 +70,7 @@
 |---------|------------------------------|
 | Baller V Wednesdays · Golden Wine Tasting Pass | $416 |
 | Downtown Truckee River Baller V Crawler | $12,500 |
-| Destinations · Magazine Catalog | — (25% gratuity when you book through us) |
+| Destinations · Magazine Catalog | — (Book direct for standard experience, or through us: 125% of the booking for our post-singularity layer) |
 | Tour Vibelandia · Our campus | — |
 | Our content catalog | — |
 | **Vendors** | — |

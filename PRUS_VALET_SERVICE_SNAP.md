@@ -79,6 +79,15 @@ We don't hide. This is an experience; we take you through it. Not a transaction.
 
 ---
 
+## Real-world surfacing · Arrival & at-the-club
+
+- **Surface "buttons"** in the real world at **points of planning** (anyone planning a trip to Reno) and **arrival points** — we focus on **downtown casino hotel lobbies** (not airport). Target: **downtown dwellers**, **baller vibes only.** Get the word out on arrival in a **natural flow.** Recruit **cast** (dance/performer) to hand out **one invitation card** (Wednesday + Third Saturday together); **only where there's a connection**, subtle, respectful of businesses. **At the club:** pop-up when busy; spontaneous join; man can invite lady friends at table; **$100 (hundy)** each when they make it happen (down-low). Full spec: [REAL_WORLD_SURFACING_ARRIVAL_RECRUITMENT_SNAP.md](REAL_WORLD_SURFACING_ARRIVAL_RECRUITMENT_SNAP.md).
+
+## Optional Happy Ending · Mustang Ranch (Crawler add-on)
+
+- **All legal.** The optional after-after party at Mustang Ranch is a Crawler add-on. What we do: **we take them over, we accompany them over there.** We **set up a Baller VIP table** (base). We **wait for them.** We **get them home safely.** That's it.
+- **Purpose:** Make sure they **don't get fucked over.** We're the buffer, the valet, the protector — so they're safe and not taken advantage of. Full Baller V style applies.
+
 ## Content notes
 
 - **Photos and catalogs:** Need correction. To be updated separately with the team. Noted here so we don't lose track.

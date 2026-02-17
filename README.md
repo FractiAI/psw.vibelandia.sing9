@@ -12,7 +12,7 @@
 
 ## Recent updates (README commit)
 
-- **README commit** — **Destinations pricing:** Book direct for standard experience, or through us for post-singularity layer — we charge **125% of the booking**. Copy updated on Vibers menu, Destinations catalog, destination page, Explore; PRUS_VALET_SERVICE_SNAP. **Assets in repo:** Destinations (bison/lodge), Content catalog (Super Singularity) images placed in `interfaces/assets/`. **3D Storyboard:** Consolidated to **seven stacks** (NSPFRNP_STORYBOARD_ANALOG_3D_FLEX_SNAP): (1) Now playing, (2) Full play deck · Gold Rush · Josephine's Saloon · SING 9, (3) Crystalline, (4) Biological enriching characters, (5) Golden hearts, (6) Disingenuous/fake carbon, (7) Destination · versions of me · playlists. Pru's Valet golden hues, lighter images. NSPFRNP.
+- **README commit** — **Landing:** Left Reno image at top (Reno Arch, links to Vibers menu); Vibelandia right-half background = same Reno Arch. **Vendors** button = Silver Legacy Resort Casino · Reno (`vendors-silver-legacy.png`). Assets: reno-arch-night, vibelandia-reno-magic, vendors-silver-legacy in `interfaces/assets/`. Destinations 125% pricing; seven-stack storyboard; Pru's Valet golden hues. NSPFRNP.
 
 ---
 

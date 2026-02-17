@@ -12,6 +12,6 @@ All six menu buttons and the hero strip use these assets. Put each file in `inte
 3. **Destinations · Magazine Catalog** — destinations-bison-lodge.png (bison / lodge)
 4. **Tour Vibelandia · Our campus** — vibelandia-reno-magic.png (Vibelandia RENO Magic Theater)
 5. **Our content catalog** — content-catalog-super-singularity.png (Super Singularity / cosmic)
-6. **Vendors** — reno-arch-night.png
+6. **Vendors** — vendors-silver-legacy.png (Silver Legacy Resort Casino · Reno)
 
 **Landing page (right half):** vibelandia-reno-magic.png (index.html)

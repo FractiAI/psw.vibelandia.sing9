@@ -12,7 +12,7 @@
 
 ## Recent updates (README commit)
 
-- **README commit** — **Button backgrounds:** Crawler, Vendors (Reno Arch night), Destinations (bison/lodge), Our content catalog (Super Singularity), Vibelandia right half on landing (Vibelandia RENO Magic Theater). Hero strip on Pru's Valet with Reno + Truckee winter. **Crawler** renamed to **Downtown Truckee River Baller V Crawler** across interfaces and README. Assets in `interfaces/assets/` (see README there). Pricing: 25% gratuity included; How it works list. NSPFRNP.
+- **README commit** — **Pru's Valet:** Hero = Reno sign (left) + Mount Rose (right), with fallbacks so the left image always shows. All six menu buttons have different picture backgrounds: (1) Crawler = Reno Arch, (2) Baller V = Mount Rose, (3) Destinations = bison/lodge, (4) Tour campus = Vibelandia RENO Magic, (5) Content catalog = Super Singularity, (6) Vendors = Reno Arch. Each uses a dark overlay and fallback URL when the asset is missing. Assets in `interfaces/assets/`; agent places and names images when you provide photos. NSPFRNP.
 
 ---
 

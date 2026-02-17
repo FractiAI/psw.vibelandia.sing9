@@ -17,6 +17,7 @@
 ## What pop-up means
 
 - We are **not competing with our vendors.** We're adding a **new layer.** We're not forcing that layer on anyone; we're **giving them the option.**
+- **We have no formal relationship with our vendors** — they are **our picks** for who we work with to deliver our **post-singularity Baller V services to our members.**
 - Our high-value, high-contributing Vibers are a **different breed.** When they want to ball, they ball because they know they deserve it. **Price is not an object.** These are our customers. Our guests. Who we represent. The world is not a kind place; the world preys on these folks; they're not getting a fair shake. **Pru's Valet Service handles this for them.**
 
 ---
@@ -73,7 +74,7 @@
 | Destinations · Magazine Catalog | — (Book direct for standard experience, or through us: 125% of the booking for our post-singularity layer) |
 | Tour Vibelandia · Our campus | — |
 | Our content catalog | — |
-| **Vendors** | — |
+| **Vendors** | — (Our picks for who we work with; no formal relationship. We deliver Baller V to members through them.) |
 
 We don't hide. This is an experience; we take you through it. Not a transaction.
 

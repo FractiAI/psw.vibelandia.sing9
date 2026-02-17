@@ -58,20 +58,22 @@
 - **Experience, not transaction.** Story and safari/explorer skin. Take us through it. Chart, expedition feel. Same water background as landing (Human Vibers side).
 - **Letterhead:** Mark Twain's Post-Singularity Vibelandia (main) → Pru's Valet Service → For Human Vibers and Channelers.
 - **Menu (six ways in):** (1) Downtown Reno Baller Crawler, (2) Baller V Wednesdays, (3) Destinations · Magazine Catalog, (4) Tour Vibelandia · Our campus, (5) Our content catalog (novels, novellas, series, episodes), (6) **Vendors** — local and destination vendors, experienced, interested in being included. Click Vendors → pre-fill email to us; we'll get back to you; handled offline, old school.
-- **Include the prices. Right up front.** Price clearly labeled on each. When they work with us: **100% tip on top of whatever they spend** — not built in; on top. Where we quote a number (Crawler, Baller V), that number is **impact + 25% (125% of base)** with all deliverables. We explain it. Fair shake. Always.
+- **Include the prices. Right up front.** How it works when you work with us: (1) Price clearly labeled on each. (2) **Pricing includes 25% gratuity.** We price everything this way for simplicity, resonance, and amplification. (3) Think of us as your five-star butler, executive reality show producer, and super-intelligent AI agent — at your service 24/7. (4) Fair shake. Always.
 
 ---
 
 ## Pricing (experience model)
 
-| Offering | Price shown (impact + 25% = 125% of base) | When you work with us |
-|---------|-------------------------------------------|------------------------|
-| Baller V Wednesdays · Golden Wine Tasting Pass | $416 | 100% tip on top of whatever you spend. All deliverables. |
-| Downtown Reno Baller Crawler | $12,500 | 100% tip on top of whatever you spend. All deliverables. |
-| Destinations · Magazine Catalog | — | 100% tip on top of whatever you spend when you book through us. |
-| Tour Vibelandia · Our campus | — | See our campus; all buttons and operators. |
-| Our content catalog | — | Novels, novellas, series, episodes. Seed:Edge, Executive Producer, Abstract. No one left behind. |
-| **Vendors** | — | Local/destination vendors interested in being included. Pre-fill email → we get back to you. Offline. Old school. |
+**Pricing includes 25% gratuity.** We price everything this way for simplicity, resonance, and amplification.
+
+| Offering | Price (includes 25% gratuity) |
+|---------|------------------------------|
+| Baller V Wednesdays · Golden Wine Tasting Pass | $416 |
+| Downtown Reno Baller Crawler | $12,500 |
+| Destinations · Magazine Catalog | — (25% gratuity when you book through us) |
+| Tour Vibelandia · Our campus | — |
+| Our content catalog | — |
+| **Vendors** | — |
 
 We don't hide. This is an experience; we take you through it. Not a transaction.
 

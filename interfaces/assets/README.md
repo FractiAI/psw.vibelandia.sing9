@@ -7,7 +7,7 @@ All six menu buttons and the hero strip use these assets. Put each file in `inte
 - **Right:** Mount Rose — **truckee-winter-ski.png** (Truckee region winter / ski)
 
 **Six buttons (each with a different background):**
-1. **Downtown Truckee River Baller V Crawler** — reno-arch-night.png
+1. **Downtown Truckee River Baller V Crawler** — truckee-river.png (Truckee River photo)
 2. **Wink & Vibers · Baller V Wednesdays** — truckee-winter-ski.png (Mount Rose)
 3. **Destinations · Magazine Catalog** — destinations-bison-lodge.png (bison / lodge)
 4. **Tour Vibelandia · Our campus** — vibelandia-reno-magic.png (Vibelandia RENO Magic Theater)

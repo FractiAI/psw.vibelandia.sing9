@@ -12,7 +12,7 @@
 
 ## Recent updates (README commit)
 
-- **README commit** — **Pru's Valet:** Hero = Reno sign (left) + Mount Rose (right), with fallbacks so the left image always shows. All six menu buttons have different picture backgrounds: (1) Crawler = Reno Arch, (2) Baller V = Mount Rose, (3) Destinations = bison/lodge, (4) Tour campus = Vibelandia RENO Magic, (5) Content catalog = Super Singularity, (6) Vendors = Reno Arch. Each uses a dark overlay and fallback URL when the asset is missing. Assets in `interfaces/assets/`; agent places and names images when you provide photos. NSPFRNP.
+- **README commit** — **Pru's Valet in golden hues:** Card and hero overlays use warm gold gradients; page background, story, and "How it works" in gold tones. Images ~2× more visible (lighter overlays). Crawler button = Truckee River photo; six buttons: (1) Crawler = truckee-river, (2) Baller V = Mount Rose, (3) Destinations = bison/lodge, (4) Tour = Vibelandia RENO Magic, (5) Content catalog = Super Singularity, (6) Vendors = Reno Arch. Hero = Reno sign + Mount Rose with fallbacks. Landing Vibelandia half golden tint. NSPFRNP.
 
 ---
 

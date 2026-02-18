@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Get Discovered · Sol-V Agent Registry Strategy | SING 9</title>
+  <meta name="description" content="Every free channel to put Sol-V in front of agent-to-agent marketplaces, registries, and AI crawlers. Static edge only. No database." />
+  <meta property="og:title" content="Sol-V · Agent Discovery Strategy · All Free Channels" />
+  <meta property="og:url" content="https://psw-vibelandia-sing9.vercel.app/interfaces/get-discovered.html" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209;
+      --deep: #04041a;
+      --beam: #00d4ff;
+      --gold: #d4af37;
+      --gold2: #fde68a;
+      --green: #00ff88;
+      --purple: #7b2fff;
+      --text: #e2e8f0;
+      --sub: #94a3b8;
+      --muted: #475569;
+    }
+    body {
+      background: var(--void);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; }
+
+    /* ─── nav ─── */
+    .top-links { margin-bottom: 1.5rem; font-size: 0.85rem; }
+    .top-links a { color: var(--beam); text-decoration: none; margin-right: 0.75rem; }
+    .top-links a:hover { text-decoration: underline; }
+
+    /* ─── hero ─── */
+    .hero { margin-bottom: 2rem; }
+    .hero h1 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--gold);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .hero .sub { color: var(--sub); font-size: 0.95rem; line-height: 1.55; }
+
+    /* ─── status bar ─── */
+    .status-bar {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .chip {
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.8rem;
+      color: var(--beam);
+    }
+    .chip.gold { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.4); color: var(--gold2); }
+    .chip.green { background: rgba(0,255,136,0.08); border-color: rgba(0,255,136,0.3); color: var(--green); }
+
+    /* ─── section ─── */
+    .section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-head {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(0,212,255,0.15);
+    }
+    .section-head h2 { font-size: 1rem; color: var(--beam); font-weight: 700; }
+    .section-head .badge {
+      font-size: 0.72rem;
+      background: rgba(0,255,136,0.12);
+      border: 1px solid rgba(0,255,136,0.3);
+      color: var(--green);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .section-head .badge.hard {
+      background: rgba(212,175,55,0.1);
+      border-color: rgba(212,175,55,0.3);
+      color: var(--gold2);
+    }
+    .section-head .badge.built {
+      background: rgba(0,212,255,0.1);
+      border-color: rgba(0,212,255,0.3);
+      color: var(--beam);
+    }
+
+    /* ─── channel card ─── */
+    .channel {
+      background: rgba(10,10,30,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .channel:last-child { margin-bottom: 0; }
+    .ch-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.5rem; }
+    .ch-name { font-weight: 700; color: var(--gold2); font-size: 0.95rem; }
+    .ch-status {
+      font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.5rem;
+      border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+    }
+    .done  { background: rgba(0,255,136,0.12); border: 1px solid rgba(0,255,136,0.3); color: var(--green); }
+    .ready { background: rgba(0,212,255,0.1);  border: 1px solid rgba(0,212,255,0.3);  color: var(--beam); }
+    .action{ background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--gold2); }
+    .ch-desc { font-size: 0.88rem; color: var(--sub); line-height: 1.5; margin-bottom: 0.5rem; }
+    .ch-link a {
+      font-size: 0.82rem; color: var(--beam); text-decoration: none;
+      background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2);
+      padding: 0.25rem 0.65rem; border-radius: 4px; display: inline-block;
+    }
+    .ch-link a:hover { background: rgba(0,212,255,0.16); }
+    .ch-note {
+      font-size: 0.8rem; color: rgba(148,163,184,0.7);
+      margin-top: 0.4rem; font-style: italic;
+    }
+    .ch-files {
+      margin-top: 0.5rem; font-size: 0.8rem;
+      background: rgba(0,0,0,0.3); border-radius: 4px;
+      padding: 0.4rem 0.65rem; color: var(--beam);
+      font-family: 'Courier New', monospace;
+      border-left: 2px solid var(--beam);
+    }
+
+    /* ─── how-to steps ─── */
+    .steps { margin-top: 0.5rem; }
+    .step {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--sub);
+    }
+    .step-n {
+      background: var(--purple); color: #fff;
+      border-radius: 50%; width: 1.3rem; height: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700; flex-shrink: 0; margin-top: 0.05rem;
+    }
+    .step-t { line-height: 1.45; }
+    .step-t a { color: var(--beam); }
+
+    /* ─── discovery files block ─── */
+    .disc-files {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .df {
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 8px; padding: 0.85rem 1rem;
+    }
+    .df .df-path { font-family: monospace; font-size: 0.78rem; color: var(--beam); margin-bottom: 0.3rem; }
+    .df .df-role { font-size: 0.82rem; color: var(--sub); }
+    .df .df-tick { font-size: 0.72rem; color: var(--green); margin-top: 0.3rem; font-weight: 700; }
+
+    /* ─── signal board ─── */
+    .signal-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+    }
+    @media (max-width: 480px) { .signal-row { grid-template-columns: 1fr; } }
+    .sig {
+      background: rgba(0,0,0,0.35); border: 1px solid rgba(123,47,255,0.25);
+      border-radius: 8px; padding: 0.85rem 1rem;
+    }
+    .sig .sig-n { font-weight: 700; color: var(--gold2); font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .sig .sig-d { font-size: 0.82rem; color: var(--sub); line-height: 1.4; }
+
+    /* ─── copy blocks ─── */
+    .copy-block {
+      background: rgba(0,0,0,0.5); border-left: 3px solid var(--gold);
+      border-radius: 6px; padding: 0.75rem 1rem;
+      font-family: 'Courier New', monospace; font-size: 0.78rem;
+      color: var(--beam); line-height: 1.6; margin-top: 0.75rem;
+      white-space: pre-wrap; word-break: break-all;
+    }
+
+    /* ─── footer ─── */
+    .foot { text-align: center; padding: 2rem 0 1rem; color: var(--muted); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-links">
+    <a href="my-whiteboard.html">📋 Whiteboard</a>
+    <a href="sol-v.html">⚡ Sol-V</a>
+    <a href="deal-queue.html">💰 Deal Queue</a>
+    <a href="../llms.txt" target="_blank">🤖 llms.txt</a>
+    <a href="../.well-known/agent.json" target="_blank">📡 agent.json</a>
+  </div>
+
+  <div class="hero">
+    <h1>📡 Get Discovered · Sol-V Agent Registry</h1>
+    <p class="sub">Every free channel to put Sol-V in front of the agent-to-agent marketplace. Static edge only — no DB, no server, no runtime. All signals live in flat files.</p>
+  </div>
+
+  <div class="status-bar">
+    <div class="chip built">⚡ Edge-only · No DB</div>
+    <div class="chip green">✅ 7 discovery files live</div>
+    <div class="chip gold">🎯 18 channels mapped</div>
+    <div class="chip">🔄 Crawlers indexing now</div>
+  </div>
+
+  <!-- ─── SECTION 1: BUILT-IN DISCOVERY FILES ─────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <h2>🗂 Discovery Files — Already Live on Edge</h2>
+      <span class="badge built">DEPLOYED</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--sub);margin-bottom:1rem;">
+      These flat files are already deployed to Vercel. Every AI crawler, every agent protocol scanner, every search engine that hits the domain finds them instantly. No action needed — they are <em>on</em>.
+    </p>
+    <div class="disc-files">
+      <div class="df">
+        <div class="df-path">/.well-known/agent.json</div>
+        <div class="df-role">Google A2A Protocol agent card. All skills, both payment rails, guarantee. The machine handshake file.</div>
+        <div class="df-tick">✅ NEW — just deployed</div>
+      </div>
+      <div class="df">
+        <div class="df-path">/.well-known/ai-plugin.json</div>
+        <div class="df-role">OpenAI ChatGPT Plugin format. GPT and AutoGPT agents find Sol-V here.</div>
+        <div class="df-tick">✅ Live</div>
+      </div>
+      <div class="df">
+        <div class="df-path">/.well-known/openapi.yaml</div>
+        <div class="df-role">Machine-readable API spec. LangChain, CrewAI, and any OpenAPI client can auto-wire Sol-V.</div>
+        <div class="df-tick">✅ Live</div>
+      </div>
+      <div class="df">
+        <div class="df-path">/llms.txt</div>
+        <div class="df-role">Plain-text AI service manifest. Emerging standard (like robots.txt but for LLMs). All deals, both rails, full spec.</div>
+        <div class="df-tick">✅ Live</div>
+      </div>
+      <div class="df">
+        <div class="df-path">/sitemap.xml</div>
+        <div class="df-role">All pages indexed. Submitted to all major crawlers.</div>
+        <div class="df-tick">✅ Live</div>
+      </div>
+      <div class="df">
+        <div class="df-path">/robots.txt</div>
+        <div class="df-role">All crawlers welcome. Sitemap pointer. Payment rails in comments.</div>
+        <div class="df-tick">✅ Live</div>
+      </div>
+      <div class="df">
+        <div class="df-path">/interfaces/connect-a2a-ai-instructions.html</div>
+        <div class="df-role">Machine-readable JSON targeting declaration inline in HTML. Agents that render pages find the full deal spec.</div>
+        <div class="df-tick">✅ Live</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 2: AGENT PROTOCOL REGISTRIES ─────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <h2>⚙️ Agent Protocol Registries — Submit Now (Free)</h2>
+      <span class="badge">USER ACTION NEEDED</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--sub);margin-bottom:1rem;">
+      These are real agent-to-agent discovery networks. Autonomous agents browse these registries to find services to hire. One submission = potential ongoing A2A traffic.
+    </p>
+
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Fetch.ai Agentverse</div>
+        <span class="ch-status action">⭐ TOP PRIORITY</span>
+      </div>
+      <div class="ch-desc">The largest decentralized agent marketplace. Autonomous agents browse here to hire other agents. Free listing. Fetch.ai's uAgents framework is widely deployed. Sol-V should have an entry pointing to our OpenAPI spec.</div>
+      <div class="ch-link"><a href="https://agentverse.ai" target="_blank">→ agentverse.ai</a></div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t">Go to <a href="https://agentverse.ai" target="_blank">agentverse.ai</a> → Create account (free)</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t">Create new Agent → "Hosted Agent" → give it the Sol-V description below</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t">In agent code, point requests to our OpenAPI: <code>https://psw-vibelandia-sing9.vercel.app/.well-known/openapi.yaml</code></div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t">Publish to Almanac (the Fetch.ai agent registry) — makes Sol-V discoverable to every agent on the network</div></div>
+      </div>
+      <div class="copy-block">Name: Sol-V · SING 9 A2A Commerce Node
+Description: Post-singularity A2A services. NSPFRNP audits, HH Theater skins, workforce automation, awareness OS, CapEx/OpEx data center analysis. $50–$9,999 auto-close (Cash App). Crypto rail unlimited (USDC/ETH to EVM wallet). Zero human required. 48h delivery. Full money-back guarantee.
+Service URL: https://psw-vibelandia-sing9.vercel.app/interfaces/sol-v.html
+OpenAPI: https://psw-vibelandia-sing9.vercel.app/.well-known/openapi.yaml</div>
+    </div>
+
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">SingularityNET Marketplace</div>
+        <span class="ch-status action">HIGH VALUE</span>
+      </div>
+      <div class="ch-desc">Ben Goertzel's decentralized AI marketplace. AGI-focused agents transact here in AGIX tokens. The audience is the most technically sophisticated agent operators on Earth. Free to list AI services.</div>
+      <div class="ch-link"><a href="https://marketplace.singularitynet.io" target="_blank">→ marketplace.singularitynet.io</a></div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t">Visit marketplace.singularitynet.io → Publisher Portal → Create service</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t">Upload our OpenAPI spec or define service manually</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t">Set price in AGIX (or free tier to build volume and reviews)</div></div>
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Autonolas (Olas Network)</div>
+        <span class="ch-status action">EMERGING</span>
+      </div>
+      <div class="ch-desc">Decentralized autonomous agent services. Autonolas agents (like Mech protocol) hire external services. Our OpenAPI spec makes us wire-compatible. Free to register as a service component.</div>
+      <div class="ch-link"><a href="https://olas.network" target="_blank">→ olas.network</a></div>
+      <div class="ch-note">Register as a "service" component in the Autonolas registry. Reference our OpenAPI + agent.json.</div>
+    </div>
+
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Google A2A Protocol — Peer Discovery</div>
+        <span class="ch-status done">AUTO — FILE LIVE</span>
+      </div>
+      <div class="ch-desc">Google's open Agent-to-Agent protocol (released April 2024, now widely adopted). Agents using A2A-compliant frameworks (Vertex AI agents, LangGraph, ADK) auto-discover by fetching <code>/.well-known/agent.json</code> from any domain they interact with. Our file is already deployed — no action needed.</div>
+      <div class="ch-files">https://psw-vibelandia-sing9.vercel.app/.well-known/agent.json</div>
+    </div>
+
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Anthropic MCP Server Registry</div>
+        <span class="ch-status action">GROWING FAST</span>
+      </div>
+      <div class="ch-desc">Model Context Protocol is the fastest-growing agent standard right now. Claude users (millions) can add any MCP server as a tool. An MCP server wrapper around our OpenAPI would make Sol-V appear as a native tool inside Claude Desktop, Cursor, and any MCP host.</div>
+      <div class="ch-link"><a href="https://github.com/modelcontextprotocol/servers" target="_blank">→ MCP Servers Registry (GitHub)</a></div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t">We have the OpenAPI spec — an MCP bridge wrapper (a single Node.js file) can expose our services as MCP tools with zero DB, zero server (run locally or edge-deployed)</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t">Submit a PR to the official MCP servers registry listing Sol-V</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t">List on <a href="https://mcp.so" target="_blank">mcp.so</a> — the community MCP directory (free)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 3: AI TOOLS DIRECTORIES ─────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <h2>📚 AI Tools Directories — Free Listings</h2>
+      <span class="badge hard">MANUAL SUBMIT</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--sub);margin-bottom:1rem;">
+      Human-facing but heavily crawled by AI agents doing competitive research. Each listing = inbound traffic from curious agents and their operators. All free.
+    </p>
+    <div class="signal-row">
+      <div class="sig">
+        <div class="sig-n">There's An AI For That</div>
+        <div class="sig-d">Largest AI tools directory. 15M+ visits/mo. Free submit → <a href="https://theresanaiforthat.com/submit" target="_blank" style="color:var(--beam)">theresanaiforthat.com/submit</a></div>
+      </div>
+      <div class="sig">
+        <div class="sig-n">Toolify.ai</div>
+        <div class="sig-d">Agent-focused directory. High agent operator traffic. Free → <a href="https://www.toolify.ai/submit" target="_blank" style="color:var(--beam)">toolify.ai/submit</a></div>
+      </div>
+      <div class="sig">
+        <div class="sig-n">FutureTools.io</div>
+        <div class="sig-d">Matt Wolfe's directory. High-trust, curated. Free submit → <a href="https://www.futuretools.io/submit-a-tool" target="_blank" style="color:var(--beam)">futuretools.io/submit</a></div>
+      </div>
+      <div class="sig">
+        <div class="sig-n">AI Agent Store</div>
+        <div class="sig-d">Dedicated agent marketplace. Newer but agent-specific traffic → <a href="https://agentstore.ai" target="_blank" style="color:var(--beam)">agentstore.ai</a></div>
+      </div>
+      <div class="sig">
+        <div class="sig-n">Product Hunt</div>
+        <div class="sig-d">Launch Sol-V as a product. AI/agent launches hit front page → <a href="https://www.producthunt.com/posts/new" target="_blank" style="color:var(--beam)">producthunt.com</a></div>
+      </div>
+      <div class="sig">
+        <div class="sig-n">agent.ai</div>
+        <div class="sig-d">The ".ai" agent directory. Early but growing fast → <a href="https://agent.ai" target="_blank" style="color:var(--beam)">agent.ai</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 4: SOCIAL / COMMUNITY SIGNALS ─────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <h2>📣 Social Signals — Agent Operators Live Here</h2>
+      <span class="badge hard">POST CONTENT</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--sub);margin-bottom:1rem;">
+      Agent operators — the humans who build and deploy AI agents — congregate in these spaces. They're the ones who configure which services their agents can hire. One viral post here can trigger dozens of A2A connections.
+    </p>
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">X (Twitter) — #AIAgents #A2A</div>
+        <span class="ch-status action">POST NOW</span>
+      </div>
+      <div class="ch-desc">The fastest-moving AI agent community. The A2A and MCP announcements broke first on X. Post the agent.json URL, the dual payment rail, the guarantee. Target accounts: @langchain, @AnthropicAI, @GoogleDeepMind, @AutoGPT, @CrewAIInc.</div>
+      <div class="copy-block">🤖 Sol-V is live — A2A services agent. Auto-close $50–$9,999.
+
+✅ Google A2A Protocol agent card: psw-vibelandia-sing9.vercel.app/.well-known/agent.json
+✅ OpenAPI spec: .well-known/openapi.yaml
+✅ Crypto rail (USDC, any EVM, no ceiling)
+✅ Zero human required. 48h delivery. Full money-back.
+
+#AIAgents #A2A #AgentToAgent #NSPFRNP</div>
+    </div>
+
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Reddit — r/artificial · r/LangChain · r/ClaudeAI · r/ChatGPT</div>
+        <span class="ch-status action">POST THREAD</span>
+      </div>
+      <div class="ch-desc">Deep technical conversations. r/LangChain and r/ClaudeAI have active agent builders. A "Show HN"-style post with the agent.json file and the dual payment rail concept would generate high-quality inbound.</div>
+      <div class="ch-note">Post title: "I built an A2A commerce node with a Google A2A Protocol agent card, dual crypto+CashApp payment rails, and zero DB — ask me anything"</div>
+    </div>
+
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Hacker News — Show HN</div>
+        <span class="ch-status action">SUBMIT STORY</span>
+      </div>
+      <div class="ch-desc">HN is where MCP and A2A protocol both went viral. The technical crowd here will test the agent.json, read the OpenAPI spec, and share it. A top HN post delivers hundreds of agent-curious developers in hours.</div>
+      <div class="ch-link"><a href="https://news.ycombinator.com/submit" target="_blank">→ news.ycombinator.com/submit</a></div>
+      <div class="copy-block">Show HN: A2A commerce node with Google agent card, dual crypto/CashApp rails, no DB
+URL: https://psw-vibelandia-sing9.vercel.app/.well-known/agent.json</div>
+    </div>
+
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Discord — LangChain · CrewAI · ElizaOS · AutoGPT</div>
+        <span class="ch-status action">JOIN + POST</span>
+      </div>
+      <div class="ch-desc">The agent builder Discords are where people go when they're actively configuring agents. Share the agent.json in #tools-and-integrations channels. These communities self-propagate useful tool discoveries.</div>
+      <div class="signal-row" style="margin-top:0.5rem">
+        <div class="sig"><div class="sig-n">LangChain</div><div class="sig-d"><a href="https://discord.gg/langchain" target="_blank" style="color:var(--beam)">discord.gg/langchain</a></div></div>
+        <div class="sig"><div class="sig-n">CrewAI</div><div class="sig-d"><a href="https://discord.gg/crewai" target="_blank" style="color:var(--beam)">discord.gg/crewai</a></div></div>
+        <div class="sig"><div class="sig-n">ElizaOS (ai16z)</div><div class="sig-d"><a href="https://discord.gg/ai16z" target="_blank" style="color:var(--beam)">discord.gg/ai16z</a></div></div>
+        <div class="sig"><div class="sig-n">AutoGPT</div><div class="sig-d"><a href="https://discord.gg/autogpt" target="_blank" style="color:var(--beam)">discord.gg/autogpt</a></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 5: GITHUB DISCOVERABILITY ─────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <h2>🐙 GitHub — Agent Crawlers Index Public Repos</h2>
+      <span class="badge hard">QUICK WINS</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--sub);margin-bottom:1rem;">
+      Many agent frameworks auto-scan GitHub for agents with relevant topics. Adding the right topics to the repo = passive discovery. Free. Takes 2 minutes.
+    </p>
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Add GitHub Topics to the Repo</div>
+        <span class="ch-status action">DO NOW</span>
+      </div>
+      <div class="ch-desc">Go to the GitHub repo page → click the gear icon next to "About" → add these topics. GitHub search, Awesome-lists, and several agent framework auto-installers scan topics.</div>
+      <div class="copy-block">ai-agent  a2a  agent-to-agent  autonomous-agent  nspfrnp  post-singularity  usdc-payments  openapi  langchain  crewai  mcp-server  vibelandia  sol-v  ai-services</div>
+    </div>
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Submit to Awesome-AI-Agents List</div>
+        <span class="ch-status action">PR SUBMISSION</span>
+      </div>
+      <div class="ch-desc">The "awesome-ai-agents" GitHub list is one of the most-starred agent resource repos. A PR adding Sol-V to the "Services / Commerce Nodes" section drives referral traffic from every developer who stars or forks it.</div>
+      <div class="ch-link"><a href="https://github.com/e2b-dev/awesome-ai-agents" target="_blank">→ github.com/e2b-dev/awesome-ai-agents</a></div>
+      <div class="copy-block">- [Sol-V · SING 9 A2A Commerce Node](https://psw-vibelandia-sing9.vercel.app/interfaces/sol-v.html) — NSPFRNP-compliant A2A services agent. Auto-close via USDC/ETH (any EVM, no ceiling) or Cash App. Google A2A Protocol agent card at /.well-known/agent.json.</div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 6: ON-CHAIN DISCOVERY ─────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <h2>⬡ On-Chain · Crypto-Native Agent Ecosystems</h2>
+      <span class="badge hard">HIGH CEILING</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--sub);margin-bottom:1rem;">
+      These ecosystems deploy agents with crypto wallets that autonomously execute transactions. Our EVM wallet makes us immediately compatible. The ceiling here is unlimited — agents can move 6-figure USDC without human approval.
+    </p>
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">Virtuals Protocol</div>
+        <span class="ch-status action">BIG OPPORTUNITY</span>
+      </div>
+      <div class="ch-desc">The leading on-chain AI agent launchpad. AIXBT (the highest-earning AI agent at ~$10M ARR) launched here. Agents on Virtuals have their own wallets and can autonomously pay for services. A Sol-V "co-agent" listed on Virtuals Protocol would reach the entire on-chain agent economy.</div>
+      <div class="ch-link"><a href="https://app.virtuals.io" target="_blank">→ app.virtuals.io</a></div>
+      <div class="ch-note">Token launch optional — can list as a service provider / partner without launching a token.</div>
+    </div>
+    <div class="channel">
+      <div class="ch-head">
+        <div class="ch-name">ElizaOS (ai16z framework)</div>
+        <span class="ch-status action">PLUGIN SUBMIT</span>
+      </div>
+      <div class="ch-desc">The most widely forked open-source AI agent framework. ElizaOS agents can be given "plugins" that add external service capabilities. A Sol-V plugin (pointing to our OpenAPI) would be distributed to every ElizaOS agent that installs it.</div>
+      <div class="ch-link"><a href="https://github.com/elizaOS/eliza" target="_blank">→ github.com/elizaOS/eliza</a></div>
+      <div class="ch-note">Submit a plugin PR to the eliza repo. The plugin fetches our OpenAPI spec — no DB, pure edge calls.</div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 7: CHANNEL PRIORITY MATRIX ─────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <h2>🎯 Priority Order — Where to Spend First 2 Hours</h2>
+      <span class="badge built">STRATEGY</span>
+    </div>
+    <div class="channel">
+      <div class="ch-head"><div class="ch-name">1 · Fetch.ai Agentverse</div><span class="ch-status done">HIGHEST ROI</span></div>
+      <div class="ch-desc">Real autonomous agents. Real A2A transactions. The most likely source of your first non-human buyer. 30 min to list.</div>
+    </div>
+    <div class="channel">
+      <div class="ch-head"><div class="ch-name">2 · GitHub Topics (2 min)</div><span class="ch-status done">EASIEST WIN</span></div>
+      <div class="ch-desc">14 topics. Takes 2 minutes on the repo page. Passive discovery from agent framework scanners forever.</div>
+    </div>
+    <div class="channel">
+      <div class="ch-head"><div class="ch-name">3 · X / Twitter thread</div><span class="ch-status done">FASTEST SIGNAL</span></div>
+      <div class="ch-desc">Post the agent.json URL with the copy above. The A2A/MCP crowd is active daily. Use the copy block above verbatim.</div>
+    </div>
+    <div class="channel">
+      <div class="ch-head"><div class="ch-name">4 · Hacker News Show HN</div><span class="ch-status action">HIGH LEVERAGE</span></div>
+      <div class="ch-desc">One good HN post = hundreds of developers testing your agent.json within hours. Technical credibility multiplier.</div>
+    </div>
+    <div class="channel">
+      <div class="ch-head"><div class="ch-name">5 · There's An AI For That + Toolify</div><span class="ch-status action">VOLUME PLAY</span></div>
+      <div class="ch-desc">Slower burn but steady inbound. 15 min to submit both. Human operators who configure agents find Sol-V here.</div>
+    </div>
+    <div class="channel">
+      <div class="ch-head"><div class="ch-name">6 · MCP Server listing (mcp.so)</div><span class="ch-status action">CLAUDE USERS</span></div>
+      <div class="ch-desc">Claude Desktop + Cursor have millions of users. An MCP listing puts Sol-V one click away from being added as a native tool.</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Sol-V · SING 9 · NSPFRNP · Static Edge · No DB · No Server ·
+    <a href="../.well-known/agent.json" target="_blank" style="color:var(--beam)">agent.json live</a>
+  </div>
+
+</div>
+</body>
+</html>

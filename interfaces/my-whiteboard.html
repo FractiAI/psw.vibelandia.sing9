@@ -95,23 +95,49 @@
 
       <div style="font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(0,214,50,0.7);margin-bottom:0.75rem;">Sol-V · Deployment Status · Feb 18, 2026</div>
 
-      <!-- STATUS GRID -->
+      <!-- STATUS GRID — each chip is clickable -->
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;margin-bottom:1rem;">
-        <div style="background:rgba(0,214,50,0.07);border:1px solid rgba(0,214,50,0.25);border-radius:8px;padding:0.6rem 0.75rem;text-align:center;">
+
+        <!-- LIVE → expands inline -->
+        <div onclick="toggleStatus()" style="background:rgba(0,214,50,0.07);border:1px solid rgba(0,214,50,0.25);border-radius:8px;padding:0.6rem 0.75rem;text-align:center;cursor:pointer;" title="Click to see all live surfaces">
           <div style="font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(0,214,50,0.65);margin-bottom:0.2rem;">Site</div>
-          <div style="font-size:0.88rem;font-weight:800;color:#00D632;">✓ Live</div>
-          <div style="font-size:0.65rem;color:#64748b;">Vercel · auto-deploy</div>
+          <div style="font-size:0.88rem;font-weight:800;color:#00D632;">✓ Live ▾</div>
+          <div style="font-size:0.65rem;color:#64748b;">tap to inspect</div>
         </div>
-        <div style="background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.2);border-radius:8px;padding:0.6rem 0.75rem;text-align:center;">
+
+        <!-- REVENUE → deal queue payment log -->
+        <a href="deal-queue.html#pay-log-panel" style="background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.2);border-radius:8px;padding:0.6rem 0.75rem;text-align:center;text-decoration:none;display:block;" title="See payment log">
           <div style="font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(212,175,55,0.65);margin-bottom:0.2rem;">Revenue</div>
-          <div style="font-size:0.88rem;font-weight:800;color:#d4af37;">$0.00</div>
-          <div style="font-size:0.65rem;color:#64748b;">First payment unseen ⏳</div>
-        </div>
-        <div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.25);border-radius:8px;padding:0.6rem 0.75rem;text-align:center;">
+          <div style="font-size:0.88rem;font-weight:800;color:#d4af37;">$0.00 ▸</div>
+          <div style="font-size:0.65rem;color:#64748b;">tap · see income log</div>
+        </a>
+
+        <!-- PIPELINE → deal queue grid -->
+        <a href="deal-queue.html" style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.25);border-radius:8px;padding:0.6rem 0.75rem;text-align:center;text-decoration:none;display:block;" title="See all 18 deals">
           <div style="font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(139,92,246,0.65);margin-bottom:0.2rem;">Pipeline</div>
-          <div style="font-size:0.88rem;font-weight:800;color:#c4b5fd;">$118,889</div>
-          <div style="font-size:0.65rem;color:#64748b;">18 deals · 9 active</div>
+          <div style="font-size:0.88rem;font-weight:800;color:#c4b5fd;">$118,889 ▸</div>
+          <div style="font-size:0.65rem;color:#64748b;">18 deals · tap to drill in</div>
+        </a>
+      </div>
+
+      <!-- LIVE STATUS EXPAND — all surfaces -->
+      <div id="status-expand" style="display:none;background:rgba(0,0,0,0.35);border:1px solid rgba(0,214,50,0.2);border-radius:10px;padding:0.85rem 1rem;margin-bottom:0.85rem;">
+        <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,214,50,0.6);margin-bottom:0.6rem;">All Live Surfaces · Vercel Deploy</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.35rem;font-size:0.75rem;">
+          <a href="sol-v.html" style="color:#00D632;text-decoration:none;">✓ sol-v.html</a>
+          <a href="deal-queue.html" style="color:#00D632;text-decoration:none;">✓ deal-queue.html</a>
+          <a href="a2a-services.html" style="color:#00D632;text-decoration:none;">✓ a2a-services.html</a>
+          <a href="connect-a2a-ai-instructions.html" style="color:#00D632;text-decoration:none;">✓ connect-a2a-ai-instructions</a>
+          <a href="a2a-revolution.html" style="color:#00D632;text-decoration:none;">✓ a2a-revolution.html</a>
+          <a href="why-add-sing9-to-cursor.html" style="color:#00D632;text-decoration:none;">✓ why-add-sing9-to-cursor</a>
+          <a href="payment-checkout.html" style="color:#00D632;text-decoration:none;">✓ payment-checkout.html</a>
+          <a href="vibelandia-truckee-river-crawl.html" style="color:#00D632;text-decoration:none;">✓ viber-crawler.html</a>
+          <a href="https://psw-vibelandia-sing9.vercel.app/llms.txt" target="_blank" style="color:#00D632;text-decoration:none;">✓ llms.txt ↗</a>
+          <a href="https://psw-vibelandia-sing9.vercel.app/.well-known/ai-plugin.json" target="_blank" style="color:#00D632;text-decoration:none;">✓ ai-plugin.json ↗</a>
+          <span style="color:#64748b;">✓ robots.txt</span>
+          <span style="color:#64748b;">✓ openapi.yaml</span>
         </div>
+        <div style="margin-top:0.65rem;font-size:0.7rem;color:#475569;">Commit: 1bd1d16 · Feb 18 2026 · All systems green</div>
       </div>
 
       <!-- PAYMENT RAILS -->
@@ -285,5 +311,11 @@
 
     <p class="foot"><a href="office-hours.html">Office Hours</a> · <a href="launch-pad.html">Launch Pad</a> · <a href="../index.html">Landing</a> · NSPFRNP → ∞⁹</p>
   </div>
+<script>
+  function toggleStatus() {
+    var el = document.getElementById('status-expand');
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
 </body>
 </html>

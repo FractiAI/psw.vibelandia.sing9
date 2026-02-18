@@ -1,4 +1,4 @@
-# Baller V Wednesdays at da club — SNAP (internal)
+# Wink & Vibers · Baller V Wednesdays — SNAP (internal)
 
 **Status:** ⚡ ACTIVE  
 **Type:** Reno event · Pop-up · Mixer · Tasting · Internal spec + external skin
@@ -17,7 +17,8 @@
 ## Naming
 
 - **Baller V** = B-A-L-L-E-R **V** — **V** stands for **Viber**.
-- **Event:** **Baller V Wednesdays at da club.** A pop-up **mixer**. Along the Truckee. **Sponsored by Twain's Vibelandia and Wink.** **Pop-Up Style. Just gotta know.** **Connect to get in the know.**
+- **Preferred title:** **Wink & Vibers · Baller V Wednesdays.** Sub: **Golden tastings & experiences · Along the Truckee.** (Legacy: "Baller V Wednesdays at da club" remains in tagline / neon line as "at da club.")
+- **Event:** A **mixer for Wink and Vibers** — high-value, high-contributing Vibers. Sponsored by Twain's Vibelandia and Wink. Pop-Up Style. Just gotta know.
 - **Positioning line:** Fractal Dating Site for High Value, High Contributing Vibers (Channelers, Stars, Super Heroes).
 
 ---
@@ -36,6 +37,20 @@
 
 ---
 
+## Tastings and experiences (not just tastings)
+
+- **Things of interest:** tastings and **experiences**. Fine wine. Fine cigar. **Local fine cheeses** and **cured meats**. All **curated, selected** by **yours truly** and the **chef of this establishment**, in **partnership with our local purveyors**.
+- **Local to us:** all the way to the **California coast** — down to **Monterey**, up to **Humboldt**. Includes **wine country**, the **Santa Cruz Mountains** (rich abundance), **Sonoma**. So much to explore. So much to experience.
+- **Sign-off:** A little hug for all in the know.
+
+## Threes and water (resonance)
+
+- We **resonate on threes and water**. See **NSPFRNP_THREES_AND_WATER_SNAP.md**.
+- **Wednesday** = the **third day** of the work week. Our wine, cigar, cheese tastings land there.
+- **Three wines, three cheeses, three cigars** — we feature three of each; we try to always maintain this.
+- **Three-to-one ratio** — **ladies to men** — for our high-value Ballers, Vibers, Channelers. Ideally **Wink** members.
+- **Three states of water** and their equivalence: **Frozen** = Crystalline Intelligence supporting us; **Fluid** = Sensory Slowing; **Boiling · Vapor** = the heart, Explosive Happy Endings, Gold hearts, 21+ (our novellas).
+
 ## Golden Wine Tasting Pass — what's included
 
 ### Wine
@@ -47,7 +62,8 @@
 - **2.** Classic **Monte Cristo** short smoke.
 - **3.** High-vibe **Cohiba** short smoke (closing).
 
-### Food
+### Cheese, cured meats, appetizers
+- **Tastings and experiences** of **local fine cheeses** and **cured meats** (curated with chef and local purveyors).
 - **3** well-chosen, top-tier **appetizers** — appropriate for any Baller V, any Baller occasion, any company.
 
 ### Full Baller V experience
@@ -64,7 +80,7 @@
 
 ## External skin
 
-- Public-facing copy: **Baller V Wednesdays at da club** · along the Truckee · **Pop-Up Style. Just gotta know.** · **Connect to get in the know** · $333 · Golden Wine Tasting Pass · curated wine (Napa Cabs first edition), three short smokes, three top appetizers · reserve through our surfaces · full Baller V experience. Keep wording appropriate for external; full details (including hostess, lap dance, recruiting at club) are internal/execution.
+- Public-facing copy: **Wink & Vibers · Baller V Wednesdays** · Golden tastings & experiences · along the Truckee · **Pop-Up Style. Just gotta know.** · Mixer for Wink and Vibers, high-value high-contributing · tastings and experiences: fine wine, fine cigar, local fine cheeses, cured meats · curated by yours truly and chef, partnership with local purveyors · local = California coast, Monterey to Humboldt, wine country, Santa Cruz Mountains, Sonoma · $333 · Golden Wine Tasting Pass · reserve through our surfaces · full Baller V experience · **A little hug for all in the know.** Keep wording appropriate for external; full details (including hostess, lap dance, recruiting at club) are internal/execution.
 
 ## Surfaces — Neon Baller · Downtown Reno (IP‑respectful)
 

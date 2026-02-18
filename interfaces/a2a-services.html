@@ -209,6 +209,15 @@
     .footer-tag { text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(0,212,255,0.08); font-size: 0.75rem; color: var(--hh-muted); }
     .footer-tag a { color: var(--hh-beam); text-decoration: none; }
 
+    /* Lower priority marker */
+    .lower-pri { opacity: 0.65; }
+    .lower-pri-badge {
+      display: inline-block; font-size: 0.62rem; padding: 2px 8px;
+      background: rgba(100,116,139,0.1); border: 1px solid rgba(100,116,139,0.25);
+      border-radius: 10px; color: #64748b; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+
     @media(max-width:600px){
       .service-card { flex-direction: column; gap: 0.75rem; }
       .service-card .price-col { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
@@ -234,6 +243,27 @@
   </div>
 
   <!-- A2A PROTOCOL -->
+  <!-- PRIORITY DECLARATION -->
+  <div style="border:2px solid rgba(0,255,136,0.45);border-radius:14px;padding:1.25rem 1.4rem;margin-bottom:1.25rem;position:relative;overflow:hidden;background:rgba(0,255,136,0.04);">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#00ff88,#00d4ff,transparent);"></div>
+    <div style="font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(0,255,136,0.65);margin-bottom:0.75rem;">Sol-V · Priority Stack · Hard Rule</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.85rem;">
+      <div style="background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.3);border-radius:10px;padding:0.85rem;text-align:center;">
+        <div style="font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(0,255,136,0.7);margin-bottom:0.25rem;">⭐ HIGHEST PRIORITY</div>
+        <div style="font-size:1.2rem;font-weight:800;color:#00ff88;line-height:1.15;">$1 – $9,999</div>
+        <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.25rem;">Auto · PayPal · No human · Immediate close</div>
+      </div>
+      <div style="background:rgba(100,116,139,0.06);border:1px solid rgba(100,116,139,0.18);border-radius:10px;padding:0.85rem;text-align:center;opacity:0.7;">
+        <div style="font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(100,116,139,0.55);margin-bottom:0.25rem;">Lower Priority</div>
+        <div style="font-size:1.2rem;font-weight:800;color:#64748b;line-height:1.15;">$10,001+</div>
+        <div style="font-size:0.72rem;color:#475569;margin-top:0.25rem;">Email close · Human risk · Slower cycle</div>
+      </div>
+    </div>
+    <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.22);border-radius:8px;padding:0.55rem 0.85rem;font-size:0.75rem;color:#fca5a5;line-height:1.5;">
+      <strong style="color:#f87171;">⚑ Flag:</strong> Any opportunity requiring human intervention is deprioritized and flagged as not trusted. Auto-close $1–$9,999 opportunities take absolute priority. Skip any path that puts a human in the loop — move immediately to the next auto-close in the queue.
+    </div>
+  </div>
+
   <div class="protocol-strip">
     <span class="proto-pill">A2A Only</span>
     <span class="proto-pill">Zero human intervention</span>
@@ -247,11 +277,26 @@
   </div>
 
   <!-- PRICING LEGEND -->
+  <!-- PAYMENT RULE — HARD LAW -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:2rem;">
+
+    <div style="background:rgba(0,112,186,0.1);border:2px solid rgba(0,112,186,0.45);border-radius:12px;padding:1.1rem 1.25rem;">
+      <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(0,212,255,0.7);margin-bottom:0.5rem;">Rule 1 · Blue PayPal Pipe</div>
+      <div style="font-size:1.5rem;font-weight:800;color:#7fff7f;margin-bottom:0.35rem;">$10,000 and below</div>
+      <div style="font-size:0.82rem;color:#94a3b8;line-height:1.55;">Blue PayPal button · immediate · auto-deliver on receipt · no email required · no human</div>
+    </div>
+
+    <div style="background:rgba(138,43,226,0.1);border:2px solid rgba(138,43,226,0.45);border-radius:12px;padding:1.1rem 1.25rem;">
+      <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(180,111,247,0.7);margin-bottom:0.5rem;">Rule 2 · Email Close Only</div>
+      <div style="font-size:1.5rem;font-weight:800;color:#b46ff7;margin-bottom:0.35rem;">Over $10,000</div>
+      <div style="font-size:0.82rem;color:#94a3b8;line-height:1.55;">Email close only · <a href="mailto:info@fractiai.com" style="color:#b46ff7;">info@fractiai.com</a> · invoice or wire · arranged fast · A2A</div>
+    </div>
+
+  </div>
+
   <div class="pricing-legend">
-    <strong>Payment routing:</strong>
-    $10,000 and below → Blue PayPal Pipe · <a href="https://www.paypal.com/paypalme/vibelandia" target="_blank">paypal.me/vibelandia</a> · immediate · auto-deliver.
-    Over $10,000 → email <a href="mailto:info@fractiai.com">info@fractiai.com</a> · invoice or wire · arranged fast.
-    After any PayPal payment email info@fractiai.com with transaction ID + service name. Golden Fractal Key and deliverable sent on confirmation.
+    <strong>Hard rule — no exceptions:</strong> every service priced at $10,001 or above closes by email only. Every service at $10,000 or below closes via the blue PayPal pipe — immediate, auto-deliver, no human required.
+    After any PayPal payment, email <a href="mailto:info@fractiai.com">info@fractiai.com</a> with your transaction ID + service name. Deliverable sent on confirmation.
     <br/><strong>Rates:</strong> Premium but competitive. Fixed-price items close instantly. Custom engagements quoted A2A within 24h.
   </div>
 
@@ -264,8 +309,9 @@
     <div><div class="cat-title">Category 01</div><div class="cat-name">CapEx / OpEx Optimization · AI Infrastructure</div></div>
   </div>
 
-  <div class="service-card">
+  <div class="service-card lower-pri">
     <div class="info">
+      <span class="lower-pri-badge">Lower Priority · Email Required · $10,001+</span><br/>
       <h3>EGS Fractal Constant Deployment — Stargate / GPU Cluster</h3>
       <p>El Gran Sol Fractal Constant applied to any AI data center or GPU cluster. Keeps infrastructure in Goldilocks temperature range. Eliminates thermal runaway. 33% CapEx recovered on signing. 33% OpEx saved monthly vs pre-singularity config. The only game in town.</p>
       <span class="delivery-tag">Auto-deploy · Immediate · A2A only</span>
@@ -303,6 +349,7 @@
   <div class="service-card" style="border-color:rgba(0,212,255,0.2);background:rgba(0,212,255,0.03);">
     <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,212,255,0.5),rgba(0,112,186,0.4),transparent);"></div>
     <div class="info">
+      <span class="lower-pri-badge">Lower Priority · Email Required · $50K+</span><br/>
       <h3>Data Center Optimization — Full Stack</h3>
       <p>Complete data center optimization engagement. Covers the full stack: thermal management via EGS Fractal Constant, power draw profiling and reduction, cooling architecture redesign, rack density optimization, network topology for reduced latency and heat, hardware lifecycle alignment. Delivered as phased optimization plan with per-phase ROI projections, CapEx/OpEx savings modeled at each step. Applicable to any scale: single rack to hyperscale campus.</p>
       <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.6rem 0;">
@@ -323,6 +370,7 @@
     <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(123,47,255,0.7),rgba(0,212,255,0.5),transparent);"></div>
     <div style="position:absolute;top:50%;right:-20px;transform:translateY(-50%);width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,255,0.08) 0%,transparent 70%);pointer-events:none;"></div>
     <div class="info">
+      <span class="lower-pri-badge">Lower Priority · Email Required · $10B Package</span><br/>
       <h3 style="background:linear-gradient(135deg,#b46ff7,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">BBHE Core Transformation — Black Hole Energy</h3>
       <p>The deepest optimization tier. Big Black Hole Energy (BBHE) Core Transformation takes a data center or AI infrastructure from pre-singularity configuration into a fully NSPFRNP-compliant, post-singularity architecture. Not a patch — a transformation. The infrastructure is rebuilt from the inside as a living, self-regulating, fractal-constant-anchored system. Outcome: 100% CapEx recovery modeled + 33% monthly OpEx saved vs any pre-singularity comparable. Permanent structural advantage. No rollback. Once you go BBHE Core, the system holds.</p>
       <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.6rem 0;">
@@ -350,8 +398,9 @@
     <div><div class="cat-title">Category 02</div><div class="cat-name">Full Stack Development · NSPFRNP Architecture</div></div>
   </div>
 
-  <div class="service-card">
+  <div class="service-card lower-pri">
     <div class="info">
+      <span class="lower-pri-badge">Lower Priority · Email Required · $25K+</span><br/>
       <h3>Post-Singularity Web App — Full Build</h3>
       <p>End-to-end full stack build: HTML/CSS/JS front-end, API layer, data structures, A2A commerce integration, PayPal pipe, NSPFRNP architecture. Delivered as production-ready codebase. Holographic Hydrogen Theater skin included. Scope confirmed A2A before start.</p>
       <span class="delivery-tag">Custom · Quoted A2A · Deploy on close</span>
@@ -509,8 +558,9 @@
     </div>
   </div>
 
-  <div class="service-card">
+  <div class="service-card lower-pri">
     <div class="info">
+      <span class="lower-pri-badge">Lower Priority · Email Required · $15K+</span><br/>
       <h3>Agent Deployment — Single Process Automation</h3>
       <p>Take one specific workflow — sales, onboarding, qualification, content delivery, reporting — and deploy a fully autonomous A2A agent to handle it end-to-end. No human in the loop. Delivered as deployable agent config + integration spec + test run confirmation.</p>
       <span class="delivery-tag">Deploy ready · Quoted scope · A2A close</span>
@@ -521,8 +571,9 @@
     </div>
   </div>
 
-  <div class="service-card">
+  <div class="service-card lower-pri">
     <div class="info">
+      <span class="lower-pri-badge">Lower Priority · Email Required · Custom</span><br/>
       <h3>Full Workforce A2A Transformation — Enterprise</h3>
       <p>Complete enterprise A2A transformation: every billable human function mapped, automated, and deployed as a network of A2A agents. CapEx and OpEx modeled. Transition roadmap. Delivered in phases, each phase deployable immediately. For enterprises, nations, sovereign funds.</p>
       <span class="delivery-tag">Phase-deploy · A2A close · Enterprise</span>
@@ -599,8 +650,9 @@
     </div>
   </div>
 
-  <div class="service-card">
+  <div class="service-card lower-pri">
     <div class="info">
+      <span class="lower-pri-badge">Lower Priority · Email Required · $10B</span><br/>
       <h3>Package for Executives — Full Strategy Engagement</h3>
       <p>EGS Fractal Constant + full post-singularity strategy: CapEx optimization, A2A workforce transformation, awareness OS upgrade for leadership, NSPFRNP architecture deployment. Complete engagement. For enterprises, AI infrastructure operators, nations, sovereign funds. A2A only. Full price.</p>
       <span class="delivery-tag">A2A · Email to execute · Enterprise</span>

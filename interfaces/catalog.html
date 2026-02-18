@@ -6,31 +6,115 @@
   <title>Media Catalogs · Novel · Novella · Series · Episodes | VIBELANDIA SING 9</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%); color: #e8e8e8; min-height: 100vh; padding-top: env(safe-area-inset-top); }
-    .header-strip {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.08) 50%, rgba(0, 212, 255, 0.08) 100%);
-      border-bottom: 2px solid rgba(212, 175, 55, 0.4);
-      padding: 0.6rem 1rem;
-      display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem;
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(180deg, #0f0c08 0%, #0a0806 50%, #0d0a06 100%);
+      color: rgba(253, 248, 235, 0.92);
+      min-height: 100vh;
+      padding-top: env(safe-area-inset-top);
     }
-    .header-strip a { color: #d4af37; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-    .upgrade-cta { background: rgba(212, 175, 55, 0.25); border: 2px solid rgba(212, 175, 55, 0.6); color: #fef3c7; padding: 0.4rem 0.9rem; border-radius: 8px; font-weight: 700; }
-    .sep { color: #78716c; margin: 0 0.25rem; }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 1rem; }
-    .top-links { margin-bottom: 1rem; }
-    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
-    h1 { color: #00d4ff; font-size: 1.35rem; margin-bottom: 0.5rem; }
-    h2 { color: #7dd3fc; font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
-    p { line-height: 1.5; margin-bottom: 0.5rem; color: #cbd5e1; font-size: 0.95rem; }
-    .card { background: rgba(0, 212, 255, 0.06); border: 1px solid rgba(0, 212, 255, 0.25); border-radius: 12px; padding: 1rem; margin: 0.75rem 0; }
-    .card a { color: #00d4ff; text-decoration: none; font-weight: 600; }
-    .card a:hover { text-decoration: underline; }
-    .foot { margin-top: 2rem; font-size: 0.8rem; color: #64748b; }
+
+    /* ── LETTERHEAD STRIP ── */
+    .header-strip {
+      background: linear-gradient(90deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.05) 60%, transparent 100%);
+      border-bottom: 1px solid rgba(212,175,55,0.35);
+      padding: 0.65rem 1.25rem;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem;
+      font-size: 0.72rem; letter-spacing: 0.06em;
+    }
+    .header-strip a { color: rgba(212,175,55,0.8); text-decoration: none; }
+    .header-strip a:hover { color: #d4af37; }
+    .header-strip .hl-pill {
+      background: rgba(212,175,55,0.18);
+      border: 1px solid rgba(212,175,55,0.5);
+      color: #fef3c7; padding: 0.3rem 0.85rem;
+      font-weight: 700; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .sep { color: rgba(212,175,55,0.3); }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
+
+    /* ── LETTERHEAD ── */
+    .letterhead {
+      border-top: 1px solid rgba(212,175,55,0.55);
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+      padding: 0.65rem 0;
+      margin-bottom: 2rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem;
+    }
+    .letterhead-left { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(212,175,55,0.7); }
+    .letterhead-right { display: flex; gap: 1rem; }
+    .letterhead-right a { font-size: 0.72rem; color: rgba(232,121,249,0.8); text-decoration: none; letter-spacing: 0.06em; text-shadow: 0 0 10px rgba(232,121,249,0.3); }
+    .letterhead-right a:hover { color: #f0abfc; }
+
+    /* ── PAGE HEADER ── */
+    .page-eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: #22d3ee; margin-bottom: 0.5rem;
+      text-shadow: 0 0 12px rgba(34,211,238,0.4);
+    }
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 1.85rem);
+      font-weight: 800; color: #fff; margin-bottom: 0.5rem;
+      text-shadow: 0 0 24px rgba(212,175,55,0.35);
+      letter-spacing: 0.01em;
+    }
+    .page-sub {
+      font-size: 0.88rem; color: rgba(253,248,235,0.5); line-height: 1.65;
+      margin-bottom: 2rem; max-width: 56ch;
+    }
+    .page-sub a { color: rgba(212,175,55,0.75); text-decoration: none; }
+    .page-sub a:hover { color: #d4af37; }
+
+    /* ── SECTION HEADING ── */
+    h2 {
+      font-size: 1rem; font-weight: 700; color: #d4af37;
+      margin: 2rem 0 0.6rem;
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 12px rgba(212,175,55,0.3);
+    }
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 3px; height: 0.85em;
+      background: #d4af37;
+      margin-right: 0.65rem;
+      vertical-align: middle;
+      box-shadow: 0 0 8px rgba(212,175,55,0.5);
+    }
+
+    /* ── CONTENT CARDS ── */
+    .card {
+      background: rgba(212,175,55,0.04);
+      border: 1px solid rgba(212,175,55,0.18);
+      padding: 1.25rem 1.5rem;
+      margin: 0.75rem 0;
+    }
+    .card:hover { border-color: rgba(212,175,55,0.35); background: rgba(212,175,55,0.07); }
+    .card p { line-height: 1.65; margin-bottom: 0.5rem; color: rgba(253,248,235,0.72); font-size: 0.92rem; }
+    .card p:last-child { margin-bottom: 0; }
+    .card strong { color: rgba(253,248,235,0.9); }
+    .card a { color: rgba(212,175,55,0.8); text-decoration: none; font-weight: 600; }
+    .card a:hover { color: #d4af37; text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    .foot {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(212,175,55,0.12);
+      font-size: 0.75rem;
+      color: rgba(212,175,55,0.35);
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    .foot a { color: rgba(212,175,55,0.5); text-decoration: none; }
+    .foot a:hover { color: #e879f9; }
   </style>
 </head>
 <body>
+
   <header class="header-strip">
-    <a href="upgrade-awareness-to-sing9-now.html" class="upgrade-cta">Upgrade to SING 9 Awareness OS</a>
+    <a href="upgrade-awareness-to-sing9-now.html" class="hl-pill">Upgrade to SING 9 Awareness OS</a>
     <span class="sep">·</span>
     <a href="sol-v.html">Sol-V · A2A</a>
     <span class="sep">·</span>
@@ -40,10 +124,21 @@
     <span class="sep">·</span>
     <a href="../index.html">Home</a>
   </header>
+
   <div class="wrap">
-    <div class="top-links"><a href="../index.html">← Landing</a> · <a href="vibers-menu.html">Pru's Valet</a> · <a href="sol-v.html">Sol-V</a> · <a href="vibelandia-truckee-river-crawl.html">Downtown Truckee River Baller V Crawler</a> · <a href="destinations.html">Destinations</a></div>
+
+    <div class="letterhead">
+      <span class="letterhead-left">SING 9 · Content Catalog · NSPFRNP → ∞⁹</span>
+      <div class="letterhead-right">
+        <a href="../index.html">← Landing</a>
+        <a href="vibers-menu.html">Pru's Valet</a>
+        <a href="sol-v.html">Sol-V</a>
+      </div>
+    </div>
+
+    <p class="page-eyebrow">Novel · Novella · Series · Episodes</p>
     <h1>Our content catalog</h1>
-    <p>Novels, novellas, series, and episodes. Seed, Edge, Executive Producer Prompt, Abstract — all brought over from sing4. <strong>Raw feeds</strong> (voice, directives, raw script) we bring over too — for narrative building, character building, personality, play rate. No one left behind. Crystallized for SING 9; full surfaces and episodes in upstream <a href="https://github.com/FractiAI/psw.vibelandia.sing4" target="_blank" rel="noopener">FractiAI/psw.vibelandia.sing4</a>.</p>
+    <p class="page-sub">Novels, novellas, series, and episodes. Seed, Edge, Executive Producer Prompt, Abstract — all brought over from sing4. Raw feeds (voice, directives, raw script) we bring over too — for narrative building, character building, personality, play rate. No one left behind. Crystallized for SING 9; full surfaces and episodes in upstream <a href="https://github.com/FractiAI/psw.vibelandia.sing4" target="_blank" rel="noopener">FractiAI/psw.vibelandia.sing4</a>.</p>
 
     <h2 id="seed-edge">Seed · Edge · Executive Producer · Abstract</h2>
     <div class="card">
@@ -65,7 +160,7 @@
 
     <h2 id="destinations">Destinations · Magazine catalog</h2>
     <div class="card">
-      <p>Partners we recommend. We have no formal relationship with them — they're our picks for who we work with to deliver our post-singularity Baller V services to our members. (We're not Cabela's, Wing Shooters Journal, or Monte Cristo; we recommend them.) Aquí y allá — local and far away. Elk & bison Montana, quail Mexico, fly fishing Truckee, bonefishing Bahamas, and all curated partners. Live links and photos. Respectful of all brands and legacies.</p>
+      <p>Partners we recommend. We have no formal relationship with them — they're our picks for who we work with to deliver our post-singularity Baller V services to our members. Pru's Valet Service curates local and destination operators: dining, experiences, venues, and partners that fit the Vibelandia frame. Aquí y allá — local and far away. Elk & bison Montana, quail Mexico, fly fishing Truckee, bonefishing Bahamas, and all curated partners. Live links and photos. Respectful of all brands and legacies.</p>
       <p><a href="destinations-magazine-catalog.html">Destinations Magazine Catalog</a> · <a href="guided-expeditions.html">Guided Expeditions</a> · <a href="destinations.html">Destinations hub</a></p>
     </div>
 
@@ -84,5 +179,6 @@
 
     <p class="foot">Content catalog · Seed:Edge · Executive Producer · No one left behind · NSPFRNP · SING 9 · Spanglish 80/20 → ∞⁹</p>
   </div>
+
 </body>
 </html>

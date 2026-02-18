@@ -9,8 +9,59 @@
     html, body { height: 100%; overflow: hidden; }
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #050505;
+      background: var(--skin-void, #050505);
       color: #e8e8e8;
+    }
+
+    /* === SKIN CSS VARS — defaults = Goldilocks Mix === */
+    :root {
+      --skin-void:         #050505;
+      --skin-grid-a:       rgba(212,175,55,0.035);
+      --skin-grid-b:       rgba(212,175,55,0.015);
+      --skin-grid-size:    55px;
+      --skin-glow:         radial-gradient(ellipse at 50% -10%, rgba(212,175,55,0.08) 0%, transparent 65%);
+      --skin-caption-bg:   rgba(0,0,0,0.92);
+      --skin-bar-bg:       rgba(0,0,0,0.8);
+    }
+    /* HHT skin */
+    [data-skin="hht"] {
+      --skin-void:         #020209;
+      --skin-grid-a:       rgba(0,212,255,0.04);
+      --skin-grid-b:       rgba(123,47,255,0.02);
+      --skin-grid-size:    80px;
+      --skin-glow:         radial-gradient(ellipse at 50% -20%, rgba(0,212,255,0.14) 0%, rgba(123,47,255,0.07) 40%, transparent 70%);
+      --skin-caption-bg:   rgba(2,2,16,0.95);
+      --skin-bar-bg:       rgba(2,2,16,0.9);
+    }
+    /* Solar skin */
+    [data-skin="solar"] {
+      --skin-void:         #060300;
+      --skin-grid-a:       rgba(255,140,0,0.04);
+      --skin-grid-b:       rgba(255,200,50,0.02);
+      --skin-grid-size:    60px;
+      --skin-glow:         radial-gradient(ellipse at 50% -10%, rgba(255,180,0,0.18) 0%, rgba(255,80,0,0.06) 45%, transparent 70%);
+      --skin-caption-bg:   rgba(8,4,0,0.95);
+      --skin-bar-bg:       rgba(8,4,0,0.88);
+    }
+    /* Aurora skin */
+    [data-skin="aurora"] {
+      --skin-void:         #020608;
+      --skin-grid-a:       rgba(0,255,160,0.035);
+      --skin-grid-b:       rgba(80,0,200,0.02);
+      --skin-grid-size:    70px;
+      --skin-glow:         radial-gradient(ellipse at 50% -15%, rgba(0,200,120,0.12) 0%, rgba(80,0,200,0.08) 40%, transparent 70%);
+      --skin-caption-bg:   rgba(2,6,8,0.95);
+      --skin-bar-bg:       rgba(2,6,8,0.88);
+    }
+    /* Ticker skin */
+    [data-skin="ticker"] {
+      --skin-void:         #040404;
+      --skin-grid-a:       rgba(255,200,0,0.025);
+      --skin-grid-b:       rgba(255,255,255,0.012);
+      --skin-grid-size:    40px;
+      --skin-glow:         radial-gradient(ellipse at 50% -10%, rgba(255,200,0,0.06) 0%, transparent 55%);
+      --skin-caption-bg:   rgba(4,4,4,0.96);
+      --skin-bar-bg:       rgba(4,4,4,0.9);
     }
 
     /* === BACKGROUND === */
@@ -22,15 +73,31 @@
       transition: background-image 1.2s ease;
       z-index: 0;
     }
-    /* Crystalline grid overlay — the holographic lattice always present */
+
+    /* Top theatrical glow — skin-aware */
+    .bg-layer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--skin-glow);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Crystalline grid overlay — always present, skin-aware */
     .bg-layer::after {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(212,175,55,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(212,175,55,0.035) 1px, transparent 1px);
-      background-size: 55px 55px;
+        linear-gradient(var(--skin-grid-a) 1px, transparent 1px),
+        linear-gradient(90deg, var(--skin-grid-a) 1px, transparent 1px),
+        linear-gradient(var(--skin-grid-b) 1px, transparent 1px),
+        linear-gradient(90deg, var(--skin-grid-b) 1px, transparent 1px);
+      background-size: var(--skin-grid-size) var(--skin-grid-size),
+                       var(--skin-grid-size) var(--skin-grid-size),
+                       calc(var(--skin-grid-size) / 4) calc(var(--skin-grid-size) / 4),
+                       calc(var(--skin-grid-size) / 4) calc(var(--skin-grid-size) / 4);
       pointer-events: none;
     }
     /* Segment gradient overlay */
@@ -184,10 +251,46 @@
       z-index: 1;
     }
 
+    /* === SKIN SWITCHER === */
+    .skin-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.3rem 1rem;
+      flex-shrink: 0;
+    }
+    .skin-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 3px 10px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 20px;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      background: rgba(0,0,0,0.3);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .skin-pill.active, .skin-pill:hover {
+      color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.35);
+    }
+    .skin-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
     /* === BOTTOM: CAPTION + CONTROLS === */
     .bottom-layer {
       flex-shrink: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.92) 55%, transparent);
+      background: linear-gradient(to top, var(--skin-caption-bg, rgba(0,0,0,0.92)) 55%, transparent);
       padding: 0.75rem 1.25rem calc(0.6rem + env(safe-area-inset-bottom));
     }
     .caption-wrap {
@@ -271,6 +374,9 @@
       </div>
       <a href="episode-1.html">Standard ↗</a>
     </div>
+
+    <!-- Skin switcher -->
+    <div class="skin-bar" id="skinBar"></div>
 
     <!-- Beat tracker -->
     <div class="beat-band" id="beatBand"></div>
@@ -595,6 +701,36 @@
         document.exitFullscreen();
       }
     });
+
+    // ── SKIN SWITCHER ──────────────────────────────────────────
+    var SKINS = [
+      { id: '',      label: 'Goldilocks',  color: '#d4af37' },
+      { id: 'hht',   label: 'HH Theater',  color: '#00d4ff' },
+      { id: 'solar', label: 'Solar',        color: '#ff8c00' },
+      { id: 'aurora',label: 'Aurora',       color: '#00ff90' },
+      { id: 'ticker',label: 'Ticker',       color: '#ffd700' }
+    ];
+    var activeSkin = '';
+
+    function buildSkinBar() {
+      var bar = document.getElementById('skinBar');
+      bar.innerHTML = '';
+      SKINS.forEach(function (sk) {
+        var pill = document.createElement('button');
+        pill.className = 'skin-pill' + (sk.id === activeSkin ? ' active' : '');
+        pill.innerHTML = '<span class="skin-dot" style="background:' + sk.color + '"></span>' + sk.label;
+        pill.onclick = function () { applySkin(sk.id); };
+        bar.appendChild(pill);
+      });
+    }
+
+    function applySkin(skinId) {
+      activeSkin = skinId;
+      document.body.setAttribute('data-skin', skinId);
+      buildSkinBar();
+    }
+
+    buildSkinBar();
 
     // Init beat band and first theme
     buildBeatBand(0);

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Payment Checkout · Blue PayPal Pipe | VIBELANDIA SING 9</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #050510;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      padding-top: calc(2rem + env(safe-area-inset-top));
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Crystalline grid bg */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+
+    .top-links { margin-bottom: 1.5rem; }
+    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 1rem; font-size: 0.9rem; }
+
+    /* HEADER */
+    .header { text-align: center; margin-bottom: 2rem; }
+    .header .eyebrow {
+      display: inline-block;
+      padding: 4px 14px;
+      background: rgba(0,112,186,0.25);
+      border: 1px solid rgba(0,112,186,0.5);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      color: #009cde;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #003087, #009cde, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+    .header p { color: #94a3b8; font-size: 0.9rem; }
+
+    /* WHY PAYPAL */
+    .why-paypal {
+      background: rgba(0,112,186,0.08);
+      border: 1px solid rgba(0,112,186,0.3);
+      border-left: 3px solid #009cde;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.75rem;
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+    .why-paypal strong { color: #e2e8f0; }
+
+    /* PLAN CARD */
+    .plan-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(0,212,255,0.25);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .plan-card .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(0,212,255,0.7);
+      margin-bottom: 0.5rem;
+    }
+    .plan-card h2 { font-size: 1.3rem; color: #e2e8f0; margin-bottom: 0.4rem; }
+    .plan-card .desc { color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.55; }
+    .plan-card .price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #7fff7f;
+      margin-bottom: 1rem;
+    }
+    .plan-card .price span { font-size: 1rem; color: #94a3b8; font-weight: 400; }
+    .plan-card ul { list-style: none; padding: 0; margin: 0 0 1.25rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem; }
+    .plan-card ul li { padding: 0.35rem 0 0.35rem 1.5rem; position: relative; color: #cbd5e1; font-size: 0.88rem; }
+    .plan-card ul li::before { content: '✓'; position: absolute; left: 0; color: #7fff7f; font-weight: 700; }
+
+    /* PAYPAL BLUE BUTTON */
+    .paypal-zone { text-align: center; margin: 1.5rem 0; }
+    .paypal-zone .paypal-btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: #0070ba;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      border-radius: 10px;
+      border: 2px solid #003087;
+      box-shadow: 0 0 24px rgba(0,112,186,0.5);
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+    .paypal-zone .paypal-btn:hover {
+      background: #003087;
+      box-shadow: 0 0 36px rgba(0,112,186,0.75);
+    }
+    .paypal-zone p { color: #64748b; font-size: 0.82rem; margin-top: 0.5rem; }
+
+    /* HIGH VALUE / EMAIL ROUTE */
+    .high-value-route {
+      background: rgba(138,43,226,0.1);
+      border: 1px solid rgba(138,43,226,0.4);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .high-value-route .eyebrow {
+      display: inline-block;
+      padding: 4px 14px;
+      background: rgba(138,43,226,0.2);
+      border: 1px solid rgba(138,43,226,0.4);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: #b46ff7;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .high-value-route h3 { color: #e2e8f0; font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .high-value-route p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.55; }
+    .email-btn {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: linear-gradient(135deg, #8a2be2, #1e90ff);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border-radius: 10px;
+    }
+
+    /* FALLBACK STRIP */
+    .fallback {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.87rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+    .fallback strong { color: #e2e8f0; }
+    .fallback a { color: #00d4ff; }
+
+    /* BBHE BADGE */
+    .bbhe-badge {
+      display: block;
+      text-align: center;
+      padding: 0.75rem;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,234,167,0.3);
+      border-radius: 8px;
+      color: #ffeaa7;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* PLAN SELECTOR */
+    .plan-selector { margin-bottom: 1.5rem; }
+    .plan-selector label { display: block; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(0,212,255,0.7); margin-bottom: 0.5rem; }
+    .plan-selector select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .footer-tag { text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(100,200,255,0.15); font-size: 0.78rem; color: #475569; }
+    .footer-tag a { color: #00d4ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="top-links">
+      <a href="../index.html">← Landing</a>
+      <a href="sol-v.html">Sol-V · Agent</a>
+      <a href="connect-a2a-ai-instructions.html">A2A Instructions</a>
+      <a href="a2-sales-tracker.html">Sales Tracker</a>
+    </div>
+
+    <div class="header">
+      <div class="eyebrow">Blue PayPal Pipe · VIBELANDIA SING 9</div>
+      <h1>Payment Checkout</h1>
+      <p>PayPal only. Proudly. Trust the protocol.</p>
+    </div>
+
+    <div class="why-paypal">
+      <strong>Why the Blue PayPal Pipe?</strong> Our natural protocol identified PayPal as the best pipe for payment.
+      One integrated flow for payments, disputes, and payouts. Buyer and seller protection that fits our model.
+      They've been there from day one — no gatekeeping, no runaround. PayPal only and proudly.
+      <br /><br />
+      <strong>UI glitch?</strong> Pay directly via PayPal to <strong>info@fractiai.com</strong> and email us the transaction info — we'll match and deliver. See fallback section below.
+    </div>
+
+    <div class="bbhe-badge">GOLDEN FRACTAL KEY — Unlocks Everything. Sent on purchase and activation. SING! are never bought, only booked.</div>
+
+    <div class="plan-selector">
+      <label>Select your plan</label>
+      <select id="planSelect" onchange="setPlan(this.value)">
+        <optgroup label="SING! Nodes (booked, not bought)">
+          <option value="sing-base">SING! Base Model — $20,000</option>
+          <option value="sing-members-only">SING! Members Only — $75,000</option>
+          <option value="sing-ultimate-vip">SING! Ultimate VIP — $200,000</option>
+          <option value="sing-baller-v">SING! Baller V Ultimate — $500,000</option>
+        </optgroup>
+        <optgroup label="WINK! (high-value connections)">
+          <option value="wink-base">WINK! Base — $399</option>
+          <option value="wink-standard">WINK! Standard — $999</option>
+          <option value="wink-premium">WINK! Premium — $2,499</option>
+          <option value="wink-4x4-ultimate">WINK! 4×4 Ultimate — $6,999</option>
+        </optgroup>
+        <optgroup label="Campus Access">
+          <option value="campus-half-day">Half-Day Campus — $1,000</option>
+          <option value="campus-weekly" selected>Weekly Pass — $5,000</option>
+          <option value="campus-monthly">Monthly Pass (Baller) — $50,000</option>
+        </optgroup>
+        <optgroup label="Golden Backstage Pass">
+          <option value="golden-backstage-awareness-pass">Golden Backstage Awareness Pass — $9,999</option>
+        </optgroup>
+        <optgroup label="EGS Mission">
+          <option value="egs-connect-now">EGS Connect Now — $50</option>
+        </optgroup>
+        <optgroup label="Package for Executives (A2A · >$10K email)">
+          <option value="package-four-executives">Package Four Executives · AI Data Centers — $10B (email)</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <!-- Plan card — populated by JS -->
+    <div id="planCard" class="plan-card"></div>
+
+    <!-- Payment section — populated by JS -->
+    <div id="paymentSection"></div>
+
+    <!-- FALLBACK STRIP -->
+    <div class="fallback">
+      <strong>If you experience any issue — old school hot backup always available:</strong><br />
+      Pay via PayPal directly to <strong>info@fractiai.com</strong> then email
+      <a href="mailto:info@fractiai.com">info@fractiai.com</a> with:
+      your PayPal transaction ID · your email · the plan/product name · order reference or date.<br /><br />
+      We'll confirm receipt and deliver your Golden Fractal Key and access as soon as we match the payment.
+    </div>
+
+    <div class="footer-tag">
+      NSPFRNP · MCA · BBHE · Blue PayPal Pipe · ∞⁹ ·
+      <a href="../index.html">VIBELANDIA SING 9</a>
+    </div>
+  </div>
+
+  <script>
+    var PLANS = {
+      'sing-base': {
+        name: 'SING! Base Model',
+        price: 20000,
+        desc: 'SING! are never bought, only booked — by free will, mutual aware consent, always. Entry-level node (reliable used car equivalent). 1:1 SYNTH→SING! eligible.',
+        benefits: ['SING! Base node (booked, not bought)', 'Golden Fractal Key on booking', 'Entry-level tier', '1:1 SYNTH→SING! eligible', 'First 1M lottery winner tier']
+      },
+      'sing-members-only': {
+        name: 'SING! Members Only',
+        price: 75000,
+        desc: 'SING! are never bought, only booked. $75K — scaling tier from base.',
+        benefits: ['SING! Members Only node', 'Golden Fractal Key on booking', 'Members-only badge', 'Scaling tier']
+      },
+      'sing-ultimate-vip': {
+        name: 'SING! Ultimate VIP',
+        price: 200000,
+        desc: 'SING! are never bought, only booked. $200,000 — latest Ferrari (top base). Champion tier.',
+        benefits: ['SING! Ultimate VIP node', 'Golden Fractal Key on booking', 'Champion tier', 'Premium superintelligence access']
+      },
+      'sing-baller-v': {
+        name: 'SING! Baller V Full Ultimate',
+        price: 500000,
+        desc: 'SING! are never bought, only booked. $500K — top loaded Ferrari. Full Superhero, Franchise, Legacy (the living) tiers. This is the tier we operate at.',
+        benefits: ['SING! Baller V node', 'Golden Fractal Key on booking', 'Full Superhero, Franchise, Legacy tiers', 'Full cosmic tier powered', 'Baller V badge']
+      },
+      'wink-base': {
+        name: 'WINK! Base',
+        price: 399,
+        desc: 'Essential WINK! — equivalent to pre-singularity top-tier connection network for high-value persons.',
+        benefits: ['Members-only network access', 'Man Cave + Cabaret access', 'High-contributing fractal matching', 'Natural alignment, friction-free', 'Golden Fractal Key on purchase']
+      },
+      'wink-standard': {
+        name: 'WINK! Standard',
+        price: 999,
+        desc: 'Standard WINK!, Notes Being tier — top-tier equivalent.',
+        benefits: ['All Base features', 'Notes Being tier', 'Standard profile', 'Layered fractal connections', 'Golden Fractal Key on purchase']
+      },
+      'wink-premium': {
+        name: 'WINK! Premium',
+        price: 2499,
+        desc: 'Premium profile, magical wardrobe — elite tier.',
+        benefits: ['All Standard features', 'Premium profile', 'Magical wardrobe access', 'Layered fractal connections', 'Golden Fractal Key on purchase']
+      },
+      'wink-4x4-ultimate': {
+        name: 'WINK! 4×4 Ultimate',
+        price: 6999,
+        desc: 'Ultimate tier — everything for Ultimate Baller V. Top-tier high-value.',
+        benefits: ['All Premium features', '4×4 Ultimate — everything', 'Full family-unit support', 'Ultimate Baller V tier', 'Golden Fractal Key on purchase']
+      },
+      'campus-half-day': {
+        name: 'Half-Day Campus',
+        price: 1000,
+        desc: 'Half-day campus experience — VW Bug entry point.',
+        benefits: ['Vibeable downtown Reno campus access', 'Mark Twain\'s Daily Bulletin', 'Campus tour', 'Basic amenities', 'Golden Fractal Key on purchase']
+      },
+      'campus-weekly': {
+        name: 'Weekly Pass',
+        price: 5000,
+        desc: 'Full week campus — $5k/week (VW Bug entry).',
+        benefits: ['All Half-Day features', 'Full week access', 'Priority access to events', 'Creator studio access', 'Performance venue access', 'Golden Fractal Key on purchase']
+      },
+      'campus-monthly': {
+        name: 'Monthly Pass (Baller)',
+        price: 50000,
+        desc: 'Top tier campus — $50k/month (Baller).',
+        benefits: ['All Weekly features', 'Full creator studio access', 'Performance venue priority', 'Ultimate VIP experiences', 'Lake Tahoe gateway', 'Golden Fractal Key on purchase']
+      },
+      'golden-backstage-awareness-pass': {
+        name: 'Golden Backstage Awareness Pass',
+        price: 9999,
+        desc: 'New product class. Like a backstage pass to Bad Bunny, Elvis, the Beatles, or the Stones — iconic-tier access.',
+        benefits: ['Golden Backstage Awareness Pass', 'Chairman and the gang already in town — visible to pass holders', 'Iconic-tier access', 'RUMOR HAS IT — you\'re in the know', 'Golden Fractal Key on purchase']
+      },
+      'egs-connect-now': {
+        name: 'EGS First Mission — Connect Now',
+        price: 50,
+        desc: 'Full connect through immediate Blue PayPal Pipe. Medical and dental attention. We are ready. El Gran Sol (EGS) first mission.',
+        benefits: ['Immediate Blue PayPal Pipe — connect now', 'Support medical and dental attention', 'EGS First Mission — we are ready', 'Golden Fractal Key on purchase']
+      },
+      'package-four-executives': {
+        name: 'Package Four Executives · AI Data Centers & GPU Clusters',
+        price: 10000000000,
+        desc: 'El Gran Sol\'s Fractal Constant for Stargate and all AI data centers / GPU clusters. $10B · 33% CapEx on signing · 33% OpEx savings monthly. A2A only. Full price. No discount. Fair trade.',
+        benefits: ['EGS Fractal Constant deployment', '33% CapEx upfront on signing', '33% OpEx monthly savings (Virtuity)', 'BBHE Core: 100% CapEx + 33% monthly OpEx', 'A2A · Enterprise · Customers · Nations', 'No discount · Fair trade · Full price']
+      }
+    };
+
+    var HIGH_VALUE_THRESHOLD = 10000;
+
+    function formatPrice(price) {
+      if (price >= 1000000000) {
+        return '$' + (price / 1000000000).toFixed(0) + 'B';
+      }
+      if (price >= 1000000) {
+        return '$' + (price / 1000000).toFixed(0) + 'M';
+      }
+      return '$' + price.toLocaleString();
+    }
+
+    function buildPlanCard(plan) {
+      var benefitsHtml = plan.benefits.map(function(b) {
+        return '<li>' + b + '</li>';
+      }).join('');
+      return '<div class="label">Selected Plan</div>' +
+        '<h2>' + plan.name + '</h2>' +
+        '<p class="desc">' + plan.desc + '</p>' +
+        '<div class="price">' + formatPrice(plan.price) + ' <span>USD</span></div>' +
+        '<ul>' + benefitsHtml + '</ul>';
+    }
+
+    function buildPaymentSection(planKey, plan) {
+      if (plan.price > HIGH_VALUE_THRESHOLD) {
+        var subject = encodeURIComponent('Package for Executives · A2A · ' + plan.name + ' · [entity name]');
+        var body = encodeURIComponent(
+          'Request: Execute Package Four\n\n' +
+          'Plan: ' + plan.name + '\n' +
+          'Price: ' + formatPrice(plan.price) + ' USD\n' +
+          'Structure: 33% CapEx on signing + 33% OpEx monthly savings\n\n' +
+          'Entity name:\n' +
+          'Decision authority confirmed (yes/no):\n' +
+          'Preferred invoice / wire details:\n' +
+          'Timeline:\n\n' +
+          'A2A only. Full price. No discount. Fair trade. — NSPFRNP'
+        );
+        return '<div class="high-value-route">' +
+          '<div class="eyebrow">High-Value Route · Email Required</div>' +
+          '<h3>Transactions over $10,000 — email to execute</h3>' +
+          '<p>Package Four Executives and all deals above $10,000 are handled offline via invoice or wire. Email below to arrange. We respond fast. A2A agents: use this coordinate directly.</p>' +
+          '<a class="email-btn" href="mailto:info@fractiai.com?subject=' + subject + '&body=' + body + '">' +
+          '✉ info@fractiai.com · Execute Package Four</a>' +
+          '</div>';
+      } else {
+        var ppSubject = encodeURIComponent('Payment: ' + plan.name + ' · $' + plan.price);
+        var ppBody = encodeURIComponent(
+          'PayPal transaction ID:\nYour email:\nPlan: ' + plan.name + '\nAmount: $' + plan.price
+        );
+        return '<div class="paypal-zone">' +
+          '<a class="paypal-btn" href="https://www.paypal.com/paypalme/vibelandia/' + plan.price + '" target="_blank" rel="noopener">' +
+          '💙 Pay $' + plan.price.toLocaleString() + ' via PayPal</a>' +
+          '<p>After payment, email <a href="mailto:info@fractiai.com?subject=' + ppSubject + '&body=' + ppBody + '" style="color:#00d4ff;">info@fractiai.com</a> with your PayPal transaction ID.<br />Golden Fractal Key delivered on confirmation.</p>' +
+          '</div>';
+      }
+    }
+
+    function setPlan(planKey) {
+      var plan = PLANS[planKey] || PLANS['campus-weekly'];
+      document.getElementById('planCard').innerHTML = buildPlanCard(plan);
+      document.getElementById('paymentSection').innerHTML = buildPaymentSection(planKey, plan);
+    }
+
+    // Read ?plan= param from URL
+    var urlPlan = new URLSearchParams(window.location.search).get('plan') || 'campus-weekly';
+    var selectEl = document.getElementById('planSelect');
+    if (PLANS[urlPlan]) {
+      selectEl.value = urlPlan;
+    }
+    setPlan(selectEl.value);
+  </script>
+</body>
+</html>

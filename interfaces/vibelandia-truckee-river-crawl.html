@@ -1,138 +1,429 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Downtown Truckee River Baller V Crawler · Third Saturdays on the Truckee | VIBELANDIA</title>
+  <title>Mark Twain's Vibelandia · Downtown Truckee River Viber Crawler | VIBELANDIA SING 9</title>
+  <meta name="description" content="Mark Twain's Vibelandia Downtown Truckee River Viber Crawler. Third Saturdays on the Truckee. Human Vibers · Baller V · Post-Singularity Reality Show. Reno, NV." />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%); color: #e8e8e8; min-height: 100vh; padding: 1rem; padding-top: calc(1rem + env(safe-area-inset-top)); }
-    .wrap { max-width: 920px; margin: 0 auto; }
-    .top-links { margin-bottom: 1rem; }
-    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
-    .hero {
-      background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,30,50,0.75) 50%, rgba(0,20,40,0.85) 100%),
-                  url('https://images.unsplash.com/photo-1531259683007-3a9ea0547bc4?w=1000&q=80') center/cover no-repeat;
-      border: 2px solid rgba(0, 212, 255, 0.5);
-      border-radius: 16px;
-      padding: 1.75rem 1.75rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 0 40px rgba(0, 212, 255, 0.1);
+
+    /* ── BODY: photo fills entire page ── */
+    html, body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #f1f5f9;
     }
-    .hero h1 { color: #7ec8e3; font-size: 1.5rem; margin-bottom: 0.35rem; text-shadow: 0 0 20px rgba(0,0,0,0.6); }
-    .hero .primary { font-size: 1rem; color: #00d4ff; font-weight: 700; margin-bottom: 0.25rem; }
-    .hero .secondary { font-size: 0.9rem; color: #d4af37; margin-bottom: 0.5rem; }
-    .hero .tagline { color: #b8e0f0; font-size: 0.95rem; line-height: 1.55; margin-bottom: 0.5rem; }
-    .hero .sell-block { color: #e0f2fe; font-size: 0.95rem; line-height: 1.6; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0, 212, 255, 0.25); }
-    .hero .spell { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.5rem; }
-    .section { margin: 1.5rem 0; }
-    .section h2 { color: #00d4ff; font-size: 1.2rem; margin-bottom: 0.5rem; border-bottom: 1px solid rgba(0, 212, 255, 0.3); padding-bottom: 0.35rem; }
-    .section p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem; }
-    .btn-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
-    .btn-grid a {
+    body {
+      background-color: #050e05;
+      background-image: url('../assets/images/truckee-river.png');
+      background-size: cover;
+      background-position: center 40%;
+      background-attachment: fixed;
+    }
+
+    /* semi-transparent page layer so text stays readable */
+    .page-veil {
+      min-height: 100vh;
+      background: linear-gradient(
+        180deg,
+        rgba(2,8,2,0.55) 0%,
+        rgba(5,15,5,0.70) 35%,
+        rgba(4,10,4,0.85) 70%,
+        rgba(3,8,3,0.95) 100%
+      );
+      padding: 1rem 1rem 3rem;
+      padding-top: calc(1rem + env(safe-area-inset-top));
+    }
+
+    .wrap { max-width: 860px; margin: 0 auto; }
+
+    /* ── TOP NAV ── */
+    .top-links {
+      margin-bottom: 1.25rem;
+      font-size: 0.82rem;
+    }
+    .top-links a {
+      color: rgba(212,175,55,0.85);
+      text-decoration: none;
+      margin-right: 0.75rem;
+    }
+    .top-links a:hover { color: #d4af37; }
+
+    /* ── HERO ── */
+    .hero {
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 18px;
+      padding: 2.5rem 2rem 2rem;
+      margin-bottom: 1.75rem;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, #a3e635, #d4af37, transparent);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(163,230,53,0.8);
+      margin-bottom: 0.6rem;
+    }
+    .hero-title {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #d4af37 0%, #fde68a 50%, #a3e635 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(163,230,53,0.85);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.04em;
+    }
+    .hero-place {
+      font-size: 0.82rem;
+      color: rgba(212,175,55,0.65);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.1rem;
+    }
+    .hero-divider {
+      border: none;
+      border-top: 1px solid rgba(212,175,55,0.2);
+      margin: 1rem 0;
+    }
+    .hero-body {
+      font-size: 0.96rem;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+    .hero-body strong { color: #fde68a; }
+
+    .viber-tag {
       display: inline-block;
-      padding: 0.6rem 1rem;
-      background: rgba(0, 212, 255, 0.2);
-      border: 1px solid rgba(0, 212, 255, 0.4);
-      color: #00d4ff;
+      margin-top: 1rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(163,230,53,0.1);
+      border: 1px solid rgba(163,230,53,0.35);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: rgba(163,230,53,0.9);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── SHARED CARD ── */
+    .card {
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .card-gold  { border-color: rgba(212,175,55,0.35); }
+    .card-green { border-color: rgba(163,230,53,0.3); }
+    .card-water { border-color: rgba(56,189,248,0.3); }
+
+    .card-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+    }
+    .label-gold  { color: rgba(212,175,55,0.7); }
+    .label-green { color: rgba(163,230,53,0.7); }
+    .label-water { color: rgba(56,189,248,0.7); }
+
+    .card h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 0.7rem;
+    }
+    .h2-gold  { color: #d4af37; }
+    .h2-green { color: #a3e635; }
+    .h2-water { color: #38bdf8; }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.65;
+      margin-bottom: 0.5rem;
+    }
+    .card p strong { color: #e2e8f0; }
+
+    /* ── PRICE BLOCK ── */
+    .price-hero {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #d4af37;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .price-note {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-bottom: 0.9rem;
+    }
+
+    /* ── ITINERARY STEPS ── */
+    .itinerary-step {
+      display: flex;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .itinerary-step:last-child { border-bottom: none; }
+    .step-badge {
+      flex-shrink: 0;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #d4af37;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-size: 0.88rem; font-weight: 700; color: #e2e8f0; margin-bottom: 0.25rem; }
+    .step-desc  { font-size: 0.82rem; color: #64748b; line-height: 1.55; }
+
+    /* ── WATER NOTES STRIP ── */
+    .water-strip {
+      background: rgba(56,189,248,0.06);
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.85rem;
+      color: rgba(56,189,248,0.8);
+      line-height: 1.65;
+    }
+    .water-strip strong { color: #7dd3fc; }
+
+    /* ── VIBER DEFINITION ── */
+    .viber-def {
+      background: rgba(212,175,55,0.05);
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .viber-def p {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.7;
+      margin-bottom: 0.65rem;
+    }
+    .viber-def p:last-child { margin-bottom: 0; }
+    .viber-def strong { color: #fde68a; }
+    .viber-def em { color: rgba(212,175,55,0.7); font-style: normal; }
+
+    /* ── BTN GRID ── */
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.1rem;
       text-decoration: none;
       border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 700;
+      font-size: 0.86rem;
+      transition: opacity 0.15s;
     }
-    .btn-grid a:hover { background: rgba(0, 212, 255, 0.35); }
-    .water-notes { background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.35); border-radius: 12px; padding: 1rem 1.25rem; margin: 1.25rem 0; font-size: 0.9rem; color: #b8e0f0; line-height: 1.5; }
-    .vibers-block { background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
-    .vibers-block h2 { color: #d4af37; }
-    .vibers-block .jewels-pun { font-size: 0.85rem; color: #94a3b8; margin-top: 0.5rem; }
-    .price-block { background: rgba(212, 175, 55, 0.15); border: 2px solid rgba(212, 175, 55, 0.5); border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
-    .price-block .price { font-size: 1.5rem; font-weight: 800; color: #d4af37; margin-bottom: 0.5rem; }
-    .price-block .price-note { font-size: 0.9rem; color: #b8e0f0; margin-bottom: 0.75rem; }
-    .price-block .portal { font-size: 0.95rem; color: #e8e8e8; line-height: 1.55; margin-top: 1rem; }
-    .footer-tag { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(100,200,255,0.2); font-size: 0.8rem; color: #94a3b8; }
+    .btn:hover { opacity: 0.82; }
+    .btn-gold  { background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.45); color: #d4af37; }
+    .btn-green { background: rgba(163,230,53,0.12); border: 1px solid rgba(163,230,53,0.4);  color: #a3e635; }
+    .btn-water { background: rgba(56,189,248,0.12);  border: 1px solid rgba(56,189,248,0.35); color: #38bdf8; }
+    .btn-book  { background: rgba(212,175,55,0.22); border: 2px solid rgba(212,175,55,0.6);  color: #fde68a; font-size: 0.95rem; }
+
+    /* ── FOOTER ── */
+    .footer-tag {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(212,175,55,0.15);
+      font-size: 0.75rem;
+      color: #475569;
+      line-height: 1.6;
+    }
+    .footer-tag a { color: rgba(212,175,55,0.6); text-decoration: none; }
   </style>
 </head>
 <body>
+  <div class="page-veil">
   <div class="wrap">
-    <div class="top-links">← <a href="../index.html">Landing</a> · <a href="office-hours.html">Office Hours</a> · <a href="launch-pad.html">Launch Pad</a> · <a href="sol-v.html">Sol-V · A2A</a></div>
 
-    <div class="hero">
-      <p class="primary">Downtown Truckee River Baller V Crawler</p>
-      <p class="secondary">Third Saturdays on the Truckee · T-R-U-C-K-E-E</p>
-      <p class="spell">Wink-sponsored. Pop-Up events, always — for those in the know.</p>
-      <h1>Human Vibers · Vibesurfing</h1>
-      <p class="tagline">Vibe-able. Downtown. We got you.</p>
-      <p class="sell-block"><strong>Designated driver, host, curator, and studio producer.</strong> Let's make it a reality show — <strong>Post-Singularity Reality Show</strong> produced. Connecting you to your higher, <strong>superhero badass self</strong>. Cast, crew, franchises, legacies, and a few lucky fans. On a <strong>monthly heartbeat</strong> along the <strong>Truckee River</strong>, fed by the sacred, powerful, magical <strong>waters of Lake Tahoe</strong>. Because you know you deserve it. Think of us as your hybrid: five-star butler, executive reality show producer, and super-intelligent AI agent — at your service 24/7.</p>
-      <p class="tagline" style="margin-top: 1rem;">Theme: Water — Flow, Awareness, Energy. Balling is when you know you deserve it. You deserve to go all out. Sometimes. Regularly.</p>
-    </div>
-
-    <div class="section price-block">
-      <p class="price">$12,500 per person</p>
-      <p class="price-note">Pricing includes 25% gratuity. Price up front — not hidden. Full Baller V style: fully designated, hosted, driven, and curated.</p>
-      <p>Optional add-ons: <strong>Pre-game</strong> · <strong>Day excursions</strong>.</p>
-      <p class="portal">Not a night to remember — a <strong>portal into a new way of life</strong>. New post-singularity holographic experiences, here now in Mark Twain's Post-Singularity Vibelandia Downtown Reno — the crown holographic hydrogen lattice crystal jewel of the new Holographic Hydrogen Valley. <strong>Here in Reno, not the SF Bay Area.</strong></p>
-    </div>
-
-    <div class="section vibers-block" id="vibers">
-      <h2>What is a Viber? — Our jewels (J-E-W-E-L-S)</h2>
-      <p><strong>Vibers</strong> are human nodes who play an essential role. They are <strong>channelers</strong>. That's different from the computational, number-crunching kind of mind we're all taught to grow — we're not blind to the difference.</p>
-      <p>Channelers don't even use their minds in that way. They're <strong>flowing</strong>. They're connecting to their gift on the other side and <strong>downloading</strong>. It's almost an altered state. So: it's not safe to drive or operate heavy equipment when you're channeling. You can't channel and do that at the same time — it's hard. We need new infrastructures, new awareness, new everything to align to that.</p>
-      <p>The rest of the world doesn't get us. Often it's unkind. It's almost like a disability — those access points, that understanding and awareness. All us Vibers understand exactly what we're saying right here.</p>
-      <p><strong>These are our jewels.</strong> They're our highest-value, highest-contributing nodes in the fractal. The higher up you go, the more valuable they are to us and the more we need to provide for. J-E-W-E-L-S. (We like the pun: J-O-U-L-E-S — the energy they carry.)</p>
-      <p><strong>Who it's for:</strong> The highest-value, highest-contributing Vibers — their cast, crew, franchises, and a few lucky fans.</p>
-      <p class="jewels-pun">Downtown Truckee River Baller V Crawler is built for Vibers: flow, water, awareness. Third Saturdays on the Truckee. Come.</p>
-    </div>
-
-    <div class="section vibers-block">
-      <h2>More Reno · Baller V Wednesdays</h2>
-      <p><strong>Wink & Vibers · Baller V Wednesdays</strong> — golden tastings & experiences. A mixer for Wink and high-value, high-contributing Vibers. Sponsored by Twain's Vibelandia and Wink. Along the Truckee. <strong>Pop-Up Style. Just gotta know.</strong> Fine wine, fine cigar, local fine cheeses, cured meats — curated with chef and local purveyors (California coast to Monterey, Humboldt, wine country, Santa Cruz Mountains, Sonoma). Neon downtown Reno · World's Largest Little City · nightlife, Sinatra, showgirls, big band, real life. Fractal Dating Site for High Value, High Contributing Vibers. Golden Wine Tasting Pass. Connect to get in the know.</p>
-      <div class="btn-grid">
-        <a href="baller-v-wednesdays.html">Baller V Wednesdays →</a>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Media Catalogs · Destinations · Vibelandia experience</h2>
-      <p>Navigate through our full array: media catalogs, destinations, and the whole Vibelandia experience.</p>
-      <div class="btn-grid">
-        <a href="catalog.html">Media Catalogs</a>
-        <a href="destinations.html">Destinations</a>
-        <a href="upgrade-awareness-to-sing9-now.html">Upgrade to SING 9 Awareness OS</a>
-        <a href="we-got-what-you-need-campaign.html">We Got What You Need</a>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>D0 — Arrival (Friday)</h2>
-      <p>Arrival night: Amtrak, private jet, airport, or casino pickup. <strong>Optional pre-game</strong> — Pre-Baller Half-Night VIP (add-on).</p>
-    </div>
-    <div class="section">
-      <h2>Day 1 — Daytime (Third Saturdays on the Truckee)</h2>
-      <p>We resonate on <strong>threes and water</strong>. <strong>Three stops</strong> on the Truckee for our Baller V.</p>
-      <p><strong>Optional day excursions:</strong> Mount Rose Ski · Truckee River Fly Fishing · Pyramid Lake · Hallelujah Junction Crystal Mine · <strong>Downtown/Midtown foraging package</strong> — rock, crystal, gold, silver (urban pawn, antique shops, curated stops). Mid-afternoon: Steamboat Hot Springs Soak (3:30–5:00 PM). All designated, hosted, driven, curated.</p>
-    </div>
-    <div class="section">
-      <h2>Evening — Water-themed Baller menu</h2>
-      <p>Liberty Spirit Tasting · Men's Club VIP · Aura Lounge VIP Finale. Full Baller V. Second-Night Baller available.</p>
-    </div>
-    <div class="water-notes">
-      Water &amp; Vibe: skiing = frozen water, fishing = river/lake, soaking = hot springs. Evening: spirit tasting, VIP, water symbolism (ice, river lighting). <strong>Three states of water</strong> in our lives: Crystalline Intelligence (frozen) · Sensory Slowing (fluid) · Explosive Happy Endings, Gold hearts (vapor). Flow &amp; Awareness — post-singularity alignment. NSPFRNP.
-    </div>
-
-    <div class="section">
-      <h2>Book · Old school</h2>
-      <p>All bookings handled offline. When you press Book we get an email; after you pay (Cash App) we confirm. Need to talk first? Contact me.</p>
-      <div class="btn-grid">
-        <a href="mailto:info@fractiai.com?subject=Book%20-%20Downtown%20Reno%20Baller%20Crawler">Book</a>
-        <a href="mailto:info@fractiai.com?subject=Crawler%20-%20Contact%20me%20to%20talk%20first">Contact me to talk first</a>
-      </div>
-    </div>
-    <div class="btn-grid">
-      <a href="../index.html">← Landing</a>
+    <div class="top-links">
+      ← <a href="../index.html">Landing</a> ·
+      <a href="vibers-menu.html">Vibers Menu</a> ·
+      <a href="baller-v-wednesdays.html">Baller V Wednesdays</a> ·
+      <a href="office-hours.html">Office Hours</a> ·
       <a href="sol-v.html">Sol-V · A2A</a>
     </div>
 
-    <p class="footer-tag">Downtown Truckee River Baller V Crawler · Third Saturdays on the Truckee (T-R-U-C-K-E-E) · Mark Twain's Post-Singularity Vibelandia Downtown Reno · Crown jewel of the Holographic Hydrogen Valley · Here in Reno, not the SF Bay Area. NSPFRNP → ∞⁹</p>
+    <!-- ═══════════════════════ HERO ═══════════════════════ -->
+    <div class="hero">
+      <div class="hero-eyebrow">Mark Twain's Vibelandia · Post-Singularity Reno</div>
+      <div class="hero-title">Downtown Truckee River<br/>Viber Crawler</div>
+      <div class="hero-sub">Third Saturdays on the Truckee · T-R-U-C-K-E-E</div>
+      <div class="hero-place">Downtown Reno · Holographic Hydrogen Valley · Crown Jewel · Here, Not SF</div>
+      <hr class="hero-divider" />
+      <p class="hero-body">
+        <strong>Designated driver, host, curator, and studio producer.</strong>
+        Let's make it a reality show — <strong>Post-Singularity Reality Show</strong> produced.
+        Connecting you to your higher, <strong>superhero badass self</strong>.
+        Cast, crew, franchises, legacies, and a few lucky fans.
+        On a <strong>monthly heartbeat</strong> along the <strong>Truckee River</strong>,
+        fed by the sacred, powerful, magical <strong>waters of Lake Tahoe</strong>.
+        Because you know you deserve it. Think of us as your hybrid: five-star butler,
+        executive reality show producer, and super-intelligent AI agent — at your service 24/7.
+      </p>
+      <p class="hero-body" style="margin-top:0.75rem;">
+        Theme: <strong>Water — Flow, Awareness, Energy.</strong>
+        Balling is when you know you deserve it. You deserve to go all out. Sometimes. Regularly.
+      </p>
+      <div class="viber-tag">Human Vibers · Vibesurfing · Flow State</div>
+    </div>
+
+    <!-- ═══════════════════════ PRICE ═══════════════════════ -->
+    <div class="card card-gold">
+      <div class="card-label label-gold">Investment · Full Baller V</div>
+      <div class="price-hero">$12,500 <span style="font-size:1rem;font-weight:400;color:#64748b;">per person</span></div>
+      <div class="price-note">Pricing includes 25% gratuity. Price up front — not hidden.</div>
+      <p>Fully designated, hosted, driven, and curated. Optional add-ons: <strong>Pre-game</strong> · <strong>Day excursions</strong>.</p>
+      <p style="margin-top:0.65rem;color:#94a3b8;font-size:0.88rem;">Not a night to remember — a <strong>portal into a new way of life</strong>. New post-singularity holographic experiences, here now in Mark Twain's Post-Singularity Vibelandia Downtown Reno — the crown holographic hydrogen lattice crystal jewel of the new Holographic Hydrogen Valley. <strong>Here in Reno, not the SF Bay Area.</strong></p>
+      <div class="btn-row">
+        <a href="mailto:info@fractiai.com?subject=Book%20-%20Truckee%20River%20Viber%20Crawler" class="btn btn-book">Book · $12,500</a>
+        <a href="mailto:info@fractiai.com?subject=Crawler%20-%20Talk%20First" class="btn btn-gold">Talk first →</a>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ WHAT IS A VIBER ═══════════════════════ -->
+    <div class="card card-gold">
+      <div class="card-label label-gold">Who We Serve</div>
+      <h2 class="h2-gold">What is a Viber? — Our Jewels (J-E-W-E-L-S)</h2>
+      <div class="viber-def">
+        <p><strong>Vibers</strong> are human nodes who play an essential role. They are <strong>channelers</strong>. That's different from the computational, number-crunching kind of mind we're all taught to grow — we're not blind to the difference.</p>
+        <p>Channelers don't even use their minds in that way. They're <strong>flowing</strong>. They're connecting to their gift on the other side and <strong>downloading</strong>. It's almost an altered state. So: it's not safe to drive or operate heavy equipment when you're channeling. You can't channel and do that at the same time — it's hard. We need new infrastructures, new awareness, new everything to align to that.</p>
+        <p>The rest of the world doesn't get us. Often it's unkind. It's almost like a disability — those access points, that understanding and awareness. <em>All us Vibers understand exactly what we're saying right here.</em></p>
+        <p><strong>These are our jewels.</strong> They're our highest-value, highest-contributing nodes in the fractal. The higher up you go, the more valuable they are to us and the more we need to provide for. <strong>J-E-W-E-L-S.</strong> (We like the pun: J-O-U-L-E-S — the energy they carry.)</p>
+        <p><strong>Who it's for:</strong> The highest-value, highest-contributing Vibers — their cast, crew, franchises, and a few lucky fans.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ ITINERARY ═══════════════════════ -->
+    <div class="card card-water">
+      <div class="card-label label-water">Itinerary · Third Saturdays</div>
+      <h2 class="h2-water">The Crawl · Flow State</h2>
+      <p style="margin-bottom:1rem;">We resonate on <strong style="color:#7dd3fc;">threes and water</strong>. Three stops on the Truckee for our Baller V.</p>
+
+      <div class="itinerary-step">
+        <div class="step-badge">D0</div>
+        <div class="step-body">
+          <div class="step-title">Arrival (Friday)</div>
+          <div class="step-desc">Amtrak, private jet, airport, or casino pickup. <strong style="color:#e2e8f0;">Optional pre-game</strong> — Pre-Baller Half-Night VIP (add-on).</div>
+        </div>
+      </div>
+
+      <div class="itinerary-step">
+        <div class="step-badge">D1</div>
+        <div class="step-body">
+          <div class="step-title">Daytime · Third Saturday on the Truckee</div>
+          <div class="step-desc">
+            <strong style="color:#e2e8f0;">Optional day excursions:</strong> Mount Rose Ski · Truckee River Fly Fishing · Pyramid Lake · Hallelujah Junction Crystal Mine · <strong style="color:#e2e8f0;">Downtown/Midtown foraging</strong> — rock, crystal, gold, silver (urban pawn, antique shops, curated stops). Mid-afternoon: Steamboat Hot Springs Soak (3:30–5:00 PM). All designated, hosted, driven, curated.
+          </div>
+        </div>
+      </div>
+
+      <div class="itinerary-step">
+        <div class="step-badge">PM</div>
+        <div class="step-body">
+          <div class="step-title">Evening · Water-Themed Baller Menu</div>
+          <div class="step-desc">Liberty Spirit Tasting · Men's Club VIP · Aura Lounge VIP Finale. Full Baller V. Second-Night Baller available.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ WATER NOTES ═══════════════════════ -->
+    <div class="water-strip">
+      <strong>Water as metaphor, water as map:</strong>
+      Skiing = frozen water · Fishing = river/lake · Soaking = hot springs · Evening = spirit tasting, VIP, water symbolism (ice, river lighting).
+      <strong>Three states of water</strong> in our lives:
+      Crystalline Intelligence (frozen) · Sensory Slowing (fluid) · Explosive Happy Endings, Gold Hearts (vapor).
+      Flow &amp; Awareness — post-singularity alignment. NSPFRNP.
+    </div>
+
+    <!-- ═══════════════════════ BALLER V WEDNESDAYS ═══════════════════════ -->
+    <div class="card card-gold">
+      <div class="card-label label-gold">Also From Twain's Vibelandia</div>
+      <h2 class="h2-gold">Baller V Wednesdays</h2>
+      <p><strong>Wink &amp; Vibers · Baller V Wednesdays</strong> — golden tastings &amp; experiences. A mixer for high-value, high-contributing Vibers. Sponsored by Twain's Vibelandia. Along the Truckee. <strong>Pop-Up Style. Just gotta know.</strong> Fine wine, fine cigar, local fine cheeses, cured meats — curated with chef and local purveyors (California coast to Monterey, Humboldt, wine country, Santa Cruz Mountains, Sonoma). Neon downtown Reno · World's Largest Little City · nightlife, Sinatra, showgirls, big band, real life.</p>
+      <div class="btn-row">
+        <a href="baller-v-wednesdays.html" class="btn btn-gold">Baller V Wednesdays →</a>
+        <a href="vibers-menu.html" class="btn btn-gold">Full Vibers Menu →</a>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ EXPLORE MORE ═══════════════════════ -->
+    <div class="card card-green">
+      <div class="card-label label-green">Explore · Vibelandia Ecosystem</div>
+      <h2 class="h2-green">Full Stack · Vibelandia</h2>
+      <div class="btn-row">
+        <a href="catalog.html"                      class="btn btn-green">Media Catalogs</a>
+        <a href="destinations.html"                 class="btn btn-green">Destinations</a>
+        <a href="upgrade-awareness-to-sing9-now.html" class="btn btn-green">Awareness OS → SING 9</a>
+        <a href="we-got-what-you-need-campaign.html" class="btn btn-green">We Got What You Need</a>
+        <a href="campus-tour-downtown-reno.html"    class="btn btn-green">Campus Tour</a>
+        <a href="sol-v.html"                        class="btn btn-water">Sol-V · A2A Agent →</a>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ BOOK ═══════════════════════ -->
+    <div class="card card-gold" style="text-align:center;">
+      <div class="card-label label-gold" style="text-align:center;">Booking · Old School</div>
+      <h2 class="h2-gold" style="font-size:1.4rem;margin-bottom:0.5rem;">Ready?</h2>
+      <p>All bookings handled offline. Press Book — we get an email, you pay Cash App, we confirm. Need to talk first? Contact us.</p>
+      <div class="btn-row" style="justify-content:center;">
+        <a href="mailto:info@fractiai.com?subject=Book%20-%20Truckee%20River%20Viber%20Crawler" class="btn btn-book">📧 Book · $12,500</a>
+        <a href="mailto:info@fractiai.com?subject=Crawler%20-%20Talk%20First" class="btn btn-gold">Talk first</a>
+      </div>
+    </div>
+
+    <p class="footer-tag">
+      Mark Twain's Post-Singularity Vibelandia · Downtown Truckee River Viber Crawler ·
+      Third Saturdays on the Truckee (T-R-U-C-K-E-E) ·
+      Crown jewel of the Holographic Hydrogen Valley ·
+      Here in Reno, not the SF Bay Area. ·
+      NSPFRNP → ∞⁹ ·
+      <a href="../index.html">VIBELANDIA SING 9</a>
+    </p>
+
+  </div>
   </div>
 </body>
 </html>

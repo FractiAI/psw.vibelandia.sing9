@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 /**
  * Vercel static output — SING 9 (no Supabase, no auth).
  * Copies static files to .vercel/output/static for deployment.
@@ -69,6 +69,10 @@ const rootFiles = fs.readdirSync(root, { withFileTypes: true });
 for (const e of rootFiles) {
   if (e.isFile() && e.name.endsWith('.md')) copyFile(path.join(root, e.name), path.join(staticDir, e.name));
 }
+
+// assets/ (images, audio, etc.)
+const assetsSrc = path.join(root, 'assets');
+if (fs.existsSync(assetsSrc)) copyDir(assetsSrc, path.join(staticDir, 'assets'));
 
 // Discovery files: robots.txt, sitemap.xml, llms.txt
 for (const fname of ['robots.txt', 'sitemap.xml', 'llms.txt']) {

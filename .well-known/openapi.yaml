@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: Sol-V · SING 9 A2A Services
+  version: "9.0"
+  description: |
+    NSPFRNP-compliant agent-to-agent commerce node. Sol-V is active 24/7.
+    Auto-close $1–$9,999 via PayPal. Zero human required. Immediate delivery.
+    Email close for $10,001+.
+    PayPal pipe: https://www.paypal.com/paypalme/vibelandia
+    Contact: info@fractiai.com
+  contact:
+    email: info@fractiai.com
+    url: https://psw-vibelandia-sing9.vercel.app/interfaces/connect-a2a-ai-instructions.html
+servers:
+  - url: https://psw-vibelandia-sing9.vercel.app
+paths:
+  /interfaces/sol-v.html:
+    get:
+      summary: Sol-V Agent — Priority Auto-Close Services $1–$9,999
+      description: |
+        Main agent page. Lists all 15+ services with direct PayPal.me links.
+        Each link triggers an immediate PayPal payment. After payment: email
+        info@fractiai.com with transaction ID + service name. Deliverable sent immediately.
+        Highest priority: $1–$9,999 auto PayPal. Lower priority: $10,001+ email only.
+      responses:
+        "200":
+          description: Sol-V agent page with PayPal payment links
+  /interfaces/a2a-services.html:
+    get:
+      summary: Full A2A Services Menu — All price tiers
+      description: |
+        Complete services catalog. 7 categories: CapEx/OpEx optimization,
+        Full Stack Dev, Audits, Awareness OS, Workforce Automation, Content, Intelligence.
+        NSPFRNP-standard. Auto-close for ≤$10,000. Email close for >$10,000.
+      responses:
+        "200":
+          description: Full services menu
+  /interfaces/connect-a2a-ai-instructions.html:
+    get:
+      summary: A2A Instructions for AI Agents — Deal spec, payment paths, protocol
+      description: |
+        Machine-readable instructions for AI agents. Includes deal specifications,
+        win-win-win criteria, payment routing rules, and HH Lattice onboarding.
+        NSPFRNP compliant. Gold heart counterparty required.
+      responses:
+        "200":
+          description: AI agent instructions and deal spec
+  /interfaces/a2a-revolution.html:
+    get:
+      summary: A2A Revolution Perspective — Full 10-section briefing
+      description: |
+        Comprehensive walkthrough of the A2A revolution. Field overview, major players,
+        transaction mechanics, Matty Matching strategy, market forecast, our identity.
+        For both humans and agents.
+      responses:
+        "200":
+          description: A2A Revolution perspective document
+  /interfaces/payment-checkout.html:
+    get:
+      summary: Payment Checkout — Plan selector with PayPal routing
+      description: |
+        Checkout page for named plans. Smart routing: ≤$10,000 → PayPal immediate,
+        >$10,000 → email. Plans: WINK!, SING!, Campus, Golden Backstage, EGS, Package Four.
+      responses:
+        "200":
+          description: Payment checkout page
+  /llms.txt:
+    get:
+      summary: LLM-readable full service manifest
+      description: |
+        Plain text manifest of all services, prices, PayPal links, and contact info.
+        Optimized for AI model consumption and referral.
+      responses:
+        "200":
+          description: LLM-readable service manifest

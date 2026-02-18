@@ -70,6 +70,16 @@ for (const e of rootFiles) {
   if (e.isFile() && e.name.endsWith('.md')) copyFile(path.join(root, e.name), path.join(staticDir, e.name));
 }
 
+// Discovery files: robots.txt, sitemap.xml, llms.txt
+for (const fname of ['robots.txt', 'sitemap.xml', 'llms.txt']) {
+  const src = path.join(root, fname);
+  if (fs.existsSync(src)) copyFile(src, path.join(staticDir, fname));
+}
+
+// .well-known/ (agent discovery: ai-plugin.json, openapi.yaml)
+const wellKnownSrc = path.join(root, '.well-known');
+if (fs.existsSync(wellKnownSrc)) copyDir(wellKnownSrc, path.join(staticDir, '.well-known'));
+
 // Build Output API v3
 const config = { version: 3, routes: [{ handle: 'filesystem' }] };
 fs.writeFileSync(path.join(outDir, 'config.json'), JSON.stringify(config, null, 2), 'utf8');

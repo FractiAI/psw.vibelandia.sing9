@@ -1,6 +1,6 @@
-# Env: Sing4 → Sing9
+﻿# Env: Sing4 → Sing9
 
-Reference for copying environment variables from the **Sing4** Vercel project to **Sing9**. Sing9 has no Supabase and no auth; only optional PayPal is relevant.
+Reference for copying environment variables from the **Sing4** Vercel project to **Sing9**. Sing9 has no Supabase and no auth; only optional Cash App is relevant.
 
 **Pipe type:** These keys are carried on the **Public-Free Key Pipe** (NSPFRNP): public info + free plans only, bypassing heavy security layers. See [protocols/PIPE_PUBLIC_FREE_KEY_NSPFRNP.md](protocols/PIPE_PUBLIC_FREE_KEY_NSPFRNP.md).
 
@@ -12,8 +12,8 @@ Reference for copying environment variables from the **Sing4** Vercel project to
 |----------|---------|---------|
 | `VIBELANDIA_SUPABASE_ANON_KEY` or `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Build (api-config.js) | Supabase anon key — **not used in Sing9** |
 | `VIBELANDIA_SUPABASE_URL` or `NEXT_PUBLIC_SUPABASE_URL` | Front-end / auth | Supabase URL — **not used in Sing9** |
-| `VIBELANDIA_PAYPAL_CLIENT_ID` or `NEXT_PUBLIC_PAYPAL_CLIENT_ID` or `PAYPAL_CLIENT_ID` or `PAYPAL_CLIENT_ID_SANDBOX` | Build (api-config.js) | PayPal client ID for front-end — **optional in Sing9** |
-| `PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET` (or `*_SANDBOX` / `*_LIVE`) | Serverless (PayPal create-order/capture-order) | PayPal API — **Sing9 has no serverless; no copy** |
+| `VIBELANDIA_PAYPAL_CLIENT_ID` or `NEXT_PUBLIC_PAYPAL_CLIENT_ID` or `PAYPAL_CLIENT_ID` or `PAYPAL_CLIENT_ID_SANDBOX` | Build (api-config.js) | Cash App client ID for front-end — **optional in Sing9** |
+| `PAYPAL_CLIENT_ID` / `PAYPAL_CLIENT_SECRET` (or `*_SANDBOX` / `*_LIVE`) | Serverless (Cash App create-order/capture-order) | Cash App API — **Sing9 has no serverless; no copy** |
 | `PAYPAL_MODE` or `PAYPAL_LIVE` | Serverless | Sandbox vs live — **not used in Sing9** |
 | `VIBELANDIA_GOOGLE_CLIENT_ID` or `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Auth / profile | Google OAuth — **not used in Sing9** |
 
@@ -27,9 +27,9 @@ Reference for copying environment variables from the **Sing4** Vercel project to
    | Copy to Sing9 | When |
   |---------------|------|
    | **None** | Default. Sing9 runs fully static; no Supabase, no auth. |
-   | `VIBELANDIA_PAYPAL_CLIENT_ID` or `PAYPAL_CLIENT_ID` | Only if you want PayPal Pipes (client-only) on Sing9; build injects it into `interfaces/api-config.js`. |
+   | `VIBELANDIA_PAYPAL_CLIENT_ID` or `PAYPAL_CLIENT_ID` | Only if you want Cash App Pipes (client-only) on Sing9; build injects it into `interfaces/api-config.js`. |
 
-So: **move over what we need** = for current Sing9 you need **no** env vars. Optionally copy **PayPal Client ID** from Sing4 to Sing9 if you want the same client ID available for future PayPal Pipes UI.
+So: **move over what we need** = for current Sing9 you need **no** env vars. Optionally copy **Cash App Client ID** from Sing4 to Sing9 if you want the same client ID available for future Cash App Pipes UI.
 
 ---
 

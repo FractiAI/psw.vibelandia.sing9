@@ -1,4 +1,4 @@
-# Pru's Valet Service — SNAP (internal)
+﻿# Pru's Valet Service — SNAP (internal)
 
 **Status:** ⚡ ACTIVE  
 **Type:** Brand · Pop-up umbrella · Human Vibers · Raw script + positioning  
@@ -48,10 +48,10 @@
 ## Bookings (all offline — old school)
 
 - **All bookings handled offline.** When they press **Book:** send an **email to owner** (e.g. info@fractiai.com). Old school.
-- **After they pay** — PayPal. We confirm. No in-app payment flow; we send link or instructions, they pay, we confirm.
+- **After they pay** — Cash App. We confirm. No in-app payment flow; we send link or instructions, they pay, we confirm.
 - **Or:** a button to **Contact me** if they need to **talk about it first.** Then Book after.
 - Surfaces: **Book** (mailto with subject line for the offering) and **Contact me to talk first** (mailto). Simple.
-- Lock: Bookings = email to owner on Book; payment via PayPal after; Contact me option always available.
+- Lock: Bookings = email to owner on Book; payment via Cash App after; Contact me option always available.
 ---
 
 ## Menu surface (Human Vibers entry)

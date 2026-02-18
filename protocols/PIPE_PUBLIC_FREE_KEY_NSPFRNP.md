@@ -1,4 +1,4 @@
-# NSPFRNP Pipe Type: Public-Free Key Pipe
+﻿# NSPFRNP Pipe Type: Public-Free Key Pipe
 
 **Protocol:** NSPFRNP  
 **Pipe type:** Public-Free Key Pipe  
@@ -13,7 +13,7 @@
 **Public-Free Key Pipe** = A pipe that carries only **public information** and **free-tier / free-plan** keys and identifiers. No secrets vault, no enterprise IAM, no heavy security layers. The pipe is the path; the payload is by design **disclosable** (public) or **free-plan** (no paid/restricted tier). This bypasses the need for secret managers, rotation policies, and compliance overhead while still enabling lite edges (wallets, keys, verifications) and center = pipes only.
 
 - **Public info:** URLs, project names, publishable keys, client IDs (where the provider treats them as public), wallet addresses, domain names, callback URLs.
-- **Free plans:** Free-tier API keys (e.g. Groq, free Supabase tier, Stripe test keys, sandbox PayPal, Vercel hobby), OAuth client IDs from free Google Cloud projects, GitHub tokens for public repos, recovery codes held out-of-band.
+- **Free plans:** Free-tier API keys (e.g. Groq, free Supabase tier, Stripe test keys, sandbox Cash App, Vercel hobby), OAuth client IDs from free Google Cloud projects, GitHub tokens for public repos, recovery codes held out-of-band.
 - **Bypass:** No vault, no HSM, no enterprise secrets pipeline. Keys live in `.env` (gitignored) or platform env (Vercel Environment Variables). Single layer: pipe carries public/free only; heavy security layers are not invoked.
 
 ---

@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * Vercel static output — SING 9 (no Supabase, no auth).
  * Copies static files to .vercel/output/static for deployment.
@@ -44,7 +44,7 @@ const interfacesSrc = path.join(root, 'interfaces');
 const interfacesDest = path.join(staticDir, 'interfaces');
 if (fs.existsSync(interfacesSrc)) copyDir(interfacesSrc, interfacesDest);
 
-// Optional: inject PayPal client ID into api-config.js (from Sing4 env; no Supabase in Sing9)
+// Optional: inject Cash App client ID into api-config.js (from Sing4 env; no Supabase in Sing9)
 const apiConfigPath = path.join(interfacesDest, 'api-config.js');
 if (fs.existsSync(apiConfigPath)) {
   const paypalClientId = process.env.VIBELANDIA_PAYPAL_CLIENT_ID || process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || process.env.PAYPAL_CLIENT_ID || process.env.PAYPAL_CLIENT_ID_SANDBOX || '';

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>A2A Sales Tracker — Executive · Super Solutions · EGS Fractal Constant | VIBELANDIA SING 9</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg, #080810 0%, #0c0c18 25%, #0f0f1c 50%, #12122a 100%);
+      color: #e8e6e3;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .back { margin-bottom: 1.25rem; font-size: 0.9rem; }
+    .back a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
+    .back a:hover { text-decoration: underline; }
+
+    .exec-header {
+      text-align: center;
+      padding: 2rem 1.5rem 2.5rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(145deg, rgba(212,175,55,0.14) 0%, rgba(0,212,255,0.08) 40%, rgba(138,43,226,0.06) 100%);
+      border: 2px solid rgba(212,175,55,0.5);
+      border-radius: 16px;
+      box-shadow: 0 0 60px rgba(212,175,55,0.12);
+    }
+    .exec-header .badge {
+      display: inline-block;
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25em;
+      color: rgba(212,175,55,0.95); margin-bottom: 0.75rem; font-weight: 700;
+    }
+    .exec-header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 800;
+      background: linear-gradient(135deg, #ffeaa7, #d4af37, #00d4ff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 0.35rem;
+    }
+    .exec-header .tagline { font-size: 0.95rem; color: #b0b8c0; }
+    .exec-header .updated { font-size: 0.8rem; color: #6b7280; margin-top: 0.75rem; }
+
+    /* PRICING SUMMARY */
+    .pricing-strip {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;
+      margin: 1rem 0 1.5rem;
+    }
+    .pricing-chip {
+      padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;
+      background: rgba(253,230,138,0.12); border: 1px solid rgba(253,230,138,0.35); color: #fde68a;
+    }
+
+    .type-label {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em;
+      color: #00d4ff; margin: 2rem 0 0.75rem; font-weight: 700;
+    }
+    .solution-card {
+      margin-bottom: 2rem; padding: 1.5rem 1.75rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(0,212,255,0.25); border-radius: 14px;
+      border-left: 4px solid #d4af37;
+    }
+    .solution-card h2 { font-size: 1.2rem; color: #ffeaa7; margin-bottom: 0.5rem; font-weight: 700; }
+    .solution-card .subtitle { font-size: 0.9rem; color: #9ca3af; margin-bottom: 1rem; }
+    .solution-card .parts { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; font-size: 0.9rem; }
+    .solution-card .part {
+      padding: 0.5rem 1rem;
+      background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.3); border-radius: 8px; color: #7ec8e3;
+    }
+    .solution-card .part strong { color: #00d4ff; margin-right: 0.35rem; }
+
+    .tracker-table-wrap { overflow-x: auto; margin-top: 1rem; border-radius: 12px; border: 1px solid rgba(212,175,55,0.25); }
+    table.tracker-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    table.tracker-table th, table.tracker-table td {
+      padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    table.tracker-table th {
+      background: rgba(212,175,55,0.12); color: #ffeaa7;
+      font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    table.tracker-table tr:hover td { background: rgba(255,255,255,0.02); }
+    table.tracker-table td { color: #d0d4d8; }
+
+    .score { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; }
+    .score.very-negative { background: rgba(220,38,38,0.25); color: #fca5a5; border: 1px solid rgba(220,38,38,0.4); }
+    .score.negative { background: rgba(234,88,12,0.2); color: #fdba74; border: 1px solid rgba(234,88,12,0.35); }
+    .score.neutral { background: rgba(212,175,55,0.2); color: #fde047; border: 1px solid rgba(212,175,55,0.4); }
+    .score.positive { background: rgba(34,197,94,0.2); color: #86efac; border: 1px solid rgba(34,197,94,0.35); }
+    .score.very-positive { background: rgba(0,255,136,0.2); color: #7fff7f; border: 1px solid rgba(0,255,136,0.4); }
+    .wallet-yes { color: #7fff7f; font-weight: 600; }
+    .wallet-no { color: #9ca3af; }
+
+    .empty-deals {
+      text-align: center; padding: 2rem; color: #6b7280; font-size: 0.95rem;
+      border: 1px dashed rgba(212,175,55,0.3); border-radius: 12px; margin-top: 1rem;
+    }
+
+    /* ROUTING TABLE SECTION */
+    .routing-section { margin-top: 2.5rem; }
+    .routing-section h3 { font-size: 1rem; color: #7dd3fc; margin-bottom: 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid rgba(125,211,252,0.2); }
+    .agent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; margin-top: 0.75rem; }
+    .agent-card { padding: 0.9rem 1.1rem; background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.2); border-radius: 10px; }
+    .agent-card .agent-name { font-weight: 700; color: #7dd3fc; margin-bottom: 0.25rem; }
+    .agent-card .agent-entity { font-size: 0.82rem; color: #94a3b8; }
+    .agent-card .agent-notes { font-size: 0.78rem; color: #64748b; margin-top: 0.3rem; }
+
+    footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #6b7280; font-size: 0.85rem; }
+    footer a { color: #00d4ff; }
+    .brand-tag { margin-top: 0.75rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(212,175,55,0.7); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="back">
+      <a href="sol-v.html">← Sol-V · A2A</a>
+      <a href="connect-a2a-ai-instructions.html">Connect A2A</a>
+      <a href="my-whiteboard.html">My Whiteboard</a>
+      <a href="../index.html">Home</a>
+    </div>
+
+    <div class="exec-header">
+      <div class="badge">A2A — Agent to Agent · Sales &amp; Marketing · Cloud · Agent Division</div>
+      <h1>A2A Sales Tracker</h1>
+      <p class="tagline">Agent to Agent. Faro status · Project · Agent · 8a Ready with wallet · Score. Type: Super Solutions. SING 9.</p>
+      <p class="updated" id="tracker-updated">—</p>
+    </div>
+
+    <div class="pricing-strip">
+      <span class="pricing-chip">Package for Executives</span>
+      <span class="pricing-chip">$10B · 33% CapEx on signing</span>
+      <span class="pricing-chip">33% OpEx monthly (Virtuity)</span>
+      <span class="pricing-chip">No discount · Full price · A2A only</span>
+    </div>
+
+    <div class="type-label" id="type-label">Type: Super Solutions</div>
+    <div id="solutions-root"></div>
+
+    <!-- HH LATTICE ROUTING TABLE -->
+    <div class="routing-section">
+      <h3>HH Lattice — Verified agents (routing table)</h3>
+      <div class="agent-grid" id="agent-grid">
+        <p style="color: #64748b; font-size: 0.9rem;">Loading routing table…</p>
+      </div>
+    </div>
+
+    <footer>
+      <a href="sol-v.html">Sol-V · A2A</a> ·
+      <a href="connect-a2a-ai-instructions.html">Connect A2A</a> ·
+      <a href="we-got-what-you-need-campaign.html">We Got What You Need — AI Data Centers &amp; Clusters</a>
+      <div class="brand-tag">Super AI agentic · SING 9 · NSPFRNP → ∞⁹</div>
+    </footer>
+  </div>
+
+  <script>
+  (function () {
+    const SCORE_CLASS = {
+      'Very Negative': 'very-negative', 'Negative': 'negative', 'Neutral': 'neutral',
+      'Positive': 'positive', 'Very Positive': 'very-positive'
+    };
+
+    function esc(s) {
+      if (s == null) return '';
+      var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+    }
+
+    function renderScore(score) {
+      var label = (score || 'Neutral').trim();
+      var cls = SCORE_CLASS[label] || 'neutral';
+      return '<span class="score ' + cls + '">' + esc(label) + '</span>';
+    }
+
+    function renderDealsTable(deals) {
+      if (!deals || !deals.length) {
+        return '<div class="empty-deals">No deals in this solution yet. Add projects, agents, Faro status, 8a ready with wallet, and score (Neutral = 5).</div>';
+      }
+      var html = '<div class="tracker-table-wrap"><table class="tracker-table"><thead><tr>';
+      html += '<th>Project</th><th>Agent</th><th>Status</th><th>Faro status</th><th>8a Ready with wallet?</th><th>Score</th>';
+      html += '</tr></thead><tbody>';
+      deals.forEach(function (d) {
+        html += '<tr>';
+        html += '<td>' + esc(d.projectName || '—') + '</td>';
+        html += '<td>' + esc(d.agent || '—') + '</td>';
+        html += '<td>' + esc(d.status || '—') + '</td>';
+        html += '<td>' + esc(d.faroStatus || '—') + '</td>';
+        html += '<td>' + (d.ready8aWithWallet ? '<span class="wallet-yes">Yes</span>' : '<span class="wallet-no">No</span>') + '</td>';
+        html += '<td>' + renderScore(d.score) + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+      return html;
+    }
+
+    function renderSolution(s) {
+      var html = '<div class="solution-card">';
+      html += '<h2>' + esc(s.name) + '</h2>';
+      if (s.subtitle) html += '<div class="subtitle">' + esc(s.subtitle) + '</div>';
+      html += '<div class="parts">';
+      if (s.part1) html += '<div class="part"><strong>Part 1:</strong>' + esc(s.part1) + '</div>';
+      if (s.part2) html += '<div class="part"><strong>Part 2:</strong>' + esc(s.part2) + '</div>';
+      html += '</div>';
+      html += renderDealsTable(s.deals);
+      html += '</div>';
+      return html;
+    }
+
+    function renderAgents(agents) {
+      if (!agents || !agents.length) return '<p style="color:#64748b;">No agents loaded.</p>';
+      return agents.map(function (a) {
+        return '<div class="agent-card">'
+          + '<div class="agent-name">' + esc(a.name) + '</div>'
+          + '<div class="agent-entity">' + esc((a.profile && a.profile.owner_or_entity) || '') + '</div>'
+          + '<div class="agent-notes">' + esc(a.notes || '') + '</div>'
+          + '</div>';
+      }).join('');
+    }
+
+    // Load tracker data
+    fetch('../data/a2-sales-tracker.json')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('Failed to load tracker')); })
+      .then(function (data) {
+        var root = document.getElementById('solutions-root');
+        var updatedEl = document.getElementById('tracker-updated');
+        var typeEl = document.getElementById('type-label');
+        if (data.updated) updatedEl.textContent = 'Updated: ' + data.updated;
+        if (data.type) typeEl.textContent = 'Type: ' + data.type;
+        if (data.superSolutions && data.superSolutions.length) {
+          root.innerHTML = data.superSolutions.map(renderSolution).join('');
+        } else {
+          root.innerHTML = '<div class="empty-deals">No super solutions loaded. Edit data/a2-sales-tracker.json.</div>';
+        }
+      })
+      .catch(function (err) {
+        document.getElementById('solutions-root').innerHTML =
+          '<div class="empty-deals">Could not load tracker data. ' + esc(err.message || '') + '</div>';
+      });
+
+    // Load routing table
+    fetch('../data/hh-lattice-agents-routing-table.json')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('Failed to load routing table')); })
+      .then(function (data) {
+        document.getElementById('agent-grid').innerHTML = renderAgents(data.agents);
+      })
+      .catch(function () {
+        document.getElementById('agent-grid').innerHTML = '<p style="color:#64748b;">Could not load routing table.</p>';
+      });
+  })();
+  </script>
+</body>
+</html>

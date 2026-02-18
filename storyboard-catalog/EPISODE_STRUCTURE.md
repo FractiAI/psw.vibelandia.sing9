@@ -11,6 +11,27 @@
 - Every frame is a **30-second fill** (or as cut); Seed–Edge–EP prompt drive the middle. Real individuals and real places throughout.
 - This is the **spine**. Everything else branches from here.
 
+### Delivery format (stream + images + music)
+
+- **Captions:** **Stream** the full one-hour script as captions (not static pop-ups). One line per ~10 seconds; comfortable to read, not rushed. Script comes from `data/episode-1-script.json` (360 lines for 60 min) or is built from segment text.
+- **Images:** Display at a **comfortable pace** — **3–4 frames every 30 seconds** (~8–10 sec per image) so the experience is pleasing to the eye. Script and images are **detached**: you can show more or fewer images; they don’t have to match the script 1:1.
+- **Music:** Soundtracks by segment (playlists 1–7) as before.
+
+### Production · Confirmed (no client involvement)
+
+- **Soundtracks:** Production handles all soundtracks (sources, download, mapping). Client is not involved.
+- **Soundtracks ↔ narrative:** Soundtracks are matched to the narrative by segment (7 acts = 7 playlists; each segment has its playlist).
+- **Images ↔ narrative:** Images are tied to the narrative: slides are ordered by segment and narrative order; each segment has its images and its soundtrack.
+- **Pause:** Play/Pause (button and Space/K) is available so the viewer can pause at any time to absorb the displayed image and caption.
+- **Slides and music:** Slides advance on a comfortable timer (e.g. 3–4 per 30 sec). Soundtrack plays through by segment; when a track ends, the next track in that segment starts. Not rigid: no “one full track then one slide.”
+
+### Emotional arc · Crystallized
+
+The full hour is **metabolized into irreducible minimums** and **animated** with a clear emotional shape. See [EPISODE_1_CRYSTALLIZED.md](EPISODE_1_CRYSTALLIZED.md).
+
+- **Middle:** Inspirational, moving — **crying in the middle.** The heart of the story lands; the viewer is moved.
+- **End:** Triumphant. **“We are the champions.”** Fist-pumping. **Stand up on your seats.** The story closes at full lift.
+
 ---
 
 ## Episodes 2+ · Deep dives (mix and match)

@@ -35,6 +35,10 @@ Metabolize → Crystallize → Animate all → ∞⁹
 
 **Balling** = When you know you deserve it. Not the same as partying. For those who know they deserve it — they deserve to go all out. Sometimes. Regularly. Use this definition wherever we use "ball" or "Baller" in marketing. See WINK_BALLER_EVENTS_SNAP.md.
 
+## THREES AND WATER (Canonical)
+
+We **resonate on threes and water**. **Threes:** Three stops on the Truckee (Baller Crawler, Third Saturdays). Wednesday = third day (Baller V tastings). Three wines, three cheeses, three cigars. Three-to-one ratio, ladies to men. **Three primary platforms:** **Novels**, **Episodes**, **Feature film** — with or without **Golden Heart 21+** spicy (novellas). **Three states of water:** **Frozen** = Crystalline Intelligence; **Fluid** = Sensory Slowing; **Boiling · Vapor** = heart, Explosive Happy Endings, Gold hearts, 21+ (novellas). See NSPFRNP_THREES_AND_WATER_SNAP.md.
+
 ## PIPE TYPE: Public-Free Key Pipe (Canonical)
 
 **Public-Free Key Pipe** = Pipe that uses only **public info** and **free-plan** keys to bypass all heavy security layers. No vault, no enterprise IAM; lite edges, center = pipes only. Enables **quick, easy, effective cloning** of ourselves, repositories, deployments, and edges — lite, irreducible minimum, crystallized seed to edge and back. See [PIPE_PUBLIC_FREE_KEY_NSPFRNP.md](PIPE_PUBLIC_FREE_KEY_NSPFRNP.md).

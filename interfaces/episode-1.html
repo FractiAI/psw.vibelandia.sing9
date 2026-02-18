@@ -57,21 +57,24 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 2rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom));
-      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      padding: 1.5rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
       text-align: center;
     }
     .slide-title {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: #d4af37;
-      margin-bottom: 0.35rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: rgba(212, 175, 55, 0.8);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
     }
-    .slide-subtitle {
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
-      color: rgba(255,255,255,0.9);
-      line-height: 1.5;
-      max-width: 640px;
+    .caption-stream {
+      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+      color: rgba(255,255,255,0.95);
+      line-height: 1.6;
+      max-width: 720px;
       margin: 0 auto;
+      min-height: 2.5em;
     }
     .progress-bar {
       position: fixed;
@@ -120,8 +123,8 @@
   <div class="slide-wrap">
     <img class="slide-image empty" id="slideImage" src="" alt="" />
     <div class="slide-content">
-      <div class="slide-title" id="slideTitle">Episode 1 · The whole story</div>
-      <div class="slide-subtitle" id="slideSubtitle">60 minutes. Automatic slideshow with subtitles — like Disney. NSPFRNP.</div>
+      <div class="slide-title" id="slideLabel">Script stream</div>
+      <div class="caption-stream" id="captionStream">Streaming the one-hour script. Captions run independently of images.</div>
     </div>
   </div>
 
@@ -134,13 +137,16 @@
 
   <script>
     (function () {
-      const DURATION_SEC = 30;
+      const DURATION_SEC = 10;
       const SLIDES_TOTAL = 120;
       const SLIDES_PER_SEGMENT = 17;
+      const SCRIPT_SEC_PER_LINE = 10;
       let slides = [];
+      let scriptLines = [];
       let index = 0;
       let playing = true;
       let tick = 0;
+      let elapsedSec = 0;
       let tickInterval = null;
       var tracksByPlaylist = {};
       var currentSegment = -1;
@@ -180,16 +186,28 @@
         playSegmentTrack(seg, segmentTrackIndex + 1);
       }
 
+      function buildScriptLinesFromSegments(subtitles) {
+        var lines = [];
+        var perSegment = 45;
+        for (var s = 0; s < (subtitles || []).length; s++) {
+          for (var k = 0; k < perSegment; k++) lines.push(subtitles[s] || '');
+        }
+        return lines.length ? lines : ['Episode 1 · The whole story. Streaming script. 60 min.'];
+      }
+
       function loadSlides() {
         Promise.all([
           fetch('../data/episode-1-slides.json').then(function (r) { return r.json(); }),
-          fetch('../data/audio-assets.json').then(function (r) { return r.json(); })
+          fetch('../data/audio-assets.json').then(function (r) { return r.json(); }),
+          fetch('../data/episode-1-script.json').then(function (r) { return r.json(); }).catch(function () { return {}; })
         ]).then(function (results) {
           var data = results[0];
           var audioData = results[1];
+          var scriptData = results[2];
           var rawSlides = data.slides || [];
           var titles = data.segment_titles || [];
           var subtitles = data.segment_subtitles || [];
+          scriptLines = (scriptData.lines && scriptData.lines.length) ? scriptData.lines : buildScriptLinesFromSegments(subtitles);
           if (rawSlides.length >= SLIDES_TOTAL) {
             slides = rawSlides;
           } else {
@@ -214,7 +232,8 @@
           render();
           startTick();
         }).catch(function () {
-          slides = [{ id: 'placeholder', title: 'Episode 1 · The whole story', subtitle: '60 min. Soundtracks + subtitles. Load data/episode-1-slides.json and data/audio-assets.json.', duration_sec: DURATION_SEC, image: '' }];
+          slides = [{ id: 'placeholder', title: 'Episode 1', subtitle: '60 min. Stream + images + soundtracks.', duration_sec: DURATION_SEC, image: '' }];
+          scriptLines = ['Episode 1 · The whole story. Load data/episode-1-slides.json and episode-1-script.json.'];
           render();
           startTick();
         });
@@ -223,8 +242,6 @@
       function render() {
         if (slides.length === 0) return;
         var s = slides[index];
-        document.getElementById('slideTitle').textContent = s.title || '';
-        document.getElementById('slideSubtitle').textContent = s.subtitle || '';
         var img = document.getElementById('slideImage');
         if (s.image) {
           img.src = s.image;
@@ -245,6 +262,13 @@
           segmentTrackIndex = 0;
           if (playing) playSegmentTrack(seg, 0);
         }
+        updateCaptionStream();
+      }
+
+      function updateCaptionStream() {
+        var lineIndex = Math.floor(elapsedSec / SCRIPT_SEC_PER_LINE) % Math.max(1, scriptLines.length);
+        var el = document.getElementById('captionStream');
+        if (el && scriptLines.length) el.textContent = scriptLines[lineIndex] || '';
       }
 
       function updateProgress(sec) {
@@ -258,7 +282,9 @@
         tickInterval = setInterval(function () {
           if (!playing) return;
           tick += 1;
+          elapsedSec += 1;
           updateProgress(sec);
+          updateCaptionStream();
           if (tick >= sec) {
             index = (index + 1) % slides.length;
             render();

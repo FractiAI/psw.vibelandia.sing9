@@ -74,7 +74,7 @@
 | Destinations · Magazine Catalog | — (Book direct for standard experience, or through us: 125% of the booking for our post-singularity layer) |
 | Tour Vibelandia · Our campus | — |
 | Our content catalog | — |
-| **Vendors** | — (Our picks for who we work with; no formal relationship. We deliver Baller V to members through them.) |
+| **Vendors** | — (Our picks; no formal relationship. We deliver Baller V to members through them. **10% finders fee** when members book through our recommendation, or mutually agreed referral % in writing.) |
 
 We don't hide. This is an experience; we take you through it. Not a transaction.
 

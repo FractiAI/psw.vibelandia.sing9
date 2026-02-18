@@ -17,14 +17,14 @@
 
 ## The 3-day segment: four options (locked partners)
 
-The **three-day segment** is not hardcoded to one activity. Guest chooses one. We use these **top-rated, locked-in partners**:
+Guest chooses one. **Partners locked and loaded** (e.g. Mendoza = 5-star at winery: Casa de Uco; Entre Ríos = De Bernardis). Full priced proposal: [ARGENTINA_PRICED_PROPOSAL.md](ARGENTINA_PRICED_PROPOSAL.md).
 
 | Option | Activity | Partner / operator | Lodging (first preference) |
 |--------|----------|--------------------|----------------------------|
 | **A** | **3 days skiing · Bariloche** | **Cerro Catedral** — Argentina’s top-rated and South America’s largest ski resort (53 trails, 39 lifts, base village). | **NH Bariloche Edelweiss** (walkable downtown Bariloche, San Martín 202) or **Hotel Catedral** (ski-in/ski-out at base). |
-| **B** | **3 days wine country · Mendoza** | **Park Hyatt Mendoza** (5-star, Plaza Independencia, walkable downtown; 15 min to vineyards) or **Casa de Uco Vineyards & Wine Resort** (Uco Valley, 320 ha, SLH, winery on-site) or **The Vines Resort & Spa** (1,500 acres, Mallmann restaurant). First preference: downtown walkable (Park Hyatt); alternatively at winery or 5-star frontier. | Park Hyatt Mendoza (downtown) or Casa de Uco / The Vines (at vineyard). |
+| **B** | **3 days wine country · Mendoza** | **Casa de Uco Vineyards & Wine Resort** (5-star at vineyard, locked). Uco Valley, SLH. | On-site at Casa de Uco. |
 | **C** | **3 days Golden Dorado fishing** | **Pirá Lodge** (Nervous Waters) — Argentina’s first and best Golden Dorado lodge. Corrientes Province, Esteros del Iberá (3+ million-acre reserve). Hell’s Bay skiffs, sight-fishing; 5–10 fish per rod typical, trophies 25+ lb. | Lodge at fishery (Pirá Lodge — deluxe rooms, pool, farm-to-table + Catena Zapata wines). |
-| **D** | **3 days hunting · Entre Ríos** | Our **partner in Entre Ríos** (hunt operator there). Optional extras on the hunt as desired. | Per partner; we coordinate. |
+| **D** | **3 days hunting · Entre Ríos** | **De Bernardis Hunting** (locked). | Per partner; we coordinate. |
 
 All four options are in our **full catalog** and in **priced proposals**. Rest of the week: **Buenos Aires** (Hotel Claridge, half-day tour each day, transfers, F&B Baller level).
 

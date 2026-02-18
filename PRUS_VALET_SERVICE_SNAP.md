@@ -58,7 +58,7 @@
 
 - **Experience, not transaction.** Story and safari/explorer skin. Take us through it. Chart, expedition feel. Same water background as landing (Human Vibers side).
 - **Letterhead:** Mark Twain's Post-Singularity Vibelandia (main) → Pru's Valet Service → For Human Vibers and Channelers.
-- **Menu (six ways in):** (1) Downtown Truckee River Baller V Crawler, (2) Baller V Wednesdays, (3) Destinations · Magazine Catalog, (4) Tour Vibelandia · Our campus, (5) Our content catalog (novels, novellas, series, episodes), (6) **Vendors** — local and destination vendors, experienced, interested in being included. Click Vendors → pre-fill email to us; we'll get back to you; handled offline, old school.
+- **Menu (five ways in):** (1) Downtown Truckee River Baller V Crawler, (2) Baller V Wednesdays, (3) Destinations · Magazine Catalog, (4) Our content catalog (novels, novellas, series, episodes), (5) **Baller V & Destinations Operators** — local and destination operators, experienced, interested in being included. Click Vendors → pre-fill email to us; we'll get back to you; handled offline, old school.
 - **Include the prices. Right up front.**
 
 ---
@@ -69,12 +69,11 @@
 
 | Offering | Price (includes 25% gratuity) |
 |---------|------------------------------|
-| Baller V Wednesdays · Golden Wine Tasting Pass | $416 |
+| Wink! & Vibers · Baller V Mixer Wednesdays · Golden Wine Tasting Pass (3-3-3) | $416 |
 | Downtown Truckee River Baller V Crawler | $12,500 |
-| Destinations · Magazine Catalog | — (Book direct for standard experience, or through us: 125% of the booking for our post-singularity layer) |
-| Tour Vibelandia · Our campus | — |
+| Aquí y Allá · Destinations Magazine Catalog | — (One click to escape. We charge 125%; we don't compete with operators — we're their best customers. Win-win-win.) |
 | Our content catalog | — |
-| **Vendors** | — (Our picks; no formal relationship. We deliver Baller V to members through them. **10% finders fee** when members book through our recommendation, or mutually agreed referral % in writing.) |
+| **Baller V & Destinations Operators** | — (Our picks; no formal relationship. We deliver Baller V to members through them. **10% finders fee** when members book through our recommendation, or mutually agreed referral % in writing.) |
 
 We don't hide. This is an experience; we take you through it. Not a transaction.
 

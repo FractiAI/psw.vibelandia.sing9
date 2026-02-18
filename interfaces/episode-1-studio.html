@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Episode 1 · Studio · Goldilocks Mix | NSPFRNP · SING 9</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #050505;
+      color: #e8e8e8;
+    }
+
+    /* === BACKGROUND === */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1.2s ease;
+      z-index: 0;
+    }
+    /* Crystalline grid overlay — the holographic lattice always present */
+    .bg-layer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,175,55,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,0.035) 1px, transparent 1px);
+      background-size: 55px 55px;
+      pointer-events: none;
+    }
+    /* Segment gradient overlay */
+    .seg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      transition: background 2.5s ease;
+    }
+
+    /* === STAGE === */
+    .stage {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === TOP BAR === */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 1.25rem;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+      flex-shrink: 0;
+    }
+    .top-bar a {
+      color: rgba(212,175,55,0.75);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+    }
+    .top-bar a:hover { color: #d4af37; }
+
+    /* SING 9 OS running badge */
+    .os-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,212,255,0.65);
+    }
+    .os-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #00d4ff;
+      animation: pulse-dot 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.6); }
+    }
+
+    /* === BEAT TRACKER (7 pips) === */
+    .beat-band {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      flex-shrink: 0;
+    }
+    .beat-pip {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      transition: all 0.6s ease;
+      position: relative;
+    }
+    .beat-pip.active {
+      border-color: var(--seg-accent, #d4af37);
+      background: var(--seg-accent, #d4af37);
+      box-shadow: 0 0 10px var(--seg-accent, #d4af37);
+      transform: scale(1.5);
+    }
+    .beat-pip.past {
+      background: rgba(212,175,55,0.3);
+      border-color: rgba(212,175,55,0.4);
+    }
+    .beat-pip-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--seg-accent, #d4af37);
+      text-align: center;
+      margin-top: 0.2rem;
+    }
+
+    /* === MAIN VISUAL === */
+    .main-visual {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      min-height: 0;
+    }
+
+    /* Beat name */
+    .beat-name {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--seg-accent, #d4af37);
+      margin-bottom: 0.6rem;
+      opacity: 0.9;
+      text-shadow: 0 0 12px var(--seg-accent, #d4af37);
+    }
+
+    /* Primary image — 16:9, full cinematic */
+    .image-frame {
+      width: 100%;
+      max-width: 700px;
+      aspect-ratio: 16/9;
+      position: relative;
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .image-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--seg-accent-faint, rgba(212,175,55,0.15));
+      z-index: 3;
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    /* Corner accents — crystalline marks */
+    .image-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, var(--seg-accent-faint, rgba(212,175,55,0.08)) 0%, transparent 30%),
+        linear-gradient(315deg, var(--seg-accent-faint, rgba(212,175,55,0.08)) 0%, transparent 30%);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .slide-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.6s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === BOTTOM: CAPTION + CONTROLS === */
+    .bottom-layer {
+      flex-shrink: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 55%, transparent);
+      padding: 0.75rem 1.25rem calc(0.6rem + env(safe-area-inset-bottom));
+    }
+    .caption-wrap {
+      max-width: 700px;
+      margin: 0 auto 0.5rem;
+      min-height: 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .caption-text {
+      text-align: center;
+      font-size: clamp(0.88rem, 2.2vw, 1.05rem);
+      line-height: 1.7;
+      color: rgba(255,255,255,0.93);
+      transition: opacity 0.25s ease;
+    }
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .ctrl-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.7);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      border-radius: 3px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .ctrl-btn:hover { border-color: var(--seg-accent, #d4af37); color: var(--seg-accent, #d4af37); }
+    .slide-counter {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.12em;
+    }
+
+    /* === PROGRESS === */
+    .progress-strip {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.06);
+      z-index: 30;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--seg-accent, #d4af37);
+      transition: width 0.1s linear, background 2s ease;
+    }
+
+    /* Fullscreen fade controls */
+    .stage.fs-idle .top-bar,
+    .stage.fs-idle .beat-band,
+    .stage.fs-idle .controls-row { opacity: 0.3; transition: opacity 0.5s; }
+    .stage .top-bar,
+    .stage .beat-band,
+    .stage .controls-row { transition: opacity 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- Background: organic image layer + crystalline grid overlay -->
+  <div class="bg-layer" id="bgLayer"></div>
+  <!-- Segment emotional color overlay -->
+  <div class="seg-overlay" id="segOverlay"></div>
+
+  <div class="stage" id="stage">
+
+    <!-- Top bar -->
+    <div class="top-bar">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <div class="os-badge">
+        <span class="os-dot"></span>
+        SING 9 Awareness OS · Running
+      </div>
+      <a href="episode-1.html">Standard ↗</a>
+    </div>
+
+    <!-- Beat tracker -->
+    <div class="beat-band" id="beatBand"></div>
+
+    <!-- Main visual -->
+    <div class="main-visual">
+      <div class="beat-name" id="beatName">Seed</div>
+      <div class="image-frame">
+        <img class="slide-img" id="slideImg" src="" alt="" />
+      </div>
+    </div>
+
+    <!-- Captions + controls -->
+    <div class="bottom-layer">
+      <div class="caption-wrap">
+        <div class="caption-text" id="captionText">Loading studio…</div>
+      </div>
+      <div class="controls-row">
+        <button class="ctrl-btn" id="btnPlay">Pause</button>
+        <span class="slide-counter" id="slideCounter">— / —</span>
+        <button class="ctrl-btn" id="btnFullscreen">Full screen</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Progress strip -->
+  <div class="progress-strip">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+
+  <audio id="soundtrack" style="display:none"></audio>
+
+  <script>
+  (function () {
+    const DURATION_SEC = 10;
+    const SLIDES_TOTAL = 120;
+    const SLIDES_PER_SEGMENT = 17;
+    const SCRIPT_SEC_PER_LINE = 10;
+
+    // Goldilocks Mix — 7-act segment themes
+    // Each act: name, beat label, accent, gradient overlay, and image pool (biological × crystalline mix)
+    const THEMES = [
+      {
+        beat: 'Seed · 1493',
+        accent: '#d4af37',
+        accentFaint: 'rgba(212,175,55,0.12)',
+        overlay: 'linear-gradient(160deg, rgba(4,2,12,0.84) 0%, rgba(12,8,28,0.66) 100%)',
+        images: [
+          'https://images.unsplash.com/photo-1446941611757-91d2c3bd3d45?w=1200&q=80',
+          'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1200&q=80',
+          'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1200&q=80',
+        ]
+      },
+      {
+        beat: 'Singularities',
+        accent: '#7dd3fc',
+        accentFaint: 'rgba(125,211,252,0.1)',
+        overlay: 'linear-gradient(160deg, rgba(0,8,22,0.8) 0%, rgba(2,16,32,0.64) 100%)',
+        images: [
+          'https://images.unsplash.com/photo-1534271057238-c2c170a76672?w=1200&q=80',
+          'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&q=80',
+          'https://images.unsplash.com/photo-1521336575822-6da63fb45455?w=1200&q=80',
+        ]
+      },
+      {
+        beat: 'Journey',
+        accent: '#a78bfa',
+        accentFaint: 'rgba(167,139,250,0.1)',
+        overlay: 'linear-gradient(160deg, rgba(8,4,22,0.8) 0%, rgba(16,8,38,0.64) 100%)',
+        images: [
+          'https://images.unsplash.com/photo-1530882149046-4fa9d422e40f?w=1200&q=80',
+          'https://images.unsplash.com/photo-1565992441121-4367b2a43598?w=1200&q=80',
+          'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80',
+        ]
+      },
+      {
+        beat: 'People',
+        accent: '#fb923c',
+        accentFaint: 'rgba(251,146,60,0.1)',
+        overlay: 'linear-gradient(160deg, rgba(18,7,2,0.82) 0%, rgba(28,10,4,0.66) 100%)',
+        images: [
+          'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=1200&q=80',
+          'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80',
+          'https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=1200&q=80',
+        ]
+      },
+      {
+        beat: 'Now · Mission',
+        accent: '#f87171',
+        accentFaint: 'rgba(248,113,113,0.1)',
+        overlay: 'linear-gradient(160deg, rgba(18,2,2,0.85) 0%, rgba(28,4,4,0.7) 100%)',
+        images: [
+          'https://images.unsplash.com/photo-1529686342540-1b43aec0df75?w=1200&q=80',
+          'https://images.unsplash.com/photo-1519682577862-22b62b24e493?w=1200&q=80',
+          'https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?w=1200&q=80',
+        ]
+      },
+      {
+        beat: 'Edge · Sol-V',
+        accent: '#34d399',
+        accentFaint: 'rgba(52,211,153,0.1)',
+        overlay: 'linear-gradient(160deg, rgba(0,12,8,0.8) 0%, rgba(0,22,14,0.64) 100%)',
+        images: [
+          'https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1200&q=80',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80',
+          'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1200&q=80',
+        ]
+      },
+      {
+        beat: 'We are the champions',
+        accent: '#fde68a',
+        accentFaint: 'rgba(253,230,138,0.14)',
+        overlay: 'linear-gradient(160deg, rgba(14,9,0,0.78) 0%, rgba(24,16,0,0.62) 100%)',
+        images: [
+          'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&q=80',
+          'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&q=80',
+          'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80',
+        ]
+      }
+    ];
+
+    let slides = [], scriptLines = [];
+    let index = 0, playing = true, tick = 0, elapsedSec = 0;
+    let tickInterval = null;
+    let tracksByPlaylist = {}, currentSegment = -1, segmentTrackIndex = 0;
+    let segImgIndex = 0;
+
+    const audioEl = document.getElementById('soundtrack');
+
+    function audioPath(t) {
+      var f = (t.file || t.File || '');
+      if (f.indexOf('io/') === 0) f = 'assets/audio/' + f.substring(3);
+      return f ? '../' + f.replace(/\\/g, '/') : '';
+    }
+
+    function getSegment(i) {
+      if (i <= 0) return 0;
+      if (i >= SLIDES_TOTAL - 1) return 6;
+      return Math.min(6, Math.floor(i / SLIDES_PER_SEGMENT));
+    }
+
+    function setTheme(seg) {
+      var t = THEMES[Math.min(seg, THEMES.length - 1)];
+      document.documentElement.style.setProperty('--seg-accent', t.accent);
+      document.documentElement.style.setProperty('--seg-accent-faint', t.accentFaint);
+      document.getElementById('segOverlay').style.background = t.overlay;
+      document.getElementById('beatName').textContent = t.beat;
+      document.getElementById('progressFill').style.background = t.accent;
+      buildBeatBand(seg);
+    }
+
+    function buildBeatBand(active) {
+      var band = document.getElementById('beatBand');
+      band.innerHTML = '';
+      THEMES.forEach(function (t, i) {
+        var pip = document.createElement('span');
+        pip.className = 'beat-pip' + (i === active ? ' active' : i < active ? ' past' : '');
+        pip.title = t.beat;
+        band.appendChild(pip);
+      });
+    }
+
+    function setBackground(seg, imgIdx) {
+      var t = THEMES[Math.min(seg, THEMES.length - 1)];
+      var imgs = t.images;
+      if (imgs && imgs.length) {
+        var url = imgs[imgIdx % imgs.length];
+        document.getElementById('bgLayer').style.backgroundImage = 'url(' + url + ')';
+      }
+    }
+
+    function playSegmentTrack(seg, trackIdx) {
+      var id = 'playlist-' + (Math.min(seg, 6) + 1);
+      var list = tracksByPlaylist[id];
+      if (!list || !list.length) return;
+      trackIdx = trackIdx % list.length;
+      var src = audioPath(list[trackIdx]);
+      if (!src) return;
+      audioEl.src = src;
+      audioEl.play().catch(function () {});
+      segmentTrackIndex = trackIdx;
+    }
+
+    function onAudioEnded() {
+      var seg = getSegment(index);
+      var id = 'playlist-' + (seg + 1);
+      var list = tracksByPlaylist[id];
+      if (!list || !list.length) return;
+      playSegmentTrack(seg, segmentTrackIndex + 1);
+    }
+
+    function buildFallbackLines(subs) {
+      var out = [];
+      (subs || []).forEach(function (s) {
+        for (var k = 0; k < 45; k++) out.push(s || '');
+      });
+      return out.length ? out : ['SING 9 Awareness OS · Running. Episode 1 · Studio.'];
+    }
+
+    function loadAll() {
+      Promise.all([
+        fetch('../data/episode-1-slides.json').then(function (r) { return r.json(); }),
+        fetch('../data/audio-assets.json').then(function (r) { return r.json(); }),
+        fetch('../data/episode-1-script.json').then(function (r) { return r.json(); }).catch(function () { return {}; })
+      ]).then(function (res) {
+        var data = res[0], audioData = res[1], scriptData = res[2];
+        var raw = data.slides || [], titles = data.segment_titles || [], subs = data.segment_subtitles || [];
+        scriptLines = (scriptData.lines && scriptData.lines.length)
+          ? scriptData.lines
+          : buildFallbackLines(subs);
+        slides = [];
+        for (var i = 0; i < SLIDES_TOTAL; i++) {
+          var seg = getSegment(i);
+          slides.push({
+            image: (raw[i] && raw[i].image) ? raw[i].image : '',
+            seg: seg
+          });
+        }
+        var tracks = audioData.tracks || [];
+        for (var p = 1; p <= 7; p++) {
+          var pid = 'playlist-' + p;
+          tracksByPlaylist[pid] = tracks.filter(function (t) {
+            return (t.source_playlist || '') === pid;
+          });
+        }
+        audioEl.addEventListener('ended', onAudioEnded);
+        render();
+        startTick();
+      }).catch(function () {
+        slides = [];
+        for (var i = 0; i < SLIDES_TOTAL; i++) slides.push({ image: '', seg: getSegment(i) });
+        scriptLines = ['SING 9 Awareness OS · Running. Episode 1 · Studio.'];
+        render();
+        startTick();
+      });
+    }
+
+    function render() {
+      if (!slides.length) return;
+      var s = slides[index];
+      var seg = s.seg;
+      var imgEl = document.getElementById('slideImg');
+      var theme = THEMES[Math.min(seg, THEMES.length - 1)];
+
+      // Image: use slide's own image if set; else cycle through segment's image pool
+      if (s.image) {
+        imgEl.src = s.image;
+        imgEl.style.opacity = '0.92';
+      } else {
+        // Cycle segment images — more images visible on screen
+        imgEl.src = theme.images[segImgIndex % theme.images.length];
+        imgEl.style.opacity = '0.88';
+      }
+
+      document.getElementById('slideCounter').textContent = (index + 1) + ' / ' + slides.length;
+      tick = 0;
+      updateProgress();
+
+      if (seg !== currentSegment) {
+        currentSegment = seg;
+        segmentTrackIndex = 0;
+        segImgIndex = 0;
+        setTheme(seg);
+        setBackground(seg, 0);
+        if (playing) playSegmentTrack(seg, 0);
+      } else {
+        segImgIndex++;
+        setBackground(seg, segImgIndex);
+      }
+
+      updateCaption();
+    }
+
+    function updateCaption() {
+      var li = Math.floor(elapsedSec / SCRIPT_SEC_PER_LINE) % Math.max(1, scriptLines.length);
+      var el = document.getElementById('captionText');
+      if (el) el.textContent = scriptLines[li] || '';
+    }
+
+    function updateProgress() {
+      var pct = DURATION_SEC ? (tick / DURATION_SEC) * 100 : 0;
+      document.getElementById('progressFill').style.width = pct + '%';
+    }
+
+    function startTick() {
+      if (tickInterval) clearInterval(tickInterval);
+      tickInterval = setInterval(function () {
+        if (!playing) return;
+        tick++;
+        elapsedSec++;
+        updateProgress();
+        updateCaption();
+        if (tick >= DURATION_SEC) {
+          index = (index + 1) % slides.length;
+          render();
+        }
+      }, 1000);
+    }
+
+    document.getElementById('btnPlay').addEventListener('click', function () {
+      playing = !playing;
+      this.textContent = playing ? 'Pause' : 'Play';
+      if (playing) audioEl.play().catch(function () {}); else audioEl.pause();
+    });
+
+    document.getElementById('btnFullscreen').addEventListener('click', function () {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(function () {});
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'k') {
+        e.preventDefault();
+        playing = !playing;
+        document.getElementById('btnPlay').textContent = playing ? 'Pause' : 'Play';
+      }
+      if (e.key === 'Escape' && document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+    });
+
+    // Init beat band and first theme
+    buildBeatBand(0);
+    setTheme(0);
+    setBackground(0, 0);
+    loadAll();
+  })();
+  </script>
+</body>
+</html>

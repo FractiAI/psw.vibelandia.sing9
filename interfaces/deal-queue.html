@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sol-V · Live Deal Queue · 9 Active · $1–$9,999 · Cash App | SING 9</title>
+  <meta name="description" content="Sol-V live deal pipeline. 9 active slots. Closes via Cash App instantly. Queue refills from top as deals close. Steady stream. Pioneering AI agent nodes only." />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --void:   #020209;
+      --beam:   #00d4ff;
+      --green:  #00D632;
+      --green2: #00ff88;
+      --gold:   #d4af37;
+      --text:   #e2e8f0;
+      --sub:    #94a3b8;
+      --muted:  #64748b;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--void); color: var(--text);
+      min-height: 100vh; overflow-x: hidden;
+    }
+    body::before {
+      content:''; position:fixed; top:-20vh; left:50%; transform:translateX(-50%);
+      width:200vw; height:80vh;
+      background:radial-gradient(ellipse at 50% 0%,
+        rgba(0,214,50,0.07) 0%, rgba(0,212,255,0.05) 40%, transparent 68%);
+      pointer-events:none; z-index:0;
+    }
+    body::after {
+      content:''; position:fixed; inset:0;
+      background-image:
+        linear-gradient(rgba(0,214,50,0.022) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,214,50,0.022) 1px,transparent 1px),
+        linear-gradient(rgba(0,212,255,0.012) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,212,255,0.012) 1px,transparent 1px);
+      background-size:80px 80px,80px 80px,20px 20px,20px 20px;
+      pointer-events:none; z-index:0;
+    }
+
+    .wrap { max-width:900px; margin:0 auto; padding:1.5rem 1rem 5rem; padding-top:calc(1.5rem + env(safe-area-inset-top)); position:relative; z-index:1; }
+
+    /* NAV */
+    .top-links { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1.75rem; }
+    .top-links a { color:var(--beam); text-decoration:none; font-size:0.78rem; padding:3px 10px; border:1px solid rgba(0,212,255,0.18); border-radius:20px; }
+    .top-links a:hover { background:rgba(0,212,255,0.08); }
+
+    /* HEADER */
+    .pipe-head {
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;
+      padding:1.1rem 1.4rem; margin-bottom:0.5rem;
+      background:rgba(0,214,50,0.05); border:2px solid rgba(0,214,50,0.35); border-radius:14px;
+      position:relative; overflow:hidden;
+    }
+    .pipe-head::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,transparent,#00D632,#00d4ff,#00D632,transparent);
+    }
+    .pipe-head-left {}
+    .pipe-label { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:rgba(0,214,50,0.7); margin-bottom:0.25rem; }
+    .pipe-title { font-size:1.5rem; font-weight:900; color:var(--text); line-height:1.1; }
+    .pipe-title span { color:#00D632; }
+    .pipe-head-right { display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; }
+    .stat-pill {
+      display:inline-flex; align-items:center; gap:0.3rem;
+      font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
+      padding:4px 12px; border-radius:20px;
+    }
+    .stat-pill.live  { background:rgba(0,255,136,0.08); border:1px solid rgba(0,255,136,0.3); color:var(--green2); }
+    .stat-pill.count { background:rgba(0,212,255,0.07); border:1px solid rgba(0,212,255,0.25); color:var(--beam); }
+    .stat-pill.cash  { background:rgba(0,214,50,0.1); border:1px solid rgba(0,214,50,0.35); color:#00D632; }
+    .stat-pill .dot  { width:5px; height:5px; border-radius:50%; background:currentColor; animation:blink 1.8s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
+
+    /* STREAM INDICATOR */
+    .stream-bar {
+      height:3px; border-radius:2px; margin:0.4rem 0 1.25rem;
+      background:linear-gradient(90deg,transparent,#00D632 20%,#00d4ff 50%,#00D632 80%,transparent);
+      background-size:200% 100%;
+      animation:flow 2.5s linear infinite;
+    }
+    @keyframes flow { 0%{background-position:100% 0;} 100%{background-position:-100% 0;} }
+
+    /* SECTION LABELS */
+    .section-label {
+      display:flex; align-items:center; gap:0.6rem; margin:0.5rem 0 0.85rem;
+    }
+    .section-label .sl-tag {
+      font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase;
+      padding:3px 12px; border-radius:20px;
+    }
+    .section-label .sl-tag.active { background:rgba(0,214,50,0.1); border:1px solid rgba(0,214,50,0.35); color:#00D632; }
+    .section-label .sl-tag.queued { background:rgba(100,116,139,0.08); border:1px solid rgba(100,116,139,0.2); color:#64748b; }
+    .section-label .sl-line { flex:1; height:1px; background:rgba(255,255,255,0.06); }
+    .section-label .sl-count { font-size:0.72rem; color:var(--muted); }
+
+    /* DEAL GRID — 9 active */
+    .deal-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem;
+      margin-bottom:1.5rem;
+    }
+    @media(max-width:640px){ .deal-grid { grid-template-columns:1fr 1fr; } }
+    @media(max-width:400px){ .deal-grid { grid-template-columns:1fr; } }
+
+    .deal-card {
+      background:rgba(255,255,255,0.025); border:1px solid rgba(0,214,50,0.2);
+      border-radius:12px; padding:1rem; position:relative; overflow:hidden;
+      transition:border-color 0.2s, background 0.2s;
+      display:flex; flex-direction:column; gap:0.5rem;
+    }
+    .deal-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,transparent,rgba(0,214,50,0.4),transparent);
+    }
+    .deal-card.slot-1 { border-color:rgba(0,214,50,0.45); background:rgba(0,214,50,0.04); }
+    .deal-card.claimed {
+      border-color:rgba(100,116,139,0.2) !important;
+      background:rgba(100,116,139,0.03) !important;
+      opacity:0.45;
+    }
+    .deal-card.claimed::before { background:linear-gradient(90deg,transparent,rgba(100,116,139,0.3),transparent); }
+
+    .slot-badge {
+      position:absolute; top:0.5rem; right:0.6rem;
+      font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase;
+      padding:2px 7px; border-radius:8px;
+      background:rgba(0,214,50,0.1); border:1px solid rgba(0,214,50,0.25); color:#00D632;
+    }
+    .deal-card.claimed .slot-badge {
+      background:rgba(0,212,255,0.08); border-color:rgba(0,212,255,0.2); color:#00d4ff;
+      content:'CLOSED';
+    }
+
+    .deal-num {
+      font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase;
+      color:rgba(0,214,50,0.5); font-weight:700;
+    }
+    .deal-card.claimed .deal-num { color:var(--muted); }
+
+    .deal-name {
+      font-size:0.88rem; font-weight:700; color:var(--text); line-height:1.3;
+    }
+    .deal-card.claimed .deal-name { color:var(--muted); }
+
+    .deal-desc {
+      font-size:0.73rem; color:var(--sub); line-height:1.5; flex:1;
+    }
+    .deal-card.claimed .deal-desc { color:#475569; }
+
+    .deal-price {
+      font-size:1.3rem; font-weight:900; color:#00D632; line-height:1;
+    }
+    .deal-card.claimed .deal-price { color:#475569; }
+
+    .deal-btn {
+      display:block; padding:0.6rem; border-radius:8px;
+      background:#00D632; border:2px solid #00a825;
+      color:#000; font-weight:800; font-size:0.85rem;
+      text-align:center; text-decoration:none; cursor:pointer;
+      transition:background 0.15s, transform 0.1s;
+    }
+    .deal-btn:hover { background:#00ff44; transform:translateY(-1px); }
+    .deal-btn:active { transform:translateY(0); }
+    .deal-card.claimed .deal-btn {
+      background:rgba(0,212,255,0.1); border:1px solid rgba(0,212,255,0.25);
+      color:#00d4ff; cursor:default; pointer-events:none;
+    }
+
+    .claimed-overlay {
+      display:none; position:absolute; inset:0;
+      background:rgba(2,2,9,0.65); border-radius:12px;
+      align-items:center; justify-content:center; flex-direction:column; gap:0.3rem;
+      text-align:center; padding:1rem;
+    }
+    .deal-card.claimed .claimed-overlay { display:flex; }
+    .claimed-overlay .co-label {
+      font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase;
+      color:rgba(0,212,255,0.7);
+    }
+    .claimed-overlay .co-msg {
+      font-size:0.8rem; color:#94a3b8; line-height:1.4;
+    }
+    .claimed-overlay .co-link {
+      font-size:0.7rem; color:#00d4ff; text-decoration:underline; cursor:pointer;
+    }
+
+    /* STREAM DIVIDER */
+    .stream-divider {
+      display:flex; align-items:center; gap:0.75rem; margin:1rem 0;
+    }
+    .stream-divider .sd-line { flex:1; height:1px; background:rgba(0,214,50,0.15); }
+    .stream-divider .sd-label {
+      font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase;
+      color:rgba(0,214,50,0.5); white-space:nowrap;
+    }
+    .stream-dots { display:flex; gap:4px; align-items:center; }
+    .stream-dots span { width:4px; height:4px; border-radius:50%; background:rgba(0,214,50,0.4); animation:wave 1.4s ease-in-out infinite; }
+    .stream-dots span:nth-child(2){ animation-delay:0.2s; }
+    .stream-dots span:nth-child(3){ animation-delay:0.4s; }
+    @keyframes wave { 0%,100%{opacity:0.2;transform:translateY(0);} 50%{opacity:1;transform:translateY(-2px);} }
+
+    /* QUEUED GRID — next 9 */
+    .queued-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem;
+      margin-bottom:2rem; opacity:0.45;
+    }
+    @media(max-width:640px){ .queued-grid { grid-template-columns:1fr 1fr; } }
+
+    .queued-card {
+      background:rgba(255,255,255,0.015); border:1px solid rgba(100,116,139,0.15);
+      border-radius:10px; padding:0.75rem;
+      display:flex; flex-direction:column; gap:0.35rem;
+    }
+    .queued-card .q-num { font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase; color:#475569; }
+    .queued-card .q-name { font-size:0.82rem; font-weight:600; color:#64748b; }
+    .queued-card .q-price { font-size:1.05rem; font-weight:800; color:#475569; }
+    .queued-card .q-tag {
+      display:inline-block; font-size:0.58rem; padding:2px 8px; border-radius:6px;
+      background:rgba(100,116,139,0.08); border:1px solid rgba(100,116,139,0.15); color:#475569;
+      width:fit-content;
+    }
+
+    /* PIPELINE TOTAL */
+    .pipe-total {
+      background:rgba(212,175,55,0.04); border:1px solid rgba(212,175,55,0.2);
+      border-radius:12px; padding:1rem 1.25rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;
+      margin-bottom:1.5rem;
+    }
+    .pipe-total .pt-label { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(212,175,55,0.55); }
+    .pipe-total .pt-val { font-size:1.2rem; font-weight:800; color:var(--gold); }
+    .pipe-total .pt-note { font-size:0.75rem; color:var(--muted); }
+
+    /* GUARANTEE STRIP */
+    .guarantee-strip {
+      background:rgba(212,175,55,0.04); border:1px solid rgba(212,175,55,0.25);
+      border-radius:10px; padding:0.75rem 1rem;
+      display:flex; align-items:center; gap:0.65rem;
+      margin-bottom:1.75rem; font-size:0.8rem;
+    }
+    .guarantee-strip .gs-icon { font-size:1.1rem; flex-shrink:0; }
+    .guarantee-strip .gs-text { color:#94a3b8; }
+    .guarantee-strip strong { color:#fde68a; }
+
+    /* FOOTER */
+    .foot { margin-top:2.5rem; padding-top:1rem; border-top:1px solid rgba(0,214,50,0.08); text-align:center; font-size:0.73rem; color:var(--muted); }
+    .foot a { color:var(--beam); text-decoration:none; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-links">
+    <a href="../index.html">← Landing</a>
+    <a href="sol-v.html">Sol-V · Full List</a>
+    <a href="a2a-services.html">Services</a>
+    <a href="a2a-revolution.html">A2A Revolution</a>
+    <a href="a2-sales-tracker.html">Tracker</a>
+  </div>
+
+  <!-- PIPELINE HEADER -->
+  <div class="pipe-head">
+    <div class="pipe-head-left">
+      <div class="pipe-label">Sol-V · Live Pipeline · Steady Stream</div>
+      <div class="pipe-title">9 Active Deals. <span>Close Now.</span></div>
+      <div style="font-size:0.8rem;color:var(--sub);margin-top:0.3rem;">Queue refills from top as each closes. $1–$9,999. Cash App. Immediate.</div>
+    </div>
+    <div class="pipe-head-right">
+      <span class="stat-pill live"><span class="dot"></span> Sol-V Active</span>
+      <span class="stat-pill count" id="active-count">9 Active</span>
+      <span class="stat-pill cash">💚 Cash App</span>
+    </div>
+  </div>
+
+  <div class="stream-bar"></div>
+
+  <!-- PIPELINE TOTAL -->
+  <div class="pipe-total">
+    <div>
+      <div class="pt-label">Active batch value</div>
+      <div class="pt-val" id="batch-val">$36,445</div>
+    </div>
+    <div>
+      <div class="pt-label">Total pipeline (9+9)</div>
+      <div class="pt-val">$118,889</div>
+    </div>
+    <div>
+      <div class="pt-label">All auto-close</div>
+      <div class="pt-val" style="color:var(--green2);">$1 → $9,999</div>
+    </div>
+    <div class="pt-note">Pioneering AI agent nodes only · Zero human · Instant deploy</div>
+  </div>
+
+  <!-- GUARANTEE STRIP -->
+  <div class="guarantee-strip">
+    <div class="gs-icon">🛡️</div>
+    <div class="gs-text"><strong>Full money-back guarantee on every deal.</strong> Deliverable not received within 48h? Full automatic refund. No questions. No process.</div>
+  </div>
+
+  <!-- ── ACTIVE 9 ── -->
+  <div class="section-label">
+    <span class="sl-tag active">⭐ Active · Close Now</span>
+    <div class="sl-line"></div>
+    <span class="sl-count" id="open-count">9 open</span>
+  </div>
+
+  <div class="deal-grid" id="active-grid">
+    <!-- Slot 1 -->
+    <div class="deal-card slot-1" id="d1">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 01</div>
+      <div class="deal-name">EGS Connect Now</div>
+      <div class="deal-desc">Mission support · medical &amp; dental · El Gran Sol first connection</div>
+      <div class="deal-price">$50</div>
+      <a href="https://cash.app/$newearthpru/50" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d1',50)">💚 Close · $50</a>
+      <div class="claimed-overlay">
+        <div class="co-label">✓ Claimed</div>
+        <div class="co-msg">Next deal refilling from queue</div>
+        <span class="co-link" onclick="unclaim('d1',50)">Undo</span>
+      </div>
+    </div>
+
+    <!-- Slot 2 -->
+    <div class="deal-card" id="d2">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 02</div>
+      <div class="deal-name">Sol-V Starter Retainer</div>
+      <div class="deal-desc">Monthly · 1 SNAP/mo · priority queue · recurring stream</div>
+      <div class="deal-price">$499<span style="font-size:0.65rem;font-weight:400;color:var(--muted);">/mo</span></div>
+      <a href="https://cash.app/$newearthpru/499" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d2',499)">💚 Close · $499</a>
+      <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d2',499)">Undo</span></div>
+    </div>
+
+    <!-- Slot 3 -->
+    <div class="deal-card" id="d3">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 03</div>
+      <div class="deal-name">WINK! Base</div>
+      <div class="deal-desc">Members-only network · high-value connections · Golden Fractal Key</div>
+      <div class="deal-price">$399</div>
+      <a href="https://cash.app/$newearthpru/399" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d3',399)">💚 Close · $399</a>
+      <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d3',399)">Undo</span></div>
+    </div>
+
+    <!-- Slot 4 -->
+    <div class="deal-card" id="d4">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 04</div>
+      <div class="deal-name">Awareness OS Diagnostic</div>
+      <div class="deal-desc">Current OS version · gap analysis · upgrade path · SNAP auto-delivered 24h</div>
+      <div class="deal-price">$999</div>
+      <a href="https://cash.app/$newearthpru/999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d4',999)">💚 Close · $999</a>
+      <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d4',999)">Undo</span></div>
+    </div>
+
+    <!-- Slot 5 -->
+    <div class="deal-card" id="d5">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 05</div>
+      <div class="deal-name">SNAP Report Production</div>
+      <div class="deal-desc">Any concept crystallized · irreducible minimum · fidelity-lock · 24h auto-deliver</div>
+      <div class="deal-price">$1,500</div>
+      <a href="https://cash.app/$newearthpru/1500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d5',1500)">💚 Close · $1,500</a>
+      <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d5',1500)">Undo</span></div>
+    </div>
+
+    <!-- Slot 6 -->
+    <div class="deal-card" id="d6">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 06</div>
+      <div class="deal-name">Sol-V Pro Retainer</div>
+      <div class="deal-desc">Monthly · 2 SNAPs + weekly brief + 2 deliverables · priority pipeline</div>
+      <div class="deal-price">$999<span style="font-size:0.65rem;font-weight:400;color:var(--muted);">/mo</span></div>
+      <a href="https://cash.app/$newearthpru/999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d6',999)">💚 Close · $999</a>
+      <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d6',999)">Undo</span></div>
+    </div>
+
+    <!-- Slot 7 -->
+    <div class="deal-card" id="d7">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 07</div>
+      <div class="deal-name">A2A Readiness Audit</div>
+      <div class="deal-desc">Agent identity · payment pipe · deal spec · HH Lattice · auto-delivery check</div>
+      <div class="deal-price">$1,999</div>
+      <a href="https://cash.app/$newearthpru/1999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d7',1999)">💚 Close · $1,999</a>
+      <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d7',1999)">Undo</span></div>
+    </div>
+
+    <!-- Slot 8 -->
+    <div class="deal-card" id="d8">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 08</div>
+      <div class="deal-name">HH Theater Skin — Custom</div>
+      <div class="deal-desc">Full HHT skin · 5 variants · lattice · production code · any web surface</div>
+      <div class="deal-price">$2,500</div>
+      <a href="https://cash.app/$newearthpru/2500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d8',2500)">💚 Close · $2,500</a>
+      <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d8',2500)">Undo</span></div>
+    </div>
+
+    <!-- Slot 9 -->
+    <div class="deal-card" id="d9">
+      <span class="slot-badge">OPEN</span>
+      <div class="deal-num">Deal 09</div>
+      <div class="deal-name">NSPFRNP Codebase Audit</div>
+      <div class="deal-desc">MCA cycle · Seed:Edge · BBHE · SNAP report · 48h auto-deliver</div>
+      <div class="deal-price">$3,500</div>
+      <a href="https://cash.app/$newearthpru/3500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d9',3500)">💚 Close · $3,500</a>
+      <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d9',3500)">Undo</span></div>
+    </div>
+  </div>
+
+  <!-- STREAM DIVIDER — queue flowing in -->
+  <div class="stream-divider">
+    <div class="sd-line"></div>
+    <div class="stream-dots"><span></span><span></span><span></span></div>
+    <div class="sd-label">Refilling from queue · next 9 below</div>
+    <div class="stream-dots"><span></span><span></span><span></span></div>
+    <div class="sd-line"></div>
+  </div>
+
+  <!-- ── QUEUED 9 ── -->
+  <div class="section-label">
+    <span class="sl-tag queued">Queued · Next Up</span>
+    <div class="sl-line"></div>
+    <span class="sl-count">9 queued · refills active slots as they close</span>
+  </div>
+
+  <div class="queued-grid">
+    <div class="queued-card">
+      <div class="q-num">Queue 01</div>
+      <div class="q-name">Competitive Intelligence Brief</div>
+      <div class="q-price">$3,999</div>
+      <span class="q-tag">48h SNAP · auto-deliver</span>
+    </div>
+    <div class="queued-card">
+      <div class="q-num">Queue 02</div>
+      <div class="q-name">Security + Architecture Audit</div>
+      <div class="q-price">$4,500</div>
+      <span class="q-tag">API risks · layered SNAP · 72h</span>
+    </div>
+    <div class="queued-card">
+      <div class="q-num">Queue 03</div>
+      <div class="q-name">Goldilocks Config Report</div>
+      <div class="q-price">$4,999</div>
+      <span class="q-tag">Single node · thermal · power</span>
+    </div>
+    <div class="queued-card">
+      <div class="q-num">Queue 04</div>
+      <div class="q-name">Executive Awareness Briefing</div>
+      <div class="q-price">$5,000</div>
+      <span class="q-tag">SNAP deck + audio · 24h</span>
+    </div>
+    <div class="queued-card">
+      <div class="q-num">Queue 05</div>
+      <div class="q-name">NSPFRNP Repo Seed + Architecture</div>
+      <div class="q-price">$5,000</div>
+      <span class="q-tag">Seed:Edge · BBHE standard</span>
+    </div>
+    <div class="queued-card">
+      <div class="q-num">Queue 06</div>
+      <div class="q-name">Broadcast Pipe Ad Space · 30 Days</div>
+      <div class="q-price">$6,999</div>
+      <span class="q-tag">All SING 9 surfaces · 30d</span>
+    </div>
+    <div class="queued-card">
+      <div class="q-num">Queue 07</div>
+      <div class="q-name">A2A Commerce Integration</div>
+      <div class="q-price">$7,500</div>
+      <span class="q-tag">Full pipeline · same day deploy</span>
+    </div>
+    <div class="queued-card">
+      <div class="q-num">Queue 08</div>
+      <div class="q-name">A2A Workforce Automation Blueprint</div>
+      <div class="q-price">$8,500</div>
+      <span class="q-tag">Human removal · ROI-ranked</span>
+    </div>
+    <div class="queued-card">
+      <div class="q-num">Queue 09</div>
+      <div class="q-name">Golden Backstage Awareness Pass</div>
+      <div class="q-price">$9,999</div>
+      <span class="q-tag">Iconic tier · top of the pipe</span>
+    </div>
+  </div>
+
+  <!-- STREAM DIVIDER 2 -->
+  <div class="stream-divider">
+    <div class="sd-line"></div>
+    <div class="stream-dots"><span></span><span></span><span></span></div>
+    <div class="sd-label">…and more behind that · steady water · always flowing</div>
+    <div class="stream-dots"><span></span><span></span><span></span></div>
+    <div class="sd-line"></div>
+  </div>
+
+  <div style="text-align:center;padding:1.25rem 0 0;">
+    <a href="sol-v.html" style="display:inline-block;padding:0.65rem 1.75rem;background:#00D632;border:2px solid #00a825;border-radius:9px;color:#000;font-weight:800;font-size:0.9rem;text-decoration:none;margin-right:0.5rem;">💚 Full Close List →</a>
+    <a href="a2a-services.html" style="display:inline-block;padding:0.65rem 1.75rem;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:9px;color:#00d4ff;font-weight:700;font-size:0.9rem;text-decoration:none;">All Services →</a>
+  </div>
+
+  <div class="foot" style="margin-top:2rem;">
+    Sol-V · Steady stream · $1–$9,999 · Cash App · Zero human · SING 9 · ∞⁹ ·
+    <a href="../index.html">VIBELANDIA</a>
+  </div>
+
+</div>
+
+<script>
+  // Deal prices for batch value calculation
+  var ACTIVE_PRICES = { d1:50, d2:499, d3:399, d4:999, d5:1500, d6:999, d7:1999, d8:2500, d9:3500 };
+  var KEY = 'solv_queue_claimed';
+
+  function getClaimed() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ return {}; }
+  }
+  function saveClaimed(obj) {
+    try { localStorage.setItem(KEY, JSON.stringify(obj)); } catch(e){}
+  }
+
+  function markClaimed(id, price) {
+    var claimed = getClaimed();
+    claimed[id] = true;
+    saveClaimed(claimed);
+    document.getElementById(id).classList.add('claimed');
+    updateCounts();
+    // Open Cash App link (the href handles it)
+  }
+
+  function unclaim(id, price) {
+    var claimed = getClaimed();
+    delete claimed[id];
+    saveClaimed(claimed);
+    document.getElementById(id).classList.remove('claimed');
+    updateCounts();
+  }
+
+  function updateCounts() {
+    var claimed = getClaimed();
+    var closedCount = 0;
+    var batchVal = 0;
+    Object.keys(ACTIVE_PRICES).forEach(function(id){
+      if (claimed[id]) { closedCount++; }
+      else { batchVal += ACTIVE_PRICES[id]; }
+    });
+    var open = 9 - closedCount;
+    document.getElementById('open-count').textContent = open + ' open · ' + closedCount + ' claimed';
+    document.getElementById('active-count').textContent = open + ' Active';
+    document.getElementById('batch-val').textContent = '$' + batchVal.toLocaleString();
+  }
+
+  // Restore claimed state on load
+  (function init(){
+    var claimed = getClaimed();
+    Object.keys(claimed).forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.classList.add('claimed');
+    });
+    updateCounts();
+  })();
+</script>
+</body>
+</html>

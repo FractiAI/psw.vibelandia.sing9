@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Episode 1 · The whole story (60 min) | NSPFRNP</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0a0a0c;
+      color: #e8e8e8;
+      overflow: hidden;
+    }
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    .top-bar a, .top-bar button { pointer-events: auto; }
+    .top-bar a {
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .top-bar a:hover { text-decoration: underline; }
+    .top-bar .label { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+    .slide-wrap {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #111;
+    }
+    .slide-image.empty {
+      background: linear-gradient(145deg, #1a1a2e 0%, #0f0c08 100%);
+    }
+    .slide-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      text-align: center;
+    }
+    .slide-title {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: #d4af37;
+      margin-bottom: 0.35rem;
+    }
+    .slide-subtitle {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: rgba(212, 175, 55, 0.4);
+      z-index: 25;
+      transition: width 0.1s linear;
+    }
+    .controls {
+      position: fixed;
+      bottom: calc(1rem + env(safe-area-inset-bottom));
+      right: 1rem;
+      z-index: 22;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .controls button {
+      padding: 0.5rem 0.75rem;
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      border-radius: 6px;
+      color: #fef3c7;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .controls button:hover {
+      background: rgba(212, 175, 55, 0.35);
+    }
+    .fullscreen .top-bar,
+    .fullscreen .controls { opacity: 0.6; }
+    .fullscreen .top-bar:hover,
+    .fullscreen .controls:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress" style="width: 0%"></div>
+
+  <div class="top-bar">
+    <a href="my-whiteboard.html">← My Whiteboard</a>
+    <a href="soundtrack.html">Soundtrack</a>
+    <span class="label" id="slide-counter">1 / 1</span>
+  </div>
+
+  <div class="slide-wrap">
+    <img class="slide-image empty" id="slideImage" src="" alt="" />
+    <div class="slide-content">
+      <div class="slide-title" id="slideTitle">Episode 1 · The whole story</div>
+      <div class="slide-subtitle" id="slideSubtitle">60 minutes. Automatic slideshow with subtitles — like Disney. NSPFRNP.</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button type="button" id="btnPlay">Pause</button>
+    <button type="button" id="btnFullscreen">Full screen</button>
+  </div>
+
+  <audio id="soundtrack" style="display:none"></audio>
+
+  <script>
+    (function () {
+      const DURATION_SEC = 30;
+      const SLIDES_TOTAL = 120;
+      const SLIDES_PER_SEGMENT = 17;
+      let slides = [];
+      let index = 0;
+      let playing = true;
+      let tick = 0;
+      let tickInterval = null;
+      var tracksByPlaylist = {};
+      var currentSegment = -1;
+      var segmentTrackIndex = 0;
+      var audioEl = document.getElementById('soundtrack');
+
+      function audioPath(track) {
+        var f = track.file || track.File || '';
+        if (f.indexOf('io/') === 0) f = 'assets/audio/' + f.substring(3);
+        return f ? '../' + f.replace(/\\/g, '/') : '';
+      }
+
+      function getSegment(slideIdx) {
+        if (slideIdx <= 0) return 0;
+        if (slideIdx >= SLIDES_TOTAL - 1) return 7;
+        return Math.min(7, Math.floor(slideIdx / SLIDES_PER_SEGMENT));
+      }
+
+      function playSegmentTrack(seg, trackIdx) {
+        var playlistId = 'playlist-' + (Math.min(seg, 6) + 1);
+        var list = tracksByPlaylist[playlistId];
+        if (!list || !list.length) return;
+        trackIdx = trackIdx % list.length;
+        var t = list[trackIdx];
+        var src = audioPath(t);
+        if (!src) return;
+        audioEl.src = src;
+        audioEl.play().catch(function () {});
+        segmentTrackIndex = trackIdx;
+      }
+
+      function onAudioEnded() {
+        var seg = getSegment(index);
+        var playlistId = 'playlist-' + (seg + 1);
+        var list = tracksByPlaylist[playlistId];
+        if (!list || !list.length) return;
+        playSegmentTrack(seg, segmentTrackIndex + 1);
+      }
+
+      function loadSlides() {
+        Promise.all([
+          fetch('../data/episode-1-slides.json').then(function (r) { return r.json(); }),
+          fetch('../data/audio-assets.json').then(function (r) { return r.json(); })
+        ]).then(function (results) {
+          var data = results[0];
+          var audioData = results[1];
+          var rawSlides = data.slides || [];
+          var titles = data.segment_titles || [];
+          var subtitles = data.segment_subtitles || [];
+          if (rawSlides.length >= SLIDES_TOTAL) {
+            slides = rawSlides;
+          } else {
+            slides = [];
+            for (var i = 0; i < SLIDES_TOTAL; i++) {
+              var seg = getSegment(i);
+              slides.push({
+                id: 'slide-' + i,
+                title: titles[seg] || 'Episode 1',
+                subtitle: subtitles[seg] || '',
+                duration_sec: DURATION_SEC,
+                image: (rawSlides[i] && rawSlides[i].image) ? rawSlides[i].image : ''
+              });
+            }
+          }
+          var tracks = audioData.tracks || [];
+          for (var p = 1; p <= 7; p++) {
+            var id = 'playlist-' + p;
+            tracksByPlaylist[id] = tracks.filter(function (t) { return (t.source_playlist || '') === id; });
+          }
+          if (audioEl && !audioEl.onended) audioEl.addEventListener('ended', onAudioEnded);
+          render();
+          startTick();
+        }).catch(function () {
+          slides = [{ id: 'placeholder', title: 'Episode 1 · The whole story', subtitle: '60 min. Soundtracks + subtitles. Load data/episode-1-slides.json and data/audio-assets.json.', duration_sec: DURATION_SEC, image: '' }];
+          render();
+          startTick();
+        });
+      }
+
+      function render() {
+        if (slides.length === 0) return;
+        var s = slides[index];
+        document.getElementById('slideTitle').textContent = s.title || '';
+        document.getElementById('slideSubtitle').textContent = s.subtitle || '';
+        var img = document.getElementById('slideImage');
+        if (s.image) {
+          img.src = s.image;
+          img.alt = s.title || '';
+          img.classList.remove('empty');
+        } else {
+          img.src = '';
+          img.alt = '';
+          img.classList.add('empty');
+        }
+        document.getElementById('slideCounter').textContent = (index + 1) + ' / ' + slides.length;
+        var sec = s.duration_sec != null ? s.duration_sec : DURATION_SEC;
+        tick = 0;
+        updateProgress(sec);
+        var seg = getSegment(index);
+        if (seg !== currentSegment) {
+          currentSegment = seg;
+          segmentTrackIndex = 0;
+          if (playing) playSegmentTrack(seg, 0);
+        }
+      }
+
+      function updateProgress(sec) {
+        var pct = sec ? (tick / sec) * 100 : 0;
+        document.getElementById('progress').style.width = pct + '%';
+      }
+
+      function startTick() {
+        if (tickInterval) clearInterval(tickInterval);
+        var sec = (slides[index] && slides[index].duration_sec != null) ? slides[index].duration_sec : DURATION_SEC;
+        tickInterval = setInterval(function () {
+          if (!playing) return;
+          tick += 1;
+          updateProgress(sec);
+          if (tick >= sec) {
+            index = (index + 1) % slides.length;
+            render();
+          }
+        }, 1000);
+      }
+
+      document.getElementById('btnPlay').addEventListener('click', function () {
+        playing = !playing;
+        this.textContent = playing ? 'Pause' : 'Play';
+        if (playing) audioEl.play().catch(function () {}); else audioEl.pause();
+      });
+
+      document.getElementById('btnFullscreen').addEventListener('click', function () {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(function () {});
+        } else {
+          document.exitFullscreen();
+        }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === ' ' || e.key === 'k') {
+          e.preventDefault();
+          playing = !playing;
+          document.getElementById('btnPlay').textContent = playing ? 'Pause' : 'Play';
+        }
+        if (e.key === 'Escape') {
+          if (document.fullscreenElement) document.exitFullscreen();
+        }
+      });
+
+      loadSlides();
+    })();
+  </script>
+</body>
+</html>

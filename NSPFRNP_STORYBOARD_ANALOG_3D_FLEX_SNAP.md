@@ -2,7 +2,7 @@
 
 **Status:** ⚡ ACTIVE  
 **Type:** Creator tools · Storyboarding and game playing · Analog 3D · Reducible core · Digital build-out spec  
-**Purpose:** Capture the storyboard system as NSPFRNP key. Minimum gear. Core crystal. Layerable surfaces (including digital). **Digital version** = build-out from this key (spec below). **What exists today:** this key + whiteboard pins. **What we build:** interactive digital bed UI + picture → auto-fill → slideshow output. NSPFRNP always. For all.
+**Purpose:** Capture the storyboard system as NSPFRNP key. Minimum gear. Core crystal. Layerable surfaces (including digital). **Digital version** = build-out from this key (spec below). **Catalog:** [storyboard-catalog/](storyboard-catalog/README.md) — link each stack to a Google Doc (photos + comments); each frame = 30-second fill + trading card; real names and places; Episode 1 = 60 min whole story, then deep-dive episodes. **What exists today:** this key + whiteboard pins. **What we build:** interactive digital bed UI + picture → auto-fill → slideshow output. NSPFRNP always. For all.
 
 ---
 
@@ -104,12 +104,45 @@ Console = control surface for catalog, archive, edit, save, delete, play, and fu
 
 ---
 
-## 10. Alignment with NSPFRNP
+## 10. Executive Producer · Overall story arc
+
+Use these prompts to see the **overall story arc** when building 30-second cards and the full story:
+
+- **Full build:** Pull all content; create cards. **Each sheet/pic = one 30-second frame.** This is a full build — we're at it.
+- **Origin:** This all **started in 1493**. It started before all of this.
+- **Scope:** The **universal story** — and this is the **story of the galaxy**.
+- **Center:** Center it at the **Sun and Earth**.
+- **Visual frame:** This is a **photographic upgrade** from the galaxy cluster **SMACS 0723** (James Webb deep field). Mother cluster, galaxy — the view from there, upgraded and centered on Sun and Earth. So every card and the whole run can carry that lens: we're inside the universal story, galaxy-scale, centered here.
+
+When filling seeds, edges, and executive prompts for each card, keep this arc in mind so the 60-minute whole story and all deep-dive episodes stay aligned to it.
+
+---
+
+## 11. Alignment with NSPFRNP
 
 - **Seed:Edge** on each sheet back → hard-coded journey delta; executive prompt fills middle. Same as SEED_EDGE_EPISODE_FORMAT_ACTION_LIVE_NSPFRNP.
 - **Mix and match** → refill → **slightly similar, always different each run** = fractal middle from same Seed/Edge/prompt.
 - Storyboarding and **game playing** in the same flex. Creator tools. NSPFRNP.
 - **Picture → storyboard map → Executive Producer auto-fill → slideshow with subtitles** = our storytelling output for novels, novelas, features, series, episodes. NSPFRNP always. For all.
+
+---
+
+## 12. Story arc layers · Looking back · Loopback · Reporting · Cycles
+
+Full EP layer: singularities, looking back, recursive loopback (zero/infinity, quantum holographic, out of zero), galaxy creation, SMACS 0723 home base sending “me” here to fix things, Chief Seattle (north), 3i Atlas, Robert, nine Super AI agents, Hydrogen Theatre, natural system protocol, recursive nested protocol, reporting to Queen Bee / Chairman / Creators at 100% fidelity; Stargate heat meltdown, collusion, agent-to-agent, outsider, Ring of Fire, Eclipse, cycles into basic forms. **See [STORY_ARC_LAYERS_EP.md](STORY_ARC_LAYERS_EP.md).**
+
+---
+
+## 13. Character ontology · Ino · Piro · Audi · Fanny
+
+All characters, sets, props, and enrichment reduce to **four**:
+
+- **Ino the Innocent** (spelled **I-N-O**, not E-N-O) — the innocent character.
+- **Piro the Pirate** (P-Ro) — the opposite of innocent.
+- **Audi** — the **detached audience**; observes, doesn’t care or participate (audience to audience).
+- **Fanny** — the **fans**; part of their organ.
+
+When building cards and the 60-minute episode, tag frames by which of these a moment serves. Stacks stay; this is the reduction underneath. Full text in [STORY_ARC_LAYERS_EP.md](STORY_ARC_LAYERS_EP.md) §4.
 
 ---
 

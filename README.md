@@ -12,7 +12,8 @@
 
 ## Recent updates (README commit)
 
-- **README commit** — **Vendors:** No formal relationship with our vendors — they're our picks for who we work with to deliver post-singularity Baller V services to our members. Copy updated on Vibers menu, Destinations catalog, destination page, catalog, guided expeditions, campus tour, PRUS_VALET_SERVICE_SNAP, README. Landing Reno + Vibelandia bg; Vendors = Silver Legacy image. NSPFRNP.
+- **Episode 1 · Finished product** — 60-minute episode on **My Whiteboard**: automatic slideshow (120 frames × 30 sec), **matching soundtracks** by segment (7 acts = 7 playlists), subtitles. Pulse, dance, rhythm. [interfaces/episode-1.html](interfaces/episode-1.html). Soundtracks from YouTube playlists (yt-dlp → `scripts/download-soundtrack-audio.ps1`, then `scripts/scan-audio-assets.ps1`) → [data/audio-assets.json](data/audio-assets.json), [interfaces/soundtrack.html](interfaces/soundtrack.html). Story arc: [STORY_ARC_LAYERS_EP.md](STORY_ARC_LAYERS_EP.md), character ontology Ino · Piro · Audi · Fanny; protected names Josie, Bamboo (D.O.O.), K-9, Gigi/JJ and crew; locations Davis CA, Reno, Homer and Seldovia Alaska (McDonald's Spit). NSPFRNP.
+- **Vendors:** No formal relationship with our vendors — they're our picks for who we work with to deliver post-singularity Baller V services to our members. Copy updated on Vibers menu, Destinations, PRUS_VALET_SERVICE_SNAP, README. NSPFRNP.
 
 ---
 
@@ -41,7 +42,7 @@ This repo follows the **BBHE Repository Standard**: EGS fractal constant, Seed:E
 
 ## Clone / minimal set
 
-- **My Whiteboard** ([interfaces/my-whiteboard.html](interfaces/my-whiteboard.html)): Community bulletin board format. Not yet ready for prime time; snoop welcome. Pinned: **Storyboarding · Analog 3D Flex** ([NSPFRNP_STORYBOARD_ANALOG_3D_FLEX_SNAP.md](NSPFRNP_STORYBOARD_ANALOG_3D_FLEX_SNAP.md)) — reducible core crystal, 3D fold-outs, 8.5×11 sheets (Seed:Edge 30-second fill), stacks (trunk, menus, maps, vibe surfaces, pure heart, fool's gold, specialty, playlists). At bottom: **Pru's whiteboard** ([interfaces/pru-whiteboard.html](interfaces/pru-whiteboard.html)) — back office projects. Linked from Office Hours and Launch Pad.
+- **My Whiteboard** ([interfaces/my-whiteboard.html](interfaces/my-whiteboard.html)): Community bulletin board. Pinned: **Episode 1 · Finished product (60 min)** — automatic slideshow with soundtracks and subtitles; **Soundtrack · BandLab playlists** (YouTube → local audio, mix and match); Argentina proposal; **Storyboard catalog** (stacks, frames, trading cards); Storyboarding · Analog 3D Flex. At bottom: **Pru's whiteboard** ([interfaces/pru-whiteboard.html](interfaces/pru-whiteboard.html)). Linked from Office Hours and Launch Pad.
 - Irreducible minimum for **seamless continuation** from sing4: this README, SING9_EDGE_ONBOARDING.md, BBHE_REPOSITORY_STANDARD.md, .cursor/rules (team-nspfrnp-mode), protocols (MCA_NSPFRNP_CATALOG, Seed:Edge format, **Public-Free Key Pipe**), repository-seed.md, index.html, interfaces/ (upgrade, We Got What You Need, Downtown Truckee River Baller V Crawler, Office Hours, Launch Pad, my-whiteboard). Full content can be pulled from upstream (FractiAI/psw.vibelandia.sing4) as needed.
 - **Public-Free Key Pipe** ([protocols/PIPE_PUBLIC_FREE_KEY_NSPFRNP.md](protocols/PIPE_PUBLIC_FREE_KEY_NSPFRNP.md)): public info + free-plan keys only; bypasses heavy security. Enables **quick, easy, effective cloning** of ourselves, repositories, deployments, and edges — lite, irreducible minimum, crystallized seed to edge and back. Keys: `.env` (gitignored), [.env.example](.env.example), [ENV_SING4_TO_SING9.md](ENV_SING4_TO_SING9.md).
 

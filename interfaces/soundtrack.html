@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Soundtrack · BandLab playlists | NSPFRNP</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f0c08; color: #e8e8e8; min-height: 100vh; padding: 1.5rem; padding-top: calc(1rem + env(safe-area-inset-top)); }
+    .wrap { max-width: 640px; margin: 0 auto; }
+    .top-links { margin-bottom: 1rem; font-size: 0.9rem; }
+    .top-links a { color: #d4af37; text-decoration: none; margin-right: 0.75rem; }
+    .top-links a:hover { text-decoration: underline; }
+    h1 { font-size: 1.35rem; color: #d4af37; margin-bottom: 0.5rem; }
+    .sub { font-size: 0.9rem; color: #a3a3a3; margin-bottom: 1.5rem; }
+    .playlist {
+      display: block;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      background: rgba(212, 175, 55, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 10px;
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .playlist:hover { border-color: rgba(212, 175, 55, 0.6); background: rgba(212, 175, 55, 0.1); }
+    .playlist .num { font-weight: 700; color: #fef3c7; margin-bottom: 0.2rem; }
+    .playlist .id { font-size: 0.85rem; color: #94a3b8; }
+    .track { padding: 1rem 1.25rem; margin-bottom: 0.75rem; background: rgba(30,30,50,0.5); border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; }
+    .track .title { font-weight: 700; color: #fef3c7; margin-bottom: 0.25rem; }
+    .track .meta { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.5rem; }
+    .track audio { width: 100%; max-width: 400px; height: 32px; margin-top: 0.25rem; }
+    .foot { margin-top: 2rem; font-size: 0.8rem; color: #64748b; text-align: center; }
+    .foot a { color: #d4af37; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-links">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <a href="episode-1.html">Episode 1</a>
+    </div>
+
+    <h1>Soundtrack · BandLab playlists</h1>
+    <p class="sub">Your music. Place appropriately in the soundtracks and areas. Pulse to the whole story. Align to its dance.</p>
+
+    <h2 style="font-size:1rem;color:#7dd3fc;margin-top:1.5rem;margin-bottom:0.5rem;">Local audio files (mix and match)</h2>
+    <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:0.75rem;">Get audio from YouTube: run <code>scripts\download-soundtrack-audio.ps1</code>, then <code>scripts\scan-audio-assets.ps1</code>.</p>
+    <div id="local"></div>
+
+    <h2 style="font-size:1rem;color:#7dd3fc;margin-top:1.5rem;margin-bottom:0.5rem;">YouTube playlists</h2>
+    <div id="list"></div>
+
+    <p class="foot"><a href="../SOUNDTRACK_PLAYLISTS.md">SOUNDTRACK_PLAYLISTS.md</a> · <a href="my-whiteboard.html">My Whiteboard</a> · NSPFRNP → ∞⁹</p>
+  </div>
+  <script>
+    // Local audio assets (from data/audio-assets.json)
+    fetch('../data/audio-assets.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var container = document.getElementById('local');
+        var tracks = data.tracks || [];
+        if (tracks.length === 0) {
+          container.innerHTML = '<p style="color:#64748b;">No local tracks yet. Run <code>download-soundtrack-audio.ps1</code> to get audio from YouTube, then <code>scan-audio-assets.ps1</code>.</p>';
+          return;
+        }
+        tracks.forEach(function (t) {
+          var file = t.file || t.File;
+          var title = t.title || t.id || file;
+          var div = document.createElement('div');
+          div.className = 'track';
+          var src = file ? '../' + file.replace(/\\/g, '/') : '';
+          div.innerHTML = '<span class="title">' + escapeHtml(title) + '</span>' +
+            (t.source_playlist ? '<div class="meta">' + escapeHtml(t.source_playlist) + (t.placement ? ' · ' + escapeHtml(t.placement) : '') + '</div>' : '') +
+            (src ? '<audio controls preload="metadata" src="' + escapeHtml(src) + '"></audio>' : '');
+          container.appendChild(div);
+        });
+      })
+      .catch(function () {
+        document.getElementById('local').innerHTML = '<p style="color:#64748b;">No audio-assets.json or error loading.</p>';
+      });
+
+    function escapeHtml(s) {
+      if (!s) return '';
+      var d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    // YouTube playlists
+    fetch('../data/soundtrack-playlists.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var container = document.getElementById('list');
+        (data.playlists || []).forEach(function (p, i) {
+          var a = document.createElement('a');
+          a.href = p.url;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.className = 'playlist';
+          a.innerHTML = '<span class="num">Playlist ' + (i + 1) + '</span><span class="id">' + (p.id || '') + '</span>';
+          container.appendChild(a);
+        });
+      })
+      .catch(function () {
+        document.getElementById('list').innerHTML = '<p style="color:#94a3b8;">Load playlists from data/soundtrack-playlists.json</p>';
+      });
+  </script>
+</body>
+</html>

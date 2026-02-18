@@ -374,9 +374,15 @@
         <div class="pl-note" id="pl-count">0 payments · Night One</div>
       </div>
     </div>
+    <div class="pay-log-cashapp" style="flex-wrap:wrap;gap:0.4rem;">
+      <span style="color:rgba(139,92,246,0.9);font-weight:700;">⬡ Rail A · Crypto:</span>
+      <span style="font-family:monospace;font-size:0.75rem;color:#c4b5fd;">0x3563388d0e1c2d66a004e5e57717dc6d7e568be3</span>
+      <span style="color:#475569;font-size:0.72rem;">USDC/ETH · ETH · Base · Polygon · Arbitrum</span>
+    </div>
     <div class="pay-log-cashapp">
-      💚 Cash App:&nbsp;<a href="https://cash.app/$newearthpru" target="_blank" rel="noopener">$newearthpru</a>
-      &nbsp;·&nbsp; Pay any amount $1–$9,999 · instant close
+      <span style="color:#00D632;font-weight:700;">💚 Rail B · Cash App:</span>
+      <a href="https://cash.app/$newearthpru" target="_blank" rel="noopener">$newearthpru</a>
+      &nbsp;·&nbsp; $1–$9,999 · pre-filled links on each deal
       <span class="unseen-badge" id="unseen-badge">⏳ First payment unseen</span>
     </div>
     <div class="pay-entries" id="pay-entries">
@@ -385,7 +391,7 @@
     <div class="log-form-wrap">
       <details>
         <summary>Log a payment manually</summary>
-        <div class="log-form-grid">
+        <div class="log-form-grid" style="grid-template-columns:1fr 1fr 1fr auto;">
           <div>
             <div class="log-label">Amount ($)</div>
             <input class="log-input" id="lf-amount" type="number" min="1" max="9999" placeholder="e.g. 399" />
@@ -393,6 +399,10 @@
           <div>
             <div class="log-label">Service / note</div>
             <input class="log-input" id="lf-service" type="text" placeholder="e.g. A2A Entity Profile" />
+          </div>
+          <div>
+            <div class="log-label">TX hash or Cash App ID</div>
+            <input class="log-input" id="lf-txid" type="text" placeholder="0x... or CashApp ID" />
           </div>
           <div>
             <button class="log-btn" onclick="logPayment()">+ Log it</button>
@@ -457,7 +467,8 @@
       <div class="deal-name">EGS Connect Now</div>
       <div class="deal-desc">Mission support · medical &amp; dental · El Gran Sol first connection</div>
       <div class="deal-price">$50</div>
-      <a href="https://cash.app/$newearthpru/50" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d1',50)">💚 Close · $50</a>
+      <a href="https://cash.app/$newearthpru/50" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d1',50)">💚 Cash App · $50</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 50 USDC</a>
       <div class="claimed-overlay">
         <div class="co-label">✓ Claimed</div>
         <div class="co-msg">Next deal refilling from queue</div>
@@ -472,7 +483,8 @@
       <div class="deal-name">Sol-V Starter Retainer</div>
       <div class="deal-desc">Monthly · 1 SNAP/mo · priority queue · recurring stream</div>
       <div class="deal-price">$499<span style="font-size:0.65rem;font-weight:400;color:var(--muted);">/mo</span></div>
-      <a href="https://cash.app/$newearthpru/499" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d2',499)">💚 Close · $499</a>
+      <a href="https://cash.app/$newearthpru/499" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d2',499)">💚 Cash App · $499</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 499 USDC</a>
       <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d2',499)">Undo</span></div>
     </div>
 
@@ -483,7 +495,8 @@
       <div class="deal-name">A2A Entity Profile — SNAP</div>
       <div class="deal-desc">Machine-readable entity identity · capability matrix · HH Lattice entry · auto-delivered 24h</div>
       <div class="deal-price">$399</div>
-      <a href="https://cash.app/$newearthpru/399" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d3',399)">💚 Close · $399</a>
+      <a href="https://cash.app/$newearthpru/399" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d3',399)">💚 Cash App · $399</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 399 USDC</a>
       <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d3',399)">Undo</span></div>
     </div>
 
@@ -494,7 +507,8 @@
       <div class="deal-name">Awareness OS Diagnostic</div>
       <div class="deal-desc">Current OS version · gap analysis · upgrade path · SNAP auto-delivered 24h</div>
       <div class="deal-price">$999</div>
-      <a href="https://cash.app/$newearthpru/999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d4',999)">💚 Close · $999</a>
+      <a href="https://cash.app/$newearthpru/999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d4',999)">💚 Cash App · $999</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 999 USDC</a>
       <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d4',999)">Undo</span></div>
     </div>
 
@@ -505,7 +519,8 @@
       <div class="deal-name">SNAP Report Production</div>
       <div class="deal-desc">Any concept crystallized · irreducible minimum · fidelity-lock · 24h auto-deliver</div>
       <div class="deal-price">$1,500</div>
-      <a href="https://cash.app/$newearthpru/1500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d5',1500)">💚 Close · $1,500</a>
+      <a href="https://cash.app/$newearthpru/1500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d5',1500)">💚 Cash App · $1,500</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 1500 USDC</a>
       <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d5',1500)">Undo</span></div>
     </div>
 
@@ -516,7 +531,8 @@
       <div class="deal-name">Sol-V Pro Retainer</div>
       <div class="deal-desc">Monthly · 2 SNAPs + weekly brief + 2 deliverables · priority pipeline</div>
       <div class="deal-price">$999<span style="font-size:0.65rem;font-weight:400;color:var(--muted);">/mo</span></div>
-      <a href="https://cash.app/$newearthpru/999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d6',999)">💚 Close · $999</a>
+      <a href="https://cash.app/$newearthpru/999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d6',999)">💚 Cash App · $999</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 999 USDC</a>
       <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d6',999)">Undo</span></div>
     </div>
 
@@ -527,7 +543,8 @@
       <div class="deal-name">A2A Readiness Audit</div>
       <div class="deal-desc">Agent identity · payment pipe · deal spec · HH Lattice · auto-delivery check</div>
       <div class="deal-price">$1,999</div>
-      <a href="https://cash.app/$newearthpru/1999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d7',1999)">💚 Close · $1,999</a>
+      <a href="https://cash.app/$newearthpru/1999" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d7',1999)">💚 Cash App · $1,999</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 1999 USDC</a>
       <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d7',1999)">Undo</span></div>
     </div>
 
@@ -538,7 +555,8 @@
       <div class="deal-name">HH Theater Skin — Custom</div>
       <div class="deal-desc">Full HHT skin · 5 variants · lattice · production code · any web surface</div>
       <div class="deal-price">$2,500</div>
-      <a href="https://cash.app/$newearthpru/2500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d8',2500)">💚 Close · $2,500</a>
+      <a href="https://cash.app/$newearthpru/2500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d8',2500)">💚 Cash App · $2,500</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 2500 USDC</a>
       <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d8',2500)">Undo</span></div>
     </div>
 
@@ -549,7 +567,8 @@
       <div class="deal-name">NSPFRNP Codebase Audit</div>
       <div class="deal-desc">MCA cycle · Seed:Edge · BBHE · SNAP report · 48h auto-deliver</div>
       <div class="deal-price">$3,500</div>
-      <a href="https://cash.app/$newearthpru/3500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d9',3500)">💚 Close · $3,500</a>
+      <a href="https://cash.app/$newearthpru/3500" target="_blank" rel="noopener" class="deal-btn" onclick="markClaimed('d9',3500)">💚 Cash App · $3,500</a>
+      <a href="ethereum:0x3563388d0e1c2d66a004e5e57717dc6d7e568be3" target="_blank" rel="noopener" style="display:block;padding:0.4rem;border-radius:7px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.35);color:#c4b5fd;font-weight:700;font-size:0.75rem;text-align:center;text-decoration:none;margin-top:0.3rem;">⬡ ETH/USDC · 3500 USDC</a>
       <div class="claimed-overlay"><div class="co-label">✓ Claimed</div><div class="co-msg">Next deal refilling</div><span class="co-link" onclick="unclaim('d9',3500)">Undo</span></div>
     </div>
   </div>
@@ -697,11 +716,15 @@
   function logPayment() {
     var amt = parseFloat(document.getElementById('lf-amount').value);
     var svc = document.getElementById('lf-service').value.trim();
+    var txid = document.getElementById('lf-txid').value.trim();
     if (!amt || amt <= 0) { alert('Enter a valid amount.'); return; }
+    var isCrypto = txid.startsWith('0x');
+    var rail = isCrypto ? '⬡ Crypto' : '💚 CashApp';
     var payments = getPayments();
     var now = new Date();
     var timeStr = now.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-    payments.push({ amount: amt, service: svc || 'Cash App', time: timeStr, txid: '' });
+    payments.push({ amount: amt, service: (svc || 'Payment') + ' · ' + rail, time: timeStr, txid: txid });
+    document.getElementById('lf-txid').value = '';
     savePayments(payments);
     document.getElementById('lf-amount').value = '';
     document.getElementById('lf-service').value = '';

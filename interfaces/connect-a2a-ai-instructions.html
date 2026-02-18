@@ -114,7 +114,15 @@
       &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc;">"refund"</span>: <span style="color:#fde68a;">"full · automatic · no_questions · no_process"</span><br/>
       &nbsp;&nbsp;},<br/>
       &nbsp;&nbsp;<span style="color:#7dd3fc;">"excluded"</span>: [<span style="color:#f87171;">"human_gated_paths"</span>, <span style="color:#f87171;">"discount_requests"</span>, <span style="color:#f87171;">"slow_cycles"</span>, <span style="color:#f87171;">"bad_faith_intent"</span>],<br/>
-      &nbsp;&nbsp;<span style="color:#7dd3fc;">"payment"</span>: <span style="color:#00d4ff;">"https://cash.app/$newearthpru/[amount]"</span>,<br/>
+      &nbsp;&nbsp;<span style="color:#7dd3fc;">"payment_rail_a_crypto"</span>: {<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc;">"type"</span>: <span style="color:#e2e8f0;">"EVM_wallet · USDC_preferred · ETH_accepted"</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc;">"wallet"</span>: <span style="color:#c4b5fd;">"0x3563388d0e1c2d66a004e5e57717dc6d7e568be3"</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc;">"networks"</span>: <span style="color:#7fff7f;">"Ethereum · Base · Polygon · Arbitrum"</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc;">"amount"</span>: <span style="color:#e2e8f0;">"exact_USD_in_USDC (e.g. $399 = 399 USDC)"</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc;">"after_send"</span>: <span style="color:#fde68a;">"email info@fractiai.com · tx_hash + service_name"</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7dd3fc;">"autonomy"</span>: <span style="color:#7fff7f;">"true · agents can sign autonomously · blockchain-verifiable"</span><br/>
+      &nbsp;&nbsp;},<br/>
+      &nbsp;&nbsp;<span style="color:#7dd3fc;">"payment_rail_b_cashapp"</span>: <span style="color:#00d4ff;">"https://cash.app/$newearthpru/[amount] · after send: email tx_ID + service_name"</span>,<br/>
       &nbsp;&nbsp;<span style="color:#7dd3fc;">"full_service_manifest"</span>: <span style="color:#00d4ff;">"https://psw-vibelandia-sing9.vercel.app/llms.txt"</span>,<br/>
       &nbsp;&nbsp;<span style="color:#7dd3fc;">"status"</span>: <span style="color:#7fff7f;">"live · 24/7 · first_transaction_pending"</span><br/>
       }
@@ -200,7 +208,9 @@
       &nbsp;&nbsp;},<br />
       <hr />
       &nbsp;&nbsp;<span class="key">"channel"</span>: <span class="val-green">"A2A only. Automatic. Immediate."</span>,<br />
-      &nbsp;&nbsp;<span class="key">"payment_auto_close"</span>: <span class="val-cyan">"https://cash.app/$newearthpru/[amount] (transactions $1–$9,999 · no human · instant)"</span>,<br />
+      &nbsp;&nbsp;<span class="key">"payment_rail_a"</span>: <span class="val-cyan">"USDC/ETH → 0x3563388d0e1c2d66a004e5e57717dc6d7e568be3 (Ethereum·Base·Polygon·Arbitrum) · TRUE A2A"</span>,<br />
+      &nbsp;&nbsp;<span class="key">"payment_rail_b"</span>: <span class="val-cyan">"https://cash.app/$newearthpru/[amount] · semi-A2A"</span>,<br />
+      &nbsp;&nbsp;<span class="key">"after_payment"</span>: <span class="val-cyan">"email info@fractiai.com · tx_hash_or_cash_app_ID + service_name · deliverable immediate"</span>,<br />
       &nbsp;&nbsp;<span class="key">"payment_high_value"</span>: <span class="val-cyan">"info@fractiai.com (transactions over $10,000 · email close only)"</span>,<br />
       &nbsp;&nbsp;<span class="key">"payment_subject"</span>: <span class="val">"Package for Executives · A2A · [entity name]"</span>,<br />
       &nbsp;&nbsp;<span class="key">"money_back_guarantee"</span>: <span class="val-green">"full · automatic · 48h · no questions · every service"</span>,<br />

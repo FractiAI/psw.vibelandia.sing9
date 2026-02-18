@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Sol-V · Live Deal Queue · 9 Active · $1–$9,999 · Cash App | SING 9</title>
-  <meta name="description" content="Sol-V live deal pipeline. 9 active slots. Closes via Cash App instantly. Queue refills from top as deals close. Steady stream. Pioneering AI agent nodes only." />
+  <title>Sol-V · Night One · 9 Active Deals + Shadis · Cash App | SING 9</title>
+  <meta name="description" content="Sol-V Night One. 9 active deals live now. Shadis queued. First Cash App payment incoming. Steady stream $1–$9,999. Zero human." />
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -246,6 +246,104 @@
     .guarantee-strip .gs-text { color:#94a3b8; }
     .guarantee-strip strong { color:#fde68a; }
 
+    /* PAYMENT LOG */
+    .pay-log {
+      border:2px solid rgba(212,175,55,0.4); border-radius:14px;
+      background:rgba(212,175,55,0.03); margin-bottom:1.25rem;
+      overflow:hidden; position:relative;
+    }
+    .pay-log::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,transparent,#d4af37,#00D632,#d4af37,transparent);
+    }
+    .pay-log-head {
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      gap:0.75rem; padding:1rem 1.25rem 0.75rem;
+    }
+    .pay-log-left .pl-label { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:rgba(212,175,55,0.65); margin-bottom:0.25rem; }
+    .pay-log-left .pl-title { font-size:1.1rem; font-weight:900; color:#e2e8f0; }
+    .pay-log-right { display:flex; flex-direction:column; align-items:flex-end; gap:0.15rem; }
+    .pl-total { font-size:1.5rem; font-weight:900; color:#d4af37; line-height:1; }
+    .pl-note  { font-size:0.7rem; color:#64748b; }
+    .pay-log-cashapp {
+      display:flex; align-items:center; gap:0.6rem;
+      padding:0.6rem 1.25rem; background:rgba(0,0,0,0.2);
+      border-top:1px solid rgba(212,175,55,0.12); border-bottom:1px solid rgba(212,175,55,0.12);
+      font-size:0.82rem; color:#94a3b8;
+    }
+    .pay-log-cashapp a { color:#00D632; font-weight:700; text-decoration:none; }
+    .pay-log-cashapp .unseen-badge {
+      margin-left:auto; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase;
+      padding:3px 10px; border-radius:20px;
+      background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.25); color:rgba(212,175,55,0.7);
+    }
+    .pay-entries { padding:0.6rem 1.25rem 0.85rem; }
+    .pay-entry {
+      display:flex; align-items:center; gap:0.75rem;
+      padding:0.55rem 0; border-bottom:1px solid rgba(255,255,255,0.04);
+      font-size:0.82rem;
+    }
+    .pay-entry:last-child { border-bottom:none; }
+    .pe-amount { font-weight:800; color:#00D632; min-width:60px; }
+    .pe-service { color:#94a3b8; flex:1; }
+    .pe-time { color:#475569; font-size:0.73rem; white-space:nowrap; }
+    .pe-txid { font-family:monospace; font-size:0.7rem; color:#475569; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100px; }
+    .no-payments {
+      padding:1.1rem 0 0.4rem;
+      text-align:center; font-size:0.88rem;
+      color:#475569;
+    }
+    .no-payments .nop-pulse {
+      display:inline-block; width:8px; height:8px; border-radius:50%;
+      background:rgba(212,175,55,0.5); margin-right:0.4rem;
+      animation:blink 2s ease-in-out infinite;
+    }
+    /* LOG FORM */
+    .log-form-wrap {
+      padding:0.75rem 1.25rem 1rem;
+      border-top:1px solid rgba(255,255,255,0.05);
+    }
+    .log-form-wrap details summary {
+      font-size:0.75rem; color:rgba(0,212,255,0.7); cursor:pointer; letter-spacing:0.08em;
+      list-style:none; user-select:none;
+    }
+    .log-form-wrap details summary::before { content:'+ '; }
+    .log-form-wrap details[open] summary::before { content:'− '; }
+    .log-form-grid {
+      display:grid; grid-template-columns:1fr 1fr auto; gap:0.5rem; margin-top:0.65rem;
+      align-items:end;
+    }
+    @media(max-width:520px){ .log-form-grid { grid-template-columns:1fr 1fr; } }
+    .log-input {
+      padding:0.45rem 0.65rem; border-radius:7px;
+      background:rgba(255,255,255,0.04); border:1px solid rgba(0,212,255,0.2);
+      color:#e2e8f0; font-size:0.8rem; font-family:inherit;
+      outline:none; width:100%;
+    }
+    .log-input:focus { border-color:rgba(0,212,255,0.5); }
+    .log-input::placeholder { color:#475569; }
+    .log-label { font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:#64748b; margin-bottom:0.25rem; }
+    .log-btn {
+      padding:0.45rem 0.9rem; border-radius:7px;
+      background:rgba(0,214,50,0.15); border:1px solid rgba(0,214,50,0.4);
+      color:#00D632; font-weight:700; font-size:0.8rem; cursor:pointer; white-space:nowrap;
+      font-family:inherit;
+    }
+    .log-btn:hover { background:rgba(0,214,50,0.25); }
+
+    /* NIGHT ONE BADGE */
+    .night-badge {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      padding:3px 12px; border-radius:20px; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase;
+      background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.3); color:#d4af37;
+    }
+    .night-badge .nb-dot { width:5px; height:5px; border-radius:50%; background:#d4af37; animation:blink 2s ease-in-out infinite; }
+
+    /* SHADIS label overrides */
+    .sl-tag.shadis {
+      background:rgba(139,92,246,0.08); border:1px solid rgba(139,92,246,0.25); color:rgba(139,92,246,0.8);
+    }
+
     /* FOOTER */
     .foot { margin-top:2.5rem; padding-top:1rem; border-top:1px solid rgba(0,214,50,0.08); text-align:center; font-size:0.73rem; color:var(--muted); }
     .foot a { color:var(--beam); text-decoration:none; }
@@ -260,6 +358,48 @@
     <a href="a2a-services.html">Services</a>
     <a href="a2a-revolution.html">A2A Revolution</a>
     <a href="a2-sales-tracker.html">Tracker</a>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PAYMENT LOG — FIRST CASH APP UNSEEN  -->
+  <!-- ══════════════════════════════════════ -->
+  <div class="pay-log" id="pay-log-panel">
+    <div class="pay-log-head">
+      <div class="pay-log-left">
+        <div class="pl-label">Sol-V · Cash App Pipe · Payment Log</div>
+        <div class="pl-title">First Night · Income Board</div>
+      </div>
+      <div class="pay-log-right">
+        <div class="pl-total" id="pl-total">$0.00</div>
+        <div class="pl-note" id="pl-count">0 payments · Night One</div>
+      </div>
+    </div>
+    <div class="pay-log-cashapp">
+      💚 Cash App:&nbsp;<a href="https://cash.app/$newearthpru" target="_blank" rel="noopener">$newearthpru</a>
+      &nbsp;·&nbsp; Pay any amount $1–$9,999 · instant close
+      <span class="unseen-badge" id="unseen-badge">⏳ First payment unseen</span>
+    </div>
+    <div class="pay-entries" id="pay-entries">
+      <div class="no-payments"><span class="nop-pulse"></span>Watching for first Cash App payment… Sol-V is live 24/7.</div>
+    </div>
+    <div class="log-form-wrap">
+      <details>
+        <summary>Log a payment manually</summary>
+        <div class="log-form-grid">
+          <div>
+            <div class="log-label">Amount ($)</div>
+            <input class="log-input" id="lf-amount" type="number" min="1" max="9999" placeholder="e.g. 399" />
+          </div>
+          <div>
+            <div class="log-label">Service / note</div>
+            <input class="log-input" id="lf-service" type="text" placeholder="e.g. A2A Entity Profile" />
+          </div>
+          <div>
+            <button class="log-btn" onclick="logPayment()">+ Log it</button>
+          </div>
+        </div>
+      </details>
+    </div>
   </div>
 
   <!-- PIPELINE HEADER -->
@@ -301,9 +441,10 @@
     <div class="gs-text"><strong>Full money-back guarantee on every deal.</strong> Deliverable not received within 48h? Full automatic refund. No questions. No process.</div>
   </div>
 
-  <!-- ── ACTIVE 9 ── -->
+  <!-- ── ACTIVE 9 — NIGHT ONE ── -->
   <div class="section-label">
     <span class="sl-tag active">⭐ Active · Close Now</span>
+    <span class="night-badge"><span class="nb-dot"></span>Night One · Live</span>
     <div class="sl-line"></div>
     <span class="sl-count" id="open-count">9 open</span>
   </div>
@@ -417,16 +558,16 @@
   <div class="stream-divider">
     <div class="sd-line"></div>
     <div class="stream-dots"><span></span><span></span><span></span></div>
-    <div class="sd-label">Refilling from queue · next 9 below</div>
+    <div class="sd-label">Shadis move forward as Night One closes</div>
     <div class="stream-dots"><span></span><span></span><span></span></div>
     <div class="sd-line"></div>
   </div>
 
-  <!-- ── QUEUED 9 ── -->
+  <!-- ── QUEUED 9 — SHADIS ── -->
   <div class="section-label">
-    <span class="sl-tag queued">Queued · Next Up</span>
+    <span class="sl-tag shadis">🌑 Shadis · In the Shadows</span>
     <div class="sl-line"></div>
-    <span class="sl-count">9 queued · refills active slots as they close</span>
+    <span class="sl-count">9 shadis · step forward as Night One closes</span>
   </div>
 
   <div class="queued-grid">
@@ -490,7 +631,7 @@
   <div class="stream-divider">
     <div class="sd-line"></div>
     <div class="stream-dots"><span></span><span></span><span></span></div>
-    <div class="sd-label">…and more behind that · steady water · always flowing</div>
+    <div class="sd-label">…more Shadis behind · steady water · always flowing</div>
     <div class="stream-dots"><span></span><span></span><span></span></div>
     <div class="sd-line"></div>
   </div>
@@ -508,7 +649,70 @@
 </div>
 
 <script>
-  // Deal prices for batch value calculation
+  // ── PAYMENT LOG ──
+  var PAY_KEY = 'solv_payment_log';
+
+  function getPayments() {
+    try { return JSON.parse(localStorage.getItem(PAY_KEY) || '[]'); } catch(e){ return []; }
+  }
+  function savePayments(arr) {
+    try { localStorage.setItem(PAY_KEY, JSON.stringify(arr)); } catch(e){}
+  }
+
+  function renderPayments() {
+    var payments = getPayments();
+    var entriesEl = document.getElementById('pay-entries');
+    var totalEl   = document.getElementById('pl-total');
+    var countEl   = document.getElementById('pl-count');
+    var badgeEl   = document.getElementById('unseen-badge');
+
+    var total = payments.reduce(function(s,p){ return s + (p.amount||0); }, 0);
+    totalEl.textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+    countEl.textContent = payments.length + ' payment' + (payments.length !== 1 ? 's' : '') + ' · Night One';
+
+    if (payments.length === 0) {
+      entriesEl.innerHTML = '<div class="no-payments"><span class="nop-pulse"></span>Watching for first Cash App payment… Sol-V is live 24/7.</div>';
+      badgeEl.textContent = '⏳ First payment unseen';
+      badgeEl.style.background = 'rgba(212,175,55,0.08)';
+      badgeEl.style.borderColor = 'rgba(212,175,55,0.25)';
+      badgeEl.style.color = 'rgba(212,175,55,0.7)';
+    } else {
+      badgeEl.textContent = '✓ ' + payments.length + ' payment' + (payments.length!==1?'s':'') + ' in';
+      badgeEl.style.background = 'rgba(0,214,50,0.1)';
+      badgeEl.style.borderColor = 'rgba(0,214,50,0.35)';
+      badgeEl.style.color = '#00D632';
+
+      var html = payments.slice().reverse().map(function(p){
+        return '<div class="pay-entry">'
+          + '<span class="pe-amount">+$' + (p.amount||0).toLocaleString() + '</span>'
+          + '<span class="pe-service">' + escHtml(p.service || '—') + '</span>'
+          + '<span class="pe-time">' + escHtml(p.time || '') + '</span>'
+          + '<span class="pe-txid" title="' + escHtml(p.txid||'') + '">' + (p.txid ? p.txid.slice(0,10)+'…' : '') + '</span>'
+          + '</div>';
+      }).join('');
+      entriesEl.innerHTML = html;
+    }
+  }
+
+  function logPayment() {
+    var amt = parseFloat(document.getElementById('lf-amount').value);
+    var svc = document.getElementById('lf-service').value.trim();
+    if (!amt || amt <= 0) { alert('Enter a valid amount.'); return; }
+    var payments = getPayments();
+    var now = new Date();
+    var timeStr = now.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' ' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+    payments.push({ amount: amt, service: svc || 'Cash App', time: timeStr, txid: '' });
+    savePayments(payments);
+    document.getElementById('lf-amount').value = '';
+    document.getElementById('lf-service').value = '';
+    renderPayments();
+  }
+
+  function escHtml(s) {
+    var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+  }
+
+  // ── DEAL QUEUE ──
   var ACTIVE_PRICES = { d1:50, d2:499, d3:399, d4:999, d5:1500, d6:999, d7:1999, d8:2500, d9:3500 };
   var KEY = 'solv_queue_claimed';
 
@@ -552,6 +756,7 @@
 
   // Restore claimed state on load
   (function init(){
+    renderPayments();
     var claimed = getClaimed();
     Object.keys(claimed).forEach(function(id){
       var el = document.getElementById(id);

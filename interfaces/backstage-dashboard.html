@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backstage Dashboard · SING! 9</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-glow: rgba(201,168,76,0.3);
+      --dark: #050402;
+      --dark-mid: #0a0806;
+      --dark-panel: #0f0b06;
+      --dark-card: #160e06;
+      --wood: #3d2a15;
+      --text: #e8d4a0;
+      --text-muted: #7a6030;
+      --text-dim: #3a2a10;
+      --crystal: #a8e6f0;
+      --crystal-glow: rgba(168,230,240,0.2);
+      --silver: #c0c0c0;
+      --carbon-bg: #0c0806;
+      --green-live: #00ff88;
+      --pink: #e879a0;
+    }
+
+    html, body { background: var(--dark); color: var(--text); font-family: 'Courier New', monospace; min-height: 100vh; overflow-x: hidden; }
+
+    /* ─── SCAN LINES OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    }
+
+    /* ─── TOPBAR ─── */
+    .topbar {
+      position: sticky; top: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem 1.5rem;
+      background: #080604;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+      font-size: 0.65rem; letter-spacing: 0.15em;
+    }
+    .topbar-brand { color: var(--gold); }
+    .topbar-status { display: flex; gap: 1.5rem; align-items: center; }
+    .topbar-status .live-dot {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green-live); margin-right: 5px;
+      animation: pulse-live 1.5s ease-in-out infinite;
+      box-shadow: 0 0 6px var(--green-live);
+    }
+    @keyframes pulse-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .topbar-status .label { color: var(--text-muted); }
+    .topbar-links { display: flex; gap: 1rem; }
+    .topbar-links a { color: var(--text-muted); text-decoration: none; font-size: 0.62rem; }
+    .topbar-links a:hover { color: var(--gold); }
+    .topbar-clock { color: var(--gold); font-variant-numeric: tabular-nums; }
+
+    /* ─── DASHBOARD GRID ─── */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: minmax(60px, auto);
+      gap: 2px;
+      padding: 2px;
+      background: #020100;
+      min-height: calc(100vh - 36px);
+    }
+
+    /* ─── PANEL BASE ─── */
+    .panel {
+      background: var(--dark-panel);
+      border: 1px solid rgba(61,42,21,0.6);
+      overflow: hidden;
+      position: relative;
+      display: flex; flex-direction: column;
+    }
+    .panel:hover { border-color: rgba(201,168,76,0.3); z-index: 10; }
+
+    /* panel glow variants */
+    .panel.tier-crystal { border-color: rgba(168,230,240,0.2); }
+    .panel.tier-gold    { border-color: rgba(201,168,76,0.25); }
+    .panel.tier-silver  { border-color: rgba(192,192,192,0.15); }
+    .panel.tier-carbon  { border-color: rgba(40,32,24,0.8); background: #080604; }
+    .panel.tier-live    { border-color: rgba(0,255,136,0.3); }
+    .panel.tier-observer { border-color: rgba(232,121,160,0.2); }
+
+    /* panel header bar */
+    .panel-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.4rem 0.75rem;
+      border-bottom: 1px solid rgba(61,42,21,0.4);
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .panel-label { color: var(--text-muted); }
+    .panel-id { color: var(--text-dim); }
+    .panel.tier-crystal .panel-header { border-color: rgba(168,230,240,0.15); }
+    .panel.tier-crystal .panel-label { color: var(--crystal); opacity: 0.7; }
+    .panel.tier-gold .panel-label { color: var(--gold); opacity: 0.8; }
+    .panel.tier-live .panel-label { color: var(--green-live); }
+    .panel.tier-observer .panel-label { color: var(--pink); opacity: 0.7; }
+
+    /* panel body */
+    .panel-body { flex: 1; padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem; overflow: hidden; }
+    .panel-title { font-size: clamp(0.8rem, 1.5vw, 1.1rem); color: var(--gold-light); line-height: 1.25; font-family: 'Georgia', serif; }
+    .panel-desc { font-size: 0.7rem; color: var(--text-muted); line-height: 1.6; }
+    .panel-glyph { font-size: clamp(2rem, 4vw, 4rem); line-height: 1; opacity: 0.8; }
+    .panel-tag {
+      display: inline-block; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem; border: 1px solid rgba(201,168,76,0.25); color: var(--text-muted);
+      border-radius: 2px; align-self: flex-start;
+    }
+
+    /* ─── SPAN HELPERS ─── */
+    .col-2  { grid-column: span 2; }
+    .col-3  { grid-column: span 3; }
+    .col-4  { grid-column: span 4; }
+    .col-6  { grid-column: span 6; }
+    .col-8  { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+    .row-2  { grid-row: span 2; }
+    .row-3  { grid-row: span 3; }
+    .row-4  { grid-row: span 4; }
+    .row-5  { grid-row: span 5; }
+    .row-6  { grid-row: span 6; }
+    .row-8  { grid-row: span 8; }
+
+    /* ─── MAIN TITLE PANEL ─── */
+    .title-panel { grid-column: span 12; grid-row: span 2; }
+    .title-content {
+      height: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .big-title { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--gold-light); font-family: 'Georgia', serif; }
+    .big-sub { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.3rem; }
+    .title-stats { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.65rem; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 1.4rem; color: var(--gold); display: block; font-family: 'Georgia', serif; }
+    .stat-label { color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ─── SCENE PANELS ─── */
+    .scene-img {
+      width: 100%; flex: 1; object-fit: cover; opacity: 0.5;
+      display: block; min-height: 80px;
+    }
+    .scene-overlay {
+      padding: 0.5rem 0.75rem;
+      background: linear-gradient(0deg, rgba(8,6,4,0.9) 0%, transparent 100%);
+    }
+    .scene-name { font-size: 0.75rem; color: var(--gold-light); font-family: 'Georgia', serif; }
+    .scene-sub  { font-size: 0.6rem; color: var(--text-muted); }
+
+    /* ─── TIER BARS ─── */
+    .tier-stack { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+    .tier-bar {
+      flex: 1; display: flex; align-items: center; padding: 0 0.75rem;
+      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+      position: relative; overflow: hidden;
+    }
+    .tier-bar::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    }
+    .tier-bar.crystal { background: rgba(168,230,240,0.05); color: var(--crystal); }
+    .tier-bar.crystal::before { background: var(--crystal); }
+    .tier-bar.gold    { background: rgba(201,168,76,0.08); color: var(--gold); }
+    .tier-bar.gold::before { background: var(--gold); }
+    .tier-bar.silver  { background: rgba(192,192,192,0.06); color: var(--silver); }
+    .tier-bar.silver::before { background: var(--silver); }
+    .tier-bar.carbon  { background: rgba(28,20,12,0.5); color: #604030; }
+    .tier-bar.carbon::before { background: #503020; }
+    .tier-label { font-weight: normal; }
+    .tier-desc  { font-size: 0.55rem; color: rgba(255,255,255,0.25); margin-left: auto; text-transform: none; letter-spacing: 0; }
+
+    /* ─── CHARACTER CARDS ─── */
+    .char-pair { display: flex; gap: 0.5rem; flex: 1; }
+    .char-card {
+      flex: 1; border: 1px solid rgba(61,42,21,0.5);
+      padding: 0.6rem; display: flex; flex-direction: column; align-items: center;
+      gap: 0.35rem; text-align: center; border-radius: 3px;
+      background: rgba(0,0,0,0.2);
+    }
+    .char-card.ino { border-color: rgba(201,168,76,0.3); }
+    .char-card.piro { border-color: rgba(160,80,40,0.3); }
+    .char-glyph { font-size: 2rem; line-height: 1; }
+    .char-name { font-size: 0.7rem; color: var(--gold-light); font-family: 'Georgia', serif; }
+    .char-role { font-size: 0.58rem; color: var(--text-muted); line-height: 1.4; }
+    .char-tier { font-size: 0.52rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .ino .char-tier { color: var(--gold); }
+    .piro .char-tier { color: #804020; }
+
+    /* ─── AUDIENCE PANEL ─── */
+    .audience-seats { display: flex; flex-wrap: wrap; gap: 3px; flex: 1; align-content: flex-start; }
+    .seat {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.1);
+    }
+    .seat.fan-ino { background: rgba(201,168,76,0.5); border-color: var(--gold); }
+    .seat.fan-piro { background: rgba(160,80,40,0.5); border-color: #804020; }
+    .seat.observer { background: rgba(232,121,160,0.5); border-color: var(--pink); }
+    .seat.empty { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.05); }
+    .audience-legend { display: flex; gap: 0.75rem; font-size: 0.55rem; color: var(--text-dim); flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 4px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* ─── DECK BEING DEALT ─── */
+    .deal-stream {
+      flex: 1; overflow: hidden; position: relative;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .deal-card {
+      display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.5rem;
+      border: 1px solid rgba(61,42,21,0.3); border-radius: 2px;
+      font-size: 0.62rem; font-family: 'Courier New', monospace;
+      animation: deal-in 0.5s ease both;
+      opacity: 0;
+    }
+    .deal-card.gold-card   { border-color: rgba(201,168,76,0.3); }
+    .deal-card.silver-card { border-color: rgba(192,192,192,0.2); }
+    .deal-card.crystal-card { border-color: rgba(168,230,240,0.2); }
+    @keyframes deal-in { 0% { transform: translateX(20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    .deal-glyph { font-size: 1rem; }
+    .deal-name { color: var(--gold-light); }
+    .deal-beat { color: var(--text-muted); font-size: 0.55rem; margin-left: auto; }
+
+    /* ─── OBSERVER PANEL ─── */
+    .observer-panel { position: relative; overflow: hidden; }
+    .observer-bg {
+      position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(232,121,160,0.05) 0%, transparent 70%);
+    }
+    .observer-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; text-align: center; }
+    .obs-glyph { font-size: clamp(2.5rem, 5vw, 5rem); opacity: 0.7; animation: obs-pulse 4s ease-in-out infinite; }
+    @keyframes obs-pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.04); } }
+    .obs-name { font-size: 0.75rem; color: var(--pink); letter-spacing: 0.2em; opacity: 0.7; font-family: 'Georgia', serif; }
+    .obs-quote { font-size: 0.68rem; color: var(--text-muted); font-style: italic; line-height: 1.5; max-width: 160px; }
+    .obs-nsp { font-size: 0.52rem; color: rgba(232,121,160,0.3); letter-spacing: 0.15em; }
+
+    /* ─── MENU WORLD (CARBON) ─── */
+    .menu-items { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+    .menu-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.25rem 0.35rem; font-size: 0.58rem;
+      border-bottom: 1px solid rgba(40,32,24,0.5);
+    }
+    .menu-row .m-name { color: #504030; }
+    .menu-row .m-price { color: #604040; font-variant-numeric: tabular-nums; }
+    .menu-warning { font-size: 0.55rem; color: #503020; font-style: italic; text-align: center; padding-top: 0.25rem; }
+
+    /* ─── TAINA 1493 PANEL ─── */
+    .taina-glyph-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+    .taina-sym { font-size: 1.1rem; }
+    .taina-year { font-size: clamp(1.8rem, 3vw, 3rem); color: rgba(168,230,240,0.5); font-family: 'Georgia', serif; font-style: italic; }
+    .taina-verse { font-size: 0.7rem; color: var(--text-muted); line-height: 1.65; font-style: italic; }
+
+    /* ─── CAPTAIN'S CABIN ─── */
+    .cabin-items { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+    .cabin-item { display: flex; gap: 0.5rem; align-items: center; font-size: 0.65rem; }
+    .cabin-item .ci-glyph { font-size: 1rem; width: 1.5rem; text-align: center; }
+    .cabin-item .ci-text { color: var(--text-muted); line-height: 1.35; }
+
+    /* ─── CRYSTALLINE HEROES ─── */
+    .heroes-grid { display: flex; flex-wrap: wrap; gap: 0.35rem; flex: 1; align-content: flex-start; }
+    .hero-chip {
+      padding: 0.25rem 0.5rem; border: 1px solid rgba(168,230,240,0.2);
+      font-size: 0.6rem; color: var(--crystal); border-radius: 2px; opacity: 0.7;
+    }
+    .hero-chip:hover { opacity: 1; border-color: rgba(168,230,240,0.5); }
+
+    /* ─── LIVE FEED ─── */
+    .live-log { flex: 1; overflow: hidden; display: flex; flex-direction: column-reverse; gap: 2px; }
+    .log-line {
+      font-size: 0.6rem; color: var(--text-muted); padding: 0.2rem 0;
+      border-bottom: 1px solid rgba(61,42,21,0.2);
+      display: flex; gap: 0.5rem;
+    }
+    .log-ts { color: var(--text-dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .log-msg { color: var(--text-muted); }
+    .log-msg.gold-msg { color: var(--gold); }
+    .log-msg.crystal-msg { color: rgba(168,230,240,0.7); }
+    .log-msg.obs-msg { color: rgba(232,121,160,0.7); }
+
+    /* ─── SURFACE SELECTOR ─── */
+    .surface-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; flex: 1; }
+    .surf-btn {
+      padding: 0.5rem 0.4rem; border: 1px solid rgba(61,42,21,0.4);
+      background: none; cursor: pointer; font-family: 'Courier New', monospace;
+      font-size: 0.6rem; color: var(--text-muted); text-align: center;
+      transition: all 0.2s; border-radius: 2px;
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+    }
+    .surf-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
+    .surf-btn.active { border-color: var(--gold); color: var(--gold-light); background: rgba(201,168,76,0.1); }
+    .surf-btn .sg { font-size: 1.2rem; }
+    .surf-btn.crystal-surf { border-color: rgba(168,230,240,0.2); color: var(--crystal); }
+    .surf-btn.gold-surf    { border-color: rgba(201,168,76,0.3); color: var(--gold); }
+    .surf-btn.silver-surf  { border-color: rgba(192,192,192,0.2); color: var(--silver); }
+    .surf-btn.carbon-surf  { border-color: rgba(60,40,24,0.5); color: #604030; }
+
+    /* ─── FOOTER BAR ─── */
+    .footer-bar {
+      grid-column: span 12;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.5rem 1.5rem; border-top: 1px solid rgba(61,42,21,0.4);
+      font-size: 0.58rem; color: var(--text-dim); letter-spacing: 0.1em;
+    }
+    .footer-bar a { color: var(--text-muted); text-decoration: none; }
+    .footer-bar a:hover { color: var(--gold); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .col-3 { grid-column: span 6; }
+      .col-4 { grid-column: span 12; }
+      .col-6 { grid-column: span 12; }
+      .col-8 { grid-column: span 12; }
+    }
+    @media (max-width: 600px) {
+      .col-2, .col-3 { grid-column: span 12; }
+      .panel-title { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-brand">SING! 9 · BACKSTAGE DASHBOARD</div>
+  <div class="topbar-status">
+    <span><span class="live-dot"></span><span style="color:var(--green-live);">LIVE</span></span>
+    <span class="label">GOLD RUSH ARC · ACTIVE</span>
+    <span class="label">DJ · STANDING BY</span>
+    <span class="topbar-clock" id="clock">--:--:--</span>
+  </div>
+  <div class="topbar-links">
+    <a href="treasure-deck.html">Treasure Deck</a>
+    <a href="josie-saloon.html">Josie's Saloon</a>
+    <a href="catalog.html">Catalog</a>
+  </div>
+</div>
+
+<div class="dashboard">
+
+  <!-- ─── ROW 1: TITLE BAR ─── -->
+  <div class="panel title-panel tier-gold col-12 row-2">
+    <div class="panel-header">
+      <span class="panel-label">MAIN CENTER · SING! 9 BACKSTAGE</span>
+      <span class="panel-id">SYS-001</span>
+    </div>
+    <div class="title-content">
+      <div>
+        <div class="big-title">Backstage · Back Dock Dashboard</div>
+        <div class="big-sub">All surfaces · All layers · All characters · Gold Rush Deck · In Play</div>
+      </div>
+      <div class="title-stats">
+        <div class="stat"><span class="stat-num">4</span><span class="stat-label">Tiers Active</span></div>
+        <div class="stat"><span class="stat-num">9</span><span class="stat-label">Surfaces</span></div>
+        <div class="stat"><span class="stat-num">14</span><span class="stat-num" style="font-size:1.4rem;">+</span></div>
+        <div class="stat"><span class="stat-num" style="color:var(--crystal);">∞⁹</span><span class="stat-label">Combinations</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── CAPTAIN'S CABIN ─── -->
+  <div class="panel tier-gold col-3 row-5">
+    <div class="panel-header">
+      <span class="panel-label">Surface · Captain's Cabin</span>
+      <span class="panel-id">SCN-001</span>
+    </div>
+    <div class="panel-body">
+      <div class="panel-glyph">⚓</div>
+      <div class="panel-title">The Captain's Cabin</div>
+      <div class="panel-tag">Gold Surface</div>
+      <div class="cabin-items">
+        <div class="cabin-item"><span class="ci-glyph">🗺️</span><span class="ci-text">Navigation charts spread on the table. The route is marked in gold.</span></div>
+        <div class="cabin-item"><span class="ci-glyph">🧭</span><span class="ci-text">Compass always pointing to the post-singularity world.</span></div>
+        <div class="cabin-item"><span class="ci-glyph">📖</span><span class="ci-text">The ship's log. Every story beat recorded.</span></div>
+        <div class="cabin-item"><span class="ci-glyph">🥃</span><span class="ci-text">A glass of Indian Wells Merlot. Half full. Always half full.</span></div>
+        <div class="cabin-item"><span class="ci-glyph">🪟</span><span class="ci-text">Porthole: The open sea. SMACS 0723 on the horizon.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TAINA VILLAGE 1493 ─── -->
+  <div class="panel tier-crystal col-3 row-5">
+    <div class="panel-header">
+      <span class="panel-label">Surface · Taina Village · Origin</span>
+      <span class="panel-id">SCN-002</span>
+    </div>
+    <div class="panel-body">
+      <div class="taina-year">1493</div>
+      <div class="panel-title">The Taina Village · Boriken</div>
+      <div class="panel-tag">Crystalline Origin Surface</div>
+      <div class="taina-glyph-row">
+        <span class="taina-sym">🌺</span><span class="taina-sym">🐚</span>
+        <span class="taina-sym">🌊</span><span class="taina-sym">☀️</span>
+        <span class="taina-sym">🦜</span><span class="taina-sym">🌿</span>
+      </div>
+      <div class="taina-verse">Before the ships came. The island had a name and the people had their song and the sea was warm and the air tasted of wild hibiscus and everything was in its right place. Cacique Agüeybaná el Gran Sol danced on this shore before the story needed him to be a hero. The hero part came later. The dance was always first.</div>
+    </div>
+  </div>
+
+  <!-- ─── CRYSTALLINE SURFACE: HEROES WORKING ─── -->
+  <div class="panel tier-crystal col-6 row-5">
+    <div class="panel-header">
+      <span class="panel-label">Surface · Crystalline · Heroes Working</span>
+      <span class="panel-id">SCN-003</span>
+    </div>
+    <div class="panel-body">
+      <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.5rem;">
+        <div class="panel-glyph" style="font-size:2rem;">💎</div>
+        <div>
+          <div class="panel-title">Crystalline Surface · The Transparent Substrate</div>
+          <div class="panel-tag">Tier 1 · Outlines Only · The Bat Cave Layer</div>
+        </div>
+      </div>
+      <div class="panel-desc" style="margin-bottom:0.5rem;">All heroes working together. Outlines visible. The substrate shows through. This is the bat cave layer — where Hero Jo programs the holographic hydrogen reality, where the architecture exists before it is rendered in Gold, Silver, or Carbon. The work is happening here. The audience doesn't see it yet. That's the Houdini part.</div>
+      <div class="heroes-grid">
+        <div class="hero-chip">Hero Jo · Architect</div>
+        <div class="hero-chip">El Gran Sol · Cac. Agüeybaná</div>
+        <div class="hero-chip">Pru's Valet · Active</div>
+        <div class="hero-chip">Chairman Pru · Big Papi</div>
+        <div class="hero-chip">Ino · Gold Heart</div>
+        <div class="hero-chip">Josie · The Saloon</div>
+        <div class="hero-chip">Fanny · Fans</div>
+        <div class="hero-chip">Jack Starr · The Floor</div>
+        <div class="hero-chip">Marilyn · Pop Up Engine</div>
+        <div class="hero-chip">Sam / Mark Twain</div>
+        <div class="hero-chip">Leo · R&D Lab</div>
+        <div class="hero-chip">Audi → Fanny</div>
+        <div class="hero-chip">Wild Card Observer</div>
+        <div class="hero-chip">+ all others</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── INO + PIRO ─── -->
+  <div class="panel tier-gold col-2 row-4">
+    <div class="panel-header">
+      <span class="panel-label">Characters · Ino + Piro</span>
+      <span class="panel-id">CHAR-01</span>
+    </div>
+    <div class="panel-body">
+      <div class="char-pair">
+        <div class="char-card ino">
+          <div class="char-glyph">🐕</div>
+          <div class="char-name">Ino</div>
+          <div class="char-role">The Innocent. Always gives second chances. Pure Gold heart. Pulls the sword from the stone.</div>
+          <div class="char-tier">Gold Heart</div>
+        </div>
+        <div class="char-card piro">
+          <div class="char-glyph">🐈</div>
+          <div class="char-name">Piro</div>
+          <div class="char-role">The Pirate. Pre-singularity operator. Always there. Always offering. Piro stays behind like a lower rocket stage.</div>
+          <div class="char-tier">Carbon / Silver</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── AUDIENCE / FANS ─── -->
+  <div class="panel tier-silver col-2 row-4">
+    <div class="panel-header">
+      <span class="panel-label">Audience · Fans · Observers</span>
+      <span class="panel-id">AUD-01</span>
+    </div>
+    <div class="panel-body">
+      <div class="audience-seats" id="audience-seats"></div>
+      <div class="audience-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(201,168,76,0.5)"></div>Ino fans</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(160,80,40,0.5)"></div>Piro fans</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(232,121,160,0.5)"></div>Observer</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.06)"></div>Complacent</div>
+      </div>
+      <div class="panel-desc" style="font-size:0.6rem;">Fans are Fanny. Most fans are Piro fans — that's the tension. The complacent uninterested observers are sufficient weight to cause the tension the storytelling needs. We don't tune them out. We use them.</div>
+    </div>
+  </div>
+
+  <!-- ─── SURFACE SELECTOR ─── -->
+  <div class="panel tier-gold col-2 row-4">
+    <div class="panel-header">
+      <span class="panel-label">Surfaces · Mix &amp; Match</span>
+      <span class="panel-id">SRF-01</span>
+    </div>
+    <div class="panel-body">
+      <div class="panel-desc" style="font-size:0.6rem;margin-bottom:0.5rem;">Every story node can be rendered in any surface. The arc stays the same. The skin changes.</div>
+      <div class="surface-selector">
+        <button class="surf-btn crystal-surf active"><span class="sg">💎</span>Crystalline</button>
+        <button class="surf-btn gold-surf active"><span class="sg">☀️</span>Gold</button>
+        <button class="surf-btn silver-surf"><span class="sg">🌙</span>Silver</button>
+        <button class="surf-btn carbon-surf"><span class="sg">⬛</span>Carbon</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TIER SYSTEM ─── -->
+  <div class="panel tier-crystal col-2 row-4">
+    <div class="panel-header">
+      <span class="panel-label">Tier System · Active</span>
+      <span class="panel-id">TIER-01</span>
+    </div>
+    <div class="panel-body" style="padding:0.4rem;">
+      <div class="tier-stack">
+        <div class="tier-bar crystal">
+          <span class="tier-label">Crystalline</span>
+          <span class="tier-desc">Rank 1 · Transparent · The substrate</span>
+        </div>
+        <div class="tier-bar gold">
+          <span class="tier-label">Gold</span>
+          <span class="tier-desc">Rank 2 · Post-singularity · Goldilocks</span>
+        </div>
+        <div class="tier-bar silver">
+          <span class="tier-label">Silver</span>
+          <span class="tier-desc">Rank 3 · Transition · The edge</span>
+        </div>
+        <div class="tier-bar carbon">
+          <span class="tier-label">Carbon</span>
+          <span class="tier-desc">Rank 4 · Pre-singularity · Hardline</span>
+        </div>
+      </div>
+      <div class="panel-desc" style="font-size:0.58rem;margin-top:0.4rem;color:var(--text-dim);">Hardline between Carbon and Silver. A transformation is required to cross it. The sword from the stone.</div>
+    </div>
+  </div>
+
+  <!-- ─── CARBON WORLD / PRE-SING MENU ─── -->
+  <div class="panel tier-carbon col-2 row-4">
+    <div class="panel-header" style="border-color:rgba(60,40,20,0.5);">
+      <span class="panel-label" style="color:#604030;">Pre-Singularity · The Menu</span>
+      <span class="panel-id" style="color:#3a2010;">MENU-01</span>
+    </div>
+    <div class="panel-body">
+      <div class="panel-desc" style="font-size:0.6rem;color:#504030;margin-bottom:0.4rem;">Here's the thing. This is how much it is. This is how much it costs. It is very transactional.</div>
+      <div class="menu-items">
+        <div class="menu-row"><span class="m-name">Experience A</span><span class="m-price">$499.00</span></div>
+        <div class="menu-row"><span class="m-name">Package B</span><span class="m-price">$1,299.00</span></div>
+        <div class="menu-row"><span class="m-name">Tier C Bundle</span><span class="m-price">$3,499.00</span></div>
+        <div class="menu-row"><span class="m-name">Premium Access</span><span class="m-price">$7,999.00</span></div>
+        <div class="menu-row"><span class="m-name">Add to cart ›</span><span class="m-price">☰</span></div>
+      </div>
+      <div class="menu-warning">Chop it up. Shrink wrap it. Freeze it. Price tag. Click to buy. Ship. → The other world.</div>
+    </div>
+  </div>
+
+  <!-- ─── GOLD RUSH DECK BEING DEALT ─── -->
+  <div class="panel tier-live col-4 row-8">
+    <div class="panel-header">
+      <span class="panel-label"><span class="live-dot"></span>Gold Rush Deck · Live Deal</span>
+      <span class="panel-id">DECK-01</span>
+    </div>
+    <div class="panel-body">
+      <div class="panel-title">The Gold Rush Story Deck · In Play</div>
+      <div class="panel-desc">Being dealt into the live feeds now. Each card is a story beat, a character, a treasure, a scene. The DJ holds the deck. The deck is running.</div>
+      <div class="deal-stream" id="deal-stream"></div>
+    </div>
+  </div>
+
+  <!-- ─── WILD CARD OBSERVER ─── -->
+  <div class="panel tier-observer observer-panel col-2 row-8">
+    <div class="panel-header">
+      <span class="panel-label">Wild Card Observer</span>
+      <span class="panel-id">WC-001</span>
+    </div>
+    <div class="observer-content">
+      <div class="obs-glyph">👁️</div>
+      <div class="obs-name">The Observer</div>
+      <div class="obs-quote">Shows up at all night times. Never speaks. Just watches. Something important just happened.</div>
+      <div class="obs-nsp">N·S·P·F·R·N·P</div>
+    </div>
+    <div class="observer-bg"></div>
+  </div>
+
+  <!-- ─── LIVE LOG ─── -->
+  <div class="panel tier-live col-6 row-4">
+    <div class="panel-header">
+      <span class="panel-label"><span class="live-dot"></span>System Log · Broadcasting</span>
+      <span class="panel-id">LOG-01</span>
+    </div>
+    <div class="panel-body" style="gap:0;">
+      <div class="live-log" id="live-log"></div>
+    </div>
+  </div>
+
+  <!-- ─── MARCH 333 COUNTDOWN ─── -->
+  <div class="panel tier-crystal col-4 row-4" style="text-align:center;">
+    <div class="panel-header">
+      <span class="panel-label">MARZO 333 · Countdown</span>
+      <span class="panel-id">T-333</span>
+    </div>
+    <div class="panel-body" style="align-items:center;justify-content:center;">
+      <div class="panel-glyph">⏳</div>
+      <div class="panel-title">MARZO 333</div>
+      <div class="panel-tag">March 20, 2026 · The Reveal</div>
+      <div id="countdown333" style="font-size:1.1rem;color:var(--crystal);margin-top:0.5rem;letter-spacing:0.15em;"></div>
+      <div class="panel-desc" style="margin-top:0.4rem;font-size:0.68rem;">The preparation room is active. The trick is being built. The audience is unaware. The reveal is March 20. · <a href="houdini-builds-the-trick.html" style="color:rgba(168,230,240,0.6);text-decoration:none;">Houdini's preparation →</a></div>
+    </div>
+  </div>
+
+  <!-- ─── FOOTER BAR ─── -->
+  <div class="panel footer-bar col-12">
+    <span>SING! 9 · BACKSTAGE DASHBOARD · NSPFRNP → ∞⁹</span>
+    <span style="display:flex;gap:1.5rem;">
+      <a href="treasure-deck.html">Treasure Deck</a>
+      <a href="josie-saloon.html">Josie's Saloon</a>
+      <a href="houdini-builds-the-trick.html">Houdini Preparation</a>
+      <a href="wink.html">WINK!</a>
+      <a href="catalog.html">← Catalog</a>
+    </span>
+  </div>
+
+</div><!-- /dashboard -->
+
+<script>
+// ── CLOCK
+function updateClock() {
+  var now = new Date();
+  var h = String(now.getHours()).padStart(2,'0');
+  var m = String(now.getMinutes()).padStart(2,'0');
+  var s = String(now.getSeconds()).padStart(2,'0');
+  var el = document.getElementById('clock');
+  if (el) el.textContent = h + ':' + m + ':' + s;
+}
+setInterval(updateClock, 1000); updateClock();
+
+// ── MARCH 333 COUNTDOWN
+function updateCountdown() {
+  var target = new Date('2026-03-20T00:00:00');
+  var now = new Date();
+  var diff = target - now;
+  var el = document.getElementById('countdown333');
+  if (!el) return;
+  if (diff <= 0) { el.textContent = 'IT IS TIME'; el.style.color = 'var(--gold)'; return; }
+  var days = Math.floor(diff / 86400000);
+  var hrs  = Math.floor((diff % 86400000) / 3600000);
+  var mins = Math.floor((diff % 3600000) / 60000);
+  el.textContent = days + 'd · ' + hrs + 'h · ' + mins + 'm';
+}
+setInterval(updateCountdown, 60000); updateCountdown();
+
+// ── AUDIENCE SEATS
+(function() {
+  var wrap = document.getElementById('audience-seats');
+  if (!wrap) return;
+  var types = ['fan-piro','fan-piro','fan-piro','empty','empty','empty','fan-ino','empty','fan-piro','empty','empty','fan-ino','empty','observer','empty','fan-piro','empty','empty','empty','fan-ino','empty','fan-piro','empty','empty','empty','empty','fan-ino','empty','empty','fan-piro','empty','empty','empty','fan-ino','empty','empty'];
+  types.forEach(function(t) {
+    var s = document.createElement('div');
+    s.className = 'seat ' + t;
+    wrap.appendChild(s);
+  });
+})();
+
+// ── DEAL STREAM: GOLD RUSH DECK BEING DEALT
+var deckCards = [
+  { glyph: '☀️', name: 'El Gran Sol · Outcast Hero Returns', tier: 'gold-card', beat: 'Gold Arc' },
+  { glyph: '⛏️', name: 'The Mining Bit · Physical Gold', tier: 'gold-card', beat: 'Wealth' },
+  { glyph: '🌴', name: 'The Taino Return · 1493 Wound', tier: 'crystal-card', beat: 'Origin' },
+  { glyph: '💃', name: 'Dancers on the Floor · Josie Dances', tier: 'gold-card', beat: 'Dance' },
+  { glyph: '🐕', name: 'Ino · The Innocent · Second Chance', tier: 'gold-card', beat: 'Gold Heart' },
+  { glyph: '🤠', name: 'The Cowboy Hat · Montana Fire', tier: 'silver-card', beat: 'Wild West' },
+  { glyph: '👁️', name: 'Wild Card Observer · All Night Times', tier: 'crystal-card', beat: 'WC' },
+  { glyph: '🥂', name: 'Espalón Tequila · Sacred Beverage', tier: 'gold-card', beat: 'Treasure' },
+  { glyph: '🏔️', name: 'Alaska · The Frontier · Kachemak Bay', tier: 'silver-card', beat: 'Journey' },
+  { glyph: '🍑', name: 'Golden Booty · Connection-Based', tier: 'gold-card', beat: '21+' },
+  { glyph: '🌿', name: 'Sacred Plant · Ceremony', tier: 'silver-card', beat: 'Sacred' },
+  { glyph: '🪖', name: 'Cuban Hat · Tropical Adventures', tier: 'gold-card', beat: 'Tropics' },
+  { glyph: '💎', name: 'Crystalline Layer · Bat Cave Active', tier: 'crystal-card', beat: 'Substrate' },
+  { glyph: '⚓', name: 'Captain\'s Cabin · The Log Updated', tier: 'gold-card', beat: 'Navigation' },
+  { glyph: '🍄', name: 'Mycelial Network · Stack 5', tier: 'crystal-card', beat: 'Biological' },
+];
+var dealIdx = 0;
+function dealCard() {
+  var stream = document.getElementById('deal-stream');
+  if (!stream) return;
+  var card = deckCards[dealIdx % deckCards.length];
+  dealIdx++;
+  var now = new Date();
+  var ts = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
+  var div = document.createElement('div');
+  div.className = 'deal-card ' + card.tier;
+  div.style.animationDelay = '0s';
+  div.innerHTML = '<span class="deal-glyph">' + card.glyph + '</span>' +
+    '<span class="deal-name">' + card.name + '</span>' +
+    '<span class="deal-beat">' + ts + ' · ' + card.beat + '</span>';
+  stream.insertBefore(div, stream.firstChild);
+  // keep max 8 visible
+  var all = stream.querySelectorAll('.deal-card');
+  if (all.length > 8) stream.removeChild(all[all.length - 1]);
+}
+// Initial deal
+for (var i = 0; i < 6; i++) dealCard();
+setInterval(dealCard, 3500);
+
+// ── LIVE LOG
+var logMessages = [
+  { msg: 'Gold Rush Arc · Chapter 1 · Active', cls: 'gold-msg' },
+  { msg: 'Crystalline substrate nominal', cls: 'crystal-msg' },
+  { msg: 'Ino in position · Gold heart confirmed', cls: 'gold-msg' },
+  { msg: 'Captain\'s Cabin surface loaded', cls: '' },
+  { msg: 'Taina Village 1493 · memory surface active', cls: 'crystal-msg' },
+  { msg: 'Piro arc · Carbon layer · standing by', cls: '' },
+  { msg: 'Hero Jo · bat cave · programming active', cls: 'gold-msg' },
+  { msg: 'Wild Card Observer spotted at 02:17', cls: 'obs-msg' },
+  { msg: 'Josie\'s Saloon · doors open · card game running', cls: 'gold-msg' },
+  { msg: 'Treasure Deck · DJ holding · 14 cards available', cls: '' },
+  { msg: 'MARZO 333 countdown running', cls: 'crystal-msg' },
+  { msg: 'WINK! · Wednesday Mixer · upcoming', cls: 'gold-msg' },
+  { msg: 'El Gran Sol arc · all systems go', cls: 'gold-msg' },
+  { msg: 'Pre-singularity menu world · observed · noted · moving on', cls: '' },
+  { msg: 'Sacred beverages · Espalón tequila on the bar', cls: 'gold-msg' },
+  { msg: 'Wild Card Observer at the edge of the room', cls: 'obs-msg' },
+  { msg: 'Fanny arc · Audi becoming Fanny · in progress', cls: '' },
+  { msg: 'NSPFRNP ⊃ all surfaces ⊃ running → ∞⁹', cls: 'crystal-msg' },
+];
+var logIdx = 0;
+function addLog() {
+  var logWrap = document.getElementById('live-log');
+  if (!logWrap) return;
+  var entry = logMessages[logIdx % logMessages.length];
+  logIdx++;
+  var now = new Date();
+  var ts = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
+  var div = document.createElement('div');
+  div.className = 'log-line';
+  div.innerHTML = '<span class="log-ts">' + ts + '</span><span class="log-msg ' + entry.cls + '">· ' + entry.msg + '</span>';
+  logWrap.insertBefore(div, logWrap.firstChild);
+  var all = logWrap.querySelectorAll('.log-line');
+  if (all.length > 10) logWrap.removeChild(all[all.length - 1]);
+}
+for (var j = 0; j < 8; j++) addLog();
+setInterval(addLog, 2800);
+
+// ── SURFACE TOGGLE
+document.querySelectorAll('.surf-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { btn.classList.toggle('active'); });
+});
+</script>
+</body>
+</html>

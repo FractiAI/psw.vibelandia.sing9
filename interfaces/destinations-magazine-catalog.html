@@ -211,6 +211,7 @@
       <a href="destinations.html">Destinations</a><span>·</span>
       <a href="guided-expeditions.html">Guided Expeditions</a><span>·</span>
       <a href="vibers-menu.html">Pru's Valet</a><span>·</span>
+      <a href="wink.html" style="color:#e879a0;">WINK!</a><span>·</span>
       <a href="../index.html">Home</a>
     </nav>
 
@@ -267,27 +268,41 @@
 
   <script>
 (function () {
-  var u = '../data/destination-partners.json';
-  fetch(u).then(function (r) { return r.json(); }).then(function (data) {
-    var partners = data.partners || [];
-    var local = partners.filter(function (p) { return p.region === 'Local'; });
-    var far = partners.filter(function (p) { return p.region === 'Far away'; });
-    function card(p) {
-      var detailUrl = 'destination.html?id=' + encodeURIComponent(p.id || '');
-      var img = p.imageUrl ? '<div class="img-wrap"><img src="' + p.imageUrl + '" alt="" loading="lazy" /></div>' : '';
-      return '<a href="' + detailUrl + '" class="partner-card">' + img +
-        '<div class="body"><div class="name">' + (p.name || '') + '</div><div class="activity">' + (p.activity || '') + '</div><div class="link-row">Details →</div></div></a>';
-    }
-    var localEl = document.getElementById('partner-grid-local');
-    var farEl = document.getElementById('partner-grid-far');
-    if (localEl) localEl.innerHTML = local.map(card).join('');
-    if (farEl) farEl.innerHTML = far.map(card).join('');
-  }).catch(function () {
-    var localEl = document.getElementById('partner-grid-local');
-    var farEl = document.getElementById('partner-grid-far');
-    if (localEl) localEl.innerHTML = '<p style="color:rgba(212,175,55,0.35);font-size:0.85rem;">Partners loading…</p>';
-    if (farEl) farEl.innerHTML = '<p style="color:rgba(212,175,55,0.35);font-size:0.85rem;">Partners loading…</p>';
-  });
+  var partners = [
+    { id: "turner-ranch-montana",    name: "Turner Ranch Outfitting · Flying D Ranch", activity: "Elk and bison · Montana · Big Sky Country", region: "Far away", imageUrl: "assets/destinations-bison-lodge.png" },
+    { id: "debernardis-argentina",   name: "De Bernardis Hunting · Entre Ríos", activity: "Perdiz, duck, dove · Argentina", region: "Far away", imageUrl: "https://debernardishunting.com/wp-content/uploads/2023/07/Best-Wing-shooting-Argentina-cover.webp" },
+    { id: "vanwormer-baja",          name: "Van Wormer Resorts · Hotel Palmas de Cortez", activity: "Rooster fishing · Baja · Sea of Cortez", region: "Far away", imageUrl: "https://static1.squarespace.com/static/65ccdcdf6ac1725d8d27821f/t/65cfd71639fd0c4a7a606667/1708119830302/Van+Wormer+Resorts+Hotel+Palmas+De+Cortez+Los+Barriles+East+Cape+Baja+California+Sur-21.jpg?format=1500w" },
+    { id: "abaco-bahamas",           name: "Abaco Lodge · Bonefishing", activity: "Bonefishing · Bahamas · Flats", region: "Far away", imageUrl: "https://www.nervouswaters.com/wp-content/uploads/2022/09/The-Fishing-I-Bonefish.jpg" },
+    { id: "wideopen-mexico",         name: "Wide Open Outfitters · Mexico", activity: "Bobwhite quail, duck and dove · Mexico", region: "Far away", imageUrl: "https://wideopenoutfitters.com/wp-content/uploads/2022/10/wideopen-la-finca-lodge-hunting.jpg" },
+    { id: "fishtheamazon",           name: "Fish the Amazon", activity: "Amazon peacock bass · Brazil", region: "Far away", imageUrl: "https://static.wixstatic.com/media/db8d44_f3a50ad7881e4642a368973eedc7f6c4~mv2.png/v1/fill/w_1536,h_1024,al_c/db8d44_f3a50ad7881e4642a368973eedc7f6c4~mv2.png" },
+    { id: "marco-tarpon",            name: "Marco Island Tarpon Fishing", activity: "Snook and tarpon · Naples, Florida", region: "Far away", imageUrl: "https://marcoislandtarponfishing.com/wp-content/uploads/2023/03/charter-fishing-marco-island-florida-best-tarpon-fish-2.jpg" },
+    { id: "argentina-bariloche-ski", name: "Cerro Catedral · Bariloche Ski", activity: "Skiing · Patagonia · Argentina", region: "Far away", imageUrl: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=500&h=350&fit=crop" },
+    { id: "argentina-mendoza-wine",  name: "Mendoza Wine Country · Casa de Uco", activity: "Wine · Uco Valley · 5-star · Argentina", region: "Far away", imageUrl: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=500&h=350&fit=crop" },
+    { id: "argentina-golden-dorado", name: "Pirá Lodge · Golden Dorado", activity: "Golden Dorado fishing · Iberá Wetlands · Argentina", region: "Far away", imageUrl: "https://www.nervouswaters.com/wp-content/uploads/2021/01/The-Fishing-1.jpg" },
+    { id: "argentina-entre-rios-hunt", name: "De Bernardis · Entre Ríos Hunt", activity: "Wing shooting · Entre Ríos · Argentina", region: "Far away", imageUrl: "https://debernardishunting.com/wp-content/uploads/2023/07/Best-Wing-shooting-Argentina-cover.webp" },
+    { id: "matt-heron-truckee",      name: "Matt Heron Fly Fishing", activity: "Fly fishing · Truckee River · Reno", region: "Local", imageUrl: "https://mattheronflyfishing.com/wp-content/uploads/2022/05/Matt-Heron-Fly-Fishing-Truckee-River-Guide.jpg" },
+    { id: "steamboat-hot-springs",   name: "Steamboat Hot Springs", activity: "Mineral hot springs · healing · Reno", region: "Local", imageUrl: "https://steamboatsprings.org/wp-content/uploads/2022/10/steamboat-soaking-outdoor-pool.jpg" },
+    { id: "mt-rose-ski",             name: "Mt. Rose Ski Tahoe", activity: "Skiing · Reno–Tahoe", region: "Local", imageUrl: "assets/truckee-winter-ski.png" },
+    { id: "renomensclub",            name: "Men's Club Reno", activity: "Men's club · Reno VIP · Josie's Saloon Adjacent", region: "Local", imageUrl: "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=500&h=350&fit=crop" },
+    { id: "black-rabbit-mead",       name: "Black Rabbit Mead", activity: "Craft mead · downtown Reno · Truckee River Crawl", region: "Local", imageUrl: "https://static.wixstatic.com/media/db068e_0b6c0e27e6ec45e09c8b87b4e63c9b2a~mv2.jpg/v1/fill/w_1300,h_868,al_c,q_85/db068e_0b6c0e27e6ec45e09c8b87b4e63c9b2a~mv2.jpg" },
+    { id: "silver-legacy",           name: "Silver Legacy Casino", activity: "Casino · breakfast buffet · Reno", region: "Local", imageUrl: "assets/vendors-silver-legacy.png" },
+    { id: "eldorado-novi",           name: "Eldorado Reno · Novi Club", activity: "Casino · Novi nightclub · Reno VIP", region: "Local", imageUrl: "https://www.caesars.com/content/dam/properties/eldorado-reno/venues/nightlife/novi/Novi-nightclub-eldorado-reno-01.jpg" }
+  ];
+
+  var local = partners.filter(function (p) { return p.region === 'Local'; });
+  var far = partners.filter(function (p) { return p.region === 'Far away'; });
+
+  function card(p) {
+    var detailUrl = 'destination.html?id=' + encodeURIComponent(p.id || '');
+    var img = p.imageUrl ? '<div class="img-wrap"><img src="' + p.imageUrl + '" alt="" loading="lazy" onerror="this.style.opacity=\'0.2\'" /></div>' : '';
+    return '<a href="' + detailUrl + '" class="partner-card">' + img +
+      '<div class="body"><div class="name">' + (p.name || '') + '</div><div class="activity">' + (p.activity || '') + '</div><div class="link-row">Full experience →</div></div></a>';
+  }
+
+  var localEl = document.getElementById('partner-grid-local');
+  var farEl = document.getElementById('partner-grid-far');
+  if (localEl) localEl.innerHTML = local.map(card).join('');
+  if (farEl) farEl.innerHTML = far.map(card).join('');
 })();
   </script>
 

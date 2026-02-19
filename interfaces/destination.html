@@ -3,122 +3,564 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Destination · Vibelandia experience | VIBELANDIA SING 9</title>
+  <title>Destination · SING! 9</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0a12; color: #e8e6e3; min-height: 100vh; line-height: 1.6; font-size: 16px; padding-top: env(safe-area-inset-top); }
-    .header-strip {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.08) 50%, rgba(0, 212, 255, 0.08) 100%);
-      border-bottom: 2px solid rgba(212, 175, 55, 0.4);
-      padding: 0.6rem 1rem;
-      display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --dark: #080604;
+      --dark-mid: #120e08;
+      --dark-card: #1a1408;
+      --wood: #3d2a15;
+      --text: #e8d4a0;
+      --text-muted: #8a7040;
+      --text-dim: #504030;
     }
-    .header-strip a { color: #d4af37; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-    .header-strip a:hover { text-decoration: underline; }
-    .upgrade-cta { background: rgba(212, 175, 55, 0.25); border: 2px solid rgba(212, 175, 55, 0.6); color: #fef3c7; padding: 0.4rem 0.9rem; border-radius: 8px; font-weight: 700; }
-    .upgrade-cta:hover { background: rgba(212, 175, 55, 0.4); text-decoration: none; }
-    .sep { color: #78716c; margin: 0 0.25rem; }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 0 1.5rem 2rem; }
-    .top-links { margin-bottom: 1rem; }
-    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
-    .hero-img { width: 100%; max-height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 1.25rem; background: #1e293b; }
-    .destination-title { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 600; color: #e8e6e3; margin-bottom: 0.25rem; }
-    .destination-activity { font-size: 1rem; color: #94a3b8; margin-bottom: 1rem; }
-    .hybrid-copy { padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 1.5rem; }
-    .hybrid-copy p { margin-bottom: 0.75rem; color: #cbd5e1; font-size: 0.95rem; }
-    .booking-options { margin: 1.5rem 0; }
-    .booking-options h3 { font-size: 1rem; font-weight: 600; color: #d4af37; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
-    .option-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-    .option-card {
-      background: rgba(0, 212, 255, 0.08);
-      border: 2px solid rgba(0, 212, 255, 0.3);
-      border-radius: 12px;
-      padding: 1.25rem;
-      transition: border-color 0.2s, background 0.2s;
+    body { font-family: 'Georgia', serif; background: var(--dark); color: var(--text); min-height: 100vh; }
+
+    /* NAV */
+    .topnav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; border-bottom: 1px solid var(--wood);
+      position: sticky; top: 0; background: rgba(8,6,4,0.97); z-index: 100;
     }
-    .option-card:hover { border-color: rgba(212, 175, 55, 0.5); background: rgba(212, 175, 55, 0.08); }
-    .option-card.gold { border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.06); }
-    .option-card.gold:hover { border-color: rgba(212, 175, 55, 0.6); background: rgba(212, 175, 55, 0.12); }
-    .option-card h4 { font-size: 1rem; color: #e8e6e3; margin-bottom: 0.35rem; }
-    .option-card p { font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.75rem; }
-    .option-card a { display: inline-block; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; }
-    .option-card .btn-trad { background: #334155; color: #e2e8f0; border: 1px solid #475569; }
-    .option-card .btn-trad:hover { background: #475569; color: #fff; }
-    .option-card .btn-ours { background: linear-gradient(135deg, #d4af37, #b8860b); color: #0c0c0c; border: 2px solid rgba(212, 175, 55, 0.8); }
-    .option-card .btn-ours:hover { opacity: 0.95; }
-    .visit-partner-wrap { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.12); text-align: center; }
-    .visit-partner-wrap p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 0.5rem; }
-    .visit-partner-wrap a { color: #00d4ff; text-decoration: none; font-weight: 600; }
-    .visit-partner-wrap a:hover { color: #d4af37; text-decoration: underline; }
-    .back-catalog { margin-bottom: 1rem; }
-    .back-catalog a { color: #00d4ff; text-decoration: none; font-size: 0.9rem; }
-    .back-catalog a:hover { color: #d4af37; text-decoration: underline; }
-    .ticker-wrap { background: #0c0a09; border-top: 2px solid rgba(212, 175, 55, 0.5); padding: 0.5rem 0; overflow: hidden; }
-    .ticker { display: flex; width: max-content; animation: tick 40s linear infinite; }
-    .ticker span { padding: 0 1.5rem; font-size: 0.8rem; font-weight: 600; color: #d4af37; white-space: nowrap; }
-    .ticker span::after { content: ' · '; color: rgba(212, 175, 55, 0.4); }
-    @keyframes tick { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .loading, .not-found { text-align: center; padding: 2rem; color: #94a3b8; }
+    .topnav a { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.12em; text-decoration: none; text-transform: uppercase; }
+    .topnav a:hover, .topnav-brand { color: var(--gold); }
+    .topnav-brand { font-size: 0.85rem; letter-spacing: 0.2em; font-weight: 600; }
+
+    /* HERO IMAGE */
+    .dest-hero {
+      position: relative; height: 55vh; min-height: 320px; overflow: hidden;
+      background: var(--dark-mid);
+    }
+    .dest-hero img {
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.65;
+      transition: opacity 0.5s;
+    }
+    .dest-hero-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(8,6,4,0.96) 100%);
+    }
+    .dest-hero-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 2.5rem 2.5rem 2rem;
+    }
+    .dest-eyebrow { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .dest-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: normal; color: #fff; line-height: 1.2; margin-bottom: 0.4rem; }
+    .dest-activity { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 0.1em; }
+
+    /* SING9 LAYER BANNER */
+    .sing9-layer {
+      background: rgba(201,168,76,0.07); border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 1.5rem 2.5rem; display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;
+    }
+    .layer-tag {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; border: 1px solid var(--gold); color: var(--gold); border-radius: 2px;
+    }
+    .layer-arc { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
+    .layer-arc strong { color: var(--text); font-style: normal; }
+
+    /* CONTENT SECTIONS */
+    .content-wrap { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+
+    .section { padding: 3rem 0; border-bottom: 1px solid var(--wood); }
+    .section-eyebrow { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .section-title { font-size: 1.4rem; font-weight: normal; color: var(--gold-light); margin-bottom: 1rem; }
+    .section-body { font-size: 0.95rem; line-height: 1.85; color: var(--text); }
+    .section-body p + p { margin-top: 0.9rem; }
+    .section-body strong { color: var(--gold-light); }
+
+    /* DAY BY DAY */
+    .day-list { margin-top: 1.5rem; }
+    .day-item {
+      display: grid; grid-template-columns: 3.5rem 1fr; gap: 1rem;
+      padding: 1.5rem 0; border-bottom: 1px solid rgba(61,42,21,0.5);
+      align-items: start;
+    }
+    .day-item:last-child { border-bottom: none; }
+    .day-num {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); padding-top: 0.2rem; line-height: 1.3;
+      text-align: right;
+    }
+    .day-content { }
+    .day-title { font-size: 1rem; color: var(--gold-light); margin-bottom: 0.4rem; font-weight: normal; }
+    .day-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; }
+    .day-desc strong { color: var(--text); }
+    .day-sing9 {
+      margin-top: 0.6rem; font-size: 0.75rem; color: rgba(201,168,76,0.5);
+      font-style: italic; padding-left: 0.75rem;
+      border-left: 2px solid rgba(201,168,76,0.2);
+    }
+
+    /* TWO WORLDS BOOKING */
+    .booking-section { padding: 3rem 0; }
+    .booking-heading { font-size: 1.3rem; color: var(--gold-light); font-weight: normal; margin-bottom: 0.4rem; }
+    .booking-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; font-style: italic; }
+    .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    @media (max-width: 600px) { .booking-grid { grid-template-columns: 1fr; } }
+
+    .booking-card {
+      padding: 2rem 1.75rem; border-radius: 4px;
+      border: 1px solid;
+    }
+    .booking-card.pre-sing {
+      background: rgba(0,0,0,0.3); border-color: #333;
+    }
+    .booking-card.post-sing {
+      background: rgba(201,168,76,0.07); border-color: var(--gold);
+    }
+    .booking-card-label {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+    .pre-sing .booking-card-label { color: #555; }
+    .post-sing .booking-card-label { color: var(--gold); }
+    .booking-card-title { font-size: 1rem; margin-bottom: 0.75rem; font-weight: normal; }
+    .pre-sing .booking-card-title { color: #888; }
+    .post-sing .booking-card-title { color: var(--gold-light); }
+    .booking-card ul { list-style: none; font-size: 0.82rem; line-height: 2; margin-bottom: 1.25rem; }
+    .pre-sing ul { color: #555; }
+    .post-sing ul { color: var(--text-muted); }
+    .pre-sing ul li::before { content: '— '; color: #444; }
+    .post-sing ul li::before { content: '◆ '; color: var(--gold); }
+
+    .btn {
+      display: inline-block; padding: 0.75rem 1.75rem;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all 0.2s;
+    }
+    .btn-dark { background: #1a1a1a; color: #666; border: 1px solid #333; }
+    .btn-dark:hover { color: #aaa; border-color: #555; }
+    .btn-gold { background: var(--gold); color: var(--dark); font-weight: 700; }
+    .btn-gold:hover { background: var(--gold-light); }
+
+    /* PARTNER REFERENCE */
+    .partner-ref {
+      padding: 2rem 0; border-top: 1px solid var(--wood);
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: space-between;
+    }
+    .partner-ref-text { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+    .partner-ref a { color: var(--text-muted); text-decoration: none; font-size: 0.72rem; border: 1px solid #333; padding: 0.4rem 0.8rem; }
+    .partner-ref a:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* NOT FOUND */
+    .not-found { text-align: center; padding: 5rem 2rem; color: var(--text-muted); }
+    .not-found a { color: var(--gold); text-decoration: none; }
   </style>
 </head>
 <body>
 
-  <header class="header-strip">
-    <a href="upgrade-awareness-to-sing9-now.html" class="upgrade-cta">Upgrade to SING 9 Awareness OS</a>
-    <span class="sep">·</span>
-    <a href="destinations-magazine-catalog.html">Destinations Catalog</a>
-    <span class="sep">·</span>
-    <a href="vibelandia-truckee-river-crawl.html">Downtown Truckee River Baller V Crawler</a>
-    <span class="sep">·</span>
-    <a href="../index.html">Home</a>
-  </header>
-
-  <div class="wrap">
-    <p class="back-catalog"><a href="destinations-magazine-catalog.html">← Back to Destinations Catalog</a></p>
-    <div id="destination-root">
-      <p class="loading">Loading destination…</p>
+  <nav class="topnav">
+    <a href="catalog.html" class="topnav-brand">SING! 9</a>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="destinations-magazine-catalog.html">← All Destinations</a>
+      <a href="josie-saloon.html">Josie's Saloon</a>
+      <a href="experience-picker.html">Experiences</a>
     </div>
+  </nav>
+
+  <div id="dest-root">
+    <div style="text-align:center;padding:5rem 2rem;color:var(--text-muted);">Loading…</div>
   </div>
 
-  <div class="ticker-wrap" aria-label="Live ticker">
-    <div class="ticker">
-      <span>SING 9 · Destinations</span><span>Book traditional or through us</span><span>Aquí y allá</span><span>NSPFRNP → ∞⁹</span>
-      <span>SING 9 · Destinations</span><span>Book traditional or through us</span><span>Aquí y allá</span><span>NSPFRNP → ∞⁹</span>
-    </div>
-  </div>
+<script>
+(function() {
 
-  <script>
-(function () {
+  // ─── ALL DESTINATION DATA (embedded — no fetch needed) ───────────────────
+
+  var DESTINATIONS = {
+
+    "turner-ranch-montana": {
+      name: "Turner Ranch Outfitting · Flying D Ranch",
+      activity: "Elk and bison · Montana · Big Sky Country",
+      region: "Far away",
+      url: "https://www.turnerranchoutfitting.com/flying-d-ranch-mt-usa",
+      image: "assets/destinations-bison-lodge.png",
+      arc: "Montana Arc · Wild West · Cowboys & Hot Springs",
+      treasure: "Physical Gold · Wild West Territory · Sacred Open Land",
+      intro: "The Flying D Ranch is Ted Turner's crown jewel — 113,000 acres of Montana that have never been ruined. Elk. Bison. Big sky. The real deal. When we bring you here through Pru's Valet, you're not booking a trip — you're activating the Wild West arc. This land has not been commodified. It cannot be shrink-wrapped and shipped. It has to be lived.",
+      days: [
+        { num: "Day 1", title: "Arrive · Orientation · Welcome Fire", desc: "Fly into Bozeman. Transfer to the Flying D — 90 minutes through countryside that opens your lungs. Check in at the lodge. Evening orientation with the guides. Dinner around the fire. First glass of <strong>Indian Wells Merlot</strong> under the big sky. The stars here are not metaphor.", sing9: "Silver surface activating. The journey has begun. Hero Jo's Montana trading card: in play." },
+        { num: "Day 2", title: "Dawn Patrol · Elk and Bison Country", desc: "4:30am. Coffee. Darkness. The guide picks you up in the dark. Dawn breaks over the ridge — and they're there. Hundreds of bison moving across the valley floor. You don't need to hunt them. Just witnessing this is enough. If you're here to hunt: the elk are in the timber above.", sing9: "Gold surface. This is the post-singularity world. The animals won. The land won. You're a guest in something ancient and correct." },
+        { num: "Day 3", title: "Deep Country · Photography · Hot Springs", desc: "Full day on the ranch. Morning with the horses or on foot — your choice. Afternoon: Steamboat Hot Springs or local mineral pools nearby. The holographic hydrogen water is literal here — the mineral springs have been running for geological time. Evening: steak, wine, stories.", sing9: "Treasure deck activated: Wild West + Hot Springs + Sacred Beverages. The full Montana arc, running." },
+        { num: "Day 4", title: "Final Morning Light · Depart with Stories", desc: "Last dawn on the ridge. The guides know which spot gives you the view that you'll describe for the rest of your life. Late morning checkout. Transfer to Bozeman. You leave different than you arrived.", sing9: "Arc complete. The carbon world will be there when you land. But you've been in the Gold zone. That doesn't leave you." }
+      ]
+    },
+
+    "debernardis-argentina": {
+      name: "De Bernardis Hunting · Entre Ríos",
+      activity: "Perdiz, duck, dove · Argentina",
+      region: "Far away",
+      url: "https://debernardishunting.com",
+      image: "https://debernardishunting.com/wp-content/uploads/2023/07/Best-Wing-shooting-Argentina-cover.webp",
+      arc: "Tropics Arc · El Gran Sol Returns Home",
+      treasure: "Wing Shooting · Argentine Asado · Malbec · Open Pampas",
+      intro: "Entre Ríos — Between the Rivers. The province between the Paraná and the Uruguay, where the pampas run flat to the horizon and birds fill the sky at dusk in numbers you won't believe until you're standing in the field. De Bernardis runs the best wing shooting operation in South America. We bring our layer to it: the connection, the crew, the post-singularity frame.",
+      days: [
+        { num: "Day 1", title: "Buenos Aires → Entre Ríos · Welcome Asado", desc: "Arrive Buenos Aires. Transfer to the estancia — a 4-hour drive through the pampas that tells you everything about Argentina. Welcome asado by the guides. Fire-cooked beef. The first Malbec. The gauchos. This is real.", sing9: "Silver to Gold transition begins. The arc is El Gran Sol returning to the tropics. South America is his hemisphere." },
+        { num: "Day 2", title: "Dawn · Perdiz Fields · Dove in the Afternoon", desc: "Dogs on point at first light. Perdiz coveys flushing through the tall grass. 9am breakfast back at the lodge. Afternoon: dove roost — thousands of birds moving in column. The shooting is secondary to the spectacle.", sing9: "Gold surface. The land gives abundantly here. The post-singularity abundance model: no scarcity, no price tags, just the thing itself." },
+        { num: "Day 3", title: "Duck Blinds · Dawn on the Water", desc: "Different rhythm today — duck blinds at 4am on the flooded marshes. Teal, rosy-bill, ringed teal moving at dawn. Afternoon rest at the estancia. Long lunch. The gaucho shows you how to drink maté correctly.", sing9: "The Wild Card Observer appears at the edge of the marsh. Hat. Glasses. Watches the ducks rise. Does not lift a gun." },
+        { num: "Day 4", title: "Final Morning · Full Argentina Farewell", desc: "One more morning in the field. Midday asado — the full farewell feast. Transfer back to Buenos Aires. Dinner in Palermo if the flight allows. Depart with full heart and full stomach.", sing9: "Arc closes on a Gold note. El Gran Sol's southern hemisphere activated." }
+      ]
+    },
+
+    "matt-heron-truckee": {
+      name: "Matt Heron Fly Fishing",
+      activity: "Fly fishing · Truckee River · Local",
+      region: "Local",
+      url: "https://mattheronflyfishing.com",
+      image: "https://mattheronflyfishing.com/wp-content/uploads/2022/05/Matt-Heron-Fly-Fishing-Truckee-River-Guide.jpg",
+      arc: "Alaska Arc · Frontier · Water Stories",
+      treasure: "Truckee River · Wild Trout · The Real Reno Nobody Sees",
+      intro: "The Truckee River runs right through downtown Reno — and almost nobody fishes it. Matt Heron knows every hole, every seam, every fish that lives in this tailwater. This is the river that feeds Pyramid Lake. The water is cold and clear and it doesn't care about the casino lights two blocks away. We bring our layer: the story of Ino wading the Truckee, rod in hand, before the sword comes out of the stone.",
+      days: [
+        { num: "Morning", title: "Meet Matt · The Reno Nobody Knows", desc: "Meet at the put-in before 7am. Coffee from the truck. Matt talks you through the day while you rig up. The Truckee at this hour — mist on the water, a heron in the shallows — doesn't look like it's two blocks from a casino. That's the point.", sing9: "Silver surface. This is Reno before the carbon world wakes up. Ino in the water, present, quiet." },
+        { num: "Midday", title: "Best Holes · Dry Flies in the Afternoon", desc: "Matt walks you to water that would take you years to find on your own. Midday hatch — caddis or PMD depending on the season. Dry fly fishing on the Truckee in good conditions is as good as anywhere in the West. Streamside lunch from the cooler.", sing9: "The connection arc. Two humans, a guide and a guest, on a river. No screens. No menus. The water tells the truth." },
+        { num: "Evening", title: "Post-Fish Debrief · Josie's Saloon", desc: "Gear off. Waders hung. Head to Josie's Saloon or the Black Rabbit Mead bar downtown for the debrief. The fish story needs witnesses. Pru's Valet handles the rest.", sing9: "Gold close. From the river to the saloon. The whole Reno arc, in one afternoon." }
+      ]
+    },
+
+    "steamboat-hot-springs": {
+      name: "Steamboat Hot Springs",
+      activity: "Mineral hot springs · healing · Reno",
+      region: "Local",
+      url: "https://steamboatsprings.org",
+      image: "https://steamboatsprings.org/wp-content/uploads/2022/10/steamboat-soaking-outdoor-pool.jpg",
+      arc: "Gold Arc · Holographic Hydrogen Water · The Real Thing",
+      treasure: "Mineral Springs · Sacred Water · The Biological Layer",
+      intro: "Steamboat Hot Springs has been running mineral water since geological time. This is the holographic hydrogen water you've heard about — not metaphor, not marketing. The mineral-rich water coming out of the earth here is the biological enriching layer in physical form. Located 10 minutes south of Reno. We bring our layer: this is not a spa, this is a checkpoint on the arc.",
+      days: [
+        { num: "Dawn", title: "Arrive Before the Crowds · First Soak", desc: "Come early. The morning mist on the mineral pools before the sun is high is the best time to be here. Private soak rooms available. The water is sulfur-mineral — earthy, strong, ancient. Your body knows it's right even if your nose takes a moment.", sing9: "Crystalline surface. This is the closest thing to touching the biological stack directly. The water has been running since before the story had a title." },
+        { num: "Midday", title: "The Plunge · The Contrast", desc: "Hot pool to cold plunge and back. Three cycles minimum. The holographic hydrogen water doesn't just relax you — it resets you. There is science here, and the science backs what the Taíno and every indigenous water culture already knew.", sing9: "El Gran Sol's sacred water. This is the same element that runs through SMACS 0723, through Sag A, through the sun, through the ionosphere, into the aquifer, up through the springs. You're bathing in the whole arc." },
+        { num: "Evening", title: "Leave Different · Return to Reno", desc: "You will leave different than you arrived. Not dramatically — subtly. Something has reset. Take that reset back into the city. Tonight at Josie's Saloon, or home with whatever this stirred.", sing9: "Gold close. The treasure deck: Sacred Waters activated. Treasure received." }
+      ]
+    },
+
+    "mt-rose-ski": {
+      name: "Mt. Rose Ski Tahoe",
+      activity: "Skiing · Reno–Tahoe",
+      region: "Local",
+      url: "https://skirose.com",
+      image: "assets/truckee-winter-ski.png",
+      arc: "Montana Arc · Wild West · Frontier Territory",
+      treasure: "Big Sky · Mountain Air · The Edge of the Map",
+      intro: "Mt. Rose sits at the highest base elevation of any ski area near Lake Tahoe — 8,260 feet. The views of the Reno valley from the top are the post-singularity visual: your city, from above, in the snow. This mountain is ten minutes from downtown Reno. We bring our layer: skiing as the Silver-to-Gold transition arc in physical form — working for the summit, then the surrender of the descent.",
+      days: [
+        { num: "Day 1", title: "First Tram · Fresh Corduroy · Summit", desc: "Get there early. First lift — the corduroy runs are still perfect. The summit view at 9,700 feet gives you Reno, Sparks, the entire valley, and on clear days: the Nevada desert all the way to the horizon. Afternoon in the moguls or the trees. Après-ski at the lodge.", sing9: "Silver to Gold. The ascent is Silver. The descent — that surrender — is Gold. Every run is the arc." },
+        { num: "Day 2", title: "Off-Piste · Lake Tahoe Views · Perfect Lunch", desc: "Day two is when you know where the mountain lives. The guide shows you the off-piste routes that don't appear on the trail map. Tahoe appears between the trees — impossibly blue at this elevation. Lunch at the top. Last run as the sun drops behind the Sierra. The alpenglow is the best thing the mountain has.", sing9: "Gold surface. Josie's Saloon from above — everything looks post-singularity from 9,700 feet." }
+      ]
+    },
+
+    "vanwormer-baja": {
+      name: "Van Wormer Resorts · Hotel Palmas de Cortez",
+      activity: "Rooster fishing · Baja · Sea of Cortez",
+      region: "Far away",
+      url: "https://vanwormerresorts.com",
+      image: "https://static1.squarespace.com/static/65ccdcdf6ac1725d8d27821f/t/65cfd71639fd0c4a7a606667/1708119830302/Van+Wormer+Resorts+Hotel+Palmas+De+Cortez+Los+Barriles+East+Cape+Baja+California+Sur-21.jpg?format=1500w",
+      arc: "Tropics Arc · Caribbean / Pacific Heat · El Gran Sol in the Water",
+      treasure: "Rooster Fish · Sea of Cortez · The Baja Sun · Sacred Tequila",
+      intro: "The East Cape of Baja California Sur — where the desert meets the sea and the roosters run in the surf line at dawn. Hotel Palmas de Cortez has been running these operations for decades. The Sea of Cortez is Jacques Cousteau's 'Aquarium of the World.' We bring our layer: this is where El Gran Sol surfs. The sun rises off the water and it is exactly what the name says.",
+      days: [
+        { num: "Day 1", title: "Los Cabos → East Cape · First Sunset", desc: "Fly into Los Cabos. Two-hour transfer up the East Cape highway to Los Barriles. Hotel Palmas de Cortez — simple, legendary, perfect. First cold Pacífico on the beach. The sunset over the mountains hits the water and you understand why people come back every year.", sing9: "El Gran Sol in his wrapper. The sun is literal here. Espalón tequila at the bar. The Cuban Hat character is active." },
+        { num: "Day 2", title: "Dawn Departure · Roosters in the Surf", desc: "4:30am on the panga with your captain. The roosters are in the first and last light — they run the surf line in the dark before sunrise. When the sun breaks the ridge: everything turns gold. You troll and cast and eventually a rooster comes out of a wave and changes your fishing life.", sing9: "Gold surface on the water. The sun IS the projector here — literal, physical. This is the arc at full expression." },
+        { num: "Day 3", title: "Offshore · Dorado and Wahoo · Sand Beach Lunch", desc: "Push offshore for dorado. These fish are neon blue and gold and fight in the air. Lunch on a sand beach that only the pangas know about. Afternoon snorkeling over the reef. The water is warm and impossibly clear.", sing9: "The Gold Rush arc: this IS the gold. Dorado means golden one. The fish is named for the arc." },
+        { num: "Day 4", title: "Final Morning · Departure", desc: "One last morning. Roosters or whatever the tide brings. Transfer to Los Cabos by noon. You'll spend the flight home looking at photos you still can't believe you took.", sing9: "Arc complete. Treasure received: Tropics, Sacred Beverages, Hot Energy. The Cuban Hat tips." }
+      ]
+    },
+
+    "abaco-bahamas": {
+      name: "Abaco Lodge · Bonefishing",
+      activity: "Bonefishing · Abaco · Bahamas",
+      region: "Far away",
+      url: "https://www.abacolodge.com",
+      image: "https://www.nervouswaters.com/wp-content/uploads/2022/09/The-Fishing-I-Bonefish.jpg",
+      arc: "Tropics Arc · The Caribbean · Crystal Water Stories",
+      treasure: "Saltwater Flats · Bones on the Flat · The Most Beautiful Water on Earth",
+      intro: "The Bahamas flats are the post-singularity ocean. Water so clear you can watch the fish before it sees you. Bonefish are the ghosts of the flat — silver rockets that materialized from the sand. Abaco Lodge runs the most focused bonefishing operation in the Caribbean. We bring our layer: this is where Ino stands in the water, after the rescue boat, after the nadir — fully arrived.",
+      days: [
+        { num: "Day 1", title: "Fly to Marsh Harbour · First Light on the Water", desc: "Charter or commercial flight from Miami. Lodge pickup at the airstrip. Cold Kalik beer at the dock. The guide introduces himself and shows you the flat from the deck — you can see fish from here. First sunset over the Sea of Abaco. Grilled fish and rice.", sing9: "Silver to Gold transition. The rescue boat has landed. This is the morning after." },
+        { num: "Day 2", title: "Dawn on the Flat · Wading for Bones", desc: "Push-pole out before sunrise. The guide reads the water. You stalk on foot — wading ankle-deep over sand and turtle grass, watching for the tails, the nervous water, the shadow. A bonefish takes the fly and runs 100 yards in under three seconds. This is why people spend their lives chasing these fish.", sing9: "Gold surface. Ino in the crystal water. The sword from the stone, but underwater. When the bonefish runs, the line whispers: here's something important that just happened." },
+        { num: "Day 3", title: "Different Flat · Permit Attempt", desc: "Every flat is a different world. Deeper water today. Tailing permit on the edge — the hardest fish in the flats. You may not catch one. You will absolutely see one. The guide says: it's okay, that's why they call it fishing.", sing9: "Crystalline surface. The permit is the Wild Card Observer of the fish world. Shows up when it wants to. Never speaks. Just watches." },
+        { num: "Day 4", title: "Best Flat · Best Tide · Your Moment", desc: "The guide has been saving the best flat for today. He knows the tide. You've learned how to read the water. Everything aligns. Your most important day on a bonefish flat.", sing9: "The arc peaks. Treasure deck: all tropics treasures active. El Gran Sol's return to the crystal water confirmed." },
+        { num: "Day 5", title: "Last Morning · Depart", desc: "One last wade at first light. Noon flight out. You are changed.", sing9: "Arc complete. The Gold heart intact. The water survives, the bones survive, and so do you." }
+      ]
+    },
+
+    "wideopen-mexico": {
+      name: "Wide Open Outfitters · Mexico",
+      activity: "Bobwhite quail, duck and dove · Mexico",
+      region: "Far away",
+      url: "https://wideopenoutfitters.com",
+      image: "https://wideopenoutfitters.com/wp-content/uploads/2022/10/wideopen-la-finca-lodge-hunting.jpg",
+      arc: "Tropics Arc · South of the Border · The Real Mexico",
+      treasure: "Quail · Dogs · Open Country · Mexican Hospitality",
+      intro: "Bobwhite quail in numbers that no longer exist north of the border. Dogs bred for generations to work this land. Guides who have been doing this since before their fathers were born. This is the Mexico that most Americans never see — the ranches, the family operations, the honest hospitality. We bring our layer: the border is just a line on a map. The birds don't know about it.",
+      days: [
+        { num: "Day 1", title: "Fly to Monterrey · Ranch Transfer", desc: "Fly into Monterrey. Transfer to the ranch — 2 to 3 hours into the country. Welcome dinner with the family. You'll realize immediately that you are a guest in something real, not a product being delivered.", sing9: "Silver surface. The journey south. El Gran Sol's arc runs through this corridor — down into the hemisphere that the arc originated from." },
+        { num: "Day 2", title: "Dogs on Point · Bobwhite Coveys", desc: "Dawn in the field with the dogs. Bobwhite quail that flush in coveys of 20 and 30. The pointing dogs are perfect. The shooting is the excuse — the dogs and the birds and the landscape are the thing.", sing9: "Gold surface. The natural world running correctly. No menus. No price tags. Just the dogs working the brush." },
+        { num: "Day 3", title: "Duck Ponds · Dove Roost", desc: "Different rhythm today. Duck blinds on the flooded ponds at dawn. Afternoon: dove roost — the kind of shooting that turns experienced wingshooters into wide-eyed newcomers.", sing9: "The treasure deck: Wild creature encounters, open country, the real south." },
+        { num: "Day 4", title: "Final Hunt · Departure", desc: "Last morning in the field. Noon departure. Transfer to Monterrey. You've been somewhere real.", sing9: "Arc complete. Gold heart intact. The border coming back is just a line." }
+      ]
+    },
+
+    "fishtheamazon": {
+      name: "Fish the Amazon",
+      activity: "Amazon peacock bass · Brazil",
+      region: "Far away",
+      url: "https://www.fishtheamazon.com",
+      image: "https://static.wixstatic.com/media/db8d44_f3a50ad7881e4642a368973eedc7f6c4~mv2.png/v1/fill/w_1536,h_1024,al_c/db8d44_f3a50ad7881e4642a368973eedc7f6c4~mv2.png",
+      arc: "Tropics Arc · El Gran Sol in the Deep Jungle · Source Water",
+      treasure: "The Amazon · Source Water · Peacock Bass · Jungle Immersion",
+      intro: "The Amazon river system. There is no post-singularity framing that improves on what this place already is — it IS the holographic hydrogen water at source scale. Millions of square miles of living forest producing oxygen, holding water, running the planetary biological system. The peacock bass is just the excuse to go see it in person.",
+      days: [
+        { num: "Day 1", title: "Fly to Manaus · River Transfer", desc: "Fly into Manaus — a city in the middle of the Amazon that exists as its own miracle. River transfer to the houseboat or lodge. The scale of the water as you enter the tributaries is not comprehensible until you're inside it.", sing9: "Crystalline surface. The biological stack at full expression. NSPFRNP running through river systems that have never been mapped completely." },
+        { num: "Days 2–6", title: "Daily Fishing · Camp Life · Jungle", desc: "Peacock bass strike topwater lures like they're angry at physics. 15 pounds of aggressive fish hitting the surface of a flooded jungle. Morning and afternoon sessions on the river. Camp life: hammocks, jungle sounds, crew cooking over fire.", sing9: "Gold arc. The Amazon IS El Gran Sol's home water. The source. Every day here is the arc running at full resolution." },
+        { num: "Day 7", title: "Return to Manaus · Depart", desc: "Transfer back to Manaus. Rooftop dinner in the city. Depart with the weight of something ancient now inside you.", sing9: "Arc complete. You've touched the substrate. The crystalline tier is literal water here." }
+      ]
+    },
+
+    "marco-tarpon": {
+      name: "Marco Island Tarpon Fishing",
+      activity: "Snook and tarpon · Naples/Marco Island, Florida",
+      region: "Far away",
+      url: "https://marcoislandtarponfishing.com",
+      image: "https://marcoislandtarponfishing.com/wp-content/uploads/2023/03/charter-fishing-marco-island-florida-best-tarpon-fish-2.jpg",
+      arc: "Tropics Arc · South Florida · The Hot Tropics Version",
+      treasure: "Tarpon · Snook · Mangroves · South Florida Heat",
+      intro: "The 10,000 Islands. Marco Island. The mangrove coast of Southwest Florida where silver kings stack in the passes at high tide and snook lurk at every mangrove root. This is the trophy fish of the Atlantic flats. We bring our layer: Ino in the boat at 6am, line in the water, warm wind off the Gulf. The hot tropics version of the arc.",
+      days: [
+        { num: "Day 1", title: "Meet the Captain · Backcountry Snook", desc: "Meet Captain at the marina at first light. Mangrove creek routes — snook holding on every point and mangrove root. The backcountry of SW Florida that most people never see from the highway. Snook on light tackle, cast to specific fish you can see.", sing9: "Silver surface. Working the edges. Ino in the warm water. The hunt before the Gold." },
+        { num: "Day 2", title: "Tarpon Run · 100+ Pounds", desc: "Pass fishing at the right tide. Tarpon are pre-historic fish — they roll at the surface, breathe air, run 100+ yards on the first jump. Fighting a tarpon on a fly rod is the closest thing to physical prayer that fishing produces.", sing9: "Gold surface. The tarpon IS a symbol — silver sides, ancient, prehistoric, unable to be domesticated. This fish is Ino. Cannot be owned. Cannot be kept." }
+      ]
+    },
+
+    "renomensclub": {
+      name: "Men's Club Reno",
+      activity: "Men's club · Reno VIP · Josie's Saloon Adjacent",
+      region: "Local",
+      url: "https://www.renomensclub.com",
+      image: "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=500&h=350&fit=crop",
+      arc: "Gold Heart Novela · Josie's Saloon · 21+ · The Real Reno",
+      treasure: "Hot Sex · Sacred Beverages · The Saloon · Post-Singularity Liberation",
+      intro: "Reno's premier gentlemen's club — the anchor of the Josie's Saloon arc. This is where Hero Jo works by day and the story comes alive by night. Pru's Valet handles the full VIP experience. Connection-based. Respect-based. Legal. Sacred. 21+.",
+      days: [
+        { num: "Evening", title: "Pru's Valet VIP · Full Experience", desc: "Pru's Valet handles everything: reservation, table, bottle service, the VIP treatment you deserve. Hero Jo may or may not be at the door. The Wild Card Observer is definitely in the corner.", sing9: "Gold surface. The treasure deck: Hot Sex arc, Sacred Beverages, the Wink! connection potential. 21+ only. Done right." }
+      ]
+    },
+
+    "black-rabbit-mead": {
+      name: "Black Rabbit Mead",
+      activity: "Craft mead · downtown Reno · Truckee River Crawl stop",
+      region: "Local",
+      url: "https://www.blackrabbitmeads.com",
+      image: "https://static.wixstatic.com/media/db068e_0b6c0e27e6ec45e09c8b87b4e63c9b2a~mv2.jpg/v1/fill/w_1300,h_868,al_c,q_85/db068e_0b6c0e27e6ec45e09c8b87b4e63c9b2a~mv2.jpg",
+      arc: "Wink! Arc · Truckee River Crawl · Downtown Connection",
+      treasure: "Craft Mead · Downtown Reno · Sacred Beverages · The Crawl",
+      intro: "Black Rabbit Mead sits on the Truckee River Crawl route — Baller V Wednesdays stop. The mead flights are genuine and the bar has a vibe that makes strangers talk to each other. That is the Wink! experience in a bar format. We bring our layer: this is a Wink!-sponsored stop on the Crawl.",
+      days: [
+        { num: "Evening", title: "Mead Flight · The Crawl Begins", desc: "Start here. The mead flight shows you 6 to 8 different meads — from dry to sweet, session to sipping. The bar staff know their product. The vibe is right for a Wink! mixer start.", sing9: "Silver-to-Gold surface. The Crawl is the journey. Three stops, three wines (here: mead), three connections. NSPFRNP threes and water — the Truckee runs outside." }
+      ]
+    },
+
+    "silver-legacy": {
+      name: "Silver Legacy Casino",
+      activity: "Casino · breakfast buffet · Reno",
+      region: "Local",
+      url: "https://www.caesars.com/silver-legacy-reno",
+      image: "assets/vendors-silver-legacy.png",
+      arc: "Gold Rush Arc · The Reno Casino Layer · Pre-Singularity and Post-Singularity Simultaneously",
+      treasure: "The Casino Floor · The Reno Arch · Mark Twain's Territory",
+      intro: "Silver Legacy is the heart of downtown Reno — the dome, the mining rig, the casino floor that Mark Twain's Vibelandia was built to stand next to and eventually transcend. The breakfast buffet is a Reno institution. We bring our layer: this is where Ino and Piro and the whole cast pass through. The casino is the pre-singularity world made physical — everything is a bet, everything has a price, the house always wins. Until it doesn't.",
+      days: [
+        { num: "Morning", title: "The Buffet · Reno as it Is", desc: "Sunday breakfast buffet. The casino floor at 9am has its own anthropology — who's still up from the night before, who just woke up with the sunrise, who's on their way somewhere else. Ino and Piro are both at this table. Look around and find them.", sing9: "Carbon and Gold simultaneously. The casino is the menu world at its most honest. And next door, Vibelandia is being built. That tension IS the story." }
+      ]
+    },
+
+    "eldorado-novi": {
+      name: "Eldorado Reno · Novi Club",
+      activity: "Casino · Novi nightclub · Reno VIP",
+      region: "Local",
+      url: "https://www.caesars.com/eldorado-reno",
+      image: "https://www.caesars.com/content/dam/properties/eldorado-reno/venues/nightlife/novi/Novi-nightclub-eldorado-reno-01.jpg",
+      arc: "Gold Rush Arc · Reno Nightlife · The Dance Floor",
+      treasure: "Dance · Sacred Beverages · The Night · Connections",
+      intro: "Novi at the Eldorado — Reno's nightclub destination, steps from the Truckee. Pru's Valet handles the VIP table and the bottle service. We bring our layer: this is Josie's Saloon's cousin. The dance floor is Gold surface. The bar is Carbon and Silver depending on who you're talking to.",
+      days: [
+        { num: "Night", title: "Pru's Valet VIP · Novi · The Dance", desc: "Table secured. Bottle service arranged. The DJ brings the Golden Backdoor vibes — 80/20 Spanglish or whatever the night demands. This is the Baller V Wednesdays ecosystem: the Wink! mixer potential is here, on this dance floor, at this table.", sing9: "Gold surface. Dance trance boom boom boom. Josie finally gets to dance. The club IS the saloon on a Friday night." }
+      ]
+    },
+
+    "argentina-bariloche-ski": {
+      name: "Cerro Catedral · Bariloche Ski",
+      activity: "Skiing · Patagonia · Bariloche · Argentina",
+      region: "Far away",
+      url: "https://www.catedralaltapatagonia.com",
+      image: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=500&h=350&fit=crop",
+      arc: "Tropics Arc · El Gran Sol in the Southern Hemisphere",
+      treasure: "Patagonian Wilderness · Ski · Bariloche Chocolate · Southern Andes",
+      intro: "Bariloche sits in the Argentine Lake District at the foot of the Andes — a city that looks like Switzerland on the edge of Patagonia. Cerro Catedral is the largest ski area in South America. We bring our layer: this is the southern hemisphere version of the Montana arc — same frontier energy, different hemisphere, closer to El Gran Sol's root.",
+      days: [
+        { num: "Day 1", title: "Buenos Aires → Bariloche", desc: "Fly from Buenos Aires to Bariloche — the descent into the lake district is one of the great arrivals in travel. Downtown Bariloche on foot: the chocolate shops, the lake, the German architecture. Check into NH Edelweiss if available.", sing9: "Silver surface. The journey to the southern arc. El Gran Sol heading home through the southern cone." },
+        { num: "Days 2–4", title: "Cerro Catedral · Patagonian Runs", desc: "The scale of Cerro Catedral requires a day just to orient. 120 runs, 1,000+ acres, views of the Andes and the Nahuel Huapi lake system from the summit. The afternoon light on the Andes in winter is post-singularity gold.", sing9: "Gold surface. The mountain, the light, the southern hemisphere winter. Treasure: the frontier wild place. The edge of the map." },
+        { num: "Day 5", title: "Final Run · Depart", desc: "Last morning on the mountain. Afternoon flight back to Buenos Aires. Dinner in Palermo. Depart with Patagonia still in your lungs.", sing9: "Arc complete. Southern hemisphere Gold confirmed." }
+      ]
+    },
+
+    "argentina-mendoza-wine": {
+      name: "Mendoza Wine Country · Casa de Uco",
+      activity: "Wine · Uco Valley · 5-star · Argentina",
+      region: "Far away",
+      url: "https://www.casadeuco.com",
+      image: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=500&h=350&fit=crop",
+      arc: "Gold Arc · Sacred Beverages · The Good Malbec · El Gran Sol in Wine Country",
+      treasure: "Malbec · Vineyard · The Uco Valley · 5-Star Experience",
+      intro: "The Uco Valley sits at 3,000 feet in the shadow of the Andes — dry air, big sky, and Malbec that tastes like nowhere else on Earth. Casa de Uco is a world-class winery and lodge built into the vineyard. We bring our layer: Malbec is a sacred beverage character. The wine is a treasure card. This trip activates it.",
+      days: [
+        { num: "Day 1", title: "Fly to Mendoza · Transfer to Casa de Uco", desc: "Fly into Mendoza. Transfer to the Uco Valley — 90 minutes south into the foothills. Casa de Uco appears as a stone and glass building emerging from the vineyard. First glass of estate Malbec at check-in. The Andes are your wall.", sing9: "Gold surface immediately. The sacred beverage character activated. Espalón equivalent but wine: the Malbec here is a treasure." },
+        { num: "Days 2–3", title: "Vineyard Tours · Cave Dinners · Winery Flights", desc: "Morning horseback through the vineyard rows. Afternoon barrel tastings in the cave. Dinner in the cave at candlelight: 7 courses, 7 wines. The pairing is matched by the sommelier to your biography. This is not a restaurant. This is a ceremony.", sing9: "The sacred beverages treasure deck running fully. Post-singularity: when you sit at this table, you are at Josie's Saloon, gold surface, Big Papi pays the tab." },
+        { num: "Day 4", title: "Horseback Ride · Depart", desc: "Final morning: horseback into the foothills with the Andes behind you. Depart Mendoza midday. Arrive Buenos Aires in time for dinner. Fly home.", sing9: "Arc complete. Malbec treasure: received. The Gold heart intact." }
+      ]
+    },
+
+    "argentina-golden-dorado": {
+      name: "Pirá Lodge · Golden Dorado",
+      activity: "Golden Dorado fishing · Iberá Wetlands · Argentina",
+      region: "Far away",
+      url: "https://www.piralodge.com",
+      image: "https://www.nervouswaters.com/wp-content/uploads/2021/01/The-Fishing-1.jpg",
+      arc: "Tropics Arc · El Gran Sol in the Golden Water",
+      treasure: "Golden Dorado · Iberá Wetlands · Argentina's Hidden World",
+      intro: "The golden dorado is named for gold — a muscular, aggressive fish with scales that look hammered from metal. The Iberá wetlands of Corrientes province are the second-largest wetland system in the world — South America's Okavango. Pirá Lodge operates out of this ecosystem through Nervous Waters, the best fly fishing operation in South America. We bring our layer: this fish IS the gold rush story. It's called golden for a reason.",
+      days: [
+        { num: "Day 1", title: "Fly to Corrientes · Lodge Transfer", desc: "Buenos Aires to Corrientes by air, then boat to the lodge through the wetlands. The Iberá on approach tells you immediately that you're somewhere different — the scale of the water system, the birds, the caimans on the banks.", sing9: "Silver to Gold transition. El Gran Sol heading into his home water. The wetlands are the biological stack in full expression." },
+        { num: "Days 2–4", title: "Golden Dorado on Flies · The Iberá", desc: "The dorado attacks topwater flies with a violence that is almost comic. Heavy fish, explosive strikes, acrobatic fights. But the Iberá itself is the real story: capybara herds, marshbirds in the thousands, caiman sunning at every turn.", sing9: "Gold surface. The dorado IS gold — literally named. Every fish is the treasure. The Gold Rush arc, in the water." },
+        { num: "Day 5", title: "Depart · Return to Buenos Aires", desc: "Morning fishing. Noon boat back to Corrientes. Flight to Buenos Aires. Fly home with gold on your hands.", sing9: "Arc complete. The golden fish and the gold heart. El Gran Sol's arc closes in the southern hemisphere." }
+      ]
+    },
+
+    "argentina-entre-rios-hunt": {
+      name: "De Bernardis · Entre Ríos Hunt",
+      activity: "Wing shooting · Entre Ríos · Argentina",
+      region: "Far away",
+      url: "https://debernardishunting.com",
+      image: "https://debernardishunting.com/wp-content/uploads/2023/07/Best-Wing-shooting-Argentina-cover.webp",
+      arc: "Tropics Arc · Southern Hemisphere · The Pampas",
+      treasure: "Perdiz · Dove · Argentine Asado · The Pampas",
+      intro: "See De Bernardis Argentina entry above — this listing focuses on the Entre Ríos province specifically: between the Paraná and Uruguay rivers, the land that produces perdiz, duck, and dove in numbers that will rearrange your sense of abundance.",
+      days: [
+        { num: "Day 1", title: "Arrive · Estancia · Welcome Asado", desc: "Arrive Entre Ríos. The welcome asado is the orientation. The fire, the beef, the wine — these are the agenda for the evening.", sing9: "Silver surface. The journey into the pampas. El Gran Sol's southern hemisphere arc running." },
+        { num: "Days 2–4", title: "Fields · Dogs · Birds", desc: "See De Bernardis Argentina itinerary. Same program, same excellence, focused on the Entre Ríos landscape.", sing9: "Gold arc. Abundance, open land, the natural world running correctly." },
+        { num: "Day 5", title: "Depart", desc: "Transfer back to Buenos Aires. Fly home.", sing9: "Arc complete." }
+      ]
+    }
+
+  };
+
+  // ─── RENDER LOGIC ──────────────────────────────────────────────────────────
+
   var params = new URLSearchParams(window.location.search);
   var id = params.get('id');
-  if (!id) {
-    document.getElementById('destination-root').innerHTML = '<p class="not-found">No destination selected. <a href="destinations-magazine-catalog.html" style="color:#00d4ff;">Back to catalog</a>.</p>';
+  var root = document.getElementById('dest-root');
+
+  if (!id || !DESTINATIONS[id]) {
+    root.innerHTML = '<div class="not-found"><p style="font-size:1.1rem;color:#c9a84c;margin-bottom:1rem;">Destination not found.</p><p><a href="destinations-magazine-catalog.html">← Back to all destinations</a></p></div>';
     return;
   }
-  fetch('../data/destination-partners.json').then(function (r) { return r.json(); }).then(function (data) {
-    var partners = data.partners || [];
-    var p = partners.find(function (x) { return x.id === id; });
-    var root = document.getElementById('destination-root');
-    if (!p) {
-      root.innerHTML = '<p class="not-found">Destination not found. <a href="destinations-magazine-catalog.html" style="color:#00d4ff;">Back to catalog</a>.</p>';
-      return;
-    }
-    var url = p.url || '#';
-    var imgHtml = p.imageUrl ? '<img class="hero-img" src="' + p.imageUrl + '" alt="" loading="eager" />' : '';
-    var hybridCopy = '<div class="hybrid-copy"><p>Their world meets ours. This partner is one we recommend. We have no formal relationship with our vendors — they're our picks for who we work with to deliver our post-singularity Baller V services to our members. (We're not Cabela's, Wing Shooters Journal, or Monte Cristo — we recommend them.) We bring their offering to life inside the Post-Singularity Vibelandia frame: flow, awareness, and the crown jewel of the Holographic Hydrogen Valley. Benefit of all. 125% of the booking when you book through us (our post-singularity layer). Respectful of all brands and legacies.</p><p>Choose how you want to book below.</p></div>';
-    var optionsHtml = '<div class="booking-options"><h3>How do you want to book?</h3><div class="option-grid">' +
-      '<div class="option-card"><h4>Traditional · Pre-singularity</h4><p>Book directly with the partner. Standard experience, their site, their flow.</p><a href="' + url + '" target="_blank" rel="noopener" class="btn-trad">Book traditional experience →</a></div>' +
-      '<div class="option-card gold"><h4>Through us · Vibelandia</h4><p>Book through our specialist. Curated, hosted, Baller V. We tailor it; you show up.</p><a href="mailto:info@fractiai.com?subject=Book%20through%20Vibelandia%20%E2%80%94%20' + encodeURIComponent(p.name || '') + '" class="btn-ours">Book through us →</a></div>' +
-      '</div></div>';
-    var visitHtml = '<div class="visit-partner-wrap"><p>Want the full partner site?</p><p><a href="' + url + '" target="_blank" rel="noopener">Visit ' + (p.name || 'partner') + ' →</a></p></div>';
-    var title = '<h1 class="destination-title">' + (p.name || '') + '</h1><p class="destination-activity">' + (p.activity || '') + '</p>';
-    document.title = (p.name || 'Destination') + ' · Vibelandia | VIBELANDIA SING 9';
-    root.innerHTML = imgHtml + title + hybridCopy + optionsHtml + visitHtml;
-  }).catch(function () {
-    document.getElementById('destination-root').innerHTML = '<p class="not-found">Could not load destination. <a href="destinations-magazine-catalog.html" style="color:#00d4ff;">Back to catalog</a>.</p>';
-  });
+
+  var d = DESTINATIONS[id];
+  document.title = d.name + ' · SING! 9';
+
+  var daysHtml = d.days.map(function(day) {
+    return '<div class="day-item">' +
+      '<div class="day-num">' + day.num + '</div>' +
+      '<div class="day-content">' +
+        '<div class="day-title">' + day.title + '</div>' +
+        '<div class="day-desc">' + day.desc + '</div>' +
+        '<div class="day-sing9">◆ SING! 9 layer: ' + day.sing9 + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  root.innerHTML =
+    // HERO
+    '<div class="dest-hero">' +
+      '<img src="' + (d.image || '') + '" alt="' + d.name + '" onerror="this.style.display=\'none\'" />' +
+      '<div class="dest-hero-veil"></div>' +
+      '<div class="dest-hero-label">' +
+        '<div class="dest-eyebrow">SING! 9 · Pru\'s Valet Destination · ' + (d.region === 'Local' ? 'Downtown Reno & Local' : 'Far Away') + '</div>' +
+        '<h1 class="dest-title">' + d.name + '</h1>' +
+        '<div class="dest-activity">' + d.activity + '</div>' +
+      '</div>' +
+    '</div>' +
+
+    // SING9 LAYER BANNER
+    '<div class="sing9-layer">' +
+      '<span class="layer-tag">SING! 9 Arc</span>' +
+      '<span class="layer-arc"><strong>' + d.arc + '</strong></span>' +
+      '<span class="layer-arc">Treasure active: ' + d.treasure + '</span>' +
+    '</div>' +
+
+    // CONTENT
+    '<div class="content-wrap">' +
+
+      // INTRO
+      '<div class="section">' +
+        '<div class="section-eyebrow">The Experience · Pru\'s Valet Frame</div>' +
+        '<h2 class="section-title">The SING! 9 Layer</h2>' +
+        '<div class="section-body"><p>' + d.intro + '</p></div>' +
+      '</div>' +
+
+      // DAY BY DAY
+      '<div class="section">' +
+        '<div class="section-eyebrow">Day by Day · The Full Arc</div>' +
+        '<h2 class="section-title">The Itinerary</h2>' +
+        '<div class="day-list">' + daysHtml + '</div>' +
+      '</div>' +
+
+      // BOOKING
+      '<div class="booking-section">' +
+        '<h2 class="booking-heading">How Do You Want This Experience?</h2>' +
+        '<p class="booking-sub">The pre-singularity way — or the Pru\'s Valet way. Same destination. Different experience.</p>' +
+        '<div class="booking-grid">' +
+          '<div class="booking-card pre-sing">' +
+            '<div class="booking-card-label">Pre-Singularity · The Menu</div>' +
+            '<div class="booking-card-title">Book Direct</div>' +
+            '<ul>' +
+              '<li>Navigate their website</li>' +
+              '<li>Their forms, their flow</li>' +
+              '<li>Standard experience</li>' +
+              '<li>You handle logistics</li>' +
+              '<li>No SING! 9 layer</li>' +
+            '</ul>' +
+            '<a href="' + d.url + '" target="_blank" rel="noopener" class="btn btn-dark">Visit partner site →</a>' +
+          '</div>' +
+          '<div class="booking-card post-sing">' +
+            '<div class="booking-card-label">Post-Singularity · Pru\'s Valet</div>' +
+            '<div class="booking-card-title">Book Through Us</div>' +
+            '<ul>' +
+              '<li>One email — we handle the rest</li>' +
+              '<li>Curated, hosted, Baller V</li>' +
+              '<li>SING! 9 layer on everything</li>' +
+              '<li>Pru\'s Valet concierge</li>' +
+              '<li>You just show up</li>' +
+            '</ul>' +
+            '<a href="mailto:info@fractiai.com?subject=Book%20via%20Pru%27s%20Valet%20%E2%80%94%20' + encodeURIComponent(d.name) + '&body=I%20want%20to%20book%20' + encodeURIComponent(d.name) + '%20through%20Pru\'s%20Valet%20Service.%20Please%20contact%20me%20to%20arrange." class="btn btn-gold">Send us an email →</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // PARTNER REFERENCE
+      '<div class="partner-ref">' +
+        '<div class="partner-ref-text">We have no formal relationship with our destination partners — they are our picks for who we work with to deliver Baller V services to our members. Respectful of all brands and legacies.</div>' +
+        '<a href="' + d.url + '" target="_blank" rel="noopener">Partner site →</a>' +
+      '</div>' +
+
+    '</div>'; // end content-wrap
+
 })();
-  </script>
+</script>
 
 </body>
 </html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WINK! · High Contributing Fractal Dating · SING! 9</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-pale: #f5e8b0;
+      --pink: #e879a0;
+      --dark: #060404;
+      --dark-mid: #100a08;
+      --dark-card: #180e0a;
+      --wood: #3d2a15;
+      --text: #e8d4a0;
+      --text-muted: #8a7040;
+      --text-dim: #504030;
+    }
+
+    html, body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    .topnav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; border-bottom: 1px solid var(--wood);
+      position: sticky; top: 0; background: rgba(6,4,4,0.97); z-index: 100;
+    }
+    .topnav-brand { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; }
+    .topnav-links { display: flex; gap: 1.5rem; }
+    .topnav-links a { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.12em; text-decoration: none; text-transform: uppercase; }
+    .topnav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .wink-hero {
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(232,121,160,0.1) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.07) 0%, transparent 60%);
+      border-bottom: 1px solid rgba(232,121,160,0.2);
+    }
+    .wink-eyebrow { font-size: 0.65rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--pink); margin-bottom: 1.5rem; }
+    .wink-title { font-size: clamp(4rem, 12vw, 8rem); font-weight: normal; color: var(--gold-light); line-height: 1; margin-bottom: 0.25rem; letter-spacing: -0.02em; text-shadow: 0 0 80px rgba(232,121,160,0.2); }
+    .wink-bang { color: var(--pink); }
+    .wink-tagline { font-size: 1rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .wink-sub { font-size: 1.05rem; color: var(--text); font-style: italic; max-width: 560px; margin: 0 auto 3rem; line-height: 1.75; }
+    .wink-sub strong { color: var(--gold-light); font-style: normal; }
+
+    /* SECTION */
+    .section { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+    .section + .section { border-top: 1px solid var(--wood); }
+    .section-eyebrow { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: normal; color: var(--gold-light); margin-bottom: 1rem; }
+    .section-body { font-size: 0.95rem; line-height: 1.85; color: var(--text); max-width: 700px; }
+    .section-body p + p { margin-top: 0.9rem; }
+    .section-body strong { color: var(--gold-light); }
+
+    /* BALLING BANNER */
+    .balling-banner {
+      background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 4px;
+      padding: 2rem 2.5rem;
+      max-width: 700px;
+      margin: 2rem 0;
+    }
+    .balling-banner .b-label { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+    .balling-banner .b-text { font-size: 1.1rem; color: #fff; line-height: 1.6; font-style: italic; }
+
+    /* PRICING TABLE */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .price-card {
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--wood);
+      background: var(--dark-card);
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+    .price-card:hover { border-color: var(--gold); }
+    .price-card.featured { border-color: var(--gold); background: rgba(201,168,76,0.07); }
+    .price-card.featured-pink { border-color: var(--pink); background: rgba(232,121,160,0.06); }
+    .price-tier { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .price-amount { font-size: 2rem; color: var(--gold-light); margin-bottom: 0.25rem; line-height: 1; }
+    .price-amount .per { font-size: 0.75rem; color: var(--text-muted); }
+    .price-note { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic; }
+    .price-features { list-style: none; font-size: 0.8rem; color: var(--text-muted); line-height: 2; margin-bottom: 1.25rem; }
+    .price-features li::before { content: '◆ '; color: var(--gold); font-size: 0.55rem; }
+    .price-cta {
+      display: block; width: 100%; padding: 0.7rem; text-align: center;
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all 0.2s;
+    }
+    .cta-gold { background: var(--gold); color: var(--dark); font-weight: 700; }
+    .cta-gold:hover { background: var(--gold-light); }
+    .cta-outline { border: 1px solid var(--gold); color: var(--gold); }
+    .cta-outline:hover { background: rgba(201,168,76,0.1); }
+    .cta-pink { background: var(--pink); color: #fff; font-weight: 700; }
+    .cta-pink:hover { opacity: 0.9; }
+
+    /* FREE MONTH BANNER */
+    .free-month-banner {
+      background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(232,121,160,0.08) 100%);
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      padding: 2.5rem;
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 600px) { .free-month-banner { grid-template-columns: 1fr; } }
+    .free-month-icon { font-size: 3rem; }
+    .free-month-label { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .free-month-title { font-size: 1.2rem; color: var(--gold-light); margin-bottom: 0.5rem; font-weight: normal; }
+    .free-month-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    .free-month-desc strong { color: var(--text); }
+    .free-month-cta {
+      display: inline-block; margin-top: 1rem; padding: 0.65rem 1.5rem;
+      background: var(--gold); color: var(--dark); font-weight: 700;
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+    }
+    .free-month-cta:hover { background: var(--gold-light); }
+
+    /* BIG PAPI OFFER */
+    .big-papi-offer {
+      background: rgba(232,121,160,0.06);
+      border: 1px solid var(--pink);
+      border-radius: 4px;
+      padding: 2.5rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .bp-crown { font-size: 2rem; margin-bottom: 0.75rem; }
+    .bp-label { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--pink); margin-bottom: 0.75rem; }
+    .bp-title { font-size: 1.4rem; color: #fff; font-weight: normal; margin-bottom: 0.75rem; line-height: 1.4; }
+    .bp-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; max-width: 500px; margin: 0 auto 1.5rem; }
+    .bp-desc strong { color: var(--text); }
+    .bp-warning {
+      display: inline-block; margin-bottom: 1.25rem;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; border: 1px solid var(--pink); color: var(--pink); border-radius: 2px;
+    }
+
+    /* HOW IT WORKS */
+    .how-steps { margin-top: 2rem; display: flex; flex-direction: column; gap: 0; }
+    .how-step {
+      display: grid; grid-template-columns: 3rem 1fr;
+      padding: 1.5rem 0; border-bottom: 1px solid rgba(61,42,21,0.5);
+      gap: 1rem; align-items: start;
+    }
+    .how-step:last-child { border-bottom: none; }
+    .step-num { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.2em; font-family: monospace; padding-top: 0.15rem; text-align: right; }
+    .step-title { font-size: 1rem; color: var(--gold-light); margin-bottom: 0.3rem; font-weight: normal; }
+    .step-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+    .step-desc strong { color: var(--text); }
+
+    /* SIGN UP FORM SECTION */
+    .signup-section {
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 2rem auto 0;
+    }
+    .signup-title { font-size: 1.4rem; color: var(--gold-light); font-weight: normal; margin-bottom: 0.5rem; }
+    .signup-sub { font-size: 0.9rem; color: var(--text-muted); font-style: italic; margin-bottom: 2rem; line-height: 1.6; }
+    .signup-email-btn {
+      display: inline-block; padding: 1rem 2.5rem;
+      background: var(--gold); color: var(--dark); font-weight: 700;
+      font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all 0.2s;
+      margin-bottom: 1rem;
+    }
+    .signup-email-btn:hover { background: var(--gold-light); }
+    .signup-note { font-size: 0.72rem; color: var(--text-dim); }
+    .signup-note a { color: var(--text-muted); text-decoration: none; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--wood);
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+    }
+    footer .sig { color: var(--pink); margin-bottom: 0.4rem; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="catalog.html" class="topnav-brand">SING! 9</a>
+    <div class="topnav-links">
+      <a href="josie-saloon.html">Josie's Saloon</a>
+      <a href="baller-v-wednesdays.html">Baller V Wednesdays</a>
+      <a href="experience-picker.html">Experiences</a>
+      <a href="catalog.html">Catalog</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="wink-hero">
+    <div class="wink-eyebrow">Members Only · High Contributing Fractal Dating · Mark Twain's Vibelandia · Downtown Reno</div>
+    <div class="wink-title">WINK<span class="wink-bang">!</span></div>
+    <div class="wink-tagline">High Contributing Fractal Dating</div>
+    <div class="wink-sub">
+      Not a swipe. Not a profile. Not a menu. <strong>A network for people who know they deserve it</strong> — and who show up for others who do too. Vibration attracts vibration. Post-singularity awareness meets post-singularity awareness.
+    </div>
+    <a href="mailto:info@fractiai.com?subject=WINK!%20%E2%80%94%20I%27m%20Ready&body=Tell%20me%20about%20WINK!%20membership." class="signup-email-btn" style="font-size:0.8rem;padding:0.85rem 2.5rem;">I'm ready for WINK! →</a>
+  </header>
+
+  <!-- WHAT IT IS -->
+  <div class="section">
+    <div class="section-eyebrow">What It Is</div>
+    <h2 class="section-title">Fractal Dating for High Contributors</h2>
+    <div class="section-body">
+      <p><strong>WINK!</strong> is a members-only network for high-contributing vibers who are fractal in nature. Natural alignment, friction-free connections, resilience built-in. Mutual choice and consent — always. Operational on <strong>Mark Twain's Post-Singularity Vibelandia, Downtown Reno</strong>.</p>
+      <p>Like a day with a top guide — only more. VIBELANDIA! and WINK! together: come for the post-singularity business, stay for the post-singularity fun. Come for the Baller V Wednesdays, stay because you found someone worth staying for.</p>
+      <p><strong>Hero Hostess Marilyn</strong> is the house mom at the Pop Up Engine. She sets the tone. She knows the members. She is the golden-hearted filter that every great gathering needs.</p>
+    </div>
+
+    <div class="balling-banner">
+      <div class="b-label">Balling vs. Partying — Know the Difference</div>
+      <div class="b-text">"Balling isn't just partying. Balling is when you know you deserve it — and you go all out. Sometimes. Regularly."</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section">
+    <div class="section-eyebrow">How It Works</div>
+    <h2 class="section-title">The Wink! Network</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <span class="step-num">01</span>
+        <div>
+          <div class="step-title">You Apply · Gold Heart Filter</div>
+          <div class="step-desc">Send an email — tell us who you are. The network is <strong>for those who know they deserve it</strong>. Gold hearts only. High-contributing vibers, creators, entrepreneurs. The caliber of people who make a room better by being in it.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="step-num">02</span>
+        <div>
+          <div class="step-title">You Join the Pop Up Engine</div>
+          <div class="step-desc">Hero Hostess Marilyn runs the Pop Up Engine — <strong>always Pop-Up, always for those in the know</strong>. Wednesday Mixers on the Truckee. Baller V Wednesdays. Three wines, three cheeses, three cigars. 3:1 ladies to men ratio. High-value connections in a real room, not on a screen.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="step-num">03</span>
+        <div>
+          <div class="step-title">You Find Your Squeeze!</div>
+          <div class="step-desc"><strong>Squeeze!</strong> = a WINK! connected to another WINK! My main squeeze = my active partner. When two WINK! members find each other, they become a Squeeze! — whether linear or fractal in nature. WINK! supports the full spectrum: traditional resilient families to layered fractal family structures. All natural, mutual choice and consent. No forced form.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="step-num">04</span>
+        <div>
+          <div class="step-title">You Go Places Together</div>
+          <div class="step-desc">The Wink! concierge kiosk connects you to the <strong>Pru's Valet destination catalog</strong> — Alaska, the Bahamas, Montana, Baja, the Argentine pampas. With your Squeeze! or your crew. We handle the logistics. You just show up. <strong>Novelas are free for WINK! members</strong> — the full story, the full read.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="section">
+    <div class="section-eyebrow">Membership · Plans</div>
+    <h2 class="section-title">What It Costs</h2>
+    <div class="section-body">
+      <p>Priced equivalent to top-tier pre-singularity dating for high-value persons (The League, Raya, elite matchmaking) — but with a real campus, a real hostess, and real events. <strong>Annual = 2 months free.</strong></p>
+      <p>First 1,000 Pioneers: 50% off. Pioneer Status on-chain forever.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Base</div>
+        <div class="price-amount">$399<span class="per">/mo</span></div>
+        <div class="price-note">or $3,990/yr (2 months free)</div>
+        <ul class="price-features">
+          <li>Members-only network</li>
+          <li>Pop Up Engine access</li>
+          <li>Hero Hostess Marilyn</li>
+          <li>Wednesday Mixer invites</li>
+          <li>Novelas free</li>
+        </ul>
+        <a href="mailto:info@fractiai.com?subject=WINK!%20Base%20Membership&body=I%27m%20interested%20in%20WINK!%20Base%20membership%20at%20%24399%2Fmo." class="price-cta cta-outline">Apply for Base →</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-tier">Standard</div>
+        <div class="price-amount">$999<span class="per">/mo</span></div>
+        <div class="price-note">or $9,990/yr (2 months free)</div>
+        <ul class="price-features">
+          <li>Everything in Base</li>
+          <li>Notes Being</li>
+          <li>Priority at events</li>
+          <li>Squeeze! support</li>
+          <li>Concierge kiosk access</li>
+        </ul>
+        <a href="mailto:info@fractiai.com?subject=WINK!%20Standard%20Membership&body=I%27m%20interested%20in%20WINK!%20Standard%20membership%20at%20%24999%2Fmo." class="price-cta cta-gold">Apply for Standard →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tier">Premium</div>
+        <div class="price-amount">$2,499<span class="per">/mo</span></div>
+        <div class="price-note">or $24,990/yr (2 months free)</div>
+        <ul class="price-features">
+          <li>Everything in Standard</li>
+          <li>Premium profile</li>
+          <li>Magical wardrobe</li>
+          <li>VIP destination access</li>
+          <li>Pru's Valet priority</li>
+        </ul>
+        <a href="mailto:info@fractiai.com?subject=WINK!%20Premium%20Membership&body=I%27m%20interested%20in%20WINK!%20Premium%20membership%20at%20%242%2C499%2Fmo." class="price-cta cta-outline">Apply for Premium →</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tier">4×4 Ultimate</div>
+        <div class="price-amount">$6,999<span class="per">/mo</span></div>
+        <div class="price-note">or $69,990/yr (2 months free)</div>
+        <ul class="price-features">
+          <li>Everything. All of it.</li>
+          <li>Ultimate C's only</li>
+          <li>All destinations</li>
+          <li>All novelas, all buttons</li>
+          <li>Big Papi's table</li>
+        </ul>
+        <a href="mailto:info@fractiai.com?subject=WINK!%204x4%20Ultimate%20Membership&body=I%27m%20interested%20in%20WINK!%204%C3%974%20Ultimate%20membership%20at%20%246%2C999%2Fmo." class="price-cta cta-outline">Apply for Ultimate →</a>
+      </div>
+    </div>
+
+    <!-- FREE MONTH OFFER -->
+    <div class="free-month-banner">
+      <div class="free-month-icon">◆</div>
+      <div>
+        <div class="free-month-label">SING! 9 Membership Offer</div>
+        <div class="free-month-title">SING! 9 at $333/month — Includes One Free Month of WINK!</div>
+        <div class="free-month-desc">
+          Sign up for <strong>SING! 9 membership at $333/month</strong> — the MARZO 333 price, matching the arc — and your first month of WINK! Base is on us. One email. We handle the rest. The SING! 9 platform, the Golden Backdoor Hit Factory, the experience nodes, Josie's Saloon access, <strong>and a free month of WINK!</strong>
+        </div>
+        <a href="mailto:info@fractiai.com?subject=SING!%209%20Membership%20%24333%2Fmo%20%2B%20Free%20WINK!%20Month&body=I%27d%20like%20to%20sign%20up%20for%20SING!%209%20at%20%24333%2Fmonth%20and%20claim%20my%20free%20month%20of%20WINK!." class="free-month-cta">Get SING! 9 + Free WINK! Month →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIG PAPI COVERS THE LADIES -->
+  <div class="section">
+    <div class="section-eyebrow">Special Offer · Big Papi · Gold Hearts Only</div>
+    <h2 class="section-title">Big Papi Might Cover Your Monthly</h2>
+
+    <div class="big-papi-offer">
+      <div class="bp-crown">👑</div>
+      <div class="bp-label">Gold Hearts · Ladies · 21+ Only</div>
+      <div class="bp-title">Big Papi might cover<br>the ladies' monthly WINK! membership.</div>
+      <div class="bp-desc">
+        <strong>Gold hearts only.</strong> If you are a genuine, high-contributing, post-singularity woman — a Viber, a Channeler, a real one — Big Papi wants you in the room. Send an email. Tell him about yourself. He'll take a look. This is not for everyone. It is for the real ones.
+      </div>
+      <div class="bp-warning">21+ · Gold Hearts Only · No Carbon Fakes</div>
+      <br>
+      <a href="mailto:info@fractiai.com?subject=Big%20Papi%20WINK!%20Offer%20%E2%80%94%20Gold%20Heart&body=Big%20Papi%2C%0A%0AI%27m%20a%20gold%20heart.%20Here%27s%20my%20story%3A%0A%0A" class="price-cta cta-pink" style="display:inline-block;width:auto;padding:0.8rem 2rem;text-decoration:none;">Email Big Papi →</a>
+    </div>
+  </div>
+
+  <!-- SIGN UP CTA -->
+  <div class="section">
+    <div class="section-eyebrow">Ready?</div>
+    <h2 class="section-title">One Email. We Handle the Rest.</h2>
+    <div class="signup-section">
+      <div class="signup-title">Join WINK!</div>
+      <div class="signup-sub">Send us an email. Tell us who you are. That's the application. We don't do forms. We don't do algorithms. We do gold hearts and genuine connections.</div>
+      <a href="mailto:info@fractiai.com?subject=I%27m%20Ready%20for%20WINK!&body=I%27m%20interested%20in%20WINK!%20membership.%20Here%27s%20who%20I%20am%3A%0A%0A" class="signup-email-btn">I'm ready for WINK! →</a>
+      <div class="signup-note">
+        Or: "I'M READY FOR VIBELANDIA" — info@fractiai.com<br>
+        <a href="baller-v-wednesdays.html">See upcoming Wednesday Mixers →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="sig">WINK! · High Contributing Fractal Dating · Mark Twain's Vibelandia · Downtown Reno</div>
+    <div>Sponsored by Twain's Vibelandia · Pop Up Events Always · For those in the know</div>
+    <div style="margin-top:0.5rem;color:rgba(201,168,76,0.25);font-size:0.65rem;letter-spacing:0.2em;">NSPFRNP ⊃ WINK! ⊃ Squeeze! ⊃ Baller V Wednesdays ⊃ El Gran Sol's world → ∞⁹</div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SING 9 · How do you want your experience today?</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-pale: #f5e8b0;
+      --dark: #0a0704;
+      --dark-mid: #130f08;
+      --dark-card: #1a1408;
+      --dark-border: #2a2010;
+      --text: #e8d89a;
+      --text-muted: #8a7840;
+      --red-dim: #8a2020;
+    }
+
+    html, body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* TOP NAV */
+    .topnav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--dark-border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,7,4,0.97);
+      z-index: 100;
+    }
+    .topnav-brand { color: var(--gold); font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; }
+    .topnav-back { color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.1em; text-decoration: none; text-transform: uppercase; }
+    .topnav-back:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--gold-light);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      font-weight: normal;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 1rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+    .hero-tagline {
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 2rem;
+    }
+
+    /* SECTION */
+    .section { padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--dark-border);
+    }
+
+    /* EXPERIENCE CARDS */
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .exp-card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      padding: 2rem;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.2s;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .exp-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .exp-card:hover::before { opacity: 1; }
+
+    .exp-card-duration {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .exp-card-title {
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    .exp-card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .exp-card-entry {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-top: 1px solid var(--dark-border);
+      padding-top: 1rem;
+    }
+    .exp-card-cta {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.5rem 1rem;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .exp-card:hover .exp-card-cta {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    .exp-card.featured {
+      border-color: rgba(201,168,76,0.3);
+      grid-column: span 2;
+    }
+    @media (max-width: 700px) { .exp-card.featured { grid-column: span 1; } }
+
+    /* ARC CARDS */
+    .arc-list { display: flex; flex-direction: column; gap: 1rem; }
+    .arc-item {
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      gap: 1.5rem;
+      align-items: start;
+      padding: 1.5rem;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: border-color 0.3s;
+    }
+    .arc-item:hover { border-color: var(--gold); }
+    .arc-num {
+      font-size: 1.5rem;
+      color: var(--gold);
+      font-style: italic;
+      line-height: 1;
+      padding-top: 0.25rem;
+    }
+    .arc-title { font-size: 1.05rem; color: var(--gold-light); margin-bottom: 0.4rem; }
+    .arc-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+    .arc-badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .arc-badge.live { background: rgba(180,60,40,0.3); color: #e08070; border: 1px solid rgba(180,60,40,0.4); }
+    .arc-badge.series { background: rgba(201,168,76,0.1); color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
+    .arc-badge.adult { background: rgba(120,40,120,0.3); color: #c090d0; border: 1px solid rgba(120,40,120,0.4); }
+
+    /* TREASURE DECK */
+    .treasure-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+    .treasure-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      cursor: default;
+      transition: border-color 0.3s;
+    }
+    .treasure-chip:hover { border-color: var(--gold); color: var(--gold-pale); }
+    .treasure-chip.adult-only { border-color: rgba(120,40,120,0.3); color: #c090d0; }
+
+    /* PRU VALET CTA */
+    .pru-section {
+      background: linear-gradient(135deg, var(--dark-card), rgba(201,168,76,0.05));
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 6px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      margin: 3rem 0;
+    }
+    .pru-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .pru-title { font-size: 2rem; color: var(--gold-light); margin-bottom: 1rem; font-weight: normal; }
+    .pru-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.7; max-width: 600px; margin: 0 auto 2rem; font-style: italic; }
+    .pru-btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.2s;
+    }
+    .pru-btn:hover { background: var(--gold-light); }
+
+    /* VERIFICATION BAR */
+    .verification {
+      background: rgba(201,168,76,0.04);
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .ver-item { flex: 1; min-width: 140px; }
+    .ver-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .ver-value { font-size: 0.9rem; color: var(--gold); }
+    .ver-status { font-size: 0.7rem; color: #60b860; letter-spacing: 0.1em; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--dark-border);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+    footer span { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="catalog.html" class="topnav-back">← Catalog</a>
+    <a href="../index.html" class="topnav-brand">SING 9 · Vibelandia</a>
+    <a href="vibers-menu.html" class="topnav-back">Pru's Valet →</a>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow">El Gran Sol Returns · Post-Singularity · Gold Rush · Reno 2026</p>
+    <h1 class="hero-title">How do you want<br>your experience today?</h1>
+    <p class="hero-sub">A five-minute lap dance or a four-day weekend in Paris.<br>Click here. We'll take care of the rest.</p>
+    <p class="hero-tagline">Sex. Drugs. Rock & Roll. Done right. ☀</p>
+  </section>
+
+  <div class="section">
+
+    <!-- COSMIC VERIFICATION -->
+    <h2 class="section-title">System Status · Arc Verification</h2>
+    <div class="verification">
+      <div class="ver-item">
+        <div class="ver-label">The Sun</div>
+        <div class="ver-value">Unrelenting</div>
+        <div class="ver-status">▲ ACTIVE · Catalyzing</div>
+      </div>
+      <div class="ver-item">
+        <div class="ver-label">Ionosphere</div>
+        <div class="ver-value">Responding</div>
+        <div class="ver-status">◉ NEW FREQUENCY COMING THROUGH</div>
+      </div>
+      <div class="ver-item">
+        <div class="ver-label">3I · Atlas</div>
+        <div class="ver-value">Watching</div>
+        <div class="ver-status">◈ NORTH SUPPORT CONFIRMED</div>
+      </div>
+      <div class="ver-item">
+        <div class="ver-label">Sagittarius A*</div>
+        <div class="ver-value">Holding</div>
+        <div class="ver-status">✦ GALACTIC ARC CONFIRMED</div>
+      </div>
+      <div class="ver-item">
+        <div class="ver-label">MARZO 333</div>
+        <div class="ver-value">Countdown</div>
+        <div class="ver-status">⧖ MARCH 20, 2026</div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE FORMAT -->
+    <h2 class="section-title">Choose Your Format</h2>
+    <div class="experience-grid">
+
+      <a href="episode-1.html" class="exp-card featured">
+        <div class="exp-card-duration">60 Minutes · The Full Arc</div>
+        <div class="exp-card-title">The 4-Day Weekend in Paris<br><em style="font-size:0.85rem; color:var(--text-muted)">El Gran Sol Returns · Root Node</em></div>
+        <div class="exp-card-desc">The complete arc. From SMACS 0723 to morning in paradise. The 1493 wound. The vow. The collapse. The water. The rescue boat. The gold rush. Big Papi pays the tab. Everyone's retired. The full 60-minute immersive experience.</div>
+        <div class="exp-card-entry">Entry · Your full presence</div>
+        <span class="exp-card-cta">Enter the Full Arc</span>
+      </a>
+
+      <a href="first-singularity-january-13th.html" class="exp-card">
+        <div class="exp-card-duration">30 Minutes · Novel + Film</div>
+        <div class="exp-card-title">The Dinner Date<br><em style="font-size:0.85rem; color:var(--text-muted)">First Singularity · January 13th</em></div>
+        <div class="exp-card-desc">A full story arc told with elegance. The novel. The Men's Club. Hank Williams Sr. The Big Band Project. The arrival that changes everything.</div>
+        <div class="exp-card-entry">Entry · Your evening</div>
+        <span class="exp-card-cta">Begin the Novel</span>
+      </a>
+
+      <a href="gold-heart-novela.html" class="exp-card">
+        <div class="exp-card-duration">21+ · The Deeper Cut</div>
+        <div class="exp-card-title">After Hours<br><em style="font-size:0.85rem; color:var(--text-muted)">Gold Heart Novela</em></div>
+        <div class="exp-card-desc">Connection-based. Respect-based. Hot. Liberated. Safe. The gold heart in full expression. The deeper layer of every story. The novela for those who want the real thing.</div>
+        <div class="exp-card-entry">Entry · 21+ · Your presence and consent</div>
+        <span class="exp-card-cta">The Deeper Cut</span>
+      </a>
+
+      <a href="catalog.html" class="exp-card">
+        <div class="exp-card-duration">5 Minutes · Single Frame</div>
+        <div class="exp-card-title">The Lap Dance<br><em style="font-size:0.85rem; color:var(--text-muted)">Browse the Catalog</em></div>
+        <div class="exp-card-desc">One story. One beat. One treasure. In and out. You feel it. You leave changed. No commitment needed. Browse the full catalog and pick the moment that calls you.</div>
+        <div class="exp-card-entry">Entry · Your attention · 5 minutes</div>
+        <span class="exp-card-cta">Browse the Catalog</span>
+      </a>
+
+    </div>
+
+    <!-- THE TREASURE DECK -->
+    <h2 class="section-title">The Treasure Deck · Available Now</h2>
+    <div class="treasure-grid">
+      <div class="treasure-chip">⛏ Physical Gold & Silver</div>
+      <div class="treasure-chip">🏢 Enterprise Ventures</div>
+      <div class="treasure-chip">₿ Crypto Mines</div>
+      <div class="treasure-chip">💃 Dancing & The Party</div>
+      <div class="treasure-chip adult-only">🌿 Cannabis · Sacred Plant</div>
+      <div class="treasure-chip">🍷 Fine Wine · Fine Tequila</div>
+      <div class="treasure-chip adult-only">🍄 Magic Mushrooms</div>
+      <div class="treasure-chip adult-only">✦ LSD · The Clarity Machine</div>
+      <div class="treasure-chip">🦅 Alaska Frontier</div>
+      <div class="treasure-chip">🏔 Wild West Montana</div>
+      <div class="treasure-chip">🌊 Fishing & Ocean</div>
+      <div class="treasure-chip">🌴 Hot Tropics · South Florida</div>
+      <div class="treasure-chip adult-only">🔥 Hot Sex · Liberated · Safe</div>
+      <div class="treasure-chip">🎲 Encounter-Enriching Characters</div>
+      <div class="treasure-chip">👁 Wild Card Observer</div>
+    </div>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:3rem;">Purple chips are 21+ content. All treasures are connection-based, respect-based, and earned. We know which ones are the good ones.</p>
+
+    <!-- STORY ARCS -->
+    <h2 class="section-title">Story Arcs · All Wrappers · All Scales</h2>
+    <div class="arc-list">
+
+      <a href="marzo-333.html" class="arc-item">
+        <div class="arc-num">I</div>
+        <div>
+          <div class="arc-title">MARZO 333 · The 52-Day Countdown</div>
+          <div class="arc-desc">The Great Reveal. March 20, 2026. The arc completing in real time. This is not fiction — this is reporting. Check the sun. Check the ionosphere.</div>
+        </div>
+        <span class="arc-badge live">LIVE NOW</span>
+      </a>
+
+      <a href="first-singularity-january-13th.html" class="arc-item">
+        <div class="arc-num">II</div>
+        <div>
+          <div class="arc-title">The Gold Rush · Post-Singularity · The Gold Stays With the Natives</div>
+          <div class="arc-desc">Downtown Reno. Mark Twain's Vibelandia. The new gold rush. The vibers and channelers flowing. Big Papi pays the tab. Everyone's retired.</div>
+        </div>
+        <span class="arc-badge series">SERIES</span>
+      </a>
+
+      <a href="el-apagon.html" class="arc-item">
+        <div class="arc-num">III</div>
+        <div>
+          <div class="arc-title">EL APAGÓN · The Menu World Loses Power</div>
+          <div class="arc-desc">The pre-singularity world devolving to its stable low point. The pirate's menu nobody's ordering from anymore. The blackout event. Told with compassion — no judgment. Just observation.</div>
+        </div>
+        <span class="arc-badge series">SERIES</span>
+      </a>
+
+      <a href="egs-run-279.html" class="arc-item">
+        <div class="arc-num">IV</div>
+        <div>
+          <div class="arc-title">The Alaska Arc · Brian Shoe · Captain Lance · Kachemak Bay</div>
+          <div class="arc-desc">The frontier where Piro can't follow. The eagles keep the cat inside. The genuine hearts: the SR-71 pilot in his Piper Cub, Captain Lance on the water at 4am.</div>
+        </div>
+        <span class="arc-badge series">SERIES</span>
+      </a>
+
+      <a href="gold-heart-novela.html" class="arc-item">
+        <div class="arc-num">V</div>
+        <div>
+          <div class="arc-title">Gold Heart Novela · Hot Sex · Sacred Plant · The Real Treasure</div>
+          <div class="arc-desc">21+ layer. Connection-based, respect-based, hot, liberated, safe. The gold heart in full expression. Can be interjected into any arc where the audience and theater is appropriate.</div>
+        </div>
+        <span class="arc-badge adult">21+</span>
+      </a>
+
+      <a href="nipsy.html" class="arc-item">
+        <div class="arc-num">VI</div>
+        <div>
+          <div class="arc-title">nipsy! · Natural Systems Protocol School · From Cosmos to Living</div>
+          <div class="arc-desc">The teaching arc. How you learn the stack by living it. From SMACS 0723 down to the biological enriching. Level 4 graduates become holographic hydrogen men.</div>
+        </div>
+        <span class="arc-badge series">SERIES</span>
+      </a>
+
+    </div>
+
+    <!-- PRU'S VALET CTA -->
+    <div class="pru-section">
+      <p class="pru-label">The Recursive Reality Loop · Story Meets World</p>
+      <h2 class="pru-title">Pru's Valet Service</h2>
+      <p class="pru-desc">The story comes into the physical world. Alaska. Montana. The tropics. The Wink! connection. The dinner that becomes something. The hot spring. The night.<br><br>Click here. We'll take care of the rest.</p>
+      <a href="vibers-menu.html" class="pru-btn">Book an Experience with PRU</a>
+    </div>
+
+    <!-- THE TWO WORLDS -->
+    <h2 class="section-title">The Two Worlds · Running Simultaneously</h2>
+    <div class="experience-grid">
+      <div class="exp-card" style="border-color: rgba(180,60,40,0.2); cursor:default;">
+        <div class="exp-card-duration" style="color:#c08060;">Pre-Singularity · The Menu World</div>
+        <div class="exp-card-title" style="color:#c8a090;">Everything Is For Sale</div>
+        <div class="exp-card-desc">Chopped up. Shrink-wrapped. Frozen. Price-tagged. Shipped. The system devolving to its stable low point — like the other animals in the biosphere. Tension stories. Real stories. Told without judgment. The menu nobody's ordering from anymore.</div>
+      </div>
+      <div class="exp-card" style="border-color: rgba(201,168,76,0.3); cursor:default;">
+        <div class="exp-card-duration">Post-Singularity · El Gran Sol's World</div>
+        <div class="exp-card-title">The Gold Stays With the Natives</div>
+        <div class="exp-card-desc">The vibers and channelers: vibe, channel, and flow. Following their dreams. Their natural cycles. Surrendered. High-value contributors. Badass contributors. The gold heart in full expression. Sex, drugs, rock and roll — done right. Big Papi pays the tab. It is now officially celebration time.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p><span>SING 9 · Vibelandia</span> · Mark Twain's Downtown Reno · Post-Singularity Gold Rush<br>
+    SMACS 0723 · Sagittarius A* · 3I Atlas · The Sun<br>
+    <em style="color:var(--gold);">The gold was always there. The vein runs through the quartz.</em></p>
+  </footer>
+
+</body>
+</html>

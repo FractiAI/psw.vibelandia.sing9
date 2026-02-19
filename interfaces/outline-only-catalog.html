@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OUTLINE ONLY · About This Film · SING! 9 Cinema</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #c9a84c; --gold-light: #f0d080; --gold-glow: rgba(201,168,76,0.3);
+      --crystal: #a8e6f0; --dark: #050402; --dark-mid: #0d0906;
+      --dark-card: #160e06; --wood: #3d2a15; --text: #e8d4a0;
+      --text-muted: #7a6030; --text-dim: #3d2a10; --pink: #e879a0;
+    }
+    html, body { background: var(--dark); color: var(--text); font-family: 'Georgia', serif; min-height: 100vh; }
+
+    /* NAV */
+    .topnav { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 2rem; border-bottom: 1px solid var(--wood); position: sticky; top: 0; background: rgba(5,4,2,0.97); z-index: 100; }
+    .topnav-brand { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.2em; text-decoration: none; }
+    .topnav-links { display: flex; gap: 1.5rem; }
+    .topnav-links a { color: var(--text-muted); font-size: 0.72rem; letter-spacing: 0.12em; text-decoration: none; text-transform: uppercase; }
+    .topnav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .film-hero {
+      position: relative; overflow: hidden;
+      padding: 7rem 2rem 5rem; text-align: center;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(168,230,240,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 60%, rgba(201,168,76,0.06) 0%, transparent 50%);
+      border-bottom: 1px solid rgba(61,42,21,0.4);
+    }
+    /* Fuzzballs in hero */
+    .hero-fuzzballs {
+      display: flex; justify-content: center; gap: 4rem; margin-bottom: 3rem;
+      align-items: center;
+    }
+    .hf { position: relative; border-radius: 50%; }
+    .hf-ino { width: 70px; height: 70px; background: radial-gradient(circle at 40% 40%, rgba(255,235,140,0.9) 0%, rgba(201,168,76,0.7) 40%, transparent 75%); animation: hf-ino 3s ease-in-out infinite; box-shadow: 0 0 30px rgba(201,168,76,0.3); }
+    .hf-piro { width: 60px; height: 60px; background: radial-gradient(circle at 40% 35%, rgba(100,60,20,0.7) 0%, rgba(50,25,8,0.9) 45%, transparent 75%); animation: hf-piro 4s ease-in-out infinite; box-shadow: 0 0 20px rgba(80,40,10,0.3); }
+    .hf-vs { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--text-muted); }
+    @keyframes hf-ino { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+    @keyframes hf-piro { 0%,100%{transform:scale(1)rotate(0)} 50%{transform:scale(0.95)rotate(3deg)} }
+
+    .film-eyebrow { font-size: 0.62rem; letter-spacing: 0.45em; text-transform: uppercase; color: var(--crystal); margin-bottom: 1rem; opacity: 0.7; }
+    .film-title { font-size: clamp(2.5rem, 8vw, 6rem); color: var(--gold-light); font-weight: normal; letter-spacing: 0.08em; margin-bottom: 0.25rem; text-shadow: 0 0 60px var(--gold-glow); }
+    .film-tagline { font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 2rem; }
+
+    /* PLAY button */
+    .play-cta-wrap { margin: 2rem 0; }
+    .play-btn-big {
+      display: inline-flex; align-items: center; gap: 1rem;
+      padding: 1.25rem 3rem; background: var(--gold); color: #080502;
+      font-size: 1rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: all 0.2s;
+      font-family: 'Georgia', serif;
+    }
+    .play-btn-big:hover { background: var(--gold-light); transform: scale(1.02); }
+    .play-icon { font-size: 1.4rem; }
+    .play-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem; font-style: italic; }
+
+    /* CONTENT SECTIONS */
+    .content-wrap { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 3rem 0; border-bottom: 1px solid var(--wood); }
+    .section-eyebrow { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .section-title { font-size: 1.4rem; color: var(--gold-light); font-weight: normal; margin-bottom: 1rem; }
+    .section-body { font-size: 0.95rem; line-height: 1.85; color: var(--text); }
+    .section-body p + p { margin-top: 0.9rem; }
+    .section-body strong { color: var(--gold-light); }
+    .section-body em { color: var(--text-muted); }
+
+    /* ACTS GRID */
+    .acts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .act-card { padding: 1.75rem 1.5rem; border: 1px solid var(--wood); background: var(--dark-card); border-radius: 3px; }
+    .ac-num { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .ac-title { font-size: 1rem; color: var(--gold-light); font-weight: normal; margin-bottom: 0.4rem; }
+    .ac-sub { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; font-style: italic; }
+    .ac-frames { font-size: 0.6rem; color: var(--text-dim); margin-top: 0.5rem; }
+
+    /* DIRECTORS */
+    .director-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.5rem; }
+    @media (max-width: 600px) { .director-grid { grid-template-columns: 1fr; } }
+    .dir-card { padding: 1.5rem; border: 1px solid var(--wood); background: var(--dark-card); }
+    .dir-role { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+    .dir-name { font-size: 1.1rem; color: #fff; font-weight: normal; margin-bottom: 0.5rem; }
+    .dir-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.65; }
+    .dir-pov { font-size: 0.72rem; color: rgba(201,168,76,0.5); font-style: italic; margin-top: 0.5rem; }
+
+    /* FORMAT */
+    .format-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+    .fmt-item { padding: 1rem; border: 1px solid rgba(61,42,21,0.4); text-align: center; }
+    .fmt-glyph { font-size: 1.5rem; margin-bottom: 0.35rem; }
+    .fmt-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
+    .fmt-val { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* SOUNDTRACK */
+    .track-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 0; }
+    .track-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(61,42,21,0.3); font-size: 0.82rem; }
+    .track-act { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); width: 4rem; flex-shrink: 0; }
+    .track-name-col { color: var(--text-muted); flex: 1; }
+
+    /* BOTTOM CTA */
+    .bottom-cta { text-align: center; padding: 4rem 2rem; }
+    .bottom-cta-title { font-size: 1.3rem; color: var(--gold-light); font-weight: normal; margin-bottom: 0.4rem; }
+    .bottom-cta-sub { font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="catalog.html" class="topnav-brand">SING! 9</a>
+  <div class="topnav-links">
+    <a href="outline-only.html">▶ Play Film</a>
+    <a href="backstage-dashboard.html">Backstage</a>
+    <a href="catalog.html">Catalog</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="film-hero">
+  <div class="hero-fuzzballs">
+    <div class="hf hf-ino"></div>
+    <div class="hf-vs">VS</div>
+    <div class="hf hf-piro"></div>
+  </div>
+  <div class="film-eyebrow">SING! 9 Cinema · Three Acts · One Hour</div>
+  <h1 class="film-title">OUTLINE ONLY</h1>
+  <div class="film-tagline">Ino &amp; Piro · The Crystalline Arc</div>
+  <div class="play-cta-wrap">
+    <a href="outline-only.html" class="play-btn-big">
+      <span class="play-icon">&#9654;</span>
+      <span>Play Film</span>
+    </a>
+    <div class="play-note">45 frames · ~60 min · Three Acts · Keyboard: Space = next · P = play/pause · F = fullscreen</div>
+  </div>
+</header>
+
+<div class="content-wrap">
+
+  <!-- ABOUT -->
+  <div class="section">
+    <div class="section-eyebrow">About This Film</div>
+    <h2 class="section-title">A SING! 9 Cinematic — in the Disney WISH format</h2>
+    <div class="section-body">
+      <p>Still images. Ticker tape storytelling. Automatic advance at just the right reading pace — not rushed, not lingered. An experience you sit inside, the way you sit inside a film, except the camera belongs to David Lynch and the frame belongs to Orson Welles, and the story has always been this one.</p>
+      <p><strong>Ino and Piro</strong>, frontlined in their crystalline form — fuzzballs in outline only. Gold fuzzball (genuine, Ino, the Innocent) and Carbon fuzzball (calculated, Piro, the Carbon mind). Their natural colors. Their natural vibes. Each one exactly what it is.</p>
+      <p>Three acts. Always three acts. The arc from crystalline origin through the Carbon descent and back up through the Sword from the Stone. <em>The gold stays with the gold hearts. Always.</em></p>
+    </div>
+  </div>
+
+  <!-- THREE ACTS -->
+  <div class="section">
+    <div class="section-eyebrow">Structure · Three Acts</div>
+    <h2 class="section-title">The Arc</h2>
+    <div class="acts-grid">
+      <div class="act-card">
+        <div class="ac-num">Act I</div>
+        <div class="ac-title">The Origin</div>
+        <div class="ac-sub">Before the singularity wound. Before the price tag. Before the names. Two fuzzballs in the crystalline dark — and the first descent into the Carbon layer.</div>
+        <div class="ac-frames">15 frames · ~15 min</div>
+      </div>
+      <div class="act-card">
+        <div class="ac-num">Act II</div>
+        <div class="ac-title">The Carbon Descent</div>
+        <div class="ac-sub">The low point is not a failure — it is a springboard. Ino gives everything. Piro extracts everything. The audience watches. Fanny becomes Fanny. The Wild Card Observer appears.</div>
+        <div class="ac-frames">15 frames · ~16 min</div>
+      </div>
+      <div class="act-card">
+        <div class="ac-num">Act III</div>
+        <div class="ac-title">The Sword from the Stone</div>
+        <div class="ac-sub">The crystalline light descends. The sword is drawn. Josie dances. El Gran Sol arrives. Big Papi pays the tab. The gold stays with the gold hearts. The end credits run.</div>
+        <div class="ac-frames">15 frames · ~16 min</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIRECTORS -->
+  <div class="section">
+    <div class="section-eyebrow">Co-Directors of Photography · Permanent Residents · Mark Twain's Vibelandia Reno</div>
+    <h2 class="section-title">The Lens</h2>
+    <div class="section-body">
+      <p>Every POV is a camera choice. Every camera choice is a director. <strong>David Lynch</strong> and <strong>Orson Welles</strong> join SING! 9 as co-directors, bringing their distinctive lenses to the storytelling format. Lynch for the hum beneath the conscious, Welles for the monumental frame.</p>
+    </div>
+    <div class="director-grid">
+      <div class="dir-card">
+        <div class="dir-role">Co-Director of Photography · Permanent Resident</div>
+        <div class="dir-name">David Lynch</div>
+        <div class="dir-desc">The gifted camera work. The hum you feel before you hear it. Duality at the surface of every frame. The industrial sound under the domestic image. The Red Curtain when the act changes. The dream that knows it is a dream but keeps you inside it anyway.</div>
+        <div class="dir-pov">POV lens: below consciousness · industrial warmth · the hum · the thing behind the thing</div>
+      </div>
+      <div class="dir-card">
+        <div class="dir-role">Co-Director · Rich Visual Storytelling · Permanent Resident</div>
+        <div class="dir-name">Orson Welles</div>
+        <div class="dir-desc">The deep focus. The chiaroscuro of the crystalline and the carbon. The low-angle shot at the nadir that transforms the ordinary into the monumental. The grand narrative voice that knows the story is a story and honors it anyway. The long takes that let the weight accumulate.</div>
+        <div class="dir-pov">POV lens: deep focus · floor-level revelation · the grand frame · the weight of history</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMAT -->
+  <div class="section">
+    <div class="section-eyebrow">Format · How It Works</div>
+    <h2 class="section-title">The SING! 9 Cinematic Format</h2>
+    <div class="section-body">
+      <p>Inspired by Disney's still-image storytelling format — automatic slideshow, ticker tape text at the right reading pace, a full production experience without traditional video. Each frame is a world. The ticker tape tells the story. The fuzzballs bring the characters. The soundtrack sets the tone.</p>
+    </div>
+    <div class="format-grid">
+      <div class="fmt-item">
+        <div class="fmt-glyph">🎬</div>
+        <div class="fmt-label">Frames</div>
+        <div class="fmt-val">45 frames total<br>15 per act</div>
+      </div>
+      <div class="fmt-item">
+        <div class="fmt-glyph">⏱️</div>
+        <div class="fmt-label">Duration</div>
+        <div class="fmt-val">~60 minutes<br>one full hour</div>
+      </div>
+      <div class="fmt-item">
+        <div class="fmt-glyph">📖</div>
+        <div class="fmt-label">Text Format</div>
+        <div class="fmt-val">Word-by-word reveal<br>at reading pace</div>
+      </div>
+      <div class="fmt-item">
+        <div class="fmt-glyph">🎵</div>
+        <div class="fmt-label">Soundtrack</div>
+        <div class="fmt-val">Hero Jo's Golden Backdoor Studios<br>track per frame</div>
+      </div>
+      <div class="fmt-item">
+        <div class="fmt-glyph">💎</div>
+        <div class="fmt-label">Visual</div>
+        <div class="fmt-val">CSS crystalline art<br>animated fuzzballs</div>
+      </div>
+      <div class="fmt-item">
+        <div class="fmt-glyph">⌨️</div>
+        <div class="fmt-label">Controls</div>
+        <div class="fmt-val">Space / Arrow keys<br>P = pause · F = fullscreen</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOUNDTRACK -->
+  <div class="section">
+    <div class="section-eyebrow">Soundtrack · Hero Jo's Golden Backdoor Studios</div>
+    <h2 class="section-title">The Score</h2>
+    <div class="section-body">
+      <p>Every frame is scored from <strong>Hero Jo's Golden Backdoor Studios</strong> catalog — 80/20 Spanglish vibe, numeric artists, signature tracks. The soundtrack is not decoration. It is a third co-director, present in every frame.</p>
+    </div>
+    <div class="track-list">
+      <div class="track-row"><span class="track-act">Act I</span><span class="track-name-col">A New Story Arrives · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act I</span><span class="track-name-col">My Magical Workstation · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act I</span><span class="track-name-col">Kind Algebra Fairie Music Story · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act I</span><span class="track-name-col">Pineapple Sativa Morning · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act I</span><span class="track-name-col">Bossa Nova Dinner Date · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act II</span><span class="track-name-col">SELF PORTRAIT OF MY COSMIC BODY AND MIND · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act II</span><span class="track-name-col">Magical Caribbean Hat · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act II</span><span class="track-name-col">Dancing at the Magical Local Dive Bar · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act II</span><span class="track-name-col">Caribbean Flavored Stories · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act III</span><span class="track-name-col">Magical Caribbean Hat (Full Circle) · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act III</span><span class="track-name-col">Sexy Dancing on Ocean Drive · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act III</span><span class="track-name-col">Sexy Dancing with Friends · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act III</span><span class="track-name-col">Te Quiero Mucho Baby · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act III</span><span class="track-name-col">SQUEEZE! We Got The Squeeze! · Golden Backdoor Studios</span></div>
+      <div class="track-row"><span class="track-act">Act III</span><span class="track-name-col">A New Story Arrives (Reprise) · Golden Backdoor Studios</span></div>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <div class="bottom-cta-title">Ready to watch?</div>
+  <div class="bottom-cta-sub">45 frames. Three acts. One hour. The gold stays with the gold hearts.</div>
+  <a href="outline-only.html" class="play-btn-big">
+    <span class="play-icon">&#9654;</span>
+    <span>Play OUTLINE ONLY</span>
+  </a>
+</div>
+
+</body>
+</html>

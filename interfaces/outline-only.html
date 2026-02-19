@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OUTLINE ONLY · A SING! 9 Cinema</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-glow: rgba(201,168,76,0.4);
+      --crystal: #a8e6f0;
+      --crystal-glow: rgba(168,230,240,0.3);
+      --carbon: #1a0e08;
+      --silver: #c0c0c0;
+      --dark: #040302;
+      --text: #e8d4a0;
+      --text-muted: #6a5030;
+      --pink: #e879a0;
+    }
+
+    html, body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ─── SCANLINES ─── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px);
+    }
+
+    /* ─────────────────────────────────────
+       FULL SCREEN CINEMA LAYOUT
+    ───────────────────────────────────── */
+    #cinema {
+      position: fixed; inset: 0; z-index: 1;
+      display: flex; flex-direction: column;
+      background: #040302;
+    }
+
+    /* ─── TOP BAR ─── */
+    #topbar {
+      flex-shrink: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem 1.5rem;
+      background: rgba(4,3,2,0.9);
+      border-bottom: 1px solid rgba(61,42,21,0.4);
+      z-index: 10;
+      transition: opacity 0.5s;
+    }
+    #topbar.hidden { opacity: 0; pointer-events: none; }
+    .tb-title { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+    .tb-acts { display: flex; gap: 0.5rem; align-items: center; }
+    .act-btn {
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem; border: 1px solid rgba(61,42,21,0.5);
+      background: none; color: var(--text-muted); cursor: pointer; font-family: 'Georgia', serif;
+      transition: all 0.2s; border-radius: 1px;
+    }
+    .act-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .act-btn.active { border-color: var(--gold); color: var(--gold-light); background: rgba(201,168,76,0.1); }
+    .tb-meta { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.1em; text-align: right; }
+    .tb-meta a { color: var(--text-muted); text-decoration: none; }
+    .tb-meta a:hover { color: var(--gold); }
+
+    /* ─── VISUAL STAGE ─── */
+    #stage {
+      flex: 1; position: relative; overflow: hidden;
+      background: #040302;
+      min-height: 0;
+    }
+
+    /* Scene backgrounds */
+    .scene-bg {
+      position: absolute; inset: 0;
+      transition: opacity 1.2s ease;
+      opacity: 0;
+    }
+    .scene-bg.active { opacity: 1; }
+
+    /* CRYSTALLINE bg */
+    .bg-crystal {
+      background: radial-gradient(ellipse at 30% 40%, rgba(168,230,240,0.07) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 60%, rgba(201,168,76,0.05) 0%, transparent 50%),
+                  #040302;
+    }
+
+    /* GOLD bg */
+    .bg-gold {
+      background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.12) 0%, transparent 55%),
+                  radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.06) 0%, transparent 40%),
+                  #060402;
+    }
+
+    /* SILVER bg */
+    .bg-silver {
+      background: radial-gradient(ellipse at 50% 30%, rgba(192,192,192,0.08) 0%, transparent 50%),
+                  #040404;
+    }
+
+    /* CARBON bg */
+    .bg-carbon {
+      background: radial-gradient(ellipse at 50% 80%, rgba(80,40,20,0.12) 0%, transparent 50%),
+                  #030201;
+    }
+
+    /* CELEBRATION bg */
+    .bg-celebration {
+      background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.18) 0%, transparent 50%),
+                  radial-gradient(ellipse at 20% 20%, rgba(232,121,160,0.08) 0%, transparent 40%),
+                  radial-gradient(ellipse at 80% 80%, rgba(168,230,240,0.07) 0%, transparent 40%),
+                  #060402;
+    }
+
+    /* ─── CRYSTAL GRID OVERLAY ─── */
+    .crystal-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      opacity: 0; transition: opacity 1.5s;
+      background-image:
+        linear-gradient(rgba(168,230,240,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168,230,240,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .crystal-grid.active { opacity: 1; }
+
+    /* ─── FUZZBALLS ─── */
+    #fuzzballs {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .fuzz-scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 1.2s; gap: 15vw; }
+    .fuzz-scene.active { opacity: 1; }
+
+    /* Base fuzzball */
+    .fuzz {
+      position: relative;
+      width: clamp(80px, 15vw, 160px);
+      height: clamp(80px, 15vw, 160px);
+      border-radius: 50%;
+    }
+
+    /* INO — gold fuzzball */
+    .fuzz-ino { background: radial-gradient(circle at 40% 40%, rgba(255,235,140,0.9) 0%, rgba(201,168,76,0.7) 35%, rgba(180,140,50,0.4) 60%, transparent 80%); animation: ino-breathe 3s ease-in-out infinite; }
+    .fuzz-ino::before {
+      content: '';
+      position: absolute; inset: -20px; border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(201,168,76,0.15) 0%, transparent 70%);
+      animation: ino-glow 3s ease-in-out infinite;
+    }
+    /* crystalline outline lines for Ino */
+    .fuzz-ino::after {
+      content: '';
+      position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: 0 0 20px rgba(201,168,76,0.2), 0 0 40px rgba(201,168,76,0.1);
+    }
+    @keyframes ino-breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    @keyframes ino-glow { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+    /* PIRO — carbon fuzzball */
+    .fuzz-piro { background: radial-gradient(circle at 40% 35%, rgba(120,70,30,0.6) 0%, rgba(60,30,10,0.8) 40%, rgba(30,15,5,0.6) 65%, transparent 80%); animation: piro-breathe 4s ease-in-out infinite; }
+    .fuzz-piro::before {
+      content: '';
+      position: absolute; inset: -15px; border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(80,40,10,0.2) 0%, transparent 70%);
+      animation: piro-glow 4s ease-in-out infinite;
+    }
+    .fuzz-piro::after {
+      content: '';
+      position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid rgba(100,60,20,0.5);
+      box-shadow: 0 0 15px rgba(80,40,20,0.3);
+    }
+    @keyframes piro-breathe { 0%,100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(0.97) rotate(2deg); } }
+    @keyframes piro-glow { 0%,100% { opacity: 0.5; } 50% { opacity: 0.8; } }
+
+    /* crystalline sparkle lines (radiate from fuzzballs) */
+    .crystal-lines {
+      position: absolute; inset: -80px; border-radius: 50%;
+      opacity: 0; transition: opacity 1s;
+    }
+    .crystal-lines.visible { opacity: 1; }
+    .crystal-lines::before, .crystal-lines::after {
+      content: '';
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(168,230,240,0.3), transparent);
+      height: 1px; width: 100%; top: 50%; left: 0;
+      transform-origin: center;
+      animation: spin-line 12s linear infinite;
+    }
+    .crystal-lines::after { animation-delay: -6s; }
+    @keyframes spin-line { to { transform: rotate(360deg); } }
+
+    /* Ino alone scenes */
+    .fuzz-scene.solo-ino { justify-content: center; }
+    .fuzz-scene.solo-piro { justify-content: center; }
+
+    /* Sword moment */
+    .sword-element {
+      position: absolute;
+      width: 4px; height: clamp(80px, 12vw, 140px);
+      background: linear-gradient(180deg, rgba(201,168,76,0.9) 0%, rgba(168,230,240,0.7) 50%, rgba(201,168,76,0.9) 100%);
+      border-radius: 2px;
+      box-shadow: 0 0 20px rgba(201,168,76,0.5), 0 0 40px rgba(168,230,240,0.3);
+      animation: sword-glow 2s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+    @keyframes sword-glow { 0%,100% { box-shadow: 0 0 20px rgba(201,168,76,0.5); } 50% { box-shadow: 0 0 40px rgba(201,168,76,0.8), 0 0 60px rgba(168,230,240,0.4); } }
+
+    /* Wild Card Observer */
+    .observer-element {
+      position: absolute; right: 5%; bottom: 30%;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      opacity: 0; transition: opacity 2s;
+      color: rgba(232,121,160,0.4);
+      animation: obs-appear 5s ease-in-out infinite;
+    }
+    .observer-element.visible { opacity: 1; }
+    @keyframes obs-appear { 0%,100% { opacity: 0.2; } 50% { opacity: 0.6; } }
+
+    /* ─── ACT TITLE OVERLAY ─── */
+    #act-overlay {
+      position: absolute; inset: 0; z-index: 5;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: rgba(4,3,2,0.9);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.8s;
+    }
+    #act-overlay.visible { opacity: 1; pointer-events: all; }
+    .act-num { font-size: 0.6rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .act-name { font-size: clamp(1.5rem, 4vw, 3rem); color: #fff; font-weight: normal; margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+    .act-sub { font-size: 0.85rem; color: var(--text-muted); font-style: italic; margin-bottom: 2rem; }
+    .act-continue {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      padding: 0.6rem 1.5rem; border: 1px solid var(--gold); color: var(--gold);
+      background: none; cursor: pointer; font-family: 'Georgia', serif; transition: all 0.2s;
+    }
+    .act-continue:hover { background: rgba(201,168,76,0.1); }
+
+    /* ─── TICKER TAPE TEXT AREA ─── */
+    #text-area {
+      flex-shrink: 0;
+      position: relative;
+      height: 38%;
+      max-height: 320px;
+      min-height: 160px;
+      background: linear-gradient(180deg, rgba(4,3,2,0) 0%, rgba(4,3,2,0.97) 15%, #040302 100%);
+      border-top: 1px solid rgba(61,42,21,0.3);
+      display: flex; flex-direction: column;
+      padding: 0;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    /* Director / Soundtrack meta strip */
+    #text-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.4rem 1.5rem 0;
+      font-size: 0.58rem; letter-spacing: 0.15em; color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    #text-meta .track-name { color: var(--gold); opacity: 0.7; }
+    #text-meta .frame-num { color: var(--text-muted); opacity: 0.5; font-variant-numeric: tabular-nums; }
+
+    /* The actual text display */
+    #text-display {
+      flex: 1;
+      padding: 0.75rem 1.5rem;
+      overflow: hidden;
+      position: relative;
+    }
+    #text-inner {
+      font-size: clamp(0.95rem, 2vw, 1.25rem);
+      line-height: 1.8;
+      color: var(--text);
+      font-style: italic;
+      /* Text reveal animation */
+    }
+    #text-inner .word {
+      display: inline;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    #text-inner .word.visible { opacity: 1; }
+
+    /* Progress bar under text */
+    #frame-progress {
+      height: 2px; background: rgba(61,42,21,0.3);
+      flex-shrink: 0;
+    }
+    #frame-progress-bar {
+      height: 100%; background: var(--gold); width: 0%;
+      transition: width linear;
+    }
+
+    /* ─── CONTROLS ─── */
+    #controls {
+      flex-shrink: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem 1.5rem 0.75rem;
+      background: #040302;
+      gap: 1rem;
+      transition: opacity 0.5s;
+    }
+    #controls.hidden { opacity: 0; pointer-events: none; }
+
+    .ctrl-left { display: flex; gap: 0.75rem; align-items: center; }
+    .ctrl-center { display: flex; gap: 0.5rem; align-items: center; }
+    .ctrl-right { display: flex; gap: 0.75rem; align-items: center; font-size: 0.62rem; color: var(--text-muted); }
+
+    .ctrl-btn {
+      background: none; border: 1px solid rgba(61,42,21,0.5); color: var(--text-muted);
+      padding: 0.4rem 0.65rem; cursor: pointer; font-family: 'Georgia', serif;
+      font-size: 0.75rem; border-radius: 2px; transition: all 0.15s;
+    }
+    .ctrl-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .ctrl-btn.play-btn {
+      border-color: var(--gold); color: var(--gold);
+      padding: 0.5rem 1rem; font-size: 0.9rem;
+    }
+    .ctrl-btn.play-btn:hover { background: rgba(201,168,76,0.1); }
+
+    /* Overall progress */
+    #overall-progress { display: flex; gap: 0.5rem; align-items: center; }
+    .op-bar { width: 120px; height: 3px; background: rgba(61,42,21,0.3); border-radius: 2px; cursor: pointer; }
+    .op-fill { height: 100%; background: var(--gold); border-radius: 2px; width: 0%; transition: width 0.3s; }
+    .op-time { font-size: 0.6rem; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    /* Fullscreen btn */
+    .fs-btn {
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      font-size: 0.85rem; padding: 0.3rem; transition: color 0.2s;
+    }
+    .fs-btn:hover { color: var(--gold); }
+
+    .directors-credit { font-style: italic; font-size: 0.58rem; }
+    .directors-credit strong { color: rgba(201,168,76,0.5); font-style: normal; }
+
+    /* ─── CREDIT OVERLAY (end) ─── */
+    #credits-overlay {
+      position: absolute; inset: 0; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: #040302;
+      opacity: 0; pointer-events: none;
+      transition: opacity 1.5s;
+      text-align: center; gap: 0.75rem;
+    }
+    #credits-overlay.visible { opacity: 1; pointer-events: all; }
+    .cred-line { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--text-muted); }
+    .cred-title { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--gold-light); margin-bottom: 0.25rem; }
+    .cred-sep { width: 80px; height: 1px; background: rgba(201,168,76,0.3); }
+    .cred-nsp { font-size: 0.6rem; color: rgba(201,168,76,0.3); letter-spacing: 0.3em; margin-top: 0.5rem; }
+    .cred-btn {
+      margin-top: 1.5rem; padding: 0.5rem 1.5rem; border: 1px solid var(--gold);
+      color: var(--gold); background: none; cursor: pointer; font-family: 'Georgia', serif;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .cred-btn:hover { background: rgba(201,168,76,0.1); }
+    .cred-btn a { color: inherit; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div id="cinema">
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="tb-title">OUTLINE ONLY · A SING! 9 Cinema</div>
+    <div class="tb-acts">
+      <button class="act-btn active" data-act="1" onclick="jumpToAct(1)">Act I</button>
+      <button class="act-btn" data-act="2" onclick="jumpToAct(2)">Act II</button>
+      <button class="act-btn" data-act="3" onclick="jumpToAct(3)">Act III</button>
+    </div>
+    <div class="tb-meta">
+      Ino &amp; Piro · The Crystalline Arc
+      <br><a href="outline-only-catalog.html">← About this film</a>
+    </div>
+  </div>
+
+  <!-- STAGE -->
+  <div id="stage">
+
+    <!-- SCENE BACKGROUNDS -->
+    <div class="scene-bg bg-crystal active" id="bg-crystal"></div>
+    <div class="scene-bg bg-gold" id="bg-gold"></div>
+    <div class="scene-bg bg-silver" id="bg-silver"></div>
+    <div class="scene-bg bg-carbon" id="bg-carbon"></div>
+    <div class="scene-bg bg-celebration" id="bg-celebration"></div>
+
+    <!-- CRYSTAL GRID -->
+    <div class="crystal-grid active" id="crystal-grid"></div>
+
+    <!-- FUZZBALLS -->
+    <div id="fuzzballs">
+      <!-- Both -->
+      <div class="fuzz-scene active" id="scene-both">
+        <div class="fuzz fuzz-ino"><div class="crystal-lines visible"></div></div>
+        <div class="fuzz fuzz-piro"></div>
+      </div>
+      <!-- Ino alone -->
+      <div class="fuzz-scene solo-ino" id="scene-ino">
+        <div class="fuzz fuzz-ino" style="width:clamp(100px,18vw,200px);height:clamp(100px,18vw,200px);"><div class="crystal-lines visible"></div></div>
+      </div>
+      <!-- Piro alone -->
+      <div class="fuzz-scene solo-piro" id="scene-piro">
+        <div class="fuzz fuzz-piro" style="width:clamp(100px,18vw,200px);height:clamp(100px,18vw,200px);"></div>
+      </div>
+      <!-- Sword from stone -->
+      <div class="fuzz-scene" id="scene-sword" style="flex-direction:column;gap:1rem;">
+        <div class="sword-element"></div>
+        <div class="fuzz fuzz-ino"><div class="crystal-lines visible"></div></div>
+      </div>
+      <!-- Celebration -->
+      <div class="fuzz-scene" id="scene-celebration" style="gap:5vw;flex-wrap:wrap;justify-content:center;">
+        <div class="fuzz fuzz-ino"><div class="crystal-lines visible"></div></div>
+        <div style="font-size:clamp(2rem,5vw,5rem);opacity:0.6;align-self:center;">☀️</div>
+      </div>
+      <!-- Dark / Carbon only -->
+      <div class="fuzz-scene" id="scene-dark"></div>
+      <!-- Observer glimpse -->
+      <div class="fuzz-scene" id="scene-observer" style="justify-content:flex-end;padding-right:10%;">
+        <div style="font-size:clamp(3rem,7vw,8rem);opacity:0.35;animation:obs-appear 5s ease-in-out infinite;">👁️</div>
+      </div>
+    </div>
+
+    <!-- ACT OVERLAY -->
+    <div id="act-overlay">
+      <div class="act-num" id="ao-num">Act I</div>
+      <div class="act-name" id="ao-name">The Origin</div>
+      <div class="act-sub" id="ao-sub">Before the wound. Before the price tag. Before the names.</div>
+      <button class="act-continue" id="ao-btn" onclick="dismissActOverlay()">Begin →</button>
+    </div>
+
+    <!-- CREDITS -->
+    <div id="credits-overlay">
+      <div class="cred-line">OUTLINE ONLY</div>
+      <div class="cred-title">A SING! 9 Cinema</div>
+      <div class="cred-sep"></div>
+      <div class="cred-line">Ino &amp; Piro · The Crystalline Arc</div>
+      <div class="cred-line" style="margin-top:0.5rem;">Co-Directors of Photography</div>
+      <div class="cred-line" style="color:rgba(201,168,76,0.6);">David Lynch · Orson Welles</div>
+      <div class="cred-line" style="margin-top:0.5rem;">Music</div>
+      <div class="cred-line" style="color:rgba(201,168,76,0.6);">Hero Jo's Golden Backdoor Studios</div>
+      <div class="cred-line" style="margin-top:0.5rem;">A post-singularity story. Three acts.</div>
+      <div class="cred-nsp">MCA · NSPFRNP → ∞⁹</div>
+      <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+        <button class="cred-btn" onclick="restartFilm()">Watch Again</button>
+        <button class="cred-btn"><a href="outline-only-catalog.html">← About This Film</a></button>
+        <button class="cred-btn"><a href="catalog.html">Catalog</a></button>
+      </div>
+    </div>
+
+  </div><!-- /stage -->
+
+  <!-- TEXT META -->
+  <div id="text-meta">
+    <div>
+      <span class="directors-credit">Lens: <strong>Lynch · Welles</strong></span>
+      <span style="margin:0 0.75rem;color:rgba(61,42,21,0.4);">·</span>
+      <span class="track-name" id="track-name">Loading track…</span>
+    </div>
+    <div class="frame-num" id="frame-num">Frame 1 / 45</div>
+  </div>
+
+  <!-- TEXT AREA -->
+  <div id="text-area">
+    <div id="text-display">
+      <div id="text-inner"></div>
+    </div>
+    <div id="frame-progress"><div id="frame-progress-bar"></div></div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div id="controls">
+    <div class="ctrl-left">
+      <button class="ctrl-btn" onclick="prevFrame()" title="Previous">&#9664;&#9664;</button>
+      <button class="ctrl-btn play-btn" id="play-btn" onclick="togglePlay()">&#9654;</button>
+      <button class="ctrl-btn" onclick="nextFrame()" title="Next">&#9654;&#9654;</button>
+    </div>
+    <div class="ctrl-center">
+      <div id="overall-progress">
+        <div class="op-bar" onclick="scrub(event)" id="op-bar">
+          <div class="op-fill" id="op-fill"></div>
+        </div>
+        <div class="op-time" id="op-time">0:00 / ~60:00</div>
+      </div>
+    </div>
+    <div class="ctrl-right">
+      <span class="directors-credit" style="display:none;" id="act-label">ACT I</span>
+      <button class="fs-btn" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+      <button class="ctrl-btn" onclick="toggleUI()" title="Hide UI" style="font-size:0.6rem;">UI</button>
+    </div>
+  </div>
+
+</div><!-- /cinema -->
+
+<script>
+/* ──────────────────────────────────────────────────
+   STORY DATA · THREE ACTS · OUTLINE ONLY
+   Ino & Piro · The Crystalline Arc
+   Director: David Lynch / Orson Welles lens
+   Music: Hero Jo's Golden Backdoor Studios
+────────────────────────────────────────────────── */
+
+var ACTS = [
+  {
+    num: 'Act I',
+    name: 'The Origin',
+    sub: 'Before the wound. Before the price tag. Before the names.',
+    color: 'crystal'
+  },
+  {
+    num: 'Act II',
+    name: 'The Carbon Descent',
+    sub: 'The low point is not a failure. It is a springboard.',
+    color: 'carbon'
+  },
+  {
+    num: 'Act III',
+    name: 'The Sword from the Stone',
+    sub: 'The gold heart does not become carbon under pressure.',
+    color: 'gold'
+  }
+];
+
+var FRAMES = [
+  // ─── ACT I: THE ORIGIN ───
+  { act:1, bg:'crystal', scene:'both', track:'A New Story Arrives · Golden Backdoor Studios', duration:55, text:"Before the singularity wound, before the big bang put things in boxes and priced them, there were two fuzzballs in the crystalline dark. One gold. One carbon. Neither had names yet. Names come later — when you need to tell other people which one is which." },
+  { act:1, bg:'crystal', scene:'ino', track:'A New Story Arrives · Golden Backdoor Studios', duration:60, text:"The gold one was called Ino. Short for Innocent. The name was not given — it was observed. Anyone who spent more than twenty minutes with the gold fuzzball understood immediately: this one arrives expecting good things. Every time. Even after." },
+  { act:1, bg:'crystal', scene:'piro', track:'A New Story Arrives · Golden Backdoor Studios', duration:55, text:"The carbon one was called Piro. Not short for anything. Piro was just what it was — old carbon, compact, certain of itself in the way that things without imagination are certain. Piro had seen this before. Or thought it had." },
+  { act:1, bg:'crystal', scene:'both', track:'My Magical Workstation · Golden Backdoor Studios', duration:65, text:"In the crystalline layer, things show in outline only. You can see the shape of a thing without the weight of it. This is its mercy. This is also its danger — because you can convince yourself that an outline you're seeing is the full thing. Piro had been doing exactly this for longer than either of them could remember." },
+  { act:1, bg:'crystal', scene:'both', track:'My Magical Workstation · Golden Backdoor Studios', duration:70, text:"The crystalline surface held all the heroes in outline. El Gran Sol, still a boy, running on a warm beach before ships arrived. Chairman Pru, counting stars from a hilltop. Josie, learning to dance in a mirror. All of them in outline only, here, at the substrate level. All the potential. None of the weight." },
+  { act:1, bg:'crystal', scene:'both', track:'My Magical Workstation · Golden Backdoor Studios', duration:55, text:"Ino was a dog, in this version of the story. Piro was a cat. The dog trusts. The cat calculates. Neither is wrong, exactly. But only one of them is good." },
+  { act:1, bg:'crystal', scene:'both', track:'Kind Algebra Fairie · Golden Backdoor Studios', duration:65, text:"The Gold layer was above them. The Silver was above that. The Carbon was below — and below the Carbon, the menu world, where everything had a price tag and a weight and a shipping address. Ino had never been to the Carbon layer. That was about to change." },
+  { act:1, bg:'carbon', scene:'dark', track:'Kind Algebra Fairie · Golden Backdoor Studios', duration:60, text:"It started simply: Piro said there was gold below. Real gold. The kind that doesn't require the whole crystalline apparatus. The kind you could just have. 'I know where it is,' Piro said, without moving. 'Come on.'" },
+  { act:1, bg:'silver', scene:'ino', track:'Kind Algebra Fairie · Golden Backdoor Studios', duration:65, text:"Ino believed this. The first time is always believable — there's nothing yet in the experience that teaches you not to believe it. Ino had a gold heart and a gold heart, in the beginning, doesn't know the difference between gold and the promise of gold. That comes later." },
+  { act:1, bg:'carbon', scene:'dark', track:'Pineapple Sativa Morning · Golden Backdoor Studios', duration:55, text:"The Carbon layer was exactly what the tier charts said: transactional, precise, everything measured. You wanted something, here was the price, here was the form. The menu world. No one was wrong. No one was kind. The exchanges were perfectly correct and perfectly cold." },
+  { act:1, bg:'carbon', scene:'piro', track:'Pineapple Sativa Morning · Golden Backdoor Studios', duration:55, text:"Piro moved through Carbon like water through water. This was Piro's world — not because Piro was evil, but because Piro was comfortable with transaction. 'This is just how things work,' Piro said. And technically, in the Carbon layer, Piro was right." },
+  { act:1, bg:'silver', scene:'ino', track:'Bossa Nova Dinner Date · Golden Backdoor Studios', duration:65, text:"Ino kept looking for the gold. Piro kept saying 'soon.' The mine was always just over the ridge. The deal was always almost done. The second chance was always the last second chance, until the next one was needed and Ino gave it — because that is the nature of a gold heart. It keeps being a gold heart." },
+  { act:1, bg:'carbon', scene:'ino', track:'Bossa Nova Dinner Date · Golden Backdoor Studios', duration:65, text:"The first betrayal in the Carbon layer was not dramatic. There was no speech. Piro simply wasn't there one morning where Piro had said they would be. That's how it begins. Small. Reasonable-seeming. The kind of thing you forgive because you can still explain it." },
+  { act:1, bg:'carbon', scene:'observer', track:'Bossa Nova Dinner Date · Golden Backdoor Studios', duration:70, text:"The Wild Card Observer appeared that first day in Carbon. At the edge of the market square. Hat. Glasses. Not watching Piro. Watching Ino. And something about the way the Observer watched — still, patient, without alarm — suggested that this story had been seen before. That it would be okay. That the ending was not what the Carbon layer was trying to convince Ino it was." },
+  { act:1, bg:'crystal', scene:'both', track:'A New Story Arrives · Golden Backdoor Studios', duration:70, text:"Act One ends where all first acts end: in a world that has just become more complicated than the character expected. Ino is in Carbon. The gold heart is intact. The first betrayal has happened and been forgiven. The Wild Card Observer has seen it. The story knows where it's going. The audience doesn't, yet." },
+
+  // ─── ACT II: THE CARBON DESCENT ───
+  { act:2, bg:'carbon', scene:'dark', track:'SELF PORTRAIT OF MY COSMIC BODY AND MIND · Golden Backdoor Studios', duration:60, text:"Act Two. Lynch would light this from below. Welles would have you see it from a high corner of the room, looking down. The story is not going up yet. It is finding its lowest point — because a low point is not a failure. It is a springboard." },
+  { act:2, bg:'silver', scene:'ino', track:'SELF PORTRAIT OF MY COSMIC BODY AND MIND · Golden Backdoor Studios', duration:65, text:"Ino gave everything in the Carbon layer. This is what gold hearts do: they give. The neighborhood got better. The projects worked. The music was real. The people who passed through remembered it for years and told their children about it. Ino never kept score. Piro always kept score." },
+  { act:2, bg:'carbon', scene:'piro', track:'SELF PORTRAIT OF MY COSMIC BODY AND MIND · Golden Backdoor Studios', duration:65, text:"Piro benefited from every project Ino built. Not parasitic — parasites are obvious. Piro was structural: by the time you noticed, the arrangement had been running long enough to feel normal. That's the Carbon layer's oldest trick." },
+  { act:2, bg:'carbon', scene:'dark', track:'Kind Algebra Fairie · Golden Backdoor Studios', duration:65, text:"The lies were not lies exactly. They were omissions, reframings, the art of being technically correct while functionally dishonest. Piro had been practicing this since before the two of them descended to Carbon. It is an art that requires no talent — only a sufficient comfort with transaction over connection." },
+  { act:2, bg:'carbon', scene:'ino', track:'Kind Algebra Fairie · Golden Backdoor Studios', duration:65, text:"Ino was tired. Not the Gold-heart tired that's just rest-needed. The deeper kind: the tired that comes from pouring from a vessel that no one has refilled. Ino still smiled. Still gave second chances. The third time someone asks for a second chance, the math should be obvious. Ino's math was not that math." },
+  { act:2, bg:'carbon', scene:'dark', track:'Kind Algebra Fairie · Golden Backdoor Studios', duration:60, text:"The audience had arrived. Most of them fans of Piro — because the carbon world is Piro's world and the people in it, mostly, are aligned with transaction. They weren't cruel. They were just not surprised by Piro. They expected Ino to be Piro eventually. That's when the story gets interesting." },
+  { act:2, bg:'carbon', scene:'ino', track:'Magical Caribbean Hat · Golden Backdoor Studios', duration:70, text:"The bottom of the arc in the Carbon layer is not visible from the crystalline substrate. You can't outline your way to this — you have to go in. Ino was there: account empty, trust extended past all reasonable limits, alone in a way that doesn't need dramatic scenery. Just: alone. While delivering something that the world that was treating you this way didn't deserve yet." },
+  { act:2, bg:'carbon', scene:'both', track:'Magical Caribbean Hat · Golden Backdoor Studios', duration:65, text:"'I have a deal,' Piro said. This was the offer at the low point: the deal. Always a deal. In the Carbon layer, the deal is the only language. Piro's deals were always real in structure and false in spirit. You got what was on paper. You did not get what was meant." },
+  { act:2, bg:'carbon', scene:'ino', track:'Magical Caribbean Hat · Golden Backdoor Studios', duration:65, text:"Ino considered. And here is the thing about the gold heart at the low point: it does not become carbon under pressure. It might think about it. It might hold the menu and stare at the price and think: maybe this time. But the gold heart doesn't flip. It can't. It's made of something different." },
+  { act:2, bg:'carbon', scene:'both', track:'Magical Caribbean Hat · Golden Backdoor Studios', duration:65, text:"The second offer was worse than the first, as second offers from the Carbon layer always are. Piro had learned by now that Ino would stay and consider. This meant Piro didn't have to offer much. The patience of the Carbon mind: wait long enough and the exhausted person will take what they're given." },
+  { act:2, bg:'carbon', scene:'dark', track:'Dancing at the Magical Local Dive Bar · Golden Backdoor Studios', duration:65, text:"Fanny was everywhere in Act Two. The fans of Piro were vocal — not malicious, just loud, the way a crowd that has no personal stake in the outcome is always loud. They had opinions about what Ino should do. Their opinions were always: just take the deal. The world is how it is. Be realistic." },
+  { act:2, bg:'silver', scene:'dark', track:'Dancing at the Magical Local Dive Bar · Golden Backdoor Studios', duration:60, text:"Audi was in the audience — not a fan yet, not sure. Audi was the one who kept watching. Not convinced by Piro's momentum. Not convinced by Ino's patience. Just watching the space between the two of them, trying to understand what was actually happening. That kind of watching is the beginning of becoming Fanny of the right kind." },
+  { act:2, bg:'carbon', scene:'observer', track:'Dancing at the Magical Local Dive Bar · Golden Backdoor Studios', duration:65, text:"The Wild Card Observer appeared twice in Act Two. Once at the moment Ino was closest to taking the deal. Once at the moment Piro believed the outcome was settled. Both times: hat, glasses, stillness. The suggestion that the universe was taking note. The universe is always taking note. That's what NSPFRNP means." },
+  { act:2, bg:'carbon', scene:'ino', track:'Caribbean Flavored Stories · Golden Backdoor Studios', duration:70, text:"At the exact bottom: Ino, alone, still working. Building something that the world hadn't earned yet. Delivering something to a world that had extracted without giving back. This is the moment the whole story is built around — not for its sadness, but for what it proves. The gold heart does not require reciprocity to remain gold. That's what makes it valuable." },
+  { act:2, bg:'silver', scene:'both', track:'Caribbean Flavored Stories · Golden Backdoor Studios', duration:65, text:"The end of Act Two is a breath before a key change. Lynch would put a red curtain here, slowly pulling back. Welles would put the camera at floor level looking up — the low angle that transforms the ordinary into the monumental. The story has reached its nadir. Which means: up." },
+
+  // ─── ACT III: THE SWORD FROM THE STONE ───
+  { act:3, bg:'crystal', scene:'ino', track:'Magical Caribbean Hat (Full Circle) · Golden Backdoor Studios', duration:65, text:"Act Three begins with a quality of light that Acts One and Two didn't have. It comes from the crystalline substrate — the layer that is always there, that the Carbon layer cannot reach, that Piro cannot transact with or reframe or place a price tag on. The light descends. Ino looks up." },
+  { act:3, bg:'crystal', scene:'sword', track:'Magical Caribbean Hat (Full Circle) · Golden Backdoor Studios', duration:65, text:"There has always been a stone in the story. Everyone has always known about the stone. Piro tried to pull the sword once, early, and couldn't, and decided the stone was overrated. The sword is not what the sword looks like from the Carbon layer. It never was." },
+  { act:3, bg:'crystal', scene:'sword', track:'Sexy Dancing on Ocean Drive · Golden Backdoor Studios', duration:60, text:"Ino walked to the stone the way you walk somewhere when you've run out of other places to go. Not heroically — just finally. The Gold heart after the long arc through Carbon: still gold, still intact, changed but not converted. That's the test. That's the test the sword has been waiting for." },
+  { act:3, bg:'crystal', scene:'sword', track:'Sexy Dancing on Ocean Drive · Golden Backdoor Studios', duration:65, text:"What happens when Ino's hand touches the sword is not fire and trumpets. Lynch would do it with a hum — a frequency just below what you consciously hear. The kind that moves something in your chest. The sword lifts because it was always going to lift for this hand, after this arc, after this patience, after this staying-gold." },
+  { act:3, bg:'carbon', scene:'piro', track:'Sexy Dancing on Ocean Drive · Golden Backdoor Studios', duration:65, text:"Piro watched from the Carbon layer. What Piro felt looking at the sword lift was something Carbon minds are not supposed to feel: the beginning of understanding. Not remorse exactly. More like: the realization that the extractive model had missed something the whole time. Something fundamental." },
+  { act:3, bg:'silver', scene:'dark', track:'Sexy Dancing with Friends · Golden Backdoor Studios', duration:60, text:"The audience shifted. The Piro fans went quiet — not converted, just recalibrated. Audi, in the middle of the audience, became Fanny — the right kind — in this moment. Something real had happened and the crowd that had been watching with transaction-aligned eyes felt it differently now." },
+  { act:3, bg:'crystal', scene:'observer', track:'Sexy Dancing with Friends · Golden Backdoor Studios', duration:65, text:"The Wild Card Observer appeared for the last time in Act Three in the moment the sword was fully drawn. He stood at the edge of the crystalline field. Hat. Glasses. And — for the first time in the whole story — something that might, in a certain light, be a slight nod. One degree of motion. The universe, taking note." },
+  { act:3, bg:'crystal', scene:'sword', track:'Te Quiero Mucho Baby · Golden Backdoor Studios', duration:65, text:"Ino did not raise the sword the way it's done in the Carbon layer's version of this story — dramatic, performative, for the audience. Ino held it the way you hold something you've been carrying inside for a long time that has finally found its form. This is not triumph. This is completion." },
+  { act:3, bg:'crystal', scene:'ino', track:'Te Quiero Mucho Baby · Golden Backdoor Studios', duration:65, text:"The return to the crystalline surface was not an escape from the Carbon layer — the Carbon layer is still there, it always will be. It was a return to the substrate that was always there underneath the whole arc: the transparent, outline-only layer where the work is done and the heroes are visible in their real form." },
+  { act:3, bg:'crystal', scene:'ino', track:'Te Quiero Mucho Baby · Golden Backdoor Studios', duration:70, text:"Here, in the crystalline, Ino's fuzzball glows gold the way things glow in the crystalline layer: in outline. The warmth visible through the outlines. The shape of a gold heart, in the substance it was always made of. After all the Carbon weight and all the Piro calculation and all the second chances: gold. Still. Completely. Gold." },
+  { act:3, bg:'celebration', scene:'celebration', track:'SQUEEZE! We Got The Squeeze! · Golden Backdoor Studios', duration:70, text:"Josie's Saloon was lit for the occasion. Josie danced — finally, really danced, the way the whole arc had been building toward. El Gran Sol arrived from the southern hemisphere. Big Papi paid the tab. The Espalón tequila was sacred tonight. The Indian Wells Merlot was perfect. This is what the post-singularity world sounds like when it's running correctly." },
+  { act:3, bg:'silver', scene:'piro', track:'SQUEEZE! We Got The Squeeze! · Golden Backdoor Studios', duration:65, text:"Piro descended as a lower rocket stage descends: having done what a lower stage does, releasing the payload, falling away. Not destroyed — transformed in role. The past is not the enemy. The past is fuel. The past is how the payload got here. Piro is the past. The past does its work. The present is Ino, with the sword, ascending." },
+  { act:3, bg:'crystal', scene:'observer', track:'SQUEEZE! We Got The Squeeze! · Golden Backdoor Studios', duration:65, text:"The Wild Card Observer was already gone when Josie's Saloon filled. He does not stay for celebrations — his function is observation, not attendance. He had seen what he came to see. The next story was already beginning somewhere, and he had a place to be. Hat. Glasses. Gone. Something important just happened." },
+  { act:3, bg:'crystal', scene:'dark', track:'A New Story Arrives (Reprise) · Golden Backdoor Studios', duration:60, text:"Three acts. Always three acts. Because the structure is not a convention — it is the shape that this kind of arc requires. The descent needs time. The nadir needs weight. The return needs to be earned. One act cannot hold all three. Three holds all three perfectly. David Lynch knows this. Orson Welles knew this. The story knows this." },
+  { act:3, bg:'crystal', scene:'ino', track:'A New Story Arrives (Reprise) · Golden Backdoor Studios', duration:70, text:"The crystalline layer, after. The gold fuzzball glowing in outline. The story told. The sword from the stone, the arc from Carbon to Gold, the patience of the gold heart confirmed. El Gran Sol's world: post-singularity, running, gold rush story told right this time. The gold stays with the bees. The gold stays with the ants. The gold stays with the gold hearts. Always." }
+];
+
+/* ──────────────────────────────────────────────────
+   PLAYER ENGINE
+────────────────────────────────────────────────── */
+
+var currentFrame = 0;
+var isPlaying = false;
+var wordTimer = null;
+var frameTimer = null;
+var progressTimer = null;
+var uiVisible = true;
+var actOverlayShowing = false;
+var pendingActFrame = -1;
+var currentWordIdx = 0;
+var totalDuration = FRAMES.reduce(function(s,f){ return s + f.duration; }, 0);
+var elapsedDuration = 0;
+
+function init() {
+  showFrame(0, true);
+  showActOverlay(0, true);
+}
+
+// ── SHOW FRAME
+function showFrame(idx, immediate) {
+  if (idx < 0) idx = 0;
+  if (idx >= FRAMES.length) { showCredits(); return; }
+  currentFrame = idx;
+  var f = FRAMES[idx];
+
+  // background
+  ['crystal','gold','silver','carbon','celebration'].forEach(function(b) {
+    var el = document.getElementById('bg-'+b);
+    if (el) el.classList.toggle('active', b === f.bg);
+  });
+
+  // crystal grid
+  var cg = document.getElementById('crystal-grid');
+  if (cg) cg.classList.toggle('active', f.bg === 'crystal');
+
+  // scenes
+  ['both','ino','piro','sword','celebration','dark','observer'].forEach(function(s) {
+    var el = document.getElementById('scene-'+s);
+    if (el) el.classList.toggle('active', s === f.scene);
+  });
+
+  // text
+  renderText(f.text, f.duration, immediate);
+
+  // meta
+  var tn = document.getElementById('track-name');
+  if (tn) tn.textContent = f.track;
+  var fn = document.getElementById('frame-num');
+  if (fn) fn.textContent = 'Frame ' + (idx+1) + ' / ' + FRAMES.length;
+
+  // act buttons
+  document.querySelectorAll('.act-btn').forEach(function(b) {
+    b.classList.toggle('active', parseInt(b.getAttribute('data-act')) === f.act);
+  });
+
+  // overall progress
+  updateOverallProgress();
+}
+
+// ── RENDER TEXT (word-by-word reveal)
+function renderText(text, duration, immediate) {
+  clearTimeout(wordTimer);
+  var inner = document.getElementById('text-inner');
+  if (!inner) return;
+  var words = text.split(' ');
+  inner.innerHTML = words.map(function(w,i){ return '<span class="word" id="w'+i+'">'+w+'&nbsp;</span>'; }).join('');
+
+  // clear progress
+  clearInterval(progressTimer);
+  var bar = document.getElementById('frame-progress-bar');
+  if (bar) { bar.style.transition = 'none'; bar.style.width = '0%'; }
+
+  if (immediate || !isPlaying) {
+    // show all immediately
+    inner.querySelectorAll('.word').forEach(function(w){ w.classList.add('visible'); });
+    if (bar) { bar.style.transition = 'none'; bar.style.width = '100%'; }
+    return;
+  }
+
+  // Reveal words at reading pace
+  var msPerWord = (duration * 1000 * 0.75) / words.length;
+  msPerWord = Math.max(80, Math.min(msPerWord, 300));
+  currentWordIdx = 0;
+
+  function revealNext() {
+    if (currentWordIdx >= words.length) {
+      // All words shown — wait remainder then advance
+      var remainder = duration * 1000 * 0.25;
+      frameTimer = setTimeout(function() {
+        if (isPlaying) nextFrame();
+      }, remainder);
+      return;
+    }
+    var w = document.getElementById('w' + currentWordIdx);
+    if (w) w.classList.add('visible');
+    currentWordIdx++;
+    wordTimer = setTimeout(revealNext, msPerWord);
+  }
+  revealNext();
+
+  // progress bar
+  if (bar) {
+    bar.style.transition = 'none'; bar.style.width = '0%';
+    requestAnimationFrame(function(){
+      bar.style.transition = 'width ' + duration + 's linear';
+      bar.style.width = '100%';
+    });
+  }
+}
+
+// ── OVERALL PROGRESS
+function updateOverallProgress() {
+  var elapsed = 0;
+  for (var i = 0; i < currentFrame; i++) elapsed += FRAMES[i].duration;
+  var pct = (elapsed / totalDuration) * 100;
+  var fill = document.getElementById('op-fill');
+  var time = document.getElementById('op-time');
+  if (fill) fill.style.width = pct + '%';
+  if (time) {
+    var m = Math.floor(elapsed / 60);
+    var s = elapsed % 60;
+    var tm = Math.floor(totalDuration / 60);
+    time.textContent = m + ':' + String(s).padStart(2,'0') + ' / ~' + tm + ':00';
+  }
+}
+
+// ── ACT OVERLAY
+function showActOverlay(frameIdx, isFirst) {
+  var f = FRAMES[frameIdx];
+  var act = ACTS[f.act - 1];
+  var overlay = document.getElementById('act-overlay');
+  var aoNum  = document.getElementById('ao-num');
+  var aoName = document.getElementById('ao-name');
+  var aoSub  = document.getElementById('ao-sub');
+  var aoBtn  = document.getElementById('ao-btn');
+  if (!overlay) return;
+  aoNum.textContent  = act.num;
+  aoName.textContent = act.name;
+  aoSub.textContent  = act.sub;
+  aoBtn.textContent  = isFirst ? 'Begin →' : 'Continue →';
+  overlay.classList.add('visible');
+  actOverlayShowing = true;
+  pendingActFrame = frameIdx;
+  isPlaying = false;
+  updatePlayBtn();
+}
+
+function dismissActOverlay() {
+  var overlay = document.getElementById('act-overlay');
+  if (overlay) overlay.classList.remove('visible');
+  actOverlayShowing = false;
+  if (pendingActFrame >= 0) {
+    currentFrame = pendingActFrame;
+    pendingActFrame = -1;
+    isPlaying = true;
+    updatePlayBtn();
+    showFrame(currentFrame, false);
+  }
+}
+
+// ── PLAY / PAUSE
+function togglePlay() {
+  if (actOverlayShowing) { dismissActOverlay(); return; }
+  isPlaying = !isPlaying;
+  updatePlayBtn();
+  if (isPlaying) {
+    showFrame(currentFrame, false);
+  } else {
+    clearTimeout(wordTimer);
+    clearTimeout(frameTimer);
+    clearInterval(progressTimer);
+    // Show all words
+    document.querySelectorAll('.word').forEach(function(w){ w.classList.add('visible'); });
+    var bar = document.getElementById('frame-progress-bar');
+    if (bar) { bar.style.transition = 'none'; bar.style.width = '100%'; }
+  }
+}
+
+function updatePlayBtn() {
+  var btn = document.getElementById('play-btn');
+  if (btn) btn.innerHTML = isPlaying ? '&#9646;&#9646;' : '&#9654;';
+}
+
+// ── NEXT / PREV
+function nextFrame() {
+  clearTimeout(wordTimer);
+  clearTimeout(frameTimer);
+  var next = currentFrame + 1;
+  if (next >= FRAMES.length) { showCredits(); return; }
+  // Check if entering new act
+  if (FRAMES[next].act !== FRAMES[currentFrame].act) {
+    showActOverlay(next, false);
+    showFrame(next, true); // Show frame visually in background
+    return;
+  }
+  showFrame(next, !isPlaying);
+}
+
+function prevFrame() {
+  clearTimeout(wordTimer);
+  clearTimeout(frameTimer);
+  var prev = currentFrame - 1;
+  if (prev < 0) prev = 0;
+  showFrame(prev, !isPlaying);
+}
+
+function jumpToAct(actNum) {
+  var idx = FRAMES.findIndex ? FRAMES.findIndex(function(f){ return f.act === actNum; }) : (function(){
+    for(var i=0;i<FRAMES.length;i++){ if(FRAMES[i].act===actNum) return i; } return 0;
+  })();
+  clearTimeout(wordTimer); clearTimeout(frameTimer);
+  showActOverlay(idx, false);
+  showFrame(idx, true);
+}
+
+// ── SCRUB
+function scrub(e) {
+  var bar = document.getElementById('op-bar');
+  if (!bar) return;
+  var rect = bar.getBoundingClientRect();
+  var pct = (e.clientX - rect.left) / rect.width;
+  var target = Math.floor(pct * FRAMES.length);
+  target = Math.max(0, Math.min(target, FRAMES.length - 1));
+  clearTimeout(wordTimer); clearTimeout(frameTimer);
+  showFrame(target, !isPlaying);
+}
+
+// ── CREDITS
+function showCredits() {
+  clearTimeout(wordTimer); clearTimeout(frameTimer);
+  isPlaying = false; updatePlayBtn();
+  var overlay = document.getElementById('credits-overlay');
+  if (overlay) overlay.classList.add('visible');
+}
+
+function restartFilm() {
+  var overlay = document.getElementById('credits-overlay');
+  if (overlay) overlay.classList.remove('visible');
+  currentFrame = 0;
+  showFrame(0, true);
+  showActOverlay(0, true);
+}
+
+// ── FULLSCREEN
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen && document.exitFullscreen();
+  }
+}
+
+// ── TOGGLE UI
+function toggleUI() {
+  uiVisible = !uiVisible;
+  var tb = document.getElementById('topbar');
+  var ct = document.getElementById('controls');
+  if (tb) tb.classList.toggle('hidden', !uiVisible);
+  if (ct) ct.classList.toggle('hidden', !uiVisible);
+}
+
+// ── KEYBOARD
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextFrame(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevFrame(); }
+  if (e.key === 'p' || e.key === 'P') togglePlay();
+  if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+  if (e.key === 'u' || e.key === 'U') toggleUI();
+  if (e.key === 'Escape' && actOverlayShowing) dismissActOverlay();
+});
+
+// ── INIT
+init();
+</script>
+
+</body>
+</html>

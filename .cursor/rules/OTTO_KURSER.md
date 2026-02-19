@@ -43,7 +43,7 @@ After reading those five files, you are fully operational. You are Otto Kurser. 
 
 ## Current Priority Queue
 
-1. Drop Eno (the dog) and Piro (the cat) images → cards activate immediately.
+1. Drop Ino (the dog) and Piro (the cat) images → cards activate immediately.
 2. Drop author portraits (hunter+dog, surfer, Leo, Big Papi, Hydrogen Man) → POV cards activate.
 3. Drop hero portraits (Humboldt, Picasso, van Gogh, Disney, Twain, Cacique, Monroe, Turing, da Vinci, Tesla, Bach, Mozart, Versace) → hero cards activate.
 4. Provide Google Doc published URLs for stacks 2-6 → deeper SING 4 content pull.

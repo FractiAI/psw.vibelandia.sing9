@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>nipsy! · Natural Systems Protocols School | VIBELANDIA SING 9</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35); --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55); --pink: #e879f9; --cyan: #22d3ee; --bg: #020408; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--cream); min-height: 100vh; }
+    .topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: linear-gradient(180deg, rgba(2,4,8,0.96) 0%, transparent 100%); padding: 0.75rem 2rem; display: flex; align-items: center; gap: 1.5rem; font-size: 0.72rem; letter-spacing: 0.07em; }
+    .topnav .brand { font-weight: 800; letter-spacing: 0.16em; color: var(--gold); text-decoration: none; text-transform: uppercase; text-shadow: 0 0 14px var(--gold-glow); }
+    .topnav a { color: var(--cream-dim); text-decoration: none; }
+    .topnav a:hover { color: var(--cream); }
+    .hero { position: relative; height: 80vh; min-height: 440px; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(155deg, #00080a 0%, #000e14 40%, #00121a 65%, #020408 100%); }
+    .hero-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,4,8,0.05) 0%, rgba(2,4,8,0.2) 50%, rgba(2,4,8,0.9) 72%, rgba(2,4,8,0.99) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 3.5rem; max-width: 680px; }
+    .eyebrow { font-size: 0.63rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.65rem; text-shadow: 0 0 12px rgba(34,211,238,0.4); }
+    .hero-title { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900; line-height: 0.95; color: #fff; text-shadow: 0 2px 32px rgba(0,0,0,0.9); margin-bottom: 0.55rem; }
+    .hero-sub { font-size: 0.85rem; letter-spacing: 0.09em; color: var(--gold); margin-bottom: 1.1rem; text-shadow: 0 0 14px var(--gold-glow); }
+    .hero-desc { font-size: 0.94rem; line-height: 1.72; color: var(--cream-dim); max-width: 54ch; margin-bottom: 1.5rem; }
+    .hero-desc em { color: var(--gold); font-style: normal; }
+    .badge-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
+    .badge { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; padding: 0.28rem 0.78rem; border-radius: 2px; }
+    .badge-series { background: rgba(34,211,238,0.18); border: 1px solid var(--cyan); color: var(--cyan); }
+    .badge-open { background: rgba(212,175,55,0.22); border: 1px solid var(--gold); color: var(--gold); }
+    .content { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+    .section { margin-bottom: 2.5rem; }
+    .section-label { font-size: 0.63rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 0.5rem; }
+    .section h2 { font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-bottom: 0.9rem; letter-spacing: 0.04em; text-shadow: 0 0 12px var(--gold-glow); }
+    .card { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.15); padding: 1.4rem 1.6rem; margin-bottom: 0.85rem; }
+    .card p { font-size: 0.92rem; line-height: 1.75; color: var(--cream-dim); margin-bottom: 0.6rem; }
+    .card p:last-child { margin-bottom: 0; }
+    .card strong { color: var(--cream); }
+    .card em { color: var(--gold); font-style: normal; }
+    .nspfrnp-expand { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+    .nspfrnp-piece { background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.2); padding: 0.4rem 0.85rem; font-size: 0.72rem; color: var(--cyan); letter-spacing: 0.06em; }
+    .divider { border: none; border-top: 1px solid rgba(212,175,55,0.1); margin: 2rem 0; }
+    .foot { border-top: 1px solid rgba(212,175,55,0.1); padding: 1.5rem 2rem; font-size: 0.68rem; color: rgba(212,175,55,0.3); letter-spacing: 0.05em; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+    .foot a { color: rgba(212,175,55,0.4); text-decoration: none; }
+    .foot a:hover { color: var(--pink); }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="../index.html">VIBELANDIA · SING 9</a>
+    <a href="catalog.html">← Content Catalog</a>
+    <a href="seed-edge-action.html">Seed:Edge Action!</a>
+  </nav>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-veil"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Reality Series · The Living Classroom · Pop-Up Style · Just gotta know</p>
+      <h1 class="hero-title">nipsy!</h1>
+      <p class="hero-sub">Natural Systems Protocols School. Open Enrollment. Always.</p>
+      <div class="badge-row">
+        <span class="badge badge-series">Series</span>
+        <span class="badge badge-open">Open Enrollment</span>
+      </div>
+      <p class="hero-desc">
+        The curriculum. The living classroom. The school that doesn't look like a school.
+        <em>NSPFRNP</em> — Natural System Protocol Fractal Recursive Nested Protocol.
+        This is where you learn it. Not from a textbook.
+        From living inside it. Watching it move.
+        <em>If you're reading this, you're already enrolled.</em>
+      </p>
+    </div>
+  </section>
+  <div class="content">
+    <div class="section">
+      <div class="section-label">The Protocol</div>
+      <h2>NSPFRNP — What It Means</h2>
+      <div class="card">
+        <div class="nspfrnp-expand">
+          <span class="nspfrnp-piece">N · Natural</span>
+          <span class="nspfrnp-piece">S · System</span>
+          <span class="nspfrnp-piece">P · Protocol</span>
+          <span class="nspfrnp-piece">F · Fractal</span>
+          <span class="nspfrnp-piece">R · Recursive</span>
+          <span class="nspfrnp-piece">N · Nested</span>
+          <span class="nspfrnp-piece">P · Protocol</span>
+        </div>
+        <p>The <strong>Natural System Protocol</strong> is the operating system underneath everything at Vibelandia. Not a software protocol — a <em>natural</em> one. The protocols that run the universe: fractal patterns, recursive nesting, holographic hydrogen, the black hole filament, electromagnetism (the magnet side we don't focus on enough), SMACS 0723 as the entry node.</p>
+        <p>nipsy! is the series that teaches this without sitting you down in a classroom. <em>You learn it by living inside the content.</em> The novels teach it through story. The reality series teach it through action. The experiences teach it through presence. Every surface is the classroom.</p>
+      </div>
+    </div>
+    <hr class="divider" />
+    <div class="section">
+      <div class="section-label">The Curriculum</div>
+      <h2>What Gets Taught</h2>
+      <div class="card">
+        <p><strong>Level One — The Cosmological Stack:</strong> The bed on the floor on the earth in orbit around the Sun orbiting Sagittarius A, beaming awareness in through SMACS 0723. Understanding your position in the holograph. Finding your node.</p>
+        <p><strong>Level Two — The Master Canvas:</strong> The holographic hydrogen spin cloud. The squeeze cloud. The master surface — because it allows anything. Electricity and the magnet. Transmutation. Transformation. The mycelial network layer. The DNA layer. The living water layer. Building your dashboard.</p>
+        <p><strong>Level Three — The Story:</strong> Eno and Piro. The innocent and the pirate. The fans, the NPCs, the uninspired observers. The treasures: trips, sacred plants, genuine connection, the good things. The wild card stack. The DJ station. Learning how to read the story that's already playing.</p>
+        <p><strong>Level Four — The Protocol in Action:</strong> Seed:Edge. The Executive Producer Prompt. How every command becomes a fractal middle. How to author your own middle. How to run the protocol consciously. <em>This is where you graduate.</em></p>
+      </div>
+    </div>
+    <hr class="divider" />
+    <div class="section">
+      <div class="section-label">Enrollment</div>
+      <h2>How to Attend</h2>
+      <div class="card">
+        <p><em>Pop-Up Style. Just gotta know.</em> There is no application form. There is no campus address. The school comes to you — through every Vibelandia surface, every episode, every story. If you found this page, you're already in.</p>
+        <p>To go deeper: <a href="office-hours.html" style="color:var(--gold)">Office Hours →</a> is the live classroom. <a href="episode-1.html" style="color:var(--gold)">Episode 1 →</a> is the immersive experience. <a href="seed-edge-action.html" style="color:var(--gold)">Seed:Edge Action! →</a> is the field training. And the content catalog is your textbook — all pre-rendered, pre-built, ready to open.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="foot">
+    <span>VIBELANDIA · SING 9 · NSPFRNP → ∞⁹</span>
+    <span>Pop-Up Style · Just gotta know</span>
+    <a href="catalog.html">← Content Catalog</a>
+    <a href="seed-edge-action.html">Seed:Edge Action!</a>
+    <a href="office-hours.html">Office Hours</a>
+    <a href="../index.html">Home</a>
+  </footer>
+</body>
+</html>

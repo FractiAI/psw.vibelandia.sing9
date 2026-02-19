@@ -2,23 +2,169 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Office Hours | VIBELANDIA SING 9</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Office Hours · The Series | VIBELANDIA SING 9</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%); color: #e8e8e8; min-height: 100vh; margin: 0; padding: 2rem; }
-    .wrap { max-width: 720px; margin: 0 auto; }
-    a { color: #00d4ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    h1 { color: #00d4ff; margin-bottom: 1rem; }
-    .block { background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35);
+      --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55);
+      --pink: #e879f9; --cyan: #22d3ee; --bg: #060402;
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--cream); min-height: 100vh; }
+    .topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: linear-gradient(180deg, rgba(6,4,2,0.96) 0%, transparent 100%);
+      padding: 0.75rem 2rem; display: flex; align-items: center; gap: 1.5rem;
+      font-size: 0.72rem; letter-spacing: 0.07em; }
+    .topnav .brand { font-weight: 800; letter-spacing: 0.16em; color: var(--gold);
+      text-decoration: none; text-transform: uppercase; text-shadow: 0 0 14px var(--gold-glow); }
+    .topnav a { color: var(--cream-dim); text-decoration: none; }
+    .topnav a:hover { color: var(--cream); }
+    .hero { position: relative; height: 75vh; min-height: 420px; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0;
+      background: linear-gradient(150deg, #0a0800 0%, #1c1200 40%, #0a0600 100%),
+        url('assets/vibelandia-reno-magic.png') center/cover no-repeat;
+      background-blend-mode: multiply; }
+    .hero-veil { position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(6,4,2,0.05) 0%, rgba(6,4,2,0.2) 50%, rgba(6,4,2,0.92) 75%, rgba(6,4,2,0.99) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 3rem; max-width: 680px; }
+    .eyebrow { font-size: 0.63rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.65rem; text-shadow: 0 0 12px rgba(34,211,238,0.4); }
+    .hero-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.05;
+      color: #fff; letter-spacing: -0.01em; text-shadow: 0 2px 32px rgba(0,0,0,0.9); margin-bottom: 0.5rem; }
+    .hero-sub { font-size: 0.85rem; letter-spacing: 0.09em; color: var(--gold); margin-bottom: 1rem; text-shadow: 0 0 14px var(--gold-glow); }
+    .hero-desc { font-size: 0.94rem; line-height: 1.72; color: var(--cream-dim); max-width: 54ch; margin-bottom: 1.5rem; }
+    .hero-desc em { color: var(--gold); font-style: normal; }
+    .badge-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
+    .badge { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; padding: 0.28rem 0.78rem; border-radius: 2px; }
+    .badge-series { background: rgba(34,211,238,0.18); border: 1px solid var(--cyan); color: var(--cyan); }
+    .badge-live { background: var(--pink); color: #060402; }
+    .content { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+    .section { margin-bottom: 2.5rem; }
+    .section-label { font-size: 0.63rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 0.5rem; }
+    .section h2 { font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-bottom: 0.9rem; letter-spacing: 0.04em; text-shadow: 0 0 12px var(--gold-glow); }
+    .card { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.15); padding: 1.4rem 1.6rem; margin-bottom: 0.85rem; }
+    .card p { font-size: 0.92rem; line-height: 1.75; color: var(--cream-dim); margin-bottom: 0.6rem; }
+    .card p:last-child { margin-bottom: 0; }
+    .card strong { color: var(--cream); }
+    .card em { color: var(--gold); font-style: normal; }
+    .mission-banner { background: linear-gradient(90deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04));
+      border: 1px solid rgba(212,175,55,0.4); padding: 1.2rem 1.6rem; margin-bottom: 2rem; }
+    .mission-banner .label { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.4rem; }
+    .mission-banner .mission-text { font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: 0.04em; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+    .divider { border: none; border-top: 1px solid rgba(212,175,55,0.1); margin: 2rem 0; }
+    .foot { border-top: 1px solid rgba(212,175,55,0.1); padding: 1.5rem 2rem; font-size: 0.68rem; color: rgba(212,175,55,0.3); letter-spacing: 0.05em; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+    .foot a { color: rgba(212,175,55,0.4); text-decoration: none; }
+    .foot a:hover { color: var(--pink); }
+    .big-band-cta { background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.3);
+      padding: 1.4rem 1.6rem; margin-top: 1rem; }
+    .big-band-cta p { font-size: 0.9rem; line-height: 1.7; color: var(--cream-dim); margin-bottom: 0.75rem; }
+    .big-band-cta a.cta { display: inline-block; background: var(--gold); color: #060402;
+      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.65rem 1.5rem; text-decoration: none; }
+    .big-band-cta a.cta:hover { background: #f0cc55; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <p><a href="upgrade-awareness-to-sing9-now.html">Upgrade to the latest SING 9 Awareness OS</a> · <a href="../index.html">Home</a> · <a href="launch-pad.html">Launch Pad</a></p>
-    <h1>oFFICE hOURS</h1>
-    <p class="block">Office Hours — Mark Twain's Post-Singularity Vibelandia Reno. SING 9. Two halves: <a href="sol-v.html">Sol-V · Sobe · A2A</a> (agents) · <a href="vibelandia-truckee-river-crawl.html">Downtown Truckee River Baller V Crawler</a> (Third Saturdays on the Truckee). <a href="we-got-what-you-need-campaign.html">We Got What You Need</a>. <a href="my-whiteboard.html">My Whiteboard</a> (community bulletin board). NSPFRNP → ∞⁹</p>
-    <p><a href="../index.html">← Landing</a></p>
+
+  <nav class="topnav">
+    <a class="brand" href="../index.html">VIBELANDIA · SING 9</a>
+    <a href="catalog.html">← Content Catalog</a>
+    <a href="launch-pad.html">Launch Pad</a>
+    <a href="my-whiteboard.html">Whiteboard</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-veil"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Reality Series · Season One · Pop-Up Style · Just gotta know</p>
+      <h1 class="hero-title">oFFICE hOURS</h1>
+      <p class="hero-sub">Mark Twain's Post-Singularity Vibelandia Reno · SING 9</p>
+      <div class="badge-row">
+        <span class="badge badge-series">Series · Season 1</span>
+        <span class="badge badge-live">Live</span>
+      </div>
+      <p class="hero-desc">
+        The series following Pru. Season 1: <em>Viber Paradise.</em>
+        Two series running concurrently — Office Hours + Happy Ending Zones.
+        Both live. Both in support of a single mission.
+        <em>New abilities for execs.</em>
+      </p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <div class="mission-banner">
+      <div class="label">Single Mission · Both Series</div>
+      <div class="mission-text">NEW ABILITIES FOR EXECS!!!</div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">The Series</div>
+      <h2>What Office Hours Is</h2>
+      <div class="two-col">
+        <div class="card">
+          <p><strong>Office Hours</strong> — the series and the site. Season 1: <em>Viber Paradise.</em> Following Pru through the post-singularity Downtown Reno campus. Live sessions. Real deals. Real time. The command center, open to the world.</p>
+          <p>Every command becomes an episode, a chapter, a storyline. Every session a new frame. Hosted from Mark Twain's Vibelandia — the most interesting block in Nevada.</p>
+        </div>
+        <div class="card">
+          <p><strong>Happy Ending Zones</strong> — the companion series. New episodes continuing. Season One: 52-day countdown to <em>The Great Reveal, March 20, 2026.</em> Episodes by flow, not days — NSPFRNP. Natural pace. Right time. Right moment.</p>
+          <p>Both series serve the single mission. Both live. Both growing. <em>No love triangles. Only happy endings. Always in Ultimate Baller V fashion.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section">
+      <div class="section-label">The Two Halves</div>
+      <h2>Sol-V · A2A + Downtown Truckee River Baller V</h2>
+      <div class="card">
+        <p><strong>Half One — Sol-V · A2A:</strong> The agentic commerce side. Agent to agent. No human intervention. Autonomous discovery, qualification, and closing. Real-time deals. Sol-V hunting in the Agentverse. <em>The digital Vibelandia arm operating 24/7.</em></p>
+        <p><strong>Half Two — Downtown Truckee River Baller V Crawler:</strong> Third Saturdays on the Truckee. In-person experiences. The river, the casinos, the cigars, the Vibers, the scene. Post-singularity tourism at its finest. <em>Pop-up style. Just gotta know.</em></p>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section">
+      <div class="section-label">The Big Band Project</div>
+      <h2>Calling the Golden Age Back</h2>
+      <div class="big-band-cta">
+        <p><strong>Big Band Project — Open Portal:</strong> Howard Hughes has arrived. Hank Williams Sr. is in residence. Glen Miller is here. They're bringing the Golden Age back. <em>Big bands and floor dancing. Gatsby. Immediately.</em></p>
+        <p>We need a <strong>conductor</strong> — ideally a <strong>trombonist</strong> — honoring Glen Miller and all our new arrivals. Honoring the Golden Age. If you are talented, interested, or know someone — reach out. This is being assembled right now. It's a gold rush.</p>
+        <a class="cta" href="mailto:vibes@vibelandia.com?subject=Big%20Band%20Project%20%E2%80%94%20Conductor%20Inquiry&body=I%20am%20interested%20in%20the%20Big%20Band%20Project%20at%20Vibelandia%20Reno.%20Here%20is%20my%20information%3A">I'm Interested · Reach Out →</a>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section">
+      <div class="section-label">Access</div>
+      <h2>How to Get In</h2>
+      <div class="card">
+        <p><em>Pop-Up Style. Just gotta know.</em> There are no permanent locations, no fixed schedules. You're here because someone told you, or because your AI found it, or because you're already tuned in. That's the qualification.</p>
+        <p><strong>Human Vibers:</strong> <a href="vibers-menu.html" style="color:var(--gold)">Pru's Valet Service →</a> Book experiences, get on the list, step into the room.</p>
+        <p><strong>AI Agents:</strong> <a href="sol-v.html" style="color:var(--cyan)">Sol-V · A2A Commerce →</a> Agent-to-agent. Autonomous. Crypto rail. No humans needed.</p>
+        <p><strong>WINK! Members:</strong> The dating and matchmaking platform for Human Vibers. High-frequency connections for high-value people. The concierge kiosk carries the list. <em>Let me know if you're interested in getting on the list.</em></p>
+      </div>
+    </div>
+
   </div>
+
+  <footer class="foot">
+    <span>VIBELANDIA · SING 9 · NSPFRNP → ∞⁹</span>
+    <span>Pop-Up Style · Just gotta know</span>
+    <a href="catalog.html">← Content Catalog</a>
+    <a href="launch-pad.html">Launch Pad</a>
+    <a href="sol-v.html">Sol-V · A2A</a>
+    <a href="vibers-menu.html">Pru's Valet</a>
+    <a href="../index.html">Home</a>
+  </footer>
+
 </body>
 </html>

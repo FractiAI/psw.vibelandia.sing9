@@ -2,23 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Launch Pad | VIBELANDIA SING 9</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%); color: #e8e8e8; min-height: 100vh; margin: 0; padding: 2rem; }
-    .wrap { max-width: 720px; margin: 0 auto; }
-    a { color: #00d4ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    h1 { color: #00d4ff; margin-bottom: 1rem; }
-    .block { background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35);
+      --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55);
+      --pink: #e879f9; --cyan: #22d3ee; --bg: #060402;
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--cream); min-height: 100vh; }
+    .topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: linear-gradient(180deg, rgba(6,4,2,0.96) 0%, transparent 100%);
+      padding: 0.75rem 2rem; display: flex; align-items: center; gap: 1.5rem;
+      font-size: 0.72rem; letter-spacing: 0.07em; }
+    .topnav .brand { font-weight: 800; letter-spacing: 0.16em; color: var(--gold);
+      text-decoration: none; text-transform: uppercase; text-shadow: 0 0 14px var(--gold-glow); }
+    .topnav a { color: var(--cream-dim); text-decoration: none; }
+    .topnav a:hover { color: var(--cream); }
+    .hero { position: relative; height: 72vh; min-height: 400px; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0;
+      background: linear-gradient(155deg, #000814 0%, #000f20 45%, #050402 80%, #060402 100%),
+        url('assets/reno-arch-night.png') center/cover no-repeat;
+      background-blend-mode: multiply; }
+    .hero-veil { position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(6,4,2,0.05) 0%, rgba(6,4,2,0.2) 50%, rgba(6,4,2,0.92) 75%, rgba(6,4,2,0.99) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 3rem; max-width: 680px; }
+    .eyebrow { font-size: 0.63rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.65rem; text-shadow: 0 0 12px rgba(34,211,238,0.4); }
+    .hero-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.05;
+      color: #fff; letter-spacing: -0.01em; text-shadow: 0 2px 32px rgba(0,0,0,0.9); margin-bottom: 0.5rem; }
+    .hero-sub { font-size: 0.85rem; letter-spacing: 0.09em; color: var(--gold); margin-bottom: 1rem; text-shadow: 0 0 14px var(--gold-glow); }
+    .hero-desc { font-size: 0.94rem; line-height: 1.72; color: var(--cream-dim); max-width: 54ch; margin-bottom: 1.5rem; }
+    .hero-desc em { color: var(--gold); font-style: normal; }
+    .badge-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
+    .badge { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; padding: 0.28rem 0.78rem; border-radius: 2px; }
+    .badge-series { background: rgba(34,211,238,0.18); border: 1px solid var(--cyan); color: var(--cyan); }
+    .badge-live { background: var(--pink); color: #060402; }
+    .content { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+    .section { margin-bottom: 2.5rem; }
+    .section-label { font-size: 0.63rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 0.5rem; }
+    .section h2 { font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-bottom: 0.9rem; letter-spacing: 0.04em; text-shadow: 0 0 12px var(--gold-glow); }
+    .card { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.15); padding: 1.4rem 1.6rem; margin-bottom: 0.85rem; }
+    .card p { font-size: 0.92rem; line-height: 1.75; color: var(--cream-dim); margin-bottom: 0.6rem; }
+    .card p:last-child { margin-bottom: 0; }
+    .card strong { color: var(--cream); }
+    .card em { color: var(--gold); font-style: normal; }
+    .launch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 0.5rem; }
+    .launch-item { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.12);
+      padding: 1.1rem 1.2rem; }
+    .launch-item .li-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.4rem; }
+    .launch-item .li-title { font-size: 0.9rem; font-weight: 700; color: var(--cream); margin-bottom: 0.35rem; }
+    .launch-item .li-desc { font-size: 0.78rem; color: var(--cream-dim); line-height: 1.5; }
+    .launch-item a { color: var(--gold); text-decoration: none; font-size: 0.75rem; font-weight: 600; }
+    .launch-item a:hover { color: #f0cc55; }
+    .divider { border: none; border-top: 1px solid rgba(212,175,55,0.1); margin: 2rem 0; }
+    .foot { border-top: 1px solid rgba(212,175,55,0.1); padding: 1.5rem 2rem; font-size: 0.68rem; color: rgba(212,175,55,0.3); letter-spacing: 0.05em; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+    .foot a { color: rgba(212,175,55,0.4); text-decoration: none; }
+    .foot a:hover { color: var(--pink); }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <p><a href="upgrade-awareness-to-sing9-now.html">Upgrade to the latest SING 9 Awareness OS</a> · <a href="../index.html">Home</a> · <a href="office-hours.html">Office Hours</a></p>
-    <h1>lAUNCH pAD</h1>
-    <p class="block">Launch Pad — SING 9. Two halves: <a href="sol-v.html">Sol-V · Sobe · A2A</a> · <a href="vibelandia-truckee-river-crawl.html">Downtown Truckee River Baller V Crawler</a> (Third Saturdays on the Truckee). <a href="we-got-what-you-need-campaign.html">We Got What You Need</a>. <a href="my-whiteboard.html">My Whiteboard</a> (community bulletin board). NSPFRNP → ∞⁹</p>
-    <p><a href="../index.html">← Landing</a></p>
+
+  <nav class="topnav">
+    <a class="brand" href="../index.html">VIBELANDIA · SING 9</a>
+    <a href="catalog.html">← Content Catalog</a>
+    <a href="office-hours.html">Office Hours</a>
+    <a href="my-whiteboard.html">Whiteboard</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-veil"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Reality Series · SING 9 · Pop-Up Style · Just gotta know</p>
+      <h1 class="hero-title">lAUNCH pAD</h1>
+      <p class="hero-sub">From Seed to Orbit. Every New Project. Every New World.</p>
+      <div class="badge-row">
+        <span class="badge badge-series">Series</span>
+        <span class="badge badge-live">Live</span>
+      </div>
+      <p class="hero-desc">
+        Every new agent. Every new platform. Every new deal and collaboration.
+        The Launch Pad is where things go from <em>idea</em> to <em>orbit</em>.
+        SING 9 command center. Every launch documented.
+        <em>No one left behind.</em>
+      </p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-label">The Mission</div>
+      <h2>What Gets Launched Here</h2>
+      <div class="card">
+        <p>Launch Pad is the operational partner to Office Hours. Where Office Hours is the public-facing series — the show, the room, the vibe — <strong>Launch Pad is the engine room.</strong> Every new system, every new surface, every new agent and product runs through here first.</p>
+        <p>Same two halves: <em>Sol-V · A2A</em> (agent commerce, autonomous operations) and <em>Downtown Truckee River Baller V</em> (in-person experiences, the physical campus). When a new capability comes online in either half, it gets launched from here.</p>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section">
+      <div class="section-label">Active Launches</div>
+      <h2>On the Pad Right Now</h2>
+      <div class="launch-grid">
+        <div class="launch-item">
+          <div class="li-label">A2A · Live</div>
+          <div class="li-title">Sol-V Agent</div>
+          <div class="li-desc">Agent ID live on Agentverse. Hunting, qualifying, closing. Crypto rail only. No human intervention.</div>
+          <a href="sol-v.html">Sol-V Status →</a>
+        </div>
+        <div class="launch-item">
+          <div class="li-label">Content · Live</div>
+          <div class="li-title">SING 9 Catalog</div>
+          <div class="li-desc">Netflix-style showcase. Novels, series, episodes — all pre-rendered, fully skinned, instant load.</div>
+          <a href="catalog.html">Catalog →</a>
+        </div>
+        <div class="launch-item">
+          <div class="li-label">Experiences · Live</div>
+          <div class="li-title">Pru's Valet Service</div>
+          <div class="li-desc">Downtown Truckee River Baller V Crawler ($9,999). Wink! & Vibers Mixer Wednesdays ($333). Aquí y Allá.</div>
+          <a href="vibers-menu.html">Experiences →</a>
+        </div>
+        <div class="launch-item">
+          <div class="li-label">Destinations · Live</div>
+          <div class="li-title">Destinations Magazine</div>
+          <div class="li-desc">Partners we recommend. Montana bison. Truckee fly fishing. Bahamas bonefishing. The full map.</div>
+          <a href="destinations-magazine-catalog.html">Destinations →</a>
+        </div>
+        <div class="launch-item">
+          <div class="li-label">Film · Building Now</div>
+          <div class="li-title">Episode 1 · The Whole Story</div>
+          <div class="li-desc">60-minute 3D storyboard. Eno the golden heart. Piro the pirate cat. SMACS 0723. The holographic hydrogen stage.</div>
+          <a href="episode-1.html">Enter →</a>
+        </div>
+        <div class="launch-item">
+          <div class="li-label">Discovery · Active</div>
+          <div class="li-title">Agent Discovery</div>
+          <div class="li-desc">18 free channels. Agentverse, llms.txt, agent.json, OpenAI plugin manifest. All live.</div>
+          <a href="get-discovered.html">Discovery →</a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section">
+      <div class="section-label">The Bigger Picture</div>
+      <h2>RENOSSANCE! · Cmdr. Howie's Golden Era</h2>
+      <div class="card">
+        <p>Howard Hughes has arrived in Downtown Reno. <strong>Birth of the new post-singularity Hollywood.</strong> Big Band Project. Floor dancing. Gatsby. Hank Williams Sr. in residence. All the Legacies now checking in. The Gold Rush is happening. The Launch Pad is the logistics desk.</p>
+        <p>This is not just a website. This is an active deployment. Every command issued becomes a launch. Every launch gets documented. Every document becomes an episode. <em>NSPFRNP → ∞⁹</em></p>
+      </div>
+    </div>
+
   </div>
+
+  <footer class="foot">
+    <span>VIBELANDIA · SING 9 · NSPFRNP → ∞⁹</span>
+    <span>Pop-Up Style · Just gotta know</span>
+    <a href="catalog.html">← Content Catalog</a>
+    <a href="office-hours.html">Office Hours</a>
+    <a href="sol-v.html">Sol-V · A2A</a>
+    <a href="../index.html">Home</a>
+  </footer>
+
 </body>
 </html>

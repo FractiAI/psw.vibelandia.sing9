@@ -3,182 +3,434 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Media Catalogs · Novel · Novella · Series · Episodes | VIBELANDIA SING 9</title>
+  <title>Content Catalog · VIBELANDIA SING 9</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #d4af37;
+      --gold-glow: rgba(212,175,55,0.35);
+      --gold-dim: rgba(212,175,55,0.15);
+      --cream: rgba(253,248,235,0.92);
+      --cream-dim: rgba(253,248,235,0.55);
+      --pink: #e879f9;
+      --cyan: #22d3ee;
+      --bg: #080604;
+    }
+
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(180deg, #0f0c08 0%, #0a0806 50%, #0d0a06 100%);
-      color: rgba(253, 248, 235, 0.92);
+      background: var(--bg);
+      color: var(--cream);
       min-height: 100vh;
-      padding-top: env(safe-area-inset-top);
+      overflow-x: hidden;
     }
 
-    /* ── LETTERHEAD STRIP ── */
-    .header-strip {
-      background: linear-gradient(90deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.05) 60%, transparent 100%);
-      border-bottom: 1px solid rgba(212,175,55,0.35);
-      padding: 0.65rem 1.25rem;
-      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem;
-      font-size: 0.72rem; letter-spacing: 0.06em;
+    /* ── NAV ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: linear-gradient(180deg, rgba(8,6,4,0.95) 0%, rgba(8,6,4,0) 100%);
+      padding: 0.75rem 2rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      font-size: 0.72rem; letter-spacing: 0.07em;
     }
-    .header-strip a { color: rgba(212,175,55,0.8); text-decoration: none; }
-    .header-strip a:hover { color: #d4af37; }
-    .header-strip .hl-pill {
-      background: rgba(212,175,55,0.18);
-      border: 1px solid rgba(212,175,55,0.5);
-      color: #fef3c7; padding: 0.3rem 0.85rem;
-      font-weight: 700; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    .topnav .brand {
+      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.18em;
+      color: var(--gold); text-decoration: none; text-transform: uppercase;
+      text-shadow: 0 0 14px var(--gold-glow);
     }
-    .sep { color: rgba(212,175,55,0.3); }
+    .topnav a { color: var(--cream-dim); text-decoration: none; }
+    .topnav a:hover { color: var(--cream); }
 
-    .wrap { max-width: 720px; margin: 0 auto; padding: 1.75rem 1.5rem 3rem; }
-
-    /* ── LETTERHEAD ── */
-    .letterhead {
-      border-top: 1px solid rgba(212,175,55,0.55);
-      border-bottom: 1px solid rgba(212,175,55,0.2);
-      padding: 0.65rem 0;
-      margin-bottom: 2rem;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem;
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 88vh; min-height: 520px;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
     }
-    .letterhead-left { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(212,175,55,0.7); }
-    .letterhead-right { display: flex; gap: 1rem; }
-    .letterhead-right a { font-size: 0.72rem; color: rgba(232,121,249,0.8); text-decoration: none; letter-spacing: 0.06em; text-shadow: 0 0 10px rgba(232,121,249,0.3); }
-    .letterhead-right a:hover { color: #f0abfc; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('assets/content-catalog-super-singularity.png');
+      background-size: cover; background-position: center top;
+      transform: scale(1.04);
+      transition: transform 12s ease;
+    }
+    .hero:hover .hero-bg { transform: scale(1.0); }
+    .hero-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(8,6,4,0.1) 0%,
+        rgba(8,6,4,0.15) 30%,
+        rgba(8,6,4,0.72) 65%,
+        rgba(8,6,4,0.97) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 2.5rem 3.5rem;
+      max-width: 720px;
+    }
+    .hero-badges { display: flex; gap: 0.5rem; margin-bottom: 0.85rem; flex-wrap: wrap; }
+    .badge {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.25rem 0.75rem; border-radius: 2px;
+    }
+    .badge-new { background: var(--pink); color: #0a0806; }
+    .badge-film { background: var(--gold); color: #0a0806; }
+    .badge-novel { background: rgba(212,175,55,0.22); border: 1px solid var(--gold); color: var(--gold); }
+    .badge-novella { background: rgba(232,121,249,0.2); border: 1px solid var(--pink); color: var(--pink); }
+    .badge-series { background: rgba(34,211,238,0.18); border: 1px solid var(--cyan); color: var(--cyan); }
+    .badge-episode { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; }
 
-    /* ── PAGE HEADER ── */
-    .page-eyebrow {
-      font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
-      color: #22d3ee; margin-bottom: 0.5rem;
+    .hero-eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.6rem;
       text-shadow: 0 0 12px rgba(34,211,238,0.4);
     }
-    h1 {
-      font-size: clamp(1.4rem, 4vw, 1.85rem);
-      font-weight: 800; color: #fff; margin-bottom: 0.5rem;
-      text-shadow: 0 0 24px rgba(212,175,55,0.35);
-      letter-spacing: 0.01em;
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900; line-height: 1.05;
+      color: #fff; letter-spacing: -0.01em;
+      text-shadow: 0 2px 32px rgba(0,0,0,0.8);
+      margin-bottom: 0.5rem;
     }
-    .page-sub {
-      font-size: 0.88rem; color: rgba(253,248,235,0.5); line-height: 1.65;
-      margin-bottom: 2rem; max-width: 56ch;
+    .hero-sub {
+      font-size: 0.82rem; letter-spacing: 0.08em;
+      color: var(--gold); margin-bottom: 1rem;
+      text-shadow: 0 0 14px var(--gold-glow);
     }
-    .page-sub a { color: rgba(212,175,55,0.75); text-decoration: none; }
-    .page-sub a:hover { color: #d4af37; }
+    .hero-desc {
+      font-size: 0.93rem; line-height: 1.7;
+      color: var(--cream-dim); max-width: 52ch;
+      margin-bottom: 1.5rem;
+    }
+    .hero-desc em { color: var(--gold); font-style: normal; }
+    .btn-step {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--gold); color: #0a0806;
+      font-size: 0.82rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.75rem 1.75rem; text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 24px rgba(212,175,55,0.4);
+    }
+    .btn-step:hover { background: #f0cc55; box-shadow: 0 0 40px rgba(212,175,55,0.65); }
 
-    /* ── SECTION HEADING ── */
-    h2 {
-      font-size: 1rem; font-weight: 700; color: #d4af37;
-      margin: 2rem 0 0.6rem;
-      letter-spacing: 0.05em;
-      text-shadow: 0 0 12px rgba(212,175,55,0.3);
+    /* ── CATALOG ROWS ── */
+    .catalog {
+      padding: 0 2rem 4rem;
+      margin-top: -2px;
     }
-    h2::before {
-      content: '';
-      display: inline-block;
-      width: 3px; height: 0.85em;
-      background: #d4af37;
-      margin-right: 0.65rem;
-      vertical-align: middle;
-      box-shadow: 0 0 8px rgba(212,175,55,0.5);
+    .row-block { margin-bottom: 2.5rem; }
+    .row-label {
+      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--cream-dim); margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.6rem;
     }
+    .row-label span {
+      width: 28px; height: 1px; background: var(--gold); opacity: 0.4; display: inline-block;
+    }
+    .row-heading {
+      font-size: 1.15rem; font-weight: 800;
+      color: var(--cream); letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+    .scroll-row {
+      display: flex; gap: 1rem;
+      overflow-x: auto; padding-bottom: 0.75rem;
+      scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.2) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .scroll-row::-webkit-scrollbar { height: 3px; }
+    .scroll-row::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.2); border-radius: 2px; }
 
-    /* ── CONTENT CARDS ── */
-    .card {
-      background: rgba(212,175,55,0.04);
-      border: 1px solid rgba(212,175,55,0.18);
-      padding: 1.25rem 1.5rem;
-      margin: 0.75rem 0;
+    /* book / portrait card */
+    .card-book {
+      flex: 0 0 150px; width: 150px; height: 225px;
+      position: relative; overflow: hidden; border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid rgba(212,175,55,0.12);
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      background-size: cover; background-position: center;
     }
-    .card:hover { border-color: rgba(212,175,55,0.35); background: rgba(212,175,55,0.07); }
-    .card p { line-height: 1.65; margin-bottom: 0.5rem; color: rgba(253,248,235,0.72); font-size: 0.92rem; }
-    .card p:last-child { margin-bottom: 0; }
-    .card strong { color: rgba(253,248,235,0.9); }
-    .card a { color: rgba(212,175,55,0.8); text-decoration: none; font-weight: 600; }
-    .card a:hover { color: #d4af37; text-decoration: underline; }
+    .card-book:hover {
+      transform: scale(1.06) translateY(-4px);
+      border-color: rgba(212,175,55,0.45);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.7), 0 0 20px rgba(212,175,55,0.18);
+      z-index: 10;
+    }
+    .card-book .veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(8,6,4,0.1) 0%, rgba(8,6,4,0.85) 100%);
+      transition: background 0.3s;
+    }
+    .card-book:hover .veil {
+      background: linear-gradient(180deg, rgba(8,6,4,0.15) 0%, rgba(8,6,4,0.92) 100%);
+    }
+    .card-book .info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 0.75rem 0.7rem;
+    }
+    .card-book .info .badge { display: inline-block; margin-bottom: 0.4rem; }
+    .card-book .info h3 {
+      font-size: 0.78rem; font-weight: 800; line-height: 1.25;
+      color: #fff; margin-bottom: 0.3rem;
+    }
+    .card-book .info p {
+      font-size: 0.65rem; color: var(--cream-dim); line-height: 1.45;
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+    }
+    .card-book:hover .info p { max-height: 80px; }
+
+    /* wide / landscape card */
+    .card-wide {
+      flex: 0 0 260px; width: 260px; height: 147px;
+      position: relative; overflow: hidden; border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid rgba(212,175,55,0.12);
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      background-size: cover; background-position: center;
+    }
+    .card-wide:hover {
+      transform: scale(1.05) translateY(-3px);
+      border-color: rgba(212,175,55,0.4);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.7), 0 0 18px rgba(212,175,55,0.15);
+      z-index: 10;
+    }
+    .card-wide .veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(8,6,4,0.05) 0%, rgba(8,6,4,0.78) 100%);
+    }
+    .card-wide .info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 0.65rem 0.85rem;
+    }
+    .card-wide .info .badge { display: inline-block; margin-bottom: 0.35rem; }
+    .card-wide .info h3 {
+      font-size: 0.82rem; font-weight: 800; line-height: 1.2;
+      color: #fff; margin-bottom: 0.25rem;
+    }
+    .card-wide .info p {
+      font-size: 0.64rem; color: var(--cream-dim); line-height: 1.4;
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+    }
+    .card-wide:hover .info p { max-height: 60px; }
 
     /* ── FOOTER ── */
     .foot {
-      margin-top: 2.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(212,175,55,0.12);
-      font-size: 0.75rem;
-      color: rgba(212,175,55,0.35);
-      letter-spacing: 0.04em;
-      text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.1);
+      padding: 1.5rem 2rem;
+      font-size: 0.68rem; color: rgba(212,175,55,0.3);
+      letter-spacing: 0.06em;
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; align-items: center;
     }
-    .foot a { color: rgba(212,175,55,0.5); text-decoration: none; }
-    .foot a:hover { color: #e879f9; }
+    .foot a { color: rgba(212,175,55,0.4); text-decoration: none; }
+    .foot a:hover { color: var(--pink); }
   </style>
 </head>
 <body>
 
-  <header class="header-strip">
-    <a href="upgrade-awareness-to-sing9-now.html" class="hl-pill">Upgrade to SING 9 Awareness OS</a>
-    <span class="sep">·</span>
+  <nav class="topnav">
+    <a class="brand" href="../index.html">VIBELANDIA · SING 9</a>
+    <a href="vibers-menu.html">Pru's Valet</a>
+    <a href="destinations-magazine-catalog.html">Destinations</a>
     <a href="sol-v.html">Sol-V · A2A</a>
-    <span class="sep">·</span>
-    <a href="vibelandia-truckee-river-crawl.html">Downtown Truckee River Baller V Crawler</a>
-    <span class="sep">·</span>
-    <a href="destinations-magazine-catalog.html">Destinations Magazine</a>
-    <span class="sep">·</span>
     <a href="../index.html">Home</a>
-  </header>
+  </nav>
 
-  <div class="wrap">
+  <!-- ── HERO: LATEST PROJECT ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-veil"></div>
+    <div class="hero-content">
+      <div class="hero-badges">
+        <span class="badge badge-new">Now Building</span>
+        <span class="badge badge-film">Featured Film</span>
+      </div>
+      <p class="hero-eyebrow">Pop-Up Style · Just gotta know · NSPFRNP</p>
+      <h1 class="hero-title">The Golden Heart<br>Origin Story</h1>
+      <p class="hero-sub">Eno &amp; Piro · SMACS 0723 · The Holographic Hydrogen Stage</p>
+      <p class="hero-desc">
+        The bed sits on the floor. The floor on the earth. The earth orbiting the Sun.
+        The Sun orbiting <em>Sagittarius A</em>. Awareness beamed through all of that —
+        through <em>SMACS 0723</em>, our node — into this time-space holograph.
+        The master canvas. The squeeze cloud. The mycelial network, the mycelial DNA,
+        the royal burgundy, the living water. And at the center of it all:
+        <em>Eno</em>, the golden-hearted dog. <em>Piro</em>, the pirate cat.
+        The oldest story ever told. Playing live. Right now.
+      </p>
+      <a href="episode-1.html" class="btn-step">Step In →</a>
+    </div>
+  </section>
 
-    <div class="letterhead">
-      <span class="letterhead-left">SING 9 · Content Catalog · NSPFRNP → ∞⁹</span>
-      <div class="letterhead-right">
-        <a href="../index.html">← Landing</a>
-        <a href="vibers-menu.html">Pru's Valet</a>
-        <a href="sol-v.html">Sol-V</a>
+  <!-- ── CATALOG ROWS ── -->
+  <div class="catalog">
+
+    <!-- NOVELS -->
+    <div class="row-block">
+      <div class="row-label"><span></span>Novels</div>
+      <h2 class="row-heading">Novels</h2>
+      <div class="scroll-row">
+
+        <div class="card-book"
+          style="background-image: linear-gradient(160deg, #1a0e04 0%, #3d1a00 50%, #0d0804 100%), url('assets/reno-arch-night.png');">
+          <div class="veil"></div>
+          <div class="info">
+            <span class="badge badge-novel">Novel</span>
+            <h3>First Singularity<br>January 13th</h3>
+            <p>Birth Post Singularity. Hollywood. Downtown Reno. PG-13 base. The night everything changed.</p>
+          </div>
+        </div>
+
+        <div class="card-book"
+          style="background-image: linear-gradient(160deg, #0a0f1a 0%, #001a2e 50%, #060a0d 100%), url('assets/reno-arch-night.png'); background-blend-mode: multiply;">
+          <div class="veil"></div>
+          <div class="info">
+            <span class="badge badge-novel">Novel</span>
+            <h3>The EGS Run<br>· 2-7-9</h3>
+            <p>Edge. Ground. Singularity. The run through the numbers. The fractal unfolds.</p>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <p class="page-eyebrow">Novel · Novella · Series · Episodes</p>
-    <h1>Our content catalog</h1>
-    <p class="page-sub">Novels, novellas, series, and episodes. Seed, Edge, Executive Producer Prompt, Abstract — all brought over from sing4. Raw feeds (voice, directives, raw script) we bring over too — for narrative building, character building, personality, play rate. No one left behind. Crystallized for SING 9; full surfaces and episodes in upstream <a href="https://github.com/FractiAI/psw.vibelandia.sing4" target="_blank" rel="noopener">FractiAI/psw.vibelandia.sing4</a>.</p>
+    <!-- NOVELLA -->
+    <div class="row-block">
+      <div class="row-label"><span></span>Novella</div>
+      <h2 class="row-heading">Novella</h2>
+      <div class="scroll-row">
 
-    <h2 id="seed-edge">Seed · Edge · Executive Producer · Abstract</h2>
-    <div class="card">
-      <p><strong>Seed</strong> = origin (Ground Zero Anchor, SMACS 0723). <strong>Edge</strong> = experience (me here now). <strong>Executive prompt</strong> fills the middle between Seed and Edge. Same Seed, same Edge → new fractal middle each run.</p>
-      <p>In SING 9: <a href="https://github.com/FractiAI/psw.vibelandia.sing9/blob/main/SING9_EDGE_ONBOARDING.md" target="_blank" rel="noopener">SING9_EDGE_ONBOARDING.md</a> (NSPFRNP catalog, content abstract, Executive Producer abstract, executive prompt for filling in the middles). <a href="https://github.com/FractiAI/psw.vibelandia.sing9/blob/main/protocols/SEED_EDGE_EPISODE_FORMAT_ACTION_LIVE_NSPFRNP.md" target="_blank" rel="noopener">Seed:Edge Episode Format</a>. <a href="https://github.com/FractiAI/psw.vibelandia.sing9/blob/main/repository-seed.md" target="_blank" rel="noopener">repository-seed.md</a>. <a href="https://github.com/FractiAI/psw.vibelandia.sing9/blob/main/CONTENT_CATALOG_SING4_BRINGOVER.md" target="_blank" rel="noopener">Content catalog bringover (no one left behind)</a>. Full Seed/Edge/EP docs and CONTENT_SERIES_* in <a href="https://github.com/FractiAI/psw.vibelandia.sing4" target="_blank" rel="noopener">sing4</a>.</p>
+        <div class="card-book"
+          style="background-image: linear-gradient(160deg, #1a0014 0%, #3d0028 50%, #0d0009 100%), url('assets/vibelandia-reno-magic.png'); background-blend-mode: multiply;">
+          <div class="veil"></div>
+          <div class="info">
+            <span class="badge badge-novella">Novella · 21+</span>
+            <h3>Gold Heart<br>Novela</h3>
+            <p>Same storylines. Deeper cut. The real-adult version. NSPFRNP at full frequency.</p>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <h2 id="novel">Novel</h2>
-    <div class="card">
-      <p>First Singularity January 13th · Birth Post Singularity Hollywood Downtown Reno · The EGS Run · 2-7-9. PG-13 base.</p>
-      <p><a href="https://github.com/FractiAI/psw.vibelandia.sing4/tree/main/interfaces" target="_blank" rel="noopener">Novel surfaces (sing4) →</a></p>
+    <!-- REALITY SERIES -->
+    <div class="row-block">
+      <div class="row-label"><span></span>Reality Series</div>
+      <h2 class="row-heading">Reality Series</h2>
+      <div class="scroll-row">
+
+        <div class="card-wide"
+          style="background-image: linear-gradient(135deg, #0d0a00 0%, #2a1f00 100%), url('assets/vibelandia-reno-magic.png'); background-blend-mode: multiply;">
+          <div class="veil"></div>
+          <div class="info">
+            <span class="badge badge-series">Series</span>
+            <h3>Office Hours</h3>
+            <p>Live sessions. Real deals. Real time. The command center, open to the world.</p>
+          </div>
+        </div>
+
+        <div class="card-wide"
+          style="background-image: linear-gradient(135deg, #000d1a 0%, #001a2e 100%), url('assets/reno-arch-night.png'); background-blend-mode: multiply;">
+          <div class="veil"></div>
+          <div class="info">
+            <span class="badge badge-series">Series</span>
+            <h3>Launch Pad</h3>
+            <p>From seed to orbit. Every new project. Every new agent. Every new world unlocked.</p>
+          </div>
+        </div>
+
+        <div class="card-wide"
+          style="background-image: linear-gradient(135deg, #1a0000 0%, #3d0500 100%);">
+          <div class="veil" style="background: linear-gradient(180deg, rgba(8,6,4,0.2) 0%, rgba(8,6,4,0.85) 100%);"></div>
+          <div class="info">
+            <span class="badge badge-series">Series</span>
+            <h3>EL APAGÓN</h3>
+            <p>The blackout. The power cut. What survives when the grid goes down.</p>
+          </div>
+        </div>
+
+        <div class="card-wide"
+          style="background-image: linear-gradient(135deg, #0a0014 0%, #1a0028 100%);">
+          <div class="veil" style="background: linear-gradient(180deg, rgba(8,6,4,0.2) 0%, rgba(8,6,4,0.85) 100%);"></div>
+          <div class="info">
+            <span class="badge badge-series">Series</span>
+            <h3>MARZO 333</h3>
+            <p>March. The third month. Triple three. The codes hidden in plain sight.</p>
+          </div>
+        </div>
+
+        <div class="card-wide"
+          style="background-image: linear-gradient(135deg, #001a0a 0%, #002e14 100%), url('assets/destinations-bison-lodge.png'); background-blend-mode: multiply;">
+          <div class="veil"></div>
+          <div class="info">
+            <span class="badge badge-series">Series</span>
+            <h3>Seed:Edge Action!</h3>
+            <p>The protocol in motion. From origin to edge. Live. In the field. Every frame counts.</p>
+          </div>
+        </div>
+
+        <div class="card-wide"
+          style="background-image: linear-gradient(135deg, #0f0a00 0%, #221500 100%);">
+          <div class="veil" style="background: linear-gradient(180deg, rgba(8,6,4,0.2) 0%, rgba(8,6,4,0.85) 100%);"></div>
+          <div class="info">
+            <span class="badge badge-series">Series</span>
+            <h3>Harry Houdini</h3>
+            <p>The great escape. Every lock has a key. Every cage has a door. Find it.</p>
+          </div>
+        </div>
+
+        <div class="card-wide"
+          style="background-image: linear-gradient(135deg, #00141a 0%, #002028 100%);">
+          <div class="veil" style="background: linear-gradient(180deg, rgba(8,6,4,0.2) 0%, rgba(8,6,4,0.85) 100%);"></div>
+          <div class="info">
+            <span class="badge badge-series">Series</span>
+            <h3>nipsy!</h3>
+            <p>Natural Systems Protocols School. The curriculum. The living classroom. Open enrollment, always.</p>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <h2 id="novella">Novella</h2>
-    <div class="card">
-      <p>Gold Heart novela · 21+ · same storylines, deeper cut. NSPFRNP.</p>
-      <p><a href="https://github.com/FractiAI/psw.vibelandia.sing4/tree/main/interfaces" target="_blank" rel="noopener">Novella surfaces (sing4) →</a></p>
+    <!-- EPISODES -->
+    <div class="row-block">
+      <div class="row-label"><span></span>Episodes</div>
+      <h2 class="row-heading">Episodes</h2>
+      <div class="scroll-row">
+
+        <div class="card-wide"
+          style="flex: 0 0 340px; width: 340px; background-image: url('assets/content-catalog-super-singularity.png'); background-size: cover; background-position: center;">
+          <div class="veil"></div>
+          <div class="info">
+            <span class="badge badge-episode">Episode 1 · 60 min</span>
+            <h3>The Whole Story</h3>
+            <p>All of it. Eno. Piro. SMACS 0723. The cosmological stack. The beginning of the beginning. The 3D storyboard. Live.</p>
+          </div>
+        </div>
+
+        <div class="card-wide"
+          style="background-image: linear-gradient(135deg, #0a0806 0%, #181008 100%); border: 1px dashed rgba(212,175,55,0.2); opacity: 0.6;">
+          <div class="info" style="top: 50%; transform: translateY(-50%); bottom: auto; text-align: center; padding: 1rem;">
+            <p style="font-size:0.72rem; color:rgba(212,175,55,0.5); letter-spacing:0.12em; text-transform:uppercase;">More Episodes<br>Coming</p>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <h2 id="destinations">Destinations · Magazine catalog</h2>
-    <div class="card">
-      <p>Partners we recommend. We have no formal relationship with them — they're our picks for who we work with to deliver our post-singularity Baller V services to our members. Pru's Valet Service curates local and destination operators: dining, experiences, venues, and partners that fit the Vibelandia frame. Aquí y allá — local and far away. Elk & bison Montana, quail Mexico, fly fishing Truckee, bonefishing Bahamas, and all curated partners. Live links and photos. Respectful of all brands and legacies.</p>
-      <p><a href="destinations-magazine-catalog.html">Destinations Magazine Catalog</a> · <a href="guided-expeditions.html">Guided Expeditions</a> · <a href="destinations.html">Destinations hub</a></p>
-    </div>
-
-    <h2 id="series">Reality series</h2>
-    <div class="card">
-      <p>Office Hours · Launch Pad · Net episodes · EL APAGÓN · MARZO 333 · Seed:Edge Action! · Harry Houdini · nipsy! Natural Systems Protocols School.</p>
-      <p><a href="office-hours.html">Office Hours</a> · <a href="launch-pad.html">Launch Pad</a></p>
-    </div>
-
-    <h2 id="episodes">Episodes</h2>
-    <div class="card">
-      <p>Every command = episode/chapter/storyline. Net series, storylines, ticker. Full episode list and links in sing4 repo.</p>
-      <p><strong>Executive commands are being metabolized and turned into new episodes, new chapters, and new storylines on all our platforms.</strong></p>
-      <p><a href="https://github.com/FractiAI/psw.vibelandia.sing4/tree/main/episodes" target="_blank" rel="noopener">Episodes (sing4) →</a></p>
-    </div>
-
-    <p class="foot">Content catalog · Seed:Edge · Executive Producer · No one left behind · NSPFRNP · SING 9 · Spanglish 80/20 → ∞⁹</p>
   </div>
+
+  <footer class="foot">
+    <span>VIBELANDIA · SING 9 · NSPFRNP → ∞⁹</span>
+    <span>Pop-Up Style · Just gotta know</span>
+    <a href="vibers-menu.html">Pru's Valet</a>
+    <a href="destinations-magazine-catalog.html">Destinations</a>
+    <a href="sol-v.html">Sol-V · A2A</a>
+    <a href="../index.html">← Home</a>
+  </footer>
 
 </body>
 </html>

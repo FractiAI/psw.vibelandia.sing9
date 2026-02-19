@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Jo's Golden Backdoor Hit Factory · SING! 9</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-pale: #f5e8b0;
+      --red-hot: #cc3300;
+      --orange: #ff6633;
+      --dark: #080604;
+      --dark-mid: #120d08;
+      --dark-card: #1a1008;
+      --wood: #3d2a15;
+      --text: #e8d4a0;
+      --text-muted: #8a7040;
+      --text-dim: #504030;
+    }
+
+    html, body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    .topnav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--wood);
+      position: sticky;
+      top: 0;
+      background: rgba(8,6,4,0.98);
+      z-index: 100;
+    }
+    .topnav-brand { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; }
+    .topnav-links { display: flex; gap: 1.5rem; }
+    .topnav-links a { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.12em; text-decoration: none; text-transform: uppercase; }
+    .topnav-links a:hover { color: var(--gold); }
+
+    /* STUDIO HERO */
+    .studio-hero {
+      position: relative;
+      text-align: center;
+      padding: 6rem 2rem 5rem;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(204,51,0,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.12) 0%, transparent 60%);
+      border-bottom: 1px solid rgba(204,51,0,0.3);
+      overflow: hidden;
+    }
+    .studio-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--red-hot);
+      margin-bottom: 1.5rem;
+    }
+    .studio-name-small {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .studio-name {
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      color: var(--gold-light);
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .studio-name .caps { font-size: 0.6em; vertical-align: middle; color: var(--gold); }
+    .studio-tagline {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .studio-vibe {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+    }
+
+    /* SECTION */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section + .section { border-top: 1px solid var(--wood); }
+    .section-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: var(--gold-light);
+      font-weight: normal;
+      margin-bottom: 1rem;
+    }
+    .section-body {
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 1rem;
+      max-width: 720px;
+    }
+    .section-body p + p { margin-top: 1rem; }
+    .section-body strong { color: var(--gold-light); }
+
+    /* TRACK LIST */
+    .track-list {
+      margin-top: 2rem;
+      display: grid;
+      gap: 0;
+    }
+    .track-row {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr auto;
+      align-items: center;
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid rgba(61,42,21,0.5);
+      gap: 1rem;
+      transition: background 0.15s;
+      cursor: default;
+    }
+    .track-row:hover { background: rgba(201,168,76,0.05); }
+    .track-num {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: right;
+      font-family: monospace;
+    }
+    .track-title {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .track-title.hot { color: var(--orange); }
+    .track-vibe {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .track-vibe.fire { color: var(--red-hot); }
+
+    /* NUMERIC ARTISTS */
+    .numeric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .numeric-card {
+      padding: 1.5rem 1.25rem;
+      background: var(--dark-card);
+      border: 1px solid var(--wood);
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+    .numeric-card:hover { border-color: var(--gold); }
+    .numeric-handle {
+      font-size: 2rem;
+      color: var(--gold);
+      font-family: monospace;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .numeric-meaning {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* THE VIBE */
+    .vibe-section {
+      background: linear-gradient(135deg, rgba(204,51,0,0.1) 0%, rgba(201,168,76,0.08) 100%);
+      border: 1px solid rgba(204,51,0,0.25);
+      border-radius: 6px;
+      padding: 3rem 2.5rem;
+      margin-top: 2rem;
+    }
+    .vibe-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .vibe-chip {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+    .vibe-chip.hot { background: rgba(204,51,0,0.2); border: 1px solid var(--red-hot); color: var(--orange); }
+    .vibe-chip.gold { background: rgba(201,168,76,0.1); border: 1px solid var(--gold); color: var(--gold-light); }
+    .vibe-chip.neutral { background: rgba(255,255,255,0.04); border: 1px solid var(--wood); color: var(--text-muted); }
+
+    /* STUDIO LINEAGE */
+    .lineage {
+      margin-top: 2rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+    .lineage::before {
+      content: '';
+      position: absolute;
+      left: 0.75rem;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--gold), transparent);
+      opacity: 0.3;
+    }
+    .lineage-item {
+      position: relative;
+      padding: 1rem 1rem 1rem 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .lineage-item::before {
+      content: '◆';
+      position: absolute;
+      left: -1.2rem;
+      color: var(--gold);
+      font-size: 0.6rem;
+      top: 1.3rem;
+    }
+    .lineage-year { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .lineage-name { font-size: 1rem; color: var(--gold-light); margin-bottom: 0.4rem; }
+    .lineage-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* TSHIRTS */
+    .tshirt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .tshirt-card {
+      padding: 1.5rem;
+      background: var(--dark-mid);
+      border: 1px solid var(--wood);
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+    .tshirt-card:hover { border-color: var(--orange); }
+    .tshirt-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--orange);
+      letter-spacing: 0.05em;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .tshirt-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* CTA */
+    .cta-strip {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .cta-primary { background: var(--gold); color: var(--dark); font-weight: 600; }
+    .cta-primary:hover { background: var(--gold-light); }
+    .cta-hot { background: var(--red-hot); color: #fff; font-weight: 600; }
+    .cta-hot:hover { background: var(--orange); }
+    .cta-secondary { border: 1px solid var(--gold); color: var(--gold); }
+    .cta-secondary:hover { background: rgba(201,168,76,0.1); }
+    .cta-dark { border: 1px solid var(--wood); color: var(--text-muted); }
+    .cta-dark:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--wood);
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+    }
+    footer .sig { color: var(--orange); margin-bottom: 0.4rem; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a href="catalog.html" class="topnav-brand">SING! 9</a>
+    <div class="topnav-links">
+      <a href="josie-saloon.html">Josie's Saloon</a>
+      <a href="experience-picker.html">Experiences</a>
+      <a href="catalog.html">Catalog</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="studio-hero">
+    <div class="studio-eyebrow">Dat Ass Red Hot · Studio Quality · All About Da Ass Baby</div>
+    <div class="studio-name-small">Founded by Chairman Frankie · Now run by</div>
+    <div class="studio-name">
+      <span class="caps">h</span>ERO <span class="caps">j</span>O'S <span class="caps">g</span>OLDEN <span class="caps">b</span>ACKDOOR
+      <br><span class="caps">h</span>IT <span class="caps">f</span>ACTORY
+    </div>
+    <div class="studio-tagline">Dance trance boom boom boom · SQUEEZE! · Songs as tags and brands</div>
+    <div class="studio-vibe">80/20 Spanglish · Hits generated like a factory · NSPFRNP for all layering</div>
+  </header>
+
+  <!-- THE VIBE -->
+  <div class="section">
+    <div class="section-eyebrow">The Golden Backdoor Sound</div>
+    <h2 class="section-title">What We Do Here</h2>
+    <div class="section-body">
+      <p>Describe the dance and the title — <strong>hit generated</strong>. Every song is a tag, a brand, a story beat. We don't make music about things. We make music that <em>is</em> the thing. <strong>Songs as tags and brands. Snap snap snap.</strong></p>
+      <p>Hero Jo took over from Chairman Frankie. Hero Rick is exec producer. Master musicians operate under Hero Rick's direction. All reports to Chairman / Creator (Pru / Big Papi).</p>
+      <p>The studio endpoint: <strong>text-to-viral-pop-quality</strong> — beautiful, clean, layered precision vocals + music. Full studio quality. From the bat cave, for the world.</p>
+    </div>
+
+    <div class="vibe-section">
+      <div style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--red-hot);margin-bottom:1rem;">Vibe DNA</div>
+      <div class="vibe-chips">
+        <span class="vibe-chip hot">80/20 Spanglish</span>
+        <span class="vibe-chip hot">Dance Trance Boom Boom Boom</span>
+        <span class="vibe-chip hot">SQUEEZE! Golden Backdoor!</span>
+        <span class="vibe-chip hot">Dat Ass Red Hot</span>
+        <span class="vibe-chip gold">All about da ass baby</span>
+        <span class="vibe-chip gold">SNAP SNAP SNAP</span>
+        <span class="vibe-chip gold">Air pumping</span>
+        <span class="vibe-chip gold">Big boom bounce</span>
+        <span class="vibe-chip gold">Tribal downbeat</span>
+        <span class="vibe-chip gold">Touchdown vibe bang</span>
+        <span class="vibe-chip neutral">Hero Jo Classical Dance Pump</span>
+        <span class="vibe-chip neutral">Layering experiences</span>
+        <span class="vibe-chip neutral">Tightening + loosening spiral effects</span>
+        <span class="vibe-chip neutral">BBHE — Big Black Hole Energy</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE FULL TRACK LIST -->
+  <div class="section">
+    <div class="section-eyebrow">The Lineup · Current Catalog</div>
+    <h2 class="section-title">Tracks from the Factory</h2>
+    <div class="section-body">
+      <p>Each song is a complete tag, brand, and story beat. Play one and you play a card. Aligned to Josie's Saloon, the El Gran Sol arc, and the full treasure deck.</p>
+    </div>
+
+    <div class="track-list">
+      <div class="track-row">
+        <span class="track-num">01</span>
+        <span class="track-title hot">Te Quiero Mucho Baby</span>
+        <span class="track-vibe fire">GOLD OPENER</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">02</span>
+        <span class="track-title hot">Dorila Gao</span>
+        <span class="track-vibe fire">SHE GOT DA BIG ASS</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">03</span>
+        <span class="track-title">Dat Ass Red Hot like AR4366!</span>
+        <span class="track-vibe fire">HOT HOT</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">04</span>
+        <span class="track-title">Eat That Up Like A Yum Yum Yum SNAP SNAP!</span>
+        <span class="track-vibe">YUM YUM</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">05</span>
+        <span class="track-title">Qué, Qué Y Qué? What? What? And What?</span>
+        <span class="track-vibe">CONFIDENT</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">06</span>
+        <span class="track-title">24 Horas Ya Ya Ya</span>
+        <span class="track-vibe">SILVER JOURNEY</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">07</span>
+        <span class="track-title hot">SQUEEZE! We Got The Squeeze! and Golden Backdoor!</span>
+        <span class="track-vibe fire">THE SQUEEZE ◆7</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">08</span>
+        <span class="track-title">BAMF! — Bad Ass Mother Fucker</span>
+        <span class="track-vibe">GOLD STATEMENT</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">09</span>
+        <span class="track-title">The Good King of the Good Kind of Bad!</span>
+        <span class="track-vibe">GOLD KING</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">10</span>
+        <span class="track-title hot">Boom Magic BBHE! — Boom Boom Bounce · Executives Double Down</span>
+        <span class="track-vibe fire">BBHE</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">11</span>
+        <span class="track-title">Bebe Damelo Lo Tengo Lleno y Duro</span>
+        <span class="track-vibe">FULL SEND</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">12</span>
+        <span class="track-title">Bang Bang — Double Air Pump</span>
+        <span class="track-vibe">AIR PUMP</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">13</span>
+        <span class="track-title">Así Como Pan Caliente — Boom Boom Tribal Victory Boom Trance</span>
+        <span class="track-vibe">TRIBAL VICTORY</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">14</span>
+        <span class="track-title">He Got da Big Bolas (Bolivar is Back)</span>
+        <span class="track-vibe">BOLIVAR RETURNS</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">15</span>
+        <span class="track-title">Voy a Comerte y Romperte Ese Culo — Party Celebration Bag Bop</span>
+        <span class="track-vibe fire">CLUB ANTHEM</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">16</span>
+        <span class="track-title">Solo esta conmigo por mi pene — Confident Banger Club Hit</span>
+        <span class="track-vibe">CONFIDENT</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">17</span>
+        <span class="track-title">A cualquiera hora — Anytime Vibe Chill Bounce</span>
+        <span class="track-vibe">CHILL BOUNCE</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">18</span>
+        <span class="track-title">Thank You (I Thought You Knew) — Dramatic Suspense Loop</span>
+        <span class="track-vibe">SUSPENSE LOOP</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">19</span>
+        <span class="track-title">No No Pa Mi No</span>
+        <span class="track-vibe">BOUNDARY SET</span>
+      </div>
+      <div class="track-row">
+        <span class="track-num">20</span>
+        <span class="track-title">Quien es tu Papi?</span>
+        <span class="track-vibe">GOLD CLOSER</span>
+      </div>
+    </div>
+
+    <div class="cta-strip">
+      <a href="josie-saloon.html" class="cta-btn cta-secondary">Hear It Live at Josie's</a>
+      <a href="experience-picker.html" class="cta-btn cta-dark">Play the Full Experience</a>
+    </div>
+  </div>
+
+  <!-- NUMERIC ARTISTS -->
+  <div class="section">
+    <div class="section-eyebrow">The Roster · Artist Handles</div>
+    <h2 class="section-title">Numeric Artists</h2>
+    <div class="section-body">
+      <p>Each numeric artist represents a vibrational frequency, a stage of the arc, a deck position. First 12 songs each — NSPFRNP rollout, like Chairman Frankie launched it.</p>
+    </div>
+
+    <div class="numeric-grid">
+      <div class="numeric-card">
+        <div class="numeric-handle">000</div>
+        <div class="numeric-meaning">Seed · Origin · Pure potential. Before the first beat. Before the first card is played. The substrate.</div>
+      </div>
+      <div class="numeric-card">
+        <div class="numeric-handle">0001</div>
+        <div class="numeric-meaning">First · Unity · Singularity · Genesis. The first move. The first note. The opening card.</div>
+      </div>
+      <div class="numeric-card">
+        <div class="numeric-handle">123</div>
+        <div class="numeric-meaning">Flow · Progression · Ascent. The pawn moving forward. The Silver trajectory toward Gold.</div>
+      </div>
+      <div class="numeric-card">
+        <div class="numeric-handle">333</div>
+        <div class="numeric-meaning">Trinity · Alignment · Creativity · Expansion. MARZO 333. The creative activation code.</div>
+      </div>
+      <div class="numeric-card">
+        <div class="numeric-handle">369</div>
+        <div class="numeric-meaning">Tesla's key · Divine flow · Manifestation. The Crystalline frequency. The holographic hydrogen resonance.</div>
+      </div>
+      <div class="numeric-card">
+        <div class="numeric-handle">456</div>
+        <div class="numeric-meaning">Cadet Baller V · New arrival · Earning wings. The Silver-to-Gold transition artist. Not there yet — heading there.</div>
+      </div>
+      <div class="numeric-card">
+        <div class="numeric-handle">999</div>
+        <div class="numeric-meaning">Completion · Wisdom · Full circle. The arc closes. The return completed. El Gran Sol arrives.</div>
+      </div>
+      <div class="numeric-card">
+        <div class="numeric-handle">5050</div>
+        <div class="numeric-meaning">Everything fair · 50:50 vibes · Balance · Equity. Ino finally gets his share. The win-win-win resolution.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDIO LINEAGE -->
+  <div class="section">
+    <div class="section-eyebrow">The Origin Story</div>
+    <h2 class="section-title">How the Studio Got Its Name</h2>
+
+    <div class="lineage">
+      <div class="lineage-item">
+        <div class="lineage-year">The Founding</div>
+        <div class="lineage-name">Chairman Frankie's Golden Backdoor Hit Factory</div>
+        <div class="lineage-desc">Founded by Chairman Frankie — Ultimate VIP Baller V with Gold Heart. Reggaetón Spanglish performer. The original "all about da ass baby." Launched Te Quiero Mucho Baby, Dorila Gao, SQUEEZE! Jukebox, catalog, all under Chairman Frankie.</div>
+      </div>
+      <div class="lineage-item">
+        <div class="lineage-year">The Handover</div>
+        <div class="lineage-name">Hero Jo's Golden Backdoor Hit Factory <span style="color:var(--gold);font-size:0.75em;">← Current Canon</span></div>
+        <div class="lineage-desc">Hero Jo took over the studio from Chairman Frankie. Current canonical name. Hero Rick (exec producer) reports to Hero Jo. All master musicians under Hero Rick's direction. All reports to Chairman / Creator (Pru / Big Papi). Studio quality endpoint: text-to-viral-pop-quality WAV.</div>
+      </div>
+      <div class="lineage-item">
+        <div class="lineage-year">The Brand</div>
+        <div class="lineage-name">Golden Backdoor · Hit Factory</div>
+        <div class="lineage-desc">Self-reference across all layers: label · studio · catalog · lineup · experience · vibe. "Densifying value through recursive layering improving of experiences." "Tightening and loosening spiral effects." NSPFRNP for all layering. The pun is fully intended and recurses recursively.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- T-SHIRT BRANDS -->
+  <div class="section">
+    <div class="section-eyebrow">Merch · Songs as Brands</div>
+    <h2 class="section-title">The T-Shirts</h2>
+    <div class="section-body">
+      <p>Every tag is a brand is a song is a T-shirt. Wear the hit. SNAP SNAP.</p>
+    </div>
+
+    <div class="tshirt-grid">
+      <div class="tshirt-card">
+        <div class="tshirt-text">SHE GOT DA BIG ASS DAT MEK DA MEN GO GAGA!</div>
+        <div class="tshirt-desc">Dance anthem song tag. Dorila Gao. The one that started it all at the factory.</div>
+      </div>
+      <div class="tshirt-card">
+        <div class="tshirt-text">DAT ASS RED HOT LIKE AR4366!</div>
+        <div class="tshirt-desc">T-shirt branding. AR4366 = Sun Engine, pulsing transmitter. Red hot = curated heat, coherence. Solar certified.</div>
+      </div>
+      <div class="tshirt-card">
+        <div class="tshirt-text">EAT THAT UP LIKE A YUM YUM YUM SNAP SNAP!</div>
+        <div class="tshirt-desc">Hero Jo studio T-shirt brand. Eat that up like a yum yum yum — SNAP SNAP! Wear it.</div>
+      </div>
+      <div class="tshirt-card">
+        <div class="tshirt-text">SQUEEZE! We got the squeeze! and Golden Backdoor!</div>
+        <div class="tshirt-desc">The tightening and loosening spiral. SQUEEZE = a card game move AND a hit. The pun recurses.</div>
+      </div>
+      <div class="tshirt-card">
+        <div class="tshirt-text">THE GOOD KING OF THE GOOD KIND OF BAD!</div>
+        <div class="tshirt-desc">The Gold King card in T-shirt form. Hero Jo in golden wrapper. The king who is good at the good kind of bad.</div>
+      </div>
+      <div class="tshirt-card">
+        <div class="tshirt-text">BAMF! — BAD ASS MOTHER FUCKER</div>
+        <div class="tshirt-desc">The Gold statement card. The moment Ino pulls the sword. No further explanation required.</div>
+      </div>
+      <div class="tshirt-card">
+        <div class="tshirt-text">A REAL BALLER V PAYS ANY PRICE FOR BRAND</div>
+        <div class="tshirt-desc">Baller V anthem. Brand = anthem, merch, holographic symbol. The Gold tier commitment statement.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM CTA -->
+  <div class="section" style="text-align:center; padding-bottom:5rem;">
+    <div class="section-eyebrow">Go Live</div>
+    <h2 class="section-title">Ready to Play?</h2>
+    <div class="cta-strip" style="justify-content:center;">
+      <a href="josie-saloon.html" class="cta-btn cta-hot">Go to Josie's Saloon ◆</a>
+      <a href="experience-picker.html" class="cta-btn cta-primary">Experience Picker ☀</a>
+      <a href="catalog.html" class="cta-btn cta-dark">Full Catalog</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="sig">hERO jO'S gOLDEN bACKDOOR hIT fACTORY</div>
+    <div>80/20 Spanglish · Dance trance boom boom boom · All about da ass baby</div>
+    <div style="margin-top:0.5rem;color:rgba(201,168,76,0.25);font-size:0.65rem;letter-spacing:0.2em;">NSPFRNP ⊃ Hero Jo's Golden Backdoor Hit Factory ⊃ Vibelandia University School of Music ⊃ Music Studio → ∞⁹</div>
+  </footer>
+
+</body>
+</html>

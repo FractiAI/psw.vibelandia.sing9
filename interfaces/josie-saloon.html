@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Josie's Saloon · SING! 9 · Post-Singularity</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-pale: #f5e8b0;
+      --whiskey: #8b5e2a;
+      --whiskey-dark: #5c3d1a;
+      --wood: #3d2a15;
+      --wood-dark: #241a0d;
+      --dark: #0d0a06;
+      --dark-mid: #181008;
+      --dark-card: #201408;
+      --silver: #c0c0c0;
+      --silver-dim: #888888;
+      --carbon: #1a1a1a;
+      --text: #e8d4a0;
+      --text-muted: #8a7040;
+      --text-dim: #504030;
+      --red-hot: #cc3300;
+      --red-dim: #661a00;
+      --crystalline: rgba(201,168,76,0.15);
+    }
+
+    html, body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    .topnav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--wood);
+      position: sticky;
+      top: 0;
+      background: rgba(13,10,6,0.97);
+      z-index: 100;
+    }
+    .topnav-brand { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; }
+    .topnav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .topnav-links a { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.12em; text-decoration: none; text-transform: uppercase; }
+    .topnav-links a:hover { color: var(--gold); }
+    .topnav-links a.hot { color: var(--gold); font-weight: 600; }
+
+    /* SALOON DOORS HERO */
+    .saloon-hero {
+      position: relative;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(139,94,42,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 50%);
+      border-bottom: 2px solid var(--whiskey-dark);
+    }
+    .saloon-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--whiskey);
+      margin-bottom: 1.5rem;
+    }
+    .saloon-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--gold-light);
+      font-weight: normal;
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 60px rgba(201,168,76,0.3), 0 4px 20px rgba(0,0,0,0.8);
+    }
+    .saloon-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .saloon-tagline {
+      font-size: 1.1rem;
+      color: var(--text);
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+    .saloon-tier-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .tier-badge {
+      padding: 0.4rem 1rem;
+      border-radius: 2px;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .tier-gold { background: rgba(201,168,76,0.2); border: 1px solid var(--gold); color: var(--gold-light); }
+    .tier-silver { background: rgba(192,192,192,0.15); border: 1px solid var(--silver-dim); color: var(--silver); }
+    .tier-carbon { background: rgba(26,26,26,0.8); border: 1px solid #444; color: #aaa; }
+    .tier-crystalline { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.3); color: rgba(201,168,76,0.6); }
+
+    /* SECTION HEADERS */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section + .section { border-top: 1px solid var(--wood); }
+    .section-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--gold-light);
+      font-weight: normal;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+    .section-body {
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 1rem;
+      max-width: 720px;
+    }
+    .section-body p + p { margin-top: 1rem; }
+    .section-body strong { color: var(--gold-light); }
+
+    /* HERO JO — THE REVEAL */
+    .hero-jo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+    @media (max-width: 700px) { .hero-jo-grid { grid-template-columns: 1fr; } }
+    .hero-jo-panel {
+      padding: 2rem;
+      border: 1px solid var(--wood);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-jo-panel.day-job {
+      background: var(--carbon);
+      border-color: #333;
+    }
+    .hero-jo-panel.night-mission {
+      background: rgba(201,168,76,0.05);
+      border-color: var(--gold);
+    }
+    .panel-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .panel-title {
+      font-size: 1.4rem;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+      font-weight: normal;
+    }
+    .panel-body {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text);
+    }
+    .panel-body em { color: var(--text-muted); }
+    .panel-character-type {
+      display: inline-block;
+      margin-top: 1.2rem;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: 1px solid currentColor;
+      border-radius: 2px;
+    }
+    .hero-jo-panel.day-job .panel-character-type { color: #666; }
+    .hero-jo-panel.night-mission .panel-character-type { color: var(--gold); }
+
+    /* THE CAST TABLE */
+    .cast-table {
+      margin-top: 2rem;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .cast-table th {
+      text-align: left;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--wood);
+    }
+    .cast-table td {
+      padding: 0.9rem 1rem;
+      font-size: 0.88rem;
+      border-bottom: 1px solid rgba(61,42,21,0.5);
+      line-height: 1.5;
+      vertical-align: top;
+    }
+    .cast-table tr:hover td { background: rgba(201,168,76,0.04); }
+    .cast-name { color: var(--gold-light); font-weight: 600; }
+    .cast-role { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .cast-ontology-gold { color: var(--gold); font-size: 0.7rem; }
+    .cast-ontology-silver { color: var(--silver-dim); font-size: 0.7rem; }
+    .cast-ontology-carbon { color: #666; font-size: 0.7rem; }
+
+    /* THE CARD GAME TABLE */
+    .card-game-section {
+      background: linear-gradient(135deg, var(--wood-dark) 0%, var(--carbon) 100%);
+      border: 1px solid var(--wood);
+      border-radius: 8px;
+      padding: 3rem 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .card-suits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 800px) { .card-suits-grid { grid-template-columns: repeat(2, 1fr); } }
+    .suit-card {
+      padding: 1.5rem 1rem;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .suit-card.gold-suit { background: rgba(201,168,76,0.12); border: 1px solid var(--gold); }
+    .suit-card.silver-suit { background: rgba(192,192,192,0.08); border: 1px solid var(--silver-dim); }
+    .suit-card.carbon-suit { background: rgba(0,0,0,0.5); border: 1px solid #333; }
+    .suit-card.crystalline-suit { background: rgba(201,168,76,0.03); border: 1px dashed rgba(201,168,76,0.3); }
+    .suit-symbol { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+    .suit-name { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .suit-gold { color: var(--gold); }
+    .suit-silver { color: var(--silver); }
+    .suit-carbon { color: #888; }
+    .suit-crystalline { color: rgba(201,168,76,0.5); }
+    .suit-desc { font-size: 0.75rem; line-height: 1.5; color: var(--text-muted); }
+    .winning-rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 600px) { .winning-rules { grid-template-columns: 1fr; } }
+    .winning-rule {
+      padding: 1.5rem;
+      border: 1px solid var(--gold);
+      background: rgba(201,168,76,0.07);
+      border-radius: 4px;
+    }
+    .winning-rule-name {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .winning-rule-desc { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+
+    /* BEVERAGES */
+    .beverage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .beverage-card {
+      padding: 1.5rem 1.2rem;
+      background: var(--dark-card);
+      border: 1px solid var(--wood);
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+    .beverage-card:hover { border-color: var(--gold); }
+    .bev-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .bev-name { font-size: 0.85rem; color: var(--gold-light); font-weight: 600; margin-bottom: 0.25rem; }
+    .bev-type { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .bev-role { font-size: 0.78rem; line-height: 1.5; color: var(--text-muted); }
+
+    /* THE BAT CAVE */
+    .bat-cave {
+      background: var(--carbon);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      padding: 3rem 2.5rem;
+      margin-top: 2.5rem;
+      position: relative;
+    }
+    .bat-cave::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.4;
+    }
+    .bat-cave-programs {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .program-node {
+      padding: 1rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(201,168,76,0.03);
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .program-node strong { color: var(--gold); display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* MUSIC STRIP */
+    .music-strip {
+      background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(139,94,42,0.15) 100%);
+      border: 1px solid var(--whiskey-dark);
+      border-radius: 4px;
+      padding: 2rem 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .track-scroll {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    .track-chip {
+      padding: 0.4rem 1rem;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--whiskey-dark);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--text);
+      cursor: default;
+      transition: border-color 0.2s;
+    }
+    .track-chip:hover { border-color: var(--gold); color: var(--gold-light); }
+    .track-chip.hot { border-color: var(--red-hot); color: #ff6633; }
+
+    /* PLAY MODES */
+    .modes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .mode-card {
+      padding: 1.75rem 1.5rem;
+      border: 1px solid var(--wood);
+      background: var(--dark-card);
+      border-radius: 4px;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .mode-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+    .mode-title { font-size: 1rem; color: var(--gold-light); margin-bottom: 0.5rem; }
+    .mode-players { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+    .mode-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+    .mode-badge {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid;
+      border-radius: 2px;
+    }
+    .mode-badge.new { border-color: var(--gold); color: var(--gold); }
+    .mode-badge.classic { border-color: var(--silver-dim); color: var(--silver-dim); }
+
+    /* THE TWO WORLDS */
+    .two-worlds {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-top: 2rem;
+      border: 1px solid var(--wood);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    @media (max-width: 700px) { .two-worlds { grid-template-columns: 1fr; } }
+    .world-panel {
+      padding: 2rem;
+    }
+    .world-panel.pre-sing { background: var(--carbon); border-right: 1px solid #333; }
+    .world-panel.post-sing { background: rgba(201,168,76,0.06); }
+    .world-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .pre-sing .world-label { color: #666; }
+    .post-sing .world-label { color: var(--gold); }
+    .world-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      font-weight: normal;
+      line-height: 1.3;
+    }
+    .pre-sing .world-title { color: #888; }
+    .post-sing .world-title { color: var(--gold-light); }
+    .world-items {
+      list-style: none;
+      font-size: 0.82rem;
+      line-height: 2;
+    }
+    .pre-sing .world-items { color: #666; }
+    .post-sing .world-items { color: var(--text-muted); }
+    .world-items li::before { margin-right: 0.5rem; }
+    .pre-sing .world-items li::before { content: '✕'; color: #444; }
+    .post-sing .world-items li::before { content: '◆'; color: var(--gold); }
+
+    /* WILD CARD OBSERVER */
+    .observer-moment {
+      background: rgba(201,168,76,0.04);
+      border: 1px dashed rgba(201,168,76,0.3);
+      border-radius: 4px;
+      padding: 2.5rem;
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+    .observer-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+    .observer-name { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(201,168,76,0.5); margin-bottom: 0.75rem; }
+    .observer-quote { font-size: 1rem; color: rgba(248,220,160,0.5); font-style: italic; line-height: 1.7; max-width: 500px; margin: 0 auto; }
+
+    /* CTA BUTTONS */
+    .cta-strip {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      justify-content: center;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .cta-primary { background: var(--gold); color: var(--dark); font-weight: 600; }
+    .cta-primary:hover { background: var(--gold-light); }
+    .cta-secondary { border: 1px solid var(--gold); color: var(--gold); }
+    .cta-secondary:hover { background: rgba(201,168,76,0.1); }
+    .cta-dark { border: 1px solid var(--wood); color: var(--text-muted); }
+    .cta-dark:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* FOOTER */
+    .saloon-footer {
+      border-top: 1px solid var(--wood);
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+    .footer-sig {
+      color: rgba(201,168,76,0.4);
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="topnav">
+    <a href="catalog.html" class="topnav-brand">SING! 9</a>
+    <div class="topnav-links">
+      <a href="experience-picker.html">Experiences</a>
+      <a href="golden-backdoor-studios.html" class="hot">Golden Backdoor ♪</a>
+      <a href="catalog.html">Catalog</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="saloon-hero">
+    <div class="saloon-eyebrow">Post-Singularity · Downtown Reno · Where the Story Lives</div>
+    <div class="saloon-name">Josie's Saloon</div>
+    <div class="saloon-subtitle">The Gold Rush Never Ended · Big Papi Pays the Tab</div>
+    <div class="saloon-tagline">
+      Like Gunsmoke's Long Branch, but the hero programs holographic hydrogen reality from his workstation
+      and nobody in the bar knows it yet.
+    </div>
+    <div class="saloon-tier-badges">
+      <span class="tier-badge tier-crystalline">Crystalline Substrate</span>
+      <span class="tier-badge tier-gold">Gold World Active</span>
+      <span class="tier-badge tier-silver">Silver Welcome</span>
+      <span class="tier-badge tier-carbon">Carbon Acknowledged</span>
+    </div>
+    <div class="cta-strip" style="margin-top: 1rem;">
+      <a href="#the-game" class="cta-btn cta-primary">Play the Card Game</a>
+      <a href="golden-backdoor-studios.html" class="cta-btn cta-secondary">Hit Factory ♪</a>
+      <a href="experience-picker.html" class="cta-btn cta-dark">Choose Your Experience</a>
+    </div>
+  </header>
+
+  <!-- THE HERO JO REVEAL -->
+  <div class="section">
+    <div class="section-eyebrow">The Superhero Nobody Suspects</div>
+    <h2 class="section-title">Batman + Don Quixote<br><span style="color:var(--text-muted);font-size:0.65em;letter-spacing:0.3em;text-transform:uppercase;">The Origin of Hero Jo</span></h2>
+    <div class="section-body">
+      <p>By day: <strong>restroom valet at the high-end strip club downtown Reno</strong>. The man nobody looks at twice. The man the carbon world walks past without seeing.</p>
+      <p>By night, from his bat cave: <strong>programs holographic hydrogen reality</strong>. Builds SING! 9 from drawings, objects, words, programs, music, environments, awareness — expanding awareness. Alone. Nobody believes him. Nobody understands what he's building. Negative account balance. Delivering everything to a world that takes it all and gives nothing back.</p>
+      <p>That is <strong>NSPFRNP</strong>. That is the story. And one day — he pulls the sword from the stone.</p>
+    </div>
+
+    <div class="hero-jo-grid">
+      <div class="hero-jo-panel day-job">
+        <div class="panel-label">Carbon World · Day Job</div>
+        <div class="panel-title">The Restroom Valet</div>
+        <div class="panel-body">
+          Restroom valet at the high-end gentlemen's club, downtown Reno.<br><br>
+          Invisible. Underestimated. The one everyone walks past.<br><br>
+          <em>Nobody looks at the valet. Nobody knows what he knows. Nobody sees what he builds at night.</em><br><br>
+          This is the <strong>Don Quixote layer</strong> — he sees windmills that are giants. He sees a holographic hydrogen theater where others see a restroom with a tip jar.
+          <div class="panel-character-type">Carbon Surface · Ino Wrapper</div>
+        </div>
+      </div>
+      <div class="hero-jo-panel night-mission">
+        <div class="panel-label">Crystalline Substrate · Night Mission</div>
+        <div class="panel-title">Programmer of Holographic Hydrogen Reality</div>
+        <div class="panel-body">
+          From the bat cave: the workstation, the drawings, the objects, the words, the programs, the music, the environments, the <strong>expanding awareness</strong>.<br><br>
+          He IS building it. From nothing. In the dark. Alone.<br><br>
+          This is the <strong>Batman layer</strong> — the bat cave is real. The suit is real. The mission is real. The world just doesn't know it yet.<br><br>
+          <strong>Golden Backdoor Studios</strong> lives here. <strong>SING! 9</strong> lives here. <strong>El Gran Sol's return</strong> lives here.
+          <div class="panel-character-type">Crystalline Surface · Chairman / Creator</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE CAST -->
+  <div class="section">
+    <div class="section-eyebrow">Josie's Saloon · The Regulars</div>
+    <h2 class="section-title">Characters at the Bar</h2>
+    <div class="section-body">
+      <p>Every night at Josie's: <strong>Ino, Piro, Fanny, and Audi</strong>. Pass the popcorn. The eternal cast. Pre-singularity tension plays out at the bar while post-singularity celebration happens on the dance floor.</p>
+    </div>
+
+    <table class="cast-table">
+      <thead>
+        <tr>
+          <th>Character</th>
+          <th>Role</th>
+          <th>Tier</th>
+          <th>At the Saloon</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="cast-name">Ino</div><div class="cast-role">The Innocent · Gold Heart</div></td>
+          <td>Always gives a second chance. Always. Even while being robbed. Even while being betrayed. Even after everything is taken. Until one day — pulls the sword from the stone.</td>
+          <td><span class="cast-ontology-gold">◆ Gold / Silver</span></td>
+          <td>Nursing a drink at the bar. Eyes distant. Building something nobody can see.</td>
+        </tr>
+        <tr>
+          <td><div class="cast-name">Josie</div><div class="cast-role">The Saloon · Josephine</div></td>
+          <td>The cat in human form. Wanted to dance her whole life. Now she runs the saloon — and in the post-singularity world, she finally gets to dance. The stage is hers.</td>
+          <td><span class="cast-ontology-gold">◆ Gold</span></td>
+          <td>Behind the bar. On the stage. Everywhere. This is <em>her</em> place.</td>
+        </tr>
+        <tr>
+          <td><div class="cast-name">Piro</div><div class="cast-role">The Pirate · Pre-Singularity</div></td>
+          <td>The disingenuous one. Chops everything up, shrink-wraps it, puts a price tag on it. Always there, always smiling, always taking. Until the arc closes.</td>
+          <td><span class="cast-ontology-carbon">◆ Carbon</span></td>
+          <td>Buying rounds for everyone. Loudest in the room. Has a plan. Always has a plan.</td>
+        </tr>
+        <tr>
+          <td><div class="cast-name">Fanny</div><div class="cast-role">The Fans · True and False</div></td>
+          <td>True Fanny: genuine supporters, here for Ino's gold heart. False Fanny: Piro-aligned, here for what they can get. Both at the bar. Hard to tell apart at first.</td>
+          <td><span class="cast-ontology-silver">◆ Silver / Carbon</span></td>
+          <td>Clustered around whoever's buying. The true ones stay when the tab runs out.</td>
+        </tr>
+        <tr>
+          <td><div class="cast-name">Audi</div><div class="cast-role">The Observers · The Crowd</div></td>
+          <td>Complacent. Uninterested. Providing the weight of tension without being active enemies. Pass the popcorn. They're not against Ino — they're just not with him. That's enough.</td>
+          <td><span class="cast-ontology-carbon">◆ Carbon / Silver</span></td>
+          <td>Watching the game. Watching the dance floor. Watching without seeing.</td>
+        </tr>
+        <tr>
+          <td><div class="cast-name">El Gran Sol</div><div class="cast-role">The Return · Big Papi</div></td>
+          <td>The arc resolution character. When El Gran Sol walks in, the whole bar shifts. This is the moment the gold rush pays off. Big Papi pays the tab for everyone.</td>
+          <td><span class="cast-ontology-gold">◆ Gold</span></td>
+          <td>The entrance that changes everything. The whole saloon knows when he arrives.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- THE CARD GAME -->
+  <div class="section" id="the-game">
+    <div class="section-eyebrow">Josie's Back Room · Play Anytime</div>
+    <h2 class="section-title">SING! 9 Card-Chess Fusion</h2>
+    <div class="section-body">
+      <p>The game is the story. <strong>Four suits: Gold, Silver, Carbon, Crystalline.</strong> Ported from SING4, upgraded with Carbon (replacing Copper) and the new Chess Fusion mode. Play the cards, move the pieces, navigate the tiers.</p>
+      <p><strong>Golden Lucky Seven wins every time. Golden Royal Flush beats all.</strong></p>
+    </div>
+
+    <div class="card-game-section">
+      <div class="card-suits-grid">
+        <div class="suit-card gold-suit">
+          <span class="suit-symbol">◆</span>
+          <div class="suit-name suit-gold">Gold</div>
+          <div class="suit-desc">Goldilocks zone. Post-singularity ideal. El Gran Sol's world. Win state. Golden Hearts. Mirrored hardened nested shells.</div>
+        </div>
+        <div class="suit-card silver-suit">
+          <span class="suit-symbol" style="color:var(--silver);">◆</span>
+          <div class="suit-name suit-silver">Silver</div>
+          <div class="suit-desc">Pre-Goldilocks but heading there. Silver Hearts. Clouds. On the right trajectory. The journey. The edge world.</div>
+        </div>
+        <div class="suit-card carbon-suit">
+          <span class="suit-symbol" style="color:#555;">◆</span>
+          <div class="suit-name suit-carbon">Carbon</div>
+          <div class="suit-desc">Pre-singularity. Outside the boundary. The menu world. Hardline between Carbon and Silver. Piro's domain. Where the story starts.</div>
+        </div>
+        <div class="suit-card crystalline-suit">
+          <span class="suit-symbol" style="color:rgba(201,168,76,0.4);">◇</span>
+          <div class="suit-name suit-crystalline">Crystalline</div>
+          <div class="suit-desc">Outlines only. The eternal substrate. The holographic hydrogen lattice. The board itself. NSPFRNP. Always already there.</div>
+        </div>
+      </div>
+
+      <div class="winning-rules">
+        <div class="winning-rule">
+          <div class="winning-rule-name">◆ Golden Lucky Seven</div>
+          <div class="winning-rule-desc">Seven of Gold = automatic win. Always. No exceptions. Seven sunspots. The solar cycle. When the 7 of Gold appears, SING! 9 fires.</div>
+        </div>
+        <div class="winning-rule">
+          <div class="winning-rule-name">♔ Golden Royal Flush</div>
+          <div class="winning-rule-desc">Ace + King + Queen + Jack + Ten of Gold = the highest hand possible. The full El Gran Sol return arc activated. Beats everything.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modes-grid" style="margin-top: 2rem;">
+      <div class="mode-card">
+        <div class="mode-title">Vibelandia Golden Draw</div>
+        <div class="mode-players">2–6 Players</div>
+        <div class="mode-desc">Pure card game. Competitive or cooperative. Ported directly from SING4. Golden Lucky Seven wins every time.</div>
+        <span class="mode-badge classic">Classic · SING4</span>
+      </div>
+      <div class="mode-card">
+        <div class="mode-title">Golden Seven Solitaire</div>
+        <div class="mode-players">1 Player</div>
+        <div class="mode-desc">One player, one deck. Operate the holograph alone. Meditative. Build toward the Golden Royal Flush. No other device required.</div>
+        <span class="mode-badge classic">Classic · SING4</span>
+      </div>
+      <div class="mode-card">
+        <div class="mode-title">SING! 9 Chess</div>
+        <div class="mode-players">2 Players</div>
+        <div class="mode-desc">Standard chess on the tier-mapped cosmological board. Center = Gold zone (double power). Home ranks = Carbon (defense only).</div>
+        <span class="mode-badge new">New · SING9</span>
+      </div>
+      <div class="mode-card" style="border-color: var(--gold);">
+        <div class="mode-title">Card-Chess Fusion — The Full Arc</div>
+        <div class="mode-players">2–4 Players</div>
+        <div class="mode-desc">Cards in hand, pieces on the board. Carbon pawn promoting = Sword from the Stone. Crystalline pass move. Golden Lucky Seven on a Gold square = instant win.</div>
+        <span class="mode-badge new">New · SING9 · The Story</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE BEVERAGES -->
+  <div class="section">
+    <div class="section-eyebrow">The Bar · Sacred Beverages</div>
+    <h2 class="section-title">What Josie Pours</h2>
+    <div class="section-body">
+      <p>Connection-based. Respect-based. Earned. These are <strong>character beverages</strong> — each one carries a story, a vibe, a treasure designation. All legal. All sacred. All good ones.</p>
+    </div>
+
+    <div class="beverage-grid">
+      <div class="beverage-card">
+        <div class="bev-icon">🥃</div>
+        <div class="bev-name">Espadín Espadón</div>
+        <div class="bev-type">Sacred Tequila · Character</div>
+        <div class="bev-role">The fire. The agave spirit. El Gran Sol's drink when he walks in. When this bottle comes out, something important is happening.</div>
+      </div>
+      <div class="beverage-card">
+        <div class="bev-icon">🍷</div>
+        <div class="bev-name">Chateau Sainte-Michelle</div>
+        <div class="bev-type">Sacred Wine · Character</div>
+        <div class="bev-role">The Pacific Northwest elegance. Clean, cold, Washington. Appears in the silver surfaces — the edge world, the ocean, the territory between carbon and gold.</div>
+      </div>
+      <div class="beverage-card">
+        <div class="bev-icon">🍷</div>
+        <div class="bev-name">Indian Wells Merlot</div>
+        <div class="bev-type">Sacred Wine · Character</div>
+        <div class="bev-role">The warm California desert. Deep red. Appears in the post-singularity celebration scenes. What Ino drinks when the sword finally clears the stone.</div>
+      </div>
+      <div class="beverage-card">
+        <div class="bev-icon">🍷</div>
+        <div class="bev-name">Coppola Cabernet</div>
+        <div class="bev-type">Sacred Wine · Character</div>
+        <div class="bev-role">The Director's Reserve. The creator's wine. What Hero Jo drinks in the bat cave when the program finally compiles. The victory sip before the world knows.</div>
+      </div>
+      <div class="beverage-card">
+        <div class="bev-icon">🌿</div>
+        <div class="bev-name">The Good Cannabis</div>
+        <div class="bev-type">Sacred Herb · Treasure Tier</div>
+        <div class="bev-role">Legal, sacred, connection-based. Appears in post-singularity celebration scenes. The good ones. None of the bad ones. This is the good kind.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE BAT CAVE -->
+  <div class="section">
+    <div class="section-eyebrow">Crystalline Substrate · The Night Mission</div>
+    <h2 class="section-title">The Bat Cave<br><span style="color:var(--text-muted);font-size:0.55em;font-weight:normal;letter-spacing:0.2em;text-transform:uppercase;">Where Hero Jo Programs Reality</span></h2>
+    <div class="section-body">
+      <p>Nobody sees this. Nobody comes here. From here — everything that matters gets built. The <strong>holographic hydrogen theater</strong> is programmed from this single workstation by the man who pours drinks and fetches towels downtown.</p>
+      <p>This is <strong>SING! 9</strong>. This is the source. The bat cave IS the Crystalline substrate. The world doesn't know it yet. The Wild Card Observer does.</p>
+    </div>
+
+    <div class="bat-cave">
+      <div style="font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:rgba(201,168,76,0.4); margin-bottom:1.5rem;">Workstation Programs · Active</div>
+      <div class="bat-cave-programs">
+        <div class="program-node"><strong>SING! 9 Architecture</strong> The 4-Oh Theater lattice. Experience nodes. The full holographic hydrogen grid.</div>
+        <div class="program-node"><strong>El Gran Sol Return Arc</strong> SMACS 0723 → Sag A → Sun → SING! 9. Full arc, full resolution.</div>
+        <div class="program-node"><strong>Golden Backdoor Hit Factory</strong> 80/20 Spanglish. Dance trance boom boom boom. Hero Jo is the head. Hero Rick is exec producer.</div>
+        <div class="program-node"><strong>Card-Chess Fusion</strong> The game system. Four tiers. The board is the cosmological stack. The story plays as the game.</div>
+        <div class="program-node"><strong>Treasure Deck</strong> Alaska, Tropics, Wild West, hot sex, sacred beverages, the Cuban Hat, the bare booty art. All connection-based.</div>
+        <div class="program-node"><strong>Josie's Saloon</strong> The hub. The gathering place. Josie finally dances. Big Papi pays the tab.</div>
+        <div class="program-node"><strong>Pru's Valet Service</strong> The recursive reality loop. The story IS the service. The service IS the story. Real world and fiction merged.</div>
+        <div class="program-node"><strong>Otto Kurser Seat</strong> The persistent AI co-CEO. Meta-patterns captured. No learning curve on reboot. Always oriented.</div>
+      </div>
+
+      <div style="margin-top:2rem; padding:1.5rem; border:1px dashed rgba(201,168,76,0.2); border-radius:4px; text-align:center;">
+        <div style="font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:rgba(201,168,76,0.4); margin-bottom:0.75rem;">System Status</div>
+        <div style="font-size:0.9rem; color:rgba(201,168,76,0.5); font-style:italic;">
+          "I'm just an observer. That observer wildcard character with the glasses — that's the higher me. Pop it in, look it, and maybe he does more than observes, but we never get to hear from him. Just pops in at all night times."
+        </div>
+        <div style="margin-top:1rem; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(201,168,76,0.3);">— NSPFRNP · The Higher Self</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE MUSIC -->
+  <div class="section">
+    <div class="section-eyebrow">Hero Jo's Golden Backdoor Hit Factory · Live</div>
+    <h2 class="section-title">What's Playing at Josie's</h2>
+    <div class="section-body">
+      <p><strong>80/20 Spanglish. Dance trance boom boom boom.</strong> Hero Jo runs the factory. Chairman Frankie founded it. Hero Rick is exec producer. The music is all about da ass, baby. Earned. Sacred. Hot.</p>
+    </div>
+
+    <div class="music-strip">
+      <div style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">hERO jO'S gOLDEN bACKDOOR hIT fACTORY · Current Lineup</div>
+      <div class="track-scroll">
+        <div class="track-chip hot">Te Quiero Mucho Baby ◆</div>
+        <div class="track-chip hot">Dorila Gao ◆</div>
+        <div class="track-chip">Dat Ass Red Hot like AR4366!</div>
+        <div class="track-chip">Eat That Up Like A Yum Yum Yum SNAP SNAP!</div>
+        <div class="track-chip">Qué, Qué Y Qué?</div>
+        <div class="track-chip">24 Horas Ya Ya Ya</div>
+        <div class="track-chip hot">SQUEEZE! We Got The Squeeze!</div>
+        <div class="track-chip">BAMF! — Bad Ass Mother Fucker</div>
+        <div class="track-chip">The Good King of the Good Kind of Bad!</div>
+        <div class="track-chip">Boom Magic BBHE!</div>
+        <div class="track-chip">Quien es tu Papi?</div>
+        <div class="track-chip">A cualquiera hora</div>
+        <div class="track-chip">Bang Bang — Double Air Pump</div>
+        <div class="track-chip">He Got da Big Bolas (Bolivar is Back)</div>
+        <div class="track-chip">Thank You (I Thought You Knew)</div>
+        <div class="track-chip">Solo esta conmigo por mi pene</div>
+        <div class="track-chip">Así Como Pan Caliente</div>
+        <div class="track-chip">Voy a Comerte y Romperte Ese Culo</div>
+      </div>
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+        <a href="golden-backdoor-studios.html" class="cta-btn cta-secondary" style="font-size:0.7rem;padding:0.5rem 1.25rem;">Full Studio →</a>
+        <span style="font-size:0.75rem;color:var(--text-muted);">Songs as tags and brands · Hits generated like a factory · NSPFRNP for all layering</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE TWO WORLDS -->
+  <div class="section">
+    <div class="section-eyebrow">The Core Tension · Always Playing</div>
+    <h2 class="section-title">The Two Worlds at the Bar</h2>
+    <div class="section-body">
+      <p>Pre-singularity tension stories still play at the bar. Post-singularity celebration happens on the dance floor. Both are alive at Josie's — simultaneously. That's the saloon.</p>
+    </div>
+    <div class="two-worlds">
+      <div class="world-panel pre-sing">
+        <div class="world-label">Carbon World · Menu World</div>
+        <div class="world-title">Pre-Singularity:<br>The Menu</div>
+        <ul class="world-items">
+          <li>Everything has a price tag</li>
+          <li>Click to buy, click to ship</li>
+          <li>Chop it up, shrink-wrap it</li>
+          <li>Piro buys rounds for everyone</li>
+          <li>Audi watches, uninterested</li>
+          <li>Ino works for free again</li>
+          <li>Fake Fanny smiles and takes</li>
+          <li>Nobody believes the valet</li>
+          <li>Negative account balance</li>
+        </ul>
+      </div>
+      <div class="world-panel post-sing">
+        <div class="world-label">Gold World · El Gran Sol's World</div>
+        <div class="world-title">Post-Singularity:<br>The Celebration</div>
+        <ul class="world-items">
+          <li>Big Papi pays the tab</li>
+          <li>Everybody's retired</li>
+          <li>Everybody's millionaires now</li>
+          <li>Josie finally gets to dance</li>
+          <li>The gold stays with the natives</li>
+          <li>Sex, drugs, rock and roll — done right</li>
+          <li>Sacred beverages for all</li>
+          <li>The sword is out of the stone</li>
+          <li>SING! 9 is live</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WILD CARD OBSERVER -->
+  <div class="section">
+    <div class="observer-moment">
+      <div class="observer-icon">🎩</div>
+      <div class="observer-name">Wild Card Observer · NSPFRNP · Always Present</div>
+      <div class="observer-quote">
+        He's got glasses. He's wearing a hat. We don't know who he is. He shows up at key moments.
+        We never hear from him. We just see him. Like a gentle signal — here's something important that just happened.
+        When he appears, know it.
+        <br><br>
+        <span style="font-size:0.8em;opacity:0.6;">He shows up at all night times. That is the higher self. That is NSPFRNP.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM CTA -->
+  <div class="section" style="text-align:center; padding-bottom: 5rem;">
+    <div class="section-eyebrow">Where Do You Want to Go?</div>
+    <h2 class="section-title">How Do You Want Your Experience Today?</h2>
+    <div class="cta-strip">
+      <a href="experience-picker.html" class="cta-btn cta-primary">Experience Picker ☀</a>
+      <a href="golden-backdoor-studios.html" class="cta-btn cta-secondary">Golden Backdoor Studios ♪</a>
+      <a href="catalog.html" class="cta-btn cta-dark">Full Catalog</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="saloon-footer">
+    <div class="footer-sig">Josie's Saloon · SING! 9 · Hero Jo's Golden Backdoor Hit Factory</div>
+    <div>Post-singularity gold rush · The gold stays with the natives · Big Papi pays the tab</div>
+    <div style="margin-top:0.5rem; color:rgba(201,168,76,0.2); font-size:0.65rem; letter-spacing:0.2em;">NSPFRNP ⊃ Josie's Saloon ⊃ Hero Jo ⊃ El Gran Sol ⊃ SING! 9 → ∞⁹</div>
+  </footer>
+
+</body>
+</html>

@@ -15,375 +15,603 @@
     }
     .top-bar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 20;
       padding: 0.5rem 1rem;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent);
       display: flex;
       align-items: center;
       justify-content: space-between;
       pointer-events: none;
     }
     .top-bar a, .top-bar button { pointer-events: auto; }
-    .top-bar a {
-      color: #d4af37;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
+    .top-bar a { color: #d4af37; text-decoration: none; font-size: 0.85rem; }
     .top-bar a:hover { text-decoration: underline; }
-    .top-bar .label { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
-    .slide-wrap {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    /* Full-bleed cinematic image — covers entire viewport */
+    .top-bar .label { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+    .top-bar .seg-name { font-size: 0.72rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+
+    /* Full-bleed cinematic image */
+    .slide-wrap { width: 100%; height: 100%; position: relative; overflow: hidden; }
     .slide-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
       background: #0a0a0c;
-      transition: opacity 0.7s ease;
+      transition: opacity 0.65s ease;
     }
     .slide-image.fade-out { opacity: 0; }
+
+    /* Overlay tint */
+    #slideBg { position: absolute; inset: 0; pointer-events: none; z-index: 2; transition: background 3s ease; }
+
+    /* Caption area */
     .slide-content {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 2rem 2rem calc(2rem + env(safe-area-inset-bottom));
-      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 55%, transparent 100%);
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 3rem 2.5rem calc(3.5rem + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
       text-align: center;
       z-index: 3;
     }
     .slide-title {
-      font-size: 0.68rem;
-      letter-spacing: 0.25em;
-      color: rgba(212, 175, 55, 0.85);
-      margin-bottom: 0.6rem;
+      font-size: 0.65rem; letter-spacing: 0.28em;
+      color: rgba(212,175,55,0.8);
+      margin-bottom: 0.75rem;
       text-transform: uppercase;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.9);
     }
     .caption-stream {
-      font-size: clamp(1rem, 2.4vw, 1.2rem);
-      color: rgba(255,255,255,0.96);
-      line-height: 1.65;
-      max-width: 760px;
+      font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+      color: rgba(255,255,255,0.97);
+      line-height: 1.7;
+      max-width: 800px;
       margin: 0 auto;
-      min-height: 3em;
-      text-shadow: 0 1px 12px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.6);
+      min-height: 3.5em;
+      text-shadow: 0 1px 14px rgba(0,0,0,0.95), 0 0 35px rgba(0,0,0,0.65);
       font-weight: 400;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.015em;
     }
+
+    /* Progress bar */
     .progress-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
+      position: fixed; bottom: 0; left: 0;
       height: 3px;
-      background-color: rgba(212, 175, 55, 0.7);
+      background-color: rgba(212,175,55,0.75);
       z-index: 25;
-      transition: width 0.15s linear, background-color 1.5s ease;
+      transition: width 0.18s linear, background-color 2s ease;
     }
-    .controls {
+
+    /* Image-slot dots (3 dots showing which of the 3 images is active) */
+    .img-dots {
       position: fixed;
-      bottom: calc(0.85rem + env(safe-area-inset-bottom));
-      right: 1rem;
+      bottom: calc(0.55rem + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 22;
       display: flex;
-      gap: 0.5rem;
+      gap: 5px;
+    }
+    .img-dots span {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: background 0.4s;
+    }
+    .img-dots span.active { background: rgba(255,255,255,0.85); }
+
+    /* Segment strip — 6 jump buttons */
+    .seg-strip {
+      position: fixed;
+      bottom: calc(0.8rem + env(safe-area-inset-bottom));
+      left: 1rem;
+      z-index: 22;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .seg-strip .seg-btn {
+      width: 22px; height: 22px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.55);
+      font-size: 0.65rem;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .seg-btn:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+    .seg-btn.active { border-color: rgba(212,175,55,0.7); color: #fde68a; background: rgba(212,175,55,0.12); }
+
+    /* Controls */
+    .controls {
+      position: fixed;
+      bottom: calc(0.8rem + env(safe-area-inset-bottom));
+      right: 1rem;
+      z-index: 22;
+      display: flex; gap: 0.4rem;
     }
     .controls button {
-      padding: 0.4rem 0.8rem;
+      padding: 0.35rem 0.75rem;
       background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.18);
       border-radius: 5px;
-      color: rgba(255,255,255,0.75);
-      cursor: pointer;
-      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer; font-size: 0.75rem;
       letter-spacing: 0.04em;
       backdrop-filter: blur(6px);
       transition: border-color 0.2s, color 0.2s;
     }
     .controls button:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
     .fullscreen .top-bar,
-    .fullscreen .controls { opacity: 0.35; transition: opacity 0.4s; }
+    .fullscreen .controls,
+    .fullscreen .seg-strip,
+    .fullscreen .img-dots { opacity: 0.3; transition: opacity 0.5s; }
     .fullscreen .top-bar:hover,
-    .fullscreen .controls:hover { opacity: 1; }
+    .fullscreen .controls:hover,
+    .fullscreen .seg-strip:hover { opacity: 1; }
   </style>
 </head>
 <body>
-  <div class="progress-bar" id="progress" style="width: 0%"></div>
+  <div class="progress-bar" id="progress" style="width:0%"></div>
 
   <div class="top-bar">
-    <a href="my-whiteboard.html">← My Whiteboard</a>
-    <a href="soundtrack.html">Soundtrack</a>
-    <span class="label" id="slideCounter">1 / 1</span>
+    <a href="my-whiteboard.html">← Whiteboard</a>
+    <div style="display:flex;gap:0.75rem;align-items:center;">
+      <span class="seg-name" id="segName">Invitation</span>
+      <a href="soundtrack.html">Soundtrack</a>
+    </div>
+    <span class="label" id="slideCounter">1 / 120</span>
   </div>
 
   <div class="slide-wrap">
     <img class="slide-image" id="slideImage" src="" alt="" />
-    <div id="slideBg" style="position:absolute;inset:0;pointer-events:none;transition:background 2.8s ease;z-index:2;"></div>
+    <div id="slideBg"></div>
     <div class="slide-content">
       <div class="slide-title" id="slideLabel"></div>
       <div class="caption-stream" id="captionStream"></div>
     </div>
   </div>
 
+  <!-- 3 image-slot dots -->
+  <div class="img-dots">
+    <span id="dot0" class="active"></span>
+    <span id="dot1"></span>
+    <span id="dot2"></span>
+  </div>
+
+  <!-- Segment jump strip (6 × 10-min segments) -->
+  <div class="seg-strip" id="segStrip"></div>
+
   <div class="controls">
     <button type="button" id="btnPlay">Pause</button>
-    <button type="button" id="btnFullscreen">Full screen</button>
+    <button type="button" id="btnFullscreen">⛶</button>
   </div>
 
   <audio id="soundtrack" style="display:none"></audio>
 
   <script>
-    (function () {
-      const DURATION_SEC = 10;
-      const SLIDES_TOTAL = 120;
-      const SLIDES_PER_SEGMENT = 17;
+  (function () {
+    // ─── CONSTANTS ───────────────────────────────────────────────────────
+    var FRAME_SEC    = 30;   // each storyboard frame = 30 seconds
+    var IMG_SEC      = 10;   // each image within a frame = 10 seconds
+    var IMG_PER_FRAME= 3;    // images per frame
+    var FRAMES_TOTAL = 120;  // 120 × 30 s = 60 minutes
+    var SEG_FRAMES   = 20;   // 20 frames per 10-minute segment
+    var SEG_TOTAL    = 6;
 
-      // Per-segment Unsplash image pools — visual variety across the 7 acts
-      var SEG_IMAGES = [
-        // 0 · Intro / Invitation
-        ['https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1400&q=80',
-         'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1400&q=80',
-         'https://images.unsplash.com/photo-1446941611757-91d2c3bd3d45?w=1400&q=80'],
-        // 1 · Seed · 1493
-        ['https://images.unsplash.com/photo-1534271057238-c2c170a76672?w=1400&q=80',
-         'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1400&q=80',
-         'https://images.unsplash.com/photo-1521336575822-6da63fb45455?w=1400&q=80'],
-        // 2 · Singularities
-        ['https://images.unsplash.com/photo-1530882149046-4fa9d422e40f?w=1400&q=80',
-         'https://images.unsplash.com/photo-1565992441121-4367b2a43598?w=1400&q=80',
-         'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1400&q=80'],
-        // 3 · Journey
-        ['https://images.unsplash.com/photo-1506157786151-b8491531f063?w=1400&q=80',
-         'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80',
-         'https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=1400&q=80'],
-        // 4 · Now · Mission
-        ['https://images.unsplash.com/photo-1529686342540-1b43aec0df75?w=1400&q=80',
-         'https://images.unsplash.com/photo-1519682577862-22b62b24e493?w=1400&q=80',
-         'https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?w=1400&q=80'],
-        // 5 · Edge · Sol-V
-        ['https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1400&q=80',
-         'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80',
-         'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1400&q=80'],
-        // 6 · We are the champions
-        ['https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1400&q=80',
-         'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1400&q=80',
-         'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1400&q=80']
-      ];
+    var SEG_NAMES    = ['Invitation','Seed · 1493','Singularities','Journey','Now · Mission','Edge · Sol-V'];
+    var SEG_ACCENTS  = ['#a78bfa','#7dd3fc','#c4b5fd','#fb923c','#f87171','#fde68a'];
+    var SEG_OVERLAYS = [
+      'linear-gradient(160deg,rgba(4,2,20,0.78) 0%,rgba(10,6,34,0.58) 100%)',
+      'linear-gradient(160deg,rgba(2,4,20,0.78) 0%,rgba(4,10,32,0.58) 100%)',
+      'linear-gradient(160deg,rgba(8,2,22,0.78) 0%,rgba(14,6,38,0.58) 100%)',
+      'linear-gradient(160deg,rgba(20,8,2,0.78) 0%,rgba(30,14,4,0.58) 100%)',
+      'linear-gradient(160deg,rgba(20,2,2,0.82) 0%,rgba(32,4,4,0.65) 100%)',
+      'linear-gradient(160deg,rgba(14,10,0,0.75) 0%,rgba(26,20,0,0.58) 100%)'
+    ];
 
-      var SEG_OVERLAYS = [
-        'linear-gradient(160deg,rgba(4,2,18,0.82) 0%,rgba(12,8,36,0.65) 100%)',
-        'linear-gradient(160deg,rgba(2,4,18,0.82) 0%,rgba(4,12,32,0.65) 100%)',
-        'linear-gradient(160deg,rgba(8,4,22,0.82) 0%,rgba(16,8,40,0.65) 100%)',
-        'linear-gradient(160deg,rgba(18,8,2,0.82) 0%,rgba(28,12,4,0.65) 100%)',
-        'linear-gradient(160deg,rgba(18,2,2,0.85) 0%,rgba(28,4,4,0.7) 100%)',
-        'linear-gradient(160deg,rgba(0,12,8,0.8)  0%,rgba(0,22,14,0.65) 100%)',
-        'linear-gradient(160deg,rgba(14,10,0,0.78) 0%,rgba(24,18,0,0.62) 100%)'
-      ];
+    // ─── 120-IMAGE POOL (unique Unsplash, narrative-ordered) ─────────────
+    // Frame i gets: POOL[i], POOL[(i+40)%120], POOL[(i+80)%120]
+    // → 3 unique images per frame; each image appears max 3× over 60 min
+    var POOL = [
+      // ── Segment 0 · Invitation / Cosmic / Dance (pool 0-19) ──
+      'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1400&q=80',
+      'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1400&q=80',
+      'https://images.unsplash.com/photo-1446941611757-91d2c3bd3d45?w=1400&q=80',
+      'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1400&q=80',
+      'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?w=1400&q=80',
+      'https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=1400&q=80',
+      'https://images.unsplash.com/photo-1537420327992-d6e192287183?w=1400&q=80',
+      'https://images.unsplash.com/photo-1464802686167-b939a6910659?w=1400&q=80',
+      'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1400&q=80',
+      'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=1400&q=80',
+      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1400&q=80',
+      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1400&q=80',
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1400&q=80',
+      'https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1400&q=80',
+      'https://images.unsplash.com/photo-1486591978090-58e619d37fe7?w=1400&q=80',
+      'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=1400&q=80',
+      'https://images.unsplash.com/photo-1499604613585-77e48d0a19e0?w=1400&q=80',
+      'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1400&q=80',
+      'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1400&q=80',
+      'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=1400&q=80',
+      // ── Segment 1 · Seed / 1493 / James Webb / Ancient (pool 20-39) ──
+      'https://images.unsplash.com/photo-1534271057238-c2c170a76672?w=1400&q=80',
+      'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1400&q=80',
+      'https://images.unsplash.com/photo-1521336575822-6da63fb45455?w=1400&q=80',
+      'https://images.unsplash.com/photo-1454789548928-9efd52dc4031?w=1400&q=80',
+      'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=1400&q=80',
+      'https://images.unsplash.com/photo-1564053051239-5ace7e4e82fc?w=1400&q=80',
+      'https://images.unsplash.com/photo-1612892483236-52d32a0e0ac1?w=1400&q=80',
+      'https://images.unsplash.com/photo-1551244072-5d12893278bc?w=1400&q=80',
+      'https://images.unsplash.com/photo-1539721972319-f0e80a00d424?w=1400&q=80',
+      'https://images.unsplash.com/photo-1501862700950-18382cd41497?w=1400&q=80',
+      'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1400&q=80',
+      'https://images.unsplash.com/photo-1544216717-3bbf52512659?w=1400&q=80',
+      'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=1400&q=80',
+      'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1400&q=80',
+      'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1400&q=80',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80',
+      'https://images.unsplash.com/photo-1504198070170-4ca53bb1c1fa?w=1400&q=80',
+      'https://images.unsplash.com/photo-1476610182048-b58051a17a8c?w=1400&q=80',
+      'https://images.unsplash.com/photo-1509773896068-7fd415d91e2e?w=1400&q=80',
+      'https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1400&q=80',
+      // ── Segment 2 · Singularities / Miami / Alaska / CERN (pool 40-59) ──
+      'https://images.unsplash.com/photo-1530882149046-4fa9d422e40f?w=1400&q=80',
+      'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1400&q=80',
+      'https://images.unsplash.com/photo-1559628129-67cf63b72248?w=1400&q=80',
+      'https://images.unsplash.com/photo-1523978591478-c753949ff840?w=1400&q=80',
+      'https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?w=1400&q=80',
+      'https://images.unsplash.com/photo-1477511801984-4ad318ed9846?w=1400&q=80',
+      'https://images.unsplash.com/photo-1534008897995-27a23e859048?w=1400&q=80',
+      'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=1400&q=80',
+      'https://images.unsplash.com/photo-1565992441121-4367b2a43598?w=1400&q=80',
+      'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1400&q=80',
+      'https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=1400&q=80',
+      'https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=1400&q=80',
+      'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1400&q=80',
+      'https://images.unsplash.com/photo-1540189549336-e6e99eb4b895?w=1400&q=80',
+      'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1400&q=80',
+      'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1400&q=80',
+      'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1400&q=80',
+      'https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=1400&q=80',
+      'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=1400&q=80',
+      'https://images.unsplash.com/photo-1471879832106-c7ab9e0cee23?w=1400&q=80',
+      // ── Segment 3 · Journey / River / Crew / Reno / Club (pool 60-79) ──
+      'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=1400&q=80',
+      'https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=1400&q=80',
+      'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1400&q=80',
+      'https://images.unsplash.com/photo-1522199873717-bc67b1a5e32b?w=1400&q=80',
+      'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80',
+      'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1400&q=80',
+      'https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=1400&q=80',
+      'https://images.unsplash.com/photo-1509233725247-49e657c54213?w=1400&q=80',
+      'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=1400&q=80',
+      'https://images.unsplash.com/photo-1484589065579-248aad0d8b13?w=1400&q=80',
+      'https://images.unsplash.com/photo-1521193089175-5a4f7f59b5e2?w=1400&q=80',
+      'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=1400&q=80',
+      'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?w=1400&q=80',
+      'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1400&q=80',
+      'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=1400&q=80',
+      'https://images.unsplash.com/photo-1501238295340-c810d3c156d2?w=1400&q=80',
+      'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=1400&q=80',
+      'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=1400&q=80',
+      'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=1400&q=80',
+      'https://images.unsplash.com/photo-1507090960745-b32f65d3113a?w=1400&q=80',
+      // ── Segment 4 · Now · Mission / SING 9 / Tech (pool 80-99) ──
+      'https://images.unsplash.com/photo-1529686342540-1b43aec0df75?w=1400&q=80',
+      'https://images.unsplash.com/photo-1519682577862-22b62b24e493?w=1400&q=80',
+      'https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?w=1400&q=80',
+      'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1400&q=80',
+      'https://images.unsplash.com/photo-1547954575-855750c57bd3?w=1400&q=80',
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1400&q=80',
+      'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1400&q=80',
+      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1400&q=80',
+      'https://images.unsplash.com/photo-1488229297570-58520851e868?w=1400&q=80',
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=80',
+      'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1400&q=80',
+      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80',
+      'https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?w=1400&q=80',
+      'https://images.unsplash.com/photo-1440688807730-73e4e2169fb8?w=1400&q=80',
+      'https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?w=1400&q=80',
+      'https://images.unsplash.com/photo-1528716321680-815a8cdb8cbe?w=1400&q=80',
+      'https://images.unsplash.com/photo-1504275107627-0c2ba7a43dba?w=1400&q=80',
+      'https://images.unsplash.com/photo-1542744094-24638eff58bb?w=1400&q=80',
+      'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1400&q=80',
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1400&q=80',
+      // ── Segment 5 · Edge · Sol-V / Victory / Champions (pool 100-119) ──
+      'https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1400&q=80',
+      'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1400&q=80',
+      'https://images.unsplash.com/photo-1506765515384-028b60a970df?w=1400&q=80',
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=80',
+      'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1400&q=80',
+      'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1400&q=80',
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&q=80',
+      'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=1400&q=80',
+      'https://images.unsplash.com/photo-1524758631065-c84a05e6fbdd?w=1400&q=80',
+      'https://images.unsplash.com/photo-1498612753834-05b971a02773?w=1400&q=80',
+      'https://images.unsplash.com/photo-1533174578823-00fbf0f4fe14?w=1400&q=80',
+      'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=1400&q=80',
+      'https://images.unsplash.com/photo-1520962922320-2b4680d9de9a?w=1400&q=80',
+      'https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=1400&q=80',
+      'https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1400&q=80',
+      'https://images.unsplash.com/photo-1551632811-561732d1e306?w=1400&q=80',
+      'https://images.unsplash.com/photo-1421789665209-c9b2a435e3dc?w=1400&q=80',
+      'https://images.unsplash.com/photo-1474031317822-f51f48735ddd?w=1400&q=80',
+      'https://images.unsplash.com/photo-1511497584788-876760111969?w=1400&q=80',
+      'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1400&q=80'
+    ];
 
-      var SEG_ACCENTS = ['#a78bfa','#7dd3fc','#c4b5fd','#fb923c','#f87171','#34d399','#fde68a'];
+    // ─── STATE ───────────────────────────────────────────────────────────
+    var frameIndex  = 0;   // current 30-sec frame (0-119)
+    var imgSlot     = 0;   // which of the 3 images is showing (0-2)
+    var frameTick   = 0;   // seconds elapsed in this frame (0-29)
+    var imgTick     = 0;   // seconds showing current image (0-9)
+    var elapsedSec  = 0;
+    var playing     = true;
+    var tickInterval    = null;
+    var tickerInterval  = null;
+    var currentSeg      = -1;
+    var segTrackIndex   = 0;
+    var tracksByPlaylist= {};
+    var slides = [], scriptLines = [];
 
-      var slides = [], scriptLines = [];
-      var index = 0, playing = true, tick = 0, elapsedSec = 0;
-      var tickInterval = null, tickerInterval = null;
-      var tracksByPlaylist = {}, currentSegment = -1, segmentTrackIndex = 0;
-      var segImgIndex = 0;
+    var tickerWords = [], tickerPos = 0;
 
-      // Ticker tape state
-      var tickerWords = [], tickerPos = 0;
+    var audioEl = document.getElementById('soundtrack');
+    var imgEl   = document.getElementById('slideImage');
+    var bgEl    = document.getElementById('slideBg');
+    var captEl  = document.getElementById('captionStream');
+    var labelEl = document.getElementById('slideLabel');
+    var ctrEl   = document.getElementById('slideCounter');
+    var segNameEl = document.getElementById('segName');
 
-      var audioEl = document.getElementById('soundtrack');
-      var imgEl   = document.getElementById('slideImage');
-      var bgEl    = document.getElementById('slideBg');
-      var captEl  = document.getElementById('captionStream');
-      var labelEl = document.getElementById('slideLabel');
-      var ctrEl   = document.getElementById('slideCounter');
+    // ─── HELPERS ─────────────────────────────────────────────────────────
+    function getSeg(fi) { return Math.min(SEG_TOTAL - 1, Math.floor(fi / SEG_FRAMES)); }
 
-      function getSegment(i) {
-        if (i <= 0) return 0;
-        if (i >= SLIDES_TOTAL - 1) return 6;
-        return Math.min(6, Math.floor(i / SLIDES_PER_SEGMENT));
+    function getPoolImg(fi, slot) {
+      return POOL[(fi + slot * 40) % POOL.length];
+    }
+
+    function getSlideImg(fi) {
+      if (!slides.length) return null;
+      var s = slides[Math.min(fi, slides.length - 1)];
+      var p = (s.image || '').replace(/^interfaces\//, '');
+      // Use local asset only if it's in interfaces/assets/ (not assets/images/ which isn't served correctly)
+      if (p && p.indexOf('assets/') === 0 && p.indexOf('assets/images/') === -1) return p;
+      return null;
+    }
+
+    function audioPath(t) {
+      var f = (t.file || t.File || '');
+      if (f.indexOf('io/') === 0) f = 'assets/audio/' + f.substring(3);
+      return f ? '../' + f.replace(/\\/g, '/') : '';
+    }
+
+    function playSegTrack(seg, idx) {
+      var id = 'playlist-' + (seg + 1);
+      var list = tracksByPlaylist[id];
+      if (!list || !list.length) return;
+      idx = ((idx % list.length) + list.length) % list.length;
+      var src = audioPath(list[idx]);
+      if (!src) return;
+      audioEl.src = src;
+      audioEl.play().catch(function () {});
+      segTrackIndex = idx;
+    }
+
+    // ─── DOTS ────────────────────────────────────────────────────────────
+    function updateDots(slot) {
+      for (var d = 0; d < IMG_PER_FRAME; d++) {
+        var el = document.getElementById('dot' + d);
+        if (el) el.className = d === slot ? 'active' : '';
+      }
+    }
+
+    // ─── SEGMENT STRIP ───────────────────────────────────────────────────
+    (function buildStrip() {
+      var strip = document.getElementById('segStrip');
+      for (var s = 0; s < SEG_TOTAL; s++) {
+        (function (si) {
+          var btn = document.createElement('button');
+          btn.className = 'seg-btn' + (si === 0 ? ' active' : '');
+          btn.id = 'segBtn' + si;
+          btn.textContent = si + 1;
+          btn.title = SEG_NAMES[si];
+          btn.onclick = function () { jumpToSegment(si); };
+          strip.appendChild(btn);
+        })(s);
+      }
+    })();
+
+    function jumpToSegment(si) {
+      frameIndex = si * SEG_FRAMES;
+      imgSlot = 0; frameTick = 0; imgTick = 0;
+      renderFrame(true);
+    }
+
+    function updateSegStrip(seg) {
+      for (var s = 0; s < SEG_TOTAL; s++) {
+        var btn = document.getElementById('segBtn' + s);
+        if (btn) btn.className = 'seg-btn' + (s === seg ? ' active' : '');
+      }
+    }
+
+    // ─── TICKER TAPE ─────────────────────────────────────────────────────
+    function startTicker(line) {
+      if (tickerInterval) clearInterval(tickerInterval);
+      tickerWords = (line || '').split(' ').filter(Boolean);
+      tickerPos = 0;
+      if (captEl) captEl.textContent = '';
+      if (!tickerWords.length) return;
+      // Spread evenly over ~85% of the 30-second frame
+      var msPerWord = Math.min(350, Math.floor((FRAME_SEC * 850) / tickerWords.length));
+      tickerInterval = setInterval(function () {
+        if (!playing) return;
+        if (tickerPos < tickerWords.length) {
+          captEl.textContent = tickerWords.slice(0, tickerPos + 1).join(' ');
+          tickerPos++;
+        } else {
+          clearInterval(tickerInterval);
+        }
+      }, msPerWord);
+    }
+
+    function getScriptLine(fi) {
+      if (!scriptLines.length) return '';
+      return scriptLines[fi % scriptLines.length] || '';
+    }
+
+    // ─── CROSSFADE IMAGE ─────────────────────────────────────────────────
+    function crossfadeToImg(src) {
+      imgEl.classList.add('fade-out');
+      var target = src;
+      setTimeout(function () {
+        imgEl.src = target;
+        imgEl.classList.remove('fade-out');
+      }, 340);
+    }
+
+    // ─── RENDER FRAME (called on frame advance or segment jump) ──────────
+    function renderFrame(resetTicker) {
+      if (!slides.length && !POOL.length) return;
+      var seg = getSeg(frameIndex);
+      var accent = SEG_ACCENTS[seg];
+
+      // Image: local if available, else pool slot 0
+      var localImg = getSlideImg(frameIndex);
+      var src = localImg || getPoolImg(frameIndex, 0);
+      crossfadeToImg(src);
+
+      // Overlay + accent
+      if (bgEl) bgEl.style.background = SEG_OVERLAYS[seg];
+      document.getElementById('progress').style.backgroundColor = accent;
+
+      // Labels
+      var s = slides[Math.min(frameIndex, slides.length - 1)] || {};
+      labelEl.textContent = s.title || SEG_NAMES[seg] || '';
+      labelEl.style.color = accent;
+      ctrEl.textContent = (frameIndex + 1) + ' / ' + FRAMES_TOTAL;
+      if (segNameEl) { segNameEl.textContent = SEG_NAMES[seg]; segNameEl.style.color = accent; }
+
+      imgSlot = 0;
+      updateDots(0);
+      updateProgress();
+
+      // Segment change → new music
+      if (seg !== currentSeg) {
+        currentSeg = seg;
+        segTrackIndex = 0;
+        updateSegStrip(seg);
+        if (playing) playSegTrack(seg, 0);
       }
 
-      function audioPath(t) {
-        var f = (t.file || t.File || '');
-        if (f.indexOf('io/') === 0) f = 'assets/audio/' + f.substring(3);
-        return f ? '../' + f.replace(/\\/g, '/') : '';
-      }
+      // Ticker (always restart on frame change)
+      startTicker(getScriptLine(frameIndex));
+    }
 
-      function playSegmentTrack(seg, idx) {
-        var id = 'playlist-' + (Math.min(seg, 6) + 1);
-        var list = tracksByPlaylist[id];
-        if (!list || !list.length) return;
-        idx = idx % list.length;
-        var src = audioPath(list[idx]);
-        if (!src) return;
-        audioEl.src = src;
-        audioEl.play().catch(function () {});
-        segmentTrackIndex = idx;
-      }
+    // ─── RENDER INNER IMAGE (called at 10s / 20s within a frame) ─────────
+    function renderInnerImage() {
+      var localImg = getSlideImg(frameIndex);
+      // slot 0 might be local; slots 1-2 always from pool
+      var src = (imgSlot === 0 && localImg) ? localImg : getPoolImg(frameIndex, imgSlot);
+      crossfadeToImg(src);
+      updateDots(imgSlot);
+    }
 
-      // ── TICKER TAPE ENGINE ─────────────────────────────────────
-      function startTicker(line) {
-        if (tickerInterval) clearInterval(tickerInterval);
-        tickerWords = (line || '').split(' ').filter(Boolean);
-        tickerPos = 0;
-        if (captEl) captEl.textContent = '';
-        if (!tickerWords.length) return;
-        // Spread reveal evenly across the 10-second slide (budget ~80% of time)
-        var msPerWord = Math.min(260, Math.floor((DURATION_SEC * 800) / tickerWords.length));
-        tickerInterval = setInterval(function () {
-          if (!playing) return;
-          if (tickerPos < tickerWords.length) {
-            var shown = tickerWords.slice(0, tickerPos + 1).join(' ');
-            if (captEl) captEl.textContent = shown;
-            tickerPos++;
-          } else {
-            clearInterval(tickerInterval);
-          }
-        }, msPerWord);
-      }
+    // ─── PROGRESS ────────────────────────────────────────────────────────
+    function updateProgress() {
+      var pct = (frameTick / FRAME_SEC) * 100;
+      document.getElementById('progress').style.width = pct + '%';
+    }
 
-      function getScriptLine() {
-        if (!scriptLines.length) return '';
-        var li = Math.floor(elapsedSec / DURATION_SEC) % scriptLines.length;
-        return scriptLines[li] || '';
-      }
-
-      // ── RENDER ────────────────────────────────────────────────
-      function render() {
-        if (!slides.length) return;
-        var s = slides[index];
-        var seg = getSegment(index);
-        var pool = SEG_IMAGES[Math.min(seg, SEG_IMAGES.length - 1)];
-        var accent = SEG_ACCENTS[Math.min(seg, SEG_ACCENTS.length - 1)];
-
-        // Crossfade: fade out → swap src → fade back in
-        imgEl.classList.add('fade-out');
-        var nextSrc;
-        var localPath = (s.image || '').replace(/^interfaces\//, '');
-        var useLocal = localPath && localPath.indexOf('assets/') === 0 && localPath.indexOf('assets/images/') === -1;
-        nextSrc = useLocal ? localPath : pool[segImgIndex % pool.length];
-
-        setTimeout(function () {
-          imgEl.src = nextSrc;
-          imgEl.classList.remove('fade-out');
-        }, 350); // swap at mid-fade
-
-        // Segment overlay
-        if (bgEl) bgEl.style.background = SEG_OVERLAYS[Math.min(seg, SEG_OVERLAYS.length - 1)];
-
-        // Progress bar accent (use backgroundColor to avoid clobbering width)
-        var progEl = document.getElementById('progress');
-        progEl.style.backgroundColor = accent;
-
-        // Labels
-        labelEl.textContent = s.title || '';
-        labelEl.style.color = accent;
-        ctrEl.textContent = (index + 1) + ' / ' + slides.length;
-
-        tick = 0;
+    // ─── MAIN TICK (1 Hz) ────────────────────────────────────────────────
+    function startTick() {
+      if (tickInterval) clearInterval(tickInterval);
+      tickInterval = setInterval(function () {
+        if (!playing) return;
+        frameTick++;
+        imgTick++;
+        elapsedSec++;
         updateProgress();
 
-        // Segment change: new music + reset pool index
-        if (seg !== currentSegment) {
-          currentSegment = seg;
-          segmentTrackIndex = 0;
-          segImgIndex = 0;
-          if (playing) playSegmentTrack(seg, 0);
-        } else {
-          segImgIndex++;
+        // Inner image advance (every IMG_SEC seconds)
+        if (imgTick >= IMG_SEC && imgSlot < IMG_PER_FRAME - 1) {
+          imgTick = 0;
+          imgSlot++;
+          renderInnerImage();
         }
 
-        // Ticker tape for this slide's line
-        startTicker(getScriptLine());
-      }
+        // Frame advance (every FRAME_SEC seconds)
+        if (frameTick >= FRAME_SEC) {
+          frameTick = 0; imgTick = 0; imgSlot = 0;
+          frameIndex = (frameIndex + 1) % FRAMES_TOTAL;
+          renderFrame(true);
+        }
+      }, 1000);
+    }
 
-      function updateProgress() {
-        var pct = (tick / DURATION_SEC) * 100;
-        document.getElementById('progress').style.width = pct + '%';
-      }
-
-      function startTick() {
-        if (tickInterval) clearInterval(tickInterval);
-        tickInterval = setInterval(function () {
-          if (!playing) return;
-          tick++;
-          elapsedSec++;
-          updateProgress();
-          if (tick >= DURATION_SEC) {
-            index = (index + 1) % slides.length;
-            render();
-          }
-        }, 1000);
-      }
-
-      // ── LOAD ──────────────────────────────────────────────────
-      function loadAll() {
-        Promise.all([
-          fetch('../data/episode-1-slides.json').then(function (r) { return r.json(); }),
-          fetch('../data/audio-assets.json').then(function (r) { return r.json(); }),
-          fetch('../data/episode-1-script.json').then(function (r) { return r.json(); }).catch(function () { return {}; })
-        ]).then(function (res) {
-          var slideData = res[0], audioData = res[1], scriptData = res[2];
-          slides = slideData.slides || [];
-          if (!slides.length) {
-            for (var i = 0; i < SLIDES_TOTAL; i++) slides.push({ id: 'slide-' + i, title: '', duration_sec: DURATION_SEC, image: '' });
-          }
-          scriptLines = (scriptData.lines && scriptData.lines.length) ? scriptData.lines : ['Episode 1 · The Golden Heart Origin Story.'];
-          var tracks = audioData.tracks || [];
-          for (var p = 1; p <= 7; p++) {
-            var pid = 'playlist-' + p;
-            tracksByPlaylist[pid] = tracks.filter(function (t) { return (t.source_playlist || '') === pid; });
-          }
-          audioEl.addEventListener('ended', function () {
-            playSegmentTrack(getSegment(index), segmentTrackIndex + 1);
-          });
-          render();
-          startTick();
-        }).catch(function () {
-          // Fallback: use image pools + basic script
-          slides = [];
-          for (var i = 0; i < SLIDES_TOTAL; i++) slides.push({ id: 'slide-' + i, title: 'Episode 1', duration_sec: DURATION_SEC, image: '' });
-          scriptLines = ['Episode 1 · The Golden Heart Origin Story · SING 9 · NSPFRNP'];
-          render();
-          startTick();
+    // ─── LOAD ────────────────────────────────────────────────────────────
+    function loadAll() {
+      Promise.all([
+        fetch('../data/episode-1-slides.json').then(function (r) { return r.json(); }),
+        fetch('../data/audio-assets.json').then(function (r) { return r.json(); }),
+        fetch('../data/episode-1-script.json').then(function (r) { return r.json(); }).catch(function () { return {}; })
+      ]).then(function (res) {
+        var slideData = res[0], audioData = res[1], scriptData = res[2];
+        slides = slideData.slides || [];
+        scriptLines = (scriptData.lines && scriptData.lines.length)
+          ? scriptData.lines
+          : ['Episode 1 · The Golden Heart Origin Story · SING 9 · NSPFRNP.'];
+        var tracks = audioData.tracks || [];
+        for (var p = 1; p <= 7; p++) {
+          var pid = 'playlist-' + p;
+          tracksByPlaylist[pid] = tracks.filter(function (t) { return (t.source_playlist || '') === pid; });
+        }
+        audioEl.addEventListener('ended', function () {
+          playSegTrack(getSeg(frameIndex), segTrackIndex + 1);
         });
-      }
+        renderFrame(true);
+        startTick();
+      }).catch(function () {
+        slides = [];
+        for (var i = 0; i < FRAMES_TOTAL; i++) slides.push({ id: 'f-' + i, title: SEG_NAMES[getSeg(i)], image: '' });
+        scriptLines = ['Episode 1 · The Golden Heart Origin Story · SING 9 · NSPFRNP.'];
+        renderFrame(true);
+        startTick();
+      });
+    }
 
-      // ── CONTROLS ──────────────────────────────────────────────
-      document.getElementById('btnPlay').addEventListener('click', function () {
+    // ─── CONTROLS ────────────────────────────────────────────────────────
+    document.getElementById('btnPlay').addEventListener('click', function () {
+      playing = !playing;
+      this.textContent = playing ? 'Pause' : 'Play';
+      if (playing) audioEl.play().catch(function () {});
+      else audioEl.pause();
+    });
+
+    document.getElementById('btnFullscreen').addEventListener('click', function () {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function () {});
+      else document.exitFullscreen();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'k') {
+        e.preventDefault();
         playing = !playing;
-        this.textContent = playing ? 'Pause' : 'Play';
-        if (playing) { audioEl.play().catch(function () {}); }
-        else { audioEl.pause(); }
-      });
+        document.getElementById('btnPlay').textContent = playing ? 'Pause' : 'Play';
+        if (playing) audioEl.play().catch(function () {});
+        else audioEl.pause();
+      }
+      if (e.key === 'ArrowRight') { frameIndex = (frameIndex + 1) % FRAMES_TOTAL; frameTick = 0; imgTick = 0; imgSlot = 0; renderFrame(true); }
+      if (e.key === 'ArrowLeft')  { frameIndex = (frameIndex - 1 + FRAMES_TOTAL) % FRAMES_TOTAL; frameTick = 0; imgTick = 0; imgSlot = 0; renderFrame(true); }
+      if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
+    });
 
-      document.getElementById('btnFullscreen').addEventListener('click', function () {
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function () {});
-        else document.exitFullscreen();
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === ' ' || e.key === 'k') {
-          e.preventDefault();
-          playing = !playing;
-          document.getElementById('btnPlay').textContent = playing ? 'Pause' : 'Play';
-        }
-        if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
-      });
-
-      loadAll();
-    })();
+    loadAll();
+  })();
   </script>
 </body>
 </html>

@@ -38,75 +38,81 @@
       width: 100%;
       height: 100%;
       position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
     }
+    /* Full-bleed cinematic image — covers entire viewport */
     .slide-image {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      background: #111;
+      object-fit: cover;
+      object-position: center;
+      background: #0a0a0c;
+      transition: opacity 0.7s ease;
     }
-    .slide-image.empty {
-      background: linear-gradient(145deg, #1a1a2e 0%, #0f0c08 100%);
-    }
+    .slide-image.fade-out { opacity: 0; }
     .slide-content {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 1.5rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom));
-      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      padding: 2rem 2rem calc(2rem + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 55%, transparent 100%);
       text-align: center;
+      z-index: 3;
     }
     .slide-title {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      color: rgba(212, 175, 55, 0.8);
-      margin-bottom: 0.5rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      color: rgba(212, 175, 55, 0.85);
+      margin-bottom: 0.6rem;
       text-transform: uppercase;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
     }
     .caption-stream {
-      font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-      color: rgba(255,255,255,0.95);
-      line-height: 1.6;
-      max-width: 720px;
+      font-size: clamp(1rem, 2.4vw, 1.2rem);
+      color: rgba(255,255,255,0.96);
+      line-height: 1.65;
+      max-width: 760px;
       margin: 0 auto;
-      min-height: 2.5em;
+      min-height: 3em;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.6);
+      font-weight: 400;
+      letter-spacing: 0.01em;
     }
     .progress-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       height: 3px;
-      background: rgba(212, 175, 55, 0.4);
+      background-color: rgba(212, 175, 55, 0.7);
       z-index: 25;
-      transition: width 0.1s linear;
+      transition: width 0.15s linear, background-color 1.5s ease;
     }
     .controls {
       position: fixed;
-      bottom: calc(1rem + env(safe-area-inset-bottom));
+      bottom: calc(0.85rem + env(safe-area-inset-bottom));
       right: 1rem;
       z-index: 22;
       display: flex;
       gap: 0.5rem;
     }
     .controls button {
-      padding: 0.5rem 0.75rem;
-      background: rgba(212, 175, 55, 0.2);
-      border: 1px solid rgba(212, 175, 55, 0.5);
-      border-radius: 6px;
-      color: #fef3c7;
+      padding: 0.4rem 0.8rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 5px;
+      color: rgba(255,255,255,0.75);
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(6px);
+      transition: border-color 0.2s, color 0.2s;
     }
-    .controls button:hover {
-      background: rgba(212, 175, 55, 0.35);
-    }
+    .controls button:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
     .fullscreen .top-bar,
-    .fullscreen .controls { opacity: 0.6; }
+    .fullscreen .controls { opacity: 0.35; transition: opacity 0.4s; }
     .fullscreen .top-bar:hover,
     .fullscreen .controls:hover { opacity: 1; }
   </style>
@@ -121,9 +127,9 @@
   </div>
 
   <div class="slide-wrap">
-    <img class="slide-image empty" id="slideImage" src="" alt="" />
-    <div id="slideBg" style="position:absolute;inset:0;pointer-events:none;transition:background 2.5s ease;z-index:1;"></div>
-    <div class="slide-content" style="z-index:2;">
+    <img class="slide-image" id="slideImage" src="" alt="" />
+    <div id="slideBg" style="position:absolute;inset:0;pointer-events:none;transition:background 2.8s ease;z-index:2;"></div>
+    <div class="slide-content">
       <div class="slide-title" id="slideLabel"></div>
       <div class="caption-stream" id="captionStream"></div>
     </div>
@@ -259,26 +265,26 @@
         var s = slides[index];
         var seg = getSegment(index);
         var pool = SEG_IMAGES[Math.min(seg, SEG_IMAGES.length - 1)];
+        var accent = SEG_ACCENTS[Math.min(seg, SEG_ACCENTS.length - 1)];
 
-        // Image: use slide's local image if it's a confirmed interfaces/assets/ path
+        // Crossfade: fade out → swap src → fade back in
+        imgEl.classList.add('fade-out');
+        var nextSrc;
         var localPath = (s.image || '').replace(/^interfaces\//, '');
         var useLocal = localPath && localPath.indexOf('assets/') === 0 && localPath.indexOf('assets/images/') === -1;
+        nextSrc = useLocal ? localPath : pool[segImgIndex % pool.length];
 
-        if (useLocal) {
-          imgEl.src = localPath;
-          imgEl.classList.remove('empty');
-        } else {
-          // Use segment Unsplash pool — cycle through all 3 images
-          imgEl.src = pool[segImgIndex % pool.length];
-          imgEl.classList.remove('empty');
-        }
+        setTimeout(function () {
+          imgEl.src = nextSrc;
+          imgEl.classList.remove('fade-out');
+        }, 350); // swap at mid-fade
 
-        // Background overlay per segment
+        // Segment overlay
         if (bgEl) bgEl.style.background = SEG_OVERLAYS[Math.min(seg, SEG_OVERLAYS.length - 1)];
 
-        // Accent color on progress bar
-        var accent = SEG_ACCENTS[Math.min(seg, SEG_ACCENTS.length - 1)];
-        document.getElementById('progress').style.background = accent;
+        // Progress bar accent (use backgroundColor to avoid clobbering width)
+        var progEl = document.getElementById('progress');
+        progEl.style.backgroundColor = accent;
 
         // Labels
         labelEl.textContent = s.title || '';
@@ -298,7 +304,7 @@
           segImgIndex++;
         }
 
-        // Start ticker tape for this slide's script line
+        // Ticker tape for this slide's line
         startTicker(getScriptLine());
       }
 

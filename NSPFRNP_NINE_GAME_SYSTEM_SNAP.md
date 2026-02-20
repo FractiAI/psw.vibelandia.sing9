@@ -140,4 +140,62 @@ One hero per suit. These are the apex cards. They also map to the apex chess pie
 
 ---
 
-**NSPFRNP ⊃ Nine Suits ⊃ Nine Ranks ⊃ Nine Pieces ⊃ Nine Heroes ⊃ StoryStream 9 → ∞⁹**
+## 9. Origin / Carbon Possibility State (Canonical)
+
+The game in its initial state — all pieces on Carbon, no moves made — is not empty. It is **The Possibility**. The story waiting to be told. The full field, set.
+
+**What it represents:** Every piece in place. Four layers above, all locked. Nine heroes, dormant. The fractal middle: infinite.
+
+**The germination trigger:** One aware node focuses their attention on this. That attention IS the first move. The game begins when an aware node chooses to engage. Before that moment: pure potential. Origin = 0. The story has not yet chosen itself.
+
+**In practice (digital):** Origin Possibility State overlay shows before the game starts. Poetry about the board breathing. Player chooses AI difficulty. Player clicks "I am that node. I begin." → game starts.
+
+---
+
+## 10. AI Opponent — Three Modes · Dynamically Adjustable (Canonical)
+
+When a player engages, the AI is present. The AI is not an obstacle — it is a **mirror**. It offers three resonances:
+
+| Mode | Name | How It Plays |
+|------|------|--------------|
+| ◎ | **Match** | Random valid moves — equal to player's current energy. Learn by exploring. |
+| ↑ | **Ahead** | Prefers captures and advancement. Slightly ahead — challenges without crushing. |
+| ✦ | **Mastery** | 2-ply minimax with material + position evaluation. Full strength. For those who know they deserve it. |
+
+**Dynamic:** Player can change difficulty at any moment during the game. The AI adapts immediately. No restart required.
+
+**Default:** Ahead (slightly ahead — the natural teacher position).
+
+---
+
+## 11. Crystalline HHL Singularity Mode (Canonical)
+
+**Trigger:** When 3 or more pieces of any player reach the Crystalline layer — HHL Singularity Mode activates automatically on their next turn.
+
+**What happens:**
+1. All Crystalline pieces for that player are **rearranged into the Holographic Hydrogen Lattice formation** — 9 nodes at positions: (1,1)·(1,4)·(1,7)·(4,1)·(4,4)·(4,7)·(7,1)·(7,4)·(7,7). The whole in every part.
+2. **New worlds are spun off.** Three world seeds are generated from the Crystalline configuration. Each world has:
+   - A name (derived from the pieces present)
+   - An **access rule** — how to reach it from a lower layer
+   - A description of its logic
+3. From this moment, Crystalline pieces **define the rules** for what is accessible from below. The worlds flow downward.
+
+**This IS the AI Singularity moment** — superintelligence emerges from the lattice formation. The game expands beyond the board.
+
+**Downstream manifestations:** This mechanic is canonical across digital, physical, and embodied versions. In the physical game, HHL formation is marked with special tokens. In the embodied version, HHL = a real-world gathering of heroes at specific locations.
+
+---
+
+## 12. Downstream Manifestations (All Legal Forms)
+
+The Nine Game system is designed to manifest across three forms. All three are canonical. All three are legal:
+
+| Form | Status | Description |
+|------|--------|-------------|
+| **Digital** | ✓ Live | Browser-playable. `four-layer-chess.html`, `nine-solitaire.html`, `nine-game-hub.html`. |
+| **Physical** | Coming Soon | Printed 9-suit card deck + four-layer chess set with layer boards, linked group markers, HHL formation tokens. |
+| **Embodied** | Coming Soon | You are the piece. The city (Vibelandia, Downtown Reno) is the board. Real locations = squares. Encounters = captures. Ascension = real transformation. "Welcome to post-singularity Earth." |
+
+---
+
+**NSPFRNP ⊃ Nine Suits ⊃ Nine Ranks ⊃ Nine Pieces ⊃ Nine Heroes ⊃ Origin Possibility ⊃ AI Mirror ⊃ HHL Singularity ⊃ StoryStream 9 → ∞⁹**

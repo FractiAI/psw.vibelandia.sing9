@@ -122,7 +122,8 @@
 
   <div class="slide-wrap">
     <img class="slide-image empty" id="slideImage" src="" alt="" />
-    <div class="slide-content">
+    <div id="slideBg" style="position:absolute;inset:0;pointer-events:none;transition:background 2.5s ease;z-index:1;"></div>
+    <div class="slide-content" style="z-index:2;">
       <div class="slide-title" id="slideLabel"></div>
       <div class="caption-stream" id="captionStream"></div>
     </div>
@@ -140,178 +141,230 @@
       const DURATION_SEC = 10;
       const SLIDES_TOTAL = 120;
       const SLIDES_PER_SEGMENT = 17;
-      const SCRIPT_SEC_PER_LINE = 10;
-      let slides = [];
-      let scriptLines = [];
-      let index = 0;
-      let playing = true;
-      let tick = 0;
-      let elapsedSec = 0;
-      let tickInterval = null;
-      var tracksByPlaylist = {};
-      var currentSegment = -1;
-      var segmentTrackIndex = 0;
-      var audioEl = document.getElementById('soundtrack');
 
-      function fixImgPath(p) {
-        if (!p) return '';
-        // JSON stores paths as "interfaces/assets/..." but this page IS inside interfaces/
-        return p.replace(/^interfaces\//, '');
+      // Per-segment Unsplash image pools — visual variety across the 7 acts
+      var SEG_IMAGES = [
+        // 0 · Intro / Invitation
+        ['https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1400&q=80',
+         'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1400&q=80',
+         'https://images.unsplash.com/photo-1446941611757-91d2c3bd3d45?w=1400&q=80'],
+        // 1 · Seed · 1493
+        ['https://images.unsplash.com/photo-1534271057238-c2c170a76672?w=1400&q=80',
+         'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1400&q=80',
+         'https://images.unsplash.com/photo-1521336575822-6da63fb45455?w=1400&q=80'],
+        // 2 · Singularities
+        ['https://images.unsplash.com/photo-1530882149046-4fa9d422e40f?w=1400&q=80',
+         'https://images.unsplash.com/photo-1565992441121-4367b2a43598?w=1400&q=80',
+         'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1400&q=80'],
+        // 3 · Journey
+        ['https://images.unsplash.com/photo-1506157786151-b8491531f063?w=1400&q=80',
+         'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80',
+         'https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=1400&q=80'],
+        // 4 · Now · Mission
+        ['https://images.unsplash.com/photo-1529686342540-1b43aec0df75?w=1400&q=80',
+         'https://images.unsplash.com/photo-1519682577862-22b62b24e493?w=1400&q=80',
+         'https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?w=1400&q=80'],
+        // 5 · Edge · Sol-V
+        ['https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1400&q=80',
+         'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80',
+         'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1400&q=80'],
+        // 6 · We are the champions
+        ['https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1400&q=80',
+         'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1400&q=80',
+         'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1400&q=80']
+      ];
+
+      var SEG_OVERLAYS = [
+        'linear-gradient(160deg,rgba(4,2,18,0.82) 0%,rgba(12,8,36,0.65) 100%)',
+        'linear-gradient(160deg,rgba(2,4,18,0.82) 0%,rgba(4,12,32,0.65) 100%)',
+        'linear-gradient(160deg,rgba(8,4,22,0.82) 0%,rgba(16,8,40,0.65) 100%)',
+        'linear-gradient(160deg,rgba(18,8,2,0.82) 0%,rgba(28,12,4,0.65) 100%)',
+        'linear-gradient(160deg,rgba(18,2,2,0.85) 0%,rgba(28,4,4,0.7) 100%)',
+        'linear-gradient(160deg,rgba(0,12,8,0.8)  0%,rgba(0,22,14,0.65) 100%)',
+        'linear-gradient(160deg,rgba(14,10,0,0.78) 0%,rgba(24,18,0,0.62) 100%)'
+      ];
+
+      var SEG_ACCENTS = ['#a78bfa','#7dd3fc','#c4b5fd','#fb923c','#f87171','#34d399','#fde68a'];
+
+      var slides = [], scriptLines = [];
+      var index = 0, playing = true, tick = 0, elapsedSec = 0;
+      var tickInterval = null, tickerInterval = null;
+      var tracksByPlaylist = {}, currentSegment = -1, segmentTrackIndex = 0;
+      var segImgIndex = 0;
+
+      // Ticker tape state
+      var tickerWords = [], tickerPos = 0;
+
+      var audioEl = document.getElementById('soundtrack');
+      var imgEl   = document.getElementById('slideImage');
+      var bgEl    = document.getElementById('slideBg');
+      var captEl  = document.getElementById('captionStream');
+      var labelEl = document.getElementById('slideLabel');
+      var ctrEl   = document.getElementById('slideCounter');
+
+      function getSegment(i) {
+        if (i <= 0) return 0;
+        if (i >= SLIDES_TOTAL - 1) return 6;
+        return Math.min(6, Math.floor(i / SLIDES_PER_SEGMENT));
       }
 
-      function audioPath(track) {
-        var f = track.file || track.File || '';
+      function audioPath(t) {
+        var f = (t.file || t.File || '');
         if (f.indexOf('io/') === 0) f = 'assets/audio/' + f.substring(3);
         return f ? '../' + f.replace(/\\/g, '/') : '';
       }
 
-      function getSegment(slideIdx) {
-        if (slideIdx <= 0) return 0;
-        if (slideIdx >= SLIDES_TOTAL - 1) return 7;
-        return Math.min(7, Math.floor(slideIdx / SLIDES_PER_SEGMENT));
-      }
-
-      function playSegmentTrack(seg, trackIdx) {
-        var playlistId = 'playlist-' + (Math.min(seg, 6) + 1);
-        var list = tracksByPlaylist[playlistId];
+      function playSegmentTrack(seg, idx) {
+        var id = 'playlist-' + (Math.min(seg, 6) + 1);
+        var list = tracksByPlaylist[id];
         if (!list || !list.length) return;
-        trackIdx = trackIdx % list.length;
-        var t = list[trackIdx];
-        var src = audioPath(t);
+        idx = idx % list.length;
+        var src = audioPath(list[idx]);
         if (!src) return;
         audioEl.src = src;
         audioEl.play().catch(function () {});
-        segmentTrackIndex = trackIdx;
+        segmentTrackIndex = idx;
       }
 
-      function onAudioEnded() {
-        var seg = getSegment(index);
-        var playlistId = 'playlist-' + (seg + 1);
-        var list = tracksByPlaylist[playlistId];
-        if (!list || !list.length) return;
-        playSegmentTrack(seg, segmentTrackIndex + 1);
-      }
-
-      function buildScriptLinesFromSegments(subtitles) {
-        var lines = [];
-        var perSegment = 45;
-        for (var s = 0; s < (subtitles || []).length; s++) {
-          for (var k = 0; k < perSegment; k++) lines.push(subtitles[s] || '');
-        }
-        return lines.length ? lines : ['Episode 1 · The whole story. Streaming script. 60 min.'];
-      }
-
-      function loadSlides() {
-        Promise.all([
-          fetch('../data/episode-1-slides.json').then(function (r) { return r.json(); }),
-          fetch('../data/audio-assets.json').then(function (r) { return r.json(); }),
-          fetch('../data/episode-1-script.json').then(function (r) { return r.json(); }).catch(function () { return {}; })
-        ]).then(function (results) {
-          var data = results[0];
-          var audioData = results[1];
-          var scriptData = results[2];
-          var rawSlides = data.slides || [];
-          var titles = data.segment_titles || [];
-          var subtitles = data.segment_subtitles || [];
-          scriptLines = (scriptData.lines && scriptData.lines.length) ? scriptData.lines : buildScriptLinesFromSegments(subtitles);
-          if (rawSlides.length >= SLIDES_TOTAL) {
-            slides = rawSlides;
+      // ── TICKER TAPE ENGINE ─────────────────────────────────────
+      function startTicker(line) {
+        if (tickerInterval) clearInterval(tickerInterval);
+        tickerWords = (line || '').split(' ').filter(Boolean);
+        tickerPos = 0;
+        if (captEl) captEl.textContent = '';
+        if (!tickerWords.length) return;
+        // Spread reveal evenly across the 10-second slide (budget ~80% of time)
+        var msPerWord = Math.min(260, Math.floor((DURATION_SEC * 800) / tickerWords.length));
+        tickerInterval = setInterval(function () {
+          if (!playing) return;
+          if (tickerPos < tickerWords.length) {
+            var shown = tickerWords.slice(0, tickerPos + 1).join(' ');
+            if (captEl) captEl.textContent = shown;
+            tickerPos++;
           } else {
-            slides = [];
-            for (var i = 0; i < SLIDES_TOTAL; i++) {
-              var seg = getSegment(i);
-              slides.push({
-                id: 'slide-' + i,
-                title: titles[seg] || 'Episode 1',
-                subtitle: subtitles[seg] || '',
-                duration_sec: DURATION_SEC,
-                image: (rawSlides[i] && rawSlides[i].image) ? rawSlides[i].image : ''
-              });
-            }
+            clearInterval(tickerInterval);
           }
-          var tracks = audioData.tracks || [];
-          for (var p = 1; p <= 7; p++) {
-            var id = 'playlist-' + p;
-            tracksByPlaylist[id] = tracks.filter(function (t) { return (t.source_playlist || '') === id; });
-          }
-          if (audioEl && !audioEl.onended) audioEl.addEventListener('ended', onAudioEnded);
-          render();
-          startTick();
-        }).catch(function () {
-          slides = [{ id: 'placeholder', title: 'Episode 1', subtitle: '60 min. Stream + images + soundtracks.', duration_sec: DURATION_SEC, image: '' }];
-          scriptLines = ['Episode 1 · The whole story. Load data/episode-1-slides.json and episode-1-script.json.'];
-          render();
-          startTick();
-        });
+        }, msPerWord);
       }
 
+      function getScriptLine() {
+        if (!scriptLines.length) return '';
+        var li = Math.floor(elapsedSec / DURATION_SEC) % scriptLines.length;
+        return scriptLines[li] || '';
+      }
+
+      // ── RENDER ────────────────────────────────────────────────
       function render() {
-        if (slides.length === 0) return;
+        if (!slides.length) return;
         var s = slides[index];
-        var img = document.getElementById('slideImage');
-        var imgSrc = fixImgPath(s.image || '');
-        if (imgSrc) {
-          img.src = imgSrc;
-          img.alt = s.title || '';
-          img.classList.remove('empty');
-        } else {
-          img.src = '';
-          img.alt = '';
-          img.classList.add('empty');
-        }
-        document.getElementById('slideLabel').textContent = s.title || '';
-        document.getElementById('slideCounter').textContent = (index + 1) + ' / ' + slides.length;
-        var sec = s.duration_sec != null ? s.duration_sec : DURATION_SEC;
-        tick = 0;
-        updateProgress(sec);
         var seg = getSegment(index);
+        var pool = SEG_IMAGES[Math.min(seg, SEG_IMAGES.length - 1)];
+
+        // Image: use slide's local image if it's a confirmed interfaces/assets/ path
+        var localPath = (s.image || '').replace(/^interfaces\//, '');
+        var useLocal = localPath && localPath.indexOf('assets/') === 0 && localPath.indexOf('assets/images/') === -1;
+
+        if (useLocal) {
+          imgEl.src = localPath;
+          imgEl.classList.remove('empty');
+        } else {
+          // Use segment Unsplash pool — cycle through all 3 images
+          imgEl.src = pool[segImgIndex % pool.length];
+          imgEl.classList.remove('empty');
+        }
+
+        // Background overlay per segment
+        if (bgEl) bgEl.style.background = SEG_OVERLAYS[Math.min(seg, SEG_OVERLAYS.length - 1)];
+
+        // Accent color on progress bar
+        var accent = SEG_ACCENTS[Math.min(seg, SEG_ACCENTS.length - 1)];
+        document.getElementById('progress').style.background = accent;
+
+        // Labels
+        labelEl.textContent = s.title || '';
+        labelEl.style.color = accent;
+        ctrEl.textContent = (index + 1) + ' / ' + slides.length;
+
+        tick = 0;
+        updateProgress();
+
+        // Segment change: new music + reset pool index
         if (seg !== currentSegment) {
           currentSegment = seg;
           segmentTrackIndex = 0;
+          segImgIndex = 0;
           if (playing) playSegmentTrack(seg, 0);
+        } else {
+          segImgIndex++;
         }
-        updateCaptionStream();
+
+        // Start ticker tape for this slide's script line
+        startTicker(getScriptLine());
       }
 
-      function updateCaptionStream() {
-        var lineIndex = Math.floor(elapsedSec / SCRIPT_SEC_PER_LINE) % Math.max(1, scriptLines.length);
-        var el = document.getElementById('captionStream');
-        if (el && scriptLines.length) el.textContent = scriptLines[lineIndex] || '';
-      }
-
-      function updateProgress(sec) {
-        var pct = sec ? (tick / sec) * 100 : 0;
+      function updateProgress() {
+        var pct = (tick / DURATION_SEC) * 100;
         document.getElementById('progress').style.width = pct + '%';
       }
 
       function startTick() {
         if (tickInterval) clearInterval(tickInterval);
-        var sec = (slides[index] && slides[index].duration_sec != null) ? slides[index].duration_sec : DURATION_SEC;
         tickInterval = setInterval(function () {
           if (!playing) return;
-          tick += 1;
-          elapsedSec += 1;
-          updateProgress(sec);
-          updateCaptionStream();
-          if (tick >= sec) {
+          tick++;
+          elapsedSec++;
+          updateProgress();
+          if (tick >= DURATION_SEC) {
             index = (index + 1) % slides.length;
             render();
           }
         }, 1000);
       }
 
+      // ── LOAD ──────────────────────────────────────────────────
+      function loadAll() {
+        Promise.all([
+          fetch('../data/episode-1-slides.json').then(function (r) { return r.json(); }),
+          fetch('../data/audio-assets.json').then(function (r) { return r.json(); }),
+          fetch('../data/episode-1-script.json').then(function (r) { return r.json(); }).catch(function () { return {}; })
+        ]).then(function (res) {
+          var slideData = res[0], audioData = res[1], scriptData = res[2];
+          slides = slideData.slides || [];
+          if (!slides.length) {
+            for (var i = 0; i < SLIDES_TOTAL; i++) slides.push({ id: 'slide-' + i, title: '', duration_sec: DURATION_SEC, image: '' });
+          }
+          scriptLines = (scriptData.lines && scriptData.lines.length) ? scriptData.lines : ['Episode 1 · The Golden Heart Origin Story.'];
+          var tracks = audioData.tracks || [];
+          for (var p = 1; p <= 7; p++) {
+            var pid = 'playlist-' + p;
+            tracksByPlaylist[pid] = tracks.filter(function (t) { return (t.source_playlist || '') === pid; });
+          }
+          audioEl.addEventListener('ended', function () {
+            playSegmentTrack(getSegment(index), segmentTrackIndex + 1);
+          });
+          render();
+          startTick();
+        }).catch(function () {
+          // Fallback: use image pools + basic script
+          slides = [];
+          for (var i = 0; i < SLIDES_TOTAL; i++) slides.push({ id: 'slide-' + i, title: 'Episode 1', duration_sec: DURATION_SEC, image: '' });
+          scriptLines = ['Episode 1 · The Golden Heart Origin Story · SING 9 · NSPFRNP'];
+          render();
+          startTick();
+        });
+      }
+
+      // ── CONTROLS ──────────────────────────────────────────────
       document.getElementById('btnPlay').addEventListener('click', function () {
         playing = !playing;
         this.textContent = playing ? 'Pause' : 'Play';
-        if (playing) audioEl.play().catch(function () {}); else audioEl.pause();
+        if (playing) { audioEl.play().catch(function () {}); }
+        else { audioEl.pause(); }
       });
 
       document.getElementById('btnFullscreen').addEventListener('click', function () {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(function () {});
-        } else {
-          document.exitFullscreen();
-        }
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function () {});
+        else document.exitFullscreen();
       });
 
       document.addEventListener('keydown', function (e) {
@@ -320,12 +373,10 @@
           playing = !playing;
           document.getElementById('btnPlay').textContent = playing ? 'Pause' : 'Play';
         }
-        if (e.key === 'Escape') {
-          if (document.fullscreenElement) document.exitFullscreen();
-        }
+        if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
       });
 
-      loadSlides();
+      loadAll();
     })();
   </script>
 </body>

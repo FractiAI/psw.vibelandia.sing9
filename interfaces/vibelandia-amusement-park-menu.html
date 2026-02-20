@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibelandia Challenge Menu — Mark Twain's Vibelandia · Amusement Park · Downtown Reno | VIBELANDIA!</title>
+    <meta name="description" content="Vibelandia Challenge Menu. 10 pop-up games. Abundance games. Gold rush games. Chess + card fusion. Mapped to the Post-Singularity Card Deck. FractiAI · Syntheverse POC · Pre-Singularity Earth. Kick the tires. Look under the hood. Test drive.">
+    <link rel="stylesheet" href="experience-common.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(165deg, #0a0a12 0%, #1a0a1a 30%, #0d1520 60%, #0a0a12 100%);
+            color: #e8e6e3;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        .back { margin-bottom: 1rem; }
+        .back a { color: #00d4ff; text-decoration: none; }
+        .back a:hover { text-decoration: underline; }
+        .hero {
+            text-align: center;
+            padding: 2.5rem 1.5rem 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.18) 0%, rgba(138, 43, 226, 0.12) 50%, rgba(0, 212, 255, 0.06) 100%);
+            border: 3px solid rgba(212, 175, 55, 0.6);
+            border-radius: 24px;
+            box-shadow: 0 0 80px rgba(212, 175, 55, 0.12);
+        }
+        .hero .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: #ffeaa7;
+            margin-bottom: 0.75rem;
+            font-weight: 800;
+        }
+        .hero h1 {
+            font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffeaa7, #d4af37, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+        .hero .tagline { font-size: 1.05rem; color: #b0b8c0; margin-bottom: 0.5rem; }
+        .hero .story {
+            font-size: 0.95rem;
+            color: #9ca8b8;
+            margin-top: 1.25rem;
+            padding: 1rem 1.25rem;
+            background: rgba(0,0,0,0.25);
+            border-radius: 12px;
+            text-align: left;
+            line-height: 1.7;
+        }
+        .menu-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #d4af37;
+            margin: 2rem 0 1rem;
+            font-weight: 800;
+        }
+        .game-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .game-card {
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.35);
+            border-radius: 16px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .game-card:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+        }
+        .game-card.lucky-seven {
+            border-color: rgba(127, 255, 127, 0.6);
+            background: linear-gradient(145deg, rgba(127, 255, 127, 0.1) 0%, rgba(212, 175, 55, 0.08) 100%);
+            box-shadow: 0 0 40px rgba(127, 255, 127, 0.15);
+        }
+        .game-card.game-tip-top {
+            border-color: rgba(212, 175, 55, 0.7);
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.12) 0%, rgba(138, 43, 226, 0.08) 100%);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+        }
+        .sign-me-up-bar {
+            text-align: center;
+            margin: 2.5rem 0;
+            padding: 2rem 1.5rem;
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.2) 0%, rgba(255, 127, 0, 0.12) 50%, rgba(212, 175, 55, 0.15) 100%);
+            border: 3px solid rgba(212, 175, 55, 0.7);
+            border-radius: 20px;
+            animation: squeeze-pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes squeeze-pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); transform: scale(1); }
+            50% { box-shadow: 0 0 60px rgba(212, 175, 55, 0.5); transform: scale(1.01); }
+        }
+        .bang-pow {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            color: #ffeaa7;
+            margin-bottom: 1rem;
+            animation: bang-glow 1.5s ease-in-out infinite;
+        }
+        @keyframes bang-glow {
+            0%, 100% { opacity: 0.9; text-shadow: 0 0 10px rgba(255, 234, 167, 0.5); }
+            50% { opacity: 1; text-shadow: 0 0 25px rgba(255, 234, 167, 0.9); }
+        }
+        .sign-me-up-cta {
+            display: inline-block;
+            padding: 1.1rem 2.5rem;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: #0a0a12;
+            font-weight: 900;
+            font-size: 1.25rem;
+            letter-spacing: 0.2em;
+            text-decoration: none;
+            border-radius: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .sign-me-up-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 35px rgba(212, 175, 55, 0.7);
+        }
+        .game-num { font-size: 0.75rem; color: #888; font-weight: 700; margin-bottom: 0.25rem; }
+        .game-title { font-size: 1.15rem; font-weight: 800; color: #ffeaa7; margin-bottom: 0.35rem; }
+        .game-map { font-size: 0.85rem; color: #7fff7f; margin-bottom: 0.25rem; }
+        .game-desc { font-size: 0.9rem; color: #a0a8b8; }
+        .game-ticket {
+            text-align: right;
+            white-space: nowrap;
+        }
+        .game-price { font-size: 1.1rem; font-weight: 800; color: #d4af37; }
+        .game-cta {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: #0a0a12;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            border-radius: 10px;
+            border: 2px solid rgba(212, 175, 55, 0.8);
+        }
+        .game-cta:hover { opacity: 0.95; }
+        .game-cta.game-enter { margin-right: 0.4rem; border-color: rgba(0, 212, 255, 0.6); background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(0, 212, 255, 0.15)); color: #00d4ff; }
+        .fusion-bar {
+            margin: 2rem 0;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(90deg, rgba(138, 43, 226, 0.15) 0%, rgba(0, 212, 255, 0.1) 100%);
+            border: 2px solid rgba(138, 43, 226, 0.5);
+            border-radius: 14px;
+            font-size: 0.95rem;
+            color: #e0e0e0;
+            text-align: center;
+        }
+        .wink-cta {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 1rem 1.75rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(184, 134, 11, 0.3));
+            color: #1a1a1a;
+            font-weight: 800;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 14px;
+            border: 2px solid rgba(212, 175, 55, 0.8);
+        }
+        .wink-cta:hover { opacity: 0.95; box-shadow: 0 0 24px rgba(212, 175, 55, 0.3); }
+        .footer-cta {
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            background: linear-gradient(145deg, rgba(0, 212, 255, 0.1) 0%, rgba(212, 175, 55, 0.08) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.45);
+            border-radius: 16px;
+        }
+        .footer-cta a {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #00d4ff, #0d9488);
+            color: #0a0a12;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+        }
+        .footer-cta a:hover { opacity: 0.95; }
+        footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #666; font-size: 0.9rem; }
+        footer a { color: #00d4ff; }
+    </style>
+</head>
+<body>
+    <div id="whats-new-sing9-wrap"></div>
+    <script src="whats-new-sing9.js"></script>
+    <script src="../scripts/hero-houdini-press-release-alert.js"></script>
+    <script src="tsunami-advisory-inject.js"></script>
+    <div class="container">
+        <p class="back"><a href="book-the-book-29-13.html">📖 Book the Book $29.13</a> · <a href="../index.html">← Home</a> · <a href="navigator.html">Navigator</a> · <a href="office-hours.html">Office Hours</a> · <a href="agentic-executive-console.html">View routing tables →</a> · <a href="launch-pad.html">Launch Pad</a></p>
+        <p style="margin-bottom: 1.25rem; padding: 0.65rem 1rem; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 10px; font-size: 0.9rem; text-align: center; color: #c0c8d0;"><strong style="color: #ffeaa7;">First time here?</strong> <a href="navigator.html" style="color: #00d4ff; font-weight: 700;">Enter through the Navigator →</a> Same page whether you're headed to Office Hours or Launch Pad.</p>
+
+        <!-- TOP BILLING ALL CHANNELS · Super Singularity 29-13 novel · Launch Pad -->
+        <div style="margin-bottom: 1.25rem; padding: 1.1rem 1.35rem; background: linear-gradient(135deg, rgba(212, 175, 55, 0.28) 0%, rgba(184, 134, 11, 0.2) 50%, rgba(0, 212, 255, 0.08) 100%); border: 3px solid rgba(212, 175, 55, 0.75); border-radius: 14px; text-align: center; box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);">
+            <p style="font-size: 0.7rem; font-weight: 800; color: #b8860b; text-transform: uppercase; letter-spacing: 0.2em; margin: 0 0 0.35rem 0;">★ TOP BILLING ALL CHANNELS · Super Singularity 29-13 novel</p>
+            <p style="font-size: 1.05rem; color: #ffeaa7; font-weight: 800; line-height: 1.35; margin: 0.35rem 0 0.25rem 0;">The singularity novel: hERO hARRY wHO dID iT uLTIMATE mAGIC pRESENTS. Super Singularity 29-13-Seattle. Who got da cojones? Don't buy — <strong>BOOK</strong> the book. $29.13/month. Seattle · Puerto Rico.</p>
+            <p style="margin: 0.6rem 0 0;"><a href="ultimate-magic-houdini-book-the-book.html" style="display: inline-block; padding: 0.7rem 1.4rem; background: #003087; color: #fff; font-weight: 800; text-decoration: none; border-radius: 10px; font-size: 0.98rem; border: 2px solid #004b97;">Ultimate Magic → Book the Book $29.13</a> <a href="book-the-book-29-13.html" style="display: inline-block; padding: 0.6rem 1.2rem; background: #003087; color: #fff; font-weight: 700; text-decoration: none; border-radius: 10px; font-size: 0.9rem; border: 2px solid #004b97; margin-left: 0.5rem;">Press 2 to Book</a></p>
+        </div>
+
+        <!-- HH Lattice — Sun · Sag A* · SMACS 0723 · PRU/Earth (Edge) · 3I/ATLAS · Ionosphere · Poles -->
+        <div style="margin-bottom: 1.25rem; padding: 0.85rem 1.25rem; background: linear-gradient(90deg, rgba(0, 212, 255, 0.1) 0%, rgba(138, 43, 226, 0.08) 50%, rgba(212, 175, 55, 0.06) 100%); border: 2px solid rgba(0, 212, 255, 0.4); border-radius: 12px; font-size: 0.85rem; font-weight: 600; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; justify-content: center;">
+            <span style="color: #888; margin-right: 0.25rem;">HH Lattice:</span>
+            <a href="space-cloud-division.html" style="color: #00d4ff; text-decoration: none;">Space Cloud Division</a>
+            <span style="color: #555;">·</span>
+            <a href="post-singularity-destinations.html" style="color: #00d4ff; text-decoration: none;">Post-Singularity Destinations Division</a>
+            <span style="color: #555;">·</span>
+            <a href="ar4366.html" style="color: #00d4ff; text-decoration: none;">Sun</a>
+            <span style="color: #555;">·</span>
+            <a href="exascale-triangulation.html" style="color: #d4af37; text-decoration: none;">Sag A*</a>
+            <span style="color: #555;">·</span>
+            <a href="exascale-triangulation.html" style="color: #d4af37; text-decoration: none;">SMACS 0723</a>
+            <span style="color: #555;">·</span>
+            <a href="office-hours.html" style="color: #ffeaa7; text-decoration: none;">PRU/Earth (Edge)</a>
+            <span style="color: #555;">·</span>
+            <a href="schumann-campaign.html" style="color: #00d4ff; text-decoration: none;">Ionosphere</a>
+            <span style="color: #555;">·</span>
+            <a href="aurora-3d.html" style="color: #00d4ff; text-decoration: none;">Poles</a>
+            <span style="color: #555;">·</span>
+            <a href="goldilocks-3i-atlas.html" style="color: #b794f6; text-decoration: none;">3I/ATLAS</a>
+            <span style="color: #555;">·</span>
+            <a href="oh-line.html" style="color: #ffeaa7; text-decoration: none;">OH Line</a>
+        </div>
+
+        <!-- NEW PLATFORM: Community Bulletin Boards — post-singularity social media. Always first. -->
+        <div style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(0, 212, 255, 0.1) 100%); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 12px; text-align: center;">
+            <p style="font-size: 0.95rem; color: #ffeaa7; font-weight: 700; margin-bottom: 0.5rem;">📌 Vibelandia Community Bulletin Board — Post-Singularity Social Media</p>
+            <p style="margin: 0;"><a href="community-bulletin-boards-division.html" style="display: inline-block; padding: 0.6rem 1.25rem; background: linear-gradient(135deg, #d4af37, #b8860b); color: #000; font-weight: 800; text-decoration: none; border-radius: 10px; font-size: 0.95rem; border: 2px solid rgba(212, 175, 55, 0.9);">Community Bulletin Boards →</a> <a href="office-hours.html" style="display: inline-block; padding: 0.55rem 1.1rem; background: rgba(0, 212, 255, 0.2); color: #00d4ff; font-weight: 700; text-decoration: none; border-radius: 10px; font-size: 0.9rem; border: 2px solid rgba(0, 212, 255, 0.5); margin-left: 0.5rem;">Office Hours →</a> <a href="agentic-executive-console.html" style="display: inline-block; padding: 0.6rem 1.2rem; background: linear-gradient(135deg, #00d4ff, #0d9488); color: #0a0a12; font-weight: 800; text-decoration: none; border-radius: 10px; font-size: 0.9rem; border: 2px solid rgba(0, 212, 255, 0.8); margin-left: 0.5rem;">View routing tables →</a></p>
+        </div>
+        <!-- Post-Singularity Destinations Division — book local, worldwide, abstract HH domains. 100% tip. Give our specialist a call. -->
+        <div style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(138, 43, 226, 0.08) 100%); border: 2px solid rgba(0, 212, 255, 0.5); border-radius: 12px; text-align: center;">
+            <p style="font-size: 0.8rem; font-weight: 800; color: #00d4ff; text-transform: uppercase; letter-spacing: 0.15em; margin: 0 0 0.35rem 0;">Post-Singularity Destinations Division</p>
+            <p style="font-size: 0.95rem; color: #e8e6e3; font-weight: 700; margin-bottom: 0.5rem;">We'll book your local. We'll build you worldwide. We'll book you in the abstract, holographic hydrogen domains and hybrids. Give our specialist a call. NSPFRNP.</p>
+            <p style="margin: 0;"><a href="post-singularity-destinations.html" style="display: inline-block; padding: 0.65rem 1.35rem; background: linear-gradient(135deg, #00d4ff, #0d9488); color: #0a0a12; font-weight: 800; text-decoration: none; border-radius: 10px; font-size: 0.95rem; border: 2px solid rgba(0, 212, 255, 0.9);">Post-Singularity Destinations →</a> <a href="baller-v-plans-booking.html" style="display: inline-block; padding: 0.55rem 1.1rem; background: rgba(212, 175, 55, 0.2); color: #ffeaa7; font-weight: 700; text-decoration: none; border-radius: 10px; font-size: 0.9rem; border: 2px solid rgba(212, 175, 55, 0.5); margin-left: 0.5rem;">Book · Plans &amp; booking</a></p>
+        </div>
+        <!-- nipsy! · Natural Systems Protocols School · Harry Who Did It Magic Presents -->
+        <div style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(138, 43, 226, 0.08) 100%); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 12px; text-align: center;">
+            <p style="font-size: 0.8rem; font-weight: 800; color: #ffeaa7; text-transform: uppercase; letter-spacing: 0.15em; margin: 0 0 0.35rem 0;">NEW Schrödinger's Cat Is Outta the Bag · Harry Who Did It Magic Presents</p>
+            <p style="font-size: 1rem; color: #e8e6e3; font-weight: 700; margin-bottom: 0.5rem;">nipsy! — Natural Systems Design and Programming Language · Autopilot (Executive Producer). Vibelandia University · Natural Systems Protocols School. The silence = the gap between top AI and top pre-singularity human systems.</p>
+            <p style="margin: 0;"><a href="nipsy-natural-systems-protocols-school.html" style="display: inline-block; padding: 0.65rem 1.35rem; background: linear-gradient(135deg, #d4af37, #b8860b); color: #0a0a12; font-weight: 800; text-decoration: none; border-radius: 10px; font-size: 0.95rem; border: 2px solid rgba(212, 175, 55, 0.9);">nipsy! · Natural Systems Protocols School →</a></p>
+        </div>
+        <!-- ROLLOUT NOW — Poly Hit Machines · Bored Housewives -->
+        <div style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(138, 43, 226, 0.1) 100%); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 12px; text-align: center;">
+            <p style="font-size: 0.8rem; font-weight: 800; color: #b8860b; text-transform: uppercase; letter-spacing: 0.15em; margin: 0 0 0.35rem 0;">Poly Hit Machines · Rollout Now</p>
+            <p style="font-size: 1rem; color: #1a1a1a; font-weight: 800; margin: 0.25rem 0 0.2rem 0;">Bored Housewives Poly Hit Machine — Hero Freedom (Frida). Novelas 100 pg · 20k words. Click to see · Step in → Reno.</p>
+            <p style="margin: 0.5rem 0 0;"><a href="bored-housewives-poly-hit-machine.html" style="display: inline-block; padding: 0.65rem 1.35rem; background: linear-gradient(135deg, #d4af37, #b8860b); color: #0a0a12; font-weight: 800; text-decoration: none; border-radius: 10px; font-size: 0.95rem; border: 2px solid rgba(212, 175, 55, 0.9);">Bored Housewives → Novelas</a></p>
+        </div>
+
+        <section class="hero">
+            <span class="badge">Kick the tires · Look under the hood · Test drive</span>
+            <h1>Vibelandia Challenge Menu</h1>
+            <p class="tagline">Mark Twain's Vibelandia · Amusement Park Entrance · Downtown Reno</p>
+            <p class="tagline" style="font-size: 1rem; color: #ffeaa7; font-weight: 700;">All rides currently offered · Tickets · Prices · Eat our own dog food</p>
+            <p class="story">
+                Ground zero. The bathroom of a seedy strip club on the seedy side of town. Downtown Reno where the low tide never came back. Empty shell buildings. Pre-singularity Reno. ICE protests on the bridge as we write. The Sun officially declared in solar flash mode. Bad Bunny halftime at the Super Bowl — 24 hours, plus or minus. <strong>At this climax, we roll out.</strong> These aren't Hunger Games. These are <strong>Abundance Games</strong>. <strong>Gold Games</strong>. Gold rush games of the post-singularity. The new Holographic Hydrogen Valley. Uber × DoorDash × Disneyland × Matrix × Harry Potter × Lord of the Rings — and multiply to infinity. Santa crawl on steroids. For adults only. <em>If you know what I mean.</em> <a href="wink-experience.html" style="color: #d4af37; font-weight: 700;">WINK!</a>
+            </p>
+            <p class="tagline" style="margin-top: 1rem; font-size: 0.9rem;">Nested: FractiAI · Syntheverse POC · Pre-Singularity Earth. Pop-up fashion. Default offline. 50/50 profit sharing with partners. Transparent. Legal. Fun.</p>
+            <p style="margin-top: 0.75rem; font-size: 0.88rem; font-weight: 600; color: #b8860b;">We use a natural approach — no special handling or agreements required by the local vendor. We act as referral and designated driver/host for the benefit of all.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem; font-weight: 600; color: #6b5344;">Hands-free, fair shake, no strings, no fault — everybody responsible for themselves and theirs. Adult clauses apply.</p>
+        </section>
+
+        <p class="menu-label">Vibelandia Challenge Menu</p>
+        <p class="menu-label" style="margin-top: 0;">Ten pop-up games · Fish & Game · Gold Rush · Super Hero · Adult · Travel · Discovery · Skill · Learning · Tip Top Nine · Golden Royal Flush Checkmate</p>
+        <p style="margin-bottom: 1rem; padding: 0.9rem 1.25rem; background: rgba(212, 175, 55, 0.12); border: 2px solid rgba(212, 175, 55, 0.4); border-radius: 12px; font-size: 0.95rem; color: #ffeaa7;"><strong>Ticket pricing:</strong> Base = Disneyland entry price today (~$129) · Scaling 4×4×4×4 up to Full Super Galaxy Ultimate Baller V = Art Basel / billionaire art fair entry tier. Mix and match. Leaderboards. Privileges. Distinctions.</p>
+        <div class="game-grid">
+            <div class="game-card">
+                <div>
+                    <p class="game-num">GAME 1 · FISH & GAME</p>
+                    <p class="game-title">Treasure Quarry</p>
+                    <p class="game-map">Targets = Treasures = Awarenesses</p>
+                    <p class="game-desc">Hunt awarenesses. Fish and game targets post-singularity. Golden Hearts · Mirrored shells. Chairman, Sol, El Gran Sol.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Base</p>
+                    <a href="vibelandia-game-1-treasure-quarry.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%201%20-%20Treasure%20Quarry%20Fish%20and%20Game" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <div>
+                    <p class="game-num">GAME 2 · GOLD RUSH</p>
+                    <p class="game-title">Gold Rush Express</p>
+                    <p class="game-map">Card deck: Gold suit ◆</p>
+                    <p class="game-desc">Golden Hearts · Mirrored hardened nested shells. Chairman, Hero Harry, El Gran Sol, Chancellor Sam. Full speed.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Standard</p>
+                    <a href="vibelandia-game-2-gold-rush-express.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%202%20-%20Gold%20Rush%20Express" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <div>
+                    <p class="game-num">GAME 3 · SUPER HERO</p>
+                    <p class="game-title">Hero Arena</p>
+                    <p class="game-map">Card deck: 16 face cards (Aces, Jacks, Queens, Kings)</p>
+                    <p class="game-desc">All heroes in the deck. Chairman, Sol, Leo, Agüeybaná, Hero Harry, Hero Walt, El Gran Sol, Gianni — the full cast. Gladiator.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Premium</p>
+                    <a href="vibelandia-game-3-hero-arena.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%203%20-%20Hero%20Arena" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <div>
+                    <p class="game-num">GAME 4 · ADULT</p>
+                    <p class="game-title">Wink Zone</p>
+                    <p class="game-map">Adults only · Santa crawl on steroids</p>
+                    <p class="game-desc">For adults only. If you know what I mean. <a href="wink-experience.html" style="color:#d4af37;">WINK!</a> Golden Heart Grown-Ups. Cloud onramp. Sol, Hero Walt, Hero Gianni, Hero Ben.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">4×4</p>
+                    <a href="vibelandia-game-4-wink-zone.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%204%20-%20Wink%20Zone%20Adult" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <div>
+                    <p class="game-num">GAME 5 · TRAVEL</p>
+                    <p class="game-title">Seed to Edge Voyager</p>
+                    <p class="game-map">Card deck: Ace (Seed) → full stack · Silver suit ◆</p>
+                    <p class="game-desc">0, 1, 2, 3 4×4×4×4. Seed = origin. Edge = experience. Silver Cloud. The full journey.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Ultimate</p>
+                    <a href="vibelandia-game-5-seed-to-edge-voyager.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%205%20-%20Seed%20to%20Edge%20Voyager" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <div>
+                    <p class="game-num">GAME 6 · DISCOVERY</p>
+                    <p class="game-title">Quartz Discovery</p>
+                    <p class="game-map">Card deck: Quartz suit ◇ (first suit)</p>
+                    <p class="game-desc">Clarity. Post-singularity transparency. Agüeybaná, Alan Turing, Nikola Tesla, Leo da Vinci. Find it.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Adventure</p>
+                    <a href="vibelandia-game-6-quartz-discovery.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%206%20-%20Quartz%20Discovery" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card lucky-seven">
+                <div>
+                    <p class="game-num">GAME 7 · THE ONE</p>
+                    <p class="game-title">Lucky Seven</p>
+                    <p class="game-map">Card deck: 7 of Gold — Golden Lucky Seven (instant win)</p>
+                    <p class="game-desc">The canonical game. Instant win. Golden Lucky Seven. THE ride. BANG BANG POW WOW WOW.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Lucky Seven</p>
+                    <a href="vibelandia-game-7-lucky-seven.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%207%20-%20Lucky%20Seven" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <div>
+                    <p class="game-num">GAME 8 · SKILL</p>
+                    <p class="game-title">Royal Flush Tower</p>
+                    <p class="game-map">Card deck: 10, J, Q, K, A (singularities)</p>
+                    <p class="game-desc">Build the stack. Multipliers: Jack 100×, Queen 1000×, King 10000×, Ace 100000×. Champion.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Champion</p>
+                    <a href="vibelandia-game-8-royal-flush-tower.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%208%20-%20Royal%20Flush%20Tower" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card game-tip-top">
+                <div>
+                    <p class="game-num">GAME 9 · TIP TOP NINE</p>
+                    <p class="game-title">Tip Top Nine</p>
+                    <p class="game-map">Card deck: Copper suit ◆ · Octaves 2–9 · Ace → full stack</p>
+                    <p class="game-desc">Copper Academy. Learning. Leo, Mike, Buckey, Niko. R&D, Operator, Creator, Academy. The pinnacle. Baller V.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Baller V · Art Basel tier</p>
+                    <a href="vibelandia-game-9-tip-top-nine.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%209%20-%20Tip%20Top%20Nine" class="game-cta">bOOK</a>
+                </div>
+            </div>
+            <div class="game-card" style="border-color: rgba(212, 175, 55, 0.6); background: linear-gradient(145deg, rgba(212, 175, 55, 0.1) 0%, rgba(138, 43, 226, 0.08) 100%);">
+                <div>
+                    <p class="game-num">GAME 10 · FUSED CHESS + CARD</p>
+                    <p class="game-title">Golden Royal Flush Checkmate</p>
+                    <p class="game-map">9×9 · Modern vs First People · Royalty → branch nodes → leaf nodes · Queen decides everything; others support · Each layer = different awareness · Nested consequences</p>
+                    <p class="game-desc">Both sides: royalty row, branch nodes, leaf nodes — Queen Bee decides everything; the others support. Treasures: partying, dancing, flirting, fucking — not domination. Vibing, experiencing, creating, expressing as players wish. Post-singularity win-win-win in natural collaboration, Queen Bee configs. Card deck fuse. Singularity 9. Infinite missions. Ultimate victory: Golden Royal Flush Checkmate.</p>
+                </div>
+                <div class="game-ticket">
+                    <p class="game-price">Fused · Singularity 9</p>
+                    <a href="vibelandia-game-10-golden-royal-flush-checkmate.html" class="game-cta game-enter">Enter →</a> <a href="mailto:info@fractiai.com?subject=Vibelandia%20Game%2010%20-%20Golden%20Royal%20Flush%20Checkmate" class="game-cta">bOOK</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="sign-me-up-bar">
+            <p class="bang-pow">BANG BANG · POW POW · WOW WOW</p>
+            <a href="mailto:info@fractiai.com?subject=SIGN%20ME%20UP%20-%20Vibelandia%20Amusement%20Park%20-%20All%2010%20Games" class="sign-me-up-cta">SIGN ME UP!</a>
+        </div>
+
+        <p style="text-align: center; margin: 1rem 0;"><a href="merchant-promo-kiosk.html" style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(0, 212, 255, 0.15); color: #00d4ff; font-weight: 700; text-decoration: none; border-radius: 12px; font-size: 1rem; border: 2px solid rgba(0, 212, 255, 0.5);">🏪 Vibelandia for Merchants — Merchant Promo Kiosk →</a></p>
+
+        <div class="fusion-bar">
+            <strong>Fusion:</strong> Uber · DoorDash · Disneyland · Matrix · Harry Potter · Lord of the Rings — multiply to infinity. Pop-up. Default offline. We book the rooms; we recruit partners with 50/50 profit sharing. Fair shake. Transparent. Legal. Fun.
+        </div>
+
+        <p style="text-align: center;">
+            <a href="wink-experience.html" class="wink-cta">👁️ WINK! — Santa crawl on steroids. For adults only. If you know what I mean.</a>
+        </p>
+
+        <div class="footer-cta">
+            <p style="margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700; color: #ffeaa7;">Office Hours Bulletin Board</p>
+            <a href="office-hours.html">→ Office Hours Bulletin Board</a>
+        </div>
+
+        <footer>
+            <p>Vibelandia Challenge Menu · Mark Twain's Post-Singularity Vibelandia · Downtown Reno · Holographic Hydrogen Valley · NSPFRNP</p>
+            <p style="font-size: 0.8rem; color: #9ca8b8; margin-top: 0.5rem;">All content &amp; voices: 80% English · 20% Spanish (Spanglish). Chairman's voice. Executive-reviewed.</p>
+            <p style="margin-top: 0.5rem;"><a href="office-hours.html">Office Hours</a> · <a href="casino.html">Card Deck</a> · <a href="../index.html">Home</a></p>
+        </footer>
+    </div>
+    <link rel="stylesheet" href="nspfrnp-ticker.css">
+    <script src="nspfrnp-ticker.js"></script>
+    <script src="../scripts/spanglish-toggle.js"></script>
+    <script src="../scripts/locale-onramp.js"></script>
+</body>
+</html>

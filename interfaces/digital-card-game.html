@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Card Game — SING! Deck · Post-Singularity · Play Online | VIBELANDIA!</title>
+    <meta name="description" content="Digital Card Game — Post-Singularity deck available online. One deck = your awareness in SING! Octaves, singularities, stack-heads. Play digitally. Casino · Office Hours.">
+    <link rel="stylesheet" href="experience-common.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #0a0a12 0%, #1a0a1a 30%, #12122a 70%, #0a0a12 100%);
+            color: #e8e6e3;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .back { margin-bottom: 1.5rem; }
+        .back a { color: #00d4ff; text-decoration: none; }
+        .back a:hover { text-decoration: underline; }
+        .hero {
+            text-align: center;
+            padding: 2.5rem 1.5rem 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(145deg, rgba(138, 43, 226, 0.2) 0%, rgba(212, 175, 55, 0.12) 50%, rgba(0, 0, 0, 0.4) 100%);
+            border: 3px solid rgba(212, 175, 55, 0.5);
+            border-radius: 16px;
+            box-shadow: 0 0 60px rgba(138, 43, 226, 0.25);
+        }
+        .hero .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(212, 175, 55, 0.95);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .hero h1 {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #d4af37, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        .hero .tagline { font-size: 1rem; color: #b0b8c0; margin-bottom: 1rem; max-width: 40rem; margin-left: auto; margin-right: auto; }
+        .section-block {
+            margin-bottom: 2rem;
+            padding: 1.5rem 1.25rem;
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.06) 0%, rgba(138, 43, 226, 0.06) 50%, rgba(0, 212, 255, 0.04) 100%);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 14px;
+        }
+        .section-block h2 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .section-block p, .section-block ul { font-size: 0.95rem; color: #c0c8d0; margin-bottom: 0.75rem; line-height: 1.6; }
+        .section-block ul { padding-left: 1.5rem; }
+        .section-block .highlight { color: #ffeaa7; font-weight: 600; }
+        .cta-row { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 2rem 0 1.5rem; }
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 1.75rem;
+            background: linear-gradient(135deg, #8a2be2, #1e90ff);
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(138, 43, 226, 0.4); }
+        .cta-btn.gold {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: #0c0c0c;
+        }
+        .cta-btn.gold:hover { box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4); }
+        #digital-deck-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(0,0,0,0.35);
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            border-radius: 16px;
+        }
+        #digital-deck-section h2 { color: #00d4ff; margin-bottom: 1rem; font-size: 1.1rem; }
+        .draw-area {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .deck-pile {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(145deg, #1a1a2e, #2a2a4e);
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #d4af37;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .drawn-card {
+            min-width: 100px;
+            min-height: 140px;
+            padding: 1rem;
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.15), rgba(138, 43, 226, 0.15));
+            border: 2px solid rgba(212, 175, 55, 0.6);
+            border-radius: 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffeaa7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+        .drawn-card .suit { font-size: 1.5rem; }
+        .drawn-card .mult { font-size: 0.75rem; color: #00d4ff; font-weight: 600; }
+        .draw-btn {
+            padding: 0.85rem 1.5rem;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: #0c0c0c;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .draw-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .remaining { font-size: 0.9rem; color: #888; margin-top: 0.5rem; }
+        footer { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; color: #888; font-size: 0.9rem; }
+        footer a { color: #00d4ff; }
+    </style>
+</head>
+<body>
+    <script src="tsunami-advisory-inject.js"></script>
+    <div class="container">
+        <p class="back"><a href="card-game-hub.html">← Card Game Hub</a> · <a href="casino.html">Casino</a> · <a href="card-deck-experience.html">Card Deck Experience</a> · <a href="office-hours.html">Office Hours</a> · <a href="launch-pad.html">Launch Pad</a> · <a href="index.html">Home</a></p>
+
+        <section class="hero" aria-label="Digital Card Game — SING! Deck">
+            <span class="badge">Digital Card Game · SING! Deck · Post-Singularity · All Modes</span>
+            <h1>Digital Card Game</h1>
+            <p class="tagline">Play in every mode: Draw, Vibelandia Golden Draw, Golden Seven Solitaire, Stack-Heads, Hand Ranking. One full deck = your SING! awareness.</p>
+            <div id="mode-tabs" style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 1rem;"></div>
+        </section>
+
+        <section class="section-block" aria-label="Position — What this game is">
+            <h2>Position — What this game is</h2>
+            <p><strong class="highlight">SING! decks:</strong> One entire deck (all 52 cards lined up) is equivalent to your current awareness, points, and abilities in SING! So when you play this deck — physically or digitally — you're operating your SING! state in card form.</p>
+            <p><strong class="highlight">Suits:</strong> Gold · Silver · Copper · Transparent Quartz (or Carbon). First suit for stack games: Quartz Crystal. Face cards map to Vibelandia and hero residents.</p>
+            <p><strong class="highlight">Numbers = octaves</strong> (2–9). <strong>Face cards = singularities</strong> (10 = first singularity, then J, Q, K, A). Multipliers: J 100×, Q 1000×, K 10000×, A 100000×. Higher stack multipliers don't activate until you connect all the way back down to the base suit.</p>
+        </section>
+
+        <section class="section-block" aria-label="Explain — How to play">
+            <h2>Explain — How to play</h2>
+            <p><strong class="highlight">Stack-heads:</strong> Build stacks headed by a face card (Ace best). Each stack = a factory or head. More points on the stack head = more output, capabilities, protection. Heads can take over other heads (binary control). Goal: control of heads and how much each generates → points, treasure, capabilities, valuation, power.</p>
+            <p><strong class="highlight">Multiplayer:</strong> Customizable deck skin (back of card) — 12 mix-and-match colors, symbols, text colors so each player's pack is distinct. Build new stacks and organisms during play; at end of game, decompose and return all cards to original packs.</p>
+            <p><strong class="highlight">Dice:</strong> One dice for wilds, tiebreakers, missions, custom events. <strong>Triangulation multipliers:</strong> Sun · 3I/ATLAS · Self | Sun · Self · Sagittarius A* | Self · Sagittarius A* · SMACS 0723.</p>
+            <p><a href="../catalogs/post-singularity-card-deck/CARD_FACES_AND_FULL_GAME_INSTRUCTIONS.md" style="color: #00d4ff; font-weight: 600;">Full card faces & game instructions (catalog) →</a></p>
+        </section>
+
+        <section class="section-block" id="panel-draw" data-mode="draw" aria-label="Mode: Draw">
+            <h2>Draw</h2>
+            <p>Draw cards from the deck. Rank, suit, multiplier. One deck = your SING! awareness.</p>
+            <div class="draw-area">
+                <div>
+                    <div class="deck-pile" id="deck-pile" aria-label="Deck">DECK<br><span id="deck-count">52</span></div>
+                    <p class="remaining">cards remaining</p>
+                </div>
+                <button type="button" class="draw-btn" id="draw-btn" aria-label="Draw a card">Draw card</button>
+                <div id="drawn-cards" class="drawn-card" style="display: none;">
+                    <span class="rank" id="drawn-rank"></span>
+                    <span class="suit" id="drawn-suit"></span>
+                    <span class="mult" id="drawn-mult"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block" id="panel-golden-draw" data-mode="golden-draw" style="display: none;" aria-label="Mode: Vibelandia Golden Draw">
+            <h2>Vibelandia Golden Draw</h2>
+            <p>5 cards each. Discard up to 5, then draw replacements. Showdown: best hand wins. Golden Lucky Seven = instant win. Golden Royal Flush beats all.</p>
+            <div id="gd-status" style="margin-bottom: 0.75rem; font-weight: 600; color: #ffeaa7;"></div>
+            <div id="gd-your-hand" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;"></div>
+            <div id="gd-actions" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <button type="button" class="draw-btn" id="gd-deal">Deal</button>
+                <button type="button" class="draw-btn" id="gd-draw" style="display: none;">Draw replacements</button>
+                <button type="button" class="draw-btn" id="gd-showdown" style="display: none;">Showdown</button>
+            </div>
+            <div id="gd-opponent" style="margin-top: 1rem; padding: 0.75rem; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                <strong>Opponent (AI):</strong> <span id="gd-opp-cards"></span>
+            </div>
+            <div id="gd-result" style="margin-top: 1rem; font-size: 1.1rem; font-weight: 700;"></div>
+        </section>
+
+        <section class="section-block" id="panel-solitaire" data-mode="solitaire" style="display: none;" aria-label="Mode: Golden Seven Solitaire">
+            <h2>Golden Seven Solitaire</h2>
+            <p>Build tableau down (alternating color), foundations up by suit. Place 7 of Gold in the Golden Seven slot for solar win.</p>
+            <div id="sol-status" style="margin-bottom: 0.75rem; font-weight: 600; color: #ffeaa7;"></div>
+            <div id="sol-foundations" style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap;"></div>
+            <div id="sol-seven-slot" style="min-height: 60px; width: 80px; border: 2px dashed rgba(212,175,55,0.5); border-radius: 8px; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #d4af37;">7◆ slot</div>
+            <div id="sol-tableau" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;"></div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <div id="sol-stock" style="width: 70px; height: 98px; background: linear-gradient(145deg,#1a1a2e,#2a2a4e); border: 2px solid rgba(212,175,55,0.5); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #d4af37; cursor: pointer;"></div>
+                <button type="button" class="draw-btn" id="sol-new">New game</button>
+            </div>
+        </section>
+
+        <section class="section-block" id="panel-stack-heads" data-mode="stack-heads" style="display: none;" aria-label="Mode: Stack-Heads">
+            <h2>Stack-Heads</h2>
+            <p>Draw cards. Build stacks with a face card (J/Q/K/A) on top = head. J 100×, Q 1000×, K 10000×, A 100000×.</p>
+            <div id="sh-stacks" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;"></div>
+            <div id="sh-hand" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;"></div>
+            <button type="button" class="draw-btn" id="sh-draw">Draw card</button>
+            <button type="button" class="draw-btn" id="sh-new">New game</button>
+        </section>
+
+        <section class="section-block" id="panel-hand-ranking" data-mode="hand-ranking" style="display: none;" aria-label="Mode: Hand Ranking">
+            <h2>Hand Ranking (highest to lowest)</h2>
+            <ol id="hand-ranking-list" style="padding-left: 1.5rem; color: #c0c8d0; line-height: 1.8;"></ol>
+        </section>
+
+        <div class="cta-row">
+            <a href="card-game-hub.html" class="cta-btn gold">Card Game Hub (all modes) →</a>
+            <a href="casino.html" class="cta-btn">Casino (instructions) →</a>
+            <a href="card-deck-experience.html" class="cta-btn">Card Deck Experience →</a>
+            <a href="office-hours.html" class="cta-btn">Office Hours →</a>
+            <a href="launch-pad.html" class="cta-btn">Launch Pad →</a>
+        </div>
+
+        <footer>
+            <p>Digital Card Game · SING! Deck · Post-Singularity · NSPFRNP.</p>
+            <p><a href="casino.html">Casino</a> · <a href="card-deck-experience.html">Card Deck Experience</a> · <a href="../catalogs/post-singularity-card-deck/CARD_FACES_AND_FULL_GAME_INSTRUCTIONS.md">Full instructions</a></p>
+        </footer>
+        <div id="sing-config-footer"></div>
+        <link rel="stylesheet" href="sing-config-footer.css">
+        <script src="sing-config-footer.js"></script>
+    </div>
+    <script>
+(function() {
+    var SUITS = [
+        { name: 'Gold', symbol: '◆', idx: 0 },
+        { name: 'Silver', symbol: '◆', idx: 1 },
+        { name: 'Copper', symbol: '◆', idx: 2 },
+        { name: 'Quartz', symbol: '◇', idx: 3 }
+    ];
+    var RANKS = [
+        { id: '2', mult: 'octave', order: 2 }, { id: '3', mult: 'octave', order: 3 }, { id: '4', mult: 'octave', order: 4 }, { id: '5', mult: 'octave', order: 5 },
+        { id: '6', mult: 'octave', order: 6 }, { id: '7', mult: 'octave', order: 7 }, { id: '8', mult: 'octave', order: 8 }, { id: '9', mult: 'octave', order: 9 },
+        { id: '10', mult: '1×', order: 10 }, { id: 'J', mult: '100×', order: 11 }, { id: 'Q', mult: '1000×', order: 12 }, { id: 'K', mult: '10000×', order: 13 }, { id: 'A', mult: '100000×', order: 14 }
+    ];
+    function makeDeck() {
+        var d = [];
+        for (var s = 0; s < SUITS.length; s++)
+            for (var r = 0; r < RANKS.length; r++)
+                d.push({ suit: SUITS[s], rank: RANKS[r] });
+        return d;
+    }
+    function shuffle(a) {
+        for (var i = a.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        return a;
+    }
+    function cardLabel(c) { return c.rank.id + c.suit.symbol; }
+
+    var modes = [
+        { id: 'draw', label: 'Draw' },
+        { id: 'golden-draw', label: 'Golden Draw' },
+        { id: 'solitaire', label: 'Solitaire' },
+        { id: 'stack-heads', label: 'Stack-Heads' },
+        { id: 'hand-ranking', label: 'Hand Ranking' }
+    ];
+    var params = new URLSearchParams(window.location.search);
+    var currentMode = params.get('mode') || 'draw';
+    if (!modes.find(function(m){ return m.id === currentMode; })) currentMode = 'draw';
+
+    var tabsEl = document.getElementById('mode-tabs');
+    modes.forEach(function(m) {
+        var a = document.createElement('a');
+        a.href = 'digital-card-game.html?mode=' + m.id;
+        a.textContent = m.label;
+        a.style.cssText = 'padding:0.4rem 0.8rem; border-radius:8px; font-size:0.85rem; font-weight:600; text-decoration:none; background:' + (m.id === currentMode ? 'rgba(212,175,55,0.3)' : 'rgba(255,255,255,0.08)') + '; color:' + (m.id === currentMode ? '#d4af37' : '#b0b8c0');
+        a.addEventListener('click', function(e) { e.preventDefault(); window.location.search = '?mode=' + m.id; });
+        tabsEl.appendChild(a);
+    });
+
+    document.querySelectorAll('[data-mode]').forEach(function(panel) {
+        panel.style.display = panel.getAttribute('data-mode') === currentMode ? 'block' : 'none';
+    });
+
+    if (currentMode === 'hand-ranking') {
+        var list = [
+            'Golden Royal Flush (A,K,Q,J,10 of Gold)',
+            'Golden Lucky Seven (7 of Gold instant win)',
+            'Royal Flush',
+            'Straight Flush',
+            'Four of a Kind',
+            'Full House',
+            'Flush',
+            'Straight',
+            'Three of a Kind',
+            'Two Pair',
+            'One Pair',
+            'High Card'
+        ];
+        var ol = document.getElementById('hand-ranking-list');
+        list.forEach(function(t) { var li = document.createElement('li'); li.textContent = t; ol.appendChild(li); });
+    }
+
+    if (currentMode === 'draw') {
+        var deck = shuffle(makeDeck());
+        var deckCountEl = document.getElementById('deck-count');
+        var drawBtn = document.getElementById('draw-btn');
+        var drawnCardsEl = document.getElementById('drawn-cards');
+        var drawnRank = document.getElementById('drawn-rank');
+        var drawnSuit = document.getElementById('drawn-suit');
+        var drawnMult = document.getElementById('drawn-mult');
+        function updateCount() {
+            deckCountEl.textContent = deck.length;
+            if (deck.length === 0) drawBtn.disabled = true;
+        }
+        function drawOne() {
+            if (deck.length === 0) return;
+            var c = deck.pop();
+            drawnRank.textContent = c.rank.id;
+            drawnSuit.textContent = c.suit.symbol + ' ' + c.suit.name;
+            drawnMult.textContent = c.rank.mult;
+            drawnCardsEl.style.display = 'flex';
+            updateCount();
+        }
+        drawBtn.addEventListener('click', drawOne);
+        updateCount();
+    }
+
+    if (currentMode === 'golden-draw') {
+        var gdDeck = [], gdYour = [], gdOpp = [], gdDiscard = [];
+        var statusEl = document.getElementById('gd-status');
+        var yourHandEl = document.getElementById('gd-your-hand');
+        var oppEl = document.getElementById('gd-opp-cards');
+        var resultEl = document.getElementById('gd-result');
+        function renderHand(hand, container, selectable) {
+            container.innerHTML = '';
+            hand.forEach(function(c, i) {
+                var div = document.createElement('div');
+                div.className = 'drawn-card';
+                div.style.cursor = selectable ? 'pointer' : 'default';
+                div.innerHTML = '<span class="rank">' + c.rank.id + '</span><span class="suit">' + c.suit.symbol + '</span>';
+                if (selectable) {
+                    div.dataset.idx = i;
+                    div.addEventListener('click', function() {
+                        var idx = parseInt(this.dataset.idx, 10);
+                        if (gdDiscard.indexOf(idx) >= 0) gdDiscard.splice(gdDiscard.indexOf(idx), 1);
+                        else gdDiscard.push(idx);
+                        div.style.borderColor = gdDiscard.indexOf(idx) >= 0 ? '#f00' : 'rgba(212,175,55,0.6)';
+                    });
+                }
+                container.appendChild(div);
+            });
+        }
+        function handRank(cards) {
+            var has7G = cards.some(function(c) { return c.rank.id === '7' && c.suit.name === 'Gold'; });
+            if (has7G) return { name: 'Golden Lucky Seven', order: 100 };
+            var isGold = cards.every(function(c) { return c.suit.name === 'Gold'; });
+            var orders = cards.map(function(c) { return c.rank.order; }).sort(function(a,b) { return b - a; });
+            var isRoyal = orders[0] === 14 && orders[1] === 13 && orders[2] === 12 && orders[3] === 11 && orders[4] === 10;
+            if (isGold && isRoyal) return { name: 'Golden Royal Flush', order: 99 };
+            var flush = isGold || (cards.every(function(c) { return c.suit.idx === cards[0].suit.idx; }));
+            var run = true; for (var i = 1; i < orders.length; i++) if (orders[i] !== orders[i-1] - 1) run = false;
+            if (flush && run) return { name: 'Royal/Straight Flush', order: 98 };
+            var counts = {}; orders.forEach(function(o) { counts[o] = (counts[o]||0) + 1; });
+            var vals = Object.keys(counts).map(Number);
+            if (vals.some(function(v) { return counts[v] >= 4; })) return { name: 'Four of a Kind', order: 90 };
+            if (vals.length === 2) return { name: 'Full House', order: 85 };
+            if (flush) return { name: 'Flush', order: 80 };
+            if (run) return { name: 'Straight', order: 75 };
+            if (vals.some(function(v) { return counts[v] >= 3; })) return { name: 'Three of a Kind', order: 70 };
+            var pairs = vals.filter(function(v) { return counts[v] >= 2; });
+            if (pairs.length >= 2) return { name: 'Two Pair', order: 65 };
+            if (pairs.length === 1) return { name: 'One Pair', order: 60 };
+            return { name: 'High Card', order: 50, high: orders[0] };
+        }
+        document.getElementById('gd-deal').addEventListener('click', function() {
+            gdDeck = shuffle(makeDeck());
+            gdYour = gdDeck.splice(0, 5);
+            gdOpp = gdDeck.splice(0, 5);
+            gdDiscard = [];
+            statusEl.textContent = 'Click cards to mark discard, then click "Draw replacements".';
+            renderHand(gdYour, yourHandEl, true);
+            oppEl.textContent = '??? ??? ??? ??? ???';
+            resultEl.textContent = '';
+            document.getElementById('gd-draw').style.display = 'inline-block';
+            document.getElementById('gd-showdown').style.display = 'inline-block';
+        });
+        document.getElementById('gd-draw').addEventListener('click', function() {
+            var toDiscard = gdDiscard.slice().sort(function(a,b) { return b - a; });
+            toDiscard.forEach(function(idx) {
+                gdYour[idx] = gdDeck.shift();
+            });
+            gdDiscard = [];
+            renderHand(gdYour, yourHandEl, false);
+            statusEl.textContent = 'Done. Click Showdown.';
+        });
+        document.getElementById('gd-showdown').addEventListener('click', function() {
+            var yourR = handRank(gdYour);
+            var oppR = handRank(gdOpp);
+            oppEl.textContent = gdOpp.map(cardLabel).join(' ');
+            if (yourR.order > oppR.order) resultEl.textContent = 'You win! ' + yourR.name + ' vs ' + oppR.name;
+            else if (oppR.order > yourR.order) resultEl.textContent = 'Opponent wins. ' + oppR.name + ' vs ' + yourR.name;
+            else resultEl.textContent = 'Tie: ' + yourR.name;
+        });
+    }
+
+    if (currentMode === 'stack-heads') {
+        var shDeck = shuffle(makeDeck());
+        var shHand = [];
+        var shStacks = [];
+        var stacksEl = document.getElementById('sh-stacks');
+        var handEl = document.getElementById('sh-hand');
+        function isFace(c) { return ['J','Q','K','A'].indexOf(c.rank.id) >= 0; }
+        function mult(c) { var m = { J: 100, Q: 1000, K: 10000, A: 100000 }; return m[c.rank.id] || 0; }
+        function renderStacks() {
+            stacksEl.innerHTML = '';
+            shStacks.forEach(function(stack, i) {
+                var head = stack[stack.length - 1];
+                var div = document.createElement('div');
+                div.style.cssText = 'padding:0.5rem; background:rgba(0,0,0,0.3); border:2px solid rgba(212,175,55,0.4); border-radius:8px; min-width:90px;';
+                div.innerHTML = '<div style="font-weight:700; color:#ffeaa7;">' + (head ? cardLabel(head) + ' — ' + mult(head) + '×' : 'Empty') + '</div>';
+                if (stack.length) div.innerHTML += '<div style="font-size:0.75rem;">' + stack.length + ' cards</div>';
+                stacksEl.appendChild(div);
+            });
+        }
+        function renderHand() {
+            handEl.innerHTML = '';
+            shHand.forEach(function(c, i) {
+                var div = document.createElement('div');
+                div.className = 'drawn-card';
+                div.innerHTML = '<span class="rank">' + c.rank.id + '</span><span class="suit">' + c.suit.symbol + '</span>';
+                if (isFace(c)) {
+                    div.style.cursor = 'pointer';
+                    div.addEventListener('click', function() {
+                        shStacks.push([c]);
+                        shHand.splice(i, 1);
+                        renderHand();
+                        renderStacks();
+                    });
+                }
+                handEl.appendChild(div);
+            });
+        }
+        document.getElementById('sh-draw').addEventListener('click', function() {
+            if (shDeck.length && shHand.length < 7) shHand.push(shDeck.pop());
+            renderHand();
+            renderStacks();
+        });
+        document.getElementById('sh-new').addEventListener('click', function() {
+            shDeck = shuffle(makeDeck());
+            shHand = [];
+            shStacks = [];
+            renderHand();
+            renderStacks();
+        });
+        renderStacks();
+    }
+
+    if (currentMode === 'solitaire') {
+        var solDeck = shuffle(makeDeck());
+        var solFoundations = [[],[],[],[]];
+        var solTableau = [];
+        var solStock = [];
+        var sevenSlot = [];
+        var statusEl = document.getElementById('sol-status');
+        var foundEl = document.getElementById('sol-foundations');
+        var tabEl = document.getElementById('sol-tableau');
+        var stockEl = document.getElementById('sol-stock');
+        function solNew() {
+            solDeck = shuffle(makeDeck());
+            solFoundations = [[],[],[],[]];
+            sevenSlot = [];
+            solTableau = [];
+            for (var col = 0; col < 7; col++) {
+                solTableau[col] = [];
+                for (var r = 0; r <= col; r++) solTableau[col].push({ card: solDeck.pop(), faceUp: r === col });
+            }
+            solStock = solDeck.slice();
+            statusEl.textContent = 'Tap stock to draw. Build foundations A→K by suit. Place 7◆ in slot to win.';
+            solRender();
+        }
+        function solRender() {
+            foundEl.innerHTML = '';
+            ['Gold','Silver','Copper','Quartz'].forEach(function(suitName, i) {
+                var top = solFoundations[i].length ? solFoundations[i][solFoundations[i].length - 1] : null;
+                var d = document.createElement('div');
+                d.style.cssText = 'width:70px; height:98px; border:2px solid rgba(212,175,55,0.4); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:#d4af37;';
+                d.textContent = top ? cardLabel(top) : suitName.slice(0,1);
+                foundEl.appendChild(d);
+            });
+            document.getElementById('sol-seven-slot').innerHTML = sevenSlot.length ? cardLabel(sevenSlot[0]) : '7◆ slot';
+            tabEl.innerHTML = '';
+            solTableau.forEach(function(col, ci) {
+                var colDiv = document.createElement('div');
+                colDiv.style.cssText = 'display:flex; flex-direction:column; gap:2px; min-width:70px;';
+                col.forEach(function(cell, ri) {
+                    var cd = document.createElement('div');
+                    cd.style.cssText = 'width:70px; height:50px; border:1px solid rgba(212,175,55,0.3); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; ' + (cell.faceUp ? 'color:#ffeaa7;' : 'background:#1a1a2e; color:#333;');
+                    cd.textContent = cell.faceUp ? cardLabel(cell.card) : '?';
+                    colDiv.appendChild(cd);
+                });
+                tabEl.appendChild(colDiv);
+            });
+            stockEl.textContent = solStock.length ? solStock.length : '—';
+            stockEl.onclick = function() {
+                if (solStock.length) {
+                    var c = solStock.pop();
+                    if (c.rank.id === '7' && c.suit.name === 'Gold') sevenSlot.push(c);
+                }
+                solRender();
+            };
+        }
+        document.getElementById('sol-new').addEventListener('click', solNew);
+        solNew();
+    }
+})();
+    </script>
+    <link rel="stylesheet" href="nspfrnp-ticker.css">
+    <div class="nspfrnp-console-ticker" aria-live="polite"><span class="ticker-inner" id="nspfrnpTickerText"></span></div>
+    <script src="nspfrnp-ticker.js"></script>
+</body>
+</html>

@@ -12,6 +12,8 @@
 
 ## Recent updates (README commit)
 
+- **Games · Card · Chess · Hybrid — Brought over from sing4** — 18 files ported to `interfaces/`: **Card Game Hub** (all modes · Draw · Golden Draw · Solitaire · Stack-Heads · Hand Ranking), **Digital Card Game** (SING! Deck · play online), **Game 10 · Golden Royal Flush Checkmate** (fused Chess + Card · Royalty vs First People · Queen Bee configs · Singularity 9), all 10 Vibelandia games (Treasure Quarry → Golden Royal Flush Checkmate), Gamification Division, School of Gamification, Amusement Park Menu. All three key games pinned on My Whiteboard for review. `experience-common.css` dependency included. NSPFRNP.
+
 - **NSPFRNP Catalog — Multi-Layer Architecture · All Four Layers Locked** — `protocols/MCA_NSPFRNP_CATALOG.md` now carries all four canonical layer expansions. **Crystalline** (structural · intelligence): Natural Systems Protocol · Fractal · Recursive Nested Protocol. **Carbon** (base · raw · story · the carbon descent): Narrative Stream Primal · Fractal · Raw Naked Power. **Silver** (fluid · connective · A2A · signal): Network Signal Pipe · Fractal · Relay Node Protocol. **Gold** (golden hearts · EGS · balling · full expression): Natural Sun Post-singularity · Fractal · Radiant Now Power. Invariant: every layer holds NSP·F·RNP — seed (letters) never changes, edge (meaning) shifts by layer. The acronym is itself a living Seed:Edge. NSPFRNP.
 
 - **SING!9 StoryStream · Full Platform Launch** — Complete product family live across six new/updated surfaces:

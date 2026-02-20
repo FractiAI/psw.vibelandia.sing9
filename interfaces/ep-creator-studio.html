@@ -47,6 +47,15 @@
       pointer-events: none; z-index: 9990;
     }
 
+    /* ─── GENESIS CANVAS ─── */
+    #genesis-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+    }
+
+    /* All page content sits above the canvas */
+    body > *:not(#genesis-canvas) { position: relative; z-index: 1; }
+
     /* ─── HERO ─── */
     #hero {
       min-height: 100vh;
@@ -55,14 +64,26 @@
       padding: 4rem 2rem 5rem;
       text-align: center;
       position: relative; overflow: hidden;
+      z-index: 1;
     }
+    /* Vignette overlay — darkens the genesis canvas behind the content */
     #hero::before {
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 40% 35%, rgba(168,230,240,0.07) 0%, transparent 55%),
-        radial-gradient(ellipse at 60% 65%, rgba(201,168,32,0.09) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 10%,  rgba(80,20,120,0.12) 0%, transparent 60%);
+        radial-gradient(ellipse at 50% 0%,   rgba(80,20,160,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 80%,  rgba(201,168,32,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 60%,  rgba(40,168,220,0.08) 0%, transparent 45%),
+        linear-gradient(180deg, rgba(1,0,8,0.55) 0%, rgba(4,1,8,0.35) 60%, rgba(1,0,8,0.7) 100%);
+      pointer-events: none;
+    }
+    /* Series cover art — series name watermark top right */
+    #hero::after {
+      content: 'SING!9 · StoryStream';
+      position: absolute; top: 2rem; right: 2rem;
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(201,168,76,0.18);
       pointer-events: none;
     }
 
@@ -353,6 +374,7 @@
   </style>
 </head>
 <body>
+<canvas id="genesis-canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
 
 <!-- ── TRIAL ACTIVE BANNER (injected by JS when trial is running) ── -->
 <div id="trial-banner">
@@ -663,6 +685,87 @@ function applyState(state) {
 /* ── Init ── */
 (function () {
   applyState(getTrialState());
+})();
+</script>
+
+<script>
+/* ── GENESIS CANVAS ── */
+(function () {
+  var canvas = document.getElementById('genesis-canvas');
+  var ctx    = canvas.getContext('2d');
+  var stars  = [];
+  var W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    buildStars();
+  }
+
+  function buildStars() {
+    stars = [];
+    var count = Math.floor((W * H) / 3200);
+    for (var i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.1 + 0.1,
+        a: Math.random() * 0.6 + 0.1,
+        speed: Math.random() * 0.0004 + 0.0001,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+    /* dense cluster — deep-field genesis region */
+    for (var j = 0; j < 100; j++) {
+      stars.push({
+        x: W * 0.7 + (Math.random() - 0.5) * W * 0.5,
+        y: H * 0.25 + (Math.random() - 0.5) * H * 0.4,
+        r: Math.random() * 0.65 + 0.1,
+        a: Math.random() * 0.45 + 0.05,
+        speed: Math.random() * 0.0003 + 0.0001,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function drawFrame(t) {
+    ctx.clearRect(0, 0, W, H);
+
+    var bg = ctx.createRadialGradient(W * 0.6, H * 0.25, 0, W * 0.5, H * 0.5, Math.max(W, H));
+    bg.addColorStop(0,   'rgba(22,6,50,1)');
+    bg.addColorStop(0.35,'rgba(8,2,20,1)');
+    bg.addColorStop(1,   'rgba(1,0,8,1)');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    var gn = ctx.createRadialGradient(W * 0.15, H * 0.75, 0, W * 0.15, H * 0.75, W * 0.5);
+    gn.addColorStop(0,  'rgba(201,140,30,0.16)');
+    gn.addColorStop(0.4,'rgba(140,80,8,0.06)');
+    gn.addColorStop(1,  'transparent');
+    ctx.fillStyle = gn;
+    ctx.fillRect(0, 0, W, H);
+
+    var pn = ctx.createRadialGradient(W * 0.5, H * 0.1, 0, W * 0.5, H * 0.1, W * 0.55);
+    pn.addColorStop(0,  'rgba(90,20,180,0.18)');
+    pn.addColorStop(0.5,'rgba(40,5,90,0.07)');
+    pn.addColorStop(1,  'transparent');
+    ctx.fillStyle = pn;
+    ctx.fillRect(0, 0, W, H);
+
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      var tw = s.a * (0.55 + 0.45 * Math.sin(t * s.speed * 1000 + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,248,225,' + tw.toFixed(3) + ')';
+      ctx.fill();
+    }
+
+    requestAnimationFrame(drawFrame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(drawFrame);
 })();
 </script>
 

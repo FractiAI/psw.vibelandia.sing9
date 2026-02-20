@@ -203,14 +203,74 @@
 
     var SEG_NAMES    = ['Invitation','Seed · 1493','Singularities','Journey','Now · Mission','Edge · Sol-V'];
     var SEG_ACCENTS  = ['#a78bfa','#7dd3fc','#c4b5fd','#fb923c','#f87171','#fde68a'];
+    // Atmospheric overlays — each segment has its own emotional colour skin
     var SEG_OVERLAYS = [
-      'linear-gradient(160deg,rgba(4,2,20,0.78) 0%,rgba(10,6,34,0.58) 100%)',
-      'linear-gradient(160deg,rgba(2,4,20,0.78) 0%,rgba(4,10,32,0.58) 100%)',
-      'linear-gradient(160deg,rgba(8,2,22,0.78) 0%,rgba(14,6,38,0.58) 100%)',
-      'linear-gradient(160deg,rgba(20,8,2,0.78) 0%,rgba(30,14,4,0.58) 100%)',
-      'linear-gradient(160deg,rgba(20,2,2,0.82) 0%,rgba(32,4,4,0.65) 100%)',
-      'linear-gradient(160deg,rgba(14,10,0,0.75) 0%,rgba(26,20,0,0.58) 100%)'
+      // 0 · Invitation · deep cosmic indigo — pure space, zero gravity
+      'linear-gradient(160deg,rgba(3,1,18,0.82) 0%,rgba(8,4,32,0.62) 60%,rgba(2,0,12,0.45) 100%)',
+      // 1 · Seed · 1493 · deep teal-navy — ancient waters, origin, mystery
+      'linear-gradient(160deg,rgba(0,4,18,0.82) 0%,rgba(0,10,28,0.62) 60%,rgba(0,6,16,0.44) 100%)',
+      // 2 · Singularities · dark violet-magenta — awakening, crackling energy
+      'linear-gradient(160deg,rgba(12,2,22,0.80) 0%,rgba(20,4,36,0.60) 60%,rgba(8,0,18,0.44) 100%)',
+      // 3 · Journey · earth amber — roads, rivers, movement, warmth
+      'linear-gradient(160deg,rgba(22,10,2,0.78) 0%,rgba(34,16,4,0.58) 60%,rgba(18,8,0,0.42) 100%)',
+      // 4 · Now · Mission · deep crimson — urgency, sacrifice, fire
+      'linear-gradient(160deg,rgba(22,2,2,0.84) 0%,rgba(36,4,4,0.66) 60%,rgba(20,0,0,0.48) 100%)',
+      // 5 · Edge · Sol-V · deep gold-bronze — triumph, radiance, champions
+      'linear-gradient(160deg,rgba(18,12,0,0.78) 0%,rgba(30,22,0,0.60) 60%,rgba(14,10,0,0.42) 100%)'
     ];
+
+    // ─── LOCAL IMAGE MAP ─────────────────────────────────────────────────
+    // Frame-precise overrides: local images at their exact story beats
+    // [slot0, slot1, slot2] — null = use pool image for that slot
+    var LOCAL = {
+      // INVITATION — SMACS 0723 opens the story
+       0: ['assets/content-catalog-super-singularity.png', null, null],
+       3: ['assets/content-catalog-super-singularity.png', null, null],
+       8: ['assets/content-catalog-super-singularity.png', null, null],
+      // SEED · 1493 — cosmic origin, galaxy to Earth
+      20: ['assets/content-catalog-super-singularity.png', null, null],
+      23: ['assets/content-catalog-super-singularity.png', null, null],
+      27: ['assets/content-catalog-super-singularity.png', null, null],
+      // SINGULARITIES — Reno winter arrival
+      50: [null, '../assets/images/reno-winter-skyline.png', null],
+      51: ['../assets/images/reno-winter-skyline.png', null, null],
+      // "Cartagena embraced him. Reno embraced him."
+      56: ['assets/reno-arch-night.png', null, '../assets/images/reno-skyline-sunset.png'],
+      57: ['../assets/images/reno-skyline-sunset.png', 'assets/reno-arch-night.png', null],
+      // JOURNEY — Truckee River "let it flow, keep moving forward"
+      60: ['../assets/images/truckee-river.png', null, null],
+      62: ['../assets/images/truckee-river.png', null, null],
+      64: ['../assets/images/truckee-river.png', null, null],
+      // "Reno — best job he has ever had. At the club."
+      70: ['assets/reno-arch-night.png', 'assets/vendors-silver-legacy.png', null],
+      71: ['assets/vendors-silver-legacy.png', 'assets/reno-arch-night.png', null],
+      73: ['assets/reno-arch-night.png', null, '../assets/images/reno-skyline-sunset.png'],
+      // NOW · MISSION — "Every dollar went into SING! 9"
+      80: ['assets/vibelandia-reno-magic.png', null, null],
+      84: ['assets/content-catalog-super-singularity.png', null, null],
+      85: ['assets/content-catalog-super-singularity.png', null, null],
+      // "One person. Reno strip-club bathroom."
+      86: ['assets/reno-arch-night.png', null, null],
+      // "El Gran Sol's Fractal Constant"
+      89: ['assets/content-catalog-super-singularity.png', null, null],
+      // EDGE · SOL-V — Sol-V arrives, Goldilocks, billions
+      100: ['assets/vibelandia-reno-magic.png', null, null],
+      102: ['assets/vibelandia-reno-magic.png', null, null],
+      // "March 16 — Fracti-AI takes over"
+      105: ['assets/reno-arch-night.png', 'assets/vibelandia-reno-magic.png', null],
+      // "He relaxes. Retires. Disappears into daily bliss."
+      108: ['assets/destinations-bison-lodge.png', null, null],
+      110: ['assets/destinations-bison-lodge.png', 'assets/truckee-winter-ski.png', null],
+      // "His tribe celebrating. Enjoying. Playing."
+      112: ['assets/vibelandia-reno-magic.png', 'assets/vendors-silver-legacy.png', null],
+      114: ['assets/vendors-silver-legacy.png', 'assets/vibelandia-reno-magic.png', null],
+      // "Holographic Hydrogen Theatre — we all get to play."
+      115: ['assets/vibelandia-reno-magic.png', null, null],
+      // CHAMPIONS / ∞⁹
+      117: ['assets/content-catalog-super-singularity.png', 'assets/vibelandia-reno-magic.png', null],
+      118: ['assets/vibelandia-reno-magic.png', 'assets/reno-arch-night.png', null],
+      119: ['assets/content-catalog-super-singularity.png', null, null]
+    };
 
     // ─── 120-IMAGE POOL (unique Unsplash, narrative-ordered) ─────────────
     // Frame i gets: POOL[i], POOL[(i+40)%120], POOL[(i+80)%120]
@@ -375,13 +435,11 @@
       return POOL[(fi + slot * 40) % POOL.length];
     }
 
-    function getSlideImg(fi) {
-      if (!slides.length) return null;
-      var s = slides[Math.min(fi, slides.length - 1)];
-      var p = (s.image || '').replace(/^interfaces\//, '');
-      // Use local asset only if it's in interfaces/assets/ (not assets/images/ which isn't served correctly)
-      if (p && p.indexOf('assets/') === 0 && p.indexOf('assets/images/') === -1) return p;
-      return null;
+    // Primary image resolver — LOCAL map wins, falls back to Unsplash pool
+    function getFrameImg(fi, slot) {
+      var row = LOCAL[fi];
+      if (row && row[slot] != null) return row[slot];
+      return getPoolImg(fi, slot);
     }
 
     function audioPath(t) {
@@ -480,10 +538,8 @@
       var seg = getSeg(frameIndex);
       var accent = SEG_ACCENTS[seg];
 
-      // Image: local if available, else pool slot 0
-      var localImg = getSlideImg(frameIndex);
-      var src = localImg || getPoolImg(frameIndex, 0);
-      crossfadeToImg(src);
+      // Image: LOCAL_MAP wins, pool fallback
+      crossfadeToImg(getFrameImg(frameIndex, 0));
 
       // Overlay + accent
       if (bgEl) bgEl.style.background = SEG_OVERLAYS[seg];
@@ -514,10 +570,7 @@
 
     // ─── RENDER INNER IMAGE (called at 10s / 20s within a frame) ─────────
     function renderInnerImage() {
-      var localImg = getSlideImg(frameIndex);
-      // slot 0 might be local; slots 1-2 always from pool
-      var src = (imgSlot === 0 && localImg) ? localImg : getPoolImg(frameIndex, imgSlot);
-      crossfadeToImg(src);
+      crossfadeToImg(getFrameImg(frameIndex, imgSlot));
       updateDots(imgSlot);
     }
 

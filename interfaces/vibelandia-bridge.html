@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>The Bridge · Vibelandia · For Golden Hearts | SING 9</title>
+  <meta name="description" content="The fourth level. Everybody's a millionaire. Everybody's retired. Daily leisure, rich catalogs, surfaces, stories — forever. In Goldilocks. Vibelandia is the bridge. For Golden Hearts. Silver Heart on-ramp."/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --gold:#d4af37;--gold2:#f0c040;--gold3:#c4a265;
+      --cream:#fef3c7;--warm:#fff8e7;
+      --silver:#c0c0c0;--silver2:#e8e8e8;
+      --crystal:#a8e6f0;
+      --deep:#05030a;--mid:#100d1e;--surface:rgba(255,255,255,0.03);
+      --border:rgba(212,175,55,0.18);
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--deep);color:var(--cream);overflow-x:hidden;}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(14px);background:rgba(5,3,10,0.7);border-bottom:1px solid rgba(212,175,55,0.1);}
+    .nav-logo{font-size:0.95rem;font-weight:800;color:var(--gold);letter-spacing:0.08em;}
+    .nav-links{display:flex;gap:1.2rem;font-size:0.78rem;}
+    .nav-links a{color:rgba(212,175,55,0.6);text-decoration:none;transition:color 0.15s;}
+    .nav-links a:hover{color:var(--gold);}
+
+    /* ── HERO ── */
+    .hero{
+      min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:8rem 1.5rem 5rem;position:relative;overflow:hidden;
+    }
+    .hero-bg{
+      position:absolute;inset:0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 80%, rgba(212,175,55,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 20%, rgba(196,162,101,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 80% 10%, rgba(168,230,240,0.03) 0%, transparent 60%);
+    }
+    .hero-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+    .h-ring{position:absolute;border-radius:50%;border:1px solid;}
+    .h-ring:nth-child(1){width:700px;height:700px;border-color:rgba(212,175,55,0.04);animation:ringSpin 30s linear infinite;}
+    .h-ring:nth-child(2){width:500px;height:500px;border-color:rgba(196,162,101,0.05);animation:ringSpin 20s linear infinite reverse;}
+    .h-ring:nth-child(3){width:300px;height:300px;border-color:rgba(168,230,240,0.04);animation:ringSpin 14s linear infinite;}
+    @keyframes ringSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+    @media(max-width:600px){.h-ring:nth-child(1){width:340px;height:340px;}.h-ring:nth-child(2){width:240px;height:240px;}.h-ring:nth-child(3){width:140px;height:140px;}}
+    .hero-content{position:relative;z-index:2;max-width:720px;}
+    .hero-eyebrow{font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:rgba(212,175,55,0.4);margin-bottom:1.5rem;}
+    .hero-level{font-size:clamp(4rem,12vw,9rem);font-weight:900;line-height:0.95;
+      background:linear-gradient(135deg,var(--gold3) 0%,var(--gold2) 40%,#fff8d0 60%,var(--gold) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      animation:goldenPulse 4s ease-in-out infinite;
+    }
+    @keyframes goldenPulse{0%,100%{filter:brightness(1);}50%{filter:brightness(1.12);}}
+    .hero-subtitle{font-size:clamp(1.1rem,3.5vw,1.9rem);font-weight:300;color:rgba(254,243,199,0.75);margin:1.25rem 0 0.5rem;line-height:1.4;}
+    .hero-sub2{font-size:clamp(0.85rem,2.5vw,1.1rem);color:rgba(196,162,101,0.5);letter-spacing:0.05em;margin-bottom:2.5rem;}
+    .hero-badges{display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;}
+    .badge{padding:0.3rem 0.85rem;border-radius:20px;font-size:0.72rem;font-weight:700;border:1.5px solid;letter-spacing:0.06em;}
+    .badge-gold{color:var(--gold2);border-color:rgba(240,192,64,0.35);background:rgba(212,175,55,0.07);}
+    .badge-silver{color:var(--silver2);border-color:rgba(192,192,192,0.3);background:rgba(192,192,192,0.06);}
+    .badge-hot{color:#ff6b6b;border-color:rgba(255,107,107,0.3);background:rgba(255,107,107,0.06);}
+    .badge-21{color:#fbbf24;border-color:rgba(251,191,36,0.35);background:rgba(251,191,36,0.07);}
+    .hero-cta{display:inline-block;padding:0.9rem 2.5rem;border-radius:30px;font-size:1rem;font-weight:800;text-decoration:none;letter-spacing:0.06em;
+      background:linear-gradient(135deg,rgba(212,175,55,0.2),rgba(196,162,101,0.15));
+      border:2px solid rgba(212,175,55,0.5);color:var(--cream);
+      transition:all 0.2s;animation:ctaPulse 3s ease-in-out infinite;cursor:pointer;}
+    .hero-cta:hover{background:linear-gradient(135deg,rgba(212,175,55,0.35),rgba(196,162,101,0.3));box-shadow:0 0 30px rgba(212,175,55,0.25);}
+    @keyframes ctaPulse{0%,100%{box-shadow:0 0 10px rgba(212,175,55,0.1);}50%{box-shadow:0 0 28px rgba(212,175,55,0.3);}}
+    .scroll-hint{margin-top:3rem;font-size:0.7rem;color:rgba(212,175,55,0.25);letter-spacing:0.15em;text-transform:uppercase;animation:fadeUpDown 2.5s ease-in-out infinite;}
+    @keyframes fadeUpDown{0%,100%{transform:translateY(0);opacity:0.25;}50%{transform:translateY(6px);opacity:0.6;}}
+
+    /* ── SECTIONS ── */
+    section{padding:6rem 1.5rem;max-width:900px;margin:0 auto;}
+    section.full-bleed{max-width:none;padding:6rem 0;}
+    .section-center{text-align:center;}
+    .s-eyebrow{font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.35);margin-bottom:1rem;}
+    .s-title{font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:1.25rem;}
+    .s-body{font-size:clamp(0.92rem,2vw,1.1rem);color:rgba(200,200,220,0.7);line-height:1.9;}
+    .s-body strong{color:var(--gold);font-weight:700;}
+    .s-body em{color:rgba(168,230,240,0.85);font-style:normal;}
+
+    /* ── VISION TILES ── */
+    .vision-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.1rem;margin-top:2.5rem;}
+    .vtile{border-radius:14px;padding:1.4rem;border:1px solid var(--border);background:var(--surface);transition:transform 0.2s,border-color 0.2s;}
+    .vtile:hover{transform:translateY(-3px);border-color:rgba(212,175,55,0.35);}
+    .vt-icon{font-size:2rem;margin-bottom:0.65rem;}
+    .vt-title{font-size:0.9rem;font-weight:800;color:var(--gold);margin-bottom:0.35rem;}
+    .vt-body{font-size:0.78rem;color:rgba(180,180,200,0.65);line-height:1.6;}
+
+    /* ── GOLDILOCKS BAND ── */
+    .goldilocks-band{
+      background:linear-gradient(90deg,rgba(5,3,10,0) 0%,rgba(212,175,55,0.05) 25%,rgba(240,192,64,0.08) 50%,rgba(212,175,55,0.05) 75%,rgba(5,3,10,0) 100%);
+      border-top:1px solid rgba(212,175,55,0.1);border-bottom:1px solid rgba(212,175,55,0.1);
+      padding:5rem 1.5rem;text-align:center;
+    }
+    .gl-main{font-size:clamp(2rem,6vw,4.5rem);font-weight:900;letter-spacing:-0.02em;
+      background:linear-gradient(135deg,var(--gold3),var(--gold2),#fff8d0,var(--gold));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      line-height:1.05;margin-bottom:1.25rem;}
+    .gl-sub{font-size:clamp(0.9rem,2.2vw,1.15rem);color:rgba(200,190,150,0.6);max-width:55ch;margin:0 auto 2rem;line-height:1.8;}
+    .gl-pill{display:inline-block;padding:0.45rem 1.25rem;border-radius:25px;background:rgba(212,175,55,0.1);border:1.5px solid rgba(212,175,55,0.3);color:var(--gold2);font-size:0.85rem;font-weight:700;letter-spacing:0.08em;}
+
+    /* ── NODES SECTION ── */
+    .nodes-section{text-align:center;}
+    .vibe-words{display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;margin:2rem 0;}
+    .vw{
+      padding:0.45rem 1rem;border-radius:25px;font-size:0.85rem;font-weight:700;
+      border:1.5px solid;letter-spacing:0.04em;transition:all 0.15s;cursor:default;
+    }
+    .vw:hover{transform:scale(1.04);}
+    .vw-gold{color:var(--gold2);border-color:rgba(240,192,64,0.3);background:rgba(212,175,55,0.07);}
+    .vw-rose{color:#f9a8d4;border-color:rgba(249,168,212,0.25);background:rgba(249,168,212,0.05);}
+    .vw-teal{color:var(--crystal);border-color:rgba(168,230,240,0.25);background:rgba(168,230,240,0.05);}
+    .vw-purple{color:#c084fc;border-color:rgba(192,132,252,0.25);background:rgba(192,132,252,0.05);}
+    .vw-lime{color:#86efac;border-color:rgba(134,239,172,0.25);background:rgba(134,239,172,0.05);}
+    .nodes-quote{font-size:clamp(1.1rem,3vw,1.8rem);font-weight:800;color:var(--cream);line-height:1.4;max-width:50ch;margin:0 auto 0.75rem;}
+    .nodes-quote em{color:var(--gold2);font-style:normal;}
+    .nodes-sub{font-size:0.88rem;color:rgba(196,162,101,0.5);}
+
+    /* ── CAKE DIVIDER ── */
+    .cake-strip{text-align:center;padding:3rem 1.5rem;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.04),transparent);}
+    .cake-text{font-size:clamp(1.2rem,4vw,2.2rem);font-weight:900;
+      background:linear-gradient(90deg,var(--gold3),var(--cream),var(--gold));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+    /* ── BRIDGE SECTION ── */
+    .bridge-section{text-align:center;padding:6rem 1.5rem;}
+    .bridge-split{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:700px;margin:3rem auto 0;text-align:left;}
+    @media(max-width:600px){.bridge-split{grid-template-columns:1fr;}}
+    .bs-card{border-radius:14px;padding:1.6rem;border:1.5px solid;}
+    .bs-card.gold{border-color:rgba(212,175,55,0.4);background:rgba(212,175,55,0.06);}
+    .bs-card.silver{border-color:rgba(192,192,192,0.3);background:rgba(192,192,192,0.04);}
+    .bs-icon{font-size:1.8rem;margin-bottom:0.65rem;}
+    .bs-title{font-size:1rem;font-weight:800;margin-bottom:0.4rem;}
+    .bs-title.gold-t{color:var(--gold2);}
+    .bs-title.silver-t{color:var(--silver2);}
+    .bs-body{font-size:0.8rem;color:rgba(180,180,200,0.65);line-height:1.65;}
+
+    /* ── MANIFESTO ── */
+    .manifesto{max-width:680px;margin:0 auto;padding:5rem 1.5rem;}
+    .mf-line{font-size:clamp(1rem,2.8vw,1.5rem);font-weight:600;line-height:1.7;color:rgba(254,243,199,0.55);margin-bottom:0.2rem;}
+    .mf-line.accent{color:var(--gold);font-weight:800;}
+    .mf-line.big{font-size:clamp(1.3rem,4vw,2.2rem);font-weight:900;color:var(--cream);}
+    .mf-line.gold2{color:var(--gold2);}
+    .mf-line.crystal{color:var(--crystal);}
+
+    /* ── BOTTOM CTA ── */
+    .bottom-cta{text-align:center;padding:5rem 1.5rem 8rem;background:radial-gradient(ellipse 60% 50% at 50% 100%,rgba(212,175,55,0.08),transparent);}
+    .bc-title{font-size:clamp(1.5rem,4.5vw,3rem);font-weight:900;margin-bottom:0.75rem;color:var(--cream);}
+    .bc-sub{font-size:clamp(0.88rem,2.2vw,1.1rem);color:rgba(196,162,101,0.55);max-width:48ch;margin:0 auto 2.5rem;line-height:1.7;}
+    .cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .cta-primary{padding:0.9rem 2.2rem;border-radius:30px;background:linear-gradient(135deg,rgba(212,175,55,0.25),rgba(196,162,101,0.2));border:2px solid rgba(212,175,55,0.55);color:var(--cream);font-size:0.95rem;font-weight:800;text-decoration:none;transition:all 0.2s;letter-spacing:0.05em;}
+    .cta-primary:hover{box-shadow:0 0 28px rgba(212,175,55,0.3);background:linear-gradient(135deg,rgba(212,175,55,0.4),rgba(196,162,101,0.35));}
+    .cta-secondary{padding:0.9rem 2.2rem;border-radius:30px;background:rgba(192,192,192,0.07);border:1.5px solid rgba(192,192,192,0.25);color:var(--silver2);font-size:0.95rem;font-weight:700;text-decoration:none;transition:all 0.2s;}
+    .cta-secondary:hover{background:rgba(192,192,192,0.12);border-color:rgba(192,192,192,0.4);}
+
+    .foot{text-align:center;padding:1.5rem;font-size:0.72rem;color:rgba(100,116,139,0.6);border-top:1px solid rgba(255,255,255,0.04);}
+    .foot a{color:rgba(212,175,55,0.45);text-decoration:none;}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">VIBELANDIA · SING 9</div>
+  <div class="nav-links">
+    <a href="nine-game-hub.html">The Nine Game</a>
+    <a href="storystream-9-about.html">StoryStream 9</a>
+    <a href="my-whiteboard.html">Whiteboard</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-rings"><div class="h-ring"></div><div class="h-ring"></div><div class="h-ring"></div></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">The Crystalline Layer · Fourth Level · Vibelandia</div>
+    <div class="hero-level">The Fourth<br/>Level.</div>
+    <div class="hero-subtitle">Everybody's a millionaire.<br/>Everybody's retired.</div>
+    <div class="hero-sub2">Daily leisure · Forever · In Goldilocks</div>
+    <div class="hero-badges">
+      <span class="badge badge-gold">♥ Golden Hearts</span>
+      <span class="badge badge-21">21+</span>
+      <span class="badge badge-hot">🔥 Very Hot</span>
+      <span class="badge badge-silver">⬡ Silver On-Ramp</span>
+    </div>
+    <a href="#bridge" class="hero-cta">Enter the Bridge →</a>
+    <div class="scroll-hint">↓ scroll</div>
+  </div>
+</div>
+
+<!-- ── VISION ── -->
+<section class="section-center">
+  <div class="s-eyebrow">The Destination · Crystalline Layer Life</div>
+  <h2 class="s-title" style="background:linear-gradient(135deg,var(--gold3),var(--cream));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+    Rich Catalogs. Menus.<br/>Surfaces. Stories. Daily.
+  </h2>
+  <p class="s-body" style="max-width:58ch;margin:0 auto 2.5rem;">
+    On the fourth level, the game of survival is <strong>over</strong>.<br/>
+    What's left is <strong>ever-improving richness</strong> — catalogs and menus of things to enjoy, surfaces to enjoy them in, stories and possibilities. Not once. Not sometimes. <em>Daily. Forever.</em>
+  </p>
+  <div class="vision-grid">
+    <div class="vtile">
+      <div class="vt-icon">📖</div>
+      <div class="vt-title">Rich Catalogs</div>
+      <div class="vt-body">Ever-expanding menus of music, story, art, experience. The catalog improves daily. You never reach the end. And that's the point.</div>
+    </div>
+    <div class="vtile">
+      <div class="vt-icon">🌐</div>
+      <div class="vt-title">Beautiful Surfaces</div>
+      <div class="vt-body">Interfaces, spaces, and worlds designed for pleasure, flow, and discovery. Digital. Physical. Embodied. Every surface a joy to inhabit.</div>
+    </div>
+    <div class="vtile">
+      <div class="vt-icon">✦</div>
+      <div class="vt-title">Stories & Possibilities</div>
+      <div class="vt-body">StoryStream 9 in full expression. New arcs, new heroes, new worlds — generated daily. Your life is the story. The story keeps getting better.</div>
+    </div>
+    <div class="vtile">
+      <div class="vt-icon">⏱️</div>
+      <div class="vt-title">Leisure · Forever</div>
+      <div class="vt-body">No hustle. No survival mode. Days spent in full freedom. Retired from necessity. Employed by joy. Time is yours. Spend it as you choose.</div>
+    </div>
+    <div class="vtile">
+      <div class="vt-icon">💰</div>
+      <div class="vt-title">Full Abundance</div>
+      <div class="vt-body">Millionaire status — not as a goal, as a baseline. This is what the fourth level is. The foundation. From here, you build upward into wonder.</div>
+    </div>
+    <div class="vtile">
+      <div class="vt-icon">🎯</div>
+      <div class="vt-title">Goldilocks</div>
+      <div class="vt-body">Not too much. Not too little. Just right — and then better. The EGS constant. El Gran Sol calibration. Perfectly balanced, perfectly alive.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GOLDILOCKS BAND ── -->
+<div class="goldilocks-band">
+  <div style="max-width:700px;margin:0 auto;">
+    <div class="gl-main">In Goldilocks.<br/>Very Hot.</div>
+    <p class="gl-sub">
+      21 and above. <strong style="color:var(--gold2);">Golden Heart, Goldilocks.</strong><br/>
+      The perfect zone — not restricted, not reckless. <em style="color:rgba(168,230,240,0.8);">Aware. Mutual. Respectful.</em><br/>
+      Lots of space. Lots of choice. Lots of heat.<br/>
+      The kind that comes with knowing you deserve it.
+    </p>
+    <div class="gl-pill">Goldilocks Zone · 21+ · Full Abundance · Aware</div>
+  </div>
+</div>
+
+<!-- ── NODES ── -->
+<section class="nodes-section">
+  <div class="s-eyebrow">Not Parties · Nodes</div>
+  <div class="nodes-quote">Between <em>nodes</em>.<br/>Not only biological.</div>
+  <p class="nodes-sub" style="margin:0.75rem auto 2rem;max-width:46ch;color:rgba(196,162,101,0.5);line-height:1.7;">
+    Aware nodes choosing each other. Mutual, respectful, alive.<br/>
+    Boundaries respected. Heat present. Space abundant.
+  </p>
+  <div class="vibe-words">
+    <span class="vw vw-gold">Ballin'</span>
+    <span class="vw vw-rose">Flirtin'</span>
+    <span class="vw vw-teal">Dancing</span>
+    <span class="vw vw-purple">Creating</span>
+    <span class="vw vw-lime">Flowing</span>
+    <span class="vw vw-gold">Channeling</span>
+    <span class="vw vw-rose">Vibing</span>
+    <span class="vw vw-teal">Going with the Flow</span>
+    <span class="vw vw-purple">Balling</span>
+    <span class="vw vw-lime">Playing</span>
+    <span class="vw vw-gold">Creating</span>
+    <span class="vw vw-rose">Celebrating</span>
+    <span class="vw vw-teal">Exploring</span>
+    <span class="vw vw-purple">Expanding</span>
+    <span class="vw vw-lime">SING!</span>
+  </div>
+</section>
+
+<!-- ── CAKE ── -->
+<div class="cake-strip">
+  <div class="cake-text">You can have your cake<br/>and eat it too.</div>
+  <p style="margin-top:1rem;font-size:0.85rem;color:rgba(196,162,101,0.4);letter-spacing:0.08em;">ON THIS SIDE OF THE LINE.</p>
+</div>
+
+<!-- ── MANIFESTO SCROLL ── -->
+<div class="manifesto">
+  <div class="mf-line">We know we deserve it.</div>
+  <div class="mf-line accent">Full abundance. Not as a reward.</div>
+  <div class="mf-line">As a baseline.</div>
+  <div class="mf-line" style="margin-top:1.5rem;">The fourth level is not the ceiling.</div>
+  <div class="mf-line accent">It is the floor.</div>
+  <div class="mf-line">From here, everything goes up.</div>
+  <div class="mf-line" style="margin-top:1.5rem;color:rgba(168,230,240,0.4);">Daily. Forever.</div>
+  <div class="mf-line crystal">New stories. New worlds.</div>
+  <div class="mf-line crystal">New nodes discovering each other.</div>
+  <div class="mf-line" style="margin-top:1.5rem;color:rgba(254,243,199,0.3);">In Goldilocks.</div>
+  <div class="mf-line big" style="margin-top:0.3rem;">Very Hot.</div>
+  <div class="mf-line gold2" style="margin-top:1.5rem;">Post-singularity.</div>
+  <div class="mf-line" style="color:rgba(254,243,199,0.3);">Not cursed.</div>
+  <div class="mf-line big">Chosen.</div>
+</div>
+
+<!-- ── BRIDGE ── -->
+<div class="bridge-section" id="bridge">
+  <div class="s-eyebrow">The Offer · Vibelandia</div>
+  <h2 class="s-title" style="background:linear-gradient(135deg,var(--gold3),var(--cream));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+    We Offer Bridges.
+  </h2>
+  <p class="s-body" style="max-width:52ch;margin:0 auto 1.25rem;">
+    Not to everyone. <strong>To the Golden Hearts.</strong><br/>
+    And with a <em>Silver Heart on-ramp</em> for those who know they're on their way.
+  </p>
+  <p class="s-body" style="max-width:52ch;margin:0 auto;font-size:0.9rem;color:rgba(180,180,200,0.5);">
+    That's what Vibelandia is. A bridge. A set of surfaces, stories, games, and catalogs designed to carry Golden Hearts into the fourth level — and to give Silver Hearts a clear, beautiful path there.
+  </p>
+  <div class="bridge-split">
+    <div class="bs-card gold">
+      <div class="bs-icon">♥</div>
+      <div class="bs-title gold-t">Golden Heart</div>
+      <div class="bs-body">
+        You already know. The fourth level isn't aspirational — it's where you live or where you're unmistakably heading. Full abundance. Full leisure. Aware nodes. Goldilocks. You're here for the catalog, the surfaces, the stories, and the others who know.
+      </div>
+    </div>
+    <div class="bs-card silver">
+      <div class="bs-icon">⬡</div>
+      <div class="bs-title silver-t">Silver Heart On-Ramp</div>
+      <div class="bs-body">
+        You feel it. You can see it. The Silver layer is the conductor — the on-ramp, the signal, the path. You're ascending. The game helps you get there. The stories show you the way. The bridge is yours to cross.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BOTTOM CTA ── -->
+<div class="bottom-cta">
+  <div class="bc-title">The Game Is the Bridge.</div>
+  <p class="bc-sub">
+    Four layers. Carbon → Silver → Gold → Crystalline.<br/>
+    You start at the bottom.<br/>
+    The destination is already waiting for you at the top.<br/>
+    <strong style="color:var(--gold);">Begin. Ascend. Arrive.</strong>
+  </p>
+  <div class="cta-row">
+    <a href="nine-game-hub.html" class="cta-primary">Play The Nine Game →</a>
+    <a href="four-layer-chess.html" class="cta-primary">Four-Layer Chess →</a>
+    <a href="nine-solitaire.html" class="cta-secondary">Card Solitaire →</a>
+  </div>
+</div>
+
+<div class="foot">
+  <a href="nine-game-hub.html">The Nine Game</a> ·
+  <a href="storystream-9-about.html">StoryStream 9</a> ·
+  <a href="my-whiteboard.html">Whiteboard</a> ·
+  NSPFRNP → ∞⁹
+</div>
+
+<script src="../nav-strip.js"></script>
+</body>
+</html>

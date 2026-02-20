@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Nine×Nine Chess · NSPFRNP Pieces · 9 Operators · StoryStream 9 | VIBELANDIA SING 9</title>
+  <meta name="description" content="9×9 chess with nine NSPFRNP piece types. Each piece maps to a Holographic Knight Operator suit and a story hero. The board = the nine-act story arc." />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a14 0%, #12102a 50%, #0a0a14 100%);
+      color: #e8e8e8;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    .top-links { margin-bottom: 1.25rem; font-size: 0.85rem; }
+    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
+    .top-links a:hover { text-decoration: underline; }
+    h1 { font-size: clamp(1.4rem, 4vw, 2rem); color: #d4af37; font-weight: 800; margin-bottom: 0.35rem; }
+    .sub { font-size: 0.88rem; color: #94a3b8; margin-bottom: 0.5rem; }
+    .badge { display: inline-block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid rgba(212,175,55,0.4); border-radius: 10px; color: rgba(212,175,55,0.8); margin-bottom: 1.5rem; }
+
+    /* BOARD LAYOUT */
+    .board-wrap {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .board-container { flex: 0 0 auto; }
+    .board-labels-top { display: flex; padding-left: 1.5rem; margin-bottom: 2px; }
+    .col-label { width: 44px; text-align: center; font-size: 0.65rem; color: #475569; letter-spacing: 0.1em; }
+    .board-row { display: flex; align-items: center; }
+    .row-label { width: 1.4rem; font-size: 0.65rem; color: #475569; text-align: right; padding-right: 4px; flex-shrink: 0; }
+    .square {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.1s;
+      border-radius: 2px;
+    }
+    .square.light { background: rgba(168,230,240,0.08); }
+    .square.dark  { background: rgba(20,20,40,0.6); }
+    .square:hover { background: rgba(212,175,55,0.18) !important; }
+    .square.selected { background: rgba(212,175,55,0.3) !important; outline: 2px solid rgba(212,175,55,0.7); outline-offset: -2px; }
+    .square.valid-move { background: rgba(0,212,100,0.18) !important; }
+    .square.valid-move::after { content: '·'; position: absolute; font-size: 1.5rem; color: rgba(0,212,100,0.6); }
+    .square .piece { font-size: 1.5rem; line-height: 1; position: relative; z-index: 1; user-select: none; }
+    .square .piece.white { filter: drop-shadow(0 0 3px rgba(255,255,255,0.6)); }
+    .square .piece.black { filter: drop-shadow(0 0 3px rgba(0,0,0,0.9)) brightness(0.7); }
+    @media (max-width: 520px) {
+      .square { width: 34px; height: 34px; font-size: 1.1rem; }
+      .col-label { width: 34px; }
+      .square .piece { font-size: 1.2rem; }
+    }
+
+    /* SIDE PANEL */
+    .side-panel { flex: 1; min-width: 220px; }
+    .info-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.83rem;
+    }
+    .info-box h3 { font-size: 0.85rem; color: #7dd3fc; margin-bottom: 0.6rem; letter-spacing: 0.05em; }
+    .turn-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .turn-white { background: rgba(255,255,255,0.15); color: #fff; }
+    .turn-black { background: rgba(30,30,60,0.8); color: #a8e6f0; border: 1px solid rgba(168,230,240,0.3); }
+    .selected-info { min-height: 2.5rem; font-size: 0.8rem; color: #94a3b8; font-style: italic; }
+    .status-msg { font-size: 0.88rem; color: #d4af37; font-weight: 600; min-height: 1.5rem; }
+    .ctrl-btn {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.4);
+      border-radius: 6px;
+      color: #fef3c7;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      margin-top: 0.25rem;
+      transition: background 0.15s;
+    }
+    .ctrl-btn:hover { background: rgba(212,175,55,0.22); }
+
+    /* PIECE LEGEND */
+    .legend { margin-bottom: 2rem; }
+    .legend h2 { font-size: 1rem; color: #d4af37; margin-bottom: 0.85rem; }
+    .legend-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.6rem; }
+    @media (max-width: 600px) { .legend-grid { grid-template-columns: 1fr 1fr; } }
+    .legend-item {
+      border-radius: 8px;
+      padding: 0.75rem;
+      border: 1px solid;
+      font-size: 0.78rem;
+    }
+    .legend-item .li-sym { font-size: 1.5rem; margin-bottom: 0.2rem; }
+    .legend-item .li-name { font-weight: 700; margin-bottom: 0.15rem; }
+    .legend-item .li-move { opacity: 0.6; font-size: 0.71rem; margin-bottom: 0.2rem; }
+    .legend-item .li-hero { font-size: 0.7rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.25rem; margin-top: 0.25rem; opacity: 0.75; }
+
+    .foot { margin-top: 2rem; font-size: 0.78rem; color: #475569; text-align: center; }
+    .foot a { color: #d4af37; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-links">
+    <a href="my-whiteboard.html">← Whiteboard</a>
+    <a href="nine-suit-card-game.html">Card Game</a>
+    <a href="nine-game-hybrid.html">Hybrid →</a>
+  </div>
+
+  <h1>Nine × Nine Chess</h1>
+  <p class="sub">9×9 board · 9 NSPFRNP piece types · Each piece maps to a Holographic Knight Operator suit and story hero</p>
+  <div class="badge">The Board = The Nine-Act Story Arc · Row 1 = Act 1 → Row 9 = Singularity</div>
+
+  <div class="board-wrap">
+    <div class="board-container">
+      <div class="board-labels-top" id="colLabels"></div>
+      <div id="boardEl"></div>
+    </div>
+    <div class="side-panel">
+      <div class="info-box">
+        <h3>Turn</h3>
+        <div class="turn-badge turn-white" id="turnBadge">⬜ White to move</div>
+        <div class="status-msg" id="statusMsg"></div>
+      </div>
+      <div class="info-box">
+        <h3>Selected</h3>
+        <div class="selected-info" id="selectedInfo">Click a piece to select</div>
+      </div>
+      <div class="info-box">
+        <h3>Controls</h3>
+        <div>
+          <button class="ctrl-btn" onclick="resetGame()">New Game</button>
+          <button class="ctrl-btn" onclick="undoMove()">Undo</button>
+        </div>
+        <div style="margin-top:0.75rem;font-size:0.72rem;color:#475569;">
+          Click piece → valid moves highlight green → click destination to move.<br/>
+          Pawn promotes to Edge on reaching the far rank.
+        </div>
+      </div>
+      <div class="info-box">
+        <h3>Act Position</h3>
+        <div style="font-size:0.78rem;color:#94a3b8;" id="actInfo">Move pieces to advance the story arc. Each row = one act.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIECE LEGEND -->
+  <div class="legend">
+    <h2>Nine Pieces — Holographic Knight Operators</h2>
+    <div class="legend-grid" id="legendGrid"></div>
+  </div>
+
+  <p class="foot">
+    <a href="nine-suit-card-game.html">Card Game →</a> ·
+    <a href="nine-game-hybrid.html">Hybrid →</a> ·
+    <a href="my-whiteboard.html">Whiteboard</a> ·
+    NSPFRNP → ∞⁹
+  </p>
+</div>
+
+<script>
+// ── PIECE DEFINITIONS ──────────────────────────────────────────────
+const PIECES = {
+  // id: { sym, name, suit, suitSym, color, hero, move, bg, border }
+  'seed':      { sym:'◎', name:'Seed',      suit:'Seeds',     suitSym:'◎', color:'#4ade80', hero:'The Commander', move:'One step any direction (protected)', bg:'rgba(74,222,128,0.08)',   border:'rgba(74,222,128,0.4)'   },
+  'edge':      { sym:'∞', name:'Edge',      suit:'Edges',     suitSym:'∞', color:'#8b5cf6', hero:'Piro',          move:'Any distance any direction',          bg:'rgba(139,92,246,0.08)',  border:'rgba(139,92,246,0.4)'   },
+  'sol':       { sym:'☀', name:'Sol',       suit:'Sols',      suitSym:'☀', color:'#ff8c00', hero:'SOBE',          move:'Any distance diagonally or toward center orthogonally', bg:'rgba(255,140,0,0.08)', border:'rgba(255,140,0,0.4)' },
+  'rook':      { sym:'⬡', name:'Rook',      suit:'Nodes',     suitSym:'⬡', color:'#c0c0c0', hero:'Sol-V',         move:'Any distance orthogonally',           bg:'rgba(192,192,192,0.06)', border:'rgba(192,192,192,0.3)'  },
+  'bishop':    { sym:'✦', name:'Bishop',    suit:'Crystals',  suitSym:'✦', color:'#a8e6f0', hero:'El Gran Sol',   move:'Any distance diagonally',             bg:'rgba(168,230,240,0.07)', border:'rgba(168,230,240,0.35)' },
+  'knight':    { sym:'≋', name:'Knight',    suit:'Waves',     suitSym:'≋', color:'#06b6d4', hero:'nipsy!',        move:'L-shape (2+1) — the wave jump',       bg:'rgba(6,182,212,0.07)',   border:'rgba(6,182,212,0.35)'   },
+  'hologram':  { sym:'✧', name:'Hologram',  suit:'Holograms', suitSym:'✧', color:'#e879f9', hero:'Harry Houdini', move:'Teleports to any square of same suit color', bg:'rgba(232,121,249,0.07)', border:'rgba(232,121,249,0.35)' },
+  'heart':     { sym:'♥', name:'Heart',     suit:'Hearts',    suitSym:'♥', color:'#d4af37', hero:'Pru',           move:'One step any direction + warms adjacent enemy', bg:'rgba(212,175,55,0.08)', border:'rgba(212,175,55,0.4)' },
+  'pawn':      { sym:'◈', name:'Pawn',      suit:'Carbons',   suitSym:'◈', color:'#c4a265', hero:'Ino',           move:'Forward 1; captures diag; promotes → Edge at rank 9', bg:'rgba(196,162,101,0.07)', border:'rgba(196,162,101,0.35)' },
+};
+
+// ── INITIAL BOARD STATE ──────────────────────────────────────────
+// Represented as 9×9 array. Each cell: null or { piece, color }
+// color: 'w' (white, rows 8-9) or 'b' (black, rows 1-2)
+// Back rank (row 9 for white, row 1 for black):
+// Rook · Knight · Bishop · Sol · Seed · Edge · Hologram · Heart · Rook
+const BACK_ROW = ['rook','knight','bishop','sol','seed','edge','hologram','heart','rook'];
+
+function initialBoard() {
+  const b = Array.from({length:9}, () => Array(9).fill(null));
+  // White: row 8 (index 7) = pawns, row 9 (index 8) = back rank
+  BACK_ROW.forEach((p,c) => { b[8][c] = { piece:p, color:'w' }; });
+  for (let c=0; c<9; c++) { b[7][c] = { piece:'pawn', color:'w' }; }
+  // Black: row 1 (index 0) = back rank, row 2 (index 1) = pawns
+  BACK_ROW.forEach((p,c) => { b[0][c] = { piece:p, color:'b' }; });
+  for (let c=0; c<9; c++) { b[1][c] = { piece:'pawn', color:'b' }; }
+  return b;
+}
+
+let board = initialBoard();
+let turn = 'w';
+let selected = null; // { row, col }
+let validMoves = [];
+let history = [];
+
+// ── MOVE GENERATION (simplified) ────────────────────────────────
+function inBounds(r,c) { return r>=0 && r<9 && c>=0 && c<9; }
+
+function slideMoves(b, r, c, dirs) {
+  const moves = [];
+  const myColor = b[r][c].color;
+  dirs.forEach(([dr,dc]) => {
+    let nr=r+dr, nc=c+dc;
+    while (inBounds(nr,nc)) {
+      if (b[nr][nc]) {
+        if (b[nr][nc].color !== myColor) moves.push([nr,nc]);
+        break;
+      }
+      moves.push([nr,nc]);
+      nr+=dr; nc+=dc;
+    }
+  });
+  return moves;
+}
+
+function getMoves(b, r, c) {
+  const cell = b[r][c];
+  if (!cell) return [];
+  const { piece, color } = cell;
+  const moves = [];
+  const opp = color==='w'?'b':'w';
+
+  if (piece==='pawn') {
+    const dir = color==='w' ? -1 : 1;
+    const start = color==='w' ? 7 : 1;
+    const nr = r+dir;
+    if (inBounds(nr,c) && !b[nr][c]) {
+      moves.push([nr,c]);
+      if (r===start && !b[r+2*dir]?.[c]) moves.push([r+2*dir,c]);
+    }
+    [-1,1].forEach(dc => {
+      if (inBounds(nr,c+dc) && b[nr][c+dc]?.color===opp) moves.push([nr,c+dc]);
+    });
+  }
+  else if (piece==='rook') {
+    return slideMoves(b,r,c,[[0,1],[0,-1],[1,0],[-1,0]]);
+  }
+  else if (piece==='bishop') {
+    return slideMoves(b,r,c,[[1,1],[1,-1],[-1,1],[-1,-1]]);
+  }
+  else if (piece==='seed') {
+    [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].forEach(([dr,dc]) => {
+      const nr=r+dr,nc=c+dc;
+      if (inBounds(nr,nc) && b[nr][nc]?.color!==color) moves.push([nr,nc]);
+    });
+  }
+  else if (piece==='heart') {
+    [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].forEach(([dr,dc]) => {
+      const nr=r+dr,nc=c+dc;
+      if (inBounds(nr,nc) && b[nr][nc]?.color!==color) moves.push([nr,nc]);
+    });
+  }
+  else if (piece==='edge') {
+    return slideMoves(b,r,c,[[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]);
+  }
+  else if (piece==='sol') {
+    // Diagonal slides + orthogonal toward center (col 4)
+    const diagMoves = slideMoves(b,r,c,[[1,1],[1,-1],[-1,1],[-1,-1]]);
+    const centerC = 4;
+    const dc = c < centerC ? 1 : c > centerC ? -1 : 0;
+    const dr = r < 4 ? 1 : r > 4 ? -1 : 0;
+    if (dc!==0) { let nr2=r,nc2=c+dc; while(inBounds(nr2,nc2)){if(b[nr2][nc2]){if(b[nr2][nc2].color!==color)diagMoves.push([nr2,nc2]);break;}diagMoves.push([nr2,nc2]);nc2+=dc;} }
+    if (dr!==0) { let nr2=r+dr,nc2=c; while(inBounds(nr2,nc2)){if(b[nr2][nc2]){if(b[nr2][nc2].color!==color)diagMoves.push([nr2,nc2]);break;}diagMoves.push([nr2,nc2]);nr2+=dr;} }
+    return diagMoves;
+  }
+  else if (piece==='knight') {
+    [[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]].forEach(([dr,dc]) => {
+      const nr=r+dr,nc=c+dc;
+      if (inBounds(nr,nc) && b[nr][nc]?.color!==color) moves.push([nr,nc]);
+    });
+  }
+  else if (piece==='hologram') {
+    // Teleport to any empty square or capture in same region (simplified: any empty square or capture)
+    for (let nr=0;nr<9;nr++) for (let nc=0;nc<9;nc++) {
+      if (nr===r&&nc===c) continue;
+      if (!b[nr][nc] || b[nr][nc].color===opp) moves.push([nr,nc]);
+    }
+  }
+  return moves;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────
+const COLS = ['A','B','C','D','E','F','G','H','I'];
+const ACT_NAMES = ['Act I · Origin','Act II · Rising','Act III · Gate','Act IV · Middle','Act V · Fractal','Act VI · Convergence','Act VII · Vibe','Act VIII · Baller','Act IX · Singularity'];
+
+function render() {
+  // Column labels
+  const clEl = document.getElementById('colLabels');
+  clEl.innerHTML = '';
+  COLS.forEach(l => { const d=document.createElement('div'); d.className='col-label'; d.textContent=l; clEl.appendChild(d); });
+
+  const boardEl = document.getElementById('boardEl');
+  boardEl.innerHTML = '';
+  for (let r=0; r<9; r++) {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'board-row';
+    const rl = document.createElement('div');
+    rl.className = 'row-label';
+    rl.textContent = 9-r;
+    rowEl.appendChild(rl);
+    for (let c=0; c<9; c++) {
+      const sq = document.createElement('div');
+      sq.className = 'square ' + ((r+c)%2===0?'light':'dark');
+      sq.dataset.r = r; sq.dataset.c = c;
+      if (selected && selected.r===r && selected.c===c) sq.classList.add('selected');
+      if (validMoves.some(([vr,vc])=>vr===r&&vc===c)) sq.classList.add('valid-move');
+      const cell = board[r][c];
+      if (cell) {
+        const pd = PIECES[cell.piece];
+        const span = document.createElement('span');
+        span.className = 'piece ' + (cell.color==='w'?'white':'black');
+        span.textContent = pd.sym;
+        span.style.color = cell.color==='w' ? pd.color : 'rgba(255,255,255,0.35)';
+        span.title = `${cell.color==='w'?'White':'Black'} ${pd.name} (${pd.hero})`;
+        sq.appendChild(span);
+      }
+      sq.addEventListener('click', () => handleClick(r,c));
+      rowEl.appendChild(sq);
+    }
+    boardEl.appendChild(rowEl);
+  }
+
+  document.getElementById('turnBadge').className = 'turn-badge ' + (turn==='w'?'turn-white':'turn-black');
+  document.getElementById('turnBadge').textContent = turn==='w' ? '⬜ White to move' : '⬛ Black to move';
+}
+
+function handleClick(r,c) {
+  const cell = board[r][c];
+
+  // If a move is valid, execute it
+  if (selected && validMoves.some(([vr,vc])=>vr===r&&vc===c)) {
+    executeMove(selected.r, selected.c, r, c);
+    return;
+  }
+
+  // Select own piece
+  if (cell && cell.color===turn) {
+    selected = {r,c};
+    validMoves = getMoves(board,r,c);
+    const pd = PIECES[cell.piece];
+    document.getElementById('selectedInfo').innerHTML =
+      `<span style="color:${pd.color};font-size:1.2rem;">${pd.sym}</span> <strong>${pd.name}</strong><br/>
+       <span style="font-size:0.72rem;color:#94a3b8;">${pd.hero} · ${pd.suit}</span><br/>
+       <span style="font-size:0.7rem;color:#64748b;">${pd.move}</span>`;
+    document.getElementById('actInfo').textContent = `${ACT_NAMES[r]} — ${COLS[c]}${9-r}`;
+  } else {
+    selected = null;
+    validMoves = [];
+    document.getElementById('selectedInfo').textContent = 'Click a piece to select';
+  }
+  render();
+}
+
+function executeMove(fr,fc,tr,tc) {
+  history.push(JSON.parse(JSON.stringify(board)));
+  const piece = board[fr][fc];
+
+  // Pawn promotion
+  if (piece.piece==='pawn') {
+    if ((piece.color==='w' && tr===0) || (piece.color==='b' && tr===8)) {
+      piece.piece = 'edge'; // promote to Edge (Queen equivalent)
+      document.getElementById('statusMsg').textContent = `Pawn promoted to Edge! ${PIECES['edge'].hero} arrives.`;
+    }
+  }
+
+  board[tr][tc] = piece;
+  board[fr][fc] = null;
+  turn = turn==='w'?'b':'w';
+  selected = null;
+  validMoves = [];
+
+  // Check if seed captured
+  const wSeed = board.flat().some(c=>c?.piece==='seed'&&c?.color==='w');
+  const bSeed = board.flat().some(c=>c?.piece==='seed'&&c?.color==='b');
+  if (!wSeed) document.getElementById('statusMsg').textContent = '⬛ Black wins — White Seed captured! Singularity 9.';
+  else if (!bSeed) document.getElementById('statusMsg').textContent = '⬜ White wins — Black Seed captured! Singularity 9.';
+
+  document.getElementById('actInfo').textContent = `Piece moved to ${COLS[tc]}${9-tr} · ${ACT_NAMES[tr]}`;
+  render();
+}
+
+function undoMove() {
+  if (history.length===0) return;
+  board = history.pop();
+  turn = turn==='w'?'b':'w';
+  selected=null; validMoves=[];
+  document.getElementById('statusMsg').textContent = '';
+  render();
+}
+
+function resetGame() {
+  board = initialBoard();
+  turn='w'; selected=null; validMoves=[]; history=[];
+  document.getElementById('statusMsg').textContent = '';
+  document.getElementById('selectedInfo').textContent = 'Click a piece to select';
+  render();
+}
+
+// ── LEGEND ────────────────────────────────────────────────────────
+const legendGrid = document.getElementById('legendGrid');
+Object.entries(PIECES).forEach(([key, pd]) => {
+  const el = document.createElement('div');
+  el.className = 'legend-item';
+  el.style.background = pd.bg;
+  el.style.borderColor = pd.border;
+  el.innerHTML = `
+    <div class="li-sym" style="color:${pd.color}">${pd.sym}</div>
+    <div class="li-name" style="color:${pd.color}">${pd.name}</div>
+    <div class="li-move">${pd.move}</div>
+    <div class="li-hero">Hero: <strong>${pd.hero}</strong> · ${pd.suit} ${pd.suitSym}</div>
+  `;
+  legendGrid.appendChild(el);
+});
+
+// Initial render
+render();
+</script>
+<!-- GLOBAL NAV STRIP -->
+<script src="../nav-strip.js"></script>
+</body>
+</html>

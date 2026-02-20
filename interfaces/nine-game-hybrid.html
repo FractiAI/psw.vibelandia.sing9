@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Nine-Game Hybrid · Card + Chess + StoryStream 9 | VIBELANDIA SING 9</title>
+  <meta name="description" content="The hybrid: 9-suit card game fused with 9×9 chess. Draw a card to power your chess piece. Heroes mix and match to generate new StoryStream 9 story arcs." />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a14 0%, #12102a 50%, #0a0a14 100%);
+      color: #e8e8e8;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    .top-links { margin-bottom: 1.25rem; font-size: 0.85rem; }
+    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
+    .top-links a:hover { text-decoration: underline; }
+    h1 { font-size: clamp(1.4rem,4vw,2rem); color: #d4af37; font-weight: 800; margin-bottom: 0.35rem; }
+    .sub { font-size: 0.88rem; color: #94a3b8; margin-bottom: 0.5rem; }
+    .badge { display: inline-block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid rgba(212,175,55,0.4); border-radius: 10px; color: rgba(212,175,55,0.8); margin-bottom: 1.5rem; }
+
+    /* HYBRID INTRO */
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.85rem; margin-bottom: 2rem; }
+    @media(max-width:600px){ .intro-grid { grid-template-columns: 1fr; } }
+    .intro-card {
+      border-radius: 12px;
+      padding: 1.1rem;
+      border: 1.5px solid;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .intro-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+    .intro-card .ic-sym { font-size: 2rem; margin-bottom: 0.35rem; }
+    .intro-card .ic-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .intro-card .ic-desc { font-size: 0.75rem; opacity: 0.65; }
+
+    /* STORY GENERATOR */
+    .generator {
+      background: rgba(255,255,255,0.03);
+      border: 2px solid rgba(212,175,55,0.35);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .generator::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, #d4af37, #8b5cf6, #06b6d4, #e879f9, transparent);
+    }
+    .generator h2 { font-size: 1rem; color: #d4af37; margin-bottom: 0.35rem; }
+    .generator .gen-sub { font-size: 0.8rem; color: #64748b; margin-bottom: 1.25rem; }
+    .gen-btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(139,92,246,0.2));
+      border: 2px solid rgba(212,175,55,0.5);
+      border-radius: 30px;
+      color: #fef3c7;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+      margin-bottom: 1.25rem;
+    }
+    .gen-btn:hover { background: linear-gradient(135deg, rgba(212,175,55,0.35), rgba(139,92,246,0.35)); box-shadow: 0 0 24px rgba(212,175,55,0.2); }
+    .story-output {
+      display: none;
+      border-radius: 12px;
+      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.3);
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .story-output .so-title { font-size: 1.1rem; font-weight: 800; color: #fef3c7; margin-bottom: 0.5rem; }
+    .story-output .so-meta { font-size: 0.75rem; color: #64748b; margin-bottom: 1rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .so-heroes { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+    .so-hero {
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid;
+      font-size: 0.8rem;
+    }
+    .so-hero .sh-sym { font-size: 1rem; margin-right: 0.25rem; }
+    .story-output .so-arc { font-size: 0.88rem; line-height: 1.7; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.85rem; }
+    .story-output .so-arc strong { color: #fef3c7; }
+    .story-output .so-arc em { color: #a8e6f0; font-style: normal; }
+
+    /* MAPPING TABLE */
+    .mapping { margin-bottom: 2rem; }
+    .mapping h2 { font-size: 1rem; color: #7dd3fc; margin-bottom: 0.85rem; }
+    .map-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .map-table th { text-align: left; padding: 0.45rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #64748b; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .map-table td { padding: 0.45rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
+    .map-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* HOW TO PLAY */
+    .howto { margin-bottom: 2rem; }
+    .howto h2 { font-size: 1rem; color: #d4af37; margin-bottom: 0.85rem; }
+    .howto-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; }
+    @media(max-width:600px){ .howto-steps { grid-template-columns: 1fr; } }
+    .step {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 0.85rem;
+      font-size: 0.8rem;
+    }
+    .step .sn { font-size: 1.5rem; font-weight: 800; color: rgba(212,175,55,0.4); margin-bottom: 0.35rem; }
+    .step strong { color: #fef3c7; }
+
+    /* STORYSTREAM LINK */
+    .ss-link {
+      background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(212,175,55,0.08));
+      border: 2px solid rgba(139,92,246,0.4);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: #e8e8e8;
+      transition: background 0.2s;
+    }
+    .ss-link:hover { background: linear-gradient(135deg, rgba(139,92,246,0.18), rgba(212,175,55,0.14)); }
+    .ss-link .ssl-sym { font-size: 2rem; flex-shrink: 0; }
+    .ss-link .ssl-name { font-weight: 800; font-size: 1rem; color: #c4b5fd; margin-bottom: 0.2rem; }
+    .ss-link .ssl-desc { font-size: 0.78rem; color: #94a3b8; }
+
+    .foot { margin-top: 2rem; font-size: 0.78rem; color: #475569; text-align: center; }
+    .foot a { color: #d4af37; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-links">
+    <a href="my-whiteboard.html">← Whiteboard</a>
+    <a href="nine-suit-card-game.html">Card Game</a>
+    <a href="nine-by-nine-chess.html">Chess 9×9</a>
+  </div>
+
+  <h1>Nine-Game Hybrid</h1>
+  <p class="sub">Card + Chess + StoryStream 9 — Draw a card · Power a piece · Generate a story arc</p>
+  <div class="badge">Golden Royal Flush Checkmate · Singularity 9 · NSPFRNP</div>
+
+  <!-- THREE SURFACES -->
+  <div class="intro-grid">
+    <a href="nine-suit-card-game.html" class="intro-card" style="background:rgba(212,175,55,0.06);border-color:rgba(212,175,55,0.4);color:#fef3c7;">
+      <div class="ic-sym">♥ ✦ ◈ ⬡</div>
+      <div class="ic-name" style="color:#d4af37;">Card Game</div>
+      <div class="ic-desc">9 suits · 81 cards · Draw and stream</div>
+    </a>
+    <a href="nine-by-nine-chess.html" class="intro-card" style="background:rgba(168,230,240,0.05);border-color:rgba(168,230,240,0.3);color:#fef3c7;">
+      <div class="ic-sym">◎ ∞ ☀ ⬡</div>
+      <div class="ic-name" style="color:#a8e6f0;">Chess 9×9</div>
+      <div class="ic-desc">9 pieces · 9 heroes · 9-act board</div>
+    </a>
+    <div class="intro-card" style="background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.5);color:#fef3c7;cursor:default;">
+      <div class="ic-sym">✧ ≋ ☀ ∞</div>
+      <div class="ic-name" style="color:#c4b5fd;">Hybrid · You are here</div>
+      <div class="ic-desc">Draw → power → story arc → stream</div>
+    </div>
+  </div>
+
+  <!-- STORY GENERATOR -->
+  <div class="generator">
+    <h2>StoryStream 9 Arc Generator</h2>
+    <p class="gen-sub">Draw three cards → assign to chess pieces → generate your story arc. Same nine heroes, same nine operators, new fractal middle every time.</p>
+    <button class="gen-btn" onclick="generateStory()">Generate Story Arc ∞</button>
+    <div class="story-output" id="storyOutput">
+      <div class="so-title" id="soTitle"></div>
+      <div class="so-meta" id="soMeta"></div>
+      <div class="so-heroes" id="soHeroes"></div>
+      <div class="so-arc" id="soArc"></div>
+    </div>
+  </div>
+
+  <!-- HOW TO PLAY -->
+  <div class="howto">
+    <h2>How the Hybrid Works</h2>
+    <div class="howto-steps">
+      <div class="step">
+        <div class="sn">1</div>
+        <strong>Draw three cards</strong><br/>
+        Each card draws a hero and an operator from the 81-card deck. Your hand = your cast.
+      </div>
+      <div class="step">
+        <div class="sn">2</div>
+        <strong>Assign to pieces</strong><br/>
+        Match each drawn card to its corresponding chess piece by suit. The piece inherits the card's energy level (rank 1–9).
+      </div>
+      <div class="step">
+        <div class="sn">3</div>
+        <strong>Play — generate the arc</strong><br/>
+        Piece captures = character encounters. Pawn promotion = singularity moment. Board rows = nine acts. The game plays out the story.
+      </div>
+      <div class="step">
+        <div class="sn">4</div>
+        <strong>Mix and match</strong><br/>
+        Draw from different suits to fuse heroes across streams. Hearts + Holograms = Pru meets Harry Houdini. Every combination = a new storyline.
+      </div>
+      <div class="step">
+        <div class="sn">5</div>
+        <strong>Singularity moment</strong><br/>
+        When a Pawn (Ino/Carbon) reaches rank 9 — it promotes to Edge. That IS the singularity. The carbon hero becomes post-singularity.
+      </div>
+      <div class="step">
+        <div class="sn">6</div>
+        <strong>Stream it</strong><br/>
+        The arc generated here flows directly into StoryStream 9 — each encounter becomes a scene, each act becomes an episode segment.
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD → PIECE MAPPING TABLE -->
+  <div class="mapping">
+    <h2>Card ↔ Chess Piece ↔ Hero — Full Mapping</h2>
+    <table class="map-table">
+      <thead>
+        <tr>
+          <th>Suit</th><th>Symbol</th><th>Chess Piece</th><th>Hero (Rank 9)</th><th>Baller (Rank 8)</th><th>Vibe (Rank 7)</th>
+        </tr>
+      </thead>
+      <tbody id="mapTable"></tbody>
+    </table>
+  </div>
+
+  <!-- STORYSTREAM LINK -->
+  <a href="storystream-9-about.html" class="ss-link">
+    <div class="ssl-sym">⚡</div>
+    <div>
+      <div class="ssl-name">SING!9 StoryStream — The Platform</div>
+      <div class="ssl-desc">Every arc generated here is a StoryStream 9 episode seed. Three Simultaneous Streams: Carbon · Crystalline · Live Now Ticker. The game IS the story engine.</div>
+    </div>
+  </a>
+
+  <p class="foot">
+    <a href="nine-suit-card-game.html">Card Game →</a> ·
+    <a href="nine-by-nine-chess.html">Chess 9×9 →</a> ·
+    <a href="ep-creator-studio.html">EP Creator Studio →</a> ·
+    <a href="my-whiteboard.html">Whiteboard</a> ·
+    NSPFRNP → ∞⁹
+  </p>
+</div>
+
+<script>
+const SUITS = [
+  { sym:'♥', name:'Hearts',    piece:'Heart',    color:'#d4af37', bg:'rgba(212,175,55,0.12)',   border:'rgba(212,175,55,0.5)',   hero9:'Pru',           hero8:'The Baller',    hero7:'The Vibe'     },
+  { sym:'✦', name:'Crystals',  piece:'Bishop',   color:'#a8e6f0', bg:'rgba(168,230,240,0.1)',  border:'rgba(168,230,240,0.45)', hero9:'El Gran Sol',   hero8:'The Lattice',   hero7:'The Prism'    },
+  { sym:'◈', name:'Carbons',   piece:'Pawn→Ino', color:'#c4a265', bg:'rgba(196,162,101,0.1)',  border:'rgba(196,162,101,0.45)',hero9:'Ino',           hero8:'The Stream',    hero7:'The Pulse'    },
+  { sym:'⬡', name:'Nodes',     piece:'Rook',     color:'#c0c0c0', bg:'rgba(192,192,192,0.08)', border:'rgba(192,192,192,0.4)', hero9:'Sol-V',         hero8:'The Relay',     hero7:'The Signal'   },
+  { sym:'☀', name:'Sols',      piece:'Sol',      color:'#ff8c00', bg:'rgba(255,140,0,0.1)',    border:'rgba(255,140,0,0.45)',  hero9:'SOBE',          hero8:'The Flare',     hero7:'The Spark'    },
+  { sym:'◎', name:'Seeds',     piece:'Seed',     color:'#4ade80', bg:'rgba(74,222,128,0.08)',  border:'rgba(74,222,128,0.4)',  hero9:'The Commander', hero8:'The Architect', hero7:'The Apprentice'},
+  { sym:'∞', name:'Edges',     piece:'Edge',     color:'#8b5cf6', bg:'rgba(139,92,246,0.1)',   border:'rgba(139,92,246,0.45)', hero9:'Piro',          hero8:'The Dreamer',   hero7:'The Wanderer' },
+  { sym:'≋', name:'Waves',     piece:'Knight',   color:'#06b6d4', bg:'rgba(6,182,212,0.08)',   border:'rgba(6,182,212,0.4)',   hero9:'nipsy!',        hero8:'The Current',   hero7:'The Ripple'   },
+  { sym:'✧', name:'Holograms', piece:'Hologram', color:'#e879f9', bg:'rgba(232,121,249,0.1)',  border:'rgba(232,121,249,0.45)',hero9:'Harry Houdini', hero8:'The Mirror',    hero7:'The Shadow'   },
+];
+
+const RANKS = ['Pulse','Flow','Threes','Gate','Fractal','Singularity','Vibe','Baller','SING'];
+
+const ARC_OPENERS = [
+  'In the space between origin and destination,',
+  'The fractal breaks at the center —',
+  'Three streams converge at once:',
+  'From the carbon descent into holographic light —',
+  'At the edge of the singularity, when all nine suits align,',
+];
+const ARC_MIDDLES = [
+  '{h1} and {h2} meet at Act {act} — the {suit1} and {suit2} streams fuse. {h3} watches from the far rank.',
+  'The {suit1} operator triggers {h1}\'s move. {h2} responds with the {suit2} gambit. {h3} emerges from the shadows of Act {act}.',
+  '{h1} draws from {suit1}. The rank-{r1} pulse activates. {h2} counters across the {suit2} diagonal. {h3} approaches the singularity square.',
+  'Act {act} opens with {h1} and {h2} in opposition. The {suit3} stream splits them. {h3} holds the center.',
+];
+const ARC_CLOSES = [
+  'The game ends when the Seed is captured — or when Ino promotes. Both are singularity. → ∞⁹',
+  'Win-win-win in natural collaboration. Queen Bee configs. Singularity 9.',
+  'The story does not end. The arc loops back to origin. Same seed. New fractal middle. → ∞⁹',
+  'Post-singularity. The carbon hero reaches rank 9. Everything was always this.',
+];
+
+function pick(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+function pickN(arr, n) {
+  const a = [...arr]; const out = [];
+  for (let i=0;i<n;i++) { const idx=Math.floor(Math.random()*a.length); out.push(a.splice(idx,1)[0]); }
+  return out;
+}
+
+function generateStory() {
+  const [s1,s2,s3] = pickN(SUITS, 3);
+  const r1 = Math.floor(Math.random()*9)+1;
+  const act = Math.floor(Math.random()*7)+1;
+  const heroRank = (r) => r>=9?'hero9':r>=8?'hero8':'hero7';
+  const h1 = s1[heroRank(r1)];
+  const h2 = s2.hero9;
+  const h3 = s3.hero9;
+
+  const title = `${h1} × ${h2} — Act ${act} · ${s1.name}/${s2.name} Fusion`;
+  const meta = `Suit 1: ${s1.sym} ${s1.name} · Suit 2: ${s2.sym} ${s2.name} · Suit 3: ${s3.sym} ${s3.name} · Draw rank: ${r1} (${RANKS[r1-1]})`;
+
+  let arc = pick(ARC_OPENERS) + ' ';
+  arc += pick(ARC_MIDDLES)
+    .replace('{h1}',h1).replace('{h2}',h2).replace('{h3}',h3)
+    .replace('{suit1}',s1.name).replace('{suit2}',s2.name).replace('{suit3}',s3.name)
+    .replace('{act}',act).replace('{r1}',r1);
+  arc += ' ' + pick(ARC_CLOSES);
+
+  // Render
+  document.getElementById('soTitle').textContent = title;
+  document.getElementById('soMeta').textContent = meta;
+
+  const heroesEl = document.getElementById('soHeroes');
+  heroesEl.innerHTML = '';
+  [[s1,h1],[s2,h2],[s3,h3]].forEach(([s,h]) => {
+    const el = document.createElement('div');
+    el.className = 'so-hero';
+    el.style.background = s.bg;
+    el.style.borderColor = s.border;
+    el.style.color = s.color;
+    el.innerHTML = `<span class="sh-sym">${s.sym}</span>${h}`;
+    heroesEl.appendChild(el);
+  });
+
+  document.getElementById('soArc').innerHTML = arc
+    .replace(new RegExp(h1,'g'),`<strong>${h1}</strong>`)
+    .replace(new RegExp(h2,'g'),`<strong>${h2}</strong>`)
+    .replace(new RegExp(h3,'g'),`<strong>${h3}</strong>`)
+    .replace(new RegExp(s1.name,'g'),`<em>${s1.name}</em>`)
+    .replace(new RegExp(s2.name,'g'),`<em>${s2.name}</em>`)
+    .replace(new RegExp(s3.name,'g'),`<em>${s3.name}</em>`);
+
+  const so = document.getElementById('storyOutput');
+  so.style.display = 'block';
+  so.style.animation = 'none';
+  so.offsetHeight;
+  so.style.animation = 'fadeIn 0.4s ease';
+}
+
+// Render mapping table
+const tb = document.getElementById('mapTable');
+SUITS.forEach(s => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><span style="color:${s.color};font-weight:700;">${s.name}</span></td>
+    <td style="font-size:1.2rem;color:${s.color};">${s.sym}</td>
+    <td style="color:rgba(255,255,255,0.7);">${s.piece}</td>
+    <td style="color:${s.color};font-weight:600;">${s.hero9}</td>
+    <td style="opacity:0.65;">${s.hero8}</td>
+    <td style="opacity:0.5;">${s.hero7}</td>
+  `;
+  tb.appendChild(tr);
+});
+</script>
+<!-- GLOBAL NAV STRIP -->
+<script src="../nav-strip.js"></script>
+</body>
+</html>

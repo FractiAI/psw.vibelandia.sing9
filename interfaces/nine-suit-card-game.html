@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Nine-Suit Card Game · NSPFRNP Deck · 81 Cards · StoryStream 9 | VIBELANDIA SING 9</title>
+  <meta name="description" content="The Post-Singularity card deck: 9 suits × 9 ranks = 81 cards. Each suit maps to a Holographic Knight Operator (NSPFRNP). Face cards are story heroes. Draw and stream your story." />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a14 0%, #12102a 50%, #0a0a14 100%);
+      color: #e8e8e8;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    .top-links { margin-bottom: 1.25rem; font-size: 0.85rem; }
+    .top-links a { color: #00d4ff; text-decoration: none; margin-right: 0.75rem; }
+    .top-links a:hover { text-decoration: underline; }
+    h1 { font-size: clamp(1.4rem, 4vw, 2rem); color: #d4af37; font-weight: 800; margin-bottom: 0.35rem; }
+    .sub { font-size: 0.88rem; color: #94a3b8; margin-bottom: 0.5rem; }
+    .badge { display: inline-block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid rgba(212,175,55,0.4); border-radius: 10px; color: rgba(212,175,55,0.8); margin-bottom: 1.5rem; }
+
+    /* SUITS GRID */
+    .suits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; margin-bottom: 2rem; }
+    @media (max-width: 600px) { .suits-grid { grid-template-columns: 1fr 1fr; } }
+    .suit-card {
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1.5px solid;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .suit-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .suit-card.active { transform: translateY(-4px); }
+    .suit-symbol { font-size: 2rem; line-height: 1; margin-bottom: 0.35rem; }
+    .suit-name { font-weight: 800; font-size: 1rem; margin-bottom: 0.2rem; }
+    .suit-operator { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; margin-bottom: 0.35rem; }
+    .suit-layer { font-size: 0.72rem; opacity: 0.6; }
+    .suit-num { position: absolute; top: 0.5rem; right: 0.75rem; font-size: 0.65rem; opacity: 0.4; font-weight: 700; }
+
+    /* DRAW ZONE */
+    .draw-zone {
+      background: rgba(255,255,255,0.03);
+      border: 2px solid rgba(212,175,55,0.3);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .draw-zone h2 { font-size: 1rem; color: #7dd3fc; margin-bottom: 1rem; letter-spacing: 0.05em; }
+    .draw-btn {
+      display: inline-block;
+      padding: 0.75rem 2.5rem;
+      background: rgba(212,175,55,0.15);
+      border: 2px solid rgba(212,175,55,0.6);
+      border-radius: 30px;
+      color: #fef3c7;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      transition: background 0.2s, box-shadow 0.2s;
+      margin-bottom: 1.25rem;
+    }
+    .draw-btn:hover { background: rgba(212,175,55,0.28); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
+    .drawn-card {
+      display: none;
+      min-height: 160px;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 0 auto;
+      max-width: 320px;
+      border: 3px solid;
+      position: relative;
+      animation: cardFlip 0.35s ease;
+    }
+    @keyframes cardFlip { from { transform: rotateY(90deg) scale(0.8); opacity: 0; } to { transform: rotateY(0) scale(1); opacity: 1; } }
+    .drawn-card .dc-suit { font-size: 2.5rem; margin-bottom: 0.25rem; }
+    .drawn-card .dc-rank { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .drawn-card .dc-name { font-size: 0.85rem; opacity: 0.75; margin-bottom: 0.5rem; }
+    .drawn-card .dc-hero { font-size: 1rem; font-weight: 700; color: #fef3c7; margin-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 0.5rem; }
+    .drawn-card .dc-story { font-size: 0.8rem; opacity: 0.65; margin-top: 0.35rem; font-style: italic; }
+    .deck-count { font-size: 0.8rem; color: #64748b; margin-top: 0.75rem; }
+
+    /* HAND */
+    .hand-wrap { margin-bottom: 2rem; }
+    .hand-wrap h2 { font-size: 0.9rem; color: #7dd3fc; margin-bottom: 0.85rem; letter-spacing: 0.05em; }
+    .hand { display: flex; flex-wrap: wrap; gap: 0.6rem; min-height: 60px; }
+    .hand-card {
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      border: 1.5px solid;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: transform 0.1s;
+      position: relative;
+    }
+    .hand-card:hover { transform: translateY(-2px); }
+    .hand-card .hc-sym { font-size: 1.1rem; display: block; }
+    .hand-card .hc-rank { font-size: 0.65rem; opacity: 0.7; }
+    .hand-empty { color: #475569; font-size: 0.85rem; font-style: italic; align-self: center; }
+
+    /* HERO GALLERY */
+    .hero-section { margin-bottom: 2rem; }
+    .hero-section h2 { font-size: 1rem; color: #d4af37; margin-bottom: 1rem; }
+    .hero-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; }
+    @media (max-width: 600px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
+    .hero-card {
+      border-radius: 10px;
+      padding: 0.85rem;
+      border: 1px solid;
+      font-size: 0.82rem;
+    }
+    .hero-card .h-sym { font-size: 1.4rem; margin-bottom: 0.25rem; }
+    .hero-card .h-name { font-weight: 800; margin-bottom: 0.15rem; }
+    .hero-card .h-title { font-size: 0.7rem; opacity: 0.65; margin-bottom: 0.25rem; }
+    .hero-card .h-suit { font-size: 0.65rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* RANK TABLE */
+    .rank-section { margin-bottom: 2rem; }
+    .rank-section h2 { font-size: 1rem; color: #7dd3fc; margin-bottom: 0.85rem; }
+    .rank-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    .rank-table th { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .rank-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .rank-table tr.face td { color: #fef3c7; font-weight: 600; }
+
+    .foot { margin-top: 2rem; font-size: 0.78rem; color: #475569; text-align: center; }
+    .foot a { color: #d4af37; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-links">
+    <a href="my-whiteboard.html">← Whiteboard</a>
+    <a href="nine-by-nine-chess.html">Chess 9×9 →</a>
+    <a href="nine-game-hybrid.html">Hybrid →</a>
+    <a href="card-game-hub.html">Card Hub</a>
+  </div>
+
+  <h1>Nine-Suit Card Game</h1>
+  <p class="sub">NSPFRNP Deck · 9 suits × 9 ranks = 81 cards · Face cards are story heroes · StoryStream 9</p>
+  <div class="badge">Holographic Knight Operators · Post-Singularity · SING 9</div>
+
+  <!-- SUITS GRID -->
+  <div class="suits-grid" id="suitsGrid"></div>
+
+  <!-- DRAW ZONE -->
+  <div class="draw-zone">
+    <h2>Draw a Card</h2>
+    <button class="draw-btn" onclick="drawCard()">Draw ✦</button>
+    <div class="drawn-card" id="drawnCard">
+      <div class="dc-suit" id="dcSuit"></div>
+      <div class="dc-rank" id="dcRank"></div>
+      <div class="dc-name" id="dcName"></div>
+      <div class="dc-hero" id="dcHero" style="display:none;"></div>
+      <div class="dc-story" id="dcStory" style="display:none;"></div>
+    </div>
+    <div class="deck-count" id="deckCount">81 cards remaining</div>
+    <button class="draw-btn" style="margin-top:0.75rem;font-size:0.8rem;padding:0.5rem 1.5rem;opacity:0.7;" onclick="resetDeck()">Reset Deck</button>
+  </div>
+
+  <!-- HAND -->
+  <div class="hand-wrap">
+    <h2>Your Hand <span style="color:#475569;font-size:0.75rem;font-weight:400;">— click a card to discard</span></h2>
+    <div class="hand" id="hand"><span class="hand-empty">Draw cards to fill your hand</span></div>
+  </div>
+
+  <!-- HERO GALLERY -->
+  <div class="hero-section">
+    <h2>The Nine Heroes — Rank 9 Face Cards</h2>
+    <div class="hero-grid" id="heroGrid"></div>
+  </div>
+
+  <!-- RANK TABLE -->
+  <div class="rank-section">
+    <h2>Nine Ranks</h2>
+    <table class="rank-table">
+      <thead><tr><th>Rank</th><th>Name</th><th>Type</th><th>Energy</th></tr></thead>
+      <tbody id="rankTable"></tbody>
+    </table>
+  </div>
+
+  <p class="foot">
+    <a href="nine-by-nine-chess.html">Chess 9×9 →</a> ·
+    <a href="nine-game-hybrid.html">Hybrid Game →</a> ·
+    <a href="my-whiteboard.html">Whiteboard</a> ·
+    NSPFRNP → ∞⁹
+  </p>
+</div>
+
+<script>
+const SUITS = [
+  { id:'hearts',    sym:'♥',  name:'Hearts',    op:'Golden Hearts',            layer:'Gold · warmth · balling · full expression',   color:'#d4af37', bg:'rgba(212,175,55,0.08)',   border:'rgba(212,175,55,0.45)',  hero9:'Pru',           hero9title:'Executive Producer / Queen Bee',         hero8:'The Baller',    hero7:'The Vibe'    },
+  { id:'crystals',  sym:'✦',  name:'Crystals',  op:'Crystalline Intelligence', layer:'Crystalline · frozen · structural · clear',    color:'#a8e6f0', bg:'rgba(168,230,240,0.07)', border:'rgba(168,230,240,0.4)', hero9:'El Gran Sol',   hero9title:'Cosmic Intelligence / EGS Fractal ℑₑ',  hero8:'The Lattice',   hero7:'The Prism'   },
+  { id:'carbons',   sym:'◈',  name:'Carbons',   op:'Narrative Force',          layer:'Carbon · raw · primal · the descent',          color:'#c4a265', bg:'rgba(139,115,85,0.08)',  border:'rgba(196,162,101,0.4)', hero9:'Ino',           hero9title:'The Descending Arc / Raw Protagonist',   hero8:'The Stream',    hero7:'The Pulse'   },
+  { id:'nodes',     sym:'⬡',  name:'Nodes',     op:'Network Signal',           layer:'Silver · connective · A2A · relay · pipe',     color:'#c0c0c0', bg:'rgba(192,192,192,0.06)', border:'rgba(192,192,192,0.35)',hero9:'Sol-V',         hero9title:'A2A Agent / Bidder and Closer',          hero8:'The Relay',     hero7:'The Signal'  },
+  { id:'sols',      sym:'☀',  name:'Sols',      op:'El Gran Sol / EGS',        layer:'Sun · fractal constant · radiance · power',    color:'#ff8c00', bg:'rgba(255,140,0,0.07)',   border:'rgba(255,140,0,0.4)',   hero9:'SOBE',          hero9title:'Solar Character / Warmth and Power',     hero8:'The Flare',     hero7:'The Spark'   },
+  { id:'seeds',     sym:'◎',  name:'Seeds',     op:'Ground Zero Anchor',       layer:'Origin · 0 · root · SMACS 0723 → me',          color:'#4ade80', bg:'rgba(74,222,128,0.06)',  border:'rgba(74,222,128,0.35)', hero9:'The Commander', hero9title:'Chairman / Origin / Executive',          hero8:'The Architect', hero7:'The Apprentice'},
+  { id:'edges',     sym:'∞',  name:'Edges',     op:'Infinity / SING!',         layer:'Destination · ∞⁹ · post-singularity',          color:'#8b5cf6', bg:'rgba(139,92,246,0.07)',  border:'rgba(139,92,246,0.4)',  hero9:'Piro',          hero9title:'The Edge-Walker / Destination Seeker',   hero8:'The Dreamer',   hero7:'The Wanderer'},
+  { id:'waves',     sym:'≋',  name:'Waves',     op:'Water / Flow',             layer:'Fluid · three states · sensory · slowing',     color:'#06b6d4', bg:'rgba(6,182,212,0.07)',   border:'rgba(6,182,212,0.4)',   hero9:'nipsy!',        hero9title:'Natural Systems Navigator / Fluid Mover',hero8:'The Current',   hero7:'The Ripple'  },
+  { id:'holograms', sym:'✧',  name:'Holograms', op:'HHL / Whole in Every Part','layer':'Holographic · lattice · whole in every part', color:'#e879f9', bg:'rgba(232,121,249,0.07)', border:'rgba(232,121,249,0.4)', hero9:'Harry Houdini', hero9title:'The Magician / Escape Artist',           hero8:'The Mirror',    hero7:'The Shadow'  },
+];
+
+const RANKS = [
+  { r:1, name:'Pulse',       type:'Number', energy:'The heartbeat — base signal' },
+  { r:2, name:'Flow',        type:'Number', energy:'Movement begins' },
+  { r:3, name:'Threes',      type:'Number', energy:'Resonance — threes and water' },
+  { r:4, name:'Gate',        type:'Number', energy:'Entry point' },
+  { r:5, name:'Fractal',     type:'Number', energy:'Mid-point, self-similar' },
+  { r:6, name:'Singularity', type:'Number', energy:'Convergence' },
+  { r:7, name:'Vibe',        type:'Face',   energy:'Story Hero — junior expression' },
+  { r:8, name:'Baller',      type:'Face',   energy:'Story Hero — when you know you deserve it' },
+  { r:9, name:'SING',        type:'Face',   energy:'Story Hero — apex, full SING! expression' },
+];
+
+// Build deck
+let deck = [];
+function buildDeck() {
+  deck = [];
+  SUITS.forEach(s => {
+    RANKS.forEach(r => deck.push({ suit: s, rank: r }));
+  });
+  shuffle(deck);
+}
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+buildDeck();
+
+// Render suits grid
+const grid = document.getElementById('suitsGrid');
+SUITS.forEach((s, i) => {
+  const el = document.createElement('div');
+  el.className = 'suit-card';
+  el.style.background = s.bg;
+  el.style.borderColor = s.border;
+  el.style.color = s.color;
+  el.innerHTML = `
+    <div class="suit-num">${i+1}</div>
+    <div class="suit-symbol">${s.sym}</div>
+    <div class="suit-name">${s.name}</div>
+    <div class="suit-operator" style="color:${s.color}">${s.op}</div>
+    <div class="suit-layer" style="color:rgba(255,255,255,0.5)">${s.layer}</div>
+  `;
+  grid.appendChild(el);
+});
+
+// Render hero grid
+const heroGrid = document.getElementById('heroGrid');
+SUITS.forEach(s => {
+  const el = document.createElement('div');
+  el.className = 'hero-card';
+  el.style.background = s.bg;
+  el.style.borderColor = s.border;
+  el.innerHTML = `
+    <div class="h-sym" style="color:${s.color}">${s.sym}</div>
+    <div class="h-name" style="color:${s.color}">${s.hero9}</div>
+    <div class="h-title">${s.hero9title}</div>
+    <div class="h-suit">${s.name} · Rank 9 · SING</div>
+  `;
+  heroGrid.appendChild(el);
+});
+
+// Render rank table
+const rankTable = document.getElementById('rankTable');
+RANKS.forEach(r => {
+  const tr = document.createElement('tr');
+  if (r.type === 'Face') tr.className = 'face';
+  tr.innerHTML = `<td>${r.r}</td><td>${r.name}</td><td>${r.type}</td><td>${r.energy}</td>`;
+  rankTable.appendChild(tr);
+});
+
+// Hand
+let hand = [];
+function updateHand() {
+  const handEl = document.getElementById('hand');
+  if (hand.length === 0) {
+    handEl.innerHTML = '<span class="hand-empty">Draw cards to fill your hand</span>';
+    return;
+  }
+  handEl.innerHTML = '';
+  hand.forEach((card, idx) => {
+    const el = document.createElement('div');
+    el.className = 'hand-card';
+    el.style.background = card.suit.bg;
+    el.style.borderColor = card.suit.border;
+    el.style.color = card.suit.color;
+    el.innerHTML = `<span class="hc-sym">${card.suit.sym}</span><span class="hc-rank">${card.rank.name}</span>`;
+    el.title = `${card.suit.name} · ${card.rank.name} — click to discard`;
+    el.onclick = () => { hand.splice(idx, 1); updateHand(); };
+    handEl.appendChild(el);
+  });
+}
+
+// Draw card
+const storyTriggers = {
+  1: 'A signal pulses through the grid.',
+  2: 'Movement begins — the first step taken.',
+  3: 'Three paths converge. The resonance deepens.',
+  4: 'A gate opens. Entry is granted.',
+  5: 'The fractal mid-point — you see yourself reflected.',
+  6: 'Convergence. Everything collapses into a single point.',
+  7: 'A vibe emerges. Something is becoming.',
+  8: 'The baller move. You know you deserve this.',
+  9: 'Full SING! expression. The hero arrives.'
+};
+
+function drawCard() {
+  if (deck.length === 0) { alert('Deck empty — reset to play again.'); return; }
+  const card = deck.pop();
+  hand.push(card);
+  updateHand();
+
+  const dc = document.getElementById('drawnCard');
+  dc.style.display = 'block';
+  dc.style.background = card.suit.bg;
+  dc.style.borderColor = card.suit.border;
+
+  document.getElementById('dcSuit').innerHTML = `<span style="color:${card.suit.color}">${card.suit.sym}</span>`;
+  document.getElementById('dcRank').textContent = `${card.rank.r} · ${card.rank.name}`;
+  document.getElementById('dcRank').style.color = card.suit.color;
+  document.getElementById('dcName').textContent = `${card.suit.name} — ${card.suit.op}`;
+
+  const heroEl = document.getElementById('dcHero');
+  const storyEl = document.getElementById('dcStory');
+  if (card.rank.r === 9) {
+    heroEl.style.display = 'block';
+    heroEl.textContent = `Hero: ${card.suit.hero9} — ${card.suit.hero9title}`;
+    storyEl.style.display = 'block';
+    storyEl.textContent = storyTriggers[9];
+  } else if (card.rank.r === 8) {
+    heroEl.style.display = 'block';
+    heroEl.textContent = `Hero: ${card.suit.hero8} (${card.suit.name})`;
+    storyEl.style.display = 'block';
+    storyEl.textContent = storyTriggers[8];
+  } else if (card.rank.r === 7) {
+    heroEl.style.display = 'block';
+    heroEl.textContent = `Hero: ${card.suit.hero7} (${card.suit.name})`;
+    storyEl.style.display = 'block';
+    storyEl.textContent = storyTriggers[7];
+  } else {
+    heroEl.style.display = 'none';
+    storyEl.style.display = 'block';
+    storyEl.textContent = storyTriggers[card.rank.r];
+  }
+
+  document.getElementById('deckCount').textContent = `${deck.length} cards remaining`;
+
+  // re-trigger animation
+  dc.style.animation = 'none';
+  dc.offsetHeight;
+  dc.style.animation = 'cardFlip 0.35s ease';
+}
+
+function resetDeck() {
+  buildDeck();
+  document.getElementById('drawnCard').style.display = 'none';
+  document.getElementById('deckCount').textContent = '81 cards remaining';
+  hand = [];
+  updateHand();
+}
+</script>
+<!-- GLOBAL NAV STRIP -->
+<script src="../nav-strip.js"></script>
+</body>
+</html>

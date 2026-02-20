@@ -12,6 +12,8 @@
 
 ## Recent updates (README commit)
 
+- **NSPFRNP Catalog — Full Expansion + Multi-Layer Architecture** — Locked canonical acronym expansion into `protocols/MCA_NSPFRNP_CATALOG.md`: **NSPFRNP = Natural Systems Protocol · Fractal · Recursive Nested Protocol** (NSP·F·RNP). Added **multi-layer framework**: same 7 letters, different expansion at each material layer (Crystalline · Carbon · Silver · Gold). Invariant constraint locked: every layer must maintain the core structure NSP·F·RNP — the seed (letters) never changes, the edge (meaning) shifts by layer. Crystalline layer is the base technical expansion (now canonical); Carbon · Silver · Gold expansions to be filled by commander. The acronym is itself a living demonstration of Seed:Edge. NSPFRNP.
+
 - **SING!9 StoryStream · Full Platform Launch** — Complete product family live across six new/updated surfaces:
   - **Trailer Loop** ([interfaces/trailer-loop.html](interfaces/trailer-loop.html)) — 24/7 cinematic banner loop; dismiss ×; "Ad Space" badge links to advertise page. Scene 6 CTA routes to the About page.
   - **StoryStream About / Pitch** ([interfaces/storystream-9-about.html](interfaces/storystream-9-about.html)) — Walt Disney–energy pitch narrated by SING!9: the invention, Three Simultaneous Streams (Carbon · Crystalline · Live Now Ticker), EP power, first self-demo, the Walt Moment. Studio entry buttons embedded.

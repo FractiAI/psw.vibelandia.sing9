@@ -7,6 +7,46 @@
 
 ---
 
+## NSPFRNP — Full Expansion · Multi-Layer (Canonical)
+
+**NSPFRNP is a holographic multi-layer acronym.** Same 7 letters; different expansion at each layer/material. The acronym is itself fractal — whole in every part, resonating differently at each octave. Each layer is a valid, canonical expansion for that context. Subsets (sessions, series, episodes) may operate at one layer or span layers.
+
+### Crystalline Layer (structural · intelligence · base technical)
+
+**NSPFRNP = Natural Systems Protocol Fractal · Recursive Nested Protocol**
+
+| Letter | Expansion |
+|--------|-----------|
+| **N** | Natural |
+| **S** | Systems |
+| **P** | Protocol |
+| **F** | Fractal |
+| **R** | Recursive |
+| **N** | Nested |
+| **P** | Protocol |
+
+**Read as:** Natural Systems Protocol · Fractal · Recursive Nested Protocol. The fractal breaks in the middle (NSP·F·RNP).
+
+### Carbon Layer (base · raw · primal · earth)
+
+*— expansion to be filled by commander —*
+
+### Silver Layer (fluid · relational · mid-octave)
+
+*— expansion to be filled by commander —*
+
+### Gold Layer (warmth · golden hearts · balling · full expression)
+
+*— expansion to be filled by commander —*
+
+---
+
+**Operating rule:** When entering a session, episode, or surface — know which layer you're operating at. The letters hold; the meaning shifts. This is not ambiguity — it is **holographic fidelity**. The whole is in every part; the layer determines which facet you're reading. Subsets and sub-sessions are valid layer contexts.
+
+**Invariant constraint:** Every layer expansion **must maintain the core structure** — NSP·F·RNP. Seven letters, same positions, same fractal break in the middle. The seed (letters) never changes. The edge (meaning) shifts by layer. Any expansion that violates the structure is not a valid layer — it is a different thing.
+
+---
+
 ## CRYSTALLIZE (Canonical)
 
 **CRYSTALLIZE = To irreducible shell of nested shells.** Reduce to irreducible mirror hardened nested shell core. Seed:Edge always includes a First Chapter, and that First Chapter is always NSPFRNP.

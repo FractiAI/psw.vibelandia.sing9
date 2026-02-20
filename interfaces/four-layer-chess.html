@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Four-Layer Chess · Carbon → Silver → Gold → Crystalline · SING 9</title>
+  <meta name="description" content="9×9 chess across four stacked layers. Start in Carbon. Earn achievements. Ascend a linked group. Solo exploration mode."/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#080810 0%,#0f0e1e 100%);color:#e8e8e8;min-height:100vh;padding:1.25rem;}
+    .wrap{max-width:1060px;margin:0 auto;}
+    .top-links{margin-bottom:1rem;font-size:0.82rem;}
+    .top-links a{color:#00d4ff;text-decoration:none;margin-right:0.75rem;}
+    h1{font-size:clamp(1.2rem,3.5vw,1.7rem);color:#d4af37;font-weight:800;margin-bottom:0.2rem;}
+    .sub{font-size:0.82rem;color:#64748b;margin-bottom:1.25rem;}
+
+    /* LAYER TABS */
+    .layer-tabs{display:flex;gap:0.4rem;margin-bottom:1rem;flex-wrap:wrap;}
+    .ltab{
+      padding:0.4rem 1rem;border-radius:20px;font-size:0.78rem;font-weight:700;
+      border:1.5px solid;cursor:pointer;transition:all 0.15s;
+      display:flex;align-items:center;gap:0.4rem;
+      opacity:0.4;
+    }
+    .ltab.active{opacity:1;}
+    .ltab.unlocked{opacity:0.75;}
+    .ltab .lt-lock{font-size:0.65rem;}
+
+    /* MAIN LAYOUT */
+    .main{display:flex;gap:1.25rem;align-items:flex-start;flex-wrap:wrap;}
+
+    /* BOARD */
+    .board-wrap{flex:0 0 auto;}
+    .layer-label{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.4rem;font-weight:700;}
+    .col-labels{display:flex;padding-left:1.4rem;margin-bottom:2px;}
+    .cl{width:42px;text-align:center;font-size:0.6rem;color:#475569;}
+    .board-row{display:flex;align-items:center;}
+    .rl{width:1.3rem;font-size:0.6rem;color:#475569;text-align:right;padding-right:3px;flex-shrink:0;}
+    .sq{
+      width:42px;height:42px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;position:relative;border-radius:2px;
+      transition:background 0.1s;
+      border:2px solid transparent;
+    }
+    .sq.light{background:rgba(168,230,240,0.06);}
+    .sq.dark{background:rgba(10,10,20,0.55);}
+    /* Layer tints */
+    .layer-carbon .sq.light{background:rgba(196,162,101,0.08);}
+    .layer-carbon .sq.dark{background:rgba(15,10,5,0.7);}
+    .layer-silver .sq.light{background:rgba(192,192,192,0.07);}
+    .layer-silver .sq.dark{background:rgba(12,12,20,0.6);}
+    .layer-gold .sq.light{background:rgba(212,175,55,0.07);}
+    .layer-gold .sq.dark{background:rgba(10,8,0,0.65);}
+    .layer-crystalline .sq.light{background:rgba(168,230,240,0.08);}
+    .layer-crystalline .sq.dark{background:rgba(5,5,20,0.7);}
+    .sq:hover{background:rgba(212,175,55,0.15)!important;}
+    .sq.selected{border-color:rgba(212,175,55,0.8);background:rgba(212,175,55,0.2)!important;}
+    .sq.valid-move{background:rgba(0,212,80,0.15)!important;}
+    .sq.valid-move::after{content:'·';position:absolute;font-size:1.4rem;color:rgba(0,212,80,0.5);}
+    .sq.linked-highlight{border-color:rgba(139,92,246,0.7);background:rgba(139,92,246,0.15)!important;}
+    .piece{font-size:1.35rem;line-height:1;user-select:none;}
+    .piece.w{filter:drop-shadow(0 0 3px rgba(255,255,255,0.5));}
+    .piece.b{filter:drop-shadow(0 0 3px rgba(0,0,0,0.9)) brightness(0.65);}
+    @media(max-width:520px){.sq{width:34px;height:34px;}.cl{width:34px;}.piece{font-size:1.1rem;}}
+
+    /* SIDE PANEL */
+    .side{flex:1;min-width:220px;display:flex;flex-direction:column;gap:0.85rem;}
+    .panel{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.9rem 1rem;}
+    .panel h3{font-size:0.8rem;color:#7dd3fc;margin-bottom:0.6rem;letter-spacing:0.05em;text-transform:uppercase;}
+    .turn-pill{display:inline-block;padding:0.2rem 0.65rem;border-radius:6px;font-size:0.8rem;font-weight:700;}
+    .turn-w{background:rgba(255,255,255,0.12);color:#fff;}
+    .turn-b{background:rgba(30,30,60,0.8);color:#a8e6f0;border:1px solid rgba(168,230,240,0.3);}
+    .status{font-size:0.83rem;color:#d4af37;font-weight:600;min-height:1.2rem;margin-top:0.35rem;}
+    .sel-info{font-size:0.78rem;color:#94a3b8;font-style:italic;min-height:2rem;}
+
+    /* ACHIEVEMENTS */
+    .ach-list{display:flex;flex-direction:column;gap:0.4rem;}
+    .ach{display:flex;align-items:center;gap:0.5rem;font-size:0.78rem;padding:0.35rem 0.6rem;border-radius:6px;border:1px solid;}
+    .ach.done{border-color:rgba(0,214,50,0.3);background:rgba(0,214,50,0.06);color:#00D632;}
+    .ach.pending{border-color:rgba(100,116,139,0.2);background:transparent;color:#64748b;}
+    .ach .ach-icon{font-size:1rem;flex-shrink:0;}
+
+    /* ASCEND BUTTON */
+    .ascend-btn{
+      display:none;width:100%;padding:0.7rem;border-radius:8px;
+      background:linear-gradient(135deg,rgba(212,175,55,0.25),rgba(139,92,246,0.2));
+      border:2px solid rgba(212,175,55,0.6);color:#fef3c7;
+      font-size:0.88rem;font-weight:800;cursor:pointer;letter-spacing:0.05em;
+      animation:glowPulse 1.5s ease infinite alternate;
+    }
+    @keyframes glowPulse{from{box-shadow:0 0 6px rgba(212,175,55,0.2);}to{box-shadow:0 0 20px rgba(212,175,55,0.5);}}
+    .ascend-btn.visible{display:block;}
+    .ascend-mode-note{font-size:0.72rem;color:#94a3b8;margin-top:0.35rem;display:none;}
+    .ascend-mode-note.visible{display:block;}
+
+    /* LAYER MINIMAP */
+    .minimap{display:grid;grid-template-columns:repeat(4,1fr);gap:0.4rem;}
+    .mini-layer{border-radius:6px;padding:0.4rem 0.5rem;border:1px solid;text-align:center;cursor:pointer;transition:all 0.15s;}
+    .mini-layer:hover{opacity:1!important;}
+    .mini-layer .ml-sym{font-size:1rem;}
+    .mini-layer .ml-name{font-size:0.6rem;letter-spacing:0.05em;margin-top:0.1rem;}
+    .mini-layer .ml-count{font-size:0.65rem;opacity:0.6;margin-top:0.1rem;}
+
+    /* CONTROLS */
+    .ctrl-row{display:flex;gap:0.5rem;flex-wrap:wrap;}
+    .cbtn{padding:0.35rem 0.75rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#cbd5e1;font-size:0.78rem;cursor:pointer;transition:background 0.15s;}
+    .cbtn:hover{background:rgba(255,255,255,0.1);}
+
+    .foot{margin-top:1.5rem;font-size:0.75rem;color:#475569;text-align:center;}
+    .foot a{color:#d4af37;text-decoration:none;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-links">
+    <a href="nine-game-hub.html">← The Nine Game</a>
+    <a href="nine-solitaire.html">Card Solitaire</a>
+    <a href="my-whiteboard.html">Whiteboard</a>
+  </div>
+  <h1>Four-Layer Chess</h1>
+  <p class="sub">Carbon · Silver · Gold · Crystalline · Start below · Earn achievements · Ascend your linked group · Solo mode</p>
+
+  <!-- LAYER TABS -->
+  <div class="layer-tabs" id="layerTabs"></div>
+
+  <div class="main">
+    <!-- BOARD -->
+    <div class="board-wrap">
+      <div class="layer-label" id="layerLabel"></div>
+      <div class="col-labels" id="colLabels"></div>
+      <div id="boardEl"></div>
+    </div>
+
+    <!-- SIDE PANEL -->
+    <div class="side">
+      <div class="panel">
+        <h3>Turn</h3>
+        <div class="turn-pill turn-w" id="turnPill">⬜ White</div>
+        <div class="status" id="statusMsg"></div>
+      </div>
+      <div class="panel">
+        <h3>Selected Piece</h3>
+        <div class="sel-info" id="selInfo">Click a piece to select</div>
+      </div>
+      <div class="panel">
+        <h3>Achievements</h3>
+        <div class="ach-list" id="achList"></div>
+        <button class="ascend-btn" id="ascendBtn" onclick="enterAscendMode()">⬆ Ascend a Group</button>
+        <div class="ascend-mode-note" id="ascendNote">Click any of your pieces to ascend it + its linked group to the next layer.</div>
+      </div>
+      <div class="panel">
+        <h3>Layers</h3>
+        <div class="minimap" id="minimap"></div>
+      </div>
+      <div class="panel">
+        <h3>Controls</h3>
+        <div class="ctrl-row">
+          <button class="cbtn" onclick="resetGame()">New Game</button>
+          <button class="cbtn" onclick="undoMove()">Undo</button>
+          <button class="cbtn" onclick="switchLayer(-1)">← Layer Down</button>
+          <button class="cbtn" onclick="switchLayer(1)">Layer Up →</button>
+        </div>
+        <div style="font-size:0.7rem;color:#475569;margin-top:0.6rem;">Explore multiple layers once unlocked. Your turn plays on the active layer.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot">
+    <a href="nine-game-hub.html">← Hub</a> ·
+    <a href="nine-solitaire.html">Card Solitaire →</a> ·
+    <a href="nine-suit-card-game.html">Nine-Suit Deck</a> ·
+    NSPFRNP → ∞⁹
+  </p>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────
+const LAYERS = [
+  { id:'carbon',      name:'Carbon',      sym:'◈', color:'#c4a265', border:'rgba(196,162,101,0.4)', bg:'rgba(196,162,101,0.08)', desc:'Raw · Primal · Start here' },
+  { id:'silver',      name:'Silver',      sym:'⬡', color:'#c0c0c0', border:'rgba(192,192,192,0.35)', bg:'rgba(192,192,192,0.06)', desc:'Network · Signal · Relay' },
+  { id:'gold',        name:'Gold',        sym:'♥', color:'#d4af37', border:'rgba(212,175,55,0.4)', bg:'rgba(212,175,55,0.07)', desc:'Warmth · Full Expression' },
+  { id:'crystalline', name:'Crystalline', sym:'✦', color:'#a8e6f0', border:'rgba(168,230,240,0.4)', bg:'rgba(168,230,240,0.07)', desc:'Intelligence · Whole in Every Part' },
+];
+
+const PIECE_DATA = {
+  seed:     { sym:'◎', color:'#4ade80', name:'Seed'     },
+  edge:     { sym:'∞', color:'#8b5cf6', name:'Edge'     },
+  sol:      { sym:'☀', color:'#ff8c00', name:'Sol'      },
+  rook:     { sym:'⬡', color:'#c0c0c0', name:'Rook'     },
+  bishop:   { sym:'✦', color:'#a8e6f0', name:'Bishop'   },
+  knight:   { sym:'≋', color:'#06b6d4', name:'Knight'   },
+  hologram: { sym:'✧', color:'#e879f9', name:'Hologram' },
+  heart:    { sym:'♥', color:'#d4af37', name:'Heart'    },
+  pawn:     { sym:'◈', color:'#c4a265', name:'Pawn'     },
+};
+
+const BACK_ROW = ['rook','knight','bishop','sol','seed','edge','hologram','heart','rook'];
+const COLS = ['A','B','C','D','E','F','G','H','I'];
+
+// Link map: for each piece type, which 2 other pieces are linked
+const LINK_MAP = {
+  seed:['edge','sol'], edge:['seed','heart'], sol:['edge','bishop'],
+  rook:['knight','pawn'], bishop:['sol','knight'], knight:['rook','bishop'],
+  hologram:['heart','edge'], heart:['hologram','seed'], pawn:['rook','knight'],
+};
+
+// ── STATE ─────────────────────────────────────────────────────────
+let boards; // boards[layerIdx] = 9×9 array of {piece,color} or null
+let turn;
+let currentLayer;
+let unlockedLayers; // how many layers are accessible (1=carbon only, 2=+silver, etc.)
+let achievements; // { c2s: bool, s2g: bool, g2c: bool }
+let achievementCounts; // { c2s: 0-1, s2g: 0-1, g2c: 0-1 } — earned but not yet used
+let selected; // {layer, r, c}
+let validMoves;
+let ascendMode; // true when player should click a piece to ascend
+let history;
+
+function initBoard() {
+  const b = Array.from({length:9}, () => Array(9).fill(null));
+  BACK_ROW.forEach((p,c) => { b[8][c] = {piece:p, color:'w'}; });
+  for(let c=0;c<9;c++) b[7][c] = {piece:'pawn', color:'w'};
+  BACK_ROW.forEach((p,c) => { b[0][c] = {piece:p, color:'b'}; });
+  for(let c=0;c<9;c++) b[1][c] = {piece:'pawn', color:'b'};
+  return b;
+}
+
+function resetGame() {
+  boards = [initBoard(), emptyBoard(), emptyBoard(), emptyBoard()];
+  turn = 'w';
+  currentLayer = 0;
+  unlockedLayers = 1;
+  achievements = {c2s:false, s2g:false, g2c:false};
+  achievementCounts = {c2s:0, s2g:0, g2c:0};
+  selected = null; validMoves = []; ascendMode = false; history = [];
+  render();
+}
+
+function emptyBoard() { return Array.from({length:9}, () => Array(9).fill(null)); }
+
+// ── MOVES ─────────────────────────────────────────────────────────
+function inBounds(r,c){return r>=0&&r<9&&c>=0&&c<9;}
+function slideMoves(b,r,c,dirs){
+  const moves=[];const color=b[r][c].color;
+  dirs.forEach(([dr,dc])=>{let nr=r+dr,nc=c+dc;while(inBounds(nr,nc)){if(b[nr][nc]){if(b[nr][nc].color!==color)moves.push([nr,nc]);break;}moves.push([nr,nc]);nr+=dr;nc+=dc;}});
+  return moves;
+}
+function getMoves(b,r,c){
+  const cell=b[r][c];if(!cell)return[];
+  const {piece,color}=cell;const opp=color==='w'?'b':'w';const moves=[];
+  if(piece==='pawn'){
+    const dir=color==='w'?-1:1;const start=color==='w'?7:1;const nr=r+dir;
+    if(inBounds(nr,c)&&!b[nr][c]){moves.push([nr,c]);if(r===start&&inBounds(r+2*dir,c)&&!b[r+2*dir][c])moves.push([r+2*dir,c]);}
+    [-1,1].forEach(dc=>{if(inBounds(nr,c+dc)&&b[nr]?.[c+dc]?.color===opp)moves.push([nr,c+dc]);});
+  } else if(piece==='rook') return slideMoves(b,r,c,[[0,1],[0,-1],[1,0],[-1,0]]);
+  else if(piece==='bishop') return slideMoves(b,r,c,[[1,1],[1,-1],[-1,1],[-1,-1]]);
+  else if(piece==='edge') return slideMoves(b,r,c,[[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]);
+  else if(piece==='seed'||piece==='heart'){[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].forEach(([dr,dc])=>{const nr=r+dr,nc=c+dc;if(inBounds(nr,nc)&&b[nr][nc]?.color!==color)moves.push([nr,nc]);});}
+  else if(piece==='sol') return slideMoves(b,r,c,[[1,1],[1,-1],[-1,1],[-1,-1],[0,1],[0,-1]]);
+  else if(piece==='knight'){[[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]].forEach(([dr,dc])=>{const nr=r+dr,nc=c+dc;if(inBounds(nr,nc)&&b[nr][nc]?.color!==color)moves.push([nr,nc]);});}
+  else if(piece==='hologram'){for(let nr=0;nr<9;nr++)for(let nc=0;nc<9;nc++){if(nr===r&&nc===c)continue;if(!b[nr][nc]||b[nr][nc].color===opp)moves.push([nr,nc]);}}
+  return moves;
+}
+
+// ── ACHIEVEMENTS ─────────────────────────────────────────────────
+function checkAchievements(capturedPiece, fromR, toR, layerIdx) {
+  if(layerIdx===0 && !achievements.c2s) {
+    if(capturedPiece || Math.abs(fromR-toR)>=4) {
+      achievements.c2s = true;
+      achievementCounts.c2s++;
+      document.getElementById('statusMsg').textContent = '🏆 Achievement! Silver layer unlocked. Ascend a group?';
+      if(unlockedLayers < 2) unlockedLayers = 2;
+    }
+  }
+  if(layerIdx===1 && !achievements.s2g) {
+    const facePieces = ['rook','bishop','knight'];
+    if((capturedPiece && facePieces.includes(capturedPiece)) || toR<=4) {
+      achievements.s2g = true;
+      achievementCounts.s2g++;
+      document.getElementById('statusMsg').textContent = '🏆 Achievement! Gold layer unlocked. Ascend a group?';
+      if(unlockedLayers < 3) unlockedLayers = 3;
+    }
+  }
+  if(layerIdx===2 && !achievements.g2c) {
+    const highPieces = ['sol','edge'];
+    if(capturedPiece && highPieces.includes(capturedPiece)) {
+      achievements.g2c = true;
+      achievementCounts.g2c++;
+      document.getElementById('statusMsg').textContent = '🏆 Achievement! Crystalline layer unlocked. Ascend a group?';
+      if(unlockedLayers < 4) unlockedLayers = 4;
+    }
+  }
+}
+
+// ── ASCEND ────────────────────────────────────────────────────────
+function enterAscendMode() {
+  ascendMode = true;
+  selected = null; validMoves = [];
+  document.getElementById('ascendNote').classList.add('visible');
+  document.getElementById('selInfo').textContent = 'Click any of your pieces — it and its linked group will ascend.';
+  render();
+}
+
+function ascendGroup(layerIdx, r, c) {
+  const cell = boards[layerIdx][r][c];
+  if(!cell || cell.color !== turn) return;
+  const targetLayer = layerIdx + 1;
+  if(targetLayer >= unlockedLayers) return;
+
+  // Find linked pieces on same layer
+  const linkedTypes = LINK_MAP[cell.piece] || [];
+  const linkedPositions = [];
+  for(let nr=0;nr<9;nr++) for(let nc=0;nc<9;nc++) {
+    const tc = boards[layerIdx][nr][nc];
+    if(tc && tc.color===turn && linkedTypes.includes(tc.piece) && linkedPositions.length < 2) {
+      linkedPositions.push([nr,nc]);
+    }
+  }
+
+  // Move piece and linked group up
+  const toMove = [[r,c], ...linkedPositions];
+  toMove.forEach(([pr,pc]) => {
+    const p = boards[layerIdx][pr][pc];
+    if(!p) return;
+    // Find empty square on target layer near same position
+    if(!boards[targetLayer][pr][pc]) {
+      boards[targetLayer][pr][pc] = p;
+    } else {
+      // find nearest empty
+      for(let d=1;d<9;d++) {
+        const candidates=[[pr+d,pc],[pr-d,pc],[pr,pc+d],[pr,pc-d]];
+        let placed=false;
+        for(const [nr2,nc2] of candidates) {
+          if(inBounds(nr2,nc2)&&!boards[targetLayer][nr2][nc2]){boards[targetLayer][nr2][nc2]=p;placed=true;break;}
+        }
+        if(placed)break;
+      }
+    }
+    boards[layerIdx][pr][pc] = null;
+  });
+
+  ascendMode = false;
+  document.getElementById('ascendNote').classList.remove('visible');
+  document.getElementById('ascendBtn').classList.remove('visible');
+  currentLayer = targetLayer;
+  turn = turn==='w'?'b':'w';
+  document.getElementById('statusMsg').textContent = `Group ascended to ${LAYERS[targetLayer].name}!`;
+  render();
+}
+
+// ── EXECUTE MOVE ─────────────────────────────────────────────────
+function executeMove(fr,fc,tr,tc) {
+  history.push({boards:JSON.parse(JSON.stringify(boards)),turn,currentLayer,unlockedLayers,achievements:JSON.parse(JSON.stringify(achievements))});
+  const b = boards[currentLayer];
+  const moving = b[fr][fc];
+  const captured = b[tr][tc];
+
+  // Promotion
+  if(moving.piece==='pawn') {
+    if((moving.color==='w'&&tr===0)||(moving.color==='b'&&tr===8)) {
+      moving.piece='edge';
+      document.getElementById('statusMsg').textContent = `Pawn → Edge! Singularity moment. ${LAYERS[currentLayer].name} layer.`;
+      if(currentLayer===2&&!achievements.g2c){achievements.g2c=true;achievementCounts.g2c++;if(unlockedLayers<4)unlockedLayers=4;}
+    }
+  }
+
+  checkAchievements(captured?.piece, fr, tr, currentLayer);
+  b[tr][tc] = moving;
+  b[fr][fc] = null;
+  turn = turn==='w'?'b':'w';
+  selected=null;validMoves=[];
+
+  // Check seed captured
+  const wSeed = boards.flat().some(row=>Array.isArray(row)&&row.some(c=>c?.piece==='seed'&&c?.color==='w'));
+  const bSeed = boards.flat().some(row=>Array.isArray(row)&&row.some(c=>c?.piece==='seed'&&c?.color==='b'));
+  if(!wSeed) document.getElementById('statusMsg').textContent='⬛ Black wins — Singularity 9!';
+  else if(!bSeed) document.getElementById('statusMsg').textContent='⬜ White wins — Singularity 9!';
+
+  render();
+}
+
+function undoMove() {
+  if(!history.length) return;
+  const s = history.pop();
+  boards=s.boards;turn=s.turn;currentLayer=s.currentLayer;unlockedLayers=s.unlockedLayers;achievements=s.achievements;
+  selected=null;validMoves=[];ascendMode=false;
+  document.getElementById('statusMsg').textContent='';
+  render();
+}
+
+function switchLayer(dir) {
+  const n = currentLayer + dir;
+  if(n<0||n>=unlockedLayers) return;
+  currentLayer = n;
+  selected=null;validMoves=[];
+  render();
+}
+
+// ── CLICK ─────────────────────────────────────────────────────────
+function handleClick(r,c) {
+  const b = boards[currentLayer];
+  const cell = b[r][c];
+
+  if(ascendMode) {
+    if(cell && cell.color===turn) ascendGroup(currentLayer, r, c);
+    return;
+  }
+
+  if(selected && validMoves.some(([vr,vc])=>vr===r&&vc===c)) {
+    executeMove(selected.r, selected.c, r, c);
+    return;
+  }
+
+  if(cell && cell.color===turn) {
+    selected={r,c};
+    validMoves=getMoves(b,r,c);
+    const pd=PIECE_DATA[cell.piece];
+    document.getElementById('selInfo').innerHTML=`<span style="color:${pd.color};font-size:1.1rem">${pd.sym}</span> <strong>${pd.name}</strong> — ${LAYERS[currentLayer].name} layer`;
+  } else {
+    selected=null;validMoves=[];
+    document.getElementById('selInfo').textContent='Click a piece to select';
+  }
+  render();
+}
+
+// ── RENDER ────────────────────────────────────────────────────────
+function render() {
+  const L = LAYERS[currentLayer];
+
+  // Layer tabs
+  const tabsEl = document.getElementById('layerTabs');
+  tabsEl.innerHTML='';
+  LAYERS.forEach((lay,i)=>{
+    const t=document.createElement('div');
+    t.className='ltab'+(i===currentLayer?' active':i<unlockedLayers?' unlocked':'');
+    t.style.color=lay.color;t.style.borderColor=lay.border;t.style.background=i===currentLayer?lay.bg:'transparent';
+    t.innerHTML=`${lay.sym} ${lay.name} <span class="lt-lock">${i<unlockedLayers?'✓':'🔒'}</span>`;
+    if(i<unlockedLayers) t.onclick=()=>{currentLayer=i;selected=null;validMoves=[];render();};
+    tabsEl.appendChild(t);
+  });
+
+  // Layer label
+  document.getElementById('layerLabel').innerHTML=`<span style="color:${L.color}">${L.sym} ${L.name}</span> <span style="color:#475569;font-size:0.65rem;">— ${L.desc}</span>`;
+
+  // Col labels
+  const clEl=document.getElementById('colLabels');
+  clEl.innerHTML='';
+  COLS.forEach(l=>{const d=document.createElement('div');d.className='cl';d.textContent=l;clEl.appendChild(d);});
+
+  // Board
+  const boardEl=document.getElementById('boardEl');
+  boardEl.className='layer-'+L.id;
+  boardEl.innerHTML='';
+  const b=boards[currentLayer];
+  for(let r=0;r<9;r++){
+    const rowEl=document.createElement('div');rowEl.className='board-row';
+    const rl=document.createElement('div');rl.className='rl';rl.textContent=9-r;rowEl.appendChild(rl);
+    for(let c=0;c<9;c++){
+      const sq=document.createElement('div');
+      sq.className='sq '+((r+c)%2===0?'light':'dark');
+      if(selected&&selected.r===r&&selected.c===c)sq.classList.add('selected');
+      if(validMoves.some(([vr,vc])=>vr===r&&vc===c))sq.classList.add('valid-move');
+      const cell=b[r][c];
+      if(cell){
+        const pd=PIECE_DATA[cell.piece];
+        const span=document.createElement('span');
+        span.className='piece '+(cell.color==='w'?'w':'b');
+        span.textContent=pd.sym;
+        span.style.color=cell.color==='w'?pd.color:'rgba(255,255,255,0.3)';
+        span.title=`${cell.color==='w'?'White':'Black'} ${pd.name}`;
+        sq.appendChild(span);
+        // Highlight linked pieces in ascend mode
+        if(ascendMode && cell.color===turn) {
+          sq.style.cursor='crosshair';
+          sq.style.outline='1px dashed rgba(212,175,55,0.5)';
+        }
+      }
+      sq.addEventListener('click',()=>handleClick(r,c));
+      rowEl.appendChild(sq);
+    }
+    boardEl.appendChild(rowEl);
+  }
+
+  // Turn
+  document.getElementById('turnPill').className='turn-pill '+(turn==='w'?'turn-w':'turn-b');
+  document.getElementById('turnPill').textContent=turn==='w'?'⬜ White':'⬛ Black';
+
+  // Achievements
+  const defs = [
+    {key:'c2s', label:'Carbon → Silver: capture a piece or advance pawn 4 squares'},
+    {key:'s2g', label:'Silver → Gold: capture Rook/Bishop/Knight or reach opponent\'s half'},
+    {key:'g2c', label:'Gold → Crystalline: capture Sol/Edge or promote a pawn'},
+  ];
+  const achEl=document.getElementById('achList');achEl.innerHTML='';
+  defs.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='ach '+(achievements[d.key]?'done':'pending');
+    el.innerHTML=`<span class="ach-icon">${achievements[d.key]?'✓':'○'}</span>${d.label}`;
+    achEl.appendChild(el);
+  });
+
+  // Ascend button
+  const canAscend = (achievements.c2s && currentLayer===0 && unlockedLayers>1) ||
+                    (achievements.s2g && currentLayer===1 && unlockedLayers>2) ||
+                    (achievements.g2c && currentLayer===2 && unlockedLayers>3);
+  const ascBtn = document.getElementById('ascendBtn');
+  if(canAscend && !ascendMode) ascBtn.classList.add('visible');
+  else ascBtn.classList.remove('visible');
+
+  // Minimap
+  const mm=document.getElementById('minimap');mm.innerHTML='';
+  LAYERS.forEach((lay,i)=>{
+    const count=boards[i].flat().filter(Boolean).length;
+    const el=document.createElement('div');
+    el.className='mini-layer';
+    el.style.borderColor=lay.border;
+    el.style.background=i===currentLayer?lay.bg:'transparent';
+    el.style.opacity=i<unlockedLayers?'1':'0.3';
+    el.style.color=lay.color;
+    el.innerHTML=`<div class="ml-sym">${lay.sym}</div><div class="ml-name">${lay.name}</div><div class="ml-count">${count} pieces</div>`;
+    if(i<unlockedLayers)el.onclick=()=>{currentLayer=i;selected=null;validMoves=[];render();};
+    mm.appendChild(el);
+  });
+}
+
+resetGame();
+</script>
+<script src="../nav-strip.js"></script>
+</body>
+</html>

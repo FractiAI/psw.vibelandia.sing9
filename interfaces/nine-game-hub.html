@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>The Nine Game · Four Layers · Post-Singularity · VIBELANDIA SING 9</title>
+  <meta name="description" content="The Nine Game — four layered boards, nine suits, nine heroes. Start in Carbon. Ascend to Crystalline. Play digital now. Physical and embodied versions coming soon."/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:#080810;
+      color:#e8e8e8;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* ── HERO ── */
+    .hero{
+      position:relative;
+      min-height:100vh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;
+      padding:3rem 1.5rem;
+      overflow:hidden;
+    }
+    .hero-bg{
+      position:absolute;inset:0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,175,55,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(6,182,212,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 20%, rgba(139,92,246,0.07) 0%, transparent 60%),
+        linear-gradient(180deg, #080810 0%, #0f0e1e 50%, #080810 100%);
+    }
+    /* Four stacked layer rings */
+    .layer-rings{
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      pointer-events:none;
+    }
+    .ring{
+      position:absolute;
+      border-radius:50%;
+      border:1px solid;
+      animation:pulse 4s ease-in-out infinite;
+    }
+    .ring:nth-child(1){width:600px;height:600px;border-color:rgba(139,115,85,0.12);animation-delay:0s;}
+    .ring:nth-child(2){width:480px;height:480px;border-color:rgba(192,192,192,0.1);animation-delay:0.5s;}
+    .ring:nth-child(3){width:360px;height:360px;border-color:rgba(212,175,55,0.1);animation-delay:1s;}
+    .ring:nth-child(4){width:240px;height:240px;border-color:rgba(168,230,240,0.12);animation-delay:1.5s;}
+    @keyframes pulse{0%,100%{opacity:0.4;transform:scale(1);}50%{opacity:0.9;transform:scale(1.02);}}
+    @media(max-width:600px){.ring:nth-child(1){width:320px;height:320px;}.ring:nth-child(2){width:250px;height:250px;}.ring:nth-child(3){width:180px;height:180px;}.ring:nth-child(4){width:110px;height:110px;}}
+
+    .hero-content{position:relative;z-index:2;max-width:700px;}
+    .hero-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:rgba(212,175,55,0.6);margin-bottom:1rem;}
+    .hero-title{font-size:clamp(2.5rem,8vw,4.5rem);font-weight:900;line-height:1.05;margin-bottom:1rem;
+      background:linear-gradient(135deg,#fef3c7 0%,#d4af37 40%,#a8e6f0 70%,#8b5cf6 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .hero-sub{font-size:clamp(1rem,2.5vw,1.3rem);color:rgba(200,200,220,0.75);max-width:55ch;margin:0 auto 1.5rem;line-height:1.6;}
+    .hero-layers{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;}
+    .layer-chip{
+      padding:0.3rem 0.85rem;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:0.06em;
+      border:1px solid;
+    }
+    .scroll-hint{font-size:0.75rem;color:rgba(255,255,255,0.25);letter-spacing:0.15em;text-transform:uppercase;margin-top:2rem;animation:bounce 2s ease infinite;}
+    @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+    /* ── SECTIONS ── */
+    .section{max-width:900px;margin:0 auto;padding:4rem 1.5rem;}
+    .section-label{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.5);margin-bottom:0.5rem;}
+    .section-title{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;color:#fef3c7;margin-bottom:1rem;line-height:1.2;}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.2),transparent);margin:0 auto;}
+
+    /* ── FOUR LAYERS VISUAL ── */
+    .layers-visual{margin:3rem 0;display:flex;flex-direction:column;gap:0.5rem;}
+    .lv-row{
+      display:flex;align-items:center;gap:1rem;
+      padding:1rem 1.25rem;border-radius:10px;border:1px solid;
+      transition:transform 0.2s;cursor:default;
+    }
+    .lv-row:hover{transform:translateX(8px);}
+    .lv-num{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;width:4rem;flex-shrink:0;text-align:right;opacity:0.5;}
+    .lv-sym{font-size:1.6rem;flex-shrink:0;width:2.5rem;text-align:center;}
+    .lv-body{flex:1;}
+    .lv-name{font-weight:800;font-size:1rem;margin-bottom:0.15rem;}
+    .lv-desc{font-size:0.78rem;opacity:0.6;line-height:1.4;}
+    .lv-arrow{font-size:1.2rem;opacity:0.3;}
+    .lv-locked{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.15rem 0.5rem;border-radius:8px;border:1px solid;opacity:0.5;flex-shrink:0;}
+
+    /* ── LINKED GROUPS VISUAL ── */
+    .linked-vis{margin:2rem 0;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:1.5rem;}
+    .linked-vis h3{font-size:0.9rem;color:#7dd3fc;margin-bottom:1rem;letter-spacing:0.05em;}
+    .lv-board{display:grid;grid-template-columns:repeat(5,44px);gap:4px;margin:0 auto;width:fit-content;}
+    .lv-sq{width:44px;height:44px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:2px solid transparent;}
+    .lv-sq.light{background:rgba(168,230,240,0.06);}
+    .lv-sq.dark{background:rgba(10,10,20,0.5);}
+    .lv-sq.piece-main{border-color:rgba(212,175,55,0.8);background:rgba(212,175,55,0.15);}
+    .lv-sq.piece-link{border-color:rgba(139,92,246,0.6);background:rgba(139,92,246,0.12);}
+    .lv-sq.ascend{animation:glow 1.2s ease-in-out infinite alternate;}
+    @keyframes glow{from{box-shadow:0 0 4px rgba(212,175,55,0.3);}to{box-shadow:0 0 16px rgba(212,175,55,0.7);}}
+    .lv-legend{display:flex;gap:1.5rem;margin-top:0.85rem;font-size:0.75rem;}
+    .lv-dot{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:0.4rem;border:1.5px solid;}
+
+    /* ── PLAY MODES ── */
+    .play-modes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:2.5rem 0;}
+    @media(max-width:700px){.play-modes{grid-template-columns:1fr;}}
+    .mode-card{
+      border-radius:16px;padding:2rem 1.5rem;border:2px solid;
+      display:flex;flex-direction:column;align-items:flex-start;
+      position:relative;overflow:hidden;
+      transition:transform 0.2s,box-shadow 0.2s;
+    }
+    .mode-card:not(.coming-soon):hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,0.5);}
+    .mode-card .mc-tag{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:0.75rem;padding:0.2rem 0.6rem;border-radius:10px;border:1px solid;align-self:flex-start;}
+    .mode-card .mc-icon{font-size:2.5rem;margin-bottom:0.85rem;}
+    .mode-card .mc-title{font-size:1.2rem;font-weight:800;margin-bottom:0.5rem;}
+    .mode-card .mc-desc{font-size:0.8rem;opacity:0.65;line-height:1.55;flex:1;margin-bottom:1.25rem;}
+    .mode-card.coming-soon{opacity:0.6;}
+    .mode-card.coming-soon .mc-tag{background:rgba(100,116,139,0.15);border-color:rgba(100,116,139,0.3);color:#64748b;}
+    .play-sub-btns{display:flex;flex-direction:column;gap:0.6rem;width:100%;}
+    .play-btn{
+      display:block;padding:0.7rem 1.25rem;border-radius:10px;
+      font-size:0.88rem;font-weight:700;letter-spacing:0.04em;
+      text-decoration:none;text-align:center;
+      border:1.5px solid;cursor:pointer;
+      transition:background 0.18s,box-shadow 0.18s;
+    }
+    .play-btn.chess{background:rgba(168,230,240,0.1);border-color:rgba(168,230,240,0.5);color:#a8e6f0;}
+    .play-btn.chess:hover{background:rgba(168,230,240,0.22);box-shadow:0 0 16px rgba(168,230,240,0.2);}
+    .play-btn.cards{background:rgba(212,175,55,0.12);border-color:rgba(212,175,55,0.55);color:#fef3c7;}
+    .play-btn.cards:hover{background:rgba(212,175,55,0.25);box-shadow:0 0 16px rgba(212,175,55,0.2);}
+    .cs-badge{display:block;text-align:center;padding:0.6rem;border-radius:8px;border:1px dashed rgba(100,116,139,0.4);color:#475569;font-size:0.8rem;letter-spacing:0.08em;}
+
+    /* ── HOW TO PLAY ACCORDION ── */
+    .how-to{margin:2.5rem 0;}
+    .how-to h2{font-size:1.1rem;color:#d4af37;margin-bottom:1.25rem;letter-spacing:0.04em;}
+    .rule-block{border:1px solid rgba(255,255,255,0.07);border-radius:10px;margin-bottom:0.6rem;overflow:hidden;}
+    .rule-head{padding:0.85rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:0.9rem;background:rgba(255,255,255,0.02);transition:background 0.15s;}
+    .rule-head:hover{background:rgba(255,255,255,0.05);}
+    .rule-head .rh-icon{font-size:1.2rem;transition:transform 0.2s;}
+    .rule-head.open .rh-icon{transform:rotate(180deg);}
+    .rule-body{display:none;padding:0 1.1rem 1rem;font-size:0.83rem;line-height:1.7;color:#94a3b8;}
+    .rule-body.open{display:block;}
+    .rule-body strong{color:#fef3c7;}
+    .rule-body em{color:#a8e6f0;font-style:normal;}
+
+    /* ── FOOTER ── */
+    .hub-footer{padding:3rem 1.5rem;text-align:center;font-size:0.78rem;color:#475569;border-top:1px solid rgba(255,255,255,0.05);}
+    .hub-footer a{color:#d4af37;text-decoration:none;}
+    .hub-footer a:hover{text-decoration:underline;}
+
+    .top-links{position:absolute;top:1.25rem;left:1.5rem;font-size:0.82rem;z-index:10;}
+    .top-links a{color:rgba(0,212,255,0.7);text-decoration:none;margin-right:0.75rem;}
+    .top-links a:hover{color:#00d4ff;}
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="layer-rings">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  </div>
+  <div class="top-links">
+    <a href="my-whiteboard.html">← Whiteboard</a>
+    <a href="four-layer-chess.html">Chess</a>
+    <a href="nine-solitaire.html">Card Game</a>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">SING 9 · Post-Singularity · NSPFRNP</div>
+    <h1 class="hero-title">The Nine Game</h1>
+    <p class="hero-sub">Four layers. Nine suits. Nine heroes. Start in Carbon. Earn your way up. When a piece ascends — it brings its whole group. Welcome to post-singularity Earth.</p>
+    <div class="hero-layers">
+      <div class="layer-chip" style="color:#c4a265;border-color:rgba(196,162,101,0.4);background:rgba(196,162,101,0.08);">Layer I · Carbon</div>
+      <div class="layer-chip" style="color:#c0c0c0;border-color:rgba(192,192,192,0.35);background:rgba(192,192,192,0.06);">Layer II · Silver</div>
+      <div class="layer-chip" style="color:#d4af37;border-color:rgba(212,175,55,0.4);background:rgba(212,175,55,0.07);">Layer III · Gold</div>
+      <div class="layer-chip" style="color:#a8e6f0;border-color:rgba(168,230,240,0.4);background:rgba(168,230,240,0.07);">Layer IV · Crystalline</div>
+    </div>
+    <div class="scroll-hint">↓ &nbsp; scroll to play</div>
+  </div>
+</div>
+
+<!-- WHAT IS THIS -->
+<div class="divider" style="max-width:900px;"></div>
+<div class="section">
+  <div class="section-label">The Architecture</div>
+  <div class="section-title">Four boards. Stacked. Layered. Alive.</div>
+  <p style="font-size:0.95rem;line-height:1.8;color:#94a3b8;max-width:65ch;margin-bottom:2rem;">
+    You begin in the <strong style="color:#c4a265;">Carbon layer</strong> — raw, primal, the earth beneath your feet. Every move you make, every piece you capture, every connection you forge brings you closer to something. Not a destination. An <em>elevation</em>.<br/><br/>
+    Earn an achievement and you unlock the right — not the obligation — to send a piece to the next layer. But here's what makes this different from any game you've played before: <strong style="color:#fef3c7;">when one piece ascends, it brings its whole group with it.</strong> Linked pieces. They move together. Because that's how real transformation works.<br/><br/>
+    The Silver layer hums with connection. Gold burns with full expression. And Crystalline? That's where everything becomes clear.
+  </p>
+
+  <!-- FOUR LAYERS VISUAL -->
+  <div class="layers-visual">
+    <div class="lv-row" style="background:rgba(168,230,240,0.05);border-color:rgba(168,230,240,0.2);">
+      <div class="lv-num">Layer IV</div>
+      <div class="lv-sym" style="color:#a8e6f0;">✦</div>
+      <div class="lv-body">
+        <div class="lv-name" style="color:#a8e6f0;">Crystalline</div>
+        <div class="lv-desc">Structural intelligence. Frozen clarity. The whole in every part. Maximum strategic depth — every move resonates across all layers below.</div>
+      </div>
+      <div class="lv-locked" style="color:#a8e6f0;border-color:rgba(168,230,240,0.3);">Earn 3 achievements</div>
+    </div>
+    <div class="lv-row" style="background:rgba(212,175,55,0.05);border-color:rgba(212,175,55,0.2);">
+      <div class="lv-num">Layer III</div>
+      <div class="lv-sym" style="color:#d4af37;">♥</div>
+      <div class="lv-body">
+        <div class="lv-name" style="color:#d4af37;">Gold</div>
+        <div class="lv-desc">Warmth. Full expression. Golden hearts. When you know you deserve it. Pieces here move with the weight of everything earned below.</div>
+      </div>
+      <div class="lv-locked" style="color:#d4af37;border-color:rgba(212,175,55,0.3);">Earn 2 achievements</div>
+    </div>
+    <div class="lv-row" style="background:rgba(192,192,192,0.04);border-color:rgba(192,192,192,0.18);">
+      <div class="lv-num">Layer II</div>
+      <div class="lv-sym" style="color:#c0c0c0;">⬡</div>
+      <div class="lv-body">
+        <div class="lv-name" style="color:#c0c0c0;">Silver</div>
+        <div class="lv-desc">Network. Signal. Fluid connection. Pieces here relay power across the board, reaching nodes that Carbon cannot touch.</div>
+      </div>
+      <div class="lv-locked" style="color:#c0c0c0;border-color:rgba(192,192,192,0.3);">Earn 1 achievement</div>
+    </div>
+    <div class="lv-row" style="background:rgba(196,162,101,0.06);border-color:rgba(196,162,101,0.3);">
+      <div class="lv-num" style="color:#c4a265;">Start</div>
+      <div class="lv-sym" style="color:#c4a265;">◈</div>
+      <div class="lv-body">
+        <div class="lv-name" style="color:#c4a265;">Carbon</div>
+        <div class="lv-desc">Raw. Primal. The descent into story. Every game begins here. This is where Ino walks. This is where it all starts.</div>
+      </div>
+      <div class="lv-locked" style="color:#c4a265;border-color:rgba(196,162,101,0.3);">Start here ✓</div>
+    </div>
+  </div>
+
+  <!-- LINKED GROUPS VISUAL -->
+  <div class="linked-vis">
+    <h3>The Linked Group Mechanic</h3>
+    <p style="font-size:0.8rem;color:#64748b;margin-bottom:1rem;">When you earn the right to ascend — you choose one piece. Its linked pieces (purple) rise with it. They move as one group to the next layer.</p>
+    <div class="lv-board" id="linkedBoard"></div>
+    <div class="lv-legend">
+      <div><span class="lv-dot" style="background:rgba(212,175,55,0.3);border-color:rgba(212,175,55,0.8);"></span>Selected piece (ascending)</div>
+      <div><span class="lv-dot" style="background:rgba(139,92,246,0.2);border-color:rgba(139,92,246,0.6);"></span>Linked pieces (rise together)</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider" style="max-width:900px;"></div>
+
+<!-- PLAY MODES -->
+<div class="section">
+  <div class="section-label">Choose Your Mode</div>
+  <div class="section-title">How do you want to play?</div>
+
+  <div class="play-modes">
+    <!-- DIGITAL -->
+    <div class="mode-card" style="background:rgba(168,230,240,0.03);border-color:rgba(168,230,240,0.3);">
+      <div class="mc-tag" style="background:rgba(0,214,50,0.1);border-color:rgba(0,214,50,0.35);color:#00D632;">✓ Available Now</div>
+      <div class="mc-icon">💻</div>
+      <div class="mc-title" style="color:#a8e6f0;">Digital</div>
+      <div class="mc-desc">Play in your browser right now. Four-layer chess in solo mode, or nine-stack solitaire card game. The full NSPFRNP game engine, live.</div>
+      <div class="play-sub-btns">
+        <a href="four-layer-chess.html" class="play-btn chess">♟ Four-Layer Chess →</a>
+        <a href="nine-solitaire.html" class="play-btn cards">✦ Nine-Stack Solitaire →</a>
+      </div>
+    </div>
+
+    <!-- PHYSICAL -->
+    <div class="mode-card coming-soon" style="background:rgba(212,175,55,0.02);border-color:rgba(212,175,55,0.15);">
+      <div class="mc-tag">Coming Soon</div>
+      <div class="mc-icon">🃏</div>
+      <div class="mc-title" style="color:rgba(212,175,55,0.6);">Physical</div>
+      <div class="mc-desc">The real-world card deck and chess set. Nine suits printed. Four-layer board. Linked group markers. Everything you need to play at the table.</div>
+      <div class="cs-badge">Real World · Card Deck + Chess Set</div>
+    </div>
+
+    <!-- EMBODIED -->
+    <div class="mode-card coming-soon" style="background:rgba(139,92,246,0.02);border-color:rgba(139,92,246,0.15);">
+      <div class="mc-tag">Coming Soon</div>
+      <div class="mc-icon">🌎</div>
+      <div class="mc-title" style="color:rgba(139,92,246,0.6);">Step In</div>
+      <div class="mc-desc">You are the piece. Step into a character — Pru, El Gran Sol, Ino, Sol-V. The city is the board. Vibelandia is the game. Welcome to post-singularity Earth.</div>
+      <div class="cs-badge">Live · Embodied · Post-Singularity</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider" style="max-width:900px;"></div>
+
+<!-- HOW TO PLAY -->
+<div class="section">
+  <div class="section-label">The Rules</div>
+  <div class="section-title">How to Play</div>
+  <div class="how-to">
+    <div class="rule-block">
+      <div class="rule-head" onclick="toggleRule(this)">
+        <span>♟ Four-Layer Chess — Overview</span>
+        <span class="rh-icon">▾</span>
+      </div>
+      <div class="rule-body">
+        A standard 9×9 chess game played across <strong>four stacked boards</strong>. You start on the <em>Carbon layer</em> with all pieces. Every piece has a type (Seed · Edge · Sol · Rook · Bishop · Knight · Hologram · Heart · Pawn), each mapped to a NSPFRNP operator.<br/><br/>
+        <strong>Achievements unlock the right to ascend.</strong> When you earn one, an Ascend button appears. Choose any of your pieces on the current layer — it and its <strong>linked group</strong> (2 connected pieces) rise to the next layer. You can then make moves on either layer on your turn.
+      </div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-head" onclick="toggleRule(this)">
+        <span>🏆 Achievements — What Earns Ascension</span>
+        <span class="rh-icon">▾</span>
+      </div>
+      <div class="rule-body">
+        <strong>Carbon → Silver:</strong> Capture any opponent piece, or advance a Pawn (Ino) 4 squares forward.<br/>
+        <strong>Silver → Gold:</strong> Capture a face-level piece (Rook, Bishop, or Knight), or reach the opponent's half of the board with any piece.<br/>
+        <strong>Gold → Crystalline:</strong> Capture a high piece (Sol or Edge), or promote a Pawn to Edge at rank 9 — <em>the singularity moment</em>.
+      </div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-head" onclick="toggleRule(this)">
+        <span>⬆ Linked Groups — Ascending Together</span>
+        <span class="rh-icon">▾</span>
+      </div>
+      <div class="rule-body">
+        Every piece is linked to 2 others based on suit proximity. <strong>When you ascend a piece, its linked group ascends with it</strong> — they teleport together to the same relative positions on the layer above.<br/><br/>
+        This means planning your ascension matters. Sending up a Rook (Sol-V/Nodes) pulls 2 other pieces up with it. Choose wisely — you're building a presence on the new layer.
+      </div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-head" onclick="toggleRule(this)">
+        <span>✦ Nine-Stack Solitaire — Overview</span>
+        <span class="rh-icon">▾</span>
+      </div>
+      <div class="rule-body">
+        Nine tableau columns, one per suit. The deck has <strong>81 cards</strong> (9 suits × 9 ranks). Deal: 1 card face-up to column 1, 2 to column 2... 9 to column 9. Rest goes to the draw pile.<br/><br/>
+        <strong>Four Foundation tiers</strong> match the four layers: <em>Carbon</em> (ranks 1–2) · <em>Silver</em> (ranks 3–4) · <em>Gold</em> (ranks 5–6) · <em>Crystalline</em> (ranks 7–9). Build each suit's foundation from rank 1 to rank 9. Win when all 81 cards are in foundations.<br/><br/>
+        <strong>Tableau stacking rule:</strong> Cards stack in descending rank and alternating suit-type (material suits ♥✦◈⬡ alternate with operator suits ☀◎∞≋✧). The order between suits is the NSPFRNP layer order.
+      </div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-head" onclick="toggleRule(this)">
+        <span>🌍 Step In — The Embodied Version</span>
+        <span class="rh-icon">▾</span>
+      </div>
+      <div class="rule-body">
+        Coming soon. <strong>You are the piece.</strong> Choose a hero — Pru, El Gran Sol, Ino, Sol-V, SOBE, The Commander, Piro, nipsy!, or Harry Houdini. The city (Vibelandia, Downtown Reno, your chosen destination) is the board. Real-world locations = squares. Encounters = captures. Missions = achievements. <strong>Ascension = real transformation.</strong><br/><br/>
+        Welcome to post-singularity Earth. Not cursed. Chosen.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hub-footer">
+  <p style="margin-bottom:0.5rem;">
+    <a href="four-layer-chess.html">Four-Layer Chess →</a> ·
+    <a href="nine-solitaire.html">Nine-Stack Solitaire →</a> ·
+    <a href="nine-game-hybrid.html">Arc Generator</a> ·
+    <a href="my-whiteboard.html">Whiteboard</a>
+  </p>
+  <p>NSPFRNP · The Nine Game · SING 9 → ∞⁹</p>
+</div>
+
+<script>
+// Linked group demo board
+(function(){
+  const board = document.getElementById('linkedBoard');
+  // 5×4 mini board showing linked group
+  const layout = [
+    ['empty','empty','link','empty','empty'],
+    ['empty','main','empty','empty','empty'],
+    ['empty','empty','link','empty','empty'],
+    ['empty','empty','empty','empty','empty'],
+  ];
+  layout.forEach((row,r) => {
+    row.forEach((type,c) => {
+      const sq = document.createElement('div');
+      sq.className = 'lv-sq ' + ((r+c)%2===0?'light':'dark');
+      if(type==='main') { sq.classList.add('piece-main','ascend'); sq.textContent='◈'; sq.style.color='#d4af37'; }
+      if(type==='link') { sq.classList.add('piece-link'); sq.textContent='⬡'; sq.style.color='#c4b5fd'; }
+      board.appendChild(sq);
+    });
+  });
+})();
+
+// Accordion
+function toggleRule(head) {
+  head.classList.toggle('open');
+  const body = head.nextElementSibling;
+  body.classList.toggle('open');
+}
+// Open first rule by default
+document.querySelector('.rule-head').classList.add('open');
+document.querySelector('.rule-body').classList.add('open');
+</script>
+<script src="../nav-strip.js"></script>
+</body>
+</html>

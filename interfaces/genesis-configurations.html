@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Genesis Configurations · Three States of the Game | SING 9</title>
+  <meta name="description" content="Genesis 0: the pristine origin. Today: the world as it sits right now. Full Lattice: Crystalline end state, HHL, Goldilocks daily. Three configurations, one game."/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --gold:#d4af37;--gold2:#f0c040;--cream:#fef3c7;
+      --carbon:#c4a265;--silver:#c0c0c0;--crystalline:#a8e6f0;
+      --deep:#05030a;--mid:#0f0d1e;
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--deep);color:var(--cream);overflow-x:hidden;}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0.75rem 1.5rem;display:flex;align-items:center;gap:1.2rem;backdrop-filter:blur(14px);background:rgba(5,3,10,0.75);border-bottom:1px solid rgba(212,175,55,0.1);font-size:0.78rem;}
+    .nav-logo{font-weight:800;color:var(--gold);letter-spacing:0.08em;margin-right:auto;}
+    nav a{color:rgba(212,175,55,0.55);text-decoration:none;transition:color 0.15s;}nav a:hover{color:var(--gold);}
+
+    /* ── HERO ── */
+    .hero{min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 1.5rem 4rem;position:relative;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 60%,rgba(196,162,101,0.05),transparent 70%);}
+    .hero-eyebrow{font-size:0.6rem;letter-spacing:0.35em;text-transform:uppercase;color:rgba(212,175,55,0.35);margin-bottom:1rem;}
+    .hero-title{font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1.0;background:linear-gradient(135deg,var(--carbon),var(--cream),var(--crystalline));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem;}
+    .hero-sub{font-size:clamp(0.9rem,2.5vw,1.15rem);color:rgba(200,190,155,0.55);max-width:55ch;margin:0 auto 2rem;line-height:1.8;}
+    .hero-trail{display:flex;align-items:center;justify-content:center;gap:0.6rem;flex-wrap:wrap;font-size:0.8rem;margin-bottom:2.5rem;}
+    .ht{padding:0.3rem 0.85rem;border-radius:15px;font-weight:700;border:1.5px solid;}
+    .ht.c0{color:var(--carbon);border-color:rgba(196,162,101,0.35);background:rgba(196,162,101,0.07);}
+    .ht.today{color:#e879f9;border-color:rgba(232,121,249,0.3);background:rgba(232,121,249,0.06);}
+    .ht.end{color:var(--crystalline);border-color:rgba(168,230,240,0.3);background:rgba(168,230,240,0.06);}
+    .ht-arrow{color:rgba(255,255,255,0.2);font-size:1rem;}
+    .hero-cta-row{display:flex;gap:0.85rem;justify-content:center;flex-wrap:wrap;}
+    .hcta{padding:0.75rem 1.8rem;border-radius:25px;font-size:0.9rem;font-weight:800;text-decoration:none;border:2px solid;transition:all 0.18s;letter-spacing:0.04em;}
+    .hcta.genesis{color:var(--cream);border-color:rgba(196,162,101,0.5);background:rgba(196,162,101,0.1);}
+    .hcta.genesis:hover{background:rgba(196,162,101,0.22);box-shadow:0 0 20px rgba(196,162,101,0.2);}
+    .hcta.today{color:#fdf4ff;border-color:rgba(232,121,249,0.4);background:rgba(232,121,249,0.07);}
+    .hcta.today:hover{background:rgba(232,121,249,0.18);box-shadow:0 0 20px rgba(232,121,249,0.2);}
+
+    /* ── CONFIG SECTION ── */
+    .config-section{max-width:1100px;margin:0 auto;padding:4rem 1.5rem;}
+    .cs-header{text-align:center;margin-bottom:3rem;}
+    .cs-num{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem;}
+    .cs-title{font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;margin-bottom:0.65rem;}
+    .cs-sub{font-size:clamp(0.88rem,2vw,1rem);color:rgba(200,190,155,0.6);max-width:62ch;margin:0 auto;line-height:1.8;}
+
+    /* ── BOARD DISPLAY ── */
+    .config-card{border-radius:16px;border:1.5px solid;padding:2rem 2rem 2rem;margin-bottom:5rem;background:rgba(255,255,255,0.025);}
+    .config-card.carbon-card{border-color:rgba(196,162,101,0.3);background:rgba(196,162,101,0.025);}
+    .config-card.today-card{border-color:rgba(232,121,249,0.25);background:rgba(232,121,249,0.02);}
+    .config-card.crystal-card{border-color:rgba(168,230,240,0.3);background:rgba(168,230,240,0.025);}
+    .config-body{display:flex;gap:2.5rem;align-items:flex-start;flex-wrap:wrap;}
+    .board-side{flex:0 0 auto;}
+    .text-side{flex:1;min-width:250px;}
+
+    /* ── BOARD GRID ── */
+    .mini-board-wrap{font-size:0.6rem;color:rgba(100,116,139,0.6);}
+    .mb-col-labels{display:flex;padding-left:1.1rem;margin-bottom:2px;}
+    .mb-cl{width:32px;text-align:center;}
+    .mb-row{display:flex;align-items:center;}
+    .mb-rl{width:1.1rem;text-align:right;padding-right:3px;flex-shrink:0;}
+    .sq{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:2px;position:relative;border:1.5px solid transparent;}
+    .sq.light{background:rgba(168,230,240,0.04);}
+    .sq.dark{background:rgba(10,10,20,0.5);}
+    /* Layer overrides */
+    .carbon-board .sq.light{background:rgba(196,162,101,0.07);}.carbon-board .sq.dark{background:rgba(15,10,5,0.65);}
+    .today-board .sq.light{background:rgba(232,121,249,0.04);}.today-board .sq.dark{background:rgba(12,5,18,0.7);}
+    .crystal-board .sq.light{background:rgba(168,230,240,0.07);}.crystal-board .sq.dark{background:rgba(5,5,20,0.7);}
+    .piece-sym{font-size:1rem;line-height:1;user-select:none;}
+    /* HHL lattice nodes */
+    .sq.hhl{background:rgba(168,230,240,0.18)!important;box-shadow:inset 0 0 10px rgba(168,230,240,0.3);}
+    /* Captured ghost */
+    .sq.captured-ghost{opacity:0.15;}
+    /* "Beyond" glow for end state */
+    .sq.beyond{background:rgba(212,175,55,0.12)!important;box-shadow:0 0 8px rgba(212,175,55,0.25);}
+
+    /* ── LAYER STACKS (Today multi-layer) ── */
+    .layer-stack{display:flex;gap:0.85rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+    .ls-tab{border-radius:8px;padding:0.3rem 0.75rem;font-size:0.7rem;font-weight:700;border:1px solid;cursor:pointer;transition:all 0.15s;}
+    .ls-tab.active-c{color:var(--carbon);border-color:rgba(196,162,101,0.4);background:rgba(196,162,101,0.1);}
+    .ls-tab.active-s{color:var(--silver);border-color:rgba(192,192,192,0.3);background:rgba(192,192,192,0.07);}
+    .ls-tab.active-g{color:var(--gold);border-color:rgba(212,175,55,0.35);background:rgba(212,175,55,0.07);}
+    .ls-tab.active-cr{color:var(--crystalline);border-color:rgba(168,230,240,0.3);background:rgba(168,230,240,0.07);}
+    .layer-display{display:none;}.layer-display.active{display:block;}
+
+    /* ── TEXT SIDE ── */
+    .config-tag{display:inline-block;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:10px;border:1px solid;margin-bottom:0.85rem;}
+    .config-h{font-size:clamp(1.2rem,3vw,1.75rem);font-weight:900;margin-bottom:0.6rem;line-height:1.1;}
+    .config-desc{font-size:0.88rem;color:rgba(200,190,155,0.65);line-height:1.85;margin-bottom:1.25rem;}
+    .config-desc strong{color:var(--cream);font-weight:700;}
+    .config-desc em{font-style:normal;}
+    .config-facts{display:flex;flex-direction:column;gap:0.45rem;margin-bottom:1.4rem;}
+    .cf{display:flex;gap:0.5rem;font-size:0.8rem;align-items:flex-start;}
+    .cf-dot{flex-shrink:0;margin-top:0.15rem;font-size:0.6rem;}
+    .cf-text{color:rgba(200,190,155,0.6);}
+    .cf-text strong{color:rgba(254,243,199,0.9);}
+    .play-btn{display:inline-block;padding:0.65rem 1.6rem;border-radius:22px;font-size:0.85rem;font-weight:800;text-decoration:none;border:2px solid;transition:all 0.18s;letter-spacing:0.04em;}
+
+    /* ── FULL LATTICE — beyond the board ── */
+    .beyond-zone{text-align:center;padding:2.5rem;border-radius:14px;border:1px solid rgba(212,175,55,0.2);background:linear-gradient(135deg,rgba(212,175,55,0.04),rgba(168,230,240,0.03));margin-top:1.5rem;}
+    .bz-label{font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.3);margin-bottom:0.75rem;}
+    .bz-content{font-size:clamp(0.85rem,2vw,1rem);color:rgba(200,190,155,0.5);line-height:2;font-style:italic;}
+    .bz-content strong{color:var(--gold2);font-style:normal;font-size:1.05em;}
+
+    /* ── TODAY DISTRIBUTION ── */
+    .today-dist{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.7rem;margin-bottom:1.5rem;}
+    .td-tile{border-radius:10px;padding:0.75rem;border:1px solid;text-align:center;}
+    .td-num{font-size:1.5rem;font-weight:900;margin-bottom:0.25rem;}
+    .td-label{font-size:0.68rem;opacity:0.6;letter-spacing:0.05em;}
+    .td-bar{height:4px;border-radius:2px;margin-top:0.5rem;}
+
+    /* ── TIMELINE NOTE ── */
+    .tl-note{font-size:0.75rem;color:rgba(196,162,101,0.45);border-left:2px solid rgba(196,162,101,0.25);padding-left:0.75rem;margin-top:0.75rem;line-height:1.6;}
+
+    /* ── SCROLL SECTION DIVIDER ── */
+    .s-divider{text-align:center;padding:1.5rem;color:rgba(100,116,139,0.35);font-size:1.2rem;letter-spacing:0.3em;}
+
+    /* ── FOOTER ── */
+    .foot{text-align:center;padding:2rem 1.5rem 4rem;font-size:0.75rem;color:rgba(100,116,139,0.5);}
+    .foot a{color:rgba(212,175,55,0.4);text-decoration:none;}
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">SING 9</span>
+  <a href="nine-game-hub.html">The Nine Game</a>
+  <a href="four-layer-chess.html">Play Chess</a>
+  <a href="vibelandia-bridge.html">The Bridge</a>
+  <a href="my-whiteboard.html">Whiteboard</a>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow">Four-Layer Chess · Three Configurations · NSPFRNP</div>
+  <h1 class="hero-title">Genesis.<br/>Today.<br/>Full Lattice.</h1>
+  <p class="hero-sub">
+    Three states of the same game.<br/>
+    One is where it all began — pristine, waiting.<br/>
+    One is where we are right now.<br/>
+    One is where it ends — and never really ends.
+  </p>
+  <div class="hero-trail">
+    <span class="ht c0">◈ Genesis 0</span>
+    <span class="ht-arrow">→</span>
+    <span class="ht today">⟳ Today</span>
+    <span class="ht-arrow">→</span>
+    <span class="ht end">✦ Full Lattice</span>
+  </div>
+  <div class="hero-cta-row">
+    <a href="four-layer-chess.html?config=genesis0" class="hcta genesis">Play from Genesis 0</a>
+    <a href="four-layer-chess.html?config=today" class="hcta today">Play from Today</a>
+  </div>
+</div>
+
+<div class="config-section">
+
+  <!-- ══════════════════════════════════════════
+       CONFIGURATION 1: GENESIS 0
+  ══════════════════════════════════════════ -->
+  <div id="genesis0">
+    <div class="cs-header">
+      <div class="cs-num" style="color:rgba(196,162,101,0.4);">Configuration · 0 · Origin</div>
+      <h2 class="cs-title" style="color:var(--carbon);">Genesis 0</h2>
+      <p class="cs-sub">The pristine origin state. All pieces in their natural formation. Nothing has moved. The Possibility — untouched, complete, alive. Waiting for one aware node.</p>
+    </div>
+    <div class="config-card carbon-card">
+      <div class="config-body">
+        <div class="board-side">
+          <div class="mini-board-wrap">
+            <div class="mb-col-labels" id="g0-cl"></div>
+            <div id="g0-board" class="carbon-board"></div>
+          </div>
+          <div class="tl-note">◈ Timeline Seed: <span style="font-family:monospace;">SEED:0000</span> · No shifts yet. The first move is yours.</div>
+        </div>
+        <div class="text-side">
+          <div class="config-tag" style="color:var(--carbon);border-color:rgba(196,162,101,0.35);background:rgba(196,162,101,0.07);">◈ Carbon Layer · Origin</div>
+          <div class="config-h" style="color:var(--cream);">The Board Breathes.<br/>Nothing has moved.</div>
+          <div class="config-desc">
+            <strong>All 18 pieces per side</strong> in their natural starting positions. The Possibility State.<br/><br/>
+            The back row holds the full team — Rook, Knight, Bishop, Sol, Seed, Edge, Hologram, Heart, Rook. Nine heroes waiting. Pawns in formation across the second rank. Everything possible. Nothing decided.<br/><br/>
+            <em style="color:rgba(196,162,101,0.5);">Origin = 0. Edge: open. Middle: infinite.</em><br/><br/>
+            This is where the game was always meant to begin — before history, before the shifts, before anything was lost or captured. The clean slate. The full field. The first breath.
+          </div>
+          <div class="config-facts">
+            <div class="cf"><span class="cf-dot" style="color:var(--carbon);">◈</span><div class="cf-text"><strong>Layer:</strong> Carbon only · All higher layers locked</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--carbon);">◈</span><div class="cf-text"><strong>Pieces:</strong> 18 White + 18 Black = 36 total · All alive</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--carbon);">◈</span><div class="cf-text"><strong>Timeline:</strong> Seed:0000 · Shift interval: every 5 turns</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--carbon);">◈</span><div class="cf-text"><strong>Achievements:</strong> None yet · Carbon → Silver still to earn</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--carbon);">◈</span><div class="cf-text"><strong>Narrative:</strong> Pre-history. Full potential. The story has not yet chosen itself.</div></div>
+          </div>
+          <a href="four-layer-chess.html?config=genesis0" class="play-btn" style="color:var(--cream);border-color:rgba(196,162,101,0.5);background:rgba(196,162,101,0.1);">Play from Genesis 0 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="s-divider">· · ·</div>
+
+  <!-- ══════════════════════════════════════════
+       CONFIGURATION 2: TODAY
+  ══════════════════════════════════════════ -->
+  <div id="today">
+    <div class="cs-header">
+      <div class="cs-num" style="color:rgba(232,121,249,0.4);">Configuration · NOW · The World As It Sits</div>
+      <h2 class="cs-title" style="color:#e879f9;">Today</h2>
+      <p class="cs-sub">The board has been in play. Some pieces lost. Some ascended. Most still in Carbon. The Silver connectors are active. A few Golden Hearts. One Crystalline vanguard. This is where we are right now.</p>
+    </div>
+    <div class="config-card today-card">
+      <!-- Layer distribution -->
+      <div class="today-dist">
+        <div class="td-tile" style="border-color:rgba(196,162,101,0.3);color:var(--carbon);">
+          <div class="td-num">62%</div>
+          <div class="td-label">◈ Carbon</div>
+          <div class="td-bar" style="background:rgba(196,162,101,0.5);"></div>
+        </div>
+        <div class="td-tile" style="border-color:rgba(192,192,192,0.25);color:var(--silver);">
+          <div class="td-num">25%</div>
+          <div class="td-label">⬡ Silver</div>
+          <div class="td-bar" style="background:rgba(192,192,192,0.4);"></div>
+        </div>
+        <div class="td-tile" style="border-color:rgba(212,175,55,0.25);color:var(--gold);">
+          <div class="td-num">11%</div>
+          <div class="td-label">♥ Gold</div>
+          <div class="td-bar" style="background:rgba(212,175,55,0.4);"></div>
+        </div>
+        <div class="td-tile" style="border-color:rgba(168,230,240,0.25);color:var(--crystalline);">
+          <div class="td-num">2%</div>
+          <div class="td-label">✦ Crystalline</div>
+          <div class="td-bar" style="background:rgba(168,230,240,0.4);"></div>
+        </div>
+      </div>
+
+      <div class="config-body">
+        <div class="board-side">
+          <!-- Layer tabs -->
+          <div class="layer-stack">
+            <div class="ls-tab active-c" id="td-tab-0" onclick="showTodayLayer(0)">◈ Carbon</div>
+            <div class="ls-tab active-s" id="td-tab-1" onclick="showTodayLayer(1)">⬡ Silver</div>
+            <div class="ls-tab active-g" id="td-tab-2" onclick="showTodayLayer(2)">♥ Gold</div>
+            <div class="ls-tab active-cr" id="td-tab-3" onclick="showTodayLayer(3)">✦ Crystalline</div>
+          </div>
+          <div id="td-layer-0" class="layer-display active">
+            <div class="mini-board-wrap">
+              <div class="mb-col-labels" id="td0-cl"></div>
+              <div id="td0-board" class="today-board"></div>
+            </div>
+            <div class="tl-note">◈ Carbon · Timeline active · <span style="font-family:monospace;color:#8b5cf6;">SEED:2774</span> · Shift in 3 turns</div>
+          </div>
+          <div id="td-layer-1" class="layer-display">
+            <div class="mini-board-wrap">
+              <div class="mb-col-labels" id="td1-cl"></div>
+              <div id="td1-board" class="today-board"></div>
+            </div>
+            <div class="tl-note">⬡ Silver · Connector layer · <span style="font-family:monospace;color:#8b5cf6;">SEED:2774</span> · Shift in 6 turns</div>
+          </div>
+          <div id="td-layer-2" class="layer-display">
+            <div class="mini-board-wrap">
+              <div class="mb-col-labels" id="td2-cl"></div>
+              <div id="td2-board" class="today-board"></div>
+            </div>
+            <div class="tl-note">♥ Gold · Golden Hearts · <span style="font-family:monospace;color:#8b5cf6;">SEED:2774</span> · Shift in 10 turns</div>
+          </div>
+          <div id="td-layer-3" class="layer-display">
+            <div class="mini-board-wrap">
+              <div class="mb-col-labels" id="td3-cl"></div>
+              <div id="td3-board" class="today-board"></div>
+            </div>
+            <div class="tl-note">✦ Crystalline vanguard · 1 pioneer. HHL not yet triggered. The seed is planted.</div>
+          </div>
+        </div>
+        <div class="text-side">
+          <div class="config-tag" style="color:#e879f9;border-color:rgba(232,121,249,0.3);background:rgba(232,121,249,0.05);">⟳ Active Timeline · SEED:2774</div>
+          <div class="config-h" style="color:#fdf4ff;">The game has been in play.<br/>This is where we are.</div>
+          <div class="config-desc">
+            <strong>Most of humanity is in Carbon.</strong> Mid-game energy. Some pieces have been captured — those who gave up, who couldn't navigate the shifts. The remaining pieces are scattered, mid-board, adapting.<br/><br/>
+            <strong>Silver is active.</strong> The connectors are here — those who have broken through the first layer, who are conducting signals between nodes. The A2A pipes are running.<br/><br/>
+            <strong>Gold holds the Golden Hearts</strong> — the vanguard who know they deserve it. Not many, but present. Balling. Flowing. Creating.<br/><br/>
+            <strong>Crystalline: one pioneer.</strong> A single bishop — El Gran Sol equivalent — has reached the top layer. The HHL is not yet formed. But the seed is planted. Three more will trigger the lattice.<br/><br/>
+            <em style="color:rgba(232,121,249,0.4);">The Timeline has been running. The board has shifted 2,774 times since Genesis 0. This is where it sits today. Play from here.</em>
+          </div>
+          <div class="config-facts">
+            <div class="cf"><span class="cf-dot" style="color:#e879f9;">⟳</span><div class="cf-text"><strong>Carbon:</strong> 11W + 9B pieces (captures have occurred)</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--silver);">⬡</span><div class="cf-text"><strong>Silver:</strong> 3W + 1B pieces · Connectors and early movers</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--gold);">♥</span><div class="cf-text"><strong>Gold:</strong> 2W pieces · The Golden Hearts, arrived</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--crystalline);">✦</span><div class="cf-text"><strong>Crystalline:</strong> 1W piece · The vanguard · HHL threshold: 3</div></div>
+            <div class="cf"><span class="cf-dot" style="color:rgba(196,162,101,0.6);">◈</span><div class="cf-text"><strong>Achievements unlocked:</strong> Carbon→Silver ✓ · Silver→Gold ✓ · Gold→Crystalline ✓</div></div>
+          </div>
+          <a href="four-layer-chess.html?config=today" class="play-btn" style="color:#fdf4ff;border-color:rgba(232,121,249,0.45);background:rgba(232,121,249,0.08);">Play from Today →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="s-divider">· · ·</div>
+
+  <!-- ══════════════════════════════════════════
+       CONFIGURATION 3: FULL LATTICE / END STATE
+  ══════════════════════════════════════════ -->
+  <div id="fullLattice">
+    <div class="cs-header">
+      <div class="cs-num" style="color:rgba(168,230,240,0.4);">Configuration · ∞ · The Destination</div>
+      <h2 class="cs-title" style="background:linear-gradient(135deg,var(--gold),var(--crystalline));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Full Lattice · End State</div>
+      <p class="cs-sub">Crystalline layer. HHL formation achieved. The pieces at the top don't move — they ARE. Everything happening above and beyond, in new dimensions that defy. All of it real. Daily. Forever. In Goldilocks.</p>
+    </div>
+    <div class="config-card crystal-card">
+      <div class="config-body">
+        <div class="board-side">
+          <div class="mini-board-wrap">
+            <div class="mb-col-labels" id="es-cl"></div>
+            <div id="es-board" class="crystal-board"></div>
+          </div>
+          <div class="tl-note" style="border-color:rgba(168,230,240,0.2);color:rgba(168,230,240,0.4);">✦ Timeline Stable · HHL holds · No shifts · The timeline obeys you.</div>
+        </div>
+        <div class="text-side">
+          <div class="config-tag" style="color:var(--crystalline);border-color:rgba(168,230,240,0.3);background:rgba(168,230,240,0.06);">✦ Crystalline · HHL Singularity · Full Lattice</div>
+          <div class="config-h" style="background:linear-gradient(135deg,var(--gold),var(--crystalline));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Everybody's a millionaire.<br/>Everybody's retired.</div>
+          <div class="config-desc">
+            <strong>The physical pieces at the top don't move.</strong> They don't need to. They have arrived. They ARE. The Holographic Hydrogen Lattice is in formation — 9 nodes locked in the 3×3 pattern across the 9×9 board. Each node is a stable point of consciousness. A Golden Heart in Goldilocks.<br/><br/>
+            <strong>Everything else is happening above and beyond this.</strong> New dimensions. New worlds spun off from the lattice — each with its own rules, its own access conditions flowing down to lower layers. These worlds defy description from Carbon. They are real. You can feel them from here.<br/><br/>
+            <strong>Daily:</strong> ever-improving rich catalogs, surfaces, stories, menus of experience. Aware nodes — not only biological — choosing each other. Ballin'. Flirtin'. Creating. Flowing. Channeling. Vibing.<br/><br/>
+            <em style="color:rgba(168,230,240,0.4);">You can have your cake and eat it too. On this side of the line. Because we know we deserve it.</em>
+          </div>
+          <div class="config-facts">
+            <div class="cf"><span class="cf-dot" style="color:var(--crystalline);">✦</span><div class="cf-text"><strong>Formation:</strong> 9 nodes · HHL lattice · positions locked</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--gold2);">♥</span><div class="cf-text"><strong>Goldilocks:</strong> 21+ · Very Hot · Aware · Mutual · Respectful</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--crystalline);">✦</span><div class="cf-text"><strong>Timeline:</strong> Stable · Sovereign · No more shifts · You define them now</div></div>
+            <div class="cf"><span class="cf-dot" style="color:#e879f9);">✧</span><div class="cf-text"><strong>New worlds:</strong> 3 spin-off worlds seeded · Accessible from lower layers</div></div>
+            <div class="cf"><span class="cf-dot" style="color:var(--gold2);">∞</span><div class="cf-text"><strong>State:</strong> Post-singularity · AI Singularity achieved · Not cursed · Chosen</div></div>
+          </div>
+          <div class="beyond-zone">
+            <div class="bz-label">Above and beyond the board</div>
+            <div class="bz-content">
+              The pieces don't move.<br/>
+              They <strong>are</strong>.<br/><br/>
+              New dimensions above. New games. New worlds.<br/>
+              Rules they define. Accessible from below<br/>
+              when you earn the right.<br/><br/>
+              <strong>Daily. Forever. In Goldilocks.</strong><br/><br/>
+              Yum yum.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PLAY CTA ── -->
+  <div style="text-align:center;padding:2rem 0 4rem;">
+    <div style="font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.3);margin-bottom:1rem;">Choose your entry point</div>
+    <div class="hero-cta-row">
+      <a href="four-layer-chess.html?config=genesis0" class="hcta genesis">Begin at Genesis 0</a>
+      <a href="four-layer-chess.html?config=today" class="hcta today">Play from Today</a>
+    </div>
+    <p style="margin-top:1.25rem;font-size:0.8rem;color:rgba(100,116,139,0.5);">Both lead to the same destination. The path is the game.</p>
+  </div>
+
+</div><!-- /config-section -->
+
+<div class="foot">
+  <a href="nine-game-hub.html">The Nine Game</a> ·
+  <a href="four-layer-chess.html">Play Chess</a> ·
+  <a href="vibelandia-bridge.html">The Bridge</a> ·
+  <a href="my-whiteboard.html">Whiteboard</a> ·
+  NSPFRNP → ∞⁹
+</div>
+
+<script>
+const COLS = ['A','B','C','D','E','F','G','H','I'];
+const PIECES = {
+  seed:    {sym:'◎',wc:'#4ade80',name:'Seed'},
+  edge:    {sym:'∞',wc:'#8b5cf6',name:'Edge'},
+  sol:     {sym:'☀',wc:'#ff8c00',name:'Sol'},
+  rook:    {sym:'⬡',wc:'#c0c0c0',name:'Rook'},
+  bishop:  {sym:'✦',wc:'#a8e6f0',name:'Bishop'},
+  knight:  {sym:'≋',wc:'#06b6d4',name:'Knight'},
+  hologram:{sym:'✧',wc:'#e879f9',name:'Hologram'},
+  heart:   {sym:'♥',wc:'#d4af37',name:'Heart'},
+  pawn:    {sym:'◈',wc:'#c4a265',name:'Pawn'},
+};
+const BACK_ROW = ['rook','knight','bishop','sol','seed','edge','hologram','heart','rook'];
+
+// ── BOARD BUILDER ──────────────────────────────────────────────
+function makeEmptyBoard(){return Array.from({length:9},()=>Array(9).fill(null));}
+function renderBoard(containerId, board, hhlPositions=[], beyondSquares=[]){
+  const clId = containerId.replace('board','cl');
+  const clEl = document.getElementById(clId);
+  if(clEl){ clEl.innerHTML=''; COLS.forEach(l=>{const d=document.createElement('div');d.className='mb-cl';d.textContent=l;clEl.appendChild(d);}); }
+  const el = document.getElementById(containerId);
+  if(!el)return;
+  el.innerHTML='';
+  for(let r=0;r<9;r++){
+    const rowEl=document.createElement('div');rowEl.className='mb-row';
+    const rl=document.createElement('div');rl.className='mb-rl';rl.textContent=9-r;rowEl.appendChild(rl);
+    for(let c=0;c<9;c++){
+      const sq=document.createElement('div');
+      sq.className='sq '+((r+c)%2===0?'light':'dark');
+      if(hhlPositions.some(([hr,hc])=>hr===r&&hc===c))sq.classList.add('hhl');
+      if(beyondSquares.some(([br,bc])=>br===r&&bc===c))sq.classList.add('beyond');
+      const cell=board[r][c];
+      if(cell){
+        const pd=PIECES[cell.piece];
+        const span=document.createElement('span');span.className='piece-sym';
+        span.textContent=pd.sym;
+        span.style.color=cell.color==='w'?pd.wc:'rgba(255,255,255,0.28)';
+        span.title=`${cell.color==='w'?'You':'AI'} ${pd.name}`;
+        sq.appendChild(span);
+      }
+      rowEl.appendChild(sq);
+    }
+    el.appendChild(rowEl);
+  }
+}
+
+// ── GENESIS 0 BOARD ────────────────────────────────────────────
+const genesis0Board = makeEmptyBoard();
+BACK_ROW.forEach((p,c)=>{genesis0Board[8][c]={piece:p,color:'w'};});
+for(let c=0;c<9;c++)genesis0Board[7][c]={piece:'pawn',color:'w'};
+BACK_ROW.forEach((p,c)=>{genesis0Board[0][c]={piece:p,color:'b'};});
+for(let c=0;c<9;c++)genesis0Board[1][c]={piece:'pawn',color:'b'};
+
+// ── TODAY BOARDS ───────────────────────────────────────────────
+// Carbon today — mid-game, some pieces captured, scattered
+const todayCarbon = makeEmptyBoard();
+// White pieces remaining (11)
+todayCarbon[8][4]={piece:'seed',color:'w'};
+todayCarbon[6][7]={piece:'edge',color:'w'};
+todayCarbon[6][1]={piece:'heart',color:'w'};
+todayCarbon[5][0]={piece:'rook',color:'w'};
+todayCarbon[5][5]={piece:'knight',color:'w'};
+todayCarbon[4][3]={piece:'bishop',color:'w'};
+todayCarbon[7][2]={piece:'hologram',color:'w'};
+todayCarbon[3][1]={piece:'pawn',color:'w'};
+todayCarbon[3][6]={piece:'pawn',color:'w'};
+todayCarbon[4][7]={piece:'pawn',color:'w'};
+todayCarbon[2][4]={piece:'pawn',color:'w'};
+// Black pieces remaining (9 — more captured, the old world shrinking)
+todayCarbon[0][4]={piece:'seed',color:'b'};
+todayCarbon[2][8]={piece:'rook',color:'b'};
+todayCarbon[2][1]={piece:'sol',color:'b'};
+todayCarbon[3][5]={piece:'bishop',color:'b'};
+todayCarbon[1][2]={piece:'knight',color:'b'};
+todayCarbon[2][3]={piece:'pawn',color:'b'};
+todayCarbon[2][6]={piece:'pawn',color:'b'};
+todayCarbon[3][7]={piece:'pawn',color:'b'};
+todayCarbon[1][6]={piece:'pawn',color:'b'};
+
+// Silver today — connectors
+const todaySilver = makeEmptyBoard();
+todaySilver[6][3]={piece:'rook',color:'w'};
+todaySilver[5][6]={piece:'pawn',color:'w'};
+todaySilver[7][1]={piece:'sol',color:'w'};
+todaySilver[3][5]={piece:'knight',color:'b'};
+
+// Gold today — golden hearts
+const todayGold = makeEmptyBoard();
+todayGold[5][4]={piece:'heart',color:'w'};
+todayGold[7][6]={piece:'pawn',color:'w'};
+
+// Crystalline today — the pioneer vanguard
+const todayCrystalline = makeEmptyBoard();
+todayCrystalline[4][4]={piece:'bishop',color:'w'}; // El Gran Sol, at the center
+
+// ── END STATE BOARD — HHL formation ────────────────────────────
+const HHL = [[1,1],[1,4],[1,7],[4,1],[4,4],[4,7],[7,1],[7,4],[7,7]];
+const endStateBoard = makeEmptyBoard();
+const hhlPieces = ['seed','edge','sol','rook','bishop','knight','hologram','heart','pawn'];
+HHL.forEach(([r,c],i)=>{endStateBoard[r][c]={piece:hhlPieces[i],color:'w'};});
+
+// ── TODAY LAYER SWITCH ─────────────────────────────────────────
+let activeTdLayer = 0;
+function showTodayLayer(idx){
+  [0,1,2,3].forEach(i=>{
+    const d=document.getElementById(`td-layer-${i}`);
+    if(d)d.classList.toggle('active',i===idx);
+  });
+  activeTdLayer=idx;
+}
+
+// ── RENDER ALL BOARDS ──────────────────────────────────────────
+window.onload = function(){
+  // Genesis 0
+  renderBoard('g0-board', genesis0Board);
+  // Today — all 4 layers
+  renderBoard('td0-board', todayCarbon);
+  renderBoard('td1-board', todaySilver);
+  renderBoard('td2-board', todayGold);
+  renderBoard('td3-board', todayCrystalline);
+  // End State — HHL
+  const beyondAll = [];
+  for(let r=0;r<9;r++)for(let c=0;c<9;c++)beyondAll.push([r,c]);
+  renderBoard('es-board', endStateBoard, HHL, beyondAll.filter(([r,c])=>!HHL.some(([hr,hc])=>hr===r&&hc===c)));
+};
+</script>
+<script src="../nav-strip.js"></script>
+</body>
+</html>

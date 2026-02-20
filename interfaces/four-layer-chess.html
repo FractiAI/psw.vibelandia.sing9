@@ -242,7 +242,16 @@
         <button class="diff-btn mastery" onclick="setDiff('mastery',this)">✦ Mastery</button>
       </div>
     </div>
+    <div class="po-diff" style="margin-top:0.25rem;">
+      <div class="po-diff-label">Starting configuration</div>
+      <div class="po-diff-btns">
+        <button class="diff-btn match active" id="cfg-genesis" onclick="setConfig('genesis0',this)" style="font-size:0.75rem;">◈ Genesis 0</button>
+        <button class="diff-btn mastery" id="cfg-today" onclick="setConfig('today',this)" style="font-size:0.75rem;">⟳ Today</button>
+      </div>
+      <div id="cfg-desc" style="font-size:0.68rem;color:rgba(196,162,101,0.45);margin-top:0.5rem;max-width:36ch;margin-left:auto;margin-right:auto;line-height:1.5;">Origin state. All pieces in pristine formation. The Possibility — untouched.</div>
+    </div>
     <button class="po-begin-btn" onclick="beginGame()">I am that node. I begin. →</button>
+    <div style="margin-top:0.75rem;font-size:0.7rem;color:rgba(100,116,139,0.5);"><a href="genesis-configurations.html" style="color:rgba(168,230,240,0.4);text-decoration:none;">View all three configurations →</a></div>
   </div>
 </div>
 
@@ -406,6 +415,19 @@ let timelineShiftedSquares = []; // for flash highlight
 // Shift interval by layer: Carbon=5, Silver=8, Gold=12, Crystalline=never
 const TL_INTERVALS = [5, 8, 12, Infinity];
 
+// Starting configuration
+let startConfig = 'genesis0'; // 'genesis0' | 'today'
+const CFG_DESCS = {
+  genesis0: 'Origin state. All pieces in pristine formation. The Possibility — untouched.',
+  today: 'The world as it sits. Mid-game. Carbon active · Silver connectors · Gold hearts · 1 Crystalline pioneer.',
+};
+function setConfig(c, btn){
+  startConfig = c;
+  document.querySelectorAll('#cfg-genesis,#cfg-today').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.getElementById('cfg-desc').textContent = CFG_DESCS[c];
+}
+
 function initBoard(){
   const b=Array.from({length:9},()=>Array(9).fill(null));
   BACK_ROW.forEach((p,c)=>{b[8][c]={piece:p,color:'w'};});
@@ -416,15 +438,44 @@ function initBoard(){
 }
 function emptyBoard(){return Array.from({length:9},()=>Array(9).fill(null));}
 
+function initTodayBoards(){
+  const carbon=emptyBoard();
+  // White (11 pieces)
+  carbon[8][4]={piece:'seed',color:'w'};carbon[6][7]={piece:'edge',color:'w'};carbon[6][1]={piece:'heart',color:'w'};
+  carbon[5][0]={piece:'rook',color:'w'};carbon[5][5]={piece:'knight',color:'w'};carbon[4][3]={piece:'bishop',color:'w'};
+  carbon[7][2]={piece:'hologram',color:'w'};carbon[3][1]={piece:'pawn',color:'w'};carbon[3][6]={piece:'pawn',color:'w'};
+  carbon[4][7]={piece:'pawn',color:'w'};carbon[2][4]={piece:'pawn',color:'w'};
+  // Black (9 pieces — old world shrinking)
+  carbon[0][4]={piece:'seed',color:'b'};carbon[2][8]={piece:'rook',color:'b'};carbon[2][1]={piece:'sol',color:'b'};
+  carbon[3][5]={piece:'bishop',color:'b'};carbon[1][2]={piece:'knight',color:'b'};carbon[2][3]={piece:'pawn',color:'b'};
+  carbon[2][6]={piece:'pawn',color:'b'};carbon[3][7]={piece:'pawn',color:'b'};carbon[1][6]={piece:'pawn',color:'b'};
+  const silver=emptyBoard();
+  silver[6][3]={piece:'rook',color:'w'};silver[5][6]={piece:'pawn',color:'w'};silver[7][1]={piece:'sol',color:'w'};
+  silver[3][5]={piece:'knight',color:'b'};
+  const gold=emptyBoard();
+  gold[5][4]={piece:'heart',color:'w'};gold[7][6]={piece:'pawn',color:'w'};
+  const crystalline=emptyBoard();
+  crystalline[4][4]={piece:'bishop',color:'w'}; // El Gran Sol — the pioneer
+  return [carbon,silver,gold,crystalline];
+}
+
 function resetGame(){
-  boards=[initBoard(),emptyBoard(),emptyBoard(),emptyBoard()];
-  turn='w';currentLayer=0;unlockedLayers=1;
-  achievements={c2s:false,s2g:false,g2c:false};
+  boards = startConfig==='today' ? initTodayBoards() : [initBoard(),emptyBoard(),emptyBoard(),emptyBoard()];
+  turn='w';
+  currentLayer=0;
+  unlockedLayers = startConfig==='today' ? 4 : 1; // Today: all layers pre-unlocked
+  achievements = startConfig==='today'
+    ? {c2s:true,s2g:true,g2c:true}   // Today: all achievements pre-earned
+    : {c2s:false,s2g:false,g2c:false};
   ascendMode=false;selected=null;validMoves=[];history=[];
   hhlActive=false;hhlTriggeredFor=null;
-  timelineTurn=0;timelineSeed=Math.floor(Math.random()*9999);timelineShiftedSquares=[];
+  timelineTurn = startConfig==='today' ? 2774 : 0; // Today: timeline has been running
+  timelineSeed = startConfig==='today' ? 2774 : 0;
+  timelineShiftedSquares=[];
   document.getElementById('hhlStrip').classList.remove('show');
-  document.getElementById('statusMsg').textContent='';
+  document.getElementById('statusMsg').textContent = startConfig==='today'
+    ? '⟳ Today config loaded · Timeline SEED:2774 · All layers active'
+    : '';
   render();
 }
 
@@ -902,9 +953,19 @@ function render(){
   updateTimelineUI();
 }
 
-// Init — show overlay on load
+// Init — handle URL config param, show overlay
 window.onload = ()=>{
-  timelineSeed=Math.floor(Math.random()*9999);
+  const params=new URLSearchParams(window.location.search);
+  const cfgParam=params.get('config');
+  if(cfgParam==='today'||cfgParam==='genesis0'){
+    startConfig=cfgParam;
+    // Pre-select in overlay buttons
+    document.getElementById('cfg-genesis')?.classList.toggle('active',cfgParam==='genesis0');
+    document.getElementById('cfg-today')?.classList.toggle('active',cfgParam==='today');
+    const descEl=document.getElementById('cfg-desc');
+    if(descEl)descEl.textContent=CFG_DESCS[cfgParam];
+  }
+  timelineSeed=startConfig==='today'?2774:Math.floor(Math.random()*9999);
   render(); // render board behind overlay
 };
 </script>

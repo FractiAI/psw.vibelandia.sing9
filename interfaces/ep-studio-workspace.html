@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EP Creator Studio · Workspace · SING!9 StoryStream</title>
+  <style>
+/* ══════════════════════════════════════════════════════
+   SING!9 StoryStream — EP Creator Studio Workspace
+   ─────────────────────────────────────────────────────
+   Layout: Hero Will (top) · Top Bar · Sidebar + Canvas
+   Three streams visible. All nodes buttonized.
+══════════════════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg:        #040108;
+  --surface:   rgba(255,255,255,0.03);
+  --border:    rgba(201,168,32,0.18);
+  --border-hi: rgba(201,168,32,0.45);
+  --gold:      #c9a020;
+  --gold-lt:   #e8c84a;
+  --crystal:   #a8e6f0;
+  --text:      rgba(232,220,200,0.88);
+  --muted:     rgba(200,180,150,0.45);
+  --will:      rgba(168,230,240,0.9);    /* Hero Will accent */
+  --sidebar-w: 200px;
+  --topbar-h:  46px;
+  --will-h:    36px;                     /* collapsed Will bar */
+  --ticker-h:  30px;
+}
+
+html, body { height:100%; overflow:hidden; background:var(--bg); color:var(--text);
+  font-family:"Segoe UI","Helvetica Neue",system-ui,sans-serif; font-size:13px; }
+
+/* ── SCANLINES ── */
+body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9000;
+  background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(0,0,0,0.025) 3px,rgba(0,0,0,0.025) 4px); }
+
+/* ════════════════════════════════════════
+   HERO WILL — top bar, collapsible
+════════════════════════════════════════ */
+#hero-will {
+  position:fixed; top:0; left:0; right:0;
+  z-index:800;
+  background:rgba(0,15,20,0.97);
+  border-bottom:1px solid rgba(168,230,240,0.2);
+  transition:height 0.3s ease;
+  height:var(--will-h);
+  overflow:hidden;
+}
+#hero-will.expanded { height:110px; }
+
+#will-collapsed {
+  height:var(--will-h);
+  display:flex; align-items:center; gap:0.75rem;
+  padding:0 1rem; cursor:pointer; flex-shrink:0;
+}
+.will-quill { font-size:1rem; }
+.will-name {
+  font-size:0.62rem; font-weight:700; letter-spacing:0.3em;
+  text-transform:uppercase; color:var(--will);
+}
+.will-tagline { font-size:0.6rem; color:rgba(168,230,240,0.4); margin-left:auto; }
+.will-toggle { font-size:0.65rem; color:rgba(168,230,240,0.4); padding:0.2rem 0.5rem; }
+
+#will-expanded {
+  padding:0.5rem 1rem 0.65rem;
+  display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;
+}
+#will-input {
+  flex:1; min-width:240px;
+  background:rgba(168,230,240,0.06); border:1px solid rgba(168,230,240,0.25);
+  border-radius:4px; color:rgba(168,230,240,0.9);
+  font-family:inherit; font-size:0.82rem; padding:0.45rem 0.7rem;
+  outline:none; resize:none; height:40px;
+}
+#will-input::placeholder { color:rgba(168,230,240,0.3); }
+#will-input:focus { border-color:rgba(168,230,240,0.55); }
+
+.will-scope {
+  background:rgba(168,230,240,0.06); border:1px solid rgba(168,230,240,0.2);
+  border-radius:4px; color:rgba(168,230,240,0.7);
+  font-size:0.72rem; padding:0.4rem 0.6rem; cursor:pointer; outline:none;
+  font-family:inherit;
+}
+.will-submit {
+  background:rgba(168,230,240,0.1); border:1px solid rgba(168,230,240,0.45);
+  border-radius:4px; color:rgba(168,230,240,0.9);
+  font-size:0.72rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase;
+  padding:0.45rem 1.1rem; cursor:pointer; white-space:nowrap;
+  transition:background 0.2s;
+}
+.will-submit:hover { background:rgba(168,230,240,0.18); }
+#will-status {
+  font-size:0.65rem; color:rgba(168,230,240,0.5);
+  font-style:italic; width:100%;
+}
+
+/* ════════════════════════════════════════
+   TOP BAR
+════════════════════════════════════════ */
+#top-bar {
+  position:fixed; left:0; right:0;
+  top:var(--will-h); z-index:700;
+  height:var(--topbar-h);
+  background:rgba(4,1,8,0.97);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:0.5rem;
+  padding:0 1rem;
+  transition:top 0.3s ease;
+}
+#top-bar.will-open { top:110px; }
+
+.tb-back { color:rgba(201,168,32,0.6); text-decoration:none; font-size:0.72rem;
+  letter-spacing:0.06em; white-space:nowrap; transition:color 0.2s; }
+.tb-back:hover { color:var(--gold); }
+.tb-divider { width:1px; height:16px; background:rgba(255,255,255,0.1); flex-shrink:0; }
+.tb-brand { font-size:0.62rem; font-weight:700; letter-spacing:0.22em;
+  text-transform:uppercase; color:rgba(201,168,32,0.5); white-space:nowrap; }
+.tb-project { font-size:0.78rem; font-weight:700; color:rgba(232,220,200,0.8); white-space:nowrap; }
+.tb-spacer { flex:1; }
+
+/* View toggle */
+.view-toggle { display:flex; border:1px solid var(--border); border-radius:4px; overflow:hidden; }
+.view-btn {
+  padding:0.3rem 0.65rem; font-size:0.7rem; cursor:pointer;
+  background:transparent; border:none; color:var(--muted);
+  transition:background 0.15s, color 0.15s;
+}
+.view-btn.active { background:rgba(201,168,32,0.12); color:var(--gold); }
+.view-btn:hover:not(.active) { background:rgba(255,255,255,0.04); color:var(--text); }
+
+.tb-btn {
+  padding:0.35rem 0.8rem; font-size:0.68rem; font-weight:700;
+  letter-spacing:0.14em; text-transform:uppercase;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:4px; color:var(--muted); cursor:pointer;
+  transition:background 0.2s, color 0.2s, border-color 0.2s; white-space:nowrap;
+}
+.tb-btn:hover { background:rgba(201,168,32,0.08); color:var(--gold); border-color:var(--border-hi); }
+.tb-btn.crystal { border-color:rgba(168,230,240,0.3); color:rgba(168,230,240,0.65); }
+.tb-btn.crystal:hover { background:rgba(168,230,240,0.07); color:var(--crystal); border-color:rgba(168,230,240,0.55); }
+
+/* ════════════════════════════════════════
+   LAYOUT SHELL
+════════════════════════════════════════ */
+#layout {
+  position:fixed;
+  top:calc(var(--will-h) + var(--topbar-h));
+  bottom:var(--ticker-h);
+  left:0; right:0;
+  display:flex;
+  transition:top 0.3s ease;
+}
+#layout.will-open { top:calc(110px + var(--topbar-h)); }
+
+/* ════════════════════════════════════════
+   LEFT SIDEBAR — Arc navigator
+════════════════════════════════════════ */
+#sidebar {
+  width:var(--sidebar-w);
+  flex-shrink:0;
+  background:rgba(4,1,8,0.96);
+  border-right:1px solid var(--border);
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+#sidebar::-webkit-scrollbar { width:3px; }
+#sidebar::-webkit-scrollbar-thumb { background:rgba(201,168,32,0.2); border-radius:2px; }
+
+.sb-section { padding:0.75rem 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+.sb-section-title {
+  font-size:0.56rem; font-weight:700; letter-spacing:0.3em;
+  text-transform:uppercase; color:rgba(201,168,32,0.4);
+  padding:0 0.85rem 0.4rem;
+}
+
+.act-header {
+  display:flex; align-items:center; gap:0.4rem;
+  padding:0.5rem 0.85rem; cursor:pointer;
+  transition:background 0.15s;
+  user-select:none;
+}
+.act-header:hover { background:rgba(201,168,32,0.05); }
+.act-header.active { background:rgba(201,168,32,0.08); }
+.act-chevron { font-size:0.55rem; color:var(--muted); transition:transform 0.2s; }
+.act-header.open .act-chevron { transform:rotate(90deg); }
+.act-name { font-size:0.75rem; font-weight:700; color:rgba(232,220,200,0.8); flex:1; }
+.act-count { font-size:0.58rem; color:var(--muted); }
+
+.seg-list { display:none; padding:0 0 0.25rem 0; }
+.act-header.open + .seg-list { display:block; }
+.seg-item {
+  padding:0.3rem 0.85rem 0.3rem 1.5rem; cursor:pointer;
+  font-size:0.7rem; color:var(--muted); transition:color 0.15s, background 0.15s;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.seg-item:hover { color:var(--text); background:rgba(255,255,255,0.03); }
+.seg-item.active { color:var(--gold); }
+.seg-frame-count { font-size:0.58rem; color:rgba(201,168,32,0.35); }
+
+/* "All frames" item */
+.sb-all {
+  padding:0.5rem 0.85rem; cursor:pointer; font-size:0.72rem;
+  color:var(--muted); transition:color 0.15s, background 0.15s;
+  display:flex; justify-content:space-between;
+}
+.sb-all:hover, .sb-all.active { color:var(--gold); background:rgba(201,168,32,0.05); }
+
+/* ════════════════════════════════════════
+   MAIN CANVAS
+════════════════════════════════════════ */
+#canvas {
+  flex:1; overflow-y:auto; position:relative;
+  padding:1rem;
+  transition:margin-right 0.3s ease;
+}
+#canvas::-webkit-scrollbar { width:4px; }
+#canvas::-webkit-scrollbar-thumb { background:rgba(201,168,32,0.15); border-radius:2px; }
+#canvas.detail-open { margin-right:420px; }
+
+/* ── SECTION HEADER in canvas ── */
+.canvas-section-hdr {
+  font-size:0.58rem; font-weight:700; letter-spacing:0.32em;
+  text-transform:uppercase; color:rgba(201,168,32,0.35);
+  padding:0.3rem 0 0.65rem; margin-top:0.5rem;
+}
+
+/* ════════════════════════════════════════
+   LIST VIEW
+════════════════════════════════════════ */
+#frames-list { display:flex; flex-direction:column; gap:2px; }
+
+.frame-row {
+  display:flex; align-items:center; gap:0.75rem;
+  padding:0.45rem 0.6rem;
+  border:1px solid transparent;
+  border-radius:5px;
+  cursor:pointer;
+  transition:background 0.15s, border-color 0.15s;
+  min-height:48px;
+}
+.frame-row:hover { background:rgba(201,168,32,0.04); border-color:rgba(201,168,32,0.15); }
+.frame-row.selected { background:rgba(201,168,32,0.08); border-color:var(--border-hi); }
+
+.fr-num {
+  font-size:0.6rem; font-weight:700; color:rgba(201,168,32,0.45);
+  width:28px; text-align:right; flex-shrink:0;
+}
+.fr-thumb {
+  width:64px; height:40px; object-fit:cover; border-radius:3px;
+  background:rgba(255,255,255,0.04); flex-shrink:0;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.fr-info { flex:1; min-width:0; }
+.fr-title {
+  font-size:0.72rem; font-weight:600; color:rgba(232,220,200,0.85);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  margin-bottom:0.15rem;
+}
+.fr-excerpt {
+  font-size:0.65rem; color:var(--muted);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.fr-badges { display:flex; gap:0.35rem; flex-shrink:0; }
+.fr-badge {
+  font-size:0.52rem; font-weight:700; letter-spacing:0.12em;
+  padding:0.15rem 0.45rem; border-radius:2px;
+}
+.badge-act1 { background:rgba(167,139,250,0.12); color:rgba(167,139,250,0.75); border:1px solid rgba(167,139,250,0.25); }
+.badge-act2 { background:rgba(251,146,60,0.1);  color:rgba(251,146,60,0.75);  border:1px solid rgba(251,146,60,0.2); }
+.badge-act3 { background:rgba(248,206,69,0.1);  color:rgba(248,206,69,0.75);  border:1px solid rgba(248,206,69,0.22); }
+.fr-will-dot {
+  width:5px; height:5px; border-radius:50%;
+  background:var(--will); flex-shrink:0;
+  display:none; /* shown when Will note exists */
+}
+.fr-will-dot.has-note { display:block; }
+
+/* ════════════════════════════════════════
+   GALLERY VIEW
+════════════════════════════════════════ */
+#frames-gallery {
+  display:none;
+  grid-template-columns:repeat(auto-fill, minmax(170px,1fr));
+  gap:0.75rem;
+}
+body.view-gallery #frames-list  { display:none; }
+body.view-gallery #frames-gallery { display:grid; }
+
+.frame-card {
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:6px; overflow:hidden;
+  background:rgba(255,255,255,0.02);
+  cursor:pointer;
+  transition:border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.frame-card:hover { border-color:var(--border-hi); transform:translateY(-1px);
+  box-shadow:0 4px 20px rgba(201,168,32,0.12); }
+.frame-card.selected { border-color:var(--gold); box-shadow:0 0 0 1px var(--gold); }
+
+.fc-thumb { width:100%; aspect-ratio:16/9; object-fit:cover;
+  background:rgba(255,255,255,0.04); display:block; }
+.fc-body { padding:0.55rem 0.6rem; }
+.fc-num { font-size:0.55rem; color:rgba(201,168,32,0.45); margin-bottom:0.2rem; }
+.fc-title { font-size:0.72rem; font-weight:600; color:rgba(232,220,200,0.85);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:0.2rem; }
+.fc-seg { font-size:0.6rem; color:var(--muted); }
+
+/* ════════════════════════════════════════
+   DETAIL PANEL (right slide-in)
+════════════════════════════════════════ */
+#detail-panel {
+  position:fixed;
+  top:calc(var(--will-h) + var(--topbar-h));
+  right:-440px; /* hidden */
+  bottom:var(--ticker-h);
+  width:420px;
+  background:rgba(4,1,10,0.98);
+  border-left:1px solid var(--border-hi);
+  overflow-y:auto;
+  transition:right 0.3s ease, top 0.3s ease;
+  z-index:600;
+}
+#detail-panel.open { right:0; }
+#detail-panel.will-open { top:calc(110px + var(--topbar-h)); }
+#detail-panel::-webkit-scrollbar { width:3px; }
+#detail-panel::-webkit-scrollbar-thumb { background:rgba(201,168,32,0.2); }
+
+#dp-close {
+  position:sticky; top:0;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0.6rem 0.85rem;
+  background:rgba(4,1,10,0.98);
+  border-bottom:1px solid var(--border);
+  z-index:10;
+}
+.dp-frame-id {
+  font-size:0.62rem; font-weight:700; letter-spacing:0.25em;
+  text-transform:uppercase; color:rgba(201,168,32,0.6);
+}
+.dp-close-btn {
+  background:none; border:none; color:var(--muted); cursor:pointer;
+  font-size:1rem; padding:0.1rem 0.35rem; border-radius:3px;
+  transition:color 0.15s, background 0.15s;
+}
+.dp-close-btn:hover { color:var(--text); background:rgba(255,255,255,0.06); }
+
+.dp-section { padding:0.9rem 0.85rem; border-bottom:1px solid rgba(255,255,255,0.05); }
+.dp-label {
+  font-size:0.55rem; font-weight:700; letter-spacing:0.3em;
+  text-transform:uppercase; color:rgba(201,168,32,0.45); margin-bottom:0.5rem;
+}
+
+/* Image slots */
+.dp-img-wrap { position:relative; margin-bottom:0.65rem; }
+#dp-img { width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:4px;
+  background:rgba(255,255,255,0.04); display:block; }
+.dp-slot-btns {
+  display:flex; gap:0.35rem; margin-top:0.4rem;
+}
+.dp-slot-btn {
+  flex:1; padding:0.3rem 0.3rem; font-size:0.62rem; font-weight:700;
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  border-radius:3px; color:var(--muted); cursor:pointer; text-align:center;
+  transition:background 0.15s, color 0.15s, border-color 0.15s;
+}
+.dp-slot-btn.active { background:rgba(201,168,32,0.12); color:var(--gold); border-color:var(--border-hi); }
+.dp-slot-btn:hover:not(.active) { color:var(--text); background:rgba(255,255,255,0.06); }
+
+/* Editable areas */
+.dp-textarea {
+  width:100%; background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.1); border-radius:4px;
+  color:var(--text); font-family:inherit; font-size:0.8rem;
+  line-height:1.65; padding:0.6rem 0.7rem; resize:vertical;
+  outline:none; transition:border-color 0.15s;
+}
+.dp-textarea:focus { border-color:rgba(201,168,32,0.4); }
+.dp-textarea.script { min-height:120px; }
+.dp-textarea.notes  { min-height:72px; }
+
+/* Arc position row */
+.dp-arc-row {
+  display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.6rem;
+}
+.dp-arc-chip {
+  font-size:0.6rem; font-weight:700; letter-spacing:0.1em;
+  padding:0.2rem 0.55rem; border-radius:12px;
+}
+.dp-move-label { font-size:0.65rem; color:var(--muted); margin-left:auto; white-space:nowrap; }
+.dp-move-select {
+  background:rgba(255,255,255,0.04); border:1px solid var(--border);
+  border-radius:3px; color:var(--text); font-family:inherit;
+  font-size:0.7rem; padding:0.25rem 0.4rem; cursor:pointer; outline:none;
+}
+
+/* Audio / music row */
+.dp-music-row {
+  display:flex; align-items:center; gap:0.6rem;
+  font-size:0.72rem; color:var(--muted);
+}
+.dp-music-icon { font-size:1rem; }
+
+/* Detail action buttons */
+.dp-actions {
+  display:flex; gap:0.5rem; flex-wrap:wrap; padding:0.75rem 0.85rem 1rem;
+}
+.dp-action-btn {
+  flex:1; min-width:90px; padding:0.5rem 0.75rem; font-size:0.7rem;
+  font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+  border-radius:4px; cursor:pointer; text-align:center;
+  transition:background 0.2s, box-shadow 0.2s;
+}
+.dp-action-btn.save {
+  background:rgba(201,168,32,0.12); border:1.5px solid rgba(201,168,32,0.65);
+  color:#fef3c7;
+}
+.dp-action-btn.save:hover { background:rgba(201,168,32,0.22); box-shadow:0 0 20px rgba(201,168,32,0.2); }
+.dp-action-btn.preview {
+  background:rgba(168,230,240,0.07); border:1px solid rgba(168,230,240,0.35);
+  color:rgba(168,230,240,0.8);
+}
+.dp-action-btn.preview:hover { background:rgba(168,230,240,0.14); }
+.dp-action-btn.will-note {
+  background:rgba(168,230,240,0.05); border:1px solid rgba(168,230,240,0.2);
+  color:rgba(168,230,240,0.6);
+}
+.dp-action-btn.will-note:hover { background:rgba(168,230,240,0.1); }
+
+/* Will note in detail */
+.dp-will-note {
+  margin:0.4rem 0; padding:0.5rem 0.7rem;
+  background:rgba(168,230,240,0.05); border-left:2px solid rgba(168,230,240,0.4);
+  border-radius:0 4px 4px 0; font-size:0.75rem; color:rgba(168,230,240,0.75);
+  line-height:1.55;
+}
+.dp-will-note-label { font-size:0.55rem; font-weight:700; letter-spacing:0.2em;
+  text-transform:uppercase; color:rgba(168,230,240,0.45); margin-bottom:0.3rem; }
+
+/* ════════════════════════════════════════
+   CATALOG OVERLAY
+════════════════════════════════════════ */
+#catalog-overlay {
+  display:none; position:fixed; inset:0; z-index:900;
+  background:rgba(2,0,6,0.97);
+  flex-direction:column;
+}
+#catalog-overlay.open { display:flex; }
+
+#catalog-header {
+  padding:1rem 1.25rem;
+  display:flex; align-items:center; gap:1rem;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.cat-title { font-size:0.78rem; font-weight:700; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--gold); }
+.cat-subtitle { font-size:0.65rem; color:var(--muted); margin-top:0.1rem; }
+.cat-close { margin-left:auto; background:none; border:1px solid var(--border);
+  border-radius:4px; color:var(--muted); cursor:pointer; padding:0.3rem 0.75rem;
+  font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+  transition:color 0.15s, border-color 0.15s; }
+.cat-close:hover { color:var(--gold); border-color:var(--border-hi); }
+
+.cat-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); flex-shrink:0; }
+.cat-tab {
+  padding:0.6rem 1.1rem; font-size:0.7rem; font-weight:700;
+  letter-spacing:0.14em; text-transform:uppercase;
+  background:none; border:none; cursor:pointer;
+  color:var(--muted); border-bottom:2px solid transparent;
+  transition:color 0.15s, border-color 0.15s; margin-bottom:-1px;
+}
+.cat-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+.cat-tab:hover:not(.active) { color:var(--text); }
+
+.cat-body { flex:1; overflow-y:auto; padding:1rem 1.25rem; }
+.cat-body::-webkit-scrollbar { width:4px; }
+.cat-body::-webkit-scrollbar-thumb { background:rgba(201,168,32,0.2); }
+
+.cat-pane { display:none; }
+.cat-pane.active { display:block; }
+
+.cat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:0.75rem; }
+.cat-asset {
+  border:1px solid rgba(255,255,255,0.07); border-radius:5px; overflow:hidden;
+  background:rgba(255,255,255,0.02); cursor:pointer; transition:border-color 0.15s;
+}
+.cat-asset:hover { border-color:var(--border-hi); }
+.cat-asset-thumb { width:100%; aspect-ratio:16/9; object-fit:cover;
+  background:rgba(255,255,255,0.04); display:block; }
+.cat-asset-label { font-size:0.62rem; color:var(--muted); padding:0.35rem 0.45rem;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cat-asset-action {
+  display:block; width:100%; padding:0.3rem; font-size:0.6rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase; text-align:center;
+  background:rgba(201,168,32,0.08); border:none; border-top:1px solid rgba(201,168,32,0.15);
+  color:rgba(201,168,32,0.7); cursor:pointer; transition:background 0.15s;
+}
+.cat-asset-action:hover { background:rgba(201,168,32,0.18); color:var(--gold); }
+
+.cat-audio-row {
+  display:flex; align-items:center; gap:0.7rem;
+  padding:0.55rem 0.65rem; border:1px solid rgba(255,255,255,0.06); border-radius:5px;
+  margin-bottom:0.4rem; background:rgba(255,255,255,0.02); cursor:pointer;
+  transition:border-color 0.15s, background 0.15s;
+}
+.cat-audio-row:hover { border-color:var(--border-hi); background:rgba(201,168,32,0.04); }
+.cat-audio-icon { font-size:1rem; flex-shrink:0; }
+.cat-audio-info { flex:1; min-width:0; }
+.cat-audio-title { font-size:0.72rem; color:var(--text);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cat-audio-sub { font-size:0.6rem; color:var(--muted); }
+.cat-audio-import { font-size:0.62rem; font-weight:700; letter-spacing:0.1em;
+  text-transform:uppercase; color:rgba(201,168,32,0.6); white-space:nowrap; flex-shrink:0; }
+
+.cat-import-msg {
+  font-size:0.7rem; color:rgba(168,230,240,0.7);
+  padding:0.5rem; text-align:center; font-style:italic;
+}
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     HERO WILL — Executive AI Prompt
+════════════════════════════════ -->
+<div id="hero-will">
+  <div id="will-collapsed" onclick="toggleWill()">
+    <span class="will-quill">✒</span>
+    <span class="will-name">Hero Will · EP Assistant</span>
+    <span class="will-tagline">William Shakespeare · Ask anything about the project</span>
+    <span class="will-toggle" id="will-toggle-label">▾ Open</span>
+  </div>
+  <div id="will-expanded">
+    <textarea id="will-input" placeholder="Enter an executive prompt… apply to this frame, act, or the entire project." rows="2"></textarea>
+    <select class="will-scope" id="will-scope">
+      <option value="frame">This Frame</option>
+      <option value="act">This Act</option>
+      <option value="project" selected>Entire Project</option>
+    </select>
+    <button class="will-submit" onclick="submitWill()">Apply →</button>
+    <div id="will-status"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     TOP BAR
+════════════════════════════════ -->
+<div id="top-bar">
+  <a href="ep-creator-studio.html" class="tb-back">← Studio</a>
+  <div class="tb-divider"></div>
+  <div>
+    <div class="tb-brand">SING!9 StoryStream · EP Creator Studio</div>
+  </div>
+  <div class="tb-divider"></div>
+  <div class="tb-project" id="tb-project-name">Episode 1</div>
+  <div class="tb-spacer"></div>
+  <div class="view-toggle">
+    <button class="view-btn active" id="btn-list"  onclick="setView('list')">≡ List</button>
+    <button class="view-btn"        id="btn-gallery" onclick="setView('gallery')">⊞ Grid</button>
+  </div>
+  <button class="tb-btn crystal" onclick="openCatalog()">📚 Catalog</button>
+  <button class="tb-btn" onclick="exportEdits()" title="Export all edits as JSON">↓ Export</button>
+</div>
+
+<!-- ════════════════════════════════
+     MAIN LAYOUT
+════════════════════════════════ -->
+<div id="layout">
+
+  <!-- ── ARC SIDEBAR ── -->
+  <div id="sidebar">
+    <div class="sb-section">
+      <div class="sb-section-title">Project</div>
+      <div class="sb-all active" id="sb-all" onclick="filterFrames(null, null)">
+        All Frames <span class="seg-frame-count">120</span>
+      </div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-section-title">Story Arc</div>
+      <!-- Acts built by JS -->
+      <div id="arc-tree"></div>
+    </div>
+    <div class="sb-section" style="padding-bottom:1rem;">
+      <div class="sb-section-title">Quick</div>
+      <div class="seg-item" onclick="window.open('episode-1.html','_blank')">▶ Watch Ep.1</div>
+      <div class="seg-item" onclick="window.open('outline-only.html','_blank')">▶ Outline Only</div>
+      <div class="seg-item" onclick="window.open('episode-1-studio.html','_blank')">🎬 Cinematic Studio</div>
+      <div class="seg-item" onclick="openCatalog()">📚 Content Catalog</div>
+    </div>
+  </div>
+
+  <!-- ── MAIN CANVAS ── -->
+  <div id="canvas">
+    <div id="canvas-header" class="canvas-section-hdr">All Frames · 120 total</div>
+    <!-- List view -->
+    <div id="frames-list"></div>
+    <!-- Gallery view -->
+    <div id="frames-gallery"></div>
+  </div>
+
+</div><!-- /layout -->
+
+<!-- ════════════════════════════════
+     DETAIL PANEL (right slide-in)
+════════════════════════════════ -->
+<div id="detail-panel">
+  <div id="dp-close">
+    <span class="dp-frame-id" id="dp-frame-id">Frame —</span>
+    <button class="dp-close-btn" onclick="closeDetail()" title="Close">✕</button>
+  </div>
+
+  <!-- Image -->
+  <div class="dp-section">
+    <div class="dp-label">Image · <span id="dp-img-label">Slot 1 of 3</span></div>
+    <div class="dp-img-wrap">
+      <img id="dp-img" src="" alt="Frame image">
+    </div>
+    <div class="dp-slot-btns">
+      <button class="dp-slot-btn active" id="dp-slot-0" onclick="selectSlot(0)">Slot 1</button>
+      <button class="dp-slot-btn"        id="dp-slot-1" onclick="selectSlot(1)">Slot 2</button>
+      <button class="dp-slot-btn"        id="dp-slot-2" onclick="selectSlot(2)">Slot 3</button>
+    </div>
+  </div>
+
+  <!-- Arc position -->
+  <div class="dp-section">
+    <div class="dp-label">Arc Position</div>
+    <div class="dp-arc-row">
+      <span class="dp-arc-chip" id="dp-act-chip"></span>
+      <span class="dp-arc-chip" id="dp-seg-chip" style="background:rgba(168,230,240,0.08);border:1px solid rgba(168,230,240,0.2);color:rgba(168,230,240,0.75);font-size:0.58rem;letter-spacing:0.1em;padding:0.2rem 0.55rem;border-radius:12px;"></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.35rem;">
+      <span style="font-size:0.65rem;color:var(--muted);">Move to act:</span>
+      <select class="dp-move-select" id="dp-move-act" onchange="moveFrameToAct(this.value)">
+        <option value="">— keep —</option>
+        <option value="0">Act 1</option>
+        <option value="1">Act 2</option>
+        <option value="2">Act 3</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <div class="dp-section">
+    <div class="dp-label">Script · Frame narrative</div>
+    <div id="dp-will-note-area"></div>
+    <textarea class="dp-textarea script" id="dp-script" placeholder="Script text for this frame…"></textarea>
+  </div>
+
+  <!-- Music cue -->
+  <div class="dp-section">
+    <div class="dp-label">Music Cue</div>
+    <div class="dp-music-row">
+      <span class="dp-music-icon">🎵</span>
+      <span id="dp-music-info" style="font-size:0.75rem;color:var(--muted);">—</span>
+    </div>
+  </div>
+
+  <!-- Production notes -->
+  <div class="dp-section">
+    <div class="dp-label">Production Notes (private)</div>
+    <textarea class="dp-textarea notes" id="dp-notes" placeholder="Director notes, flags, to-dos…"></textarea>
+  </div>
+
+  <!-- Actions -->
+  <div class="dp-actions">
+    <button class="dp-action-btn save"     onclick="saveFrame()">💾 Save</button>
+    <button class="dp-action-btn preview"  onclick="previewFrame()">▶ Preview</button>
+    <button class="dp-action-btn will-note" onclick="openWillForFrame()">✒ Ask Will</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     CONTENT CATALOG OVERLAY
+════════════════════════════════ -->
+<div id="catalog-overlay">
+  <div id="catalog-header">
+    <div>
+      <div class="cat-title">📚 Content Catalog</div>
+      <div class="cat-subtitle">Browse all assets · click to import into current frame</div>
+    </div>
+    <button class="cat-close" onclick="closeCatalog()">✕ Close</button>
+  </div>
+  <div class="cat-tabs">
+    <button class="cat-tab active" onclick="showCatTab('images')">🖼 Images</button>
+    <button class="cat-tab"        onclick="showCatTab('audio')">🎵 Audio</button>
+    <button class="cat-tab"        onclick="showCatTab('scripts')">📝 Scripts</button>
+    <button class="cat-tab"        onclick="showCatTab('series')">📺 Series</button>
+  </div>
+  <div class="cat-body">
+    <div class="cat-pane active" id="cat-images">
+      <div id="cat-images-grid" class="cat-grid"></div>
+    </div>
+    <div class="cat-pane" id="cat-audio">
+      <div id="cat-audio-list"></div>
+    </div>
+    <div class="cat-pane" id="cat-scripts">
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem;">
+        All 120 script frames. Click to copy text to current frame.
+      </p>
+      <div id="cat-scripts-list"></div>
+    </div>
+    <div class="cat-pane" id="cat-series">
+      <div id="cat-series-list"></div>
+    </div>
+  </div>
+</div>
+
+<script src="../ticker.js"></script>
+<script>
+/* ══════════════════════════════════════════════════════
+   EP CREATOR STUDIO WORKSPACE ENGINE
+   SING!9 StoryStream · All nodes · Buttonized.
+══════════════════════════════════════════════════════ */
+
+/* ── STORY STRUCTURE ── */
+var ACTS = [
+  { name:'Act 1', frames:[0,39],  color:'#a78bfa',
+    segments:[
+      { name:'Invitation',   frames:[0,19]  },
+      { name:'Seed · 1493',  frames:[20,39] }
+    ]
+  },
+  { name:'Act 2', frames:[40,79], color:'#fb923c',
+    segments:[
+      { name:'Singularities', frames:[40,59] },
+      { name:'Journey',       frames:[60,79] }
+    ]
+  },
+  { name:'Act 3', frames:[80,119],color:'#fde68a',
+    segments:[
+      { name:'Now · Mission', frames:[80,99]  },
+      { name:'Edge · Sol-V',  frames:[100,119]}
+    ]
+  }
+];
+
+/* ── LOCAL IMAGE OVERRIDES (matches episode-1.html) ── */
+var LOCAL_IMGS = {
+   0:['assets/content-catalog-super-singularity.png',null,null],
+   3:['assets/content-catalog-super-singularity.png',null,null],
+   8:['assets/content-catalog-super-singularity.png',null,null],
+  20:['assets/content-catalog-super-singularity.png',null,null],
+  23:['assets/content-catalog-super-singularity.png',null,null],
+  27:['assets/content-catalog-super-singularity.png',null,null],
+  50:[null,'../assets/images/reno-winter-skyline.png',null],
+  51:['../assets/images/reno-winter-skyline.png',null,null],
+  56:['assets/reno-arch-night.png',null,'../assets/images/reno-skyline-sunset.png'],
+  57:['../assets/images/reno-skyline-sunset.png','assets/reno-arch-night.png',null],
+  60:['../assets/images/truckee-river.png',null,null],
+  62:['../assets/images/truckee-river.png',null,null],
+  64:['../assets/images/truckee-river.png',null,null],
+  70:['assets/reno-arch-night.png','assets/vendors-silver-legacy.png',null],
+  71:['assets/vendors-silver-legacy.png','assets/reno-arch-night.png',null],
+  80:['assets/vibelandia-reno-magic.png',null,null],
+  86:['assets/reno-arch-night.png',null,null],
+  100:['assets/vibelandia-reno-magic.png',null,null],
+  108:['assets/destinations-bison-lodge.png',null,null],
+  119:['assets/content-catalog-super-singularity.png',null,null]
+};
+
+var POOL = [
+  'assets/stack1/s1-001.jpg','assets/stack1/s1-002.jpg','assets/stack1/s1-003.jpg',
+  'assets/stack1/s1-004.jpg','assets/stack1/s1-005.jpg','assets/stack1/s1-006.jpg',
+  'assets/stack1/s1-008.jpg','assets/stack1/s1-009.jpg','assets/stack1/s1-010.jpg',
+  'assets/stack1/s1-011.jpg','assets/stack1/s1-012.jpg','assets/stack1/s1-014.jpg',
+  'assets/stack1/s1-015.jpg','assets/stack1/s1-016.jpg','assets/stack1/s1-017.jpg',
+  'assets/stack1/s1-019.jpg','assets/stack1/s1-020.jpg','assets/stack1/s1-021.jpg',
+  'assets/stack1/s1-022.jpg','assets/stack1/s1-023.jpg','assets/stack1/s1-024.jpg',
+  'assets/stack1/s1-025.jpg','assets/stack1/s1-026.jpg','assets/stack1/s1-027.jpg',
+  'assets/stack1/s1-028.jpg','assets/stack1/s1-029.jpg','assets/stack1/s1-030.jpg',
+  'assets/stack1/s1-031.jpg','assets/stack1/s1-032.jpg','assets/stack1/s1-033.jpg',
+  'assets/stack1/s1-034.jpg','assets/stack1/s1-035.jpg','assets/stack1/s1-036.jpg',
+  'assets/stack1/s1-037.jpg','assets/stack1/s1-038.jpg','assets/stack1/s1-039.jpg',
+  'assets/stack1/s1-040.jpg','assets/stack1/s1-041.jpg','assets/stack1/s1-042.jpg'
+];
+
+function getFrameImg(fi, slot) {
+  var row = LOCAL_IMGS[fi];
+  if (row && row[slot] != null) return row[slot];
+  return POOL[(fi + slot * 40) % POOL.length];
+}
+
+function getActForFrame(fi) {
+  for (var a = 0; a < ACTS.length; a++) {
+    if (fi >= ACTS[a].frames[0] && fi <= ACTS[a].frames[1]) return a;
+  }
+  return 0;
+}
+function getSegForFrame(fi) {
+  for (var a = 0; a < ACTS.length; a++) {
+    for (var s = 0; s < ACTS[a].segments.length; s++) {
+      var seg = ACTS[a].segments[s];
+      if (fi >= seg.frames[0] && fi <= seg.frames[1]) return ACTS[a].segments[s];
+    }
+  }
+  return { name:'—' };
+}
+
+/* ── STATE ── */
+var scriptLines = [];
+var audioTracks = [];
+var edits        = {}; /* fi -> { script, notes, imgOverride } */
+var willNotes    = {}; /* scope -> [{scope,text,ts}] */
+var selectedFi   = -1;
+var selectedSlot = 0;
+var filterAct    = null;
+var filterSeg    = null;
+var currentView  = 'list';
+var willOpen     = false;
+var EDITS_KEY    = 'sing9_ws_edits';
+var WILL_KEY     = 'sing9_ws_will';
+
+/* ── LOAD EDITS FROM STORAGE ── */
+try { edits     = JSON.parse(localStorage.getItem(EDITS_KEY) || '{}'); } catch(e) { edits = {}; }
+try { willNotes = JSON.parse(localStorage.getItem(WILL_KEY)  || '{}'); } catch(e) { willNotes = {}; }
+
+/* ── HERO WILL ── */
+function toggleWill() {
+  willOpen = !willOpen;
+  document.getElementById('hero-will').classList.toggle('expanded', willOpen);
+  document.getElementById('top-bar').classList.toggle('will-open', willOpen);
+  document.getElementById('layout').classList.toggle('will-open', willOpen);
+  document.getElementById('detail-panel').classList.toggle('will-open', willOpen);
+  document.getElementById('will-toggle-label').textContent = willOpen ? '▴ Close' : '▾ Open';
+}
+function submitWill() {
+  var text  = (document.getElementById('will-input').value || '').trim();
+  var scope = document.getElementById('will-scope').value;
+  if (!text) return;
+  var key = scope === 'frame' ? 'frame_' + selectedFi
+          : scope === 'act'   ? 'act_'   + (selectedFi >= 0 ? getActForFrame(selectedFi) : 0)
+          : 'project';
+  if (!willNotes[key]) willNotes[key] = [];
+  willNotes[key].unshift({ scope:scope, text:text, ts:Date.now() });
+  localStorage.setItem(WILL_KEY, JSON.stringify(willNotes));
+  document.getElementById('will-status').textContent =
+    '✒ Will has received your directive. Applied to: ' + scope + '.';
+  document.getElementById('will-input').value = '';
+  /* Refresh will dot on rows */
+  renderWillDots();
+  if (scope === 'frame' && selectedFi >= 0) showWillNoteInDetail(selectedFi);
+  setTimeout(function() { document.getElementById('will-status').textContent = ''; }, 4000);
+}
+function openWillForFrame() {
+  document.getElementById('will-scope').value = 'frame';
+  if (!willOpen) toggleWill();
+  setTimeout(function() { document.getElementById('will-input').focus(); }, 350);
+}
+function getWillNotesFor(fi) {
+  var notes = [];
+  var fKey = 'frame_' + fi;
+  var aKey = 'act_' + getActForFrame(fi);
+  var pKey = 'project';
+  [fKey, aKey, pKey].forEach(function(k) {
+    if (willNotes[k]) notes = notes.concat(willNotes[k]);
+  });
+  return notes;
+}
+
+/* ── BUILD ARC TREE ── */
+function buildArcTree() {
+  var el = document.getElementById('arc-tree');
+  el.innerHTML = '';
+  ACTS.forEach(function(act, ai) {
+    var hdr = document.createElement('div');
+    hdr.className = 'act-header open';
+    hdr.innerHTML = '<span class="act-chevron">▶</span>'
+      + '<span class="act-name" style="color:' + act.color + '">' + act.name + '</span>'
+      + '<span class="act-count">' + (act.frames[1]-act.frames[0]+1) + '</span>';
+    hdr.onclick = function() {
+      hdr.classList.toggle('open');
+      filterFrames(ai, null);
+    };
+    el.appendChild(hdr);
+
+    var segList = document.createElement('div');
+    segList.className = 'seg-list';
+    act.segments.forEach(function(seg) {
+      var item = document.createElement('div');
+      item.className = 'seg-item';
+      item.innerHTML = seg.name
+        + '<span class="seg-frame-count">' + (seg.frames[1]-seg.frames[0]+1) + '</span>';
+      item.onclick = function(e) {
+        e.stopPropagation();
+        filterFrames(ai, seg);
+        document.querySelectorAll('.seg-item').forEach(function(s) { s.classList.remove('active'); });
+        item.classList.add('active');
+        document.getElementById('sb-all').classList.remove('active');
+      };
+      segList.appendChild(item);
+    });
+    el.appendChild(segList);
+  });
+}
+
+/* ── FILTER ── */
+function filterFrames(actIdx, seg) {
+  filterAct = actIdx;
+  filterSeg = seg;
+  document.getElementById('sb-all').classList.toggle('active', actIdx === null);
+  document.querySelectorAll('.act-header').forEach(function(h, i) {
+    h.classList.toggle('active', i === actIdx);
+  });
+  var label = actIdx === null ? 'All Frames · 120 total'
+    : seg ? seg.name + ' · frames ' + (seg.frames[0]+1) + '–' + (seg.frames[1]+1)
+    : ACTS[actIdx].name + ' · frames ' + (ACTS[actIdx].frames[0]+1) + '–' + (ACTS[actIdx].frames[1]+1);
+  document.getElementById('canvas-header').textContent = label;
+  renderFrames();
+}
+
+/* ── VIEW TOGGLE ── */
+function setView(v) {
+  currentView = v;
+  document.body.classList.toggle('view-gallery', v === 'gallery');
+  document.getElementById('btn-list').classList.toggle('active',    v === 'list');
+  document.getElementById('btn-gallery').classList.toggle('active', v === 'gallery');
+}
+
+/* ── RENDER FRAMES ── */
+function renderFrames() {
+  var list    = document.getElementById('frames-list');
+  var gallery = document.getElementById('frames-gallery');
+  list.innerHTML = '';
+  gallery.innerHTML = '';
+
+  for (var fi = 0; fi < 120; fi++) {
+    /* Filter */
+    if (filterSeg && (fi < filterSeg.frames[0] || fi > filterSeg.frames[1])) continue;
+    if (filterAct !== null && !filterSeg) {
+      if (fi < ACTS[filterAct].frames[0] || fi > ACTS[filterAct].frames[1]) continue;
+    }
+    list.appendChild(buildListRow(fi));
+    gallery.appendChild(buildGalleryCard(fi));
+  }
+}
+
+function buildListRow(fi) {
+  var ai  = getActForFrame(fi);
+  var seg = getSegForFrame(fi);
+  var act = ACTS[ai];
+  var img = getFrameImg(fi, 0);
+  var script = (edits[fi] && edits[fi].script != null) ? edits[fi].script : (scriptLines[fi] || '');
+  var hasWill = getWillNotesFor(fi).length > 0;
+
+  var row = document.createElement('div');
+  row.className = 'frame-row' + (fi === selectedFi ? ' selected' : '');
+  row.id = 'row-' + fi;
+  row.innerHTML =
+    '<span class="fr-num">' + (fi+1) + '</span>'
+  + '<img class="fr-thumb" src="' + img + '" loading="lazy" alt="">'
+  + '<div class="fr-info">'
+  +   '<div class="fr-title">' + (seg.name || 'Frame ' + (fi+1)) + '</div>'
+  +   '<div class="fr-excerpt">' + script.substring(0,80) + (script.length>80?'…':'') + '</div>'
+  + '</div>'
+  + '<div class="fr-badges">'
+  +   '<span class="fr-badge badge-act' + (ai+1) + '">' + act.name + '</span>'
+  + '</div>'
+  + '<span class="fr-will-dot' + (hasWill?' has-note':'') + '" title="Will note"></span>';
+  row.onclick = function() { openDetail(fi); };
+  return row;
+}
+
+function buildGalleryCard(fi) {
+  var ai  = getActForFrame(fi);
+  var seg = getSegForFrame(fi);
+  var img = getFrameImg(fi, 0);
+
+  var card = document.createElement('div');
+  card.className = 'frame-card' + (fi === selectedFi ? ' selected' : '');
+  card.id = 'card-' + fi;
+  card.innerHTML =
+    '<img class="fc-thumb" src="' + img + '" loading="lazy" alt="">'
+  + '<div class="fc-body">'
+  +   '<div class="fc-num">Frame ' + (fi+1) + ' / 120</div>'
+  +   '<div class="fc-title">' + (seg.name || '') + '</div>'
+  +   '<div class="fc-seg" style="color:' + ACTS[ai].color + '">' + ACTS[ai].name + '</div>'
+  + '</div>';
+  card.onclick = function() { openDetail(fi); };
+  return card;
+}
+
+function renderWillDots() {
+  for (var fi = 0; fi < 120; fi++) {
+    var dot = document.querySelector('#row-' + fi + ' .fr-will-dot');
+    if (dot) dot.classList.toggle('has-note', getWillNotesFor(fi).length > 0);
+  }
+}
+
+/* ── DETAIL PANEL ── */
+function openDetail(fi) {
+  selectedFi   = fi;
+  selectedSlot = 0;
+  var panel = document.getElementById('detail-panel');
+  var canvas = document.getElementById('canvas');
+  panel.classList.add('open');
+  canvas.classList.add('detail-open');
+
+  /* Highlight selected row/card */
+  document.querySelectorAll('.frame-row.selected,.frame-card.selected').forEach(function(el) {
+    el.classList.remove('selected');
+  });
+  var rowEl  = document.getElementById('row-' + fi);
+  var cardEl = document.getElementById('card-' + fi);
+  if (rowEl)  rowEl.classList.add('selected');
+  if (cardEl) cardEl.classList.add('selected');
+
+  /* Scroll row into view */
+  if (rowEl) rowEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+
+  refreshDetail(fi);
+}
+
+function refreshDetail(fi) {
+  var ai  = getActForFrame(fi);
+  var seg = getSegForFrame(fi);
+  var act = ACTS[ai];
+  var edit = edits[fi] || {};
+
+  document.getElementById('dp-frame-id').textContent = 'Frame ' + (fi+1) + ' / 120';
+
+  /* Image */
+  selectSlot(0);
+
+  /* Arc chips */
+  var actChip = document.getElementById('dp-act-chip');
+  actChip.textContent = act.name;
+  actChip.style.cssText = 'background:' + act.color.replace('#','rgba(').replace(')',',0.12)')
+    + ';border:1px solid ' + act.color.replace('#','rgba(').replace(')',',0.4)')
+    + ';color:' + act.color + ';font-size:0.6rem;letter-spacing:0.1em;padding:0.2rem 0.55rem;border-radius:12px;';
+  document.getElementById('dp-seg-chip').textContent = seg.name;
+  document.getElementById('dp-move-act').value = '';
+
+  /* Script */
+  document.getElementById('dp-script').value =
+    edit.script != null ? edit.script : (scriptLines[fi] || '');
+
+  /* Music */
+  var track = getTrackForFrame(fi);
+  document.getElementById('dp-music-info').textContent = track || '— no track loaded';
+
+  /* Notes */
+  document.getElementById('dp-notes').value = edit.notes || '';
+
+  /* Will notes */
+  showWillNoteInDetail(fi);
+}
+
+function showWillNoteInDetail(fi) {
+  var area = document.getElementById('dp-will-note-area');
+  var notes = getWillNotesFor(fi);
+  if (!notes.length) { area.innerHTML = ''; return; }
+  area.innerHTML = notes.slice(0,2).map(function(n) {
+    return '<div class="dp-will-note">'
+      + '<div class="dp-will-note-label">✒ Will · ' + n.scope + '</div>'
+      + n.text
+      + '</div>';
+  }).join('');
+}
+
+function selectSlot(slot) {
+  selectedSlot = slot;
+  if (selectedFi < 0) return;
+  document.getElementById('dp-img').src = getFrameImg(selectedFi, slot);
+  document.getElementById('dp-img-label').textContent = 'Slot ' + (slot+1) + ' of 3';
+  for (var i = 0; i < 3; i++) {
+    document.getElementById('dp-slot-' + i).classList.toggle('active', i === slot);
+  }
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('open');
+  document.getElementById('canvas').classList.remove('detail-open');
+  document.querySelectorAll('.frame-row.selected,.frame-card.selected').forEach(function(el) {
+    el.classList.remove('selected');
+  });
+  selectedFi = -1;
+}
+
+function saveFrame() {
+  if (selectedFi < 0) return;
+  if (!edits[selectedFi]) edits[selectedFi] = {};
+  edits[selectedFi].script = document.getElementById('dp-script').value;
+  edits[selectedFi].notes  = document.getElementById('dp-notes').value;
+  localStorage.setItem(EDITS_KEY, JSON.stringify(edits));
+  /* Refresh row excerpt */
+  var rowEl = document.getElementById('row-' + selectedFi);
+  if (rowEl) {
+    var ex = rowEl.querySelector('.fr-excerpt');
+    if (ex) {
+      var s = edits[selectedFi].script;
+      ex.textContent = s.substring(0,80) + (s.length>80?'…':'');
+    }
+  }
+  showSaveFlash();
+}
+
+function showSaveFlash() {
+  var btn = document.querySelector('.dp-action-btn.save');
+  var orig = btn.textContent;
+  btn.textContent = '✓ Saved';
+  btn.style.background = 'rgba(0,180,60,0.18)';
+  btn.style.borderColor = 'rgba(0,200,70,0.6)';
+  setTimeout(function() {
+    btn.textContent = orig;
+    btn.style.background = '';
+    btn.style.borderColor = '';
+  }, 1500);
+}
+
+function previewFrame() {
+  if (selectedFi < 0) return;
+  window.open('episode-1.html#frame=' + selectedFi, '_blank');
+}
+
+function moveFrameToAct(actIdxStr) {
+  /* Visual/data note — full reorder would need backend; for now log as a Will note */
+  if (!actIdxStr || selectedFi < 0) return;
+  var ai = parseInt(actIdxStr, 10);
+  var targetAct = ACTS[ai];
+  var key = 'frame_' + selectedFi;
+  if (!willNotes[key]) willNotes[key] = [];
+  willNotes[key].unshift({
+    scope:'frame',
+    text:'[EP Move Note] Requested move to ' + targetAct.name + '. Apply in data layer.',
+    ts:Date.now()
+  });
+  localStorage.setItem(WILL_KEY, JSON.stringify(willNotes));
+  showWillNoteInDetail(selectedFi);
+  document.getElementById('dp-move-act').value = '';
+}
+
+function exportEdits() {
+  var data = { edits:edits, will_notes:willNotes, exported:new Date().toISOString() };
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'sing9-ep1-edits.json';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+/* ── MUSIC ── */
+var tracksByPlaylist = {};
+function getTrackForFrame(fi) {
+  var seg = Math.floor(fi / 20);
+  var pid = 'playlist-' + (seg + 1);
+  var list = tracksByPlaylist[pid];
+  if (!list || !list.length) return null;
+  var t = list[fi % list.length];
+  return t ? (t.title || t.file || 'Track') : null;
+}
+
+/* ── CATALOG ── */
+function openCatalog() {
+  document.getElementById('catalog-overlay').classList.add('open');
+  buildCatalogImages();
+  buildCatalogAudio();
+  buildCatalogScripts();
+  buildCatalogSeries();
+}
+function closeCatalog() {
+  document.getElementById('catalog-overlay').classList.remove('open');
+}
+function showCatTab(tab) {
+  document.querySelectorAll('.cat-tab').forEach(function(t,i) {
+    t.classList.toggle('active', ['images','audio','scripts','series'][i] === tab);
+  });
+  document.querySelectorAll('.cat-pane').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('cat-' + tab).classList.add('active');
+}
+
+function buildCatalogImages() {
+  var grid = document.getElementById('cat-images-grid');
+  if (grid.childElementCount > 0) return;
+  POOL.forEach(function(src, i) {
+    var item = document.createElement('div');
+    item.className = 'cat-asset';
+    item.innerHTML =
+      '<img class="cat-asset-thumb" src="' + src + '" loading="lazy" alt="">'
+    + '<div class="cat-asset-label">' + src.split('/').pop() + '</div>'
+    + '<button class="cat-asset-action" onclick="importImage(\'' + src + '\')">↓ Import to Frame</button>';
+    grid.appendChild(item);
+  });
+}
+function importImage(src) {
+  if (selectedFi < 0) {
+    alert('Open a frame first (click any frame row), then import.');
+    return;
+  }
+  if (!edits[selectedFi]) edits[selectedFi] = {};
+  if (!edits[selectedFi].imgOverride) edits[selectedFi].imgOverride = [null,null,null];
+  edits[selectedFi].imgOverride[selectedSlot] = src;
+  localStorage.setItem(EDITS_KEY, JSON.stringify(edits));
+  document.getElementById('dp-img').src = src;
+  closeCatalog();
+}
+
+function buildCatalogAudio() {
+  var list = document.getElementById('cat-audio-list');
+  if (list.childElementCount > 0) return;
+  audioTracks.forEach(function(t) {
+    var row = document.createElement('div');
+    row.className = 'cat-audio-row';
+    row.innerHTML =
+      '<span class="cat-audio-icon">🎵</span>'
+    + '<div class="cat-audio-info">'
+    +   '<div class="cat-audio-title">' + (t.title || t.file || 'Track') + '</div>'
+    +   '<div class="cat-audio-sub">' + (t.source_playlist || '') + '</div>'
+    + '</div>'
+    + '<span class="cat-audio-import">↓ Use in Frame</span>';
+    row.onclick = function() {
+      if (selectedFi >= 0) {
+        if (!edits[selectedFi]) edits[selectedFi] = {};
+        edits[selectedFi].musicCue = t.title || t.file;
+        localStorage.setItem(EDITS_KEY, JSON.stringify(edits));
+        document.getElementById('dp-music-info').textContent = t.title || t.file || '—';
+        closeCatalog();
+      } else {
+        alert('Open a frame first.');
+      }
+    };
+    list.appendChild(row);
+  });
+  if (!list.childElementCount) list.innerHTML = '<p style="font-size:0.8rem;color:var(--muted);">No audio tracks loaded.</p>';
+}
+
+function buildCatalogScripts() {
+  var list = document.getElementById('cat-scripts-list');
+  if (list.childElementCount > 0) return;
+  scriptLines.forEach(function(line, fi) {
+    var row = document.createElement('div');
+    row.style.cssText = 'padding:0.55rem 0.65rem;border:1px solid rgba(255,255,255,0.06);border-radius:5px;margin-bottom:0.35rem;cursor:pointer;transition:border-color 0.15s;';
+    row.innerHTML =
+      '<div style="font-size:0.58rem;font-weight:700;color:rgba(201,168,32,0.5);margin-bottom:0.2rem;">Frame ' + (fi+1) + ' · ' + getSegForFrame(fi).name + '</div>'
+    + '<div style="font-size:0.75rem;color:rgba(232,220,200,0.7);line-height:1.5;">' + line.substring(0,120) + (line.length>120?'…':'') + '</div>';
+    row.onmouseover = function() { this.style.borderColor = 'rgba(201,168,32,0.3)'; };
+    row.onmouseout  = function() { this.style.borderColor = 'rgba(255,255,255,0.06)'; };
+    row.onclick = function() {
+      if (selectedFi >= 0) {
+        document.getElementById('dp-script').value = line;
+        closeCatalog();
+      } else {
+        alert('Open a frame first.');
+      }
+    };
+    list.appendChild(row);
+  });
+}
+
+function buildCatalogSeries() {
+  var list = document.getElementById('cat-series-list');
+  if (list.childElementCount > 0) return;
+  var series = [
+    { title:'Episode 1 · The whole story', sub:'120 frames · 60 min · Full arc', href:'episode-1.html' },
+    { title:'OUTLINE ONLY · A SING!9 Cinema', sub:'120 frames · 3 acts · 14,340 words', href:'outline-only.html' },
+    { title:'Trailer Loop · 15s', sub:'STORYSTREAM 9 · Ad space · 24/7', href:'trailer-loop.html' },
+    { title:'StoryStream 9 About', sub:'Full pitch · Three streams · EP power', href:'storystream-9-about.html' },
+  ];
+  series.forEach(function(s) {
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.7rem 0.75rem;border:1px solid rgba(255,255,255,0.06);border-radius:5px;margin-bottom:0.4rem;';
+    row.innerHTML =
+      '<div><div style="font-size:0.78rem;font-weight:700;color:rgba(232,220,200,0.85);">' + s.title + '</div>'
+    + '<div style="font-size:0.65rem;color:var(--muted);">' + s.sub + '</div></div>'
+    + '<a href="' + s.href + '" target="_blank" style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(201,168,32,0.7);text-decoration:none;white-space:nowrap;padding:0.3rem 0.65rem;border:1px solid rgba(201,168,32,0.25);border-radius:3px;">Open →</a>';
+    list.appendChild(row);
+  });
+}
+
+/* ── LOAD DATA ── */
+function loadAll() {
+  Promise.all([
+    fetch('../data/episode-1-slides.json').then(function(r){ return r.json(); }),
+    fetch('../data/audio-assets.json').then(function(r){ return r.json(); }),
+    fetch('../data/episode-1-script.json').then(function(r){ return r.json(); }).catch(function(){ return {}; })
+  ]).then(function(res) {
+    var audioData = res[1], scriptData = res[2];
+    scriptLines = (scriptData.lines && scriptData.lines.length)
+      ? scriptData.lines
+      : Array.from({length:120}, function(_,i){ return 'Frame ' + (i+1) + ' · ' + getSegForFrame(i).name; });
+    audioTracks = audioData.tracks || [];
+    for (var p = 1; p <= 7; p++) {
+      var pid = 'playlist-' + p;
+      tracksByPlaylist[pid] = audioTracks.filter(function(t){ return (t.source_playlist||'') === pid; });
+    }
+    renderFrames();
+  }).catch(function() {
+    scriptLines = Array.from({length:120}, function(_,i){ return 'Frame ' + (i+1) + ' · ' + getSegForFrame(i).name; });
+    renderFrames();
+  });
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('catalog-overlay').classList.contains('open')) { closeCatalog(); return; }
+    closeDetail();
+  }
+  if (selectedFi >= 0) {
+    if (e.key === 'ArrowDown' || e.key === 'j') {
+      if (!e.target.tagName.match(/TEXTAREA|INPUT|SELECT/)) {
+        e.preventDefault(); if (selectedFi < 119) openDetail(selectedFi + 1);
+      }
+    }
+    if (e.key === 'ArrowUp' || e.key === 'k') {
+      if (!e.target.tagName.match(/TEXTAREA|INPUT|SELECT/)) {
+        e.preventDefault(); if (selectedFi > 0) openDetail(selectedFi - 1);
+      }
+    }
+  }
+});
+
+/* ── INIT ── */
+buildArcTree();
+loadAll();
+</script>
+
+</body>
+</html>

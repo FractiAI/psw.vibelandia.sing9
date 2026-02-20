@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EP Creator Studio · SING!9 StoryStream</title>
+  <style>
+    /* ════════════════════════════════════════════════════
+       SING!9 StoryStream
+       Executive Producer Creator Studio
+       Portal · Sandbox · Trial · Access
+    ════════════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── CONFIG (easy to read / update) ── */
+    /* Trial price and payment handles are in the JS CONFIG block below */
+
+    :root {
+      --gold:     #c9a020;
+      --gold-lt:  #e8c84a;
+      --crystal:  #a8e6f0;
+      --dark:     #040108;
+      --card-bg:  rgba(255,255,255,0.03);
+      --border:   rgba(201,168,32,0.22);
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--dark);
+      font-family: "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+      color: rgba(232,220,200,0.88);
+      overflow-x: hidden;
+    }
+
+    body {
+      padding-bottom: calc(var(--ticker-h, 30px) + 36px + 3rem);
+    }
+
+    /* Scanlines */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent 0, transparent 3px,
+        rgba(0,0,0,0.025) 3px, rgba(0,0,0,0.025) 4px
+      );
+      pointer-events: none; z-index: 9990;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 4rem 2rem 5rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 40% 35%, rgba(168,230,240,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 65%, rgba(201,168,32,0.09) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 10%,  rgba(80,20,120,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .brand-eyebrow {
+      font-size: clamp(0.58rem, 1vw, 0.72rem);
+      font-weight: 700; letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: rgba(168,230,240,0.45);
+      margin-bottom: 1.4rem;
+      position: relative; z-index: 1;
+    }
+
+    .brand-name {
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 900; letter-spacing: 0.06em;
+      text-transform: uppercase; line-height: 0.95;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(201,168,32,0.9);
+      margin-bottom: 0.5rem;
+      position: relative; z-index: 1;
+    }
+
+    .brand-sub {
+      font-size: clamp(0.9rem, 2.2vw, 1.4rem);
+      font-weight: 300; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(168,230,240,0.65);
+      margin-bottom: 3rem;
+      position: relative; z-index: 1;
+    }
+
+    /* ── THE ENTRY LINE ── */
+    .entry-line {
+      max-width: 620px;
+      border: 1px solid rgba(201,168,32,0.3);
+      border-radius: 6px;
+      padding: 2rem 2.5rem;
+      background: rgba(201,168,32,0.04);
+      position: relative; z-index: 1;
+      margin: 0 auto 3rem;
+    }
+    .entry-line-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold);
+      margin: 0 auto 1rem;
+      animation: entry-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes entry-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(201,168,32,0.5); }
+      50%      { box-shadow: 0 0 0 8px rgba(201,168,32,0); }
+    }
+    .entry-text {
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      font-weight: 600; letter-spacing: 0.04em;
+      line-height: 1.5; color: rgba(232,220,200,0.92);
+    }
+    .entry-text em {
+      color: var(--gold); font-style: normal; font-weight: 800;
+    }
+
+    /* ── ACCESS CARDS ── */
+    .access-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      max-width: 840px; width: 100%;
+      margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+
+    .access-card {
+      padding: 2rem 1.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      text-align: left;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .access-card:hover {
+      border-color: rgba(201,168,32,0.45);
+      background: rgba(201,168,32,0.05);
+    }
+
+    .access-card.trial-card {
+      border-color: rgba(168,230,240,0.3);
+      background: rgba(10,25,35,0.3);
+    }
+    .access-card.trial-card:hover {
+      border-color: rgba(168,230,240,0.6);
+      background: rgba(168,230,240,0.05);
+    }
+
+    .card-icon  { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .card-label {
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .access-card          .card-label { color: rgba(201,168,32,0.6); }
+    .access-card.trial-card .card-label { color: rgba(168,230,240,0.55); }
+
+    .card-title {
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      font-weight: 800; letter-spacing: 0.04em;
+      text-transform: uppercase; line-height: 1.1;
+      margin-bottom: 0.85rem;
+    }
+    .access-card            .card-title { color: rgba(240,208,128,0.95); }
+    .access-card.trial-card .card-title { color: rgba(168,230,240,0.95); }
+
+    .card-body {
+      font-size: 0.88rem;
+      color: rgba(200,180,140,0.65);
+      line-height: 1.65; margin-bottom: 1.5rem;
+    }
+
+    .card-btn {
+      display: block; width: 100%;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      text-align: center; text-decoration: none;
+      border-radius: 4px; cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      border: none;
+    }
+    .btn-gold {
+      background: rgba(201,168,32,0.12);
+      border: 1.5px solid rgba(201,168,32,0.65);
+      color: #fef3c7;
+    }
+    .btn-gold:hover {
+      background: rgba(201,168,32,0.22);
+      box-shadow: 0 0 30px rgba(201,168,32,0.25);
+    }
+    .btn-crystal {
+      background: rgba(168,230,240,0.07);
+      border: 1.5px solid rgba(168,230,240,0.5);
+      color: rgba(168,230,240,0.95);
+    }
+    .btn-crystal:hover {
+      background: rgba(168,230,240,0.14);
+      box-shadow: 0 0 30px rgba(168,230,240,0.2);
+    }
+
+    /* ── TRIAL STATE VIEWS ── */
+    /* Shown/hidden via JS based on trial state */
+    .state-view { display: none; }
+    .state-view.active { display: block; }
+
+    /* ─── MAIN CONTENT (below hero) ─── */
+    main {
+      max-width: 820px; margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .rule {
+      height: 1px; margin: 4rem 0;
+      background: linear-gradient(90deg, transparent, rgba(201,168,32,0.18), transparent);
+    }
+
+    /* ─── TRIAL ACTIVE BANNER ─── */
+    #trial-banner {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(168,230,240,0.1);
+      border-bottom: 1px solid rgba(168,230,240,0.35);
+      backdrop-filter: blur(10px);
+      padding: 0.6rem 1.5rem;
+      display: none; align-items: center; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    #trial-banner.visible { display: flex; }
+    .trial-banner-text {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(168,230,240,0.85);
+    }
+    #trial-countdown { color: var(--crystal); }
+    .trial-pay-btn {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(201,168,32,0.6); border-radius: 3px;
+      color: rgba(240,208,128,0.9); text-decoration: none;
+      background: rgba(201,168,32,0.08);
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .trial-pay-btn:hover { background: rgba(201,168,32,0.18); }
+
+    /* ─── WHAT'S INCLUDED SECTION ─── */
+    .includes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem; margin: 2rem 0;
+    }
+    .inc-item {
+      padding: 1.1rem 1rem;
+      border: 1px solid rgba(201,168,32,0.15);
+      border-radius: 5px;
+      background: rgba(201,168,32,0.03);
+    }
+    .inc-item-icon  { font-size: 1.2rem; margin-bottom: 0.4rem; }
+    .inc-item-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(201,168,32,0.6); margin-bottom: 0.2rem;
+    }
+    .inc-item-desc  { font-size: 0.8rem; color: rgba(200,180,140,0.55); line-height: 1.5; }
+
+    h2 {
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 900; letter-spacing: 0.05em;
+      text-transform: uppercase; line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+
+    p {
+      font-size: clamp(0.9rem, 1.7vw, 1.05rem);
+      color: rgba(232,220,200,0.78);
+      line-height: 1.72; margin-bottom: 1.2rem; max-width: 64ch;
+    }
+    p strong { color: rgba(232,220,200,0.95); }
+    p em     { color: var(--gold); font-style: normal; }
+
+    /* ─── PAYMENT SECTION ─── */
+    .payment-section {
+      padding: 3rem 2rem;
+      border: 1px solid rgba(201,168,32,0.2);
+      border-radius: 8px;
+      background: rgba(201,168,32,0.03);
+      text-align: center; margin: 2rem 0;
+    }
+    .payment-options {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      justify-content: center; margin-top: 1.75rem;
+    }
+    .pay-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; border-radius: 4px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .pay-btn.venmo {
+      background: rgba(0,104,168,0.15);
+      border: 1.5px solid rgba(0,130,210,0.5);
+      color: rgba(100,200,255,0.9);
+    }
+    .pay-btn.venmo:hover {
+      background: rgba(0,104,168,0.28);
+      box-shadow: 0 0 25px rgba(0,130,210,0.2);
+    }
+    .pay-btn.cashapp {
+      background: rgba(0,130,55,0.12);
+      border: 1.5px solid rgba(0,180,70,0.45);
+      color: rgba(80,220,120,0.9);
+    }
+    .pay-btn.cashapp:hover {
+      background: rgba(0,130,55,0.24);
+      box-shadow: 0 0 25px rgba(0,180,70,0.2);
+    }
+    .pay-amount {
+      font-size: 1.6rem; font-weight: 900;
+      color: var(--gold); margin: 0.75rem 0 0.4rem;
+    }
+    .pay-period {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(201,168,32,0.5); margin-bottom: 0.5rem;
+    }
+    .pay-note {
+      font-size: 0.78rem; color: rgba(200,180,140,0.5);
+      line-height: 1.5; max-width: 38ch; margin: 0 auto;
+    }
+
+    footer {
+      text-align: center; padding: 3rem 2rem;
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: rgba(201,168,32,0.18);
+      border-top: 1px solid rgba(201,168,32,0.06);
+      max-width: 820px; margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── TRIAL ACTIVE BANNER (injected by JS when trial is running) ── -->
+<div id="trial-banner">
+  <span class="trial-banner-text">
+    SING!9 EP Creator Studio · Free Trial Active ·
+    <span id="trial-countdown">calculating…</span> remaining
+  </span>
+  <a href="#payment" class="trial-pay-btn">Continue Access → Pay Now</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════ -->
+<div id="hero">
+  <div class="brand-eyebrow">SING!9 StoryStream · Product Family</div>
+  <div class="brand-name">EP Creator<br>Studio</div>
+  <div class="brand-sub">Executive Producer · Creator Studio</div>
+
+  <!-- THE ENTRY LINE -->
+  <div class="entry-line">
+    <div class="entry-line-dot"></div>
+    <div class="entry-text">
+      If you are reading this, you have entered the<br>
+      <em>SING!9 StoryStream Executive Producer Creator Studio.</em><br><br>
+      The three streams are active. The frames are loaded.
+      The studio is open. You are in the right place.
+    </div>
+  </div>
+
+  <!-- ACCESS CARDS -->
+  <div class="access-grid">
+
+    <!-- Sandbox Mode -->
+    <div class="access-card">
+      <div class="card-icon">🧪</div>
+      <div class="card-label">No commitment</div>
+      <div class="card-title">Sandbox Mode</div>
+      <div class="card-body">
+        Explore the full EP Creator Studio without signing up.
+        Navigate frames, view the three-stream architecture,
+        and experience the studio at its current build.
+        No timer. No catch.
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;">
+        <a href="ep-studio-workspace.html" class="card-btn btn-gold">
+          Open Workspace →
+        </a>
+        <a href="episode-1-studio.html" style="display:block;text-align:center;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(201,168,32,0.45);text-decoration:none;padding:0.3rem 0;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,168,32,0.8)'" onmouseout="this.style.color='rgba(201,168,32,0.45)'">
+          Cinematic Player →
+        </a>
+      </div>
+    </div>
+
+    <!-- 48-Hour Free Trial -->
+    <div class="access-card trial-card">
+      <div class="card-icon">⚡</div>
+      <div class="card-label">Free · 48 hours</div>
+      <div class="card-title">Free Trial</div>
+      <div class="card-body">
+        Full access to the EP Creator Studio for 48 hours.
+        Edit frames, test the three-stream system, build your
+        first StoryStream. After 48 hours, continue with a
+        simple payment via Venmo or Cash App.
+      </div>
+      <button class="card-btn btn-crystal" id="start-trial-btn">
+        Start Free 48-Hour Trial →
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════════ -->
+<main>
+
+  <div class="rule"></div>
+
+  <!-- WHAT'S INCLUDED -->
+  <div>
+    <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.38em;text-transform:uppercase;color:rgba(201,168,32,0.55);margin-bottom:1.1rem;">
+      What's included in the studio
+    </div>
+    <h2 style="color:var(--gold);">Everything.<br>Buttonized.</h2>
+    <p>
+      Every node of the production at your fingertips. One click per frame.
+      Full access to the script, images, music, beat annotation, arc position,
+      and export tools — for every one of the 120 frames.
+    </p>
+
+    <div class="includes-grid">
+      <div class="inc-item">
+        <div class="inc-item-icon">📝</div>
+        <div class="inc-item-label">Script</div>
+        <div class="inc-item-desc">Full narrative text per frame. NSPFRNP voice. Edit-ready.</div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-item-icon">🖼️</div>
+        <div class="inc-item-label">Image Set</div>
+        <div class="inc-item-desc">3 images per frame. Swap from the full asset repo.</div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-item-icon">🎵</div>
+        <div class="inc-item-label">Music Cue</div>
+        <div class="inc-item-desc">Golden Backdoor Studios track per beat. Full playlist control.</div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-item-icon">🎭</div>
+        <div class="inc-item-label">Beat + Arc</div>
+        <div class="inc-item-desc">Emotional arc position. Carbon / Crystal / Gold layer tags.</div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-item-icon">🌊</div>
+        <div class="inc-item-label">Three Streams</div>
+        <div class="inc-item-desc">Carbon narrative · Crystalline layer · Live ticker. All visible simultaneously.</div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-item-icon">📤</div>
+        <div class="inc-item-label">Export Ready</div>
+        <div class="inc-item-desc">Feed the full arc into any platform: film, game, stage, podcast, brand.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- PAYMENT SECTION -->
+  <div id="payment" class="payment-section">
+    <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.38em;text-transform:uppercase;color:rgba(201,168,32,0.5);margin-bottom:1rem;">
+      After your free trial · Continue access
+    </div>
+    <h2 style="color:var(--gold);font-size:clamp(1.4rem,3vw,2rem);">
+      Pay to Continue
+    </h2>
+    <div class="pay-amount" id="pay-amount-display">$99</div>
+    <div class="pay-period">per month · cancel any time</div>
+    <p class="pay-note" style="margin:0 auto 0.5rem;">
+      Direct payment. No middleman platform fee. Venmo or Cash App.
+      Send the amount with your name and <strong style="color:rgba(200,180,140,0.8);">SING!9 Studio</strong> in the note.
+    </p>
+    <div class="payment-options">
+      <a id="venmo-btn" href="#" class="pay-btn venmo" target="_blank" rel="noopener">
+        <span>💙</span> Pay via Venmo
+      </a>
+      <a id="cashapp-btn" href="#" class="pay-btn cashapp" target="_blank" rel="noopener">
+        <span>💚</span> Pay via Cash App
+      </a>
+    </div>
+    <p style="margin-top:1.25rem;font-size:0.75rem;color:rgba(200,180,140,0.4);max-width:42ch;margin-left:auto;margin-right:auto;text-align:center;">
+      After payment, reply to your confirmation email or DM us
+      to activate your continued access. We confirm every payment personally.
+    </p>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- ABOUT THE PRODUCT FAMILY -->
+  <div>
+    <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.38em;text-transform:uppercase;color:rgba(168,230,240,0.5);margin-bottom:1rem;">
+      The SING!9 StoryStream product family
+    </div>
+    <h2 style="color:rgba(168,230,240,0.9);">Two products.<br>One system.</h2>
+    <p>
+      <em>SING!9 StoryStream</em> is the storytelling output —
+      the cinematic productions, the three-stream experiences,
+      the content that runs on all surfaces.
+      Episode 1, OUTLINE ONLY, and every series that follows.
+    </p>
+    <p>
+      <em>SING!9 StoryStream Executive Producer Creator Studio</em> is the tool —
+      the production environment where the story is built, edited,
+      and exported. The studio where executive producers
+      work directly with all nodes of the production at once.
+    </p>
+    <p>
+      <strong>Together they are the full SING!9 StoryStream system.</strong>
+      Content and creation tool. Output and studio. The story and the machine that builds it.
+    </p>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.75rem;">
+      <a href="ep-studio-workspace.html" style="display:inline-block;padding:0.75rem 1.75rem;border:1.5px solid rgba(201,168,32,0.65);background:rgba(201,168,32,0.1);color:#fef3c7;font-size:0.82rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:background 0.2s;" onmouseover="this.style.background='rgba(201,168,32,0.2)'" onmouseout="this.style.background='rgba(201,168,32,0.1)'">Open Workspace →</a>
+      <a href="storystream-9-about.html" style="display:inline-block;padding:0.75rem 1.75rem;border:1.5px solid rgba(168,230,240,0.45);color:rgba(168,230,240,0.85);font-size:0.82rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:background 0.2s;" onmouseover="this.style.background='rgba(168,230,240,0.07)'" onmouseout="this.style.background='transparent'">Full pitch →</a>
+      <a href="episode-1.html" style="display:inline-block;padding:0.75rem 1.75rem;border:1.5px solid rgba(201,168,32,0.35);color:rgba(240,208,128,0.7);font-size:0.82rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:background 0.2s;" onmouseover="this.style.background='rgba(201,168,32,0.05)'" onmouseout="this.style.background='transparent'">▶ Watch Episode 1</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  SING!9 StoryStream · EP Creator Studio · NSPFRNP · MCA<br>
+  Golden Backdoor Studios · Post-Singularity · NSPFRNP → ∞⁹
+</footer>
+
+<script src="../ticker.js"></script>
+<script src="../nav-strip.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   SING!9 EP CREATOR STUDIO — Trial + Payment Engine
+   ─────────────────────────────────────────────────────
+   CONFIG: Update these values as needed.
+══════════════════════════════════════════════════════ */
+
+var CONFIG = {
+  trial_ms:      48 * 60 * 60 * 1000,  /* 48 hours in ms          */
+  price:         '$99',                 /* displayed price          */
+  price_note:    'per month',
+  storage_key:   'sing9_trial_start',  /* localStorage key         */
+
+  /* Payment handles */
+  venmo_handle:  'Pru-Mendez',          /* Venmo @handle            */
+  cashapp_handle: 'newearthpru',        /* Cash App $handle         */
+  payment_note:  'SING!9 Studio'        /* note to include          */
+};
+
+/* ── Build payment URLs ── */
+var venmoUrl   = 'https://venmo.com/u/' + CONFIG.venmo_handle
+               + '?txn=pay&note=' + encodeURIComponent(CONFIG.payment_note);
+var cashappUrl = 'https://cash.app/$' + CONFIG.cashapp_handle;
+
+document.getElementById('venmo-btn').href   = venmoUrl;
+document.getElementById('cashapp-btn').href = cashappUrl;
+document.getElementById('pay-amount-display').textContent = CONFIG.price;
+
+/* ── Trial state ── */
+var TRIAL_NONE    = 'none';
+var TRIAL_ACTIVE  = 'active';
+var TRIAL_EXPIRED = 'expired';
+
+function getTrialState() {
+  var start = localStorage.getItem(CONFIG.storage_key);
+  if (!start) return TRIAL_NONE;
+  var elapsed = Date.now() - parseInt(start, 10);
+  if (elapsed < CONFIG.trial_ms) return TRIAL_ACTIVE;
+  return TRIAL_EXPIRED;
+}
+
+function getTrialRemaining() {
+  var start = localStorage.getItem(CONFIG.storage_key);
+  if (!start) return 0;
+  return Math.max(0, CONFIG.trial_ms - (Date.now() - parseInt(start, 10)));
+}
+
+function formatRemaining(ms) {
+  if (ms <= 0) return '0h 0m';
+  var h = Math.floor(ms / 3600000);
+  var m = Math.floor((ms % 3600000) / 60000);
+  return h + 'h ' + m + 'm';
+}
+
+/* ── Update trial banner countdown ── */
+var countdownInterval = null;
+function startCountdown() {
+  var el = document.getElementById('trial-countdown');
+  if (countdownInterval) clearInterval(countdownInterval);
+  countdownInterval = setInterval(function () {
+    var rem = getTrialRemaining();
+    if (el) el.textContent = formatRemaining(rem);
+    if (rem <= 0) {
+      clearInterval(countdownInterval);
+      applyState(TRIAL_EXPIRED);
+    }
+  }, 30000); /* update every 30s */
+  if (el) el.textContent = formatRemaining(getTrialRemaining());
+}
+
+/* ── Apply UI state ── */
+function applyState(state) {
+  var banner = document.getElementById('trial-banner');
+  var startBtn = document.getElementById('start-trial-btn');
+
+  if (state === TRIAL_ACTIVE) {
+    if (banner) banner.classList.add('visible');
+    if (startBtn) {
+      startBtn.textContent = 'Trial Active · Open Studio →';
+      startBtn.onclick = function () { window.location.href = 'episode-1-studio.html'; };
+    }
+    startCountdown();
+
+  } else if (state === TRIAL_EXPIRED) {
+    if (banner) {
+      banner.classList.add('visible');
+      var bText = banner.querySelector('.trial-banner-text');
+      if (bText) bText.textContent = 'SING!9 EP Creator Studio · Trial expired · Continue with payment';
+    }
+    if (startBtn) {
+      startBtn.textContent = 'Trial Ended · Pay to Continue ↓';
+      startBtn.onclick = function () {
+        document.getElementById('payment').scrollIntoView({ behavior: 'smooth' });
+      };
+    }
+
+  } else {
+    /* TRIAL_NONE — default state, buttons already wired */
+    if (startBtn) {
+      startBtn.onclick = function () {
+        localStorage.setItem(CONFIG.storage_key, Date.now().toString());
+        applyState(TRIAL_ACTIVE);
+        /* Go straight to studio after starting trial */
+        setTimeout(function () {
+          window.location.href = 'episode-1-studio.html';
+        }, 400);
+      };
+    }
+  }
+}
+
+/* ── Init ── */
+(function () {
+  applyState(getTrialState());
+})();
+</script>
+
+</body>
+</html>

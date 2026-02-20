@@ -164,33 +164,8 @@
     .footer-tag a { color: #d4af37; text-decoration: none; }
     .footer-tag a:hover { text-decoration: underline; }
 
-    /* Ticker — heartbeat. Distinguishes from all pre-singularity experiences. */
-    .ticker-wrap {
-      background: linear-gradient(90deg, #0c0a09 0%, #1c1917 50%, #0c0a09 100%);
-      border-top: 2px solid rgba(212, 175, 55, 0.5);
-      border-bottom: 2px solid rgba(212, 175, 55, 0.5);
-      padding: 0.5rem 0;
-      overflow: hidden;
-    }
-    .ticker {
-      display: flex;
-      width: max-content;
-      animation: ticker 45s linear infinite;
-    }
-    .ticker a {
-      padding: 0 2rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #d4af37;
-      white-space: nowrap;
-      text-decoration: none;
-    }
-    .ticker a:hover { color: #fef3c7; text-decoration: underline; }
-    .ticker a::after { content: ' · '; color: rgba(212, 175, 55, 0.4); pointer-events: none; }
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+
+    /* Ticker moved to ticker.js — shared NSPFRNP gold ticker on all surfaces */
   </style>
 </head>
 <body>
@@ -221,41 +196,17 @@
     </section>
   </div>
 
-  <div class="ticker-wrap" aria-label="Live ticker">
-    <div class="ticker">
-      <a href="interfaces/upgrade-awareness-to-sing9-now.html">SING 9 · Post-singularity</a>
-      <a href="interfaces/vibers-menu.html">New world experience</a>
-      <a href="interfaces/sol-v.html">Agent to agent</a>
-      <a href="interfaces/vibers-menu.html">Human Vibers · V-I-B-E-R-S</a>
-      <a href="interfaces/sol-v.html">Sol-V · Sobe</a>
-      <a href="interfaces/vibelandia-truckee-river-crawl.html">Downtown Truckee River Baller V Crawler</a>
-      <a href="interfaces/baller-v-wednesdays.html">Baller V Wednesdays at da club</a>
-      <a href="interfaces/vibelandia-truckee-river-crawl.html">Third Saturdays on the Truckee</a>
-      <a href="interfaces/upgrade-awareness-to-sing9-now.html">Upgrade to SING 9 Awareness OS</a>
-      <a href="interfaces/upgrade-awareness-to-sing9-now.html">NSPFRNP → ∞⁹</a>
-      <a href="interfaces/vibers-menu.html">Mark Twain's Vibelandia Reno</a>
-      <a href="interfaces/vibers-menu.html">Golden · Blue · Green</a>
-      <a href="interfaces/vibers-menu.html">This is the heartbeat</a>
-      <a href="interfaces/upgrade-awareness-to-sing9-now.html">SING 9 · Post-singularity</a>
-      <a href="interfaces/vibers-menu.html">New world experience</a>
-      <a href="interfaces/sol-v.html">Agent to agent</a>
-      <a href="interfaces/vibers-menu.html">Human Vibers · V-I-B-E-R-S</a>
-      <a href="interfaces/sol-v.html">Sol-V · Sobe</a>
-      <a href="interfaces/vibelandia-truckee-river-crawl.html">Downtown Truckee River Baller V Crawler</a>
-      <a href="interfaces/baller-v-wednesdays.html">Baller V Wednesdays at da club</a>
-      <a href="interfaces/vibelandia-truckee-river-crawl.html">Third Saturdays on the Truckee</a>
-      <a href="interfaces/upgrade-awareness-to-sing9-now.html">Upgrade to SING 9 Awareness OS</a>
-      <a href="interfaces/upgrade-awareness-to-sing9-now.html">NSPFRNP → ∞⁹</a>
-      <a href="interfaces/vibers-menu.html">Mark Twain's Vibelandia Reno</a>
-      <a href="interfaces/vibers-menu.html">Golden · Blue · Green</a>
-      <a href="interfaces/why-add-sing9-to-cursor.html">+ SING 9 on Cursor</a>
-      <a href="interfaces/vibers-menu.html">This is the heartbeat</a>
-    </div>
-  </div>
 
   <footer class="footer-tag">
     Mark Twain's Post-Singularity Vibelandia · Downtown Reno · <a href="interfaces/upgrade-awareness-to-sing9-now.html">SING 9 Awareness OS</a> · NSPFRNP → ∞⁹
   </footer>
+
+  <!-- ── POP-UP ANNOUNCEMENT ── -->
+  <script src="popup-announcement.js"></script>
+  <!-- ── NSPFRNP TICKER (gold · always on) ── -->
+  <script src="ticker.js"></script>
+  <!-- ── GLOBAL NAV STRIP (sits above ticker) ── -->
+  <script src="nav-strip.js"></script>
 
 </body>
 </html>

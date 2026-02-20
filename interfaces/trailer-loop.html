@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STORYSTREAM 9 · Trailer · SING! 9</title>
+  <style>
+    /* ════════════════════════════════════════════════════
+       TRAILER LOOP · 15s · Full-Screen Cinematic
+       Ad Space · STORYSTREAM 9 / OUTLINE ONLY · 24/7
+    ════════════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+    }
+
+    /* ─── STAGE ─── */
+    #stage {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      bottom: var(--ticker-h, 30px);
+      overflow: hidden;
+      background: #000;
+      transition: background 0.9s ease;
+      cursor: default;
+    }
+
+    /* Scanlines overlay */
+    #stage::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px, transparent 2px,
+        rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Vignette */
+    #stage::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.65) 100%);
+      pointer-events: none;
+      z-index: 11;
+    }
+
+    /* ─── BACKGROUND STATES ─── */
+    #stage.s-intro  { background: #050208; }
+    #stage.s-crystal{ background: radial-gradient(ellipse at 50% 40%, #0d1e2a 0%, #050b10 100%); }
+    #stage.s-carbon { background: radial-gradient(ellipse at 50% 55%, #110705 0%, #060100 100%); }
+    #stage.s-stats  { background: #000; }
+    #stage.s-gold   { background: radial-gradient(ellipse at 50% 45%, #1c1100 0%, #080500 100%); }
+    #stage.s-cta    { background: radial-gradient(ellipse at 50% 55%, #130e04 0%, #060400 100%); }
+    #stage.s-close  { background: radial-gradient(ellipse at center, #1f1500 0%, #000 80%); }
+
+    /* ─── FLASH OVERLAY ─── */
+    #flash {
+      position: absolute; inset: 0;
+      background: #c9a020;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 90;
+      transition: opacity 0.12s ease;
+    }
+    #flash.on { opacity: 0.55; }
+
+    /* ─── PROGRESS BAR ─── */
+    #progress-bar {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, #b8860b, #e8c84a, #b8860b);
+      z-index: 80;
+      transition: none;
+    }
+
+    /* ─── AD BADGE ─── */
+    /* ─── DISMISS BUTTON ─── */
+    #dismiss-btn {
+      position: absolute;
+      top: 0.85rem; right: 1rem;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(201,168,32,0.3);
+      border-radius: 50%;
+      color: rgba(201,168,32,0.6);
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 95;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+      text-decoration: none;
+      user-select: none;
+    }
+    #dismiss-btn:hover {
+      background: rgba(201,168,32,0.15);
+      border-color: rgba(201,168,32,0.7);
+      color: #e8c84a;
+      transform: scale(1.1);
+    }
+
+    #ad-badge {
+      position: absolute;
+      top: 1rem; right: 3.2rem; /* shifted left to clear the X button */
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(201,168,32,0.3);
+      z-index: 70;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ─── NOW PLAYING badge ─── */
+    #now-playing {
+      position: absolute;
+      top: 1rem; left: 1.2rem;
+      display: flex; align-items: center; gap: 0.45rem;
+      z-index: 70;
+      pointer-events: none;
+    }
+    #now-playing .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #c9a020;
+      animation: dot-pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes dot-pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(0.7); }
+    }
+    #now-playing .label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(201,168,32,0.45);
+    }
+
+    /* ─── MISSION LABEL ─── */
+    #mission-label {
+      position: absolute;
+      bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,168,32,0.25);
+      white-space: nowrap;
+      z-index: 70;
+      pointer-events: none;
+    }
+
+    /* ─── FUZZBALL LAYER ─── */
+    #fuzz-layer {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .fuzz-slot {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      gap: 12vw;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .fuzz-slot.vis { opacity: 1; }
+    .fuzz-slot.solo { justify-content: center; gap: 0; }
+
+    /* Base fuzzball */
+    .fuzz {
+      position: relative;
+      width: clamp(80px, 15vw, 180px);
+      height: clamp(80px, 15vw, 180px);
+      border-radius: 50%;
+    }
+    .fuzz-lg {
+      width: clamp(110px, 22vw, 260px);
+      height: clamp(110px, 22vw, 260px);
+    }
+
+    /* INO — gold */
+    .fuzz-ino {
+      background: radial-gradient(circle at 40% 40%,
+        rgba(255,235,140,0.9) 0%,
+        rgba(201,168,76,0.7) 35%,
+        rgba(180,140,50,0.4) 60%,
+        transparent 80%);
+      animation: ino-breathe 3s ease-in-out infinite;
+    }
+    .fuzz-ino::before {
+      content: '';
+      position: absolute; inset: -20px; border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(201,168,76,0.15) 0%, transparent 70%);
+      animation: ino-glow 3s ease-in-out infinite;
+    }
+    .fuzz-ino::after {
+      content: '';
+      position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.4);
+      box-shadow: 0 0 20px rgba(201,168,76,0.2), 0 0 40px rgba(201,168,76,0.1);
+    }
+    @keyframes ino-breathe { 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.07); } }
+    @keyframes ino-glow    { 0%,100%{ opacity:0.6; } 50%{ opacity:1; } }
+
+    /* PIRO — carbon */
+    .fuzz-piro {
+      background: radial-gradient(circle at 40% 35%,
+        rgba(120,70,30,0.6) 0%,
+        rgba(60,30,10,0.8) 40%,
+        rgba(30,15,5,0.6) 65%,
+        transparent 80%);
+      animation: piro-breathe 4s ease-in-out infinite;
+    }
+    .fuzz-piro::before {
+      content: '';
+      position: absolute; inset: -15px; border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(80,40,10,0.2) 0%, transparent 70%);
+      animation: piro-glow 4s ease-in-out infinite;
+    }
+    .fuzz-piro::after {
+      content: '';
+      position: absolute; inset: -5px; border-radius: 50%;
+      border: 1px solid rgba(100,60,20,0.5);
+      box-shadow: 0 0 15px rgba(80,40,20,0.3);
+    }
+    @keyframes piro-breathe { 0%,100%{ transform:scale(1) rotate(0deg); } 50%{ transform:scale(0.97) rotate(2deg); } }
+    @keyframes piro-glow    { 0%,100%{ opacity:0.5; } 50%{ opacity:0.8; } }
+
+    /* Crystal lines */
+    .crystal-lines {
+      position: absolute; inset: -80px; border-radius: 50%;
+      opacity: 0; transition: opacity 1s;
+    }
+    .crystal-lines.visible { opacity: 1; }
+    .crystal-lines::before, .crystal-lines::after {
+      content: '';
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(168,230,240,0.3), transparent);
+      height: 1px; width: 100%; top: 50%; left: 0;
+      transform-origin: center;
+      animation: spin-line 12s linear infinite;
+    }
+    .crystal-lines::after { animation-delay: -6s; }
+    @keyframes spin-line { to { transform: rotate(360deg); } }
+
+    /* ─── TEXT LAYER ─── */
+    #text-layer {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 30;
+      gap: 1.2rem;
+      padding: 2rem;
+      pointer-events: none;
+    }
+
+    .t-eyebrow {
+      font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      color: rgba(201,168,32,0.6);
+    }
+    .t-eyebrow.vis { opacity: 1; }
+
+    .t-main {
+      font-size: clamp(2.6rem, 8vw, 7rem);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      text-shadow: 0 0 60px currentColor;
+      color: #c9a020;
+    }
+    .t-main.vis { opacity: 1; transform: translateY(0); }
+
+    .t-sub {
+      font-size: clamp(0.8rem, 2vw, 1.35rem);
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease 0.15s;
+      color: rgba(201,168,32,0.6);
+    }
+    .t-sub.vis { opacity: 1; }
+
+    /* CTA — pointer-events on when visible */
+    #t-cta {
+      display: inline-block;
+      padding: 0.85rem 2.8rem;
+      border: 1.5px solid rgba(201,168,32,0.7);
+      font-size: clamp(0.75rem, 1.4vw, 1rem);
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #c9a020;
+      opacity: 0;
+      transform: scale(0.94);
+      transition: opacity 0.5s ease 0.35s, transform 0.5s ease 0.35s,
+                  background 0.2s, color 0.2s;
+      pointer-events: none;
+      cursor: pointer;
+      z-index: 40;
+      position: relative;
+    }
+    #t-cta.vis {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+    #t-cta:hover {
+      background: rgba(201,168,32,0.12);
+      color: #e8c84a;
+    }
+
+    /* Scene-specific text colours */
+    #stage.s-crystal .t-main { color: #a8e6f0; text-shadow: 0 0 60px rgba(168,230,240,0.5); }
+    #stage.s-crystal .t-sub  { color: rgba(168,230,240,0.55); }
+    #stage.s-carbon  .t-main { color: rgba(210,150,80,0.9); text-shadow: 0 0 40px rgba(180,100,30,0.4); }
+    #stage.s-carbon  .t-sub  { color: rgba(180,130,70,0.55); }
+    #stage.s-stats   .t-main { color: #ffffff; text-shadow: none; letter-spacing: 0.04em; }
+    #stage.s-stats   .t-sub  { color: rgba(255,255,255,0.4); }
+    #stage.s-close   .t-main { font-size: clamp(3.5rem, 12vw, 10rem); letter-spacing: 0.15em; }
+  </style>
+</head>
+<body>
+
+<div id="stage" class="s-intro">
+  <div id="flash"></div>
+  <div id="progress-bar"></div>
+
+  <button id="dismiss-btn" title="Close trailer" aria-label="Close trailer">&#x2715;</button>
+
+  <div id="now-playing">
+    <div class="dot"></div>
+    <span class="label">Now Playing</span>
+  </div>
+  <a id="ad-badge" href="/interfaces/advertise.html" style="text-decoration:none;">Ad Space · 24/7 · Book yours →</a>
+  <div id="mission-label" id="mission-label"></div>
+
+  <!-- FUZZBALL LAYER -->
+  <div id="fuzz-layer">
+    <!-- Scene: both -->
+    <div class="fuzz-slot" id="f-both">
+      <div class="fuzz fuzz-ino"><div class="crystal-lines visible"></div></div>
+      <div class="fuzz fuzz-piro"></div>
+    </div>
+    <!-- Scene: ino solo (large) -->
+    <div class="fuzz-slot solo" id="f-ino">
+      <div class="fuzz fuzz-ino fuzz-lg"><div class="crystal-lines visible"></div></div>
+    </div>
+    <!-- Scene: piro solo -->
+    <div class="fuzz-slot solo" id="f-piro">
+      <div class="fuzz fuzz-piro fuzz-lg"></div>
+    </div>
+  </div>
+
+  <!-- TEXT LAYER -->
+  <div id="text-layer">
+    <div id="t-eyebrow" class="t-eyebrow"></div>
+    <div id="t-main" class="t-main"></div>
+    <div id="t-sub" class="t-sub"></div>
+    <a id="t-cta" href="/interfaces/outline-only.html"></a>
+  </div>
+</div>
+
+<script src="../ticker.js"></script>
+<script>
+/* ══════════════════════════════════════════════════════
+   TRAILER LOOP ENGINE
+   15-second cinematic trailer — loops 24/7 as ad space.
+
+   To change mission: update TRAILER_MISSION and SCENES below.
+   To change duration: update TRAILER_MS.
+   Each scene: { at, bg, fuzz, eyebrow, main, sub, cta, cta_text, flash }
+   `at` = ms into cycle when scene begins
+══════════════════════════════════════════════════════ */
+
+/* ── DISMISS — X button ─────────────────────────────── */
+(function () {
+  var btn = document.getElementById('dismiss-btn');
+  btn.addEventListener('click', function () {
+    var ref = document.referrer;
+    if (ref && ref !== window.location.href) {
+      window.location.href = ref;
+    } else {
+      window.location.href = '/index.html';
+    }
+  });
+})();
+
+var TRAILER_MISSION = 'STORYSTREAM 9 · OUTLINE ONLY';
+var TRAILER_LINK    = '/interfaces/outline-only.html';
+var TRAILER_MS      = 15000;
+
+var SCENES = [
+  /* 0 — Title card · 0–2.2s */
+  {
+    at: 0,
+    bg: 's-intro', fuzz: null,
+    eyebrow: 'Golden Backdoor Studios',
+    main: 'STORYSTREAM 9',
+    sub: 'presents',
+    cta: false
+  },
+  /* 1 — Crystal both · 2.2–5.0s */
+  {
+    at: 2200,
+    bg: 's-crystal', fuzz: 'both',
+    eyebrow: 'A SING! 9 Cinema',
+    main: 'OUTLINE ONLY',
+    sub: 'The Crystalline Arc',
+    cta: false
+  },
+  /* 2 — Carbon / Piro · 5.0–7.0s */
+  {
+    at: 5000,
+    bg: 's-carbon', fuzz: 'piro',
+    eyebrow: '',
+    main: 'On itself.',
+    sub: 'No instructions. First pass.',
+    cta: false
+  },
+  /* 3 — Stats flash · 7.0–9.0s */
+  {
+    at: 7000,
+    bg: 's-stats', fuzz: null,
+    eyebrow: '',
+    main: '120 frames · 3 acts',
+    sub: '14,340 words',
+    cta: false,
+    flash: true
+  },
+  /* 4 — Gold heart · 9.0–11.5s */
+  {
+    at: 9000,
+    bg: 's-gold', fuzz: 'ino',
+    eyebrow: '',
+    main: 'Gold heart. Intact.',
+    sub: 'After the full arc.',
+    cta: false
+  },
+  /* 5 — CTA · 11.5–13.5s */
+  {
+    at: 11500,
+    bg: 's-cta', fuzz: 'both',
+    eyebrow: 'Now streaming',
+    main: 'WATCH NOW',
+    sub: 'Outline Only · SING! 9',
+    cta: true, cta_text: 'Watch Now →'
+  },
+  /* 6 — Close · 13.5–15.0s */
+  {
+    at: 13500,
+    bg: 's-close', fuzz: 'both',
+    eyebrow: 'MCA · NSPFRNP',
+    main: 'SING! 9',
+    sub: 'What is this? →',
+    cta: true, cta_text: 'Read the Full Pitch →',
+    cta_href: '/interfaces/storystream-9-about.html',
+    flash: true
+  }
+];
+
+/* ── DOM refs ── */
+var stage    = document.getElementById('stage');
+var flashEl  = document.getElementById('flash');
+var progBar  = document.getElementById('progress-bar');
+var tEye     = document.getElementById('t-eyebrow');
+var tMain    = document.getElementById('t-main');
+var tSub     = document.getElementById('t-sub');
+var tCta     = document.getElementById('t-cta');
+var mLabel   = document.getElementById('mission-label');
+var fSlots   = {
+  both: document.getElementById('f-both'),
+  ino:  document.getElementById('f-ino'),
+  piro: document.getElementById('f-piro')
+};
+
+mLabel.textContent = TRAILER_MISSION;
+tCta.href = TRAILER_LINK; /* default; overridden per-scene by cta_href */
+
+var curScene  = -1;
+var startTime = null;
+var flashPending = false;
+
+function fireFlash() {
+  flashEl.classList.add('on');
+  setTimeout(function () { flashEl.classList.remove('on'); }, 180);
+}
+
+function showScene(idx) {
+  if (idx === curScene) return;
+  curScene = idx;
+  var sc = SCENES[idx];
+
+  if (sc.flash) fireFlash();
+
+  /* Background */
+  stage.className = sc.bg;
+
+  /* Fuzzballs */
+  Object.keys(fSlots).forEach(function (k) {
+    fSlots[k].classList.toggle('vis', k === sc.fuzz);
+  });
+
+  /* Text — hide then reveal */
+  [tEye, tMain, tSub].forEach(function (el) { el.classList.remove('vis'); });
+  tCta.classList.remove('vis');
+  tEye.textContent  = sc.eyebrow  || '';
+  tMain.textContent = sc.main     || '';
+  tSub.textContent  = sc.sub      || '';
+  tCta.textContent  = sc.cta_text || '';
+  tCta.href         = sc.cta_href || TRAILER_LINK;
+  tCta.style.display = sc.cta ? '' : 'none';
+
+  requestAnimationFrame(function () {
+    tEye.classList.add('vis');
+    tMain.classList.add('vis');
+    tSub.classList.add('vis');
+    if (sc.cta) tCta.classList.add('vis');
+  });
+}
+
+function tick(ts) {
+  if (!startTime) startTime = ts;
+  var elapsed = (ts - startTime) % TRAILER_MS;
+
+  /* Progress bar */
+  progBar.style.width = ((elapsed / TRAILER_MS) * 100).toFixed(3) + '%';
+
+  /* Detect loop boundary — flash on reset */
+  var rawPct = (ts - startTime) / TRAILER_MS;
+  var loopFrac = rawPct % 1;
+  if (loopFrac < 0.006 && !flashPending) {
+    flashPending = true;
+    fireFlash();
+  }
+  if (loopFrac > 0.01) flashPending = false;
+
+  /* Scene detection */
+  var idx = 0;
+  for (var i = 0; i < SCENES.length; i++) {
+    if (elapsed >= SCENES[i].at) idx = i;
+  }
+  showScene(idx);
+
+  requestAnimationFrame(tick);
+}
+
+requestAnimationFrame(tick);
+</script>
+
+</body>
+</html>

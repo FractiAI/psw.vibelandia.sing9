@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advertise · SING!9 StoryStream · Ad Space</title>
+  <style>
+/* ══════════════════════════════════════════════════════
+   ADVERTISE · SING!9 StoryStream
+   Two surfaces. Powers of 3. Early pricing. Fair shake.
+   Email: info@fractiai.com
+══════════════════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --gold:   #c9a020;
+  --gold-lt:#e8c84a;
+  --crystal:#a8e6f0;
+  --bg:     #040108;
+  --text:   rgba(232,220,200,0.88);
+  --muted:  rgba(200,180,150,0.5);
+  --border: rgba(201,168,32,0.2);
+}
+
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Segoe UI","Helvetica Neue",system-ui,sans-serif;
+  line-height:1.7;
+  padding-bottom:calc(var(--ticker-h,30px) + 36px + 4rem);
+}
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(0,0,0,0.025) 3px,rgba(0,0,0,0.025) 4px);
+}
+
+/* ── HERO ── */
+#hero {
+  min-height:90vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:5rem 2rem 4rem; text-align:center; position:relative; overflow:hidden;
+}
+#hero::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 40% 30%, rgba(201,168,32,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 60% 65%, rgba(168,230,240,0.05) 0%, transparent 50%);
+  pointer-events:none;
+}
+.hero-eyebrow {
+  font-size:clamp(0.6rem,1vw,0.75rem); font-weight:700; letter-spacing:0.45em;
+  text-transform:uppercase; color:rgba(201,168,32,0.5); margin-bottom:1.5rem;
+  position:relative; z-index:1;
+}
+.hero-title {
+  font-size:clamp(2.8rem,8vw,7rem); font-weight:900; letter-spacing:0.06em;
+  text-transform:uppercase; line-height:0.95; color:transparent;
+  -webkit-text-stroke:1.5px rgba(201,168,32,0.9);
+  margin-bottom:1.2rem; position:relative; z-index:1;
+}
+.hero-sub {
+  font-size:clamp(0.95rem,2.2vw,1.35rem); font-weight:300;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:rgba(168,230,240,0.65); margin-bottom:2.5rem;
+  position:relative; z-index:1;
+}
+.hero-body {
+  font-size:clamp(1rem,2vw,1.2rem); color:rgba(232,220,200,0.75);
+  max-width:48ch; line-height:1.65; margin:0 auto 3rem;
+  position:relative; z-index:1;
+}
+.hero-body strong { color:rgba(232,220,200,0.95); }
+.hero-body em     { color:var(--gold); font-style:normal; }
+
+/* ── STATUS BADGE ── */
+.status-badge {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  padding:0.5rem 1.2rem; border:1px solid rgba(0,200,80,0.35);
+  border-radius:20px; background:rgba(0,200,80,0.06);
+  font-size:0.7rem; font-weight:700; letter-spacing:0.18em;
+  text-transform:uppercase; color:rgba(80,220,120,0.85);
+  position:relative; z-index:1; margin-bottom:2rem;
+}
+.status-dot { width:6px; height:6px; border-radius:50%;
+  background:rgba(80,220,120,0.9); animation:sdot 1.4s ease-in-out infinite; }
+@keyframes sdot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* ── LAYOUT ── */
+.page { max-width:860px; margin:0 auto; padding:0 2rem; }
+.rule { height:1px; margin:5rem 0;
+  background:linear-gradient(90deg,transparent,rgba(201,168,32,0.2),transparent); }
+
+.section-eye { font-size:0.63rem; font-weight:700; letter-spacing:0.38em;
+  text-transform:uppercase; margin-bottom:1rem; }
+.section-eye.gold    { color:rgba(201,168,32,0.55); }
+.section-eye.crystal { color:rgba(168,230,240,0.5); }
+
+h2 { font-size:clamp(1.8rem,4vw,3rem); font-weight:900;
+  letter-spacing:0.04em; text-transform:uppercase; line-height:1.05;
+  margin-bottom:1.5rem; }
+h2.gold    { color:var(--gold); }
+h2.crystal { color:var(--crystal); }
+h2.white   { color:#fff; }
+p { font-size:clamp(0.9rem,1.7vw,1.05rem); color:var(--text);
+  margin-bottom:1.2rem; max-width:62ch; }
+p strong { color:#fff; } p em { color:var(--gold); font-style:normal; }
+
+/* ── SURFACE CARDS ── */
+.surfaces { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem; margin:2.5rem 0; }
+.surface-card { padding:2rem 1.75rem; border-radius:8px;
+  border:1px solid var(--border); background:rgba(201,168,32,0.03); }
+.surface-card.banner-card { border-color:rgba(168,230,240,0.25); background:rgba(10,25,35,0.25); }
+.surface-icon { font-size:2rem; margin-bottom:0.75rem; }
+.surface-name { font-size:0.62rem; font-weight:700; letter-spacing:0.32em;
+  text-transform:uppercase; margin-bottom:0.4rem; }
+.surface-card          .surface-name { color:rgba(201,168,32,0.6); }
+.surface-card.banner-card .surface-name { color:rgba(168,230,240,0.55); }
+.surface-title { font-size:clamp(1.1rem,2.2vw,1.45rem); font-weight:800;
+  letter-spacing:0.04em; text-transform:uppercase; line-height:1.1; margin-bottom:0.8rem; }
+.surface-card          .surface-title { color:rgba(240,208,128,0.95); }
+.surface-card.banner-card .surface-title { color:rgba(168,230,240,0.95); }
+.surface-desc { font-size:0.88rem; color:rgba(200,180,140,0.65); line-height:1.65; }
+
+/* ── PRICING GRID ── */
+.pricing-note { font-size:0.8rem; color:var(--muted); font-style:italic;
+  margin-bottom:2rem; }
+.pricing-grid { display:grid; grid-template-columns:1fr; gap:2.5rem; }
+
+.pricing-product { padding:2rem 1.75rem; border-radius:8px;
+  border:1px solid var(--border); background:rgba(255,255,255,0.02); }
+.pricing-product.featured { border-color:rgba(201,168,32,0.45);
+  background:rgba(201,168,32,0.04); }
+.pp-header { display:flex; align-items:flex-start; justify-content:space-between;
+  flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; }
+.pp-name { font-size:0.62rem; font-weight:700; letter-spacing:0.32em;
+  text-transform:uppercase; color:rgba(201,168,32,0.55); margin-bottom:0.3rem; }
+.pp-title { font-size:clamp(1.1rem,2.2vw,1.5rem); font-weight:800;
+  text-transform:uppercase; color:rgba(240,208,128,0.95); }
+.pp-badge { font-size:0.6rem; font-weight:700; letter-spacing:0.15em;
+  text-transform:uppercase; padding:0.25rem 0.75rem; border-radius:12px;
+  background:rgba(0,200,80,0.1); border:1px solid rgba(0,200,80,0.35);
+  color:rgba(80,220,120,0.85); white-space:nowrap; align-self:flex-start; }
+
+.pp-desc { font-size:0.88rem; color:rgba(200,180,140,0.65); margin-bottom:1.5rem; }
+
+/* Tier rows */
+.tiers { display:flex; flex-direction:column; gap:0.6rem; }
+.tier-row {
+  display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+  padding:0.85rem 1rem; border-radius:6px;
+  background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
+  transition:border-color 0.15s, background 0.15s;
+}
+.tier-row:hover { border-color:rgba(201,168,32,0.3); background:rgba(201,168,32,0.04); }
+
+.tier-duration { font-size:0.78rem; font-weight:700; color:rgba(232,220,200,0.85);
+  min-width:70px; }
+.tier-desc { font-size:0.72rem; color:var(--muted); flex:1; min-width:120px; }
+.tier-price { font-size:1.25rem; font-weight:900; color:var(--gold);
+  min-width:52px; text-align:right; }
+.tier-price sup { font-size:0.65rem; font-weight:700; vertical-align:super; }
+
+.tier-btn {
+  padding:0.45rem 1.1rem; font-size:0.68rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase;
+  background:rgba(201,168,32,0.1); border:1.5px solid rgba(201,168,32,0.55);
+  border-radius:4px; color:#fef3c7; cursor:pointer; white-space:nowrap;
+  text-decoration:none; display:inline-block;
+  transition:background 0.2s, box-shadow 0.2s;
+}
+.tier-btn:hover { background:rgba(201,168,32,0.22); box-shadow:0 0 18px rgba(201,168,32,0.2); }
+.tier-btn.crystal { background:rgba(168,230,240,0.08); border-color:rgba(168,230,240,0.45);
+  color:rgba(168,230,240,0.9); }
+.tier-btn.crystal:hover { background:rgba(168,230,240,0.15); }
+
+/* ── HOW IT WORKS ── */
+.steps { display:flex; flex-direction:column; gap:0.85rem; margin:1.5rem 0; }
+.step { display:flex; gap:1rem; align-items:flex-start; }
+.step-num { width:24px; height:24px; border-radius:50%;
+  background:rgba(201,168,32,0.12); border:1px solid rgba(201,168,32,0.4);
+  color:var(--gold); font-size:0.65rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-text { font-size:0.88rem; color:rgba(200,180,140,0.75); line-height:1.6; padding-top:0.1rem; }
+.step-text strong { color:rgba(232,220,200,0.9); }
+
+/* ── PAYMENT ── */
+.pay-row { display:flex; gap:0.75rem; flex-wrap:wrap; margin:1rem 0; }
+.pay-chip {
+  display:inline-flex; align-items:center; gap:0.45rem;
+  padding:0.5rem 1.1rem; border-radius:4px;
+  font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+  text-decoration:none; transition:background 0.2s;
+}
+.pay-chip.venmo   { background:rgba(0,104,168,0.14); border:1px solid rgba(0,130,210,0.4); color:rgba(100,200,255,0.9); }
+.pay-chip.cashapp { background:rgba(0,130,55,0.12);  border:1px solid rgba(0,180,70,0.4);  color:rgba(80,220,120,0.9);  }
+.pay-chip:hover { filter:brightness(1.2); }
+
+footer { max-width:860px; margin:0 auto; padding:3rem 2rem;
+  text-align:center; font-size:0.58rem; font-weight:700;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:rgba(201,168,32,0.18);
+  border-top:1px solid rgba(201,168,32,0.06); }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════ -->
+<div id="hero">
+  <div class="hero-eyebrow">SING!9 StoryStream · Advertising</div>
+  <div class="hero-title">Ad Space</div>
+  <div class="hero-sub">You found it. You're early. The price reflects it.</div>
+
+  <div class="status-badge">
+    <span class="status-dot"></span>
+    Live · Accepting ads now
+  </div>
+
+  <p class="hero-body">
+    <strong>Cracking AI. Growing fast.</strong><br><br>
+    Two surfaces. Both running 24/7. The audience is executive producers,
+    creative directors, founders, and the builders who follow
+    <em>SING!9 StoryStream</em>. You won't get a better time-to-price ratio than right now.
+  </p>
+  <a href="#pricing" style="font-size:0.7rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(201,168,32,0.55);text-decoration:none;animation:hero-down 2s ease-in-out infinite;">↓ See pricing</a>
+  <style>@keyframes hero-down{0%,100%{opacity:0.55;transform:translateY(0);}50%{opacity:1;transform:translateY(4px);}}</style>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     THE TWO SURFACES
+══════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="rule" style="margin-top:0;"></div>
+
+  <div class="section-eye gold">The two ad surfaces</div>
+  <h2 class="gold">Two placements.<br>Every surface.<br>24/7.</h2>
+
+  <div class="surfaces">
+
+    <div class="surface-card">
+      <div class="surface-icon">📯</div>
+      <div class="surface-name">Surface 01 · Always on</div>
+      <div class="surface-title">The Gold Ticker</div>
+      <div class="surface-desc">
+        The NSPFRNP gold ticker runs across the bottom of
+        <strong style="color:rgba(200,180,140,0.9);">every single page</strong> —
+        including while the film plays. Your message scrolls alongside
+        SING!9 lore, story fragments, and announcements.<br><br>
+        This is Gold Heart Mode. The audience sees it everywhere, every visit.
+        Your text, your link, rotating in the feed.
+      </div>
+    </div>
+
+    <div class="surface-card banner-card">
+      <div class="surface-icon">📺</div>
+      <div class="surface-name">Surface 02 · 15-second loop</div>
+      <div class="surface-title">The Trailer Banner</div>
+      <div class="surface-desc">
+        A full-screen <strong style="color:rgba(168,230,240,0.85);">15-second cinematic banner</strong>
+        running on the Trailer Loop page — looping 24/7 as display-screen ad space.
+        Your campaign, your message, in the StoryStream 9 visual style.<br><br>
+        Perfect for a screen in a lobby, office, or studio. Or just for the impression count.
+        We configure your spot. It runs.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- ══════════════════════════════════════════════════
+       PRICING
+  ══════════════════════════════════════════════════ -->
+  <div id="pricing">
+    <div class="section-eye gold">Pricing · Powers of 3 · Fair shake</div>
+    <h2 class="gold">Pick your surface.<br>Pick your duration.<br>Done.</h2>
+
+    <p class="pricing-note">
+      Early traffic = early pricing. All amounts in exact powers of 3 (3² through 3⁶).
+      Reach grows → prices adjust. Lock in now.
+    </p>
+
+    <div class="pricing-grid">
+
+      <!-- TICKER -->
+      <div class="pricing-product">
+        <div class="pp-header">
+          <div>
+            <div class="pp-name">Surface 01 · Gold Ticker</div>
+            <div class="pp-title">Ticker Spot</div>
+          </div>
+          <span class="pp-badge">All pages · All visits</span>
+        </div>
+        <p class="pp-desc">
+          Your message + link rotates in the gold ticker across the entire site.
+          Seen on every page, every visit, by every viewer — including during films.
+        </p>
+        <div class="tiers">
+          <div class="tier-row">
+            <span class="tier-duration">3 days</span>
+            <span class="tier-desc">Weekend run · test the reach</span>
+            <span class="tier-price"><sup>$</sup>9</span>
+            <a class="tier-btn" href="" id="buy-ticker-3d">Buy → $9</a>
+          </div>
+          <div class="tier-row">
+            <span class="tier-duration">9 days</span>
+            <span class="tier-desc">One week+ · solid impression run</span>
+            <span class="tier-price"><sup>$</sup>27</span>
+            <a class="tier-btn" href="" id="buy-ticker-9d">Buy → $27</a>
+          </div>
+          <div class="tier-row">
+            <span class="tier-duration">27 days</span>
+            <span class="tier-desc">Full month · full awareness cycle</span>
+            <span class="tier-price"><sup>$</sup>81</span>
+            <a class="tier-btn" href="" id="buy-ticker-27d">Buy → $81</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- BANNER -->
+      <div class="pricing-product featured">
+        <div class="pp-header">
+          <div>
+            <div class="pp-name">Surface 02 · Banner Loop</div>
+            <div class="pp-title">Banner Spot</div>
+          </div>
+          <span class="pp-badge">15s · Cinematic · 24/7</span>
+        </div>
+        <p class="pp-desc">
+          Your 15-second campaign in the Trailer Loop. Full-screen cinematic.
+          We build your spot in the SING!9 visual style. Runs 24/7 on the loop.
+          You provide the message. We produce it.
+        </p>
+        <div class="tiers">
+          <div class="tier-row">
+            <span class="tier-duration">3 days</span>
+            <span class="tier-desc">Test campaign · we build your spot</span>
+            <span class="tier-price"><sup>$</sup>27</span>
+            <a class="tier-btn" href="" id="buy-banner-3d">Buy → $27</a>
+          </div>
+          <div class="tier-row">
+            <span class="tier-duration">9 days</span>
+            <span class="tier-desc">Full push · 9-day cinematic run</span>
+            <span class="tier-price"><sup>$</sup>81</span>
+            <a class="tier-btn" href="" id="buy-banner-9d">Buy → $81</a>
+          </div>
+          <div class="tier-row">
+            <span class="tier-duration">27 days</span>
+            <span class="tier-desc">Monthly presence · full month run</span>
+            <span class="tier-price"><sup>$</sup>243</span>
+            <a class="tier-btn" href="" id="buy-banner-27d">Buy → $243</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FULL PACKAGE -->
+      <div class="pricing-product" style="border-color:rgba(168,230,240,0.3);background:rgba(10,25,35,0.2);">
+        <div class="pp-header">
+          <div>
+            <div class="pp-name" style="color:rgba(168,230,240,0.55);">Both surfaces · Best value</div>
+            <div class="pp-title" style="color:rgba(168,230,240,0.95);">Full Package</div>
+          </div>
+          <span class="pp-badge" style="background:rgba(168,230,240,0.08);border-color:rgba(168,230,240,0.3);color:rgba(168,230,240,0.8);">Ticker + Banner</span>
+        </div>
+        <p class="pp-desc">
+          Both the gold ticker AND the 15-second banner loop. Maximum reach.
+          Your message everywhere — scrolling on every page and running full-screen
+          on the banner display 24/7.
+        </p>
+        <div class="tiers">
+          <div class="tier-row" style="border-color:rgba(168,230,240,0.1);">
+            <span class="tier-duration">3 days</span>
+            <span class="tier-desc">Both surfaces · full 3-day blitz</span>
+            <span class="tier-price" style="color:var(--crystal);"><sup>$</sup>36</span>
+            <a class="tier-btn crystal" href="" id="buy-full-3d">Buy → $36</a>
+          </div>
+          <div class="tier-row" style="border-color:rgba(168,230,240,0.1);">
+            <span class="tier-duration">9 days</span>
+            <span class="tier-desc">Both surfaces · 9-day full run</span>
+            <span class="tier-price" style="color:var(--crystal);"><sup>$</sup>108</span>
+            <a class="tier-btn crystal" href="" id="buy-full-9d">Buy → $108</a>
+          </div>
+          <div class="tier-row" style="border-color:rgba(168,230,240,0.1);">
+            <span class="tier-duration">27 days</span>
+            <span class="tier-desc">Both surfaces · 27-day full presence</span>
+            <span class="tier-price" style="color:var(--crystal);"><sup>$</sup>324</span>
+            <a class="tier-btn crystal" href="" id="buy-full-27d">Buy → $324</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 30-SECOND TRAILER -->
+      <div class="pricing-product" style="border-color:rgba(251,146,60,0.35);background:rgba(40,15,0,0.2);margin-top:1.25rem;">
+        <div class="pp-header">
+          <div>
+            <div class="pp-name" style="color:rgba(251,146,60,0.6);">Premium surface · 30-second spot</div>
+            <div class="pp-title" style="color:rgba(255,180,80,0.95);">30-Second Trailer</div>
+          </div>
+          <span class="pp-badge" style="background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.35);color:rgba(251,146,60,0.85);">You send · or we build</span>
+        </div>
+        <p class="pp-desc">
+          A full 30-second cinematic spot running in the banner loop 24/7.
+          <strong style="color:rgba(220,180,120,0.9);">Send your own</strong> — we drop it straight in.
+          Or <strong style="color:rgba(220,180,120,0.9);">we produce it for you</strong> in SING!9 style — brief us, we deliver.
+        </p>
+
+        <!-- Option A: You send -->
+        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:rgba(251,146,60,0.55);margin-bottom:0.55rem;margin-top:0.25rem;">Option A · You send your 30s spot</div>
+        <div class="tiers" style="margin-bottom:1.25rem;">
+          <div class="tier-row" style="border-color:rgba(251,146,60,0.12);">
+            <span class="tier-duration">3 days</span>
+            <span class="tier-desc">You provide the file · we run it</span>
+            <span class="tier-price" style="color:rgba(255,180,80,0.9);"><sup>$</sup>27</span>
+            <a class="tier-btn" href="" id="buy-30s-send-3d" style="background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.55);color:rgba(255,200,120,0.95);">Buy → $27</a>
+          </div>
+          <div class="tier-row" style="border-color:rgba(251,146,60,0.12);">
+            <span class="tier-duration">9 days</span>
+            <span class="tier-desc">You provide the file · we run it</span>
+            <span class="tier-price" style="color:rgba(255,180,80,0.9);"><sup>$</sup>81</span>
+            <a class="tier-btn" href="" id="buy-30s-send-9d" style="background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.55);color:rgba(255,200,120,0.95);">Buy → $81</a>
+          </div>
+          <div class="tier-row" style="border-color:rgba(251,146,60,0.12);">
+            <span class="tier-duration">27 days</span>
+            <span class="tier-desc">You provide the file · we run it</span>
+            <span class="tier-price" style="color:rgba(255,180,80,0.9);"><sup>$</sup>243</span>
+            <a class="tier-btn" href="" id="buy-30s-send-27d" style="background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.55);color:rgba(255,200,120,0.95);">Buy → $243</a>
+          </div>
+        </div>
+
+        <!-- Option B: We produce it -->
+        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:rgba(251,146,60,0.55);margin-bottom:0.55rem;">Option B · We produce your 30s spot</div>
+        <div style="font-size:0.8rem;color:rgba(200,160,100,0.6);margin-bottom:0.75rem;line-height:1.55;">
+          One-time <strong style="color:rgba(200,160,100,0.85);">$81 production fee</strong> + run cost.
+        </div>
+        <div class="tiers">
+          <div class="tier-row" style="border-color:rgba(251,146,60,0.18);background:rgba(251,146,60,0.04);">
+            <span class="tier-duration">3 days</span>
+            <span class="tier-desc" style="font-size:0.68rem;">$81 production + $27 run</span>
+            <span class="tier-price" style="color:rgba(255,180,80,0.9);"><sup>$</sup>108</span>
+            <a class="tier-btn" href="" id="buy-30s-build-3d" style="background:rgba(251,146,60,0.12);border-color:rgba(251,146,60,0.65);color:rgba(255,200,120,0.98);">Buy → $108</a>
+          </div>
+          <div class="tier-row" style="border-color:rgba(251,146,60,0.18);background:rgba(251,146,60,0.04);">
+            <span class="tier-duration">9 days</span>
+            <span class="tier-desc" style="font-size:0.68rem;">$81 production + $81 run</span>
+            <span class="tier-price" style="color:rgba(255,180,80,0.9);"><sup>$</sup>162</span>
+            <a class="tier-btn" href="" id="buy-30s-build-9d" style="background:rgba(251,146,60,0.12);border-color:rgba(251,146,60,0.65);color:rgba(255,200,120,0.98);">Buy → $162</a>
+          </div>
+          <div class="tier-row" style="border-color:rgba(251,146,60,0.18);background:rgba(251,146,60,0.04);">
+            <span class="tier-duration">27 days</span>
+            <span class="tier-desc" style="font-size:0.68rem;">$81 production + $243 run</span>
+            <span class="tier-price" style="color:rgba(255,180,80,0.9);"><sup>$</sup>324</span>
+            <a class="tier-btn" href="" id="buy-30s-build-27d" style="background:rgba(251,146,60,0.12);border-color:rgba(251,146,60,0.65);color:rgba(255,200,120,0.98);">Buy → $324</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- ══════════════════════════════════════════════════
+       HOW IT WORKS
+  ══════════════════════════════════════════════════ -->
+  <div>
+    <div class="section-eye crystal">How it works</div>
+    <h2 class="white">Three steps.<br>No platform fees.<br>We activate fast.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-text">
+          <strong>Pick your package above.</strong> Click the Buy button.
+          It opens a pre-filled email to <strong>info@fractiai.com</strong>
+          with your package, duration, and amount.
+          Include your ad message (ticker text or banner brief).
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-text">
+          <strong>Send payment</strong> via Venmo or Cash App.
+          Include "SING!9 Ad" and the package name in the note.
+          Exact same amount as listed — no platform markup.
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-text">
+          <strong>We confirm and activate within 24 hours.</strong>
+          Your ticker text goes live on all pages.
+          Banner spots are produced and pushed to the loop.
+          You get a confirmation reply.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <div class="section-eye gold" style="margin-bottom:0.75rem;">Pay here first</div>
+      <div class="pay-row">
+        <a href="https://venmo.com/u/Pru-Mendez" target="_blank" rel="noopener" class="pay-chip venmo">💙 Venmo @Pru-Mendez</a>
+        <a href="https://cash.app/$newearthpru" target="_blank" rel="noopener" class="pay-chip cashapp">💚 Cash App $newearthpru</a>
+      </div>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:0.75rem;">
+        Send payment first, then send the confirmation email using the Buy button above.
+        We match payment to email and activate. Personal confirmation every time.
+      </p>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- SING!9 VOICE -->
+  <div style="text-align:center;padding:3rem 0;">
+    <div style="max-width:520px;margin:0 auto;border-left:2px solid rgba(201,168,32,0.35);padding:1.5rem 0 1.5rem 1.75rem;text-align:left;position:relative;">
+      <div style="position:absolute;top:-0.6rem;left:1.75rem;font-size:0.58rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:rgba(201,168,32,0.4);background:var(--bg);padding:0 0.5rem;">SING!9 says:</div>
+      <p style="font-size:clamp(1rem,2vw,1.25rem);font-style:italic;color:rgba(232,220,200,0.8);line-height:1.65;margin:0;">
+        "You are advertising on a platform powered by cracking AI,
+        built on hydrogen holographic architecture, running three streams simultaneously,
+        watched by executive producers and creators.<br><br>
+        The price is early. The audience is real. The reach is growing.
+        Get in now while the price is still a factor of three
+        and not a factor of thirty."
+      </p>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<footer>
+  SING!9 StoryStream · Ad Space · info@fractiai.com<br>
+  NSPFRNP · MCA · Gold Heart Mode · NSPFRNP → ∞⁹
+</footer>
+
+<script src="../ticker.js"></script>
+<script src="../nav-strip.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   AD PURCHASE EMAIL BUILDER
+   Each Buy button → pre-filled email to info@fractiai.com
+   After payment via Venmo / Cash App.
+══════════════════════════════════════════════════════ */
+
+var EMAIL_TO = 'info@fractiai.com';
+
+var PACKAGES = {
+  /* Ticker */
+  'ticker-3d':  { name:'Ticker Spot · 3 days',  price:9,   surface:'Gold Ticker (all pages)' },
+  'ticker-9d':  { name:'Ticker Spot · 9 days',  price:27,  surface:'Gold Ticker (all pages)' },
+  'ticker-27d': { name:'Ticker Spot · 27 days', price:81,  surface:'Gold Ticker (all pages)' },
+  /* Banner */
+  'banner-3d':  { name:'Banner Spot · 3 days',  price:27,  surface:'Trailer Banner Loop (15s)' },
+  'banner-9d':  { name:'Banner Spot · 9 days',  price:81,  surface:'Trailer Banner Loop (15s)' },
+  'banner-27d': { name:'Banner Spot · 27 days', price:243, surface:'Trailer Banner Loop (15s)' },
+  /* Full */
+  'full-3d':    { name:'Full Package · 3 days',  price:36,  surface:'Ticker + Banner (both surfaces)' },
+  'full-9d':    { name:'Full Package · 9 days',  price:108, surface:'Ticker + Banner (both surfaces)' },
+  'full-27d':   { name:'Full Package · 27 days', price:324, surface:'Ticker + Banner (both surfaces)' },
+  /* 30-Second Trailer — you send */
+  '30s-send-3d':  { name:'30s Trailer · You Send · 3 days',  price:27,  surface:'Trailer Banner Loop (30s · your file)' },
+  '30s-send-9d':  { name:'30s Trailer · You Send · 9 days',  price:81,  surface:'Trailer Banner Loop (30s · your file)' },
+  '30s-send-27d': { name:'30s Trailer · You Send · 27 days', price:243, surface:'Trailer Banner Loop (30s · your file)' },
+  /* 30-Second Trailer — we produce */
+  '30s-build-3d':  { name:'30s Trailer · We Produce · 3 days',  price:108, surface:'Trailer Banner Loop (30s · SING!9 produced)', note:'Includes $81 production + $27 run cost. Provide your brief in the email.' },
+  '30s-build-9d':  { name:'30s Trailer · We Produce · 9 days',  price:162, surface:'Trailer Banner Loop (30s · SING!9 produced)', note:'Includes $81 production + $81 run cost. Provide your brief in the email.' },
+  '30s-build-27d': { name:'30s Trailer · We Produce · 27 days', price:324, surface:'Trailer Banner Loop (30s · SING!9 produced)', note:'Includes $81 production + $243 run cost. Provide your brief in the email.' }
+};
+
+function buildMailto(pkgKey) {
+  var pkg = PACKAGES[pkgKey];
+  if (!pkg) return '#';
+
+  var subject = encodeURIComponent(
+    'Ad Space · ' + pkg.name + ' · $' + pkg.price
+  );
+
+  var is30sBuild = pkgKey.indexOf('30s-build') === 0;
+  var is30sSend  = pkgKey.indexOf('30s-send')  === 0;
+  var isTicker   = pkgKey.indexOf('ticker')    === 0;
+
+  var contentBlock = '';
+  if (is30sBuild) {
+    contentBlock =
+      '──────────────────────────────\n'
+    + 'YOUR 30-SECOND SPOT BRIEF\n'
+    + '──────────────────────────────\n\n'
+    + 'Brand / product:\n[YOUR BRAND]\n\n'
+    + 'What should the spot say / feel:\n[YOUR BRIEF HERE]\n\n'
+    + 'Tone (cinematic / bold / minimal / other):\n[TONE]\n\n'
+    + 'Link or CTA to include:\n[URL]\n\n'
+    + (pkg.note ? 'Note: ' + pkg.note + '\n\n' : '');
+  } else if (is30sSend) {
+    contentBlock =
+      '──────────────────────────────\n'
+    + 'YOUR 30-SECOND VIDEO FILE\n'
+    + '──────────────────────────────\n\n'
+    + 'File link (WeTransfer, Google Drive, Dropbox, etc.):\n[YOUR FILE LINK HERE]\n\n'
+    + 'CTA link to include with the spot (optional):\n[URL]\n\n';
+  } else if (isTicker) {
+    contentBlock =
+      '──────────────────────────────\n'
+    + 'MY AD CONTENT\n'
+    + '──────────────────────────────\n\n'
+    + 'Ticker text (max 60 chars):\n[YOUR TICKER MESSAGE HERE]\n\n'
+    + 'Link to include (optional):\n[URL]\n\n';
+  } else {
+    contentBlock =
+      '──────────────────────────────\n'
+    + 'MY AD CONTENT\n'
+    + '──────────────────────────────\n\n'
+    + 'Ticker text (max 60 chars, if applicable):\n[YOUR TICKER MESSAGE HERE]\n\n'
+    + 'Link to include (optional):\n[URL]\n\n'
+    + 'Banner brief (what should the 15-second spot say?):\n[YOUR BANNER MESSAGE / BRIEF HERE]\n\n';
+  }
+
+  var body = encodeURIComponent(
+    'Hi,\n\n'
+  + 'I would like to purchase the following ad space on SING!9 StoryStream:\n\n'
+  + '  Package:  ' + pkg.name + '\n'
+  + '  Surface:  ' + pkg.surface + '\n'
+  + '  Amount:   $' + pkg.price + '\n\n'
+  + 'I have sent payment via [Venmo @Pru-Mendez / Cash App $newearthpru].\n'
+  + 'Payment note used: "SING!9 Ad · ' + pkg.name + '"\n\n'
+  + contentBlock
+  + '──────────────────────────────\n'
+  + 'MY CONTACT INFO\n'
+  + '──────────────────────────────\n\n'
+  + 'Name:    \n'
+  + 'Email:   \n'
+  + 'Brand:   \n'
+  + 'Website: \n\n'
+  + 'Thanks!\n'
+  );
+
+  return 'mailto:' + EMAIL_TO + '?subject=' + subject + '&body=' + body;
+}
+
+/* Wire all Buy buttons */
+Object.keys(PACKAGES).forEach(function(key) {
+  var btn = document.getElementById('buy-' + key);
+  if (btn) btn.href = buildMailto(key);
+});
+</script>
+
+</body>
+</html>

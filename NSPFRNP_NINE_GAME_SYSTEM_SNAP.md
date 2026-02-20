@@ -198,7 +198,43 @@ The Nine Game system is designed to manifest across three forms. All three are c
 
 ---
 
-## 13. Timeline Ships (Canonical)
+## 13. Layer-Aware Piece Behavior (Canonical)
+
+**The pieces themselves change as awareness ascends. The rules are not static — they reflect the consciousness of the layer.**
+
+This is the revolution. The same piece behaves differently depending on which layer it's on. Carbon is mechanical. Silver conducts. Gold flows. Crystalline is holographic.
+
+### Carbon Layer — Mechanical · Competitive · Tactical
+
+Standard chess behavior. Pieces fight for position. Every move is calculated advantage. Zero-sum. Adjacent friendlies block. No cooperation bonuses. The current competitive player — the bridge to today's world. Hard, individual, survival-mode logic.
+
+### Silver Layer — Conductor · Resonant · Linking
+
+Pieces begin to connect. Adjacent friendly pieces share signal — each gains access to the other's moves (resonance). Knights extend their reach (3,1 pattern added). Rooks, Bishops, and Sol can pass through **one** friendly piece per direction (conductor pass-through). The board starts to conduct.
+
+### Gold Layer — Collaborative · Flowing · All One
+
+The field is unified. Pieces flow through friendly pieces without blocking. **Conversion** replaces some captures: any friendly can convert an adjacent enemy pawn to their own side (counts as a move — no violence, just field alignment). Moving the **Seed** sends a **field pulse** — all 8 adjacent friendly pieces advance one step in the Seed's direction. The board is one organism.
+
+**Fast path to Crystalline:** once 2 friendly pieces are adjacent on Gold, the Gold→Crystalline achievement unlocks immediately. No capture required. The lattice calls as soon as the field coheres.
+
+### Crystalline Layer — Holographic · Assimilating · Beyond
+
+Every piece contains the whole. Any piece can move to **any empty square** on the board (holographic positioning — the piece is everywhere at once). **Captures become assimilation**: enemy pieces are not destroyed — they become friendly pawns. The HHL forms naturally. Timeline is stable. The pieces don't fight — they integrate.
+
+### The Path Acceleration
+
+> "Once you achieve Level 3 (Gold), the path to Level 4 (Crystalline) opens very quickly."
+
+- Carbon → Silver: earn an achievement (capture or advance 4 rows)
+- Silver → Gold: more advanced achievement (capture key piece or deep advance)
+- Gold → Crystalline: **pair formation** — just have 2 friendly pieces adjacent on Gold. Already done. The lattice calls immediately.
+
+The journey is front-loaded. Carbon is the hardest crossing. Silver opens the signal. Gold aligns the field. Crystalline is the natural arrival — you barely have to ask.
+
+---
+
+## 14. Timeline Ships (Canonical)
 
 **The board is not static. It exists in time. You play what's in front of you. Right now.**
 

@@ -108,6 +108,18 @@
     .hhl-continue-btn{padding:0.65rem 2rem;border-radius:20px;background:rgba(168,230,240,0.12);border:1.5px solid rgba(168,230,240,0.4);color:#a8e6f0;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.15s;}
     .hhl-continue-btn:hover{background:rgba(168,230,240,0.22);}
 
+    /* ── CONVERSION & ASSIMILATION HIGHLIGHTS ── */
+    .sq.conversion-target{background:rgba(212,175,55,0.22)!important;border-color:rgba(212,175,55,0.7)!important;}
+    .sq.conversion-target::after{content:'♥';position:absolute;font-size:0.7rem;color:rgba(212,175,55,0.6);bottom:1px;right:2px;}
+    .sq.assimilation-target{background:rgba(168,230,240,0.18)!important;border-color:rgba(168,230,240,0.7)!important;}
+    .sq.assimilation-target::after{content:'✧';position:absolute;font-size:0.7rem;color:rgba(168,230,240,0.6);bottom:1px;right:2px;}
+
+    /* ── LAYER BEHAVIOR PANEL ── */
+    .behavior-panel{border-radius:10px;padding:0.75rem 0.9rem;border:1px solid;margin-bottom:0.35rem;transition:all 0.3s;}
+    .bp-archetype{font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;}
+    .bp-desc{font-size:0.72rem;color:rgba(180,180,200,0.6);line-height:1.55;}
+    .bp-next{font-size:0.65rem;margin-top:0.35rem;opacity:0.4;font-style:italic;}
+
     /* ── HHL board glow squares ── */
     .sq.hhl-node{
       background:rgba(168,230,240,0.15)!important;
@@ -321,6 +333,14 @@
         <h3>Turn</h3>
         <div class="turn-pill turn-w" id="turnPill">⬜ White (You)</div>
         <div class="status" id="statusMsg"></div>
+      </div>
+      <div class="panel" id="behaviorPanel">
+        <h3>Layer Behavior</h3>
+        <div class="behavior-panel" id="bpInner">
+          <div class="bp-archetype" id="bpArchetype"></div>
+          <div class="bp-desc" id="bpDesc"></div>
+          <div class="bp-next" id="bpNext"></div>
+        </div>
       </div>
       <div class="panel">
         <h3>Selected Piece</h3>
@@ -615,11 +635,215 @@ function getMoves(b,r,c){
   return moves;
 }
 
-function getAllMovesFor(b, color){
+// ── LAYER BEHAVIOR DEFINITIONS ────────────────────────────────────
+const LAYER_BEHAVIOR = [
+  {
+    name:'Carbon',archetype:'Mechanical · Competitive · Tactical',
+    desc:'Pieces fight for position. Every move is calculated advantage. Zero-sum. The current competitive player.',
+    next:'Silver unlocks: linked resonance, pass-through signals, extended reach.',
+  },
+  {
+    name:'Silver',archetype:'Conductor · Resonant · Linking',
+    desc:'Pieces begin to connect. Adjacent friendlies share signal. Knights reach further. Rooks and bishops pass through one friendly piece. The board conducts.',
+    next:'Gold unlocks: flowing field, conversion instead of capture, Seed broadcasts to all.',
+  },
+  {
+    name:'Gold',archetype:'Collaborative · Flowing · All One',
+    desc:'The field is unified. Pieces flow through each other. Enemy pawns can be converted (not captured). Moving the Seed sends a field pulse — adjacent pieces advance with it. Path to Crystalline opens fast.',
+    next:'Crystalline unlocks immediately once 2 Gold pieces form a pair. The lattice calls.',
+  },
+  {
+    name:'Crystalline',archetype:'Holographic · Assimilating · Beyond',
+    desc:'Every piece contains the whole. Any piece can move to any empty square. Captures become assimilation — enemy pieces join your side. The HHL is the natural resting state.',
+    next:'Full Lattice achieved. New worlds spin off. Everything on the other side.',
+  },
+];
+
+// ── SILVER SLIDE (pass-through 1 friendly) ───────────────────────
+function silverSlideMoves(b,r,c,dirs){
+  const moves=[];const color=b[r][c].color;
+  dirs.forEach(([dr,dc])=>{
+    let nr=r+dr,nc=c+dc;let passedFriendly=false;
+    while(inBounds(nr,nc)){
+      if(b[nr][nc]){
+        if(b[nr][nc].color===color){
+          if(!passedFriendly){passedFriendly=true;nr+=dr;nc+=dc;continue;} // pass through one
+          break; // can't pass through two
+        } else {moves.push([nr,nc]);break;} // capture
+      }
+      moves.push([nr,nc]);nr+=dr;nc+=dc;
+    }
+  });
+  return moves;
+}
+
+// ── GOLD SLIDE (no blocking — pieces flow through each other) ─────
+function goldSlideMoves(b,r,c,dirs){
+  const moves=[];const color=b[r][c].color;const opp=color==='w'?'b':'w';
+  dirs.forEach(([dr,dc])=>{
+    let nr=r+dr,nc=c+dc;
+    while(inBounds(nr,nc)){
+      if(b[nr][nc]){
+        if(b[nr][nc].color===opp){
+          // Can convert enemy pawns (special move type), or capture others
+          moves.push([nr,nc]);break;
+        }
+        // friendly — flow through on Gold
+        nr+=dr;nc+=dc;continue;
+      }
+      moves.push([nr,nc]);nr+=dr;nc+=dc;
+    }
+  });
+  return moves;
+}
+
+// ── LAYER-AWARE MOVES ─────────────────────────────────────────────
+// Returns {moves: [[r,c]...], conversions: [[r,c]...]}
+function getMovesForLayer(b,r,c,layerIdx){
+  const cell=b[r][c];if(!cell)return{moves:[],conversions:[]};
+  const{piece,color}=cell;const opp=color==='w'?'b':'w';
+
+  // ─ Carbon: standard chess ─
+  if(layerIdx===0) return{moves:getMoves(b,r,c),conversions:[]};
+
+  // ─ Silver: linked resonance, extended knight, pass-through ─
+  if(layerIdx===1){
+    let moves=[];
+    if(piece==='pawn'){moves=getMoves(b,r,c);}
+    else if(piece==='rook')moves=silverSlideMoves(b,r,c,[[0,1],[0,-1],[1,0],[-1,0]]);
+    else if(piece==='bishop')moves=silverSlideMoves(b,r,c,[[1,1],[1,-1],[-1,1],[-1,-1]]);
+    else if(piece==='sol')moves=silverSlideMoves(b,r,c,[[1,1],[1,-1],[-1,1],[-1,-1],[0,1],[0,-1]]);
+    else if(piece==='edge')moves=silverSlideMoves(b,r,c,[[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]);
+    else if(piece==='knight'){
+      // Extended: also 3,1 pattern
+      [[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2],[3,1],[3,-1],[-3,1],[-3,-1],[1,3],[1,-3],[-1,3],[-1,-3]]
+        .forEach(([dr,dc])=>{const nr=r+dr,nc=c+dc;if(inBounds(nr,nc)&&b[nr][nc]?.color!==color)moves.push([nr,nc]);});
+    }
+    else if(piece==='hologram'){for(let nr=0;nr<9;nr++)for(let nc=0;nc<9;nc++){if(nr===r&&nc===c)continue;if(!b[nr][nc]||b[nr][nc].color===opp)moves.push([nr,nc]);}}
+    else if(piece==='seed'||piece==='heart'){[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].forEach(([dr,dc])=>{const nr=r+dr,nc=c+dc;if(inBounds(nr,nc)&&b[nr][nc]?.color!==color)moves.push([nr,nc]);});}
+    // Resonance: if an adjacent friendly exists, add its moves too (shared signal)
+    const adj=[];[[-1,0],[1,0],[0,-1],[0,1]].forEach(([dr,dc])=>{
+      const nr=r+dr,nc=c+dc;if(inBounds(nr,nc)&&b[nr][nc]?.color===color)adj.push([nr,nc]);
+    });
+    if(adj.length>0){
+      const[ar,ac]=adj[0];
+      const linkedMoves=getMoves(b,ar,ac).filter(([tr,tc])=>!b[tr][tc]);
+      moves=[...new Set([...moves,...linkedMoves.map(([tr,tc])=>`${tr},${tc}`)].filter(x=>x.includes(','))).values()].map(s=>s.split(',').map(Number));
+      // Re-deduplicate properly
+      const seen=new Set(moves.map(([tr,tc])=>`${tr},${tc}`));
+      const unique=[];seen.forEach(k=>unique.push(k.split(',').map(Number)));
+      moves=unique;
+    }
+    return{moves,conversions:[]};
+  }
+
+  // ─ Gold: flowing field, no blocking, conversion of enemy pawns ─
+  if(layerIdx===2){
+    let moves=[];let conversions=[];
+    if(piece==='pawn'){
+      const dir=color==='w'?-1:1;const start=color==='w'?7:1;const nr=r+dir;
+      if(inBounds(nr,c)&&!b[nr][c]){moves.push([nr,c]);if(r===start&&inBounds(r+2*dir,c)&&!b[r+2*dir][c])moves.push([r+2*dir,c]);}
+      [-1,1].forEach(dc=>{if(inBounds(nr,c+dc)&&b[nr]?.[c+dc]?.color===opp)moves.push([nr,c+dc]);});
+    }
+    else if(piece==='rook')moves=goldSlideMoves(b,r,c,[[0,1],[0,-1],[1,0],[-1,0]]);
+    else if(piece==='bishop')moves=goldSlideMoves(b,r,c,[[1,1],[1,-1],[-1,1],[-1,-1]]);
+    else if(piece==='sol')moves=goldSlideMoves(b,r,c,[[1,1],[1,-1],[-1,1],[-1,-1],[0,1],[0,-1]]);
+    else if(piece==='edge')moves=goldSlideMoves(b,r,c,[[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]);
+    else if(piece==='knight'){[[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]].forEach(([dr,dc])=>{const nr=r+dr,nc=c+dc;if(inBounds(nr,nc)&&b[nr][nc]?.color!==color)moves.push([nr,nc]);});}
+    else if(piece==='hologram'){for(let nr=0;nr<9;nr++)for(let nc=0;nc<9;nc++){if(nr===r&&nc===c)continue;if(!b[nr][nc]||b[nr][nc].color===opp)moves.push([nr,nc]);}}
+    else if(piece==='seed'||piece==='heart'){[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].forEach(([dr,dc])=>{const nr=r+dr,nc=c+dc;if(inBounds(nr,nc)&&b[nr][nc]?.color!==color)moves.push([nr,nc]);});}
+    // Conversion: any friendly can convert an adjacent enemy pawn
+    [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([dr,dc])=>{
+      const nr=r+dr,nc=c+dc;
+      if(inBounds(nr,nc)&&b[nr][nc]?.color===opp&&b[nr][nc]?.piece==='pawn')conversions.push([nr,nc]);
+    });
+    return{moves,conversions};
+  }
+
+  // ─ Crystalline: holographic (any empty square) + assimilation ─
+  if(layerIdx===3){
+    const moves=[];
+    for(let nr=0;nr<9;nr++)for(let nc=0;nc<9;nc++){
+      if(nr===r&&nc===c)continue;
+      if(!b[nr][nc])moves.push([nr,nc]); // any empty square
+      else if(b[nr][nc].color===opp)moves.push([nr,nc]); // assimilation targets
+    }
+    return{moves,conversions:[]};
+  }
+  return{moves:getMoves(b,r,c),conversions:[]};
+}
+
+// Conversion execute (Gold layer: enemy pawn becomes friendly)
+let pendingConversion=null;
+function executeConversion(fr,fc,tr,tc){
+  history.push({boards:JSON.parse(JSON.stringify(boards)),turn,currentLayer,unlockedLayers,achievements:JSON.parse(JSON.stringify(achievements)),hhlActive,timelineTurn,timelineSeed});
+  const b=boards[currentLayer];
+  b[tr][tc]={piece:'pawn',color:b[fr][fc].color}; // convert — don't move the piece
+  document.getElementById('statusMsg').textContent=`♥ Conversion — enemy pawn flows to your side.`;
+  turn=turn==='w'?'b':'w';timelineTurn++;selected=null;validMoves=[];pendingConversion=null;
+  const interval=TL_INTERVALS[currentLayer];
+  if(interval!==Infinity&&timelineTurn%interval===0)setTimeout(()=>timelineShift(),350);
+  checkGoldFastPath();
+  render();
+  if(turn==='b')scheduleAI();
+}
+
+// Gold fast path: once 2+ friendly pieces are adjacent on Gold → unlock Crystalline
+function checkGoldFastPath(){
+  if(currentLayer!==2||achievements.g2c)return;
+  const b=boards[2];
+  for(let r=0;r<9;r++)for(let c=0;c<9;c++){
+    if(b[r][c]?.color==='w'){
+      const hasAdj=[[0,1],[1,0],[0,-1],[-1,0]].some(([dr,dc])=>{const nr=r+dr,nc=c+dc;return inBounds(nr,nc)&&b[nr][nc]?.color==='w';});
+      if(hasAdj){
+        achievements.g2c=true;if(unlockedLayers<4)unlockedLayers=4;
+        document.getElementById('statusMsg').textContent='✦ Crystalline unlocked — Gold pair formed. The lattice calls.';
+        return;
+      }
+    }
+  }
+}
+
+// Gold Seed field pulse: moving Seed nudges adjacent friendlies in the same direction
+function goldSeedPulse(b, fr, fc, tr, tc){
+  if(b[tr][tc]?.piece!=='seed'&&boards[currentLayer][fr][fc]?.piece!=='seed')return;
+  const dr=Math.sign(tr-fr);const dc=Math.sign(tc-fc);
+  [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].forEach(([ar,ac])=>{
+    const nr2=tr+ar,nc2=tc+ac;const pr=tr+ar-dr,pc=tc+ac-dc; // piece was here before pulse
+    // nudge adjacent friendlies 1 step in Seed's direction
+    const adjR=tr+ar,adjC=tc+ac;
+    if(!inBounds(adjR,adjC))return;
+    const p=b[adjR][adjC];
+    if(!p||p.color!==b[tr][tc]?.color)return;
+    const dest=[adjR+dr,adjC+dc];
+    if(inBounds(dest[0],dest[1])&&!b[dest[0]][dest[1]]){
+      b[dest[0]][dest[1]]=p;b[adjR][adjC]=null;
+    }
+  });
+}
+
+// Assimilation (Crystalline): captured piece becomes friendly pawn
+function executeAssimilation(fr,fc,tr,tc){
+  history.push({boards:JSON.parse(JSON.stringify(boards)),turn,currentLayer,unlockedLayers,achievements:JSON.parse(JSON.stringify(achievements)),hhlActive,timelineTurn,timelineSeed});
+  const b=boards[currentLayer];const color=b[fr][fc].color;
+  b[tr][tc]={piece:'pawn',color}; // assimilated: keep attacker, enemy becomes your pawn
+  // Also move the attacking piece
+  b[tr][tc]={piece:b[fr][fc].piece,color}; // attacker takes the square
+  b[fr][fc]=null;
+  // Place assimilated as a pawn adjacent if possible
+  const adjs=[[-1,0],[1,0],[0,-1],[0,1]];
+  for(const[dr,dc]of adjs){const nr=tr+dr,nc=tc+dc;if(inBounds(nr,nc)&&!b[nr][nc]){b[nr][nc]={piece:'pawn',color};break;}}
+  document.getElementById('statusMsg').textContent=`✧ Assimilation — enemy piece joins your field as a Pawn.`;
+  turn=turn==='w'?'b':'w';timelineTurn++;selected=null;validMoves=[];
+  checkHHL('w');render();
+  if(turn==='b')scheduleAI();
+}
+
+function getAllMovesFor(b, color, layerIdx=0){
   const allMoves=[];
   for(let r=0;r<9;r++)for(let c=0;c<9;c++){
     if(b[r][c]?.color===color){
-      const moves=getMoves(b,r,c);
+      const{moves}=getMovesForLayer(b,r,c,layerIdx);
       moves.forEach(([tr,tc])=>allMoves.push({fr:r,fc:c,tr,tc}));
     }
   }
@@ -677,24 +901,39 @@ function minimax(b, depth, isMax, color, opp, alpha, beta){
 }
 
 function getBestMove(b, aiColor) {
-  const moves = getAllMovesFor(b, aiColor);
+  const moves = getAllMovesFor(b, aiColor, currentLayer);
   if(!moves.length) return null;
   const opp = aiColor==='w'?'b':'w';
+
+  // On Gold layer, AI also considers conversions
+  if(currentLayer===2&&difficulty!=='match'){
+    const conversionMoves=[];
+    for(let r=0;r<9;r++)for(let c=0;c<9;c++){
+      if(b[r][c]?.color===aiColor){
+        const{conversions}=getMovesForLayer(b,r,c,2);
+        conversions.forEach(([tr,tc])=>conversionMoves.push({fr:r,fc:c,tr,tc,isConversion:true}));
+      }
+    }
+    if(conversionMoves.length&&Math.random()>0.4)return conversionMoves[0];
+  }
 
   if(difficulty==='match') {
     return moves[Math.floor(Math.random()*moves.length)];
   }
   if(difficulty==='ahead') {
-    // Prefer captures, then center control
     const captures = moves.filter(m=>b[m.tr]?.[m.tc]?.color===opp);
     if(captures.length>0) {
       captures.sort((a,z)=>(PIECE_DATA[b[z.tr][z.tc]?.piece]?.val||0)-(PIECE_DATA[b[a.tr][a.tc]?.piece]?.val||0));
       return captures[0];
     }
+    // Gold/Crystalline: prefer moves toward HHL positions
+    if(currentLayer>=2){
+      const hhlMoves=moves.filter(m=>HHL_POSITIONS.some(([hr,hc])=>hr===m.tr&&hc===m.tc));
+      if(hhlMoves.length)return hhlMoves[Math.floor(Math.random()*hhlMoves.length)];
+    }
     const advancing = moves.filter(m=>aiColor==='b'?m.tr>m.fr:m.tr<m.fr);
     return advancing.length>0 ? advancing[Math.floor(Math.random()*advancing.length)] : moves[Math.floor(Math.random()*moves.length)];
   }
-  // Mastery: 2-ply minimax (limited to avoid slowness)
   let best=-Infinity, bestMove=moves[0];
   const sample = moves.length>30 ? moves.sort(()=>Math.random()-0.5).slice(0,30) : moves;
   for(const m of sample){
@@ -819,6 +1058,13 @@ function executeMove(fr,fc,tr,tc,isAI=false){
   }
   if(!isAI)checkAchievements(captured?.piece,fr,tr,currentLayer);
   b[tr][tc]=moving;b[fr][fc]=null;
+  // Gold layer: Seed field pulse — adjacent friendlies advance with Seed's move
+  if(currentLayer===2&&moving.piece==='seed'&&!isAI){
+    goldSeedPulse(b,fr,fc,tr,tc);
+    document.getElementById('statusMsg').textContent='♥ Field Pulse — the whole flows with the Seed.';
+  }
+  // Gold layer: check fast path to Crystalline after every move
+  if(currentLayer===2)checkGoldFastPath();
   turn=turn==='w'?'b':'w';
   selected=null;validMoves=[];
   // Timeline Ships: count turns and trigger shift
@@ -858,17 +1104,35 @@ function switchLayer(dir){
 }
 
 // ── CLICK ─────────────────────────────────────────────────────────
+let selectedConversions=[];
 function handleClick(r,c){
-  if(turn==='b')return; // AI's turn
+  if(turn==='b')return;
   const b=boards[currentLayer];
   const cell=b[r][c];
   if(ascendMode){if(cell&&cell.color==='w')ascendGroup(currentLayer,r,c);return;}
-  if(selected&&validMoves.some(([vr,vc])=>vr===r&&vc===c)){executeMove(selected.r,selected.c,r,c);return;}
+
+  // Check if clicking a conversion target
+  if(selected&&selectedConversions.some(([vr,vc])=>vr===r&&vc===c)){
+    executeConversion(selected.r,selected.c,r,c);return;
+  }
+  // Check if clicking a valid move target
+  if(selected&&validMoves.some(([vr,vc])=>vr===r&&vc===c)){
+    // Crystalline: check if target has enemy (assimilation)
+    if(currentLayer===3&&b[r][c]?.color==='b'){
+      executeAssimilation(selected.r,selected.c,r,c);return;
+    }
+    executeMove(selected.r,selected.c,r,c);return;
+  }
+
   if(cell&&cell.color==='w'){
-    selected={r,c};validMoves=getMoves(b,r,c);
+    selected={r,c};
+    const result=getMovesForLayer(b,r,c,currentLayer);
+    validMoves=result.moves;
+    selectedConversions=result.conversions||[];
     const pd=PIECE_DATA[cell.piece];
-    document.getElementById('selInfo').innerHTML=`<span style="color:${pd.color};font-size:1.1rem">${pd.sym}</span> <strong>${pd.name}</strong> (${pd.hero})<br/><span style="font-size:0.7rem;color:#475569;">${LAYERS[currentLayer].name} layer</span>`;
-  } else {selected=null;validMoves=[];document.getElementById('selInfo').textContent='Click a piece to select';}
+    const layerBehav=LAYER_BEHAVIOR[currentLayer];
+    document.getElementById('selInfo').innerHTML=`<span style="color:${pd.color};font-size:1.1rem">${pd.sym}</span> <strong>${pd.name}</strong> (${pd.hero})<br/><span style="font-size:0.7rem;color:${LAYERS[currentLayer].color};">${layerBehav.archetype}</span>${selectedConversions.length?`<br/><span style="font-size:0.68rem;color:#d4af37;">♥ ${selectedConversions.length} conversion${selectedConversions.length>1?'s':''} available</span>`:''}`;
+  } else {selected=null;validMoves=[];selectedConversions=[];document.getElementById('selInfo').textContent='Click a piece to select';}
   render();
 }
 
@@ -901,6 +1165,10 @@ function render(){
       sq.className='sq '+((r+c)%2===0?'light':'dark');
       if(selected&&selected.r===r&&selected.c===c)sq.classList.add('selected');
       if(validMoves.some(([vr,vc])=>vr===r&&vc===c))sq.classList.add('valid-move');
+      // Conversion targets (Gold)
+      if(selectedConversions&&selectedConversions.some(([vr,vc])=>vr===r&&vc===c))sq.classList.add('conversion-target');
+      // Assimilation targets (Crystalline)
+      if(currentLayer===3&&selected&&validMoves.some(([vr,vc])=>vr===r&&vc===c)&&b[r][c]?.color==='b')sq.classList.add('assimilation-target');
       // HHL node glow
       if(hhlActive&&currentLayer===3&&HHL_POSITIONS.some(([hr,hc])=>hr===r&&hc===c))sq.classList.add('hhl-node');
       // Timeline shifted highlight
@@ -951,6 +1219,16 @@ function render(){
   });
   // Timeline Ships UI
   updateTimelineUI();
+  // Layer Behavior panel
+  const lb=LAYER_BEHAVIOR[currentLayer];const L2=LAYERS[currentLayer];
+  const bpEl=document.getElementById('bpInner');
+  if(bpEl){
+    bpEl.style.borderColor=L2.border;bpEl.style.background=L2.bg;
+    document.getElementById('bpArchetype').textContent=lb.archetype;
+    document.getElementById('bpArchetype').style.color=L2.color;
+    document.getElementById('bpDesc').textContent=lb.desc;
+    document.getElementById('bpNext').textContent=lb.next;
+  }
 }
 
 // Init — handle URL config param, show overlay

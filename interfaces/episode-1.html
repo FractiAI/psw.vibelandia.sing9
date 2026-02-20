@@ -123,8 +123,8 @@
   <div class="slide-wrap">
     <img class="slide-image empty" id="slideImage" src="" alt="" />
     <div class="slide-content">
-      <div class="slide-title" id="slideLabel">Script stream</div>
-      <div class="caption-stream" id="captionStream">Streaming the one-hour script. Captions run independently of images.</div>
+      <div class="slide-title" id="slideLabel"></div>
+      <div class="caption-stream" id="captionStream"></div>
     </div>
   </div>
 
@@ -152,6 +152,12 @@
       var currentSegment = -1;
       var segmentTrackIndex = 0;
       var audioEl = document.getElementById('soundtrack');
+
+      function fixImgPath(p) {
+        if (!p) return '';
+        // JSON stores paths as "interfaces/assets/..." but this page IS inside interfaces/
+        return p.replace(/^interfaces\//, '');
+      }
 
       function audioPath(track) {
         var f = track.file || track.File || '';
@@ -243,8 +249,9 @@
         if (slides.length === 0) return;
         var s = slides[index];
         var img = document.getElementById('slideImage');
-        if (s.image) {
-          img.src = s.image;
+        var imgSrc = fixImgPath(s.image || '');
+        if (imgSrc) {
+          img.src = imgSrc;
           img.alt = s.title || '';
           img.classList.remove('empty');
         } else {
@@ -252,6 +259,7 @@
           img.alt = '';
           img.classList.add('empty');
         }
+        document.getElementById('slideLabel').textContent = s.title || '';
         document.getElementById('slideCounter').textContent = (index + 1) + ' / ' + slides.length;
         var sec = s.duration_sec != null ? s.duration_sec : DURATION_SEC;
         tick = 0;

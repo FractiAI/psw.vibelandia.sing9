@@ -507,6 +507,11 @@
 
     const audioEl = document.getElementById('soundtrack');
 
+    function fixImgPath(p) {
+      if (!p) return '';
+      return p.replace(/^interfaces\//, '');
+    }
+
     function audioPath(t) {
       var f = (t.file || t.File || '');
       if (f.indexOf('io/') === 0) f = 'assets/audio/' + f.substring(3);
@@ -623,8 +628,9 @@
       var theme = THEMES[Math.min(seg, THEMES.length - 1)];
 
       // Image: use slide's own image if set; else cycle through segment's image pool
-      if (s.image) {
-        imgEl.src = s.image;
+      var fixedImg = fixImgPath(s.image || '');
+      if (fixedImg) {
+        imgEl.src = fixedImg;
         imgEl.style.opacity = '0.92';
       } else {
         // Cycle segment images — more images visible on screen

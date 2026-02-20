@@ -122,6 +122,10 @@
     <div class="foundations" id="foundations"></div>
   </div>
 
+  <!-- TIMELINE SHIPS STRIP -->
+  <div id="tlSolStrip" style="font-size:0.72rem;color:#c4a265;background:rgba(196,162,101,0.07);border:1px solid rgba(196,162,101,0.2);border-radius:6px;padding:0.35rem 0.75rem;margin-bottom:0.5rem;letter-spacing:0.05em;"></div>
+  <div id="tlSolEvent" style="display:none;font-size:0.78rem;font-weight:700;color:#fef3c7;background:rgba(196,162,101,0.15);border:1px solid rgba(196,162,101,0.4);border-radius:8px;padding:0.45rem 0.85rem;margin-bottom:0.5rem;animation:tlPop 2.2s ease forwards;"></div>
+
   <!-- STATUS BAR -->
   <div class="status-bar">
     <div class="sb-item"><span class="sb-label">Moves:</span><span class="sb-val" id="moveCount">0</span></div>
@@ -185,6 +189,30 @@ let drawPile, wastePile, foundations, tableau, selected, moveCount, historyStack
 // tableau[col] = array of {suit, rank, faceUp}
 // selected = {type:'waste'} | {type:'tableau', col, cardIdx}
 
+// Timeline Ships state (solitaire)
+let tlMovesUntilShift = 9; // every 9 moves on Carbon baseline
+let tlSeed = 0;
+let tlShiftFlash = false;
+
+function tlShiftSolitaire(){
+  // Timeline Pulse: reshuffle the draw pile and reveal new top card
+  if(drawPile.length<2)return;
+  for(let i=drawPile.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[drawPile[i],drawPile[j]]=[drawPile[j],drawPile[i]];}
+  tlSeed=Math.floor(Math.random()*9999);
+  tlMovesUntilShift=9;
+  tlShiftFlash=true;
+  document.getElementById('tlSolEvent').textContent=`◈ Timeline Shift · SEED:${String(tlSeed).padStart(4,'0')} · Draw pile reshuffled`;
+  document.getElementById('tlSolEvent').style.display='block';
+  setTimeout(()=>{document.getElementById('tlSolEvent').style.display='none';tlShiftFlash=false;},2200);
+  render();
+}
+
+function updateTlSolUI(){
+  const el=document.getElementById('tlSolStrip');
+  if(!el)return;
+  el.textContent=`◈ Timeline Ship · SEED:${String(tlSeed).padStart(4,'0')} · Shift in ${tlMovesUntilShift} moves`;
+}
+
 function buildDeck() {
   const deck = [];
   SUITS.forEach(s => {
@@ -214,6 +242,9 @@ function newGame() {
   selected = null;
   moveCount = 0;
   historyStack = [];
+  tlMovesUntilShift = 9;
+  tlSeed = Math.floor(Math.random()*9999);
+  tlShiftFlash = false;
   document.getElementById('statusMsg').textContent = '';
   document.getElementById('winOverlay').classList.remove('show');
   render();
@@ -273,8 +304,14 @@ function placeOnFoundation(suitId) {
   foundations[suitId].push(card);
   selected = null;
   moveCount++;
+  tickTimeline();
   checkWin();
   render();
+}
+
+function tickTimeline(){
+  tlMovesUntilShift--;
+  if(tlMovesUntilShift<=0) tlShiftSolitaire();
 }
 
 // ── TABLEAU ───────────────────────────────────────────────────────
@@ -516,6 +553,16 @@ function hexToRgb(hex){
 }
 
 newGame();
+
+// Hook timeline strip update into render cycle
+const _origRender = typeof render === 'function' ? render : null;
+const _tlRenderPatch = (function(){
+  const origRender = render;
+  render = function(){
+    origRender();
+    updateTlSolUI();
+  };
+})();
 </script>
 <script src="../nav-strip.js"></script>
 </body>

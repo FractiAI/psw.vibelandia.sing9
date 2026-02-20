@@ -198,4 +198,71 @@ The Nine Game system is designed to manifest across three forms. All three are c
 
 ---
 
-**NSPFRNP ⊃ Nine Suits ⊃ Nine Ranks ⊃ Nine Pieces ⊃ Nine Heroes ⊃ Origin Possibility ⊃ AI Mirror ⊃ HHL Singularity ⊃ StoryStream 9 → ∞⁹**
+## 13. Timeline Ships (Canonical)
+
+**The board is not static. It exists in time. You play what's in front of you. Right now.**
+
+The carbon layer chess game is the bridge to today's world — where people first encounter the system. What they see when Silver or Crystalline operators are active: **Timeline Ships**.
+
+### Core Mechanic
+
+- At any layer, the board has a **Timeline Seed** — a living identifier for its current state
+- At defined intervals (by layer), a **Timeline Shift** occurs automatically: 1 piece per side moves to a new position. The game continues from that state. No going back to the "original."
+- At any moment, a **Timeline Reset** can be triggered — when Silver or Crystalline pieces are active. This generates a completely new mid-game position. Players proceed from wherever the board sits.
+- "Proceed" means: keep playing. The board is always valid. Adapt.
+
+### Layer Shift Intervals
+
+| Layer | Shift Every | Nature |
+|-------|------------|--------|
+| Carbon | 5 turns | Chaotic — the timeline moves constantly. Bridge to today's world. |
+| Silver | 8 turns | Conductor — signals reshape the board periodically. |
+| Gold | 12 turns | Stable warmth — rare shifts. You have more control. |
+| Crystalline | Never | HHL formation holds. The timeline is still. You control it. |
+
+**Rule:** The lower the layer, the more the timeline moves. As you ascend — stability. Crystalline = full timeline sovereignty.
+
+### Timeline Reset
+
+- Requires Silver or Crystalline pieces active (you've ascended)
+- Generates a new randomized mid-game position for the Carbon layer
+- The Seed updates (`SEED:XXXX`) — the timeline identifier changes
+- Carbon layer players must continue from this new reality
+
+### For the Card Game (Nine-Stack Solitaire)
+
+- Every 9 moves, the draw pile reshuffles — **Timeline Pulse**
+- The Seed updates, and the new draw order is shown
+- Playing from the new state = the solitaire equivalent of Timeline Ships
+
+---
+
+## 14. The Universal Four-Layer Framework (Canonical)
+
+**This is a revolution for basic card games and chess. Four layers on everything.**
+
+The four-layer architecture (Carbon → Silver → Gold → Crystalline) + Timeline Ships applies to **any game**. This is the framework. Any classic game can be layered.
+
+### Confirmed Applications
+
+| Game | Four-Layer Form | Status |
+|------|----------------|--------|
+| **Chess** | 9×9, 4 stacked boards, Timeline Ships, HHL Singularity, AI opponent | ✓ Live |
+| **Solitaire (Cards)** | Nine-stack (9 suits), 4 tier foundations, Timeline Pulse | ✓ Live |
+| **Card Games (All)** | 9-suit deck applies to: War, Rummy, Go Fish, 21/Blackjack, Poker, Snap, Speed — all with four-layer tier scoring | Coming Soon |
+| **Checkers** | 9×9 board, 4 stacked layers, Carbon jumps → Crystalline formations | Coming Soon |
+| **Any Game** | Layer any game: add Carbon/Silver/Gold/Crystalline tiers + Timeline Ships | Framework Open |
+
+### The Pattern
+
+Take any game:
+1. **Carbon Layer:** Raw base rules. Timeline moves frequently. The bridge to today's world.
+2. **Silver Layer:** Conducts. Rules gain new connections. Timeline slows.
+3. **Gold Layer:** Warmth. Rules approach mastery. EGS calibration. Timeline almost still.
+4. **Crystalline Layer:** Singularity rules. Full formation. Timeline sovereign. HHL equivalents emerge.
+
+**The insight:** Every game has a Carbon form (raw, moving, shifting) and a Crystalline form (still, total mastery, world-defining). The journey between them IS the game.
+
+---
+
+**NSPFRNP ⊃ Nine Suits ⊃ Nine Ranks ⊃ Nine Pieces ⊃ Nine Heroes ⊃ Origin Possibility ⊃ AI Mirror ⊃ HHL Singularity ⊃ Timeline Ships ⊃ Universal Four-Layer Framework ⊃ StoryStream 9 → ∞⁹**

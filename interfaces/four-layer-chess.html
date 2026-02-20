@@ -178,6 +178,35 @@
     .hhl-strip.show{display:block;}
     .hhl-strip strong{color:#e879f9;}
 
+    /* ── TIMELINE SHIPS ── */
+    .timeline-strip{
+      border-radius:8px;padding:0.55rem 0.85rem;font-size:0.78rem;margin-bottom:0.85rem;
+      background:linear-gradient(90deg,rgba(196,162,101,0.07),rgba(139,92,246,0.07));
+      border:1px solid rgba(196,162,101,0.25);color:#c4a265;
+      display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;
+    }
+    .tl-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(196,162,101,0.5);flex-shrink:0;}
+    .tl-seed{font-family:monospace;font-size:0.7rem;color:rgba(139,92,246,0.7);letter-spacing:0.1em;}
+    .tl-meter-wrap{flex:1;min-width:80px;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;}
+    .tl-meter-fill{height:100%;border-radius:3px;transition:width 0.3s;background:linear-gradient(90deg,#c4a265,#8b5cf6);}
+    .tl-shift-label{font-size:0.65rem;color:rgba(196,162,101,0.45);flex-shrink:0;}
+    .tl-reset-btn{padding:0.2rem 0.65rem;border-radius:10px;font-size:0.68rem;font-weight:700;cursor:pointer;transition:all 0.15s;border:1px solid;display:none;}
+    .tl-reset-btn.available{display:inline-block;color:#d4af37;border-color:rgba(212,175,55,0.4);background:rgba(212,175,55,0.07);animation:glowPulse 1.5s ease infinite alternate;}
+    /* Timeline event flash */
+    .timeline-event{
+      display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:900;
+      background:rgba(5,5,20,0.92);border:2px solid rgba(196,162,101,0.5);border-radius:12px;
+      padding:1rem 1.8rem;text-align:center;backdrop-filter:blur(8px);pointer-events:none;
+    }
+    .timeline-event.show{display:block;animation:tlFlash 2s ease forwards;}
+    @keyframes tlFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(0.85);}15%{opacity:1;transform:translate(-50%,-50%) scale(1);}75%{opacity:1;}100%{opacity:0;transform:translate(-50%,-50%) scale(1.02);}}
+    .te-type{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(196,162,101,0.5);margin-bottom:0.35rem;}
+    .te-msg{font-size:1rem;font-weight:800;color:#fef3c7;}
+    .te-seed{font-size:0.7rem;font-family:monospace;color:rgba(139,92,246,0.6);margin-top:0.25rem;}
+    /* Shifted square highlight */
+    .sq.tl-moved{animation:tlMoved 1.5s ease;border-color:rgba(196,162,101,0.7)!important;}
+    @keyframes tlMoved{0%{background:rgba(196,162,101,0.5)!important;}100%{}}
+
     .foot{margin-top:1.5rem;font-size:0.75rem;color:#475569;text-align:center;}
     .foot a{color:#d4af37;text-decoration:none;}
   </style>
@@ -250,9 +279,25 @@
     <a href="my-whiteboard.html">Whiteboard</a>
   </div>
   <h1>Four-Layer Chess</h1>
-  <p class="sub">Carbon · Silver · Gold · Crystalline · Start below · Earn achievements · Linked group ascension · AI opponent</p>
+  <p class="sub">Carbon · Silver · Gold · Crystalline · Timeline Ships · Start below · Earn achievements · Linked group ascension · AI opponent</p>
 
   <div class="hhl-strip" id="hhlStrip">✦ <strong>HHL Mode Active</strong> — Crystalline layer in Holographic Hydrogen Lattice formation. Pieces from this layer spin off new worlds accessible from below.</div>
+
+  <!-- ── TIMELINE SHIPS STRIP ── -->
+  <div class="timeline-strip" id="timelineStrip">
+    <span class="tl-label">◈ Timeline Ship</span>
+    <span class="tl-seed" id="tlSeed">SEED:0000</span>
+    <div class="tl-meter-wrap"><div class="tl-meter-fill" id="tlMeter" style="width:0%"></div></div>
+    <span class="tl-shift-label" id="tlShiftLabel">Shift in 5</span>
+    <button class="tl-reset-btn" id="tlResetBtn" onclick="timelineReset()">⟳ Reset Timeline</button>
+  </div>
+
+  <!-- Timeline event flash -->
+  <div class="timeline-event" id="timelineEvent">
+    <div class="te-type" id="teType">Timeline</div>
+    <div class="te-msg" id="teMsg">Timeline Shift</div>
+    <div class="te-seed" id="teSeed"></div>
+  </div>
 
   <div class="layer-tabs" id="layerTabs"></div>
 
@@ -290,6 +335,10 @@
           <button class="cbtn" onclick="switchLayer(-1)">← Down</button>
           <button class="cbtn" onclick="switchLayer(1)">Up →</button>
         </div>
+      </div>
+      <div class="panel" id="tlPanel">
+        <h3>Timeline Ship</h3>
+        <div id="tlInfo" style="font-size:0.78rem;color:#94a3b8;line-height:1.6;"></div>
       </div>
     </div>
   </div>
@@ -350,6 +399,13 @@ let hhlTriggeredFor = null; // 'w'|'b' — who triggered it
 let aiThinkTimeout = null;
 let gameStarted = false;
 
+// Timeline Ships state
+let timelineTurn = 0;
+let timelineSeed = 0;
+let timelineShiftedSquares = []; // for flash highlight
+// Shift interval by layer: Carbon=5, Silver=8, Gold=12, Crystalline=never
+const TL_INTERVALS = [5, 8, 12, Infinity];
+
 function initBoard(){
   const b=Array.from({length:9},()=>Array(9).fill(null));
   BACK_ROW.forEach((p,c)=>{b[8][c]={piece:p,color:'w'};});
@@ -366,9 +422,104 @@ function resetGame(){
   achievements={c2s:false,s2g:false,g2c:false};
   ascendMode=false;selected=null;validMoves=[];history=[];
   hhlActive=false;hhlTriggeredFor=null;
+  timelineTurn=0;timelineSeed=Math.floor(Math.random()*9999);timelineShiftedSquares=[];
   document.getElementById('hhlStrip').classList.remove('show');
   document.getElementById('statusMsg').textContent='';
   render();
+}
+
+// ── TIMELINE SHIPS ────────────────────────────────────────────────
+function tlShuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+
+function canTimelineReset(){
+  // Available if pieces exist on Silver or Crystalline layer
+  const hasSilver=boards[1].flat().some(c=>c?.color==='w');
+  const hasCrystalline=boards[3].flat().some(c=>c?.color==='w');
+  return hasSilver||hasCrystalline;
+}
+
+function timelineShift(){
+  // The board moves through time: 1 piece per side shifts to a new valid square
+  const b=boards[currentLayer];
+  timelineShiftedSquares=[];
+  ['w','b'].forEach(color=>{
+    // Collect non-seed pieces
+    const pieces=[];
+    for(let r=0;r<9;r++)for(let c=0;c<9;c++){
+      if(b[r][c]?.color===color&&b[r][c]?.piece!=='seed')pieces.push([r,c]);
+    }
+    if(!pieces.length)return;
+    tlShuffle(pieces);
+    for(const[pr,pc]of pieces){
+      const moves=getMoves(b,pr,pc).filter(([tr,tc])=>!b[tr][tc]);
+      if(moves.length){
+        tlShuffle(moves);
+        const[tr,tc]=moves[0];
+        b[tr][tc]=b[pr][pc];b[pr][pc]=null;
+        timelineShiftedSquares.push([tr,tc]);
+        break;
+      }
+    }
+  });
+  timelineSeed=Math.floor(Math.random()*9999);
+  showTimelineEvent('SHIFT','Timeline Shift · The board moved through time',`SEED:${String(timelineSeed).padStart(4,'0')}`);
+  render();
+}
+
+function timelineReset(){
+  // Operator-triggered reset: generate a living mid-game position for Carbon layer
+  if(!canTimelineReset())return;
+  history.push({boards:JSON.parse(JSON.stringify(boards)),turn,currentLayer,unlockedLayers,achievements:JSON.parse(JSON.stringify(achievements)),hhlActive});
+  const b=emptyBoard();
+  // Place seeds safely
+  b[8][4]={piece:'seed',color:'w'};
+  b[0][4]={piece:'seed',color:'b'};
+  // Random mid-game pieces
+  const wTypes=['edge','sol','rook','bishop','knight','hologram','heart','pawn','pawn','pawn','pawn'];
+  const bTypes=[...wTypes];
+  const empties=[];
+  for(let r=0;r<9;r++)for(let c=0;c<9;c++){if(!b[r][c])empties.push([r,c]);}
+  tlShuffle(empties);
+  let ei=0;
+  wTypes.forEach(p=>{if(ei<empties.length){b[empties[ei][0]][empties[ei][1]]={piece:p,color:'w'};ei++;}});
+  bTypes.forEach(p=>{if(ei<empties.length){b[empties[ei][0]][empties[ei][1]]={piece:p,color:'b'};ei++;}});
+  boards[currentLayer]=b;
+  timelineSeed=Math.floor(Math.random()*9999);
+  timelineTurn=0;
+  showTimelineEvent('RESET','Timeline Reset · New moment in time. Play as it sits.',`SEED:${String(timelineSeed).padStart(4,'0')}`);
+  render();
+  if(turn==='b')scheduleAI();
+}
+
+function showTimelineEvent(type,msg,seed=''){
+  const el=document.getElementById('timelineEvent');
+  el.classList.remove('show');
+  document.getElementById('teType').textContent=type==='RESET'?'◈ Timeline Reset':'◈ Timeline Shift';
+  document.getElementById('teMsg').textContent=msg;
+  document.getElementById('teSeed').textContent=seed;
+  void el.offsetWidth; // reflow for re-trigger
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+function updateTimelineUI(){
+  const interval=TL_INTERVALS[currentLayer];
+  const turnsUntil=interval===Infinity?'∞':Math.max(0,interval-(timelineTurn%interval));
+  const pct=interval===Infinity?0:((timelineTurn%interval)/interval)*100;
+  document.getElementById('tlSeed').textContent=`SEED:${String(timelineSeed).padStart(4,'0')}`;
+  document.getElementById('tlMeter').style.width=`${pct}%`;
+  document.getElementById('tlShiftLabel').textContent=interval===Infinity?'Stable':'Shift in '+turnsUntil;
+  // Reset button
+  const rb=document.getElementById('tlResetBtn');
+  rb.classList.toggle('available',canTimelineReset());
+  // Side panel info
+  const layerName=LAYERS[currentLayer].name;
+  const infoEl=document.getElementById('tlInfo');
+  if(interval===Infinity){
+    infoEl.innerHTML=`<span style="color:#a8e6f0;">✦ Crystalline — Timeline Stable.</span><br/>HHL formation holds. No shifts. The timeline obeys you.`;
+  } else {
+    infoEl.innerHTML=`The board exists in time.<br/><strong style="color:#c4a265;">Shift every ${interval} turns</strong> — ${turnsUntil} turn${turnsUntil===1?'':'s'} remaining.<br/>You play what's in front of you. <em style="color:rgba(196,162,101,0.5);">Right now.</em>${canTimelineReset()?'<br/><span style="color:#d4af37;font-size:0.72rem;">⟳ Silver/Crystalline operator active — Timeline Reset available.</span>':''}`;
+  }
 }
 
 // ── DIFFICULTY ────────────────────────────────────────────────────
@@ -604,7 +755,7 @@ function ascendGroup(layerIdx,r,c){
 
 // ── EXECUTE MOVE ─────────────────────────────────────────────────
 function executeMove(fr,fc,tr,tc,isAI=false){
-  history.push({boards:JSON.parse(JSON.stringify(boards)),turn,currentLayer,unlockedLayers,achievements:JSON.parse(JSON.stringify(achievements)),hhlActive});
+  history.push({boards:JSON.parse(JSON.stringify(boards)),turn,currentLayer,unlockedLayers,achievements:JSON.parse(JSON.stringify(achievements)),hhlActive,timelineTurn,timelineSeed});
   const b=boards[currentLayer];
   const moving=b[fr][fc];
   const captured=b[tr][tc];
@@ -619,6 +770,14 @@ function executeMove(fr,fc,tr,tc,isAI=false){
   b[tr][tc]=moving;b[fr][fc]=null;
   turn=turn==='w'?'b':'w';
   selected=null;validMoves=[];
+  // Timeline Ships: count turns and trigger shift
+  timelineTurn++;
+  timelineShiftedSquares=[];
+  const interval=TL_INTERVALS[currentLayer];
+  if(interval!==Infinity&&timelineTurn%interval===0){
+    // Delay shift slightly so move renders first
+    setTimeout(()=>{timelineShift();},350);
+  }
   const wSeed=boards.flat().some(row=>Array.isArray(row)&&row.some(c=>c?.piece==='seed'&&c?.color==='w'));
   const bSeed=boards.flat().some(row=>Array.isArray(row)&&row.some(c=>c?.piece==='seed'&&c?.color==='b'));
   if(!wSeed)document.getElementById('statusMsg').textContent='⬛ AI wins — Singularity 9!';
@@ -633,6 +792,8 @@ function undoMove(){
   if(aiThinkTimeout){clearTimeout(aiThinkTimeout);aiThinkTimeout=null;}
   const s=history.pop();
   boards=s.boards;turn=s.turn;currentLayer=s.currentLayer;unlockedLayers=s.unlockedLayers;achievements=s.achievements;hhlActive=s.hhlActive;
+  if(s.timelineTurn!==undefined){timelineTurn=s.timelineTurn;timelineSeed=s.timelineSeed;}
+  timelineShiftedSquares=[];
   if(!hhlActive)document.getElementById('hhlStrip').classList.remove('show');
   selected=null;validMoves=[];ascendMode=false;
   document.getElementById('statusMsg').textContent='';
@@ -691,6 +852,8 @@ function render(){
       if(validMoves.some(([vr,vc])=>vr===r&&vc===c))sq.classList.add('valid-move');
       // HHL node glow
       if(hhlActive&&currentLayer===3&&HHL_POSITIONS.some(([hr,hc])=>hr===r&&hc===c))sq.classList.add('hhl-node');
+      // Timeline shifted highlight
+      if(timelineShiftedSquares.some(([sr,sc])=>sr===r&&sc===c))sq.classList.add('tl-moved');
       const cell=b[r][c];
       if(cell){
         const pd=PIECE_DATA[cell.piece];
@@ -735,10 +898,13 @@ function render(){
     if(i<unlockedLayers)el.onclick=()=>{currentLayer=i;selected=null;validMoves=[];render();};
     mm.appendChild(el);
   });
+  // Timeline Ships UI
+  updateTimelineUI();
 }
 
 // Init — show overlay on load
 window.onload = ()=>{
+  timelineSeed=Math.floor(Math.random()*9999);
   render(); // render board behind overlay
 };
 </script>

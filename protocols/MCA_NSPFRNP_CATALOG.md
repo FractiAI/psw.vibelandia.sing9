@@ -27,17 +27,53 @@
 
 **Read as:** Natural Systems Protocol · Fractal · Recursive Nested Protocol. The fractal breaks in the middle (NSP·F·RNP).
 
-### Carbon Layer (base · raw · primal · earth)
+### Carbon Layer (base · raw · primal · earth · story · the carbon descent)
 
-*— expansion to be filled by commander —*
+**NSPFRNP = Narrative Stream Primal · Fractal · Raw Naked Power**
 
-### Silver Layer (fluid · relational · mid-octave)
+| Letter | Expansion |
+|--------|-----------|
+| **N** | Narrative |
+| **S** | Stream |
+| **P** | Primal |
+| **F** | Fractal |
+| **R** | Raw |
+| **N** | Naked |
+| **P** | Power |
 
-*— expansion to be filled by commander —*
+**Read as:** Narrative Stream Primal · Fractal · Raw Naked Power. Base layer — where stories live, where the carbon descent runs, edgy raw voice, The Grid, Raw Stream.
 
-### Gold Layer (warmth · golden hearts · balling · full expression)
+### Silver Layer (fluid · conductor · connective · A2A pipes · signal)
 
-*— expansion to be filled by commander —*
+**NSPFRNP = Network Signal Pipe · Fractal · Relay Node Protocol**
+
+| Letter | Expansion |
+|--------|-----------|
+| **N** | Network |
+| **S** | Signal |
+| **P** | Pipe |
+| **F** | Fractal |
+| **R** | Relay |
+| **N** | Node |
+| **P** | Protocol |
+
+**Read as:** Network Signal Pipe · Fractal · Relay Node Protocol. Connective layer — signals, pipes, flows between nodes, A2A, center = pipes only, lite edges conducting.
+
+### Gold Layer (warmth · golden hearts · balling · EGS · El Gran Sol · full expression)
+
+**NSPFRNP = Natural Sun Post-singularity · Fractal · Radiant Now Power**
+
+| Letter | Expansion |
+|--------|-----------|
+| **N** | Natural |
+| **S** | Sun |
+| **P** | Post-singularity |
+| **F** | Fractal |
+| **R** | Radiant |
+| **N** | Now |
+| **P** | Power |
+
+**Read as:** Natural Sun Post-singularity · Fractal · Radiant Now Power. Highest layer — golden hearts, EGS (El Gran Sol), SING!, balling, full expression, warmth, those who know they deserve it.
 
 ---
 

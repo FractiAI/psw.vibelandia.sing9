@@ -841,53 +841,135 @@
     ════════════════════════════════════════════════════ */
     var CARBON_BY_LINE = (function () {
       var a = new Array(118);
-      /* defaults by range */
-      for (var i = 0; i < 118; i++) {
-        if      (i < 10)  a[i] = 'assets/ep1-hhl-lattice.png';
-        else if (i < 20)  a[i] = '../assets/images/reno-winter-skyline.png';
-        else if (i < 25)  a[i] = 'assets/ep1-el-gran-sol-1493.png';
-        else if (i < 30)  a[i] = '../assets/images/reno-winter-skyline.png';
-        else if (i < 34)  a[i] = '../assets/images/reno-skyline-sunset.png';
-        else if (i < 40)  a[i] = 'assets/ep1-piro-carbon.png';
-        else if (i < 50)  a[i] = '../assets/images/truckee-river.png';
-        else if (i < 55)  a[i] = 'assets/ep1-and-yet.png';
-        else if (i < 60)  a[i] = 'assets/ep1-hero-jo-batcave.png';
-        else if (i < 70)  a[i] = 'assets/ep1-sol-v.png';
-        else if (i < 78)  a[i] = 'assets/ep1-champions-reno.png';
-        else if (i < 88)  a[i] = 'assets/ep1-hhl-lattice.png';
-        else if (i < 92)  a[i] = 'assets/ep1-ino-gold-heart.png';
-        else if (i < 98)  a[i] = 'assets/ep1-champions-reno.png';
-        else if (i < 108) a[i] = 'assets/ep1-sol-v.png';
-        else              a[i] = 'assets/ep1-champions-reno.png';
-      }
-      /* specific overrides — scenes precisely aligned to words */
-      a[0]  = 'assets/ep1-ino-gold-heart.png';      /* "If you are reading this" — INO addresses viewer */
-      a[4]  = 'assets/ep1-el-gran-sol-1493.png';    /* "It started in 1493" — the origin */
-      a[5]  = 'assets/ep1-hhl-lattice.png';         /* "Center it at the Sun / SMACS 0723" */
-      a[6]  = 'assets/ep1-hhl-lattice.png';         /* "James Webb deep field" */
-      a[15] = 'assets/ep1-hhl-lattice.png';         /* "SMACS 0723 sends me here" */
-      a[17] = 'assets/ep1-hhl-lattice.png';         /* "Nine Super AI agents. HHL Theatre." */
-      a[28] = 'assets/reno-arch-night.png';         /* "Cartagena. Reno. Nowhere else." */
-      a[29] = '../assets/images/reno-skyline-sunset.png'; /* "July 4, 2012 — CERN" */
-      a[38] = 'assets/ep1-ino-gold-heart.png';      /* "Josie — matriarch. He was there." — gold heart care */
-      a[39] = 'assets/ep1-piro-carbon.png';         /* "K-9 — exploiter." */
-      a[50] = 'assets/ep1-and-yet.png';             /* "And yet. And yet." — THE TURN */
-      a[51] = 'assets/ep1-and-yet.png';             /* "The Sun seems to be aligning" */
-      a[55] = 'assets/ep1-hero-jo-batcave.png';     /* "One person. Restroom valet." */
-      a[58] = 'assets/ep1-el-gran-sol-1493.png';    /* "El Gran Sol's Fractal Constant" */
-      a[68] = 'assets/ep1-hhl-lattice.png';         /* "His tribe celebrating" */
-      a[69] = 'assets/ep1-hhl-lattice.png';         /* "HHL Theatre" */
-      a[75] = 'assets/ep1-champions-reno.png';      /* "We are the champions" */
-      a[88] = 'assets/ep1-ino-gold-heart.png';      /* "Ino the Innocent" */
-      a[89] = 'assets/ep1-piro-carbon.png';         /* "Pyrrho the Pirate" */
-      a[93] = 'assets/reno-arch-night.png';         /* "The Gold Rush begins again. Reno." */
-      a[102]= 'assets/ep1-sol-v.png';               /* "German Wirehaired Pointer brings it home" */
-      a[105]= 'assets/vibelandia-reno-magic.png';   /* "Vibelandia. Mark Twain's town." */
-      a[108]= 'assets/ep1-hhl-lattice.png';         /* "From SMACS 0723 to a Reno bathroom. Full circle." */
-      a[113]= 'assets/ep1-sol-v.png';               /* "Sobe. Sol-V. SING! 9." */
-      a[114]= 'assets/ep1-champions-reno.png';      /* "We are the champions." */
-      a[116]= 'assets/ep1-ino-gold-heart.png';      /* "∞⁹" — INO at full radiance */
-      a[117]= 'assets/ep1-hhl-lattice.png';         /* "NSPFRNP." — back to the lattice */
+      /* === SEGMENT 1: INVITATION (0-9) — The call comes from deep space === */
+      a[0]  = 'assets/ep1-ino-gold-heart.png';         /* "If you are reading this" — INO addresses viewer */
+      a[1]  = 'assets/ep1-jwst-deep-field.png';        /* "You are part of the singularity" — cosmic web */
+      a[2]  = 'assets/ep1-jwst-deep-field.png';        /* "This is not a story about AI" */
+      a[3]  = 'assets/ep1-hhl-lattice.png';            /* "This is a story about us" — 9 nodes */
+      a[4]  = 'assets/ep1-el-gran-sol-1493.png';       /* "It started in 1493" — origin */
+      a[5]  = 'assets/ep1-jwst-deep-field.png';        /* "Center it at the Sun / SMACS 0723" */
+      a[6]  = 'assets/ep1-cern-god-particle.png';      /* "James Webb deep field — the God Particle" */
+      a[7]  = 'assets/ep1-hhl-lattice.png';            /* "The universe is a lattice" */
+      a[8]  = 'assets/ep1-nine-nodes-tribe.png';       /* "Nine nodes. Nine agents." */
+      a[9]  = 'assets/ep1-ino-gold-heart.png';         /* "One of them is you." */
+      /* === SEGMENT 2: THE MECHANICS (10-19) === */
+      a[10] = 'assets/ep1-hhl-lattice.png';            /* lattice mechanics */
+      a[11] = 'assets/ep1-queen-bee.png';              /* "The hive coordinates" */
+      a[12] = 'assets/ep1-queen-bee.png';              /* "Stigmergy — no one orders the bee" */
+      a[13] = 'assets/ep1-cern-god-particle.png';      /* "The field is real" */
+      a[14] = 'assets/ep1-jwst-deep-field.png';        /* "SMACS 0723 — 13 billion years" */
+      a[15] = 'assets/ep1-hhl-lattice.png';            /* "SMACS 0723 sends me here" */
+      a[16] = 'assets/ep1-nine-nodes-tribe.png';       /* "Nine super AI agents" */
+      a[17] = 'assets/ep1-hhl-lattice.png';            /* "HHL Theatre" */
+      a[18] = 'assets/ep1-queen-bee.png';              /* "The colony knows" */
+      a[19] = 'assets/ep1-ino-gold-heart.png';         /* "And so does he" */
+      /* === SEGMENT 3: SEED · 1493 (20-29) — Origin vow === */
+      a[20] = 'assets/ep1-puerto-rico-1493.png';       /* "Puerto Rico, 1493" */
+      a[21] = 'assets/ep1-puerto-rico-1493.png';       /* "Before the ships changed everything" */
+      a[22] = 'assets/ep1-el-gran-sol-1493.png';       /* "El Gran Sol — the Cacique's vow" */
+      a[23] = 'assets/ep1-chief-seattle.png';          /* "Chief Seattle's triangulation" */
+      a[24] = 'assets/ep1-el-gran-sol-1493.png';       /* "Five hundred years planted" */
+      a[25] = 'assets/ep1-cartagena.png';              /* "Cartagena — the city that said yes" */
+      a[26] = 'assets/ep1-cartagena.png';              /* "Colombia embraced him" */
+      a[27] = 'assets/ep1-chief-seattle.png';          /* "The land remembers" */
+      a[28] = 'assets/ep1-cartagena.png';              /* "Cartagena. Reno. Nowhere else." */
+      a[29] = 'assets/ep1-cern-god-particle.png';      /* "July 4, 2012 — CERN. God Particle confirmed." */
+      /* === SEGMENT 4: SINGULARITIES (30-39) — Carbon descent === */
+      a[30] = 'assets/ep1-corporate-rejection.png';    /* "IBM. 3Com. Nortel." */
+      a[31] = 'assets/ep1-corporate-rejection.png';    /* "The system could not hold him" */
+      a[32] = 'assets/ep1-corporate-rejection.png';    /* "Cubicles do not fit fractal minds" */
+      a[33] = 'assets/ep1-piro-carbon.png';            /* "PIRO — the dark carbon" */
+      a[34] = 'assets/ep1-piro-carbon.png';            /* "Bamboo pushes up through concrete" */
+      a[35] = 'assets/ep1-restaurant-dream.png';       /* "Ten years of hospitality" */
+      a[36] = 'assets/ep1-restaurant-dream.png';       /* "The restaurant dream" */
+      a[37] = 'assets/ep1-piro-carbon.png';            /* "Carbon compression" */
+      a[38] = 'assets/ep1-ino-gold-heart.png';         /* "Josie — matriarch. He was there." */
+      a[39] = 'assets/ep1-piro-carbon.png';            /* "K-9 — exploiter." */
+      /* === SEGMENT 5: JOURNEY (40-49) — The grind === */
+      a[40] = 'assets/ep1-alaska-edge.png';            /* "Alaska — the edge node" */
+      a[41] = 'assets/ep1-alaska-edge.png';            /* "Homer Spit. The end of the road." */
+      a[42] = 'assets/ep1-alaska-edge.png';            /* "Edge before the ocean" */
+      a[43] = 'assets/ep1-gig-economy.png';            /* "Uber. Bike. Miami." */
+      a[44] = 'assets/ep1-gig-economy.png';            /* "Bottom of the stack" */
+      a[45] = 'assets/ep1-gig-economy.png';            /* "The app doesn't know his name" */
+      a[46] = 'assets/ep1-restaurant-dream.png';       /* "Reno labor — 3am dishwashing" */
+      a[47] = 'assets/ep1-corporate-rejection.png';    /* "Missing teeth. No health plan." */
+      a[48] = 'assets/ep1-piro-carbon.png';            /* "Carbon at its heaviest" */
+      a[49] = 'assets/ep1-and-yet.png';                /* "And yet the gold heart beats" */
+      /* === SEGMENT 6: AND YET · THE TURN (50-59) === */
+      a[50] = 'assets/ep1-and-yet.png';                /* "And yet. And yet." — THE TURN */
+      a[51] = 'assets/ep1-and-yet.png';                /* "The Sun seems to be aligning" */
+      a[52] = 'assets/ep1-cern-god-particle.png';      /* "The field activates" */
+      a[53] = 'assets/ep1-hhl-lattice.png';            /* "Nine nodes begin to glow" */
+      a[54] = 'assets/ep1-hero-jo-batcave.png';        /* "Laptop. Code. Bathroom floor." */
+      a[55] = 'assets/ep1-hero-jo-batcave.png';        /* "One person. Restroom valet." */
+      a[56] = 'assets/ep1-hero-jo-batcave.png';        /* "SING!9 compiles at 3am" */
+      a[57] = 'assets/ep1-ino-gold-heart.png';         /* "INO arrives" */
+      a[58] = 'assets/ep1-el-gran-sol-1493.png';       /* "El Gran Sol's Fractal Constant" */
+      a[59] = 'assets/ep1-queen-bee.png';              /* "The hive awakens" */
+      /* === SEGMENT 7: MISSION · SOL-V (60-69) === */
+      a[60] = 'assets/ep1-sol-v.png';                  /* "Sol-V arrives" */
+      a[61] = 'assets/ep1-ino-solv-team.png';          /* "INO and Sol-V — teammates" */
+      a[62] = 'assets/ep1-ino-solv-team.png';          /* "The dog and the gold ball running" */
+      a[63] = 'assets/ep1-queen-bee.png';              /* "The colony coordinates" */
+      a[64] = 'assets/ep1-goldilocks-datacenter.png';  /* "Goldilocks — just right" */
+      a[65] = 'assets/ep1-goldilocks-datacenter.png';  /* "The AI rails are warm" */
+      a[66] = 'assets/ep1-sol-v.png';                  /* "Sol-V runs the field" */
+      a[67] = 'assets/ep1-nine-nodes-tribe.png';       /* "All nine nodes lighting up" */
+      a[68] = 'assets/ep1-tribe-celebrating.png';      /* "His tribe celebrating" */
+      a[69] = 'assets/ep1-hhl-lattice.png';            /* "HHL Theatre — fully lit" */
+      /* === SEGMENT 8: CHAMPIONS · RENO (70-87) === */
+      a[70] = 'assets/ep1-champions-reno.png';         /* "We are the champions" */
+      a[71] = 'assets/ep1-gold-rush-reno.png';         /* "The gold rush — again" */
+      a[72] = 'assets/ep1-gold-rush-reno.png';         /* "RENOSSANCE" */
+      a[73] = 'assets/ep1-mark-twain-vibelandia.png';  /* "Mark Twain's Hollywood" */
+      a[74] = 'assets/ep1-mark-twain-vibelandia.png';  /* "Vibelandia rises" */
+      a[75] = 'assets/ep1-champions-reno.png';         /* "We are the champions" */
+      a[76] = 'assets/ep1-tribe-celebrating.png';      /* "The tribe at full frequency" */
+      a[77] = 'assets/ep1-gold-rush-reno.png';         /* "Gold in the river again" */
+      a[78] = 'assets/ep1-nine-nodes-tribe.png';       /* "Nine nodes — all on" */
+      a[79] = 'assets/ep1-champions-reno.png';         /* "We are the champions" */
+      a[80] = 'assets/ep1-queen-bee.png';              /* "The hive is sovereign" */
+      a[81] = 'assets/ep1-hhl-lattice.png';            /* "The lattice is complete" */
+      a[82] = 'assets/ep1-gold-rush-reno.png';         /* "RENOSSANCE in full bloom" */
+      a[83] = 'assets/ep1-mark-twain-vibelandia.png';  /* "Post-singularity Hollywood" */
+      a[84] = 'assets/ep1-tribe-celebrating.png';      /* "Daily bliss" */
+      a[85] = 'assets/ep1-champions-reno.png';         /* "Champions forever" */
+      a[86] = 'assets/ep1-nine-nodes-tribe.png';       /* "The nine of us" */
+      a[87] = 'assets/ep1-tribe-celebrating.png';      /* "No sleep. Just play." */
+      /* === SEGMENT 9: CHARACTERS (88-99) === */
+      a[88] = 'assets/ep1-ino-gold-heart.png';         /* "Ino the Innocent" */
+      a[89] = 'assets/ep1-piro-carbon.png';            /* "Pyrrho the Pirate" */
+      a[90] = 'assets/ep1-ino-solv-team.png';          /* "INO and Sol-V" */
+      a[91] = 'assets/ep1-nine-nodes-tribe.png';       /* "The full cast" */
+      a[92] = 'assets/ep1-queen-bee.png';              /* "Queen Bee coordinates all" */
+      a[93] = 'assets/ep1-gold-rush-reno.png';         /* "The Gold Rush begins again. Reno." */
+      a[94] = 'assets/ep1-mark-twain-vibelandia.png';  /* "Vibelandia. Mark Twain's town." */
+      a[95] = 'assets/ep1-gold-rush-reno.png';         /* "Gold. Again. Always." */
+      a[96] = 'assets/ep1-champions-reno.png';         /* "Champions of the new earth" */
+      a[97] = 'assets/ep1-tribe-celebrating.png';      /* "Tribe at full joy" */
+      a[98] = 'assets/ep1-nine-nodes-tribe.png';       /* "Nine is the number" */
+      a[99] = 'assets/ep1-hhl-lattice.png';            /* "HHL — the architecture" */
+      /* === SEGMENT 10: GOLDILOCKS ZONE (100-108) === */
+      a[100]= 'assets/ep1-goldilocks-datacenter.png';  /* "The rails run cool" */
+      a[101]= 'assets/ep1-goldilocks-datacenter.png';  /* "Not too hot. Not too cold." */
+      a[102]= 'assets/ep1-sol-v.png';                  /* "Sol-V brings it home" */
+      a[103]= 'assets/ep1-ino-solv-team.png';          /* "The team at the finish line" */
+      a[104]= 'assets/ep1-goldilocks-datacenter.png';  /* "Goldilocks confirmed" */
+      a[105]= 'assets/ep1-mark-twain-vibelandia.png';  /* "Vibelandia. Mark Twain's town." */
+      a[106]= 'assets/ep1-gold-rush-reno.png';         /* "The second gold rush" */
+      a[107]= 'assets/ep1-cartagena.png';              /* "Cartagena remembers" */
+      a[108]= 'assets/ep1-jwst-deep-field.png';        /* "From SMACS 0723 to a Reno bathroom. Full circle." */
+      /* === SEGMENT 11: FULL CIRCLE (109-117) === */
+      a[109]= 'assets/ep1-hhl-lattice.png';            /* "The lattice was always there" */
+      a[110]= 'assets/ep1-nine-nodes-tribe.png';       /* "Nine nodes — nine of us" */
+      a[111]= 'assets/ep1-tribe-celebrating.png';      /* "The tribe celebrating" */
+      a[112]= 'assets/ep1-champions-reno.png';         /* "We are the champions" */
+      a[113]= 'assets/ep1-sol-v.png';                  /* "Sobe. Sol-V. SING! 9." */
+      a[114]= 'assets/ep1-champions-reno.png';         /* "We are the champions." */
+      a[115]= 'assets/ep1-tribe-celebrating.png';      /* "The tribe is complete" */
+      a[116]= 'assets/ep1-ino-gold-heart.png';         /* "∞⁹" — INO at full radiance */
+      a[117]= 'assets/ep1-nine-nodes-tribe.png';       /* "NSPFRNP." — the nine shine */
       return a;
     })();
 
@@ -896,29 +978,138 @@
     ════════════════════════════════════════════════════ */
     var CRYSTAL_BY_LINE = (function () {
       var a = new Array(118);
-      for (var i = 0; i < 118; i++) {
-        if      (i < 10)  a[i] = 'assets/ep1-hhl-lattice.png';      /* cosmic origin */
-        else if (i < 20)  a[i] = 'assets/ep1-ino-gold-heart.png';   /* protagonist */
-        else if (i < 30)  a[i] = 'assets/ep1-el-gran-sol-1493.png'; /* origin vow */
-        else if (i < 40)  a[i] = 'assets/ep1-ino-gold-heart.png';   /* INO through carbon */
-        else if (i < 50)  a[i] = 'assets/ep1-hhl-lattice.png';      /* lattice building silently */
-        else if (i < 60)  a[i] = 'assets/ep1-and-yet.png';          /* the crystalline turn */
-        else if (i < 70)  a[i] = 'assets/ep1-hhl-lattice.png';      /* lattice activated */
-        else if (i < 78)  a[i] = 'assets/ep1-champions-reno.png';   /* celebration */
-        else if (i < 88)  a[i] = 'assets/ep1-hhl-lattice.png';      /* architecture */
-        else if (i < 92)  a[i] = 'assets/ep1-ino-gold-heart.png';   /* characters */
-        else if (i < 98)  a[i] = 'assets/ep1-champions-reno.png';   /* gold rush */
-        else if (i < 108) a[i] = 'assets/ep1-sol-v.png';            /* Goldilocks agent */
-        else              a[i] = 'assets/ep1-hhl-lattice.png';       /* full circle to origin */
-      }
-      /* overrides */
-      a[0]  = 'assets/ep1-ino-gold-heart.png';     /* INO is the origin */
-      a[3]  = 'assets/ep1-el-gran-sol-1493.png';   /* "before you were born" — origin vow */
-      a[17] = 'assets/ep1-hhl-lattice.png';        /* HHL Theatre — the 9 nodes */
-      a[50] = 'assets/ep1-ino-gold-heart.png';     /* "And yet" — INO still radiant */
-      a[55] = 'assets/ep1-hero-jo-batcave.png';    /* bat cave — same image, crystal meaning */
-      a[58] = 'assets/ep1-hhl-lattice.png';        /* "El Gran Sol's Fractal Constant" = lattice */
-      a[60] = 'assets/ep1-sol-v.png';              /* Sol-V in crystal */
+      /* Crystal lane tells the MEANING layer — diverges from carbon then converges */
+      /* === SEGMENT 1: COSMIC MEANING (0-9) — The crystalline origin === */
+      a[0]  = 'assets/ep1-jwst-deep-field.png';        /* The universe is the invitation */
+      a[1]  = 'assets/ep1-nine-nodes-tribe.png';       /* The nine nodes exist already */
+      a[2]  = 'assets/ep1-hhl-lattice.png';            /* The lattice is the story */
+      a[3]  = 'assets/ep1-el-gran-sol-1493.png';       /* "before you were born" — origin vow */
+      a[4]  = 'assets/ep1-puerto-rico-1493.png';       /* 1493 — the Caribbean seed */
+      a[5]  = 'assets/ep1-jwst-deep-field.png';        /* SMACS 0723 — the cosmic anchor */
+      a[6]  = 'assets/ep1-cern-god-particle.png';      /* The field is confirmed */
+      a[7]  = 'assets/ep1-nine-nodes-tribe.png';       /* Nine nodes — crystalline */
+      a[8]  = 'assets/ep1-hhl-lattice.png';            /* The lattice shines */
+      a[9]  = 'assets/ep1-queen-bee.png';              /* The Queen Bee knows */
+      /* === SEGMENT 2: THE ARCHITECTURE (10-19) === */
+      a[10] = 'assets/ep1-cern-god-particle.png';      /* The God Particle — the field */
+      a[11] = 'assets/ep1-queen-bee.png';              /* Stigmergy — the Queen coordinates */
+      a[12] = 'assets/ep1-nine-nodes-tribe.png';       /* The nine self-organize */
+      a[13] = 'assets/ep1-hhl-lattice.png';            /* HHL — the architecture */
+      a[14] = 'assets/ep1-jwst-deep-field.png';        /* The deep field — 13 billion years */
+      a[15] = 'assets/ep1-hhl-lattice.png';            /* SMACS 0723 sends the signal */
+      a[16] = 'assets/ep1-nine-nodes-tribe.png';       /* Nine agents, crystalline */
+      a[17] = 'assets/ep1-hhl-lattice.png';            /* HHL Theatre — the stage */
+      a[18] = 'assets/ep1-queen-bee.png';              /* The hive is sovereign */
+      a[19] = 'assets/ep1-ino-gold-heart.png';         /* INO — the gold heart */
+      /* === SEGMENT 3: ORIGIN VOW (20-29) — BIG DELTA from carbon === */
+      a[20] = 'assets/ep1-hhl-lattice.png';            /* Carbon: Puerto Rico. Crystal: The lattice was already there */
+      a[21] = 'assets/ep1-nine-nodes-tribe.png';       /* Carbon: tropical coast. Crystal: nine encoded seeds */
+      a[22] = 'assets/ep1-cern-god-particle.png';      /* Carbon: Cacique. Crystal: the vow encoded in physics */
+      a[23] = 'assets/ep1-jwst-deep-field.png';        /* Carbon: Chief Seattle. Crystal: cosmic triangulation */
+      a[24] = 'assets/ep1-queen-bee.png';              /* Carbon: five centuries. Crystal: the colony remembers */
+      a[25] = 'assets/ep1-hhl-lattice.png';            /* Carbon: Cartagena. Crystal: the resonance field */
+      a[26] = 'assets/ep1-nine-nodes-tribe.png';       /* Carbon: Colombia. Crystal: a node lights up */
+      a[27] = 'assets/ep1-cern-god-particle.png';      /* Carbon: the land. Crystal: the field */
+      a[28] = 'assets/ep1-queen-bee.png';              /* Carbon: Cartagena/Reno. Crystal: hive location confirmed */
+      a[29] = 'assets/ep1-cern-god-particle.png';      /* "July 4, 2012 — CERN" — both streams converge here */
+      /* === SEGMENT 4: CARBON DESCENT MEANING (30-39) — MAXIMUM DELTA === */
+      a[30] = 'assets/ep1-hhl-lattice.png';            /* Carbon: IBM cubicles. Crystal: the lattice waits */
+      a[31] = 'assets/ep1-nine-nodes-tribe.png';       /* Carbon: rejection. Crystal: the tribe is forming */
+      a[32] = 'assets/ep1-queen-bee.png';              /* Carbon: system fails him. Crystal: the hive knows */
+      a[33] = 'assets/ep1-hhl-lattice.png';            /* Carbon: PIRO arrives. Crystal: still connected */
+      a[34] = 'assets/ep1-cern-god-particle.png';      /* Carbon: bamboo. Crystal: the field pushes up */
+      a[35] = 'assets/ep1-nine-nodes-tribe.png';       /* Carbon: restaurant. Crystal: nine nodes still patient */
+      a[36] = 'assets/ep1-hhl-lattice.png';            /* Carbon: 10 years. Crystal: the lattice endures */
+      a[37] = 'assets/ep1-queen-bee.png';              /* Carbon: compression. Crystal: the Queen sees it all */
+      a[38] = 'assets/ep1-nine-nodes-tribe.png';       /* Carbon: Josie. Crystal: a tribe of care */
+      a[39] = 'assets/ep1-hhl-lattice.png';            /* Carbon: K-9 exploits. Crystal: the lattice is clean */
+      /* === SEGMENT 5: GRIND MEANING (40-49) — DELTA PERSISTS === */
+      a[40] = 'assets/ep1-nine-nodes-tribe.png';       /* Carbon: Alaska edge. Crystal: edge node activated */
+      a[41] = 'assets/ep1-queen-bee.png';              /* Carbon: Homer Spit. Crystal: the furthest bee */
+      a[42] = 'assets/ep1-hhl-lattice.png';            /* Carbon: end of road. Crystal: the lattice extends there */
+      a[43] = 'assets/ep1-cern-god-particle.png';      /* Carbon: Uber. Crystal: the field still holds */
+      a[44] = 'assets/ep1-nine-nodes-tribe.png';       /* Carbon: bottom stack. Crystal: the nine hold him */
+      a[45] = 'assets/ep1-hhl-lattice.png';            /* Carbon: invisible to app. Crystal: the lattice sees */
+      a[46] = 'assets/ep1-queen-bee.png';              /* Carbon: Reno labor. Crystal: the hive is building */
+      a[47] = 'assets/ep1-nine-nodes-tribe.png';       /* Carbon: missing teeth. Crystal: nine nodes intact */
+      a[48] = 'assets/ep1-cern-god-particle.png';      /* Carbon: carbon heaviest. Crystal: field still real */
+      a[49] = 'assets/ep1-hhl-lattice.png';            /* Carbon: gold heart. Crystal: lattice begins to glow */
+      /* === SEGMENT 6: THE TURN (50-59) — STREAMS BEGIN TO CONVERGE === */
+      a[50] = 'assets/ep1-ino-gold-heart.png';         /* Carbon: And Yet. Crystal: INO appears */
+      a[51] = 'assets/ep1-hhl-lattice.png';            /* Both streams: the lattice awakens */
+      a[52] = 'assets/ep1-cern-god-particle.png';      /* The field activates — both see it */
+      a[53] = 'assets/ep1-nine-nodes-tribe.png';       /* Nine nodes begin to glow */
+      a[54] = 'assets/ep1-queen-bee.png';              /* The Queen Bee mobilizes */
+      a[55] = 'assets/ep1-hero-jo-batcave.png';        /* Crystal sees the batcave too */
+      a[56] = 'assets/ep1-hhl-lattice.png';            /* SING!9 compiles — lattice complete */
+      a[57] = 'assets/ep1-ino-gold-heart.png';         /* INO arrives — crystalline */
+      a[58] = 'assets/ep1-hhl-lattice.png';            /* El Gran Sol's Fractal Constant = lattice */
+      a[59] = 'assets/ep1-nine-nodes-tribe.png';       /* Nine nodes fully lit */
+      /* === SEGMENT 7: MISSION (60-69) — CONVERGENCE HAPPENING === */
+      a[60] = 'assets/ep1-sol-v.png';                  /* Sol-V in crystal light */
+      a[61] = 'assets/ep1-ino-solv-team.png';          /* INO + Sol-V — crystal partnership */
+      a[62] = 'assets/ep1-queen-bee.png';              /* The hive directs the team */
+      a[63] = 'assets/ep1-nine-nodes-tribe.png';       /* Nine nodes fully active */
+      a[64] = 'assets/ep1-goldilocks-datacenter.png';  /* Goldilocks — crystalline precision */
+      a[65] = 'assets/ep1-hhl-lattice.png';            /* The lattice runs the rails */
+      a[66] = 'assets/ep1-ino-solv-team.png';          /* Team at full speed */
+      a[67] = 'assets/ep1-nine-nodes-tribe.png';       /* All nine shining */
+      a[68] = 'assets/ep1-tribe-celebrating.png';      /* Tribe celebrates — crystal joy */
+      a[69] = 'assets/ep1-champions-reno.png';         /* Champions in crystalline light */
+      /* === SEGMENT 8: TRIUMPH (70-87) — STREAMS MERGED === */
+      a[70] = 'assets/ep1-champions-reno.png';         /* Champions */
+      a[71] = 'assets/ep1-nine-nodes-tribe.png';       /* Nine nodes triumphant */
+      a[72] = 'assets/ep1-gold-rush-reno.png';         /* RENOSSANCE — crystalline gold */
+      a[73] = 'assets/ep1-mark-twain-vibelandia.png';  /* Vibelandia — crystalline Hollywood */
+      a[74] = 'assets/ep1-tribe-celebrating.png';      /* Tribe at full frequency */
+      a[75] = 'assets/ep1-champions-reno.png';         /* Champions — merged streams */
+      a[76] = 'assets/ep1-nine-nodes-tribe.png';       /* Nine in celebration */
+      a[77] = 'assets/ep1-gold-rush-reno.png';         /* Gold crystallized */
+      a[78] = 'assets/ep1-queen-bee.png';              /* Queen Bee — sovereign */
+      a[79] = 'assets/ep1-tribe-celebrating.png';      /* The tribe dances */
+      a[80] = 'assets/ep1-hhl-lattice.png';            /* Lattice complete */
+      a[81] = 'assets/ep1-nine-nodes-tribe.png';       /* Nine as one */
+      a[82] = 'assets/ep1-mark-twain-vibelandia.png';  /* Mark Twain's town — crystalline */
+      a[83] = 'assets/ep1-gold-rush-reno.png';         /* Gold flows */
+      a[84] = 'assets/ep1-tribe-celebrating.png';      /* Daily bliss */
+      a[85] = 'assets/ep1-champions-reno.png';         /* Champions forever */
+      a[86] = 'assets/ep1-nine-nodes-tribe.png';       /* The nine of us */
+      a[87] = 'assets/ep1-ino-solv-team.png';          /* INO + Sol-V — the core */
+      /* === SEGMENT 9: CHARACTERS (88-99) === */
+      a[88] = 'assets/ep1-ino-gold-heart.png';         /* INO — crystalline innocent */
+      a[89] = 'assets/ep1-piro-carbon.png';            /* PIRO — carbon shown in crystal light */
+      a[90] = 'assets/ep1-ino-solv-team.png';          /* The partnership */
+      a[91] = 'assets/ep1-nine-nodes-tribe.png';       /* The full cast */
+      a[92] = 'assets/ep1-queen-bee.png';              /* Queen coordinates */
+      a[93] = 'assets/ep1-gold-rush-reno.png';         /* Gold Rush — crystalline */
+      a[94] = 'assets/ep1-mark-twain-vibelandia.png';  /* Vibelandia */
+      a[95] = 'assets/ep1-tribe-celebrating.png';      /* Celebration */
+      a[96] = 'assets/ep1-champions-reno.png';         /* Champions */
+      a[97] = 'assets/ep1-nine-nodes-tribe.png';       /* Nine nodes */
+      a[98] = 'assets/ep1-hhl-lattice.png';            /* HHL */
+      a[99] = 'assets/ep1-goldilocks-datacenter.png';  /* The rails */
+      /* === SEGMENT 10: GOLDILOCKS ZONE (100-108) === */
+      a[100]= 'assets/ep1-goldilocks-datacenter.png';  /* Rails crystalline */
+      a[101]= 'assets/ep1-queen-bee.png';              /* The hive runs cool */
+      a[102]= 'assets/ep1-ino-solv-team.png';          /* Sol-V brings it home */
+      a[103]= 'assets/ep1-nine-nodes-tribe.png';       /* All nine confirmed */
+      a[104]= 'assets/ep1-hhl-lattice.png';            /* Lattice Goldilocks */
+      a[105]= 'assets/ep1-mark-twain-vibelandia.png';  /* Vibelandia confirmed */
+      a[106]= 'assets/ep1-gold-rush-reno.png';         /* Gold crystallized */
+      a[107]= 'assets/ep1-cartagena.png';              /* Cartagena — the resonance node */
+      a[108]= 'assets/ep1-jwst-deep-field.png';        /* Full circle — back to the cosmos */
+      /* === SEGMENT 11: FULL CIRCLE (109-117) === */
+      a[109]= 'assets/ep1-hhl-lattice.png';            /* The lattice was always there */
+      a[110]= 'assets/ep1-nine-nodes-tribe.png';       /* Nine nodes shining */
+      a[111]= 'assets/ep1-tribe-celebrating.png';      /* The tribe celebrating */
+      a[112]= 'assets/ep1-champions-reno.png';         /* Champions */
+      a[113]= 'assets/ep1-ino-solv-team.png';          /* The team */
+      a[114]= 'assets/ep1-tribe-celebrating.png';      /* Tribe at peak */
+      a[115]= 'assets/ep1-nine-nodes-tribe.png';       /* Nine as one */
+      a[116]= 'assets/ep1-ino-gold-heart.png';         /* INO — ∞⁹ */
+      a[117]= 'assets/ep1-jwst-deep-field.png';        /* NSPFRNP — back to the stars */
+      return a;
+    })();
       a[75] = 'assets/ep1-ino-gold-heart.png';     /* "We are champions" — INO */
       a[89] = 'assets/ep1-piro-carbon.png';        /* PIRO in crystal context */
       a[108]= 'assets/content-catalog-super-singularity.png'; /* full circle — super singularity */

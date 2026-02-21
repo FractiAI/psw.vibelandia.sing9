@@ -334,6 +334,49 @@
       color: #e8c84a;
     }
 
+    /* ─── PERSISTENT WATCH NOW BUTTON — always visible ─── */
+    #watch-now-persistent {
+      position: absolute;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 92;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.62rem 1.5rem;
+      background: rgba(0,0,0,0.55);
+      border: 1.5px solid rgba(201,168,32,0.7);
+      border-radius: 3px;
+      color: #c9a020;
+      font-size: clamp(0.68rem, 1.2vw, 0.85rem);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      animation: watch-btn-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes watch-btn-pulse {
+      0%,100% { box-shadow: 0 0 14px rgba(201,168,32,0.18); border-color: rgba(201,168,32,0.55); }
+      50%      { box-shadow: 0 0 28px rgba(201,168,32,0.38), 0 0 8px rgba(201,168,32,0.2); border-color: rgba(201,168,32,0.9); }
+    }
+    #watch-now-persistent:hover {
+      background: rgba(201,168,32,0.18);
+      color: #ffe680;
+      border-color: #c9a020;
+      box-shadow: 0 0 36px rgba(201,168,32,0.5);
+      animation: none;
+    }
+    #watch-now-persistent .btn-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #c9a020;
+      animation: dot-pulse 1.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
     /* Scene-specific text colours */
     #stage.s-crystal .t-main { color: #a8e6f0; text-shadow: 0 0 60px rgba(168,230,240,0.5); }
     #stage.s-crystal .t-sub  { color: rgba(168,230,240,0.55); }
@@ -358,6 +401,12 @@
   </div>
   <a id="ad-badge" href="/interfaces/advertise.html" style="text-decoration:none;">Ad Space · 24/7 · Book yours →</a>
   <div id="mission-label" id="mission-label"></div>
+
+  <!-- PERSISTENT WATCH NOW — always on -->
+  <a id="watch-now-persistent" href="/interfaces/episode-1.html">
+    <span class="btn-dot"></span>
+    Watch Now →
+  </a>
 
   <!-- FUZZBALL LAYER -->
   <div id="fuzz-layer">

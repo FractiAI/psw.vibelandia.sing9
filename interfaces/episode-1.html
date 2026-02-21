@@ -146,16 +146,45 @@
       z-index: 3;
       transform-origin: center center;
       will-change: transform;
-      filter: saturate(0.85) hue-rotate(10deg);
+      /* SING9 lattice treatment: same scene, crystalline-filtered */
+      filter: hue-rotate(195deg) saturate(2.4) brightness(0.72) contrast(1.18);
     }
-    #crystal-lane img.lane-img.visible { opacity: 0.78; }
+    #crystal-lane img.lane-img.visible { opacity: 0.82; }
 
     /* Crystalline blue tint overlay on crystal lane */
     #crystal-lane::before {
       content: '';
       position: absolute; inset: 0;
-      background: rgba(5, 15, 30, 0.32);
+      background: rgba(2, 10, 24, 0.38);
       z-index: 4; pointer-events: none;
+    }
+
+    /* SING9 Lattice grid overlay on crystal lane — the hexagonal field */
+    #crystal-lane::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(168,230,240,0.06) 0, rgba(168,230,240,0.06) 1px,
+          transparent 1px, transparent 36px
+        ),
+        repeating-linear-gradient(
+          60deg,
+          rgba(168,230,240,0.045) 0, rgba(168,230,240,0.045) 1px,
+          transparent 1px, transparent 36px
+        ),
+        repeating-linear-gradient(
+          120deg,
+          rgba(168,230,240,0.045) 0, rgba(168,230,240,0.045) 1px,
+          transparent 1px, transparent 36px
+        );
+      z-index: 7; pointer-events: none;
+      animation: lattice-glow 5s ease-in-out infinite;
+    }
+    @keyframes lattice-glow {
+      0%,100% { opacity: 0.65; }
+      50%      { opacity: 1.0; }
     }
 
     /* Crystal caption */
@@ -320,6 +349,251 @@
       100% { width: 3px; opacity: 1;   box-shadow: 0 0 28px rgba(255,200,40,0.55); }
     }
     #stream-divider.gold-flash { animation: divider-gold-flash 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+    /* ══════════════════════════════════════════════════════
+       TELESCOPE — click-to-zoom infinite scene explorer
+    ══════════════════════════════════════════════════════ */
+    #carbon-lane, #crystal-lane { cursor: pointer; }
+
+    #telescope {
+      position: fixed; inset: 0; z-index: 250;
+      pointer-events: none;
+      background: rgba(0,0,0,0);
+      transition: background 0.4s ease;
+    }
+    #telescope.open {
+      pointer-events: all;
+      background: rgba(0,0,0,0.96);
+    }
+    #tele-bg {
+      position: absolute; inset: 0;
+    }
+    #tele-panel {
+      position: absolute;
+      top: 3vh; left: 2vw; right: 2vw; bottom: 3vh;
+      display: flex; flex-direction: column;
+      background: #04020a;
+      border: 1px solid rgba(168,230,240,0.14);
+      border-radius: 3px;
+      opacity: 0; transform: scale(0.88) translateY(20px);
+      transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16,1,0.3,1);
+      overflow: hidden;
+    }
+    #telescope.open #tele-panel {
+      opacity: 1; transform: scale(1) translateY(0);
+    }
+
+    /* — Telescope header — */
+    #tele-header {
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.55rem 1rem;
+      background: rgba(168,230,240,0.04);
+      border-bottom: 1px solid rgba(168,230,240,0.09);
+      flex-shrink: 0;
+    }
+    .tele-hbtn {
+      background: none;
+      border: 1px solid rgba(168,230,240,0.28);
+      color: rgba(168,230,240,0.75); cursor: pointer;
+      padding: 0.22rem 0.7rem; border-radius: 2px;
+      font-size: 0.64rem; letter-spacing: 0.1em;
+      font-weight: 700; text-transform: uppercase;
+      transition: all 0.18s;
+    }
+    .tele-hbtn:hover {
+      background: rgba(168,230,240,0.09);
+      border-color: rgba(168,230,240,0.55);
+      color: rgba(168,230,240,1);
+    }
+    #tele-close-btn {
+      margin-left: auto;
+      border-color: rgba(255,90,90,0.28);
+      color: rgba(255,140,140,0.7);
+    }
+    #tele-close-btn:hover {
+      background: rgba(255,80,80,0.1);
+      border-color: rgba(255,90,90,0.6);
+      color: rgba(255,180,180,1);
+    }
+    #tele-depth-label {
+      font-size: 0.58rem; font-weight: 800;
+      letter-spacing: 0.28em; color: rgba(201,168,32,0.88);
+      text-transform: uppercase;
+    }
+    #tele-line-label {
+      font-size: 0.52rem; color: rgba(168,230,240,0.4);
+      letter-spacing: 0.12em;
+    }
+    #tele-seg-label {
+      font-size: 0.5rem; color: rgba(168,230,240,0.28);
+      letter-spacing: 0.18em; margin-left: auto;
+    }
+
+    /* — Telescope main scene — */
+    #tele-main {
+      display: flex; flex-direction: row;
+      flex: 1; overflow: hidden; min-height: 0;
+    }
+    #tele-carbon, #tele-crystal {
+      position: relative; overflow: hidden;
+    }
+    #tele-carbon { flex: 3; }
+    #tele-crystal { flex: 2; }
+    #tele-carbon img, #tele-crystal img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: opacity 0.45s ease;
+    }
+    #tele-crystal img {
+      filter: hue-rotate(195deg) saturate(2.4) brightness(0.72) contrast(1.18);
+    }
+    .tele-lattice-overlay {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, rgba(168,230,240,0.065) 0, rgba(168,230,240,0.065) 1px, transparent 1px, transparent 36px),
+        repeating-linear-gradient(60deg, rgba(168,230,240,0.048) 0, rgba(168,230,240,0.048) 1px, transparent 1px, transparent 36px),
+        repeating-linear-gradient(120deg, rgba(168,230,240,0.048) 0, rgba(168,230,240,0.048) 1px, transparent 1px, transparent 36px);
+      animation: lattice-glow 5s ease-in-out infinite;
+    }
+    .tele-c-tint {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: rgba(2,10,24,0.25);
+    }
+    #tele-c-text, #tele-x-text {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 5;
+      padding: 4rem 1.5rem 1.8rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
+      font-size: clamp(0.8rem, 1.5vw, 1.05rem);
+      line-height: 1.7; font-weight: 400;
+    }
+    #tele-c-text { color: rgba(255,225,165,0.97); }
+    #tele-x-text {
+      color: rgba(168,230,240,0.88); font-style: italic;
+      font-size: clamp(0.7rem, 1.2vw, 0.88rem);
+    }
+    #tele-c-label, #tele-x-label {
+      position: absolute; top: 0.65rem; z-index: 6;
+      font-size: 0.4rem; font-weight: 700;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      padding: 0.14rem 0.45rem; border-radius: 2px;
+    }
+    #tele-c-label { left: 0.8rem; color: rgba(201,168,32,0.35); border: 1px solid rgba(201,168,32,0.14); }
+    #tele-x-label { right: 0.8rem; color: rgba(168,230,240,0.35); border: 1px solid rgba(168,230,240,0.14); }
+    #tele-split {
+      width: 2px; flex-shrink: 0;
+      background: linear-gradient(to bottom,
+        transparent 0%, rgba(168,230,240,0.32) 30%,
+        rgba(201,168,32,0.42) 55%, rgba(168,230,240,0.25) 80%, transparent 100%);
+    }
+
+    /* — Breadcrumb trail — */
+    #tele-breadcrumb {
+      display: flex; align-items: center; gap: 0.3rem;
+      flex-wrap: nowrap; overflow: hidden;
+      max-width: 40%; flex-shrink: 1;
+    }
+    .tele-bc-chip {
+      font-size: 0.44rem; font-weight: 700; letter-spacing: 0.16em;
+      color: rgba(168,230,240,0.38); text-transform: uppercase;
+      border: 1px solid rgba(168,230,240,0.14);
+      padding: 0.12rem 0.4rem; border-radius: 2px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .tele-bc-chip.tele-bc-current {
+      color: rgba(201,168,32,0.9);
+      border-color: rgba(201,168,32,0.35);
+      background: rgba(201,168,32,0.07);
+    }
+    .tele-bc-arrow {
+      font-size: 0.38rem; color: rgba(168,230,240,0.2); flex-shrink: 0;
+    }
+
+    /* — Sub-frame grid — */
+    #tele-sub-grid {
+      display: flex; gap: 2px; flex-shrink: 0;
+      height: 20vh; max-height: 175px; min-height: 110px;
+      background: #000;
+      border-top: 1px solid rgba(168,230,240,0.07);
+      overflow: hidden;
+    }
+    .tele-sub-card {
+      flex: 1; position: relative; overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s;
+      border-top: 2px solid transparent;
+    }
+    .tele-sub-card:hover  { transform: translateY(-5px); }
+    .tele-sub-card:hover img { opacity: 0.92 !important; }
+    .tele-sub-card.tele-kbd-focus {
+      transform: translateY(-6px);
+      border-top-color: rgba(255,220,80,0.8) !important;
+      box-shadow: 0 0 18px rgba(201,168,32,0.35);
+    }
+    .tele-sub-card img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.55;
+      transition: opacity 0.22s;
+    }
+    .tele-sub-card.tele-center { flex: 1.6; }
+    .tele-sub-card.tele-center img { opacity: 0.88; }
+    .tele-sub-card.tele-center { border-top: 2px solid rgba(201,168,32,0.65); }
+    /* Crystal thumbnail strip overlay on each sub-card */
+    .tele-sub-crystal-strip {
+      position: absolute; top: 0; right: 0; width: 28%; height: 100%;
+      overflow: hidden; z-index: 2;
+      border-left: 1px solid rgba(168,230,240,0.15);
+    }
+    .tele-sub-crystal-strip img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.7;
+      filter: hue-rotate(195deg) saturate(2.2) brightness(0.68) contrast(1.1);
+    }
+    .tele-sub-text {
+      position: absolute; bottom: 0; left: 0; right: 28%; z-index: 3;
+      padding: 2.2rem 0.6rem 0.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, transparent 100%);
+      font-size: 0.46rem; color: rgba(255,225,165,0.82);
+      line-height: 1.42; letter-spacing: 0.01em;
+    }
+    .tele-sub-card.tele-center .tele-sub-text {
+      color: rgba(255,245,210,1); font-weight: 600; font-size: 0.52rem;
+    }
+    .tele-sub-line-num {
+      position: absolute; top: 0.32rem; left: 0.4rem; z-index: 4;
+      font-size: 0.36rem; color: rgba(168,230,240,0.36);
+      letter-spacing: 0.18em; font-weight: 700;
+    }
+    .tele-sub-depth-hint {
+      position: absolute; bottom: 0.38rem; right: 28%; padding-right: 0.45rem;
+      z-index: 4; font-size: 0.33rem;
+      color: rgba(168,230,240,0.28); letter-spacing: 0.13em;
+    }
+
+    /* — Footer — */
+    #tele-footer {
+      height: 22px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(168,230,240,0.025);
+      border-top: 1px solid rgba(168,230,240,0.06);
+    }
+    #tele-infinity {
+      font-size: 0.37rem; letter-spacing: 0.3em;
+      color: rgba(168,230,240,0.28); text-transform: uppercase;
+    }
+
+    /* — Hover hints on main lanes — */
+    #carbon-lane::after {
+      content: '⊕ CLICK TO TELESCOPE';
+      position: absolute;
+      bottom: 40%; left: 50%; transform: translateX(-50%);
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.3em;
+      color: rgba(201,168,32,0); text-transform: uppercase;
+      z-index: 50; pointer-events: none;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+    #carbon-lane:hover::after { color: rgba(201,168,32,0.55); }
 
     /* ── Title card overlay — spans BOTH lanes ── */
     #title-card {
@@ -793,6 +1067,42 @@
         <a id="ep-back-btn" href="my-whiteboard.html" class="ep-cta-btn-secondary">← Back</a>
       </div>
       <p class="ep-cta-nsp">MCA · NSPFRNP → ∞⁹</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TELESCOPE OVERLAY — infinite scene explorer
+  ══════════════════════════════════════════════ -->
+  <div id="telescope">
+    <div id="tele-bg"></div>
+    <div id="tele-panel">
+      <div id="tele-header">
+        <button class="tele-hbtn" id="tele-out-btn">↑ OUT</button>
+        <span id="tele-depth-label">DEPTH 1</span>
+        <span id="tele-line-label">LINE 1 OF 118</span>
+        <div id="tele-breadcrumb"></div>
+        <span id="tele-seg-label"></span>
+        <button class="tele-hbtn" id="tele-close-btn">✕ CLOSE</button>
+      </div>
+      <div id="tele-main">
+        <div id="tele-carbon">
+          <img id="tele-c-img" alt="" />
+          <div class="tele-c-tint"></div>
+          <div id="tele-c-label">CARBON · STORY</div>
+          <div id="tele-c-text"></div>
+        </div>
+        <div id="tele-split"></div>
+        <div id="tele-crystal">
+          <img id="tele-x-img" alt="" />
+          <div class="tele-lattice-overlay"></div>
+          <div id="tele-x-label">CRYSTALLINE WRAPPER</div>
+          <div id="tele-x-text"></div>
+        </div>
+      </div>
+      <div id="tele-sub-grid"></div>
+      <div id="tele-footer">
+        <span id="tele-infinity">∞⁹ · TELESCOPE · SELF-GENERATING · CLICK ANY FRAME TO GO DEEPER</span>
+      </div>
     </div>
   </div>
 
@@ -1706,8 +2016,9 @@
     }
 
     function getCrystalImg(lineIdx) {
-      var actual = lineIdx % CRYSTAL_BY_LINE.length;
-      return CRYSTAL_BY_LINE[actual] || 'assets/ep1-hhl-lattice.png';
+      /* Crystal lane = SING9 lattice wrapper of the same scene.
+         Same image source — CSS filter + lattice grid overlay does the transformation. */
+      return getCarbonImg(lineIdx);
     }
 
     function getCrystalCaption(lineIdx) {
@@ -2175,6 +2486,258 @@
 
     document.getElementById('pro-skip').addEventListener('click', dismissPrologue);
     document.getElementById('pro-begin').addEventListener('click', dismissPrologue);
+
+    /* ══════════════════════════════════════════════════════
+       TELESCOPE ENGINE — click any frame to zoom in infinitely
+       Crystal = same scene through SING9 lattice filter (CSS).
+       Self-generating: history stack + modulo cycling = infinite depth.
+    ══════════════════════════════════════════════════════ */
+    var TELE = { active: false, lineIdx: 0, depth: 0, history: [], kbIdx: 0 };
+
+    var teleEl        = document.getElementById('telescope');
+    var teleCImg      = document.getElementById('tele-c-img');
+    var teleXImg      = document.getElementById('tele-x-img');
+    var teleCTxt      = document.getElementById('tele-c-text');
+    var teleXTxt      = document.getElementById('tele-x-text');
+    var teleDepthLbl  = document.getElementById('tele-depth-label');
+    var teleLineLbl   = document.getElementById('tele-line-label');
+    var teleSegLbl    = document.getElementById('tele-seg-label');
+    var teleSubGrid   = document.getElementById('tele-sub-grid');
+    var teleBreadcrumb= document.getElementById('tele-breadcrumb');
+
+    function openTelescope(lineIdx) {
+      if (TELE.active) return;
+      TELE.active  = true;
+      TELE.lineIdx = lineIdx;
+      TELE.depth   = 1;
+      TELE.history = [lineIdx];
+      TELE.kbIdx   = 0;
+      if (tickInterval) clearInterval(tickInterval);
+      teleEl.classList.add('open');
+      renderTelescopeScene(lineIdx);
+    }
+
+    function closeTelescope() {
+      TELE.active  = false;
+      TELE.history = [];
+      TELE.depth   = 0;
+      TELE.kbIdx   = 0;
+      teleEl.classList.remove('open');
+      if (playing) startTick();
+    }
+
+    function teleNavigate(lineIdx) {
+      TELE.lineIdx = lineIdx;
+      TELE.depth++;
+      TELE.history.push(lineIdx);
+      TELE.kbIdx = 0;
+      renderTelescopeScene(lineIdx);
+    }
+
+    function teleOut() {
+      TELE.history.pop();
+      if (TELE.history.length === 0) { closeTelescope(); return; }
+      TELE.depth   = Math.max(1, TELE.depth - 1);
+      TELE.lineIdx = TELE.history[TELE.history.length - 1];
+      TELE.kbIdx   = 0;
+      renderTelescopeScene(TELE.lineIdx);
+    }
+
+    /* Sub-frame count grows with depth: 5 → 7 → 9 (capped at total available) */
+    function teleOffsets(depth, total) {
+      var count   = Math.min(5 + (depth - 1) * 2, 9);  /* 5, 7, 9 */
+      var phi     = 1.618;
+      var spread  = Math.min(depth, 5) * phi;
+      var half    = Math.floor(count / 2);
+      var seen    = {};
+      var offsets = [];
+      for (var i = 0; i < count; i++) {
+        var raw = (i - half);
+        var o   = half > 0 ? Math.round(raw * spread / half) : 0;
+        /* avoid duplicates */
+        while (seen[o] !== undefined) { o += (raw >= 0 ? 1 : -1); }
+        seen[o] = true;
+        offsets.push(o);
+      }
+      offsets.sort(function (a, b) { return a - b; });
+      return offsets;
+    }
+
+    /* Self-generating deeper text: depth 1-2 = script/crystal captions;
+       depth 3+ = compounds two adjacent lines to create new micro-scene narration */
+    function teleGenerateDeepText(li, depth, total) {
+      if (depth <= 2) return scriptLines[li] || '';
+      var nextLi = (li + 1) % total;
+      var prevLi = ((li - 1) + total) % total;
+      var a = scriptLines[li]     || '';
+      var b = getCrystalCaption(nextLi) || '';
+      var c = scriptLines[prevLi] || '';
+      /* Splice: first clause of A + crystalline insight of B + closing beat of C */
+      var aClause = a.indexOf('.') > -1 ? a.slice(0, a.indexOf('.') + 1) : a;
+      var bClause = b.indexOf('.') > -1 ? b.slice(0, b.indexOf('.') + 1) : b.slice(0, 60);
+      var cTail   = c.length > 40        ? c.slice(-40).replace(/^[^a-z]*/i, '') : c;
+      var out = aClause + ' ' + bClause;
+      if (depth >= 5) out += ' ' + cTail;
+      if (depth >= 9) out += ' ∞⁹';
+      return out.trim();
+    }
+
+    function teleGenerateDeepCrystal(li, depth, total) {
+      if (depth <= 2) return getCrystalCaption(li);
+      /* At depth 3+, the crystal wrapper compounds the meaning layer further */
+      var nextLi = (li + 3) % total;
+      var base   = getCrystalCaption(li) || '';
+      var fold   = getCrystalCaption(nextLi) || '';
+      var bClause = base.indexOf('.') > -1 ? base.slice(0, base.indexOf('.') + 1) : base;
+      var fPart   = fold.slice(0, 48);
+      return 'LATTICE DEPTH ' + depth + ': ' + bClause + ' ↔ ' + fPart;
+    }
+
+    /* Breadcrumb: show up to last 6 hops as chips */
+    function renderBreadcrumb() {
+      teleBreadcrumb.innerHTML = '';
+      var total = scriptLines.length || 118;
+      var show  = TELE.history.slice(-6);
+      show.forEach(function (li, i) {
+        if (i > 0) {
+          var arr = document.createElement('span');
+          arr.className = 'tele-bc-arrow';
+          arr.textContent = '›';
+          teleBreadcrumb.appendChild(arr);
+        }
+        var chip = document.createElement('span');
+        chip.className = 'tele-bc-chip' + (i === show.length - 1 ? ' tele-bc-current' : '');
+        chip.textContent = 'L' + (((li % total) + total) % total + 1);
+        teleBreadcrumb.appendChild(chip);
+      });
+    }
+
+    function renderTelescopeScene(lineIdx) {
+      var total = scriptLines.length || 118;
+      var li    = ((lineIdx % total) + total) % total;
+      var src   = getCarbonImg(li);
+      var seg   = Math.min(SEG_TOTAL - 1, Math.floor((li / total) * SEG_TOTAL));
+
+      /* Main scene: fade new images in */
+      teleCImg.style.opacity = '0';
+      teleXImg.style.opacity = '0';
+      setTimeout(function () {
+        teleCImg.src = src;
+        teleXImg.src = src;
+        teleCImg.style.opacity = '1';
+        teleXImg.style.opacity = '1';
+      }, 180);
+
+      /* Main captions */
+      teleCTxt.textContent = teleGenerateDeepText(li, TELE.depth, total);
+      teleXTxt.textContent = teleGenerateDeepCrystal(li, TELE.depth, total);
+
+      /* Header labels */
+      var infinityBadge = TELE.depth >= 9 ? ' · ∞⁹' : (TELE.depth >= 5 ? ' · ∞' : '');
+      teleDepthLbl.textContent = 'DEPTH ' + TELE.depth + infinityBadge;
+      teleLineLbl.textContent  = 'LINE ' + (li + 1) + ' OF ' + total;
+      teleSegLbl.textContent   = SEG_NAMES[seg] || '';
+
+      /* Breadcrumb trail */
+      renderBreadcrumb();
+
+      /* Sub-frames — count grows with depth, spread widens */
+      var offsets = teleOffsets(TELE.depth, total);
+      teleSubGrid.innerHTML = '';
+      TELE.kbIdx = Math.floor(offsets.length / 2); /* default kbd focus = center */
+
+      offsets.forEach(function (offset, cardIdx) {
+        var subLi    = ((li + offset) % total + total) % total;
+        var isCenter = offset === 0;
+        var isKbd    = cardIdx === TELE.kbIdx;
+        var card     = document.createElement('div');
+        card.className = 'tele-sub-card'
+          + (isCenter ? ' tele-center' : '')
+          + (isKbd    ? ' tele-kbd-focus' : '');
+        card.setAttribute('data-card-idx', cardIdx);
+
+        /* Carbon thumbnail (main area) */
+        var img = document.createElement('img');
+        img.src = getCarbonImg(subLi);
+        img.alt = '';
+
+        /* Crystal thumbnail strip */
+        var xStrip = document.createElement('div');
+        xStrip.className = 'tele-sub-crystal-strip';
+        var xImg = document.createElement('img');
+        xImg.src = getCarbonImg(subLi); /* same src, CSS filter transforms it */
+        xImg.alt = '';
+        xStrip.appendChild(xImg);
+
+        /* Line number chip */
+        var lineNum = document.createElement('div');
+        lineNum.className = 'tele-sub-line-num';
+        lineNum.textContent = 'L' + (subLi + 1);
+
+        /* Depth hint */
+        var hint = document.createElement('div');
+        hint.className = 'tele-sub-depth-hint';
+        hint.textContent = isCenter ? '↓ DEEPER' : (offset < 0 ? '← BACK' : '→ ENTER');
+
+        /* Caption text */
+        var txt = document.createElement('div');
+        txt.className = 'tele-sub-text';
+        var raw = teleGenerateDeepText(subLi, TELE.depth, total);
+        txt.textContent = raw.length > 68 ? raw.slice(0, 68) + '…' : raw;
+
+        card.appendChild(img);
+        card.appendChild(xStrip);
+        card.appendChild(lineNum);
+        card.appendChild(hint);
+        card.appendChild(txt);
+
+        card.onclick = (function (sli) {
+          return function () { teleNavigate(sli); };
+        })(subLi);
+
+        teleSubGrid.appendChild(card);
+      });
+    }
+
+    /* Keyboard focus helper */
+    function teleKbFocus(newIdx) {
+      var cards = teleSubGrid.querySelectorAll('.tele-sub-card');
+      if (!cards.length) return;
+      newIdx = ((newIdx % cards.length) + cards.length) % cards.length;
+      TELE.kbIdx = newIdx;
+      cards.forEach(function (c, i) {
+        c.classList.toggle('tele-kbd-focus', i === newIdx);
+      });
+    }
+
+    /* Wire telescope buttons */
+    document.getElementById('tele-out-btn').addEventListener('click', teleOut);
+    document.getElementById('tele-close-btn').addEventListener('click', closeTelescope);
+    document.getElementById('tele-bg').addEventListener('click', function (e) {
+      if (e.target === document.getElementById('tele-bg')) closeTelescope();
+    });
+
+    /* Keyboard navigation */
+    document.addEventListener('keydown', function (e) {
+      if (!TELE.active) return;
+      if (e.key === 'Escape')      { closeTelescope(); return; }
+      if (e.key === 'Backspace' || e.key === 'ArrowUp') { teleOut(); return; }
+      if (e.key === 'ArrowLeft')   { teleKbFocus(TELE.kbIdx - 1); return; }
+      if (e.key === 'ArrowRight')  { teleKbFocus(TELE.kbIdx + 1); return; }
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        var cards = teleSubGrid.querySelectorAll('.tele-sub-card');
+        if (cards[TELE.kbIdx]) cards[TELE.kbIdx].click();
+      }
+    });
+
+    /* Click on either lane to enter telescope */
+    carbonLaneEl.addEventListener('click', function () {
+      if (!TELE.active) openTelescope(getLineIdx(frameIndex, imgSlot));
+    });
+    crystalLaneEl.addEventListener('click', function () {
+      if (!TELE.active) openTelescope(getLineIdx(frameIndex, imgSlot));
+    });
 
     /* Boot */
     startPrologue();

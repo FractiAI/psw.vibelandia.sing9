@@ -582,6 +582,15 @@
       color: rgba(168,230,240,0.28); text-transform: uppercase;
     }
 
+    /* — SING9 Node indicator SVG — */
+    #tele-node-svg {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      width: 88px; height: 88px;
+      z-index: 8; pointer-events: none;
+      opacity: 0.88;
+      filter: drop-shadow(0 0 6px rgba(201,168,32,0.25));
+    }
+
     /* — Hover hints on main lanes — */
     #carbon-lane::after {
       content: '⊕ CLICK TO TELESCOPE';
@@ -1095,6 +1104,11 @@
         <div id="tele-crystal">
           <img id="tele-x-img" alt="" />
           <div class="tele-lattice-overlay"></div>
+          <!-- SING9 live node indicator — shows which nodes this scene activates -->
+          <svg id="tele-node-svg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+            <g id="tele-node-lines"></g>
+            <g id="tele-node-dots"></g>
+          </svg>
           <div id="tele-x-label">CRYSTALLINE WRAPPER</div>
           <div id="tele-x-text"></div>
         </div>
@@ -2505,6 +2519,125 @@
     var teleSubGrid   = document.getElementById('tele-sub-grid');
     var teleBreadcrumb= document.getElementById('tele-breadcrumb');
 
+    /* ══════════════════════════════════════════════════════
+       SING9 NODE ACTIVATION MAP
+       9 nodes: 1=Reno, 2=Cartagena, 3=Seattle, 4=Corporate,
+                5=Protagonist, 6=CERN/Physics, 7=QueenBee, 8=Sol-V, 9=Alaska
+    ══════════════════════════════════════════════════════ */
+    var TELE_NODE_MAP = {
+      0:[5,6], 1:[1,5], 2:[5,6], 3:[5,6], 4:[2,5], 5:[5,6], 6:[5,6],
+      7:[5,6], 8:[1,2,3,4,5,6,7,8,9], 9:[5,6],
+      10:[5,6], 11:[5], 12:[5,9], 13:[5,6], 14:[5,6],
+      15:[5,6], 16:[3,5], 17:[1,2,3,4,5,6,7,8,9], 18:[7,5], 19:[7,5],
+      20:[4,5], 21:[4,5], 22:[9,5], 23:[5], 24:[4,5],
+      25:[5], 26:[4,5], 27:[2,5], 28:[1,2,5], 29:[6,5],
+      30:[5,9], 31:[4,5], 32:[4,5], 33:[5,7], 34:[4,5],
+      35:[4,5], 36:[4,5], 37:[4,5], 38:[7,5], 39:[4,5],
+      40:[1,5], 41:[5], 42:[4,8,5], 43:[4,8,5], 44:[5],
+      45:[5,1], 46:[5,6], 47:[1,2,3,4,5,6,7,8,9], 48:[5], 49:[5,1],
+      50:[5,6,7], 51:[6,5], 52:[5,6], 53:[1,2,3,4,5,6,7,8,9], 54:[5,6],
+      55:[5,1], 56:[5], 57:[5,6], 58:[6,5], 59:[6,8],
+      60:[8,5], 61:[8,5], 62:[8,5,7], 63:[5], 64:[7,8],
+      65:[5,1], 66:[8,1], 67:[1,5], 68:[1,2,3,4,5,6,7,8,9], 69:[1,2,3,4,5,6,7,8,9],
+      70:[5], 71:[1,2], 72:[1,2,3,4,5,6,7,8,9], 73:[5,6],
+      74:[1,2,3,4,5,6,7,8,9], 75:[1,2,3,4,5,6,7,8,9], 76:[1,2,3,4,5,6,7,8,9],
+      77:[1,2,3,4,5,6,7,8,9],
+      78:[1,2,3,4,5,6,7,8,9], 79:[1,2,3,4,5,6,7,8,9], 80:[1,2,3,4,5,6,7,8,9],
+      81:[8,6], 82:[8,5], 83:[8,6], 84:[7,8], 85:[8,5], 86:[5], 87:[1,2,3,4,5,6,7,8,9],
+      88:[5], 89:[4], 90:[5], 91:[5], 92:[5,6], 93:[1,4,7],
+      94:[1,2,3,4,5,6,7,8,9], 95:[7,1], 96:[6,5], 97:[6,8], 98:[7,6],
+      99:[6,8], 100:[6,8], 101:[1,2,3,4,5,6,7,8,9], 102:[8,5], 103:[1,2,3,4,5,6,7,8,9],
+      104:[7,5], 105:[1,5], 106:[1,2,3,4,5,6,7,8,9], 107:[5,6],
+      108:[5,6], 109:[5,6], 110:[5,6], 111:[5,1], 112:[1,2,3,4,5,6,7,8,9],
+      113:[8,5], 114:[1,2,3,4,5,6,7,8,9], 115:[1,2,3,4,5,6,7,8,9],
+      116:[1,2,3,4,5,6,7,8,9], 117:[1,2,3,4,5,6,7,8,9]
+    };
+    var SEG_DEFAULT_NODES = [[5,6],[2,3,5],[4,5,9],[4,5,8,9],[5,6,7],[1,5,7,8]];
+    var TELE_NODE_LABELS = ['','RENO','CART','SEA','CORP','HERO','CERN','BEE','SOL-V','EDGE'];
+    /* Node positions in SVG viewBox 0 0 96 96 */
+    var TELE_NODE_POS = [null,{x:16,y:16},{x:48,y:16},{x:80,y:16},{x:16,y:48},{x:48,y:48},{x:80,y:48},{x:16,y:80},{x:48,y:80},{x:80,y:80}];
+    /* Connections: [from, to] */
+    var TELE_CONNECTIONS = [
+      [1,2],[2,3],[4,5],[5,6],[7,8],[8,9],  /* horizontals */
+      [1,4],[4,7],[2,5],[5,8],[3,6],[6,9],  /* verticals */
+      [1,5],[3,5],[5,7],[5,9],              /* diagonals through center */
+      [2,4],[2,6],[4,8],[6,8]               /* cross diagonals */
+    ];
+
+    function getTeleNodes(li, seg) {
+      var n = TELE_NODE_MAP[li];
+      if (n) return n;
+      return SEG_DEFAULT_NODES[seg] || [5];
+    }
+
+    function drawTelescopeNodes(li, seg) {
+      var linesEl = document.getElementById('tele-node-lines');
+      var dotsEl  = document.getElementById('tele-node-dots');
+      if (!linesEl || !dotsEl) return;
+      linesEl.innerHTML = '';
+      dotsEl.innerHTML  = '';
+      var active = getTeleNodes(li, seg);
+
+      /* Draw connection lines */
+      TELE_CONNECTIONS.forEach(function (pair) {
+        var a = TELE_NODE_POS[pair[0]], b = TELE_NODE_POS[pair[1]];
+        if (!a || !b) return;
+        var bothOn = active.indexOf(pair[0]) !== -1 && active.indexOf(pair[1]) !== -1;
+        var ln = document.createElementNS('http://www.w3.org/2000/svg','line');
+        ln.setAttribute('x1', a.x); ln.setAttribute('y1', a.y);
+        ln.setAttribute('x2', b.x); ln.setAttribute('y2', b.y);
+        ln.setAttribute('stroke', bothOn ? 'rgba(212,175,55,0.65)' : 'rgba(168,230,240,0.1)');
+        ln.setAttribute('stroke-width', bothOn ? '1.2' : '0.5');
+        linesEl.appendChild(ln);
+      });
+
+      /* Draw nodes */
+      for (var n = 1; n <= 9; n++) {
+        var pos = TELE_NODE_POS[n];
+        if (!pos) continue;
+        var on = active.indexOf(n) !== -1;
+
+        if (on) {
+          /* Glow aura */
+          var aura = document.createElementNS('http://www.w3.org/2000/svg','circle');
+          aura.setAttribute('cx', pos.x); aura.setAttribute('cy', pos.y); aura.setAttribute('r', '8');
+          aura.setAttribute('fill', 'rgba(212,175,55,0.1)');
+          dotsEl.appendChild(aura);
+        }
+
+        var circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        circle.setAttribute('cx', pos.x); circle.setAttribute('cy', pos.y);
+        circle.setAttribute('r', on ? '4.5' : '2.5');
+        circle.setAttribute('fill', on ? 'rgba(212,175,55,0.92)' : 'rgba(168,230,240,0.18)');
+        circle.setAttribute('stroke', on ? 'rgba(255,235,120,0.6)' : 'rgba(168,230,240,0.1)');
+        circle.setAttribute('stroke-width', '0.8');
+        if (on) {
+          var anim = document.createElementNS('http://www.w3.org/2000/svg','animate');
+          anim.setAttribute('attributeName','r'); anim.setAttribute('values','4.5;5.5;4.5');
+          anim.setAttribute('dur', (1.5 + n * 0.2) + 's'); anim.setAttribute('repeatCount','indefinite');
+          circle.appendChild(anim);
+        }
+        dotsEl.appendChild(circle);
+
+        /* Label */
+        var txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+        txt.setAttribute('x', pos.x); txt.setAttribute('y', pos.y + 13);
+        txt.setAttribute('text-anchor','middle'); txt.setAttribute('font-size','4');
+        txt.setAttribute('font-family','system-ui,sans-serif');
+        txt.setAttribute('letter-spacing','0.2');
+        txt.setAttribute('fill', on ? 'rgba(255,235,120,0.7)' : 'rgba(168,230,240,0.2)');
+        txt.textContent = TELE_NODE_LABELS[n];
+        dotsEl.appendChild(txt);
+      }
+
+      /* Update x-label with active node names */
+      var xLabel = document.getElementById('tele-x-label');
+      if (xLabel) {
+        var activeNames = active.map(function(n){ return TELE_NODE_LABELS[n]; }).filter(Boolean);
+        xLabel.textContent = 'SING·9 · ' + activeNames.join(' · ');
+      }
+    }
+
     function openTelescope(lineIdx) {
       if (TELE.active) return;
       TELE.active  = true;
@@ -2619,18 +2752,23 @@
       var seg   = Math.min(SEG_TOTAL - 1, Math.floor((li / total) * SEG_TOTAL));
 
       /* Main scene: fade new images in */
+      var xSrc = getCrystalImg(li);
       teleCImg.style.opacity = '0';
       teleXImg.style.opacity = '0';
       setTimeout(function () {
         teleCImg.src = src;
-        teleXImg.src = src;
+        teleXImg.src = xSrc; /* Crystal = SING9 lattice version — different image */
         teleCImg.style.opacity = '1';
         teleXImg.style.opacity = '1';
+        drawTelescopeNodes(li, seg);
       }, 180);
 
       /* Main captions */
       teleCTxt.textContent = teleGenerateDeepText(li, TELE.depth, total);
-      teleXTxt.textContent = teleGenerateDeepCrystal(li, TELE.depth, total);
+      /* Crystal caption: use actual meaning-layer caption at depth 1-2, compound deeper */
+      teleXTxt.textContent = TELE.depth <= 2
+        ? getCrystalCaption(li)
+        : teleGenerateDeepCrystal(li, TELE.depth, total);
 
       /* Header labels */
       var infinityBadge = TELE.depth >= 9 ? ' · ∞⁹' : (TELE.depth >= 5 ? ' · ∞' : '');
@@ -2661,11 +2799,11 @@
         img.src = getCarbonImg(subLi);
         img.alt = '';
 
-        /* Crystal thumbnail strip */
+        /* Crystal thumbnail strip — SING9 lattice version of this scene */
         var xStrip = document.createElement('div');
         xStrip.className = 'tele-sub-crystal-strip';
         var xImg = document.createElement('img');
-        xImg.src = getCarbonImg(subLi); /* same src, CSS filter transforms it */
+        xImg.src = getCrystalImg(subLi); /* actual crystal/lattice interpretation image */
         xImg.alt = '';
         xStrip.appendChild(xImg);
 

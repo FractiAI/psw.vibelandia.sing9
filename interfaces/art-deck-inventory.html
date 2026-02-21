@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Deck Inventory · Original Artwork · SING!9 StoryStream</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #040108;
+      --gold:     #c9a020;
+      --gold-lt:  #e8c84a;
+      --crystal:  #a8e6f0;
+      --text:     rgba(232,220,200,0.88);
+      --muted:    rgba(200,180,150,0.5);
+      --border:   rgba(201,168,32,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+      min-height: 100vh;
+      padding-bottom: calc(var(--ticker-h, 30px) + 36px + 3rem);
+      padding-top: calc(var(--cinema-h, 36px) + 1.5rem);
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      max-width: 1100px;
+      margin: 0 auto 2rem;
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .top-bar a {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .top-bar a:hover { color: var(--gold); }
+    .top-bar .sep { color: rgba(201,168,32,0.2); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto 2.5rem;
+      padding: 0 1.25rem;
+      border-left: 3px solid var(--gold);
+      padding-left: 1.25rem;
+    }
+    .hero-label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(201,168,32,0.5);
+      margin-bottom: 0.4rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* ── STACK SECTION ── */
+    .stack-section {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 1.25rem;
+    }
+
+    .stack-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stack-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .stack-meta {
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .stack-doc-link {
+      margin-left: auto;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--crystal);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.15s;
+    }
+    .stack-doc-link:hover { opacity: 1; }
+
+    /* ── FRAME GRID ── */
+    .frame-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 6px;
+    }
+
+    .frame-thumb {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,32,0.1);
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .frame-thumb:hover {
+      border-color: rgba(201,168,32,0.5);
+      transform: scale(1.025);
+      z-index: 2;
+    }
+    .frame-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .frame-num {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.25rem 0.35rem;
+      background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, transparent 100%);
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: rgba(201,168,32,0.7);
+      text-transform: uppercase;
+    }
+
+    /* ── COMING SOON STACKS ── */
+    .stacks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 10px;
+    }
+    .stack-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem 1.2rem;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .stack-card:hover {
+      border-color: rgba(201,168,32,0.45);
+      background: rgba(201,168,32,0.04);
+    }
+    .stack-card-label {
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(201,168,32,0.45);
+    }
+    .stack-card-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .stack-card-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .stack-card-cta {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--crystal);
+      margin-top: auto;
+      padding-top: 0.35rem;
+    }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 9200;
+      background: rgba(0,0,0,0.94);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    #lightbox.open { display: flex; }
+    #lb-img {
+      max-width: min(92vw, 900px);
+      max-height: 78vh;
+      object-fit: contain;
+      border-radius: 3px;
+      box-shadow: 0 0 80px rgba(201,168,32,0.15);
+    }
+    #lb-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,168,32,0.55);
+    }
+    #lb-nav {
+      display: flex; gap: 1.5rem; align-items: center;
+    }
+    #lb-nav button {
+      background: rgba(201,168,32,0.1);
+      border: 1px solid rgba(201,168,32,0.3);
+      border-radius: 3px;
+      color: var(--gold);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #lb-nav button:hover { background: rgba(201,168,32,0.2); }
+    #lb-close {
+      position: fixed; top: 1rem; right: 1.25rem;
+      background: none; border: none;
+      color: rgba(201,168,32,0.45);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    #lb-close:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="ep-studio-workspace.html">← EP Studio</a>
+    <span class="sep">·</span>
+    <a href="storyboard-catalog.html">Storyboard Catalog</a>
+    <span class="sep">·</span>
+    <a href="my-whiteboard.html">My Whiteboard</a>
+    <span class="sep">·</span>
+    <a href="outline-only.html">STORYSTREAM 9 ▶</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-label">SING!9 · Original Artwork</p>
+    <h1>Art Deck Inventory</h1>
+    <p>All decks · All stacks · Original frames. Stack 1 is local and fully browsable below. Stacks 2–6 open in Google Docs. Click any frame to expand.</p>
+  </div>
+
+  <!-- STACK 1 — LOCAL IMAGES -->
+  <div class="stack-section">
+    <div class="stack-header">
+      <span class="stack-title">Stack 1 · Now Playing</span>
+      <span class="stack-meta" id="s1-count">— frames</span>
+      <a class="stack-doc-link" href="https://docs.google.com/document/d/1TiS5J1RePmgnw84RFfPJTuoauVLDTSQp21mwZALPEWk/edit?usp=drivesdk" target="_blank" rel="noopener">Open Google Doc ↗</a>
+    </div>
+    <div class="frame-grid" id="stack1-grid"></div>
+  </div>
+
+  <!-- STACKS 2–6 + ADDITIONAL -->
+  <div class="stack-section">
+    <div class="stack-header">
+      <span class="stack-title">Stacks 2–6 · Additional</span>
+      <span class="stack-meta">Google Docs · Click to open</span>
+    </div>
+    <div class="stacks-grid">
+      <a class="stack-card" href="https://docs.google.com/document/d/1cuJ7txr5V2tr1inQQ1yJpRTLjJLP4WXiMXeonJGPPPM/edit?usp=drivesdk" target="_blank" rel="noopener">
+        <span class="stack-card-label">Stack 2</span>
+        <span class="stack-card-title">Full Play Deck · Main Story</span>
+        <span class="stack-card-desc">The complete arc. Every scene. The whole play. The full SING!9 story from beginning to end.</span>
+        <span class="stack-card-cta">Open Google Doc ↗</span>
+      </a>
+      <a class="stack-card" href="https://docs.google.com/document/d/1dV142mAf-xJlGZRhyMoiA-jAOEzc5ZrJ19pwWfcM5h8/edit?usp=drivesdk" target="_blank" rel="noopener">
+        <span class="stack-card-label">Stack 3</span>
+        <span class="stack-card-title">Crystalline</span>
+        <span class="stack-card-desc">The Crystalline layer. Fourth level. HHL. Everything above the line. The destination made visible.</span>
+        <span class="stack-card-cta">Open Google Doc ↗</span>
+      </a>
+      <a class="stack-card" href="https://docs.google.com/document/d/1geA-glS1pOLeltRI0OR1wPwp3ETaIa56_V6-Q2uPsJ4/edit?usp=drivesdk" target="_blank" rel="noopener">
+        <span class="stack-card-label">Stack 4</span>
+        <span class="stack-card-title">Biological · Enriching Characters</span>
+        <span class="stack-card-desc">The cast. Real people, real archetypes. Those who enrich every room they enter. Study each one.</span>
+        <span class="stack-card-cta">Open Google Doc ↗</span>
+      </a>
+      <a class="stack-card" href="https://docs.google.com/document/d/1lD5-D5I9rQ7awGzU2eVEZosz8HVMAkaHJaahcw8YXfU/edit?usp=drivesdk" target="_blank" rel="noopener">
+        <span class="stack-card-label">Stack 5</span>
+        <span class="stack-card-title">Genuine Hearts · Golden Hearts</span>
+        <span class="stack-card-desc">Gold Heart nodes. The ones who know they deserve it. On the right side of the line. Vibelandia is theirs.</span>
+        <span class="stack-card-cta">Open Google Doc ↗</span>
+      </a>
+      <a class="stack-card" href="https://docs.google.com/document/d/1oPYNbSKUvp69f5VPMWgbDefCoaFI_o1AFjOIjobBts4/edit?usp=drivesdk" target="_blank" rel="noopener">
+        <span class="stack-card-label">Stack 6</span>
+        <span class="stack-card-title">Disingenuous · Fake Carbon Characters</span>
+        <span class="stack-card-desc">The other side. Antagonists. False signals. Carbon descent characters. Necessary for the full arc.</span>
+        <span class="stack-card-cta">Open Google Doc ↗</span>
+      </a>
+      <a class="stack-card" href="https://docs.google.com/document/d/1tF1PFk1nFKNO_0VqSZb_vYXZWcmE6F43jJ_qMbXf9Nc/edit?usp=drivesdk" target="_blank" rel="noopener">
+        <span class="stack-card-label">Additional</span>
+        <span class="stack-card-title">Additional Pics</span>
+        <span class="stack-card-desc">Overflow frames, bonus material, raw captures that didn't land in Stacks 1–6. The full raw archive.</span>
+        <span class="stack-card-cta">Open Google Doc ↗</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <button id="lb-close" aria-label="Close">×</button>
+    <img id="lb-img" src="" alt="">
+    <div id="lb-label"></div>
+    <div id="lb-nav">
+      <button id="lb-prev">← Prev</button>
+      <button id="lb-next">Next →</button>
+    </div>
+  </div>
+
+  <script>
+  /* ── STACK 1 FRAME LIST ── */
+  /* All frames that exist in assets/stack1/ */
+  var S1_FRAMES = (function () {
+    var all = [];
+    for (var i = 1; i <= 62; i++) {
+      /* skip known missing: 007, 013, 018, 044 */
+      if (i === 7 || i === 13 || i === 18 || i === 44) continue;
+      all.push(i);
+    }
+    return all;
+  })();
+
+  function pad(n) { return String(n).padStart(3, '0'); }
+  function frameSrc(n) { return 'assets/stack1/s1-' + pad(n) + '.jpg'; }
+
+  /* ── BUILD GRID ── */
+  var grid = document.getElementById('stack1-grid');
+  var lbFrames = []; /* indices into S1_FRAMES for lightbox */
+
+  S1_FRAMES.forEach(function (n, idx) {
+    lbFrames.push(n);
+    var div = document.createElement('div');
+    div.className = 'frame-thumb';
+    div.dataset.idx = idx;
+
+    var img = document.createElement('img');
+    img.src = frameSrc(n);
+    img.alt = 'Frame ' + pad(n);
+    img.loading = 'lazy';
+
+    var label = document.createElement('div');
+    label.className = 'frame-num';
+    label.textContent = 'S1 · ' + pad(n);
+
+    div.appendChild(img);
+    div.appendChild(label);
+    div.addEventListener('click', function () { openLightbox(parseInt(this.dataset.idx)); });
+    grid.appendChild(div);
+  });
+
+  document.getElementById('s1-count').textContent = '— ' + S1_FRAMES.length + ' frames';
+
+  /* ── LIGHTBOX ── */
+  var lb       = document.getElementById('lightbox');
+  var lbImg    = document.getElementById('lb-img');
+  var lbLabel  = document.getElementById('lb-label');
+  var lbIdx    = 0;
+
+  function openLightbox(idx) {
+    lbIdx = idx;
+    showFrame();
+    lb.classList.add('open');
+  }
+  function showFrame() {
+    var n = lbFrames[lbIdx];
+    lbImg.src = frameSrc(n);
+    lbLabel.textContent = 'STACK 1 · FRAME ' + pad(n) + ' · ' + (lbIdx + 1) + ' of ' + lbFrames.length;
+  }
+
+  document.getElementById('lb-close').addEventListener('click', function () { lb.classList.remove('open'); });
+  document.getElementById('lb-prev').addEventListener('click', function () {
+    lbIdx = (lbIdx - 1 + lbFrames.length) % lbFrames.length;
+    showFrame();
+  });
+  document.getElementById('lb-next').addEventListener('click', function () {
+    lbIdx = (lbIdx + 1) % lbFrames.length;
+    showFrame();
+  });
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb) lb.classList.remove('open');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % lbFrames.length; showFrame(); }
+    if (e.key === 'ArrowLeft')  { lbIdx = (lbIdx - 1 + lbFrames.length) % lbFrames.length; showFrame(); }
+    if (e.key === 'Escape')     { lb.classList.remove('open'); }
+  });
+  </script>
+
+  <script src="../ticker.js"></script>
+  <script src="../nav-strip.js"></script>
+  <script src="../cinema-banner.js"></script>
+</body>
+</html>

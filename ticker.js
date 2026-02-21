@@ -15,7 +15,7 @@
 
 /* ── CONFIG ─────────────────────────────────────────────────────────────── */
 
-var TICKER_SPEED = 160; /* seconds — full pass; increased for readability as item count grew */
+var TICKER_SPEED = 280; /* seconds — slow, calm, heartbeat pace; soft flowing stream */
 
 /* Items: { text, href }
    href: absolute path from site root, or null for non-linked story fragments */
@@ -138,11 +138,11 @@ var TICKER_ITEMS = [
     '#nspfrnp-ticker-wrap:hover #nspfrnp-ticker{animation-play-state:paused;}',
     '#nspfrnp-ticker span,#nspfrnp-ticker a{',
       'display:inline-flex;align-items:center;',
-      'padding:0 1.1rem;',
+      'padding:0 1.9rem;',
       'font-family:"Segoe UI",system-ui,sans-serif;',
-      'font-size:0.67rem;',
-      'font-weight:700;',
-      'letter-spacing:0.1em;',
+      'font-size:0.72rem;',
+      'font-weight:600;',
+      'letter-spacing:0.09em;',
       'text-transform:uppercase;',
       'white-space:nowrap;',
       'color:#1a0800;',
@@ -154,12 +154,12 @@ var TICKER_ITEMS = [
       'transition:color 0.15s,background 0.15s;',
     '}',
     '#nspfrnp-ticker a:hover{color:#fff;background:rgba(0,0,0,0.18);}',
-    /* Separator dots */
+    /* Separator — soft dot, wide breath */
     '#nspfrnp-ticker span::after,#nspfrnp-ticker a::after{',
-      'content:"✦";',
-      'margin-left:1.1rem;',
-      'opacity:0.4;',
-      'font-size:0.45rem;',
+      'content:"·";',
+      'margin-left:1.9rem;',
+      'opacity:0.28;',
+      'font-size:0.9rem;',
       'vertical-align:middle;',
     '}',
   ].join('');

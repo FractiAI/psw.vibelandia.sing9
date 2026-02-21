@@ -18,7 +18,7 @@
 
 (function () {
 
-  var TRAILER_URL  = '/interfaces/trailer-loop.html';
+  var TRAILER_URL  = '/interfaces/outline-only.html';
   var STORYSTREAM_URL = '/interfaces/storystream-9-about.html';
   var H = 36; /* px */
 
@@ -179,7 +179,7 @@
     '<div id="sing9-cb-pill"><span class="cb-dot"></span>NOW PLAYING</div>' +
     '<a id="sing9-cb-title" href="' + STORYSTREAM_URL + '">SING!9 STORYSTREAM · THREE STREAMS · 24/7</a>' +
     '<span class="cb-sep"></span>' +
-    '<a class="cb-watch" href="' + TRAILER_URL + '">▶ WATCH TRAILER</a>' +
+    '<a class="cb-watch" href="' + TRAILER_URL + '">▶ WATCH NOW</a>' +
     '<span class="cb-sep"></span>' +
     '<span id="sing9-cb-frames" aria-hidden="true">FRAME <span id="sing9-cb-fc">0001</span></span>';
   banner.appendChild(center);

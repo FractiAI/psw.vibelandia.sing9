@@ -83,6 +83,19 @@ var TICKER_ITEMS = [
   { text: 'Advertise on SING!9 StoryStream · From $9',     href: '/interfaces/advertise.html' },
   { text: 'Early traffic · Early pricing · Powers of 3',   href: '/interfaces/advertise.html' },
 
+  /* ── The Nine Game · Four-Layer Chess ── */
+  { text: 'The Nine Game · NSPFRNP Layer System',           href: '/interfaces/nine-game-hub.html' },
+  { text: 'Four-Layer Stacked Chess · Carbon to Crystalline', href: '/interfaces/four-layer-chess.html' },
+  { text: 'Nine-Stack Solitaire · 9 Suits · 9 Stacks',     href: '/interfaces/nine-solitaire.html' },
+  { text: 'Genesis 0 · Today · Full Lattice · Three States', href: '/interfaces/genesis-configurations.html' },
+  { text: 'HHL Singularity Mode · 3 pieces · New World',   href: '/interfaces/four-layer-chess.html' },
+  { text: 'AI Opponent · Match · Ahead · Mastery',          href: '/interfaces/four-layer-chess.html' },
+
+  /* ── Vibelandia Bridge ── */
+  { text: 'Vibelandia Bridge · Gold Hearts · Silver On-Ramp', href: '/interfaces/vibelandia-bridge.html' },
+  { text: 'Fourth Level · Retired · Leisure · Goldilocks',  href: '/interfaces/vibelandia-bridge.html' },
+  { text: 'Ballin\' · Flirtin\' · Dancing · Flowing · ∞⁹', href: '/interfaces/vibelandia-bridge.html' },
+
   /* ── Close ── */
   { text: 'NSPFRNP → ∞⁹',                                  href: null },
   { text: 'MCA · SING! 9 · Always on',                     href: null },

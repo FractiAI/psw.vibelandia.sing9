@@ -64,10 +64,12 @@ if (fs.existsSync(dataSrc)) copyDir(dataSrc, path.join(staticDir, 'data'));
 const protocolsSrc = path.join(root, 'protocols');
 if (fs.existsSync(protocolsSrc)) copyDir(protocolsSrc, path.join(staticDir, 'protocols'));
 
-// Root *.md
+// Root *.md + root *.js (ticker, nav-strip, cinema-banner, etc.)
 const rootFiles = fs.readdirSync(root, { withFileTypes: true });
 for (const e of rootFiles) {
-  if (e.isFile() && e.name.endsWith('.md')) copyFile(path.join(root, e.name), path.join(staticDir, e.name));
+  if (e.isFile() && (e.name.endsWith('.md') || e.name.endsWith('.js'))) {
+    copyFile(path.join(root, e.name), path.join(staticDir, e.name));
+  }
 }
 
 // assets/ (images, audio, etc.)

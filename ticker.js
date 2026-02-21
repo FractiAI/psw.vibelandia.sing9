@@ -15,7 +15,7 @@
 
 /* ── CONFIG ─────────────────────────────────────────────────────────────── */
 
-var TICKER_SPEED = 55; /* seconds — slower = more legible on film surfaces */
+var TICKER_SPEED = 160; /* seconds — full pass; increased for readability as item count grew */
 
 /* Items: { text, href }
    href: absolute path from site root, or null for non-linked story fragments */

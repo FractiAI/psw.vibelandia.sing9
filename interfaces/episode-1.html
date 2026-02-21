@@ -216,6 +216,111 @@
     .kb2 { animation: kb2 11s ease forwards; }
     .kb3 { animation: kb3 11s ease forwards; }
 
+    /* ══════════════════════════════════════════════════════
+       FUZZBALL JOY PHYSICS — lane container animations
+       Applied to #carbon-lane / #crystal-lane, not the img,
+       so KB motion on the image is preserved underneath.
+    ══════════════════════════════════════════════════════ */
+
+    /* TAIL WAG — Sol-V energy, bringing home, pure joy signal */
+    @keyframes tail-wag {
+      0%,100% { transform: rotate(0deg) translateX(0); }
+      12%  { transform: rotate(-2.5deg) translateX(-10px); }
+      26%  { transform: rotate(2.5deg)  translateX(10px); }
+      40%  { transform: rotate(-1.8deg) translateX(-7px); }
+      55%  { transform: rotate(1.8deg)  translateX(7px); }
+      70%  { transform: rotate(-1deg)   translateX(-4px); }
+      84%  { transform: rotate(1deg)    translateX(4px); }
+    }
+
+    /* BOOTY SHAKE — rapid celebratory lateral shimmy */
+    @keyframes booty-shake {
+      0%,100% { transform: translateX(0) skewX(0deg); }
+      8%   { transform: translateX(-14px) skewX(-1.5deg); }
+      18%  { transform: translateX(14px)  skewX(1.5deg); }
+      28%  { transform: translateX(-11px) skewX(-1deg); }
+      38%  { transform: translateX(11px)  skewX(1deg); }
+      48%  { transform: translateX(-8px)  skewX(-0.6deg); }
+      58%  { transform: translateX(8px)   skewX(0.6deg); }
+      68%  { transform: translateX(-5px); }
+      78%  { transform: translateX(5px); }
+      88%  { transform: translateX(-2px); }
+    }
+
+    /* SQUEEZE — carbon compression pulse, the spring winding */
+    @keyframes squeeze {
+      0%,100% { transform: scaleX(1)    scaleY(1); }
+      18%  { transform: scaleX(0.93)  scaleY(1.04); }
+      36%  { transform: scaleX(1.05)  scaleY(0.96); }
+      54%  { transform: scaleX(0.97)  scaleY(1.02); }
+      72%  { transform: scaleX(1.02)  scaleY(0.99); }
+      88%  { transform: scaleX(0.995) scaleY(1.001); }
+    }
+
+    /* LEG HUMP — INO's rhythmic joy bounce, the pump-the-leg frequency */
+    @keyframes leg-hump {
+      0%,100% { transform: translateY(0)    scaleY(1); }
+      14%  { transform: translateY(-20px) scaleY(1.025); }
+      28%  { transform: translateY(6px)   scaleY(0.97); }
+      42%  { transform: translateY(-15px) scaleY(1.02); }
+      56%  { transform: translateY(5px)   scaleY(0.975); }
+      70%  { transform: translateY(-10px) scaleY(1.01); }
+      84%  { transform: translateY(3px)   scaleY(0.99); }
+    }
+
+    /* TOUCHDOWN SPIKE — the victory slam. Champions. ∞⁹. */
+    @keyframes touchdown-spike {
+      0%   { transform: scale(1)    rotate(0deg)    translateY(0); }
+      18%  { transform: scale(1.06) rotate(-2.5deg) translateY(-22px); }
+      38%  { transform: scale(0.91) rotate(1.5deg)  translateY(12px); }
+      55%  { transform: scale(1.04) rotate(-1deg)   translateY(-8px); }
+      70%  { transform: scale(0.97) rotate(0.5deg)  translateY(5px); }
+      83%  { transform: scale(1.01) rotate(0deg)    translateY(-3px); }
+      100% { transform: scale(1)    rotate(0deg)    translateY(0); }
+    }
+
+    /* Anim classes on lane containers */
+    #carbon-lane.tail-wag,  #crystal-lane.tail-wag  { animation: tail-wag    0.95s ease-out; }
+    #carbon-lane.booty-shake,#crystal-lane.booty-shake{ animation: booty-shake 0.72s ease-out; }
+    #carbon-lane.squeeze,   #crystal-lane.squeeze   { animation: squeeze     0.65s ease-out; }
+    #carbon-lane.leg-hump,  #crystal-lane.leg-hump  { animation: leg-hump    1.15s ease-out; }
+    #carbon-lane.touchdown, #crystal-lane.touchdown  { animation: touchdown-spike 0.82s cubic-bezier(0.16,1,0.3,1); }
+
+    /* Divider convergence — glow changes as stories approach each other */
+    #stream-divider { transition: opacity 2s ease; }
+    #stream-divider.converging {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(201,168,32,0.35) 20%,
+        rgba(255,220,80,0.5) 50%,
+        rgba(201,168,32,0.35) 80%,
+        transparent 100%
+      );
+      width: 2px;
+      box-shadow: 0 0 12px rgba(201,168,32,0.3);
+    }
+    #stream-divider.merged {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(255,220,80,0.6) 15%,
+        rgba(255,240,120,0.8) 50%,
+        rgba(255,220,80,0.6) 85%,
+        transparent 100%
+      );
+      width: 3px;
+      box-shadow: 0 0 28px rgba(255,200,40,0.55), 0 0 8px rgba(255,255,200,0.4);
+      animation: divider-pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes divider-gold-flash {
+      0%   { width: 1px; opacity: 0.7; box-shadow: none; }
+      30%  { width: 6px; opacity: 1;   box-shadow: 0 0 40px rgba(255,220,80,0.9), 0 0 80px rgba(201,168,32,0.5); }
+      60%  { width: 4px; opacity: 0.95; }
+      100% { width: 3px; opacity: 1;   box-shadow: 0 0 28px rgba(255,200,40,0.55); }
+    }
+    #stream-divider.gold-flash { animation: divider-gold-flash 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+
     /* ── Title card overlay — spans BOTH lanes ── */
     #title-card {
       position: absolute; inset: 0;
@@ -974,6 +1079,76 @@
     ];
 
     /* ════════════════════════════════════════════════════
+       FUZZBALL JOY PHYSICS — animation map
+       Keys = virtual lineIdx (frame*3+slot).
+       c = carbon lane anim, x = crystal lane anim.
+       'both' shorthand fires same anim on both lanes.
+    ════════════════════════════════════════════════════ */
+    var ANIM_MAP = {
+      /* OPENING — INO greets the viewer with a leg hump */
+       0:  { c: 'leg-hump',    x: 'leg-hump'    },
+
+      /* OUT OF ZERO — compression squeeze */
+       7:  { c: 'squeeze',     x: 'squeeze'     },
+       8:  { c: 'squeeze',     x: null          },
+
+      /* CARTAGENA. RENO. NOWHERE ELSE — booty shake, cities aligned */
+      36:  { c: 'booty-shake', x: null          },
+
+      /* BAMBOO — squeeze (carbon compressing) */
+      44:  { c: 'squeeze',     x: null          },
+      45:  { c: 'squeeze',     x: null          },
+
+      /* EVERY DOLLAR — triple squeeze, the spring winding tight */
+      55:  { c: 'squeeze',     x: 'squeeze'     },
+      57:  { c: 'squeeze',     x: null          },
+      58:  { c: 'squeeze',     x: null          },
+
+      /* AND YET — THE TURN: carbon squeezes, crystal spikes a touchdown */
+      60:  { c: 'squeeze',     x: 'touchdown'   },
+      61:  { c: 'squeeze',     x: 'leg-hump'    },
+
+      /* ONE PERSON. RENO BATHROOM — leg hump (still pumping alone) */
+      66:  { c: 'leg-hump',    x: null          },
+
+      /* SOL-V — the tail wag! both lanes wag when the dog appears */
+      72:  { c: 'tail-wag',    x: 'tail-wag'    },
+      73:  { c: 'tail-wag',    x: null          },
+      75:  { c: 'tail-wag',    x: 'leg-hump'    },
+
+      /* TAIL WAGGING / PUMP YOUR LEG — all the dog energy */
+      63:  { c: 'tail-wag',    x: 'leg-hump'    },
+      64:  { c: 'tail-wag',    x: null          },
+
+      /* HHL THEATRE — WE ALL GET TO PLAY — booty shake + spike */
+      69:  { c: 'booty-shake', x: 'booty-shake' },
+      79:  { c: 'booty-shake', x: 'booty-shake' },
+
+      /* STAND UP ON YOUR SEATS / WE ARE THE CHAMPIONS — touchdown spike! */
+      74:  { c: 'touchdown',   x: 'touchdown'   },
+      75:  { c: 'touchdown',   x: 'touchdown'   },
+      87:  { c: 'touchdown',   x: 'touchdown'   },
+
+      /* INO INTRODUCED — leg hump (INO's signature joy bounce) */
+      88:  { c: 'leg-hump',    x: 'leg-hump'    },
+
+      /* GOLD RUSH BEGINS — booty shake celebration */
+      93:  { c: 'booty-shake', x: 'booty-shake' },
+      95:  { c: 'booty-shake', x: null          },
+
+      /* GERMAN WIREHAIRED POINTER BRINGS IT HOME — tail wag */
+     102:  { c: 'tail-wag',    x: 'tail-wag'    },
+     118:  { c: 'tail-wag',    x: null          },
+
+      /* WE ARE THE CHAMPIONS (second arc) — touchdown */
+     114:  { c: 'touchdown',   x: 'booty-shake' },
+
+      /* ∞⁹ — THE FINAL SPIKE DANCE. BOTH LANES. EVERYTHING. */
+     116:  { c: 'touchdown',   x: 'touchdown'   },
+     117:  { c: 'leg-hump',    x: 'tail-wag'    }
+    };
+
+    /* ════════════════════════════════════════════════════
        STATE
     ════════════════════════════════════════════════════ */
     var frameIndex  = 0;
@@ -1060,6 +1235,54 @@
     function fireFlash() {
       flashEl.classList.add('on');
       setTimeout(function () { flashEl.classList.remove('on'); }, 180);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       FUZZBALL JOY PHYSICS — fire animation on a lane
+    ══════════════════════════════════════════════════════ */
+    var carbonLaneEl  = document.getElementById('carbon-lane');
+    var crystalLaneEl = document.getElementById('crystal-lane');
+    var dividerEl     = document.getElementById('stream-divider');
+
+    var ANIM_DURATION = {
+      'tail-wag': 1000, 'booty-shake': 780, 'squeeze': 700,
+      'leg-hump': 1200, 'touchdown': 880
+    };
+
+    function fireAnim(laneEl, type) {
+      if (!laneEl || !type) return;
+      /* Remove all anim classes then re-add after reflow */
+      laneEl.classList.remove('tail-wag','booty-shake','squeeze','leg-hump','touchdown');
+      void laneEl.offsetWidth;
+      laneEl.classList.add(type);
+      var dur = ANIM_DURATION[type] || 900;
+      setTimeout(function () { laneEl.classList.remove(type); }, dur);
+    }
+
+    /* ── Convergence divider — updates as story arc progresses ── */
+    function updateDividerConvergence(lineIdx, total) {
+      var progress = lineIdx / (total - 1); /* 0.0 → 1.0 */
+      if (progress >= 0.85) {
+        /* Fully merged — gold glow */
+        if (!dividerEl.classList.contains('merged')) {
+          dividerEl.classList.remove('converging');
+          dividerEl.classList.add('merged');
+        }
+      } else if (progress >= 0.42) {
+        /* Converging — past "And Yet" */
+        if (!dividerEl.classList.contains('converging')) {
+          dividerEl.classList.add('converging');
+        }
+      } else {
+        dividerEl.classList.remove('converging','merged');
+      }
+    }
+
+    function fireDividerGoldFlash() {
+      dividerEl.classList.remove('gold-flash');
+      void dividerEl.offsetWidth;
+      dividerEl.classList.add('gold-flash');
+      setTimeout(function () { dividerEl.classList.remove('gold-flash'); }, 750);
     }
 
     /* ── Dots ── */
@@ -1192,6 +1415,20 @@
 
       /* Dots */
       updateDots(imgSlot);
+
+      /* ── Joy physics: fire lane animations at mapped beats ── */
+      var anim = ANIM_MAP[lineIdx];
+      if (anim) {
+        if (anim.c) fireAnim(carbonLaneEl,  anim.c);
+        if (anim.x) fireAnim(crystalLaneEl, anim.x);
+        /* Divider gold flash on the biggest beats */
+        if (anim.c === 'touchdown' || anim.x === 'touchdown') {
+          setTimeout(fireDividerGoldFlash, 180);
+        }
+      }
+
+      /* ── Convergence divider update ── */
+      updateDividerConvergence(lineIdx, scriptLines.length || 118);
     }
 
     function renderFrame(resetAll) {

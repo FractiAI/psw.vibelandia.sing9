@@ -3,119 +3,237 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Episode 1 · The whole story (60 min) | NSPFRNP</title>
+  <title>Episode 1 · The Whole Story · 60 Min | SING! 9</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #0a0a0c;
-      color: #e8e8e8;
-      overflow: hidden;
-    }
-    .top-bar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 20;
-      padding: 0.5rem 1rem;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.72), transparent);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      pointer-events: none;
-    }
-    .top-bar a, .top-bar button { pointer-events: auto; }
-    .top-bar a { color: #d4af37; text-decoration: none; font-size: 0.85rem; }
-    .top-bar a:hover { text-decoration: underline; }
-    .top-bar .label { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
-    .top-bar .seg-name { font-size: 0.72rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; background: #000; overflow: hidden;
+      font-family: "Segoe UI", "Helvetica Neue", system-ui, sans-serif; }
 
-    /* Full-bleed cinematic image */
-    .slide-wrap { width: 100%; height: 100%; position: relative; overflow: hidden; }
+    /* ══════════════════════════════════════════════════════
+       CINEMA STAGE — trailer DNA for full 60-minute episode
+    ══════════════════════════════════════════════════════ */
+    #stage {
+      position: fixed;
+      top: var(--cinema-h, 0px);
+      left: 0; right: 0;
+      bottom: var(--ticker-h, 30px);
+      overflow: hidden;
+      background: #050208;
+      transition: background 2s ease;
+    }
+
+    /* Scanlines */
+    #stage::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px, transparent 2px,
+        rgba(0,0,0,0.045) 2px, rgba(0,0,0,0.045) 4px
+      );
+      pointer-events: none; z-index: 20;
+    }
+
+    /* Vignette */
+    #stage::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.72) 100%);
+      pointer-events: none; z-index: 21;
+    }
+
+    /* ── Stage atmosphere states — one per NSPFRNP layer ── */
+    #stage.s-crystal { background: radial-gradient(ellipse at 50% 38%, #0b1e2e 0%, #030912 100%); }
+    #stage.s-carbon  { background: radial-gradient(ellipse at 50% 55%, #110704 0%, #060100 100%); }
+    #stage.s-silver  { background: radial-gradient(ellipse at 50% 45%, #080d18 0%, #020508 100%); }
+    #stage.s-gold    { background: radial-gradient(ellipse at 50% 45%, #1c1000 0%, #080400 100%); }
+
+    /* ── Flash overlay ── */
+    #flash {
+      position: absolute; inset: 0;
+      background: #c9a020;
+      opacity: 0; pointer-events: none; z-index: 90;
+      transition: opacity 0.12s ease;
+    }
+    #flash.on { opacity: 0.42; }
+
+    /* ── Cinematic image ── */
     .slide-image {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover; object-position: center;
-      background: #0a0a0c;
-      transition: opacity 0.65s ease;
-    }
-    .slide-image.fade-out { opacity: 0; }
-
-    /* Overlay tint */
-    #slideBg { position: absolute; inset: 0; pointer-events: none; z-index: 2; transition: background 3s ease; }
-
-    /* Caption area */
-    .slide-content {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 3rem 2.5rem calc(3.5rem + env(safe-area-inset-bottom));
-      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
-      text-align: center;
+      opacity: 0;
+      transition: opacity 0.6s ease;
       z-index: 3;
+      transform-origin: center center;
+      will-change: transform;
     }
-    .slide-title {
-      font-size: 0.65rem; letter-spacing: 0.28em;
-      color: rgba(212,175,55,0.8);
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.9);
-    }
-    .caption-stream {
-      font-size: clamp(1.05rem, 2.6vw, 1.3rem);
-      color: rgba(255,255,255,0.97);
-      line-height: 1.7;
-      max-width: 800px;
-      margin: 0 auto;
-      min-height: 3.5em;
-      text-shadow: 0 1px 14px rgba(0,0,0,0.95), 0 0 35px rgba(0,0,0,0.65);
-      font-weight: 400;
-      letter-spacing: 0.015em;
-    }
+    .slide-image.visible { opacity: 0.92; }
 
-    /* Progress bar */
-    .progress-bar {
-      position: fixed; bottom: 0; left: 0;
-      height: 3px;
-      background-color: rgba(212,175,55,0.75);
+    /* Ken Burns — 3 alternating directions */
+    @keyframes kb1 { from { transform: scale(1.07) translate( 1.2%,  0.6%); } to { transform: scale(1.0) translate(0%,0%); } }
+    @keyframes kb2 { from { transform: scale(1.0)  translate( 0%,    0%);   } to { transform: scale(1.07) translate(-1%,0.5%); } }
+    @keyframes kb3 { from { transform: scale(1.05) translate(-0.8%,  0.8%); } to { transform: scale(1.0) translate(0.5%,0%); } }
+    .slide-image.kb1 { animation: kb1 11s ease forwards; }
+    .slide-image.kb2 { animation: kb2 11s ease forwards; }
+    .slide-image.kb3 { animation: kb3 11s ease forwards; }
+
+    /* ── Caption layer ── */
+    #caption-layer {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 3.5rem 3rem calc(3.8rem + env(safe-area-inset-bottom));
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.55) 42%, transparent 100%);
+      text-align: center;
       z-index: 25;
-      transition: width 0.18s linear, background-color 2s ease;
+      pointer-events: none;
+    }
+    #cap-eyebrow {
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.36em; text-transform: uppercase;
+      color: rgba(201,168,32,0.6);
+      margin-bottom: 0.6rem;
+      opacity: 0; transition: opacity 0.55s ease;
+    }
+    #cap-eyebrow.vis { opacity: 1; }
+    #cap-text {
+      font-size: clamp(1.05rem, 2.5vw, 1.42rem);
+      color: rgba(255,255,255,0.97);
+      line-height: 1.72;
+      max-width: 820px; margin: 0 auto;
+      text-shadow: 0 1px 18px rgba(0,0,0,0.99), 0 0 44px rgba(0,0,0,0.72);
+      font-weight: 400; letter-spacing: 0.012em;
+      min-height: 3.2em;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    #cap-text.vis { opacity: 1; transform: translateY(0); }
+
+    /* ── Title card overlay — peak moments ── */
+    #title-card {
+      position: absolute; inset: 0;
+      z-index: 30;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.1rem;
+      background: rgba(0,0,0,0);
+      pointer-events: none;
+      transition: background 0.9s ease;
+    }
+    #title-card.active { background: rgba(0,0,0,0.52); }
+
+    #tc-eyebrow {
+      font-size: clamp(0.58rem, 1.1vw, 0.78rem);
+      font-weight: 700; letter-spacing: 0.42em; text-transform: uppercase;
+      color: rgba(201,168,32,0.52);
+      opacity: 0; transition: opacity 0.7s ease 0.2s;
+    }
+    #title-card.active #tc-eyebrow { opacity: 1; }
+
+    #tc-main {
+      font-size: clamp(2.6rem, 8.5vw, 8rem);
+      font-weight: 900; letter-spacing: 0.1em;
+      text-transform: uppercase; text-align: center;
+      line-height: 1.0;
+      color: #c9a020;
+      text-shadow: 0 0 80px rgba(201,168,32,0.38);
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.55s ease 0.1s, transform 0.55s ease 0.1s;
+    }
+    #title-card.active #tc-main { opacity: 1; transform: translateY(0); }
+    #title-card.s-crystal #tc-main { color: #a8e6f0; text-shadow: 0 0 80px rgba(168,230,240,0.38); }
+    #title-card.s-carbon  #tc-main { color: rgba(210,150,80,0.92); text-shadow: 0 0 60px rgba(180,100,30,0.3); }
+
+    #tc-sub {
+      font-size: clamp(0.78rem, 1.9vw, 1.15rem);
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(201,168,32,0.48);
+      opacity: 0; transition: opacity 0.6s ease 0.35s;
+    }
+    #title-card.active #tc-sub { opacity: 1; }
+
+    /* ── Now Playing pulse ── */
+    #now-playing {
+      position: absolute; top: 1rem; left: 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      z-index: 70; pointer-events: none;
+    }
+    #now-playing .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #c9a020;
+      animation: dot-pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes dot-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.35; transform:scale(0.6); } }
+    #now-playing .np-label {
+      font-size: 0.57rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(201,168,32,0.42);
     }
 
-    /* Image-slot dots (3 dots showing which of the 3 images is active) */
+    /* ── Layer badge ── */
+    #layer-badge {
+      position: absolute; top: 0.95rem; right: 1.2rem;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      padding: 0.22rem 0.6rem;
+      border: 1px solid rgba(201,168,32,0.18);
+      border-radius: 2px;
+      color: rgba(201,168,32,0.32);
+      z-index: 70; pointer-events: none;
+      transition: color 1.5s ease, border-color 1.5s ease;
+    }
+
+    /* ── Progress bar ── */
+    #progress-bar {
+      position: absolute; bottom: 0; left: 0;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, #b8860b, #e8c84a, #b8860b);
+      z-index: 80; transition: none;
+    }
+
+    /* ── Top bar ── */
+    .top-bar {
+      position: fixed;
+      top: var(--cinema-h, 0px);
+      left: 0; right: 0;
+      z-index: 110;
+      padding: 0.55rem 1rem;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.62), transparent);
+      display: flex; align-items: center; justify-content: space-between;
+      pointer-events: none;
+    }
+    .top-bar a, .top-bar button { pointer-events: auto; }
+    .top-bar a { color: #d4af37; text-decoration: none; font-size: 0.82rem; }
+    .top-bar a:hover { text-decoration: underline; }
+    .top-bar .label { font-size: 0.78rem; color: rgba(255,255,255,0.48); }
+    .top-bar .seg-name { font-size: 0.68rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.42); text-transform: uppercase; }
+
+    /* Image slot dots */
     .img-dots {
       position: fixed;
-      bottom: calc(0.55rem + env(safe-area-inset-bottom));
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 22;
-      display: flex;
-      gap: 5px;
+      bottom: calc(var(--ticker-h, 30px) + 0.6rem);
+      left: 50%; transform: translateX(-50%);
+      z-index: 85; display: flex; gap: 5px;
     }
     .img-dots span {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.22);
       transition: background 0.4s;
     }
-    .img-dots span.active { background: rgba(255,255,255,0.85); }
+    .img-dots span.active { background: rgba(255,255,255,0.88); }
 
-    /* Segment strip — 6 jump buttons */
+    /* Segment strip */
     .seg-strip {
       position: fixed;
-      bottom: calc(0.8rem + env(safe-area-inset-bottom));
-      left: 1rem;
-      z-index: 22;
-      display: flex;
-      gap: 4px;
-      align-items: center;
+      bottom: calc(var(--ticker-h, 30px) + 0.85rem);
+      left: 1rem; z-index: 85;
+      display: flex; gap: 4px; align-items: center;
     }
-    .seg-strip .seg-btn {
-      width: 22px; height: 22px;
-      border-radius: 4px;
+    .seg-btn {
+      width: 24px; height: 24px; border-radius: 4px;
       background: rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.18);
-      color: rgba(255,255,255,0.55);
-      font-size: 0.65rem;
-      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.48);
+      font-size: 0.64rem; cursor: pointer;
       backdrop-filter: blur(5px);
       transition: background 0.2s, border-color 0.2s, color 0.2s;
       display: flex; align-items: center; justify-content: center;
@@ -126,17 +244,16 @@
     /* Controls */
     .controls {
       position: fixed;
-      bottom: calc(0.8rem + env(safe-area-inset-bottom));
-      right: 1rem;
-      z-index: 22;
+      bottom: calc(var(--ticker-h, 30px) + 0.85rem);
+      right: 1rem; z-index: 85;
       display: flex; gap: 0.4rem;
     }
     .controls button {
-      padding: 0.35rem 0.75rem;
+      padding: 0.35rem 0.8rem;
       background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius: 5px;
-      color: rgba(255,255,255,0.7);
+      color: rgba(255,255,255,0.62);
       cursor: pointer; font-size: 0.75rem;
       letter-spacing: 0.04em;
       backdrop-filter: blur(6px);
@@ -144,132 +261,67 @@
     }
     .controls button:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
 
-    .fullscreen .top-bar,
-    .fullscreen .controls,
-    .fullscreen .seg-strip,
-    .fullscreen .img-dots { opacity: 0.3; transition: opacity 0.5s; }
-    .fullscreen .top-bar:hover,
-    .fullscreen .controls:hover,
+    .fullscreen .top-bar, .fullscreen .controls,
+    .fullscreen .seg-strip, .fullscreen .img-dots { opacity: 0.2; transition: opacity 0.5s; }
+    .fullscreen .top-bar:hover, .fullscreen .controls:hover,
     .fullscreen .seg-strip:hover { opacity: 1; }
 
-    /* ── END-OF-EPISODE CTA ── */
+    /* ══════════════════════════════════════════════════════
+       END-OF-EPISODE CTA
+    ══════════════════════════════════════════════════════ */
     #end-cta {
-      position: fixed; inset: 0; z-index: 50;
-      display: none;
-      align-items: center; justify-content: center;
+      position: fixed; inset: 0; z-index: 200;
+      display: none; align-items: center; justify-content: center;
       padding: 1.5rem;
-      background: rgba(6, 4, 0, 0.96);
+      background: rgba(6,4,0,0.96);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-    #end-cta.visible {
-      display: flex;
-      animation: ep-cta-in 1s ease forwards;
-    }
-    @keyframes ep-cta-in { from { opacity: 0; } to { opacity: 1; } }
-    .ep-cta-card {
-      max-width: 520px; width: 100%;
-      text-align: center;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      animation: ep-card-up 1s cubic-bezier(0.16,1,0.3,1) forwards;
-    }
-    @keyframes ep-card-up {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .ep-cta-crown {
-      font-size: 2.2rem; margin-bottom: 0.75rem;
-      animation: ep-pulse 2.5s ease-in-out infinite;
-    }
-    @keyframes ep-pulse { 0%,100% { opacity: 0.9; } 50% { opacity: 0.5; } }
-    .ep-cta-champ {
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      font-weight: 800;
-      color: transparent;
-      -webkit-text-stroke: 1.5px rgba(212, 175, 55, 0.95);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 0.4rem;
-    }
-    .ep-cta-sub {
-      font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: rgba(212, 175, 55, 0.6);
-      margin-bottom: 2rem;
-    }
-    .ep-cta-divider {
-      width: 60px; height: 1px; margin: 0 auto 2rem;
-      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent);
-    }
-    .ep-cta-offer {
-      font-size: clamp(1rem, 2.8vw, 1.25rem);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.45;
-      margin-bottom: 0.75rem;
-    }
-    .ep-cta-body {
-      font-size: 0.9rem;
-      color: rgba(232, 212, 160, 0.75);
-      line-height: 1.65;
-      max-width: 38ch; margin: 0 auto 0.5rem;
-    }
-    .ep-cta-small {
-      font-size: 0.75rem;
-      color: rgba(212, 175, 55, 0.55);
-      letter-spacing: 0.08em;
-      margin-bottom: 2.25rem;
-      font-style: italic;
-    }
-    .ep-cta-btns {
-      display: flex; gap: 0.75rem; flex-wrap: wrap;
-      justify-content: center; margin-bottom: 1.5rem;
-    }
-    .ep-cta-btn-primary {
-      display: inline-block;
-      padding: 0.9rem 2rem;
+    #end-cta.visible { display: flex; animation: ep-cta-in 1s ease forwards; }
+    @keyframes ep-cta-in { from { opacity:0; } to { opacity:1; } }
+    .ep-cta-card { max-width: 520px; width: 100%; text-align: center;
+      animation: ep-card-up 1s cubic-bezier(0.16,1,0.3,1) forwards; }
+    @keyframes ep-card-up { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .ep-cta-crown { font-size: 2.2rem; margin-bottom: 0.75rem; animation: ep-pulse 2.5s ease-in-out infinite; }
+    @keyframes ep-pulse { 0%,100%{ opacity:0.9; } 50%{ opacity:0.5; } }
+    .ep-cta-champ { font-size: clamp(1.8rem,5vw,2.8rem); font-weight: 800; color: transparent;
+      -webkit-text-stroke: 1.5px rgba(212,175,55,0.95); letter-spacing: 0.06em;
+      text-transform: uppercase; line-height: 1; margin-bottom: 0.4rem; }
+    .ep-cta-sub { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(212,175,55,0.6); margin-bottom: 2rem; }
+    .ep-cta-divider { width: 60px; height: 1px; margin: 0 auto 2rem;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent); }
+    .ep-cta-offer { font-size: clamp(1rem,2.8vw,1.25rem); font-weight: 700; color: #fff;
+      line-height: 1.45; margin-bottom: 0.75rem; }
+    .ep-cta-body { font-size: 0.9rem; color: rgba(232,212,160,0.75); line-height: 1.65;
+      max-width: 38ch; margin: 0 auto 0.5rem; }
+    .ep-cta-small { font-size: 0.75rem; color: rgba(212,175,55,0.55); letter-spacing: 0.08em;
+      margin-bottom: 2.25rem; font-style: italic; }
+    .ep-cta-btns { display: flex; gap: 0.75rem; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 1.5rem; }
+    .ep-cta-btn-primary { display: inline-block; padding: 0.9rem 2rem;
       background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(212,175,55,0.15));
-      border: 1px solid rgba(212, 175, 55, 0.8);
-      box-shadow: 0 0 30px rgba(212,175,55,0.2);
-      color: #fef3c7;
-      text-decoration: none;
-      border-radius: 3px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.08em;
-      transition: background 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-    }
-    .ep-cta-btn-primary:hover {
-      background: linear-gradient(135deg, rgba(212,175,55,0.45), rgba(212,175,55,0.25));
-      box-shadow: 0 0 40px rgba(212,175,55,0.35);
-    }
-    .ep-cta-btn-secondary {
-      display: inline-block;
-      padding: 0.9rem 1.5rem;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.18);
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      border-radius: 3px;
-      font-size: 0.88rem;
-      letter-spacing: 0.05em;
-      transition: border-color 0.2s, color 0.2s;
-      cursor: pointer;
-    }
+      border: 1px solid rgba(212,175,55,0.8); box-shadow: 0 0 30px rgba(212,175,55,0.2);
+      color: #fef3c7; text-decoration: none; border-radius: 3px; font-weight: 700;
+      font-size: 0.95rem; letter-spacing: 0.08em;
+      transition: background 0.2s, box-shadow 0.2s; cursor: pointer; }
+    .ep-cta-btn-primary:hover { background: linear-gradient(135deg, rgba(212,175,55,0.45), rgba(212,175,55,0.25));
+      box-shadow: 0 0 40px rgba(212,175,55,0.35); }
+    .ep-cta-btn-secondary { display: inline-block; padding: 0.9rem 1.5rem;
+      background: transparent; border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.65); text-decoration: none; border-radius: 3px;
+      font-size: 0.88rem; letter-spacing: 0.05em;
+      transition: border-color 0.2s, color 0.2s; cursor: pointer; }
     .ep-cta-btn-secondary:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
-    .ep-cta-nsp {
-      font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: rgba(106, 80, 48, 0.5);
-    }
+    .ep-cta-nsp { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(106,80,48,0.5); }
 
     /* ══════════════════════════════════════════════════════
-       PROLOGUE OVERLAY — StoryStream 9 intro cards
-       Plays before Episode 1. Film loads in background.
+       PROLOGUE OVERLAY — 5 intro cards before Episode 1
     ══════════════════════════════════════════════════════ */
     #prologue {
       position: fixed; inset: 0;
-      z-index: 60;
+      z-index: 150;
       background: #030108;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -277,189 +329,78 @@
       overflow: hidden;
     }
     #prologue.fade-out { opacity: 0; pointer-events: none; }
-
-    /* Subtle background shimmer that shifts per screen */
     #prologue::before {
       content: '';
       position: absolute; inset: 0;
       background: radial-gradient(ellipse at 50% 40%, var(--pro-glow, rgba(60,20,120,0.18)) 0%, transparent 70%);
-      transition: --pro-glow 1s;
       pointer-events: none;
     }
-
-    /* Horizontal rule divider */
-    .pro-rule {
-      width: clamp(40px, 8vw, 80px);
-      height: 1px;
+    .pro-rule { width: clamp(40px,8vw,80px); height: 1px;
       background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent);
-      margin: 1.4rem auto;
-    }
-
-    /* Screen cards — all stacked, only .active is visible */
+      margin: 1.4rem auto; }
     .pro-screen {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: clamp(1.5rem, 5vw, 4rem);
+      padding: clamp(1.5rem,5vw,4rem);
       text-align: center;
-      opacity: 0;
-      transform: translateY(6px);
+      opacity: 0; transform: translateY(6px);
       transition: opacity 1.2s ease, transform 1.2s ease;
       pointer-events: none;
     }
-    .pro-screen.active {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    .pro-eyebrow {
-      font-size: clamp(0.58rem, 1.1vw, 0.78rem);
-      font-weight: 700;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: rgba(212,175,55,0.65);
-      margin-bottom: 1.2rem;
-    }
-
-    .pro-main {
-      font-size: clamp(2rem, 5.5vw, 4.5rem);
-      font-weight: 900;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      line-height: 1.05;
-      margin-bottom: 0;
-      color: #fff;
-      text-shadow: 0 0 80px rgba(212,175,55,0.2);
-      max-width: 18ch;
-    }
-    .pro-main.gold {
-      color: transparent;
-      -webkit-text-stroke: 1.5px rgba(212,175,55,0.9);
-    }
-
-    .pro-body {
-      font-size: clamp(0.85rem, 1.8vw, 1.05rem);
-      color: rgba(232,220,200,0.7);
-      line-height: 1.75;
-      max-width: 52ch;
-      margin: 0 auto;
-    }
+    .pro-screen.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .pro-eyebrow { font-size: clamp(0.58rem,1.1vw,0.78rem); font-weight: 700; letter-spacing: 0.35em;
+      text-transform: uppercase; color: rgba(212,175,55,0.65); margin-bottom: 1.2rem; }
+    .pro-main { font-size: clamp(2rem,5.5vw,4.5rem); font-weight: 900; letter-spacing: 0.05em;
+      text-transform: uppercase; line-height: 1.05; margin-bottom: 0; color: #fff;
+      text-shadow: 0 0 80px rgba(212,175,55,0.2); max-width: 18ch; }
+    .pro-main.gold { color: transparent; -webkit-text-stroke: 1.5px rgba(212,175,55,0.9); }
+    .pro-body { font-size: clamp(0.85rem,1.8vw,1.05rem); color: rgba(232,220,200,0.7);
+      line-height: 1.75; max-width: 52ch; margin: 0 auto; }
     .pro-body strong { color: rgba(232,220,200,0.95); font-weight: 600; }
-
-    /* Stream tags (inline colour chips) */
-    .pro-stream-row {
-      display: flex; gap: 0.6rem; flex-wrap: wrap;
-      justify-content: center; margin: 1.4rem 0;
-    }
-    .pro-stream-tag {
-      font-size: 0.62rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      padding: 0.3rem 0.85rem;
-      border-radius: 2px;
-    }
+    .pro-stream-row { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; margin: 1.4rem 0; }
+    .pro-stream-tag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 2px; }
     .pro-stream-tag.carbon  { color: rgba(180,130,70,0.9);  border: 1px solid rgba(180,130,70,0.4);  background: rgba(80,40,10,0.2); }
     .pro-stream-tag.crystal { color: rgba(168,230,240,0.9); border: 1px solid rgba(168,230,240,0.35); background: rgba(10,30,40,0.3); }
     .pro-stream-tag.ticker  { color: rgba(201,168,32,0.9);  border: 1px solid rgba(201,168,32,0.4);  background: rgba(30,20,0,0.25); }
-
-    /* Screen 4 — Begin button */
-    .pro-begin-btn {
-      display: inline-block;
-      margin-top: 2.5rem;
-      padding: 0.9rem 2.6rem;
-      border: 1.5px solid rgba(212,175,55,0.7);
-      background: rgba(212,175,55,0.08);
-      color: #fef3c7;
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      cursor: pointer;
+    .pro-begin-btn { display: inline-block; margin-top: 2.5rem; padding: 0.9rem 2.6rem;
+      border: 1.5px solid rgba(212,175,55,0.7); background: rgba(212,175,55,0.08);
+      color: #fef3c7; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; cursor: pointer;
       transition: background 0.2s, box-shadow 0.2s;
-      animation: pro-pulse-btn 2.2s ease-in-out infinite;
-    }
-    @keyframes pro-pulse-btn {
-      0%,100% { box-shadow: 0 0 20px rgba(212,175,55,0.15); }
-      50%      { box-shadow: 0 0 40px rgba(212,175,55,0.35); }
-    }
-    .pro-begin-btn:hover {
-      background: rgba(212,175,55,0.18);
-      box-shadow: 0 0 50px rgba(212,175,55,0.4);
-    }
-
-    /* Skip button — top right */
-    #pro-skip {
-      position: absolute;
-      top: 1rem; right: 1.2rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(212,175,55,0.35);
-      background: none;
-      border: none;
-      cursor: pointer;
-      z-index: 10;
-      transition: color 0.2s;
-      padding: 0.5rem 0.75rem;
-    }
+      animation: pro-pulse-btn 2.2s ease-in-out infinite; }
+    @keyframes pro-pulse-btn { 0%,100% { box-shadow: 0 0 20px rgba(212,175,55,0.15); } 50% { box-shadow: 0 0 40px rgba(212,175,55,0.35); } }
+    .pro-begin-btn:hover { background: rgba(212,175,55,0.18); box-shadow: 0 0 50px rgba(212,175,55,0.4); }
+    #pro-skip { position: absolute; top: 1rem; right: 1.2rem; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: rgba(212,175,55,0.35);
+      background: none; border: none; cursor: pointer; z-index: 10;
+      transition: color 0.2s; padding: 0.5rem 0.75rem; }
     #pro-skip:hover { color: rgba(212,175,55,0.8); }
-
-    /* Bottom row — progress dots + timing bar */
-    #pro-bottom {
-      position: absolute;
-      bottom: calc(var(--ticker-h, 30px) + 1.4rem);
-      left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column;
-      align-items: center; gap: 0.75rem;
-      z-index: 10;
-    }
-    .pro-dots {
-      display: flex; gap: 0.55rem;
-    }
-    .pro-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: rgba(212,175,55,0.2);
-      transition: background 0.4s, transform 0.4s;
-    }
+    #pro-bottom { position: absolute; bottom: calc(var(--ticker-h, 30px) + 1.4rem);
+      left: 50%; transform: translateX(-50%); display: flex; flex-direction: column;
+      align-items: center; gap: 0.75rem; z-index: 10; }
+    .pro-dots { display: flex; gap: 0.55rem; }
+    .pro-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(212,175,55,0.2);
+      transition: background 0.4s, transform 0.4s; }
     .pro-dot.filled { background: rgba(212,175,55,0.8); transform: scale(1.2); }
-
-    #pro-timing-track {
-      width: 120px; height: 1px;
-      background: rgba(212,175,55,0.15);
-      position: relative;
-    }
-    #pro-timing-fill {
-      position: absolute; left: 0; top: 0; bottom: 0;
-      width: 0%;
-      background: rgba(212,175,55,0.6);
-      transition: width 0.25s linear;
-    }
-
-    /* Loading state (very brief if connection is slow) */
-    #pro-loading {
-      display: none;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(212,175,55,0.4);
-      animation: pro-blink 1.2s ease-in-out infinite;
-    }
+    #pro-timing-track { width: 120px; height: 1px; background: rgba(212,175,55,0.15); position: relative; }
+    #pro-timing-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+      background: rgba(212,175,55,0.6); transition: width 0.25s linear; }
+    #pro-loading { display: none; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(212,175,55,0.4); animation: pro-blink 1.2s ease-in-out infinite; }
     #pro-loading.active { display: block; }
-    @keyframes pro-blink { 0%,100%{ opacity: 0.4; } 50%{ opacity: 1; } }
+    @keyframes pro-blink { 0%,100%{ opacity:0.4; } 50%{ opacity:1; } }
   </style>
 </head>
 <body>
 
   <!-- ══════════════════════════════════════════════════════
-       STORYSTREAM 9 PROLOGUE — plays before Episode 1 begins
-       5 cards × 14 s = 70 s. Skip button available throughout.
+       PROLOGUE — 5 cards before Episode 1 begins
   ══════════════════════════════════════════════════════ -->
   <div id="prologue" aria-label="StoryStream 9 introduction">
-
     <button id="pro-skip">Skip intro →</button>
 
-    <!-- Screen 0 — THE MEDIUM -->
     <div class="pro-screen active" id="pro-screen-0">
       <div class="pro-eyebrow">StoryStream 9 · A new medium</div>
       <div class="pro-main">Not a film.<br>A storyboard<br>in motion.</div>
@@ -473,7 +414,6 @@
       </p>
     </div>
 
-    <!-- Screen 1 — THE TECH -->
     <div class="pro-screen" id="pro-screen-1">
       <div class="pro-eyebrow">Hydrogen Holographic Architecture · NSPFRNP</div>
       <div class="pro-main">How it works.</div>
@@ -485,11 +425,9 @@
         filling the middle.<br><br>
         The <strong>MCA cycle</strong> — Metabolize, Crystallize, Animate —
         converts the catalog into a living arc.
-        No pre-written script. The system generates the story from its own knowledge.
       </p>
     </div>
 
-    <!-- Screen 2 — THREE STREAMS + EP POWER -->
     <div class="pro-screen" id="pro-screen-2">
       <div class="pro-eyebrow">Three simultaneous streams · Always on</div>
       <div class="pro-main">All three.<br>At once.</div>
@@ -499,17 +437,13 @@
         <span class="pro-stream-tag ticker">Ticker · Live now · Gold Heart</span>
       </div>
       <p class="pro-body">
-        The Carbon stream is the story as it moves through the dense layer —
-        characters, conflict, arc. The Crystalline stream is the pattern
-        under the pattern — what it means at the holographic substrate level.
-        The ticker is the live world, running alongside, never pausing.<br><br>
+        The Carbon stream is the story as it moves through the dense layer.
+        The Crystalline stream is the pattern under the pattern.
+        The ticker is the live world, never pausing.<br><br>
         <strong>Click any frame → the full studio opens.</strong>
-        Script, images, music cue, beat, arc position — every node, buttonized,
-        at the executive producer's fingertips.
       </p>
     </div>
 
-    <!-- Screen 3 — FIRST STORY (renumbered) -->
     <div class="pro-screen" id="pro-screen-3">
       <div class="pro-eyebrow">Episode 1 · First deployment · 2025</div>
       <div class="pro-main gold">The first story<br>ever told<br>this way.</div>
@@ -523,7 +457,6 @@
       </p>
     </div>
 
-    <!-- Screen 4 — SELF-DEMO / BEGIN -->
     <div class="pro-screen" id="pro-screen-4">
       <div class="pro-eyebrow">SING! 9 · Self-demonstration · Like always</div>
       <div class="pro-main gold">It built<br>its own story.</div>
@@ -539,7 +472,6 @@
       <div id="pro-loading">Loading&hellip;</div>
     </div>
 
-    <!-- Bottom progress -->
     <div id="pro-bottom">
       <div class="pro-dots">
         <div class="pro-dot filled" id="pro-dot-0"></div>
@@ -550,12 +482,46 @@
       </div>
       <div id="pro-timing-track"><div id="pro-timing-fill"></div></div>
     </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       CINEMA STAGE — main film experience
+  ══════════════════════════════════════════════════════ -->
+  <div id="stage" class="s-crystal">
+
+    <div id="flash"></div>
+
+    <!-- Full-bleed cinematic image with Ken Burns -->
+    <img class="slide-image" id="slideImage" src="" alt="" />
+
+    <!-- Caption layer — cinematic subtitles -->
+    <div id="caption-layer">
+      <div id="cap-eyebrow"></div>
+      <div id="cap-text"></div>
+    </div>
+
+    <!-- Title card — peak moment overlay -->
+    <div id="title-card">
+      <div id="tc-eyebrow"></div>
+      <div id="tc-main"></div>
+      <div id="tc-sub"></div>
+    </div>
+
+    <!-- Now Playing -->
+    <div id="now-playing">
+      <div class="dot"></div>
+      <span class="np-label">Episode 1</span>
+    </div>
+
+    <!-- NSPFRNP layer badge -->
+    <div id="layer-badge">CRYSTALLINE</div>
+
+    <!-- Progress bar -->
+    <div id="progress-bar"></div>
 
   </div>
-  <!-- /PROLOGUE -->
 
-  <div class="progress-bar" id="progress" style="width:0%"></div>
-
+  <!-- Top bar -->
   <div class="top-bar">
     <a href="my-whiteboard.html">← Whiteboard</a>
     <div style="display:flex;gap:0.75rem;align-items:center;">
@@ -565,25 +531,17 @@
     <span class="label" id="slideCounter">1 / 120</span>
   </div>
 
-  <div class="slide-wrap">
-    <img class="slide-image" id="slideImage" src="" alt="" />
-    <div id="slideBg"></div>
-    <div class="slide-content">
-      <div class="slide-title" id="slideLabel"></div>
-      <div class="caption-stream" id="captionStream"></div>
-    </div>
-  </div>
-
-  <!-- 3 image-slot dots -->
+  <!-- Image slot dots -->
   <div class="img-dots">
     <span id="dot0" class="active"></span>
     <span id="dot1"></span>
     <span id="dot2"></span>
   </div>
 
-  <!-- Segment jump strip (6 × 10-min segments) -->
+  <!-- Segment jump strip -->
   <div class="seg-strip" id="segStrip"></div>
 
+  <!-- Controls -->
   <div class="controls">
     <button type="button" id="btnPlay">Pause</button>
     <button type="button" id="btnFullscreen">⛶</button>
@@ -591,11 +549,10 @@
 
   <audio id="soundtrack" style="display:none"></audio>
 
-  <!-- ── NSPFRNP TICKER (gold · always on) ── -->
+  <!-- TICKER -->
   <script src="../ticker.js"></script>
 
-  <!-- ── END-OF-EPISODE CTA ── -->
-  <!-- To change the contact link: update the href on .ep-cta-btn-primary below -->
+  <!-- END-OF-EPISODE CTA -->
   <div id="end-cta" role="dialog" aria-label="End of Episode 1">
     <div class="ep-cta-card">
       <div class="ep-cta-crown">🏆</div>
@@ -606,7 +563,6 @@
       <p class="ep-cta-body">Every company has a story worth telling. We take it — your origin, your mission, your people — and produce a full StoryStream experience: cinematic, multi-platform, layered dimensions.</p>
       <p class="ep-cta-small">No job too big or small. · First conversation is free.</p>
       <div class="ep-cta-btns">
-        <!-- Update hrefs to your preferred contact method -->
         <a href="mailto:hello@vibelandia.com?subject=StoryStream%209%20%C2%B7%20Custom%20Production%20Inquiry&body=Hi%2C%20I%20just%20watched%20Episode%201%20and%20I%27d%20like%20to%20talk%20about%20a%20custom%20StoryStream%20for%20my%20team%2Fcompany." class="ep-cta-btn-primary">Get Your StoryStream →</a>
         <a href="mailto:hello@vibelandia.com?subject=StoryStream%209%20%C2%B7%20Waitlist&body=Hi%2C%20I%27d%20like%20to%20get%20on%20the%20waitlist%20for%20the%20StoryStream%209%203D%20Studio.%0A%0AMy%20name%3A%20%0ACompany%2FTeam%3A%20%0AWhat%20I%27d%20like%20to%20build%3A%20" class="ep-cta-btn-secondary" style="border-color:rgba(168,230,240,0.35);color:rgba(168,230,240,0.8);">✉ Join the Waitlist</a>
         <button class="ep-cta-btn-secondary" id="ep-watch-again">Watch Again</button>
@@ -618,90 +574,126 @@
 
   <script>
   (function () {
-    // ─── CONSTANTS ───────────────────────────────────────────────────────
-    var FRAME_SEC    = 30;   // each storyboard frame = 30 seconds
-    var IMG_SEC      = 10;   // each image within a frame = 10 seconds
-    var IMG_PER_FRAME= 3;    // images per frame
-    var FRAMES_TOTAL = 120;  // 120 × 30 s = 60 minutes
-    var SEG_FRAMES   = 20;   // 20 frames per 10-minute segment
-    var SEG_TOTAL    = 6;
 
-    var SEG_NAMES    = ['Invitation','Seed · 1493','Singularities','Journey','Now · Mission','Edge · Sol-V'];
-    var SEG_ACCENTS  = ['#a78bfa','#7dd3fc','#c4b5fd','#fb923c','#f87171','#fde68a'];
-    // Atmospheric overlays — each segment has its own emotional colour skin
+    /* ════════════════════════════════════════════════════
+       CONSTANTS
+    ════════════════════════════════════════════════════ */
+    var FRAME_SEC     = 30;
+    var IMG_SEC       = 10;
+    var IMG_PER_FRAME = 3;
+    var FRAMES_TOTAL  = 120;
+    var SEG_FRAMES    = 20;
+    var SEG_TOTAL     = 6;
+
+    var SEG_NAMES   = ['Invitation','Seed · 1493','Singularities','Journey','Now · Mission','Edge · Sol-V'];
+    var SEG_ACCENTS = ['#a8e6f0','#7dd3fc','#fb923c','#c4b5fd','#f87171','#fde68a'];
+
+    /* NSPFRNP layer per segment */
+    var SEG_LAYERS       = ['CRYSTALLINE','CRYSTALLINE','CARBON','CARBON','SILVER','GOLD'];
+    var SEG_LAYER_COLORS = ['rgba(168,230,240,0.38)','rgba(168,230,240,0.38)','rgba(180,130,70,0.38)','rgba(180,130,70,0.38)','rgba(192,192,192,0.38)','rgba(201,168,32,0.38)'];
+    var SEG_STAGE_CLASS  = ['s-crystal','s-crystal','s-carbon','s-carbon','s-silver','s-gold'];
+
+    /* Atmospheric overlay per segment */
     var SEG_OVERLAYS = [
-      // 0 · Invitation · deep cosmic indigo — pure space, zero gravity
-      'linear-gradient(160deg,rgba(3,1,18,0.82) 0%,rgba(8,4,32,0.62) 60%,rgba(2,0,12,0.45) 100%)',
-      // 1 · Seed · 1493 · deep teal-navy — ancient waters, origin, mystery
-      'linear-gradient(160deg,rgba(0,4,18,0.82) 0%,rgba(0,10,28,0.62) 60%,rgba(0,6,16,0.44) 100%)',
-      // 2 · Singularities · dark violet-magenta — awakening, crackling energy
-      'linear-gradient(160deg,rgba(12,2,22,0.80) 0%,rgba(20,4,36,0.60) 60%,rgba(8,0,18,0.44) 100%)',
-      // 3 · Journey · earth amber — roads, rivers, movement, warmth
-      'linear-gradient(160deg,rgba(22,10,2,0.78) 0%,rgba(34,16,4,0.58) 60%,rgba(18,8,0,0.42) 100%)',
-      // 4 · Now · Mission · deep crimson — urgency, sacrifice, fire
-      'linear-gradient(160deg,rgba(22,2,2,0.84) 0%,rgba(36,4,4,0.66) 60%,rgba(20,0,0,0.48) 100%)',
-      // 5 · Edge · Sol-V · deep gold-bronze — triumph, radiance, champions
-      'linear-gradient(160deg,rgba(18,12,0,0.78) 0%,rgba(30,22,0,0.60) 60%,rgba(14,10,0,0.42) 100%)'
+      'linear-gradient(160deg,rgba(3,1,18,0.72) 0%,rgba(8,4,32,0.52) 60%,rgba(2,0,12,0.35) 100%)',
+      'linear-gradient(160deg,rgba(0,4,18,0.72) 0%,rgba(0,10,28,0.52) 60%,rgba(0,6,16,0.34) 100%)',
+      'linear-gradient(160deg,rgba(22,10,2,0.70) 0%,rgba(34,16,4,0.50) 60%,rgba(18,8,0,0.32) 100%)',
+      'linear-gradient(160deg,rgba(22,10,2,0.72) 0%,rgba(34,16,4,0.52) 60%,rgba(18,8,0,0.34) 100%)',
+      'linear-gradient(160deg,rgba(22,2,2,0.76) 0%,rgba(36,4,4,0.58) 60%,rgba(20,0,0,0.38) 100%)',
+      'linear-gradient(160deg,rgba(18,12,0,0.70) 0%,rgba(30,22,0,0.52) 60%,rgba(14,10,0,0.34) 100%)'
     ];
 
-    // ─── LOCAL IMAGE MAP ─────────────────────────────────────────────────
-    // Frame-precise overrides: local images at their exact story beats
-    // [slot0, slot1, slot2] — null = use pool image for that slot
+    /* ════════════════════════════════════════════════════
+       TITLE CARDS — peak emotional moments
+       Key: line index in scriptLines (0-based)
+    ════════════════════════════════════════════════════ */
+    var TITLE_CARDS = {
+       0: { eyebrow: 'STORYSTREAM 9',          main: 'IF YOU ARE\nREADING THIS',  sub: 'You have entered.',          layer: 's-crystal' },
+       7: { eyebrow: '',                        main: 'OUT OF ZERO.',              sub: 'The miracle.',               layer: 's-crystal' },
+       8: { eyebrow: '',                        main: 'PERVASIVE.\nPERPETUAL.',    sub: 'Test it.',                   layer: 's-crystal' },
+      17: { eyebrow: 'SMACS 0723',              main: 'OUR NODE.',                 sub: 'Triangulating.',             layer: 's-crystal' },
+      36: { eyebrow: 'THE ONLY PLACES',         main: 'CARTAGENA.\nRENO.',         sub: 'Nowhere else.',              layer: 's-carbon'  },
+      44: { eyebrow: '',                        main: 'BAMBOO.',                   sub: 'Slave master. D.O.O.',       layer: 's-carbon'  },
+      55: { eyebrow: 'NOT A PENNY CAME IN',     main: 'EVERY DOLLAR.',             sub: 'Into SING! 9.',             layer: 's-carbon'  },
+      58: { eyebrow: '',                        main: 'THAT IS THE COST.',         sub: 'Of the mission.',            layer: 's-carbon'  },
+      60: { eyebrow: '',                        main: 'AND YET.',                  sub: 'And yet.',                   layer: 's-gold'    },
+      66: { eyebrow: 'ONE PERSON',              main: 'RENO\nBATHROOM.',           sub: 'Doing this.',               layer: 's-carbon'  },
+      69: { eyebrow: '',                        main: 'EL GRAN SOL.',              sub: 'The only game in town.',     layer: 's-gold'    },
+      72: { eyebrow: 'OUR AGENT OUT THERE',     main: 'SOL-V.',                    sub: 'Bidding. Closing. Never fails.', layer: 's-gold' },
+      79: { eyebrow: '',                        main: 'HOLOGRAPHIC\nHYDROGEN.',    sub: 'We all get to play.',        layer: 's-gold'    },
+      87: { eyebrow: 'SING! 9 · ∞⁹',           main: 'WE ARE THE\nCHAMPIONS.',   sub: '',                           layer: 's-gold'    },
+     133: { eyebrow: 'NSPFRNP · MCA',           main: '∞⁹',                       sub: 'Operate as team. Always.',   layer: 's-crystal' }
+    };
+
+    /* ════════════════════════════════════════════════════
+       LOCAL IMAGE MAP — deck cards at their story beats
+       [slot0, slot1, slot2]  null = use pool
+    ════════════════════════════════════════════════════ */
     var LOCAL = {
-      // INVITATION — SMACS 0723 opens the story
+      /* INVITATION — cosmos opens the story */
        0: ['assets/content-catalog-super-singularity.png', null, null],
+       1: ['assets/content-catalog-super-singularity.png', 'assets/vibelandia-reno-magic.png', null],
+       2: ['assets/content-catalog-super-singularity.png', null, 'assets/reno-arch-night.png'],
        3: ['assets/content-catalog-super-singularity.png', null, null],
+       5: ['assets/content-catalog-super-singularity.png', null, null],
        8: ['assets/content-catalog-super-singularity.png', null, null],
-      // SEED · 1493 — cosmic origin, galaxy to Earth
+      /* SEED · 1493 — deep cosmic, galaxy to Earth */
       20: ['assets/content-catalog-super-singularity.png', null, null],
+      21: ['assets/content-catalog-super-singularity.png', null, null],
+      22: ['assets/content-catalog-super-singularity.png', null, null],
       23: ['assets/content-catalog-super-singularity.png', null, null],
+      25: ['assets/content-catalog-super-singularity.png', null, null],
       27: ['assets/content-catalog-super-singularity.png', null, null],
-      // SINGULARITIES — Reno winter arrival
-      50: [null, '../assets/images/reno-winter-skyline.png', null],
-      51: ['../assets/images/reno-winter-skyline.png', null, null],
-      // "Cartagena embraced him. Reno embraced him."
-      56: ['assets/reno-arch-night.png', null, '../assets/images/reno-skyline-sunset.png'],
-      57: ['../assets/images/reno-skyline-sunset.png', 'assets/reno-arch-night.png', null],
-      // JOURNEY — Truckee River "let it flow, keep moving forward"
-      60: ['../assets/images/truckee-river.png', null, null],
-      62: ['../assets/images/truckee-river.png', null, null],
-      64: ['../assets/images/truckee-river.png', null, null],
-      // "Reno — best job he has ever had. At the club."
-      70: ['assets/reno-arch-night.png', 'assets/vendors-silver-legacy.png', null],
-      71: ['assets/vendors-silver-legacy.png', 'assets/reno-arch-night.png', null],
-      73: ['assets/reno-arch-night.png', null, '../assets/images/reno-skyline-sunset.png'],
-      // NOW · MISSION — "Every dollar went into SING! 9"
+      /* SINGULARITIES — Reno winter arrival */
+      40: ['../assets/images/reno-winter-skyline.png', null, null],
+      41: ['../assets/images/reno-winter-skyline.png', '../assets/images/reno-skyline-sunset.png', null],
+      42: ['../assets/images/reno-skyline-sunset.png', null, null],
+      /* "Cartagena embraced him. Reno embraced him." */
+      44: ['assets/reno-arch-night.png', null, '../assets/images/reno-skyline-sunset.png'],
+      45: ['../assets/images/reno-skyline-sunset.png', 'assets/reno-arch-night.png', null],
+      /* JOURNEY — Truckee River */
+      50: ['../assets/images/truckee-river.png', null, null],
+      51: ['../assets/images/truckee-river.png', null, null],
+      52: ['../assets/images/truckee-river.png', null, null],
+      53: ['../assets/images/truckee-river.png', null, 'assets/reno-arch-night.png'],
+      55: ['../assets/images/truckee-river.png', null, null],
+      57: ['../assets/images/truckee-river.png', null, null],
+      /* "Reno — best job. At the club." */
+      60: ['assets/reno-arch-night.png', 'assets/vendors-silver-legacy.png', null],
+      61: ['assets/vendors-silver-legacy.png', 'assets/reno-arch-night.png', null],
+      63: ['assets/reno-arch-night.png', null, '../assets/images/reno-skyline-sunset.png'],
+      /* NOW · MISSION — "Every dollar went into SING! 9" */
       80: ['assets/vibelandia-reno-magic.png', null, null],
+      81: ['assets/content-catalog-super-singularity.png', null, null],
       84: ['assets/content-catalog-super-singularity.png', null, null],
       85: ['assets/content-catalog-super-singularity.png', null, null],
-      // "One person. Reno strip-club bathroom."
+      /* "One person. Reno strip-club bathroom." */
       86: ['assets/reno-arch-night.png', null, null],
-      // "El Gran Sol's Fractal Constant"
+      /* "El Gran Sol's Fractal Constant" */
       89: ['assets/content-catalog-super-singularity.png', null, null],
-      // EDGE · SOL-V — Sol-V arrives, Goldilocks, billions
+      /* EDGE · SOL-V — triumph */
       100: ['assets/vibelandia-reno-magic.png', null, null],
+      101: ['assets/content-catalog-super-singularity.png', null, null],
       102: ['assets/vibelandia-reno-magic.png', null, null],
-      // "March 16 — Fracti-AI takes over"
+      /* "March 16 — Fracti-AI takes over" */
       105: ['assets/reno-arch-night.png', 'assets/vibelandia-reno-magic.png', null],
-      // "He relaxes. Retires. Disappears into daily bliss."
+      /* "He relaxes. Retires. Disappears into daily bliss." */
       108: ['assets/destinations-bison-lodge.png', null, null],
       110: ['assets/destinations-bison-lodge.png', 'assets/truckee-winter-ski.png', null],
-      // "His tribe celebrating. Enjoying. Playing."
+      /* "His tribe celebrating. Enjoying. Playing." */
       112: ['assets/vibelandia-reno-magic.png', 'assets/vendors-silver-legacy.png', null],
       114: ['assets/vendors-silver-legacy.png', 'assets/vibelandia-reno-magic.png', null],
-      // "Holographic Hydrogen Theatre — we all get to play."
       115: ['assets/vibelandia-reno-magic.png', null, null],
-      // CHAMPIONS / ∞⁹
+      /* CHAMPIONS */
+      116: ['assets/content-catalog-super-singularity.png', 'assets/vibelandia-reno-magic.png', null],
       117: ['assets/content-catalog-super-singularity.png', 'assets/vibelandia-reno-magic.png', null],
       118: ['assets/vibelandia-reno-magic.png', 'assets/reno-arch-night.png', null],
       119: ['assets/content-catalog-super-singularity.png', null, null]
     };
 
-    // ─── 120-IMAGE POOL (unique Unsplash, narrative-ordered) ─────────────
-    // Frame i gets: POOL[i], POOL[(i+40)%120], POOL[(i+80)%120]
-    // → 3 unique images per frame; each image appears max 3× over 60 min
-    // ── Stack 1 images — 58 downloaded from your Google Doc ──
-    // Cycling wraps so all 360 image slots across 120 frames are covered
+    /* ════════════════════════════════════════════════════
+       120-IMAGE POOL — stack1 images, narrative-ordered
+    ════════════════════════════════════════════════════ */
     var POOL = [
       'assets/stack1/s1-001.jpg','assets/stack1/s1-002.jpg','assets/stack1/s1-003.jpg',
       'assets/stack1/s1-004.jpg','assets/stack1/s1-005.jpg','assets/stack1/s1-006.jpg',
@@ -725,46 +717,59 @@
       'assets/stack1/s1-062.jpg'
     ];
 
-    // ─── STATE ───────────────────────────────────────────────────────────
-    var frameIndex  = 0;   // current 30-sec frame (0-119)
-    var imgSlot     = 0;   // which of the 3 images is showing (0-2)
-    var frameTick   = 0;   // seconds elapsed in this frame (0-29)
-    var imgTick     = 0;   // seconds showing current image (0-9)
+    /* ════════════════════════════════════════════════════
+       STATE
+    ════════════════════════════════════════════════════ */
+    var frameIndex  = 0;
+    var imgSlot     = 0;
+    var frameTick   = 0;
+    var imgTick     = 0;
     var elapsedSec  = 0;
     var playing     = true;
     var tickInterval    = null;
-    var tickerInterval  = null;
     var currentSeg      = -1;
     var segTrackIndex   = 0;
     var tracksByPlaylist= {};
     var slides = [], scriptLines = [];
+    var filmReady    = false;
+    var prologueDone = false;
+    var tcTimeout    = null;
 
-    // ─── PROLOGUE STATE ──────────────────────────────────────────────────────
-    var filmReady    = false; // film data has loaded
-    var prologueDone = false; // prologue has been dismissed
+    /* DOM refs */
+    var stage       = document.getElementById('stage');
+    var flashEl     = document.getElementById('flash');
+    var progBar     = document.getElementById('progress-bar');
+    var imgEl       = document.getElementById('slideImage');
+    var capEye      = document.getElementById('cap-eyebrow');
+    var capText     = document.getElementById('cap-text');
+    var tcCard      = document.getElementById('title-card');
+    var tcEye       = document.getElementById('tc-eyebrow');
+    var tcMain      = document.getElementById('tc-main');
+    var tcSub       = document.getElementById('tc-sub');
+    var layerBadge  = document.getElementById('layer-badge');
+    var audioEl     = document.getElementById('soundtrack');
+    var ctrEl       = document.getElementById('slideCounter');
+    var segNameEl   = document.getElementById('segName');
 
-    var tickerWords = [], tickerPos = 0;
-
-    var audioEl = document.getElementById('soundtrack');
-    var imgEl   = document.getElementById('slideImage');
-    var bgEl    = document.getElementById('slideBg');
-    var captEl  = document.getElementById('captionStream');
-    var labelEl = document.getElementById('slideLabel');
-    var ctrEl   = document.getElementById('slideCounter');
-    var segNameEl = document.getElementById('segName');
-
-    // ─── HELPERS ─────────────────────────────────────────────────────────
+    /* ── Helpers ── */
     function getSeg(fi) { return Math.min(SEG_TOTAL - 1, Math.floor(fi / SEG_FRAMES)); }
 
-    function getPoolImg(fi, slot) {
-      return POOL[(fi + slot * 40) % POOL.length];
-    }
+    function getPoolImg(fi, slot) { return POOL[(fi + slot * 40) % POOL.length]; }
 
-    // Primary image resolver — LOCAL map wins, falls back to Unsplash pool
     function getFrameImg(fi, slot) {
       var row = LOCAL[fi];
       if (row && row[slot] != null) return row[slot];
       return getPoolImg(fi, slot);
+    }
+
+    function getLineIdx(fi, slot) {
+      if (!scriptLines.length) return -1;
+      return (fi * 3 + slot) % scriptLines.length;
+    }
+
+    function getScriptLine(fi, slot) {
+      if (!scriptLines.length) return '';
+      return scriptLines[getLineIdx(fi, slot)] || '';
     }
 
     function audioPath(t) {
@@ -785,7 +790,13 @@
       segTrackIndex = idx;
     }
 
-    // ─── DOTS ────────────────────────────────────────────────────────────
+    /* ── Flash ── */
+    function fireFlash() {
+      flashEl.classList.add('on');
+      setTimeout(function () { flashEl.classList.remove('on'); }, 180);
+    }
+
+    /* ── Dots ── */
     function updateDots(slot) {
       for (var d = 0; d < IMG_PER_FRAME; d++) {
         var el = document.getElementById('dot' + d);
@@ -793,7 +804,7 @@
       }
     }
 
-    // ─── SEGMENT STRIP ───────────────────────────────────────────────────
+    /* ── Segment strip ── */
     (function buildStrip() {
       var strip = document.getElementById('segStrip');
       for (var s = 0; s < SEG_TOTAL; s++) {
@@ -822,90 +833,134 @@
       }
     }
 
-    // ─── TICKER TAPE ─────────────────────────────────────────────────────
-    function startTicker(line) {
-      if (tickerInterval) clearInterval(tickerInterval);
-      tickerWords = (line || '').split(' ').filter(Boolean);
-      tickerPos = 0;
-      if (captEl) captEl.textContent = '';
-      if (!tickerWords.length) return;
-      // Spread evenly over ~85% of the 30-second frame
-      var msPerWord = Math.min(350, Math.floor((FRAME_SEC * 850) / tickerWords.length));
-      tickerInterval = setInterval(function () {
-        if (!playing) return;
-        if (tickerPos < tickerWords.length) {
-          captEl.textContent = tickerWords.slice(0, tickerPos + 1).join(' ');
-          tickerPos++;
-        } else {
-          clearInterval(tickerInterval);
+    /* ══════════════════════════════════════════════════════
+       CINEMA CAPTION — full line, fades in with image
+    ══════════════════════════════════════════════════════ */
+    function showCaption(line) {
+      capText.classList.remove('vis');
+      capEye.classList.remove('vis');
+      var lineIdx = getLineIdx(frameIndex, imgSlot);
+      var seg = getSeg(frameIndex);
+      /* Eyebrow = segment name for key segments */
+      var eye = (imgSlot === 0 && frameTick === 0) ? SEG_NAMES[seg] : '';
+      capEye.textContent = eye;
+      capText.textContent = line || '';
+      requestAnimationFrame(function () {
+        if (eye) capEye.classList.add('vis');
+        capText.classList.add('vis');
+      });
+    }
+
+    /* ══════════════════════════════════════════════════════
+       TITLE CARD — peak moment treatment
+    ══════════════════════════════════════════════════════ */
+    function checkTitleCard(fi, slot) {
+      var lineIdx = getLineIdx(fi, slot);
+      var tc = TITLE_CARDS[lineIdx];
+      if (!tc) {
+        /* Hide title card if active */
+        if (tcCard.classList.contains('active')) {
+          tcCard.classList.remove('active');
+          tcCard.className = 'active' in tcCard.classList ? '' : '';
         }
-      }, msPerWord);
+        return;
+      }
+      /* Fire title card */
+      if (tcTimeout) clearTimeout(tcTimeout);
+      tcEye.textContent  = tc.eyebrow || '';
+      tcMain.textContent = tc.main    || '';
+      tcSub.textContent  = tc.sub     || '';
+      /* Update tc layer class */
+      tcCard.className = tc.layer || '';
+      requestAnimationFrame(function () { tcCard.classList.add('active'); });
+      /* Auto-dismiss after 6s (stays for most of the 10s image slot) */
+      tcTimeout = setTimeout(function () {
+        tcCard.classList.remove('active');
+      }, 6200);
     }
 
-    function getScriptLine(fi) {
-      if (!scriptLines.length) return '';
-      return scriptLines[fi % scriptLines.length] || '';
+    function hideTitleCard() {
+      if (tcTimeout) clearTimeout(tcTimeout);
+      tcCard.classList.remove('active');
     }
 
-    // ─── CROSSFADE IMAGE ─────────────────────────────────────────────────
-    function crossfadeToImg(src) {
-      imgEl.classList.add('fade-out');
+    /* ══════════════════════════════════════════════════════
+       IMAGE CROSSFADE + KEN BURNS
+    ══════════════════════════════════════════════════════ */
+    var kbClasses = ['kb1', 'kb2', 'kb3'];
+    function crossfadeToImg(src, slot) {
+      imgEl.classList.remove('visible');
+      /* Remove old KB classes */
+      imgEl.classList.remove('kb1', 'kb2', 'kb3');
       var target = src;
+      var kb = kbClasses[slot % 3];
       setTimeout(function () {
         imgEl.src = target;
-        imgEl.classList.remove('fade-out');
-      }, 340);
+        /* Force reflow to restart animation */
+        void imgEl.offsetWidth;
+        imgEl.classList.add('visible', kb);
+      }, 320);
     }
 
-    // ─── RENDER FRAME (called on frame advance or segment jump) ──────────
-    function renderFrame(resetTicker) {
-      if (!slides.length && !POOL.length) return;
+    /* ══════════════════════════════════════════════════════
+       RENDER FRAME — called on frame advance or jump
+    ══════════════════════════════════════════════════════ */
+    function renderFrame(resetAll) {
       var seg = getSeg(frameIndex);
-      var accent = SEG_ACCENTS[seg];
 
-      // Image: LOCAL_MAP wins, pool fallback
-      crossfadeToImg(getFrameImg(frameIndex, 0));
+      /* Stage background state */
+      stage.className = SEG_STAGE_CLASS[seg];
 
-      // Overlay + accent
-      if (bgEl) bgEl.style.background = SEG_OVERLAYS[seg];
-      document.getElementById('progress').style.backgroundColor = accent;
+      /* Layer badge */
+      layerBadge.textContent = SEG_LAYERS[seg];
+      layerBadge.style.color = SEG_LAYER_COLORS[seg];
+      layerBadge.style.borderColor = SEG_LAYER_COLORS[seg];
 
-      // Labels
-      var s = slides[Math.min(frameIndex, slides.length - 1)] || {};
-      labelEl.textContent = s.title || SEG_NAMES[seg] || '';
-      labelEl.style.color = accent;
-      ctrEl.textContent = (frameIndex + 1) + ' / ' + FRAMES_TOTAL;
-      if (segNameEl) { segNameEl.textContent = SEG_NAMES[seg]; segNameEl.style.color = accent; }
-
+      /* Image: slot 0 */
       imgSlot = 0;
+      crossfadeToImg(getFrameImg(frameIndex, 0), 0);
       updateDots(0);
       updateProgress();
 
-      // Segment change → new music
+      /* Labels */
+      var s = slides[Math.min(frameIndex, slides.length - 1)] || {};
+      var accent = SEG_ACCENTS[seg];
+      if (segNameEl) { segNameEl.textContent = SEG_NAMES[seg]; segNameEl.style.color = accent; }
+      ctrEl.textContent = (frameIndex + 1) + ' / ' + FRAMES_TOTAL;
+
+      /* Segment change */
       if (seg !== currentSeg) {
+        /* Flash on segment transition */
+        if (currentSeg !== -1) fireFlash();
         currentSeg = seg;
         segTrackIndex = 0;
         updateSegStrip(seg);
         if (playing) playSegTrack(seg, 0);
       }
 
-      // Ticker (always restart on frame change)
-      startTicker(getScriptLine(frameIndex));
+      /* Caption + title card for slot 0 */
+      showCaption(getScriptLine(frameIndex, 0));
+      checkTitleCard(frameIndex, 0);
     }
 
-    // ─── RENDER INNER IMAGE (called at 10s / 20s within a frame) ─────────
+    /* ══════════════════════════════════════════════════════
+       RENDER INNER IMAGE — at 10s / 20s within a frame
+    ══════════════════════════════════════════════════════ */
     function renderInnerImage() {
-      crossfadeToImg(getFrameImg(frameIndex, imgSlot));
+      crossfadeToImg(getFrameImg(frameIndex, imgSlot), imgSlot);
       updateDots(imgSlot);
+      showCaption(getScriptLine(frameIndex, imgSlot));
+      checkTitleCard(frameIndex, imgSlot);
     }
 
-    // ─── PROGRESS ────────────────────────────────────────────────────────
+    /* ── Progress ── */
     function updateProgress() {
-      var pct = (frameTick / FRAME_SEC) * 100;
-      document.getElementById('progress').style.width = pct + '%';
+      progBar.style.width = ((frameTick / FRAME_SEC) * 100).toFixed(3) + '%';
     }
 
-    // ─── MAIN TICK (1 Hz) ────────────────────────────────────────────────
+    /* ══════════════════════════════════════════════════════
+       MAIN TICK (1 Hz)
+    ══════════════════════════════════════════════════════ */
     function startTick() {
       if (tickInterval) clearInterval(tickInterval);
       tickInterval = setInterval(function () {
@@ -915,18 +970,18 @@
         elapsedSec++;
         updateProgress();
 
-        // Inner image advance (every IMG_SEC seconds)
+        /* Inner image advance (every IMG_SEC seconds) */
         if (imgTick >= IMG_SEC && imgSlot < IMG_PER_FRAME - 1) {
           imgTick = 0;
           imgSlot++;
           renderInnerImage();
         }
 
-        // Frame advance (every FRAME_SEC seconds)
+        /* Frame advance (every FRAME_SEC seconds) */
         if (frameTick >= FRAME_SEC) {
           frameTick = 0; imgTick = 0; imgSlot = 0;
+          hideTitleCard();
           if (frameIndex >= FRAMES_TOTAL - 1) {
-            // Last frame done — stop and show end CTA
             playing = false;
             audioEl.pause();
             document.getElementById('btnPlay').textContent = 'Play';
@@ -939,12 +994,15 @@
       }, 1000);
     }
 
-    // ─── LOAD ────────────────────────────────────────────────────────────
+    /* ── Start film ── */
     function startFilm() {
       renderFrame(true);
       startTick();
     }
 
+    /* ══════════════════════════════════════════════════════
+       LOAD DATA
+    ══════════════════════════════════════════════════════ */
     function loadAll() {
       Promise.all([
         fetch('../data/episode-1-slides.json').then(function (r) { return r.json(); }),
@@ -964,11 +1022,9 @@
         audioEl.addEventListener('ended', function () {
           playSegTrack(getSeg(frameIndex), segTrackIndex + 1);
         });
-        if (prologueDone) {
-          startFilm();
-        } else {
+        if (prologueDone) { startFilm(); }
+        else {
           filmReady = true;
-          /* Show loading indicator on final screen if prologue is showing it */
           var loadEl = document.getElementById('pro-loading');
           if (loadEl) loadEl.classList.remove('active');
         }
@@ -976,15 +1032,14 @@
         slides = [];
         for (var i = 0; i < FRAMES_TOTAL; i++) slides.push({ id: 'f-' + i, title: SEG_NAMES[getSeg(i)], image: '' });
         scriptLines = ['Episode 1 · The Golden Heart Origin Story · SING 9 · NSPFRNP.'];
-        if (prologueDone) {
-          startFilm();
-        } else {
-          filmReady = true;
-        }
+        if (prologueDone) { startFilm(); }
+        else { filmReady = true; }
       });
     }
 
-    // ─── CONTROLS ────────────────────────────────────────────────────────
+    /* ══════════════════════════════════════════════════════
+       CONTROLS
+    ══════════════════════════════════════════════════════ */
     document.getElementById('btnPlay').addEventListener('click', function () {
       playing = !playing;
       this.textContent = playing ? 'Pause' : 'Play';
@@ -1005,12 +1060,12 @@
         if (playing) audioEl.play().catch(function () {});
         else audioEl.pause();
       }
-      if (e.key === 'ArrowRight') { frameIndex = (frameIndex + 1) % FRAMES_TOTAL; frameTick = 0; imgTick = 0; imgSlot = 0; renderFrame(true); }
-      if (e.key === 'ArrowLeft')  { frameIndex = (frameIndex - 1 + FRAMES_TOTAL) % FRAMES_TOTAL; frameTick = 0; imgTick = 0; imgSlot = 0; renderFrame(true); }
+      if (e.key === 'ArrowRight') { frameIndex = (frameIndex + 1) % FRAMES_TOTAL; frameTick = 0; imgTick = 0; imgSlot = 0; hideTitleCard(); renderFrame(true); }
+      if (e.key === 'ArrowLeft')  { frameIndex = (frameIndex - 1 + FRAMES_TOTAL) % FRAMES_TOTAL; frameTick = 0; imgTick = 0; imgSlot = 0; hideTitleCard(); renderFrame(true); }
       if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
     });
 
-    // ─── SMART BACK ──────────────────────────────────────────────────────
+    /* ── Smart back ── */
     function getBackInfo() {
       var ref = document.referrer;
       var fallback = { label: '← Home', href: '../index.html' };
@@ -1020,17 +1075,16 @@
         var sameHost = (url.hostname === window.location.hostname || url.hostname === 'localhost' || url.hostname === '');
         if (!sameHost) return fallback;
         var p = url.pathname;
-        if (p.indexOf('my-whiteboard') !== -1)       return { label: '← Whiteboard',   href: ref };
-        if (p.indexOf('vibers-menu') !== -1)          return { label: '← Vibers Menu',  href: ref };
-        if (p.indexOf('catalog') !== -1)              return { label: '← Catalog',       href: ref };
-        if (p.indexOf('launch-pad') !== -1)           return { label: '← Launch Pad',   href: ref };
-        if (p.indexOf('office-hours') !== -1)         return { label: '← Office Hours', href: ref };
-        if (p === '/' || p.indexOf('index') !== -1)  return { label: '← Home',          href: ref };
+        if (p.indexOf('my-whiteboard') !== -1) return { label: '← Whiteboard', href: ref };
+        if (p.indexOf('vibers-menu') !== -1)   return { label: '← Vibers Menu', href: ref };
+        if (p.indexOf('catalog') !== -1)        return { label: '← Catalog',    href: ref };
+        if (p.indexOf('launch-pad') !== -1)     return { label: '← Launch Pad', href: ref };
+        if (p === '/' || p.indexOf('index') !== -1) return { label: '← Home',  href: ref };
         return { label: '← Back', href: ref };
-      } catch (e) { return fallback; }
+      } catch (e2) { return fallback; }
     }
 
-    // ─── END-OF-EPISODE CTA ──────────────────────────────────────────────
+    /* ── End CTA ── */
     function showEndCTA() {
       var back = getBackInfo();
       var btn = document.getElementById('ep-back-btn');
@@ -1038,12 +1092,10 @@
       var el = document.getElementById('end-cta');
       if (el) el.classList.add('visible');
     }
-
     function hideEndCTA() {
       var el = document.getElementById('end-cta');
       if (el) { el.classList.remove('visible'); el.style.display = 'none'; }
     }
-
     document.getElementById('ep-watch-again').addEventListener('click', function () {
       hideEndCTA();
       frameIndex = 0; frameTick = 0; imgTick = 0; imgSlot = 0;
@@ -1054,19 +1106,20 @@
       audioEl.play().catch(function () {});
     });
 
-    // ─── PROLOGUE ENGINE ─────────────────────────────────────────────────────
+    /* ══════════════════════════════════════════════════════
+       PROLOGUE ENGINE
+    ══════════════════════════════════════════════════════ */
     var PROLOGUE_SCREENS = 5;
-    var PROLOGUE_SEC     = 14;  // seconds per screen — slow, let each card breathe
+    var PROLOGUE_SEC     = 14;
     var proIdx  = 0;
     var proTick = 0;
     var proTimer = null;
-
-    /* Background glow colours per screen */
     var PRO_GLOWS = [
-      'rgba(60,20,120,0.22)',   /* 0 — deep violet */
-      'rgba(10,40,80,0.25)',    /* 1 — deep teal */
-      'rgba(120,70,0,0.18)',    /* 2 — amber origin */
-      'rgba(180,130,0,0.22)'    /* 3 — gold wake-up */
+      'rgba(60,20,120,0.22)',
+      'rgba(10,40,80,0.25)',
+      'rgba(120,70,0,0.18)',
+      'rgba(180,130,0,0.22)',
+      'rgba(180,130,0,0.28)'
     ];
 
     function proSetScreen(idx) {
@@ -1078,7 +1131,6 @@
       }
       var el = document.getElementById('prologue');
       if (el) el.style.setProperty('--pro-glow', PRO_GLOWS[idx] || PRO_GLOWS[0]);
-      /* Reset timing fill */
       var fill = document.getElementById('pro-timing-fill');
       if (fill) fill.style.width = '0%';
     }
@@ -1088,14 +1140,9 @@
       prologueDone = true;
       clearInterval(proTimer);
       var el = document.getElementById('prologue');
-      if (el) {
-        el.classList.add('fade-out');
-        setTimeout(function () { el.style.display = 'none'; }, 1200);
-      }
-      if (filmReady) {
-        startFilm();
-      } else {
-        /* Data still loading — show loading message on final screen */
+      if (el) { el.classList.add('fade-out'); setTimeout(function () { el.style.display = 'none'; }, 1200); }
+      if (filmReady) { startFilm(); }
+      else {
         var loadEl = document.getElementById('pro-loading');
         if (loadEl) loadEl.classList.add('active');
       }
@@ -1107,15 +1154,10 @@
         proTick++;
         var fill = document.getElementById('pro-timing-fill');
         if (fill) fill.style.width = ((proTick / PROLOGUE_SEC) * 100).toFixed(1) + '%';
-
         if (proTick >= PROLOGUE_SEC) {
           proTick = 0;
-          if (proIdx >= PROLOGUE_SCREENS - 1) {
-            dismissPrologue();
-          } else {
-            proIdx++;
-            proSetScreen(proIdx);
-          }
+          if (proIdx >= PROLOGUE_SCREENS - 1) { dismissPrologue(); }
+          else { proIdx++; proSetScreen(proIdx); }
         }
       }, 1000);
     }
@@ -1123,9 +1165,10 @@
     document.getElementById('pro-skip').addEventListener('click', dismissPrologue);
     document.getElementById('pro-begin').addEventListener('click', dismissPrologue);
 
-    /* Start prologue and begin loading film data in parallel */
+    /* Boot */
     startPrologue();
     loadAll();
+
   })();
   </script>
 </body>

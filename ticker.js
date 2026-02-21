@@ -24,6 +24,7 @@ var TICKER_ITEMS = [
   /* ── Trailer Loop · Ad Space ── */
   { text: '▶ STORYSTREAM 9 · Now Playing',                   href: '/interfaces/trailer-loop.html' },
   { text: 'Trailer · 15s · Looping 24/7',                    href: '/interfaces/trailer-loop.html' },
+  { text: '★ THIS SPOT IS AD SPACE · Book it →',             href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20ad%20space%20on%20the%20SING!9%20ticker.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
   { text: 'SING!9 StoryStream · EP Creator Studio',          href: '/interfaces/ep-creator-studio.html' },
   { text: 'Free 48-hour trial · Sandbox mode available',     href: '/interfaces/ep-creator-studio.html' },
   { text: 'Three streams · all at once · always on',         href: '/interfaces/storystream-9-about.html' },
@@ -78,10 +79,15 @@ var TICKER_ITEMS = [
   { text: 'Launch Pad →',                                   href: '/interfaces/launch-pad.html' },
   { text: 'My Whiteboard →',                               href: '/interfaces/my-whiteboard.html' },
 
-  /* ── Ad Space ── */
-  { text: 'This ticker is ad space · Book your spot →',    href: '/interfaces/advertise.html' },
-  { text: 'Advertise on SING!9 StoryStream · From $9',     href: '/interfaces/advertise.html' },
+  /* ── Ad Space — multiple touchpoints with direct book CTA ── */
+  { text: '★ ADVERTISE HERE · Book this spot →',           href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20ad%20space%20on%20the%20SING!9%20ticker%20%2F%20banner.%0A%0APackage%20interested%20in%3A%20%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20' },
+  { text: 'Gold Ticker · from $9 · Book now →',            href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Gold%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20a%20Gold%20Ticker%20spot%20on%20SING!9.%0A%0APackage%3A%20Gold%20Ticker%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
+  { text: 'Banner Spot 15s · from $27 · Book now →',       href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Banner%20Spot%2015s&body=Hi%2C%20I%27d%20like%20to%20book%20a%2015-second%20Banner%20Spot%20on%20SING!9.%0A%0APackage%3A%20Banner%20Spot%2015s%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
+  { text: '30-Second Trailer · from $27 · Book now →',     href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%2030s%20Trailer&body=Hi%2C%20I%27d%20like%20to%20book%20a%2030-second%20trailer%20spot%20on%20SING!9.%0A%0APackage%3A%2030-Second%20Trailer%0AOption%20A%20(I%20send%20the%20file)%20%2F%20Option%20B%20(you%20produce)%3A%20%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20' },
+  { text: 'Full Package · from $36 · Book now →',          href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Full%20Package&body=Hi%2C%20I%27d%20like%20to%20book%20the%20Full%20Package%20(Ticker%20%2B%20Banner%20%2B%20Trailer)%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0ABudget%20range%3A%20' },
+  { text: 'Advertise on SING!9 · See all packages →',      href: '/interfaces/advertise.html' },
   { text: 'Early traffic · Early pricing · Powers of 3',   href: '/interfaces/advertise.html' },
+  { text: 'Reach gold hearts · SING!9 audience',           href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Inquiry&body=Hi%2C%20I%27m%20interested%20in%20advertising%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AWhat%20I%27d%20like%20to%20promote%3A%20' },
 
   /* ── The Nine Game · Four-Layer Chess ── */
   { text: 'The Nine Game · NSPFRNP Layer System',           href: '/interfaces/nine-game-hub.html' },
@@ -99,6 +105,7 @@ var TICKER_ITEMS = [
   /* ── Close ── */
   { text: 'NSPFRNP → ∞⁹',                                  href: null },
   { text: 'MCA · SING! 9 · Always on',                     href: null },
+  { text: '★ AD SPACE AVAILABLE · info@fractiai.com →',    href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9&body=Hi%2C%20I%27d%20like%20to%20advertise%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0APackage%20interested%20in%20(Ticker%20%2F%20Banner%20%2F%20Trailer%20%2F%20Full%20Package)%3A%20%0ABudget%3A%20' },
 
 ];
 

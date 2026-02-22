@@ -2769,12 +2769,14 @@
     });
 
     /* ══════════════════════════════════════════════════════
-       PROLOGUE ENGINE
+       PROLOGUE ENGINE — setTimeout chain (most reliable)
+       Each screen auto-schedules the next. No tick counter.
+       Screen 0-3: 2500ms each. Screen 4: 4000ms then auto-start.
+       Nuclear fallback forces dismiss at 20s no matter what.
     ══════════════════════════════════════════════════════ */
     var PROLOGUE_SCREENS = 5;
-    var PROLOGUE_SEC     = 7;
-    var proIdx  = 0;
-    var proTick = 0;
+    var PRO_MS = [2500, 2500, 2500, 2500, 4000]; /* ms per screen */
+    var proIdx   = 0;
     var proTimer = null;
     var PRO_GLOWS = [
       'rgba(60,20,120,0.22)',
@@ -2800,7 +2802,7 @@
     function dismissPrologue() {
       if (prologueDone) return;
       prologueDone = true;
-      clearInterval(proTimer);
+      clearTimeout(proTimer);
       var el = document.getElementById('prologue');
       if (el) { el.classList.add('fade-out'); setTimeout(function () { el.style.display = 'none'; }, 1200); }
       if (filmReady) { startFilm(); }
@@ -2810,18 +2812,19 @@
       }
     }
 
+    function proNext() {
+      if (prologueDone) return;
+      proIdx++;
+      if (proIdx >= PROLOGUE_SCREENS) { dismissPrologue(); return; }
+      proSetScreen(proIdx);
+      proTimer = setTimeout(proNext, PRO_MS[proIdx] || 2500);
+    }
+
     function startPrologue() {
       proSetScreen(0);
-      proTimer = setInterval(function () {
-        proTick++;
-        var fill = document.getElementById('pro-timing-fill');
-        if (fill) fill.style.width = ((proTick / PROLOGUE_SEC) * 100).toFixed(1) + '%';
-        if (proTick >= PROLOGUE_SEC) {
-          proTick = 0;
-          if (proIdx >= PROLOGUE_SCREENS - 1) { dismissPrologue(); }
-          else { proIdx++; proSetScreen(proIdx); }
-        }
-      }, 1000);
+      proTimer = setTimeout(proNext, PRO_MS[0]);
+      /* Nuclear fallback — force dismiss after 20s no matter what */
+      setTimeout(function () { dismissPrologue(); }, 20000);
     }
 
     /* Skip always dismisses */
@@ -2836,22 +2839,15 @@
       dismissPrologue();
     });
 
-    /* Per-screen click handlers — most reliable approach */
-    function proAdvance() {
-      proTick = 0;
-      var fill = document.getElementById('pro-timing-fill');
-      if (fill) fill.style.width = '0%';
-      if (proIdx >= PROLOGUE_SCREENS - 1) { dismissPrologue(); }
-      else { proIdx++; proSetScreen(proIdx); }
-    }
-
+    /* Tap any screen to jump ahead */
     for (var _ps = 0; _ps < PROLOGUE_SCREENS; _ps++) {
       (function (idx) {
         var screen = document.getElementById('pro-screen-' + idx);
         if (!screen) return;
         screen.addEventListener('click', function (e) {
           if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
-          proAdvance();
+          clearTimeout(proTimer);
+          proNext();
         });
       })(_ps);
     }

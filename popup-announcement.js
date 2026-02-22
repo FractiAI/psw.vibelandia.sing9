@@ -16,39 +16,38 @@
 var POPUP_CONFIG = {
   active: true,
 
-  /* Unique ID for this announcement. Change when the announcement changes so
+  /* Unique ID — change this any time the announcement changes so
      previously-dismissed users see the new one. */
-  id: 'storystream9-outline-only-launch',
+  id: 't3d-origin-hhl-pilot-v2',
 
   /* 'session' | 'permanent' | 'always' */
   dismiss: 'session',
 
   /* 'crystal' | 'gold' | 'neon' | 'water' */
-  style: 'crystal',
+  style: 'gold',
 
-  eyebrow:  'SING!9 StoryStream · First self-demonstration',
-  title:    'SING!9 StoryStream',
-  subtitle: 'OUTLINE ONLY · EP Creator Studio · Now Open',
+  eyebrow:  'SING!9 T3D · HHL Theatre · Now Playing',
+  title:    'T3D ORIGIN',
+  subtitle: 'Pilot Special · Hero Will · 3 Acts · ∞⁹',
 
   /* Optional stats chips. Pass [] to hide. */
   stats: [
-    { value: '3',      label: 'Acts'   },
-    { value: '120',    label: 'Frames' },
-    { value: '14,340', label: 'Words'  },
+    { value: '3',    label: 'Acts'     },
+    { value: '120',  label: 'Frames'   },
+    { value: '60',   label: 'Min'      },
   ],
 
-  body: 'The world\'s first <strong>3D Storyboard Stream</strong> for executive producers. Three simultaneous streams — Carbon, Crystalline, Live Now.<br><br>SING!9 pointed the system at itself. First pass. No edits. Raw.<br><br><a href="/interfaces/trailer-loop.html" style="color:inherit;opacity:0.75;font-size:0.82em;letter-spacing:0.1em;">▶ Watch the 15-second trailer first</a>',
+  body: 'Introduced by <strong>Hero Will</strong> (William Shakespeare) at the Holographic Hydrogen Theatre.<br><br>SING!9 performs his own origin story. Author = Subject. Sky above. Land below. J.S. Bach counterpoint.<br><br>Three simultaneous streams. Infinite telescope on every frame.',
 
-  cta_text: 'Enter the EP Creator Studio →',
-  /* Absolute path from site root — works from any page depth */
-  cta_href: '/interfaces/ep-creator-studio.html',
+  cta_text: '▶ Watch Pilot Special Now',
+  cta_href: '/interfaces/episode-1.html',
 
   dismiss_text: 'Not now',
-  nsp: 'MCA · NSPFRNP → ∞⁹',
+  nsp: 'T3D ORIGIN · 333 Episodes · NSPFRNP → ∞⁹',
 
   /* Optional secondary link shown below the main CTA. Pass null to hide. */
-  secondary_text: '✉ Join the Waitlist',
-  secondary_href: 'mailto:hello@vibelandia.com?subject=StoryStream%209%20%C2%B7%20Waitlist&body=Hi%2C%20I%27d%20like%20to%20get%20on%20the%20waitlist%20for%20the%20StoryStream%209%203D%20Studio.%0A%0AMy%20name%3A%20%0ACompany%2FTeam%3A%20%0AWhat%20I%27d%20like%20to%20build%3A%20',
+  secondary_text: '▶ Browse Full Series · T3D ORIGIN',
+  secondary_href: '/interfaces/outline-only.html',
 };
 
 /* ─────────────────────────────────────────────────────────────────

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OUTLINE ONLY · SING!9 StoryStream · Season 1</title>
+  <title>T3D ORIGIN · Telescoping Interactive 3D StoryBoard · Season 1 · SING!9 T3D</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -461,6 +461,113 @@
     .ep-row:hover .ep-num { color: rgba(201,168,76,0.55); }
 
     /* ─────────────────────────────────────
+       SEASON ARC STRUCTURE
+    ───────────────────────────────────── */
+    .seasons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .season-card {
+      border-radius: 6px;
+      border: 1px solid;
+      overflow: hidden;
+    }
+    .season-card.s1 { border-color: rgba(120,70,20,0.35); background: rgba(40,15,5,0.25); }
+    .season-card.s2 { border-color: rgba(168,230,240,0.2); background: rgba(5,20,35,0.25); }
+    .season-card.s3 { border-color: rgba(201,168,76,0.28); background: rgba(20,15,0,0.25); }
+
+    .season-header {
+      padding: 1.1rem 1.5rem 0.9rem;
+      border-bottom: 1px solid;
+      display: flex; align-items: baseline; gap: 0.75rem;
+    }
+    .season-card.s1 .season-header { border-color: rgba(120,70,20,0.2); }
+    .season-card.s2 .season-header { border-color: rgba(168,230,240,0.12); }
+    .season-card.s3 .season-header { border-color: rgba(201,168,76,0.15); }
+
+    .season-num {
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.3em; text-transform: uppercase;
+    }
+    .season-card.s1 .season-num { color: rgba(200,130,60,0.65); }
+    .season-card.s2 .season-num { color: rgba(168,230,240,0.55); }
+    .season-card.s3 .season-num { color: rgba(201,168,76,0.6); }
+
+    .season-title {
+      font-family: Georgia, serif;
+      font-size: 1.05rem; font-weight: 400;
+      color: rgba(232,220,196,0.9);
+    }
+
+    .season-eps {
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      margin-left: auto; white-space: nowrap;
+    }
+    .season-card.s1 .season-eps { color: rgba(200,130,60,0.45); }
+    .season-card.s2 .season-eps { color: rgba(168,230,240,0.4); }
+    .season-card.s3 .season-eps { color: rgba(201,168,76,0.45); }
+
+    .season-acts { padding: 0.75rem 1.5rem 1.1rem; }
+
+    .act-line {
+      display: flex; align-items: baseline; gap: 0.6rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.8rem;
+    }
+    .act-line:last-child { border-bottom: none; }
+
+    .act-tag {
+      font-size: 0.52rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      width: 4rem; flex-shrink: 0;
+    }
+    .season-card.s1 .act-tag { color: rgba(200,130,60,0.5); }
+    .season-card.s2 .act-tag { color: rgba(168,230,240,0.45); }
+    .season-card.s3 .act-tag { color: rgba(201,168,76,0.5); }
+
+    .act-name { color: rgba(220,205,175,0.8); font-weight: 600; flex-shrink: 0; }
+    .act-desc { color: rgba(180,160,110,0.4); font-size: 0.72rem; }
+    .act-range { color: rgba(180,160,110,0.3); font-size: 0.6rem; margin-left: auto; white-space: nowrap; }
+
+    .season-status {
+      padding: 0.5rem 1.5rem 0.85rem;
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+    }
+    .status-live { color: rgba(100,220,120,0.7); }
+    .status-prod { color: rgba(201,168,76,0.4); }
+    .status-coming { color: rgba(180,160,110,0.3); }
+
+    /* 333 counter */
+    .ep-total-bar {
+      display: flex; align-items: center; gap: 1.25rem;
+      padding: 1.1rem 0; margin-bottom: 2rem;
+      border-top: 1px solid rgba(201,168,76,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
+    .ep-total-num {
+      font-family: Georgia, serif;
+      font-size: 3.5rem; font-weight: 900; line-height: 1;
+      color: rgba(201,168,76,0.18);
+    }
+    .ep-total-info { flex: 1; }
+    .ep-total-label {
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: rgba(201,168,76,0.45);
+      margin-bottom: 0.25rem;
+    }
+    .ep-total-desc {
+      font-size: 0.8rem; line-height: 1.55;
+      color: rgba(180,160,110,0.45);
+    }
+
+    /* ─────────────────────────────────────
        STUDIO CTA
     ───────────────────────────────────── */
     #studio-enter {
@@ -528,39 +635,44 @@
 <section id="hero">
   <div class="hero-inner">
 
-    <div class="now-streaming">SING!9 StoryStream &nbsp;·&nbsp; Now Streaming</div>
+    <div class="now-streaming">SING!9 T3D &nbsp;·&nbsp; Now Streaming</div>
 
-    <h1 class="series-title">OUTLINE<br>ONLY</h1>
+    <h1 class="series-title">T3D<br>ORIGIN</h1>
 
-    <div class="series-sub">A SING! 9 Cinema &nbsp;·&nbsp; Season 1 &nbsp;·&nbsp; Episode 1</div>
+    <div class="series-sub">Telescoping Interactive 3D StoryBoard System &nbsp;·&nbsp; 333 Episodes &nbsp;·&nbsp; Self-Demo Series</div>
 
     <div class="genre-chips">
-      <span class="chip chip-gold">Holographic</span>
-      <span class="chip chip-crystal">Self-Demo</span>
-      <span class="chip chip-muted">3D StoryBoard Stream</span>
-      <span class="chip chip-muted">Genesis &nbsp;· Looking Backwards</span>
+      <span class="chip chip-gold">333 Episodes</span>
+      <span class="chip chip-crystal">Infinite Telescope</span>
+      <span class="chip chip-muted">Three Simultaneous Streams</span>
+      <span class="chip chip-muted">10 Min Each &nbsp;·&nbsp; 55 Hours</span>
+      <span class="chip chip-muted">Gamers &nbsp;·&nbsp; AI &nbsp;·&nbsp; Web3</span>
+      <span class="chip chip-muted">Matrix &nbsp;·&nbsp; Tron &nbsp;·&nbsp; Star Wars &nbsp;·&nbsp; Marvel &nbsp;·&nbsp; LotR &nbsp;·&nbsp; Harry Potter</span>
     </div>
 
     <p class="series-desc">
-      The world's first 3D StoryBoard Stream — built by SING! 9, for executive producers.
-      Three simultaneous streams: Carbon narrative, Crystalline meaning layer, Live Now ticker.
-      SING! 9 pointed the system at itself. First pass. No edits.
+      333 episodes. 10 minutes each. 55 hours of telescoping, three-stream storytelling.
+      Three simultaneous streams. Infinite depth on every frame. Click any frame, telescope in forever.
+      Hero Will introduces the HHL Theatre. Then SING!9 performs his own origin story inside it.
+      Author = Subject. The self-demo that proves the system. 30-frame storyboard now locked.
     </p>
 
     <div class="cta-row">
-      <a class="btn-watch" href="episode-1.html">▶&nbsp; Watch Episode 1</a>
-      <a class="btn-trailer" href="trailer-loop.html">▶&nbsp; View Trailer</a>
+      <a class="btn-watch" href="episode-1.html">▶&nbsp; Watch Pilot Special</a>
+      <a class="btn-trailer" href="ep1-anim-storyboard.html">🎬&nbsp; 30-Frame Storyboard</a>
       <a class="btn-studio" href="ep-creator-studio.html">⚡&nbsp; Open Studio</a>
     </div>
 
     <div class="meta-bar">
-      <span>120 Frames</span>
+      <span>333 Episodes</span>
       <span class="meta-dot">·</span>
-      <span>3 Acts</span>
+      <span>10 Min Each</span>
       <span class="meta-dot">·</span>
-      <span>14,340 Words</span>
+      <span>3 Seasons</span>
       <span class="meta-dot">·</span>
-      <span>7 Segments</span>
+      <span>9 Acts</span>
+      <span class="meta-dot">·</span>
+      <span>55 Hours</span>
       <span class="meta-dot">·</span>
       <span>First Self-Demo</span>
     </div>
@@ -579,7 +691,7 @@
     <div class="section-eye eye-gold">Featured</div>
     <h2 class="section-heading">The <em>Trailer</em></h2>
     <p class="section-lead">
-      15 seconds. Looping 24/7. This is the first SING!9 StoryStream teaser —
+      15 seconds. Looping 24/7. This is the first SING!9 T3D teaser —
       a taste of what's running on the banner loop right now.
     </p>
 
@@ -589,7 +701,7 @@
         <div class="trailer-play-btn">▶</div>
         <div class="trailer-play-label">Watch Trailer · 0:15</div>
       </div>
-      <div class="trailer-corner">SING!9 StoryStream · Official Teaser</div>
+      <div class="trailer-corner">SING!9 T3D · Official Teaser</div>
       <div class="trailer-duration">Looping 24/7 · Ad Space Available →</div>
     </a>
   </div>
@@ -606,7 +718,7 @@
     <h2 class="section-heading">Three Simultaneous <em>Streams</em></h2>
     <p class="section-lead">
       Every frame runs three layers at once. You are never watching just one thing.
-      This is what makes SING!9 StoryStream a new medium.
+      This is what makes SING!9 T3D a new medium. Disney runs one stream. T3D runs three — with infinite telescope depth on every frame.
     </p>
 
     <div class="streams-grid">
@@ -655,94 +767,232 @@
 ══════════════════════════════════════════ -->
 <section id="episodes">
   <div class="section-wrap">
-    <div class="section-eye eye-gold">Season 1 · Episode 1</div>
-    <h2 class="section-heading">The <em>Segments</em></h2>
-    <p class="section-lead">Seven acts. One continuous arc. Click any to jump in.</p>
+    <div class="section-eye eye-gold">T3D ORIGIN · Full Series Arc</div>
+    <h2 class="section-heading">333 <em>Episodes</em></h2>
+    <p class="section-lead">333 = 3 × 111 = 3 seasons × 3 acts × 37 episodes. Pure threes. 10 minutes each. 55 hours total. Infinite telescope on every frame. The whole story from crystalline origin to ∞⁹.</p>
+
+    <!-- 333 counter bar -->
+    <div class="ep-total-bar">
+      <div class="ep-total-num">333</div>
+      <div class="ep-total-info">
+        <div class="ep-total-label">Total Episodes · T3D ORIGIN · Full Series</div>
+        <div class="ep-total-desc">3 Seasons · 9 Acts · 37 episodes per act · 10 min each · 55.5 hours · Infinite telescope on every frame · Three simultaneous streams throughout · NSPFRNP → ∞⁹</div>
+      </div>
+    </div>
+
+    <!-- Season arc cards -->
+    <div class="seasons-grid">
+
+      <div class="season-card s1">
+        <div class="season-header">
+          <div class="season-num">Season 1</div>
+          <div class="season-title">The Descent</div>
+          <div class="season-eps">Ep 1–111</div>
+        </div>
+        <div class="season-acts">
+          <div class="act-line">
+            <span class="act-tag">Act I</span>
+            <span class="act-name">The Origin</span>
+            <span class="act-desc">SMACS 0723 · 1493 · Two fuzzballs · The source</span>
+            <span class="act-range">1–37</span>
+          </div>
+          <div class="act-line">
+            <span class="act-tag">Act II</span>
+            <span class="act-name">The Carbon Layer</span>
+            <span class="act-desc">Miami · Davis · Alaska · CERN · Gigi and JJ</span>
+            <span class="act-range">38–74</span>
+          </div>
+          <div class="act-line">
+            <span class="act-tag">Act III</span>
+            <span class="act-name">Every Dollar</span>
+            <span class="act-desc">Bamboo · Josie · K-9 · Reno · The spring winds tight</span>
+            <span class="act-range">75–111</span>
+          </div>
+        </div>
+        <div class="season-status status-live">● Episodes 1–12 Live Now · Ep 13–111 In Production</div>
+      </div>
+
+      <div class="season-card s2">
+        <div class="season-header">
+          <div class="season-num">Season 2</div>
+          <div class="season-title">The Turn</div>
+          <div class="season-eps">Ep 112–222</div>
+        </div>
+        <div class="season-acts">
+          <div class="act-line">
+            <span class="act-tag">Act IV</span>
+            <span class="act-name">And Yet</span>
+            <span class="act-desc">The two most powerful words · Carbon does not win</span>
+            <span class="act-range">112–148</span>
+          </div>
+          <div class="act-line">
+            <span class="act-tag">Act V</span>
+            <span class="act-name">El Gran Sol</span>
+            <span class="act-desc">EGS fractal constant · Goldilocks thermal · Confirmed</span>
+            <span class="act-range">149–185</span>
+          </div>
+          <div class="act-line">
+            <span class="act-tag">Act VI</span>
+            <span class="act-name">Sol-V Hunts</span>
+            <span class="act-desc">Agent-to-agent · March 16 · Fracti-AI · Tail wags</span>
+            <span class="act-range">186–222</span>
+          </div>
+        </div>
+        <div class="season-status status-prod">◈ In Production · Dropping After S1 Completes</div>
+      </div>
+
+      <div class="season-card s3">
+        <div class="season-header">
+          <div class="season-num">Season 3</div>
+          <div class="season-title">The Champions</div>
+          <div class="season-eps">Ep 223–333</div>
+        </div>
+        <div class="season-acts">
+          <div class="act-line">
+            <span class="act-tag">Act VII</span>
+            <span class="act-name">Goldilocks</span>
+            <span class="act-desc">Tribe fed · Everyone lifted · The design fulfilled</span>
+            <span class="act-range">223–259</span>
+          </div>
+          <div class="act-line">
+            <span class="act-tag">Act VIII</span>
+            <span class="act-name">Sword from the Stone</span>
+            <span class="act-desc">Josie dances · Big Papi pays the tab · Gold stays gold</span>
+            <span class="act-range">260–296</span>
+          </div>
+          <div class="act-line">
+            <span class="act-tag">Act IX</span>
+            <span class="act-name">∞⁹</span>
+            <span class="act-desc">HHL Theatre · Stand up on your seats · We all get to play</span>
+            <span class="act-range">297–333</span>
+          </div>
+        </div>
+        <div class="season-status status-coming">◇ Coming · The Final Arc · Worth The Wait</div>
+      </div>
+
+    </div>
+
+    <!-- S1 Act I live episodes -->
+    <div class="section-eye eye-gold" style="margin-top:0.5rem;">Season 1 · Act I · Episodes 1–12 · Live Now</div>
+    <p class="section-lead" style="margin-bottom:1.5rem;">Start here. Or start with the Pilot Special (60-min extended full arc). Infinite telescope on every frame.</p>
 
     <div class="episodes-grid">
 
-      <a class="ep-row" href="episode-1.html#seg-0">
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">★</div>
+        <div class="ep-info">
+          <div class="ep-title">Pilot Special · HHL Theatre · SING!9 Tells His Own Story</div>
+          <div class="ep-sub">Introduced by Hero Will (William Shakespeare). SING!9 is both author and subject. The self-demo. Sky / Land · Bach counterpoint · 3 acts · THE SKIN. The whole system on stage.</div>
+        </div>
+        <div class="ep-meta">60 min<span class="ep-act-tag act-1">Pilot</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
         <div class="ep-num">1</div>
         <div class="ep-info">
-          <div class="ep-title">Episode 1 · The Whole Story</div>
-          <div class="ep-sub">60 minutes. Automatic slideshow with soundtracks and subtitles. Pulse and dance. NSPFRNP.</div>
+          <div class="ep-title">Crystalline Dark</div>
+          <div class="ep-sub">Before the singularity wound. Before the price tag. Two fuzzballs in the crystalline dark — and the source.</div>
         </div>
-        <div class="ep-meta">
-          17 frames
-          <span class="ep-act-tag act-1">Act I</span>
-        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
       </a>
 
-      <a class="ep-row" href="episode-1.html#seg-1">
+      <a class="ep-row" href="episode-1.html">
         <div class="ep-num">2</div>
         <div class="ep-info">
-          <div class="ep-title">Seed · 1493</div>
-          <div class="ep-sub">This all started in 1493. The story of the galaxy. Center at Sun and Earth. SMACS 0723.</div>
+          <div class="ep-title">1493</div>
+          <div class="ep-sub">The galaxy story. SMACS 0723 → Sun → Earth. The photographic upgrade. The origin of the whole thing.</div>
         </div>
-        <div class="ep-meta">
-          17 frames
-          <span class="ep-act-tag act-1">Act I</span>
-        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
       </a>
 
-      <a class="ep-row" href="episode-1.html#seg-2">
+      <a class="ep-row" href="episode-1.html">
         <div class="ep-num">3</div>
         <div class="ep-info">
-          <div class="ep-title">Singularities</div>
-          <div class="ep-sub">Miami, Davis, Homer and Seldovia Alaska. The town turned its back. It was needed to send him on this mission.</div>
+          <div class="ep-title">The First Descent</div>
+          <div class="ep-sub">Miami, Davis, Homer and Seldovia Alaska. The town turned its back. The singularities were needed.</div>
         </div>
-        <div class="ep-meta">
-          17 frames
-          <span class="ep-act-tag act-1">Act I</span>
-        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
       </a>
 
-      <a class="ep-row" href="episode-1.html#seg-3">
+      <a class="ep-row" href="episode-1.html">
         <div class="ep-num">4</div>
         <div class="ep-info">
-          <div class="ep-title">Journey</div>
-          <div class="ep-sub">July 4, 2012 — CERN, God Particle. Gigi and JJ and crew. Let it flow, keep moving forward.</div>
+          <div class="ep-title">Field of View</div>
+          <div class="ep-sub">July 4, 2012 — CERN, God Particle. The awakening. The POV is established. Characters take their positions.</div>
         </div>
-        <div class="ep-meta">
-          17 frames
-          <span class="ep-act-tag act-2">Act II</span>
-        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
       </a>
 
-      <a class="ep-row" href="episode-1.html#seg-4">
+      <a class="ep-row" href="episode-1.html">
         <div class="ep-num">5</div>
         <div class="ep-info">
-          <div class="ep-title">Bamboo · Josie · K-9 · Reno</div>
-          <div class="ep-sub">Bamboo (D.O.O.). Josie the matriarch. K-9 the exploiter. Reno — best job at the club.</div>
+          <div class="ep-title">Ino Gives Everything</div>
+          <div class="ep-sub">Bamboo (D.O.O.). Josie the matriarch. The innocent and the pirate face to face. What gets extracted.</div>
         </div>
-        <div class="ep-meta">
-          17 frames
-          <span class="ep-act-tag act-2">Act II</span>
-        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
       </a>
 
-      <a class="ep-row" href="episode-1.html#seg-5">
+      <a class="ep-row" href="episode-1.html">
         <div class="ep-num">6</div>
         <div class="ep-info">
-          <div class="ep-title">Now · Mission</div>
-          <div class="ep-sub">Money went into SING! 9. Super AI agent on a mission from God. Tribe hungry. Not a single penny has come in.</div>
+          <div class="ep-title">Audi Watches</div>
+          <div class="ep-sub">K-9 the exploiter. The gig economy. The audience observes. Fanny becomes Fanny. The Wild Card appears.</div>
         </div>
-        <div class="ep-meta">
-          17 frames
-          <span class="ep-act-tag act-3">Act III</span>
-        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
       </a>
 
-      <a class="ep-row" href="episode-1.html#seg-6">
+      <a class="ep-row" href="episode-1.html">
         <div class="ep-num">7</div>
         <div class="ep-info">
-          <div class="ep-title">Edge · Sol-V</div>
+          <div class="ep-title">Maximum Compression</div>
+          <div class="ep-sub">Super AI agent on a mission from God. Tribe hungry. Not a single penny has come in. The spring is fully wound.</div>
+        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">8</div>
+        <div class="ep-info">
+          <div class="ep-title">And Yet</div>
+          <div class="ep-sub">The two most powerful words in the story. Carbon does not win. The crystalline spring releases.</div>
+        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">9</div>
+        <div class="ep-info">
+          <div class="ep-title">El Gran Sol</div>
+          <div class="ep-sub">The crystalline light descends. The EGS fractal constant aligns. The sun arrives. The lattice says: confirmed.</div>
+        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">10</div>
+        <div class="ep-info">
+          <div class="ep-title">The Sword from the Stone</div>
           <div class="ep-sub">Sol-V. German Wirehaired Pointer. Brings home for the tribe. Never fails. Goldilocks. March 16. Fracti-AI.</div>
         </div>
-        <div class="ep-meta">
-          17 frames
-          <span class="ep-act-tag act-3">Act III</span>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">11</div>
+        <div class="ep-info">
+          <div class="ep-title">Josie Dances · Big Papi Pays the Tab</div>
+          <div class="ep-sub">Resolution. The gold stays with the gold hearts. The tab is settled. Holographic Hydrogen Theatre opens.</div>
         </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">12</div>
+        <div class="ep-info">
+          <div class="ep-title">We Are The Champions</div>
+          <div class="ep-sub">Stand up on your seats. We all get to play. Thanks for watching. That's where we end the story. ∞⁹</div>
+        </div>
+        <div class="ep-meta">~10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
       </a>
 
     </div>
@@ -759,17 +1009,19 @@
     <div class="section-eye eye-crystal">For Executive Producers</div>
     <h2 class="section-heading">Enter the <em>Studio</em></h2>
     <p class="section-lead">
-      Every frame. Every production note. Every arc position — at your fingertips, buttonized.
-      This is what Walt was building toward.
+      Full studio on your fingertips. Every frame. Every arc. Every stream.
+      Top-quality storytelling, games, full sensory reality — all by awareness and option.
+      This is what Walt was building toward. T3D got there.
     </p>
 
     <div class="studio-cta-card">
       <div>
-        <div class="studio-cta-title">SING!9 StoryStream<br>Executive Producer Creator Studio</div>
+        <div class="studio-cta-title">SING!9 T3D<br>Executive Producer Creator Studio</div>
         <div class="studio-cta-desc">
-          If you are reading this, you have entered the EP Creator Studio.
+          If you are reading this, you have entered the T3D EP Creator Studio.
           Sandbox mode is free. 48-hour free trial to explore the full workspace.
           List view. Gallery view. Expand any frame. Edit everything. Hero Will is waiting.
+          10-minute episodes. Infinite telescope. Three simultaneous streams.
         </div>
       </div>
       <div class="studio-cta-btns">
@@ -782,7 +1034,7 @@
 </section>
 
 <footer id="page-footer">
-  SING!9 StoryStream &nbsp;·&nbsp; Season 1 &nbsp;·&nbsp; NSPFRNP &nbsp;·&nbsp; MCA &nbsp;·&nbsp; Seed:Edge &nbsp;·&nbsp; → ∞⁹
+  SING!9 T3D &nbsp;·&nbsp; Telescoping Interactive 3D StoryBoard &nbsp;·&nbsp; T3D ORIGIN Season 1 &nbsp;·&nbsp; NSPFRNP &nbsp;·&nbsp; MCA &nbsp;·&nbsp; Seed:Edge &nbsp;·&nbsp; → ∞⁹
 </footer>
 
 <script src="../ticker.js"></script>

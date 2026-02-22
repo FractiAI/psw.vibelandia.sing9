@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Episode 1 · Crystalline Dark · 30-Frame Animated Storyboard · T3D ORIGIN</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #D4AF37; --gold-dim: rgba(212,175,55,0.45); --gold-faint: rgba(212,175,55,0.12);
+      --crystal: #a8e6f0; --crystal-dim: rgba(168,230,240,0.45);
+      --carbon: #b48246; --carbon-dim: rgba(180,130,70,0.45);
+      --bg: #030108; --surface: rgba(255,255,255,0.035);
+      --act1: rgba(168,230,240,0.7); --act2: rgba(255,140,40,0.7); --act3: rgba(212,175,55,0.9);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: rgba(232,220,200,0.85); font-family: 'Georgia', serif;
+      font-size: 14px; line-height: 1.65; }
+
+    /* ── NAV ── */
+    .t3d-nav { position: sticky; top: 0; z-index: 100;
+      background: rgba(3,1,8,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem; height: 46px; }
+    .t3d-nav-brand { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold-dim); text-decoration: none; }
+    .t3d-nav-links { display: flex; gap: 1.2rem; align-items: center; }
+    .t3d-nav-links a { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(232,220,200,0.5); text-decoration: none;
+      transition: color 0.2s; }
+    .t3d-nav-links a:hover { color: rgba(232,220,200,0.9); }
+    .t3d-nav-cta { color: var(--gold) !important;
+      border: 1px solid var(--gold-dim); padding: 0.25rem 0.7rem; border-radius: 3px;
+      background: var(--gold-faint); }
+
+    /* ── HERO HEADER ── */
+    .sb-hero { position: relative; padding: 4rem 2rem 3rem; text-align: center;
+      border-bottom: 1px solid rgba(212,175,55,0.12); overflow: hidden; }
+    .sb-hero::before { content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(60,20,120,0.22) 0%, transparent 70%);
+      pointer-events: none; }
+    .sb-eyebrow { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold-dim); margin-bottom: 1rem; }
+    .sb-title { font-size: clamp(2.2rem,6vw,5rem); font-weight: 900; letter-spacing: 0.04em;
+      text-transform: uppercase; color: #fff;
+      text-shadow: 0 0 80px rgba(212,175,55,0.25); margin-bottom: 0.3rem; }
+    .sb-title .gold { color: transparent; -webkit-text-stroke: 1.5px rgba(212,175,55,0.85); }
+    .sb-subtitle { font-size: clamp(0.8rem,1.6vw,1rem); color: rgba(232,220,200,0.5);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2rem; }
+    .sb-meta-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 1.5rem; }
+    .sb-tag { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.28rem 0.8rem; border-radius: 2px; }
+    .sb-tag.crystal { color: var(--crystal); border: 1px solid var(--crystal-dim); background: rgba(10,30,40,0.35); }
+    .sb-tag.carbon  { color: var(--carbon); border: 1px solid var(--carbon-dim); background: rgba(40,20,5,0.35); }
+    .sb-tag.gold    { color: var(--gold);   border: 1px solid var(--gold-dim);   background: var(--gold-faint); }
+    .sb-intro { font-size: 0.9rem; color: rgba(232,220,200,0.6); max-width: 60ch; margin: 0 auto;
+      line-height: 1.8; }
+    .sb-rule { width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+      margin: 1.5rem auto; }
+
+    /* ── SECTION LABELS ── */
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .section-head { padding: 2.5rem 0 1.2rem; border-bottom: 1px solid rgba(212,175,55,0.1); margin-bottom: 1.8rem; }
+    .section-eye { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold-dim); margin-bottom: 0.5rem; }
+    .section-title { font-size: clamp(1.2rem,3vw,2rem); font-weight: 800; color: #fff;
+      letter-spacing: 0.04em; text-transform: uppercase; }
+
+    /* ── CHARACTER SHEET ── */
+    .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 1rem; margin-bottom: 2rem; }
+    .char-card { background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 4px;
+      padding: 1.2rem; position: relative; overflow: hidden; }
+    .char-card::before { content: ''; position: absolute; inset: 0;
+      background: var(--char-glow, rgba(212,175,55,0.04)); pointer-events: none; }
+    .char-name { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--char-color, var(--gold)); margin-bottom: 0.35rem; }
+    .char-role { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(232,220,200,0.4); margin-bottom: 0.75rem; }
+    .char-freq { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 2px;
+      background: var(--char-bg, rgba(212,175,55,0.08));
+      border: 1px solid var(--char-border, rgba(212,175,55,0.25));
+      color: var(--char-color, var(--gold)); display: inline-block; margin-bottom: 0.6rem; }
+    .char-desc { font-size: 0.8rem; color: rgba(232,220,200,0.6); line-height: 1.65; }
+    .char-prompt-label { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(212,175,55,0.4); margin: 0.8rem 0 0.3rem; }
+    .char-prompt { font-size: 0.72rem; color: rgba(232,220,200,0.45); font-style: italic;
+      line-height: 1.6; padding: 0.5rem; background: rgba(0,0,0,0.25); border-radius: 3px;
+      border-left: 2px solid var(--char-border, rgba(212,175,55,0.25)); }
+
+    /* ── ACT DIVIDER ── */
+    .act-divider { padding: 2rem 0; text-align: center; position: relative;
+      margin: 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); }
+    .act-divider::after { content: ''; position: absolute; inset: 0;
+      background: var(--act-bg, rgba(168,230,240,0.03)); pointer-events: none; }
+    .act-number { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--act-color, var(--act1)); margin-bottom: 0.4rem; }
+    .act-title { font-size: clamp(1rem,3vw,1.8rem); font-weight: 900; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--act-color, var(--act1)); }
+    .act-sub { font-size: 0.7rem; color: rgba(232,220,200,0.4); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-top: 0.4rem; }
+
+    /* ── STORYBOARD GRID ── */
+    .sb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px,1fr));
+      gap: 1.25rem; margin-bottom: 3rem; }
+
+    /* ── FRAME CARD ── */
+    .frame-card { background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.065); border-radius: 5px;
+      overflow: hidden; transition: border-color 0.2s, transform 0.15s;
+      position: relative; }
+    .frame-card:hover { border-color: rgba(212,175,55,0.3); transform: translateY(-2px); }
+    .frame-card.act-1 { --act-accent: var(--act1); }
+    .frame-card.act-2 { --act-accent: var(--act2); }
+    .frame-card.act-3 { --act-accent: var(--act3); }
+    .frame-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--act-accent, var(--gold-dim)); opacity: 0.6; }
+
+    /* Sky/Carbon split visual */
+    .frame-visual { position: relative; height: 160px; overflow: hidden; }
+    .frame-sky { position: absolute; top: 0; left: 0; right: 0; height: 42%;
+      background: var(--sky-bg, linear-gradient(180deg, #050a14 0%, #0a1520 100%));
+      display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .frame-sky img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55;
+      filter: hue-rotate(10deg) saturate(0.8) brightness(0.7); }
+    .frame-sky .no-img { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(168,230,240,0.3); }
+    .frame-horizon { position: absolute; top: 42%; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--act-accent, rgba(212,175,55,0.6)), transparent);
+      z-index: 5; }
+    .frame-land { position: absolute; bottom: 0; left: 0; right: 0; height: 58%;
+      background: var(--land-bg, linear-gradient(180deg, #0d0804 0%, #050302 100%));
+      display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .frame-land img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55;
+      filter: sepia(0.25) saturate(0.9) brightness(0.65); }
+    .frame-land .no-img { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(180,130,70,0.3); }
+
+    /* Frame number badge */
+    .frame-num { position: absolute; top: 0.45rem; left: 0.55rem; z-index: 10;
+      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.12em;
+      color: var(--act-accent, var(--gold));
+      background: rgba(3,1,8,0.75); padding: 0.18rem 0.5rem; border-radius: 2px; }
+    .frame-time { position: absolute; top: 0.45rem; right: 0.55rem; z-index: 10;
+      font-size: 0.52rem; font-weight: 600; letter-spacing: 0.1em;
+      color: rgba(232,220,200,0.45); background: rgba(3,1,8,0.65); padding: 0.15rem 0.4rem; border-radius: 2px; }
+
+    /* Frame body */
+    .frame-body { padding: 0.9rem 1rem 1rem; }
+    .frame-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #fff; margin-bottom: 0.6rem; }
+    .frame-chars { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.65rem; }
+    .frame-char-tag { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 2px;
+      color: var(--act-accent, var(--gold)); border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.25); }
+    .frame-streams { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.6rem; }
+    .stream-block { padding: 0.5rem; border-radius: 3px; }
+    .stream-block.crystal { background: rgba(10,30,40,0.5); border: 1px solid rgba(168,230,240,0.15); }
+    .stream-block.carbon  { background: rgba(40,20,5,0.5);  border: 1px solid rgba(180,130,70,0.15); }
+    .stream-label { font-size: 0.48rem; font-weight: 800; letter-spacing: 0.2em;
+      text-transform: uppercase; margin-bottom: 0.3rem; }
+    .stream-block.crystal .stream-label { color: var(--crystal-dim); }
+    .stream-block.carbon  .stream-label { color: var(--carbon-dim); }
+    .stream-text { font-size: 0.72rem; color: rgba(232,220,200,0.65); line-height: 1.55; }
+    .frame-ticker { font-size: 0.62rem; color: rgba(201,168,32,0.55); font-style: italic;
+      margin-bottom: 0.7rem; line-height: 1.5; border-left: 2px solid rgba(201,168,32,0.2);
+      padding-left: 0.5rem; }
+
+    /* Catalog source indicator */
+    .frame-sources { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.65rem; }
+    .src-chip { font-size: 0.48rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.12rem 0.45rem; border-radius: 2px;
+      color: rgba(232,220,200,0.45); border: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.3); }
+    .src-chip.crystal { color: rgba(168,230,240,0.6); border-color: rgba(168,230,240,0.12); }
+    .src-chip.carbon  { color: rgba(180,130,70,0.6);  border-color: rgba(180,130,70,0.12); }
+
+    /* Prompt toggle */
+    .prompt-toggle { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(212,175,55,0.4); background: none; border: none;
+      cursor: pointer; padding: 0; transition: color 0.2s; display: flex; align-items: center; gap: 0.3rem; }
+    .prompt-toggle:hover { color: var(--gold); }
+    .prompt-toggle::before { content: '▶'; font-size: 0.45rem; transition: transform 0.2s; }
+    .prompt-toggle.open::before { transform: rotate(90deg); }
+    .prompt-section { display: none; margin-top: 0.65rem; }
+    .prompt-section.open { display: block; }
+    .prompt-label { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(212,175,55,0.4); margin-bottom: 0.3rem; margin-top: 0.5rem; }
+    .prompt-box { font-size: 0.72rem; color: rgba(232,220,200,0.5); font-style: italic;
+      line-height: 1.6; padding: 0.5rem 0.6rem; background: rgba(0,0,0,0.35); border-radius: 3px;
+      border-left: 2px solid rgba(212,175,55,0.2); margin-bottom: 0.4rem; }
+    .anim-box { font-size: 0.72rem; color: rgba(168,230,240,0.5); font-style: italic;
+      line-height: 1.6; padding: 0.5rem 0.6rem; background: rgba(0,0,0,0.3); border-radius: 3px;
+      border-left: 2px solid rgba(168,230,240,0.2); }
+
+    /* ── PIPELINE SECTION ── */
+    .pipeline-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+      gap: 1rem; margin-bottom: 2.5rem; }
+    .pipe-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px; padding: 1.1rem; }
+    .pipe-rank { font-size: 2rem; font-weight: 900; color: rgba(212,175,55,0.12);
+      line-height: 1; margin-bottom: 0.4rem; }
+    .pipe-step { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.25rem; }
+    .pipe-tool { font-size: 0.85rem; font-weight: 800; color: #fff; margin-bottom: 0.15rem; }
+    .pipe-by { font-size: 0.62rem; color: rgba(232,220,200,0.38); margin-bottom: 0.5rem; }
+    .pipe-score { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .pipe-stars { font-size: 0.62rem; color: var(--gold); letter-spacing: 0.05em; }
+    .pipe-badge { font-size: 0.5rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.15rem 0.5rem; border-radius: 2px;
+      background: rgba(60,200,100,0.08); border: 1px solid rgba(60,200,100,0.25); color: rgba(60,200,100,0.8); }
+    .pipe-desc { font-size: 0.77rem; color: rgba(232,220,200,0.55); line-height: 1.6; }
+    .pipe-url { display: inline-block; margin-top: 0.4rem; font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.1em; color: var(--gold-dim); text-decoration: none;
+      border-bottom: 1px solid rgba(212,175,55,0.2); transition: color 0.2s; }
+    .pipe-url:hover { color: var(--gold); }
+
+    .pipeline-flow { background: var(--surface); border: 1px solid rgba(212,175,55,0.1);
+      border-radius: 5px; padding: 1.5rem; margin-bottom: 2rem; }
+    .flow-title { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold-dim); margin-bottom: 1rem; }
+    .flow-steps { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .flow-step { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 0.35rem 0.8rem; border-radius: 3px;
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); color: rgba(232,220,200,0.7); }
+    .flow-arrow { font-size: 0.65rem; color: var(--gold-dim); }
+    .flow-step.highlight { border-color: var(--gold-dim); color: var(--gold); background: var(--gold-faint); }
+
+    /* ── FOOTER ── */
+    footer { text-align: center; padding: 2.5rem 2rem 1.5rem;
+      font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(160,130,80,0.3); border-top: 1px solid rgba(212,175,55,0.08); line-height: 2.2; }
+    footer a { color: rgba(212,175,55,0.4); text-decoration: none; }
+    footer a:hover { color: rgba(212,175,55,0.8); }
+
+    @media (max-width: 600px) {
+      .frame-streams { grid-template-columns: 1fr; }
+      .sb-grid { grid-template-columns: 1fr; }
+      .char-grid { grid-template-columns: 1fr 1fr; }
+      .pipeline-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="t3d-nav">
+  <a class="t3d-nav-brand" href="outline-only.html">T3D ORIGIN</a>
+  <div class="t3d-nav-links">
+    <a href="outline-only.html">Series</a>
+    <a href="storystream-9-about.html">Pitch</a>
+    <a href="episode-1.html">▶ Pilot</a>
+    <a href="ep1-anim-storyboard.html" style="color:rgba(168,230,240,0.7)">Storyboard</a>
+    <a href="ep-creator-studio.html" class="t3d-nav-cta">Studio →</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="sb-hero">
+  <div class="sb-eyebrow">T3D ORIGIN · Episode 1 · Animated Storyboard · 30 Frames · 10 Minutes</div>
+  <h1 class="sb-title">Crystalline <span class="gold">Dark</span></h1>
+  <div class="sb-subtitle">3 Frames · Per Minute · Hero Will · HHL Theatre · SING!9 Self-Demo</div>
+  <div class="sb-meta-row">
+    <span class="sb-tag crystal">Sky · Crystalline · Upper Voice</span>
+    <span class="sb-tag carbon">Land & Water · Carbon · Lower Voice</span>
+    <span class="sb-tag gold">J.S. Bach Counterpoint · 3 Acts · ∞⁹</span>
+  </div>
+  <div class="sb-rule"></div>
+  <p class="sb-intro">
+    30 frames locked. 3 acts. Characters hybridized from the original catalog artwork.
+    Each frame includes the catalog source image, sky/land composition, character assignments,
+    and AI generation prompts for <strong style="color:rgba(212,175,55,0.8)">FLUX.1</strong> (stills)
+    + <strong style="color:rgba(168,230,240,0.8)">Wan2.1</strong> (animation).
+    When this locks: run the pipeline. Every frame becomes a 4-second animated clip.
+    30 × 20 seconds = 10 minutes. The episode is born.
+  </p>
+</header>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main>
+  <div class="section-wrap">
+
+    <!-- ─────────────────────────────────────────
+         CHARACTER SHEETS
+    ───────────────────────────────────────── -->
+    <div class="section-head">
+      <div class="section-eye">01 · Character Design Sheets · Hybridized from Catalog Originals</div>
+      <h2 class="section-title">The Cast</h2>
+    </div>
+
+    <div class="char-grid">
+
+      <div class="char-card" style="--char-color:#D4AF37;--char-glow:rgba(212,175,55,0.06);--char-bg:rgba(212,175,55,0.08);--char-border:rgba(212,175,55,0.3);">
+        <div class="char-name">SING!9</div>
+        <div class="char-role">The Protagonist · Author = Subject</div>
+        <div class="char-freq">Frequency: Gold Ember</div>
+        <p class="char-desc">Mixed Caribbean heritage male, 30s–40s. Dark carbon-textured clothing. A gold ember visibly glowing in the chest — the crystalline origin preserved through the compression. Eyes: gold-flecked brown. Build: athletic, grounded. The SKIN in formation.</p>
+        <div class="char-prompt-label">FLUX.1 Character Prompt</div>
+        <div class="char-prompt">Male figure, mixed Taino-Caribbean heritage, 30s, dark carbon-textured jacket, warm gold light glowing from chest like an ember, gold-flecked brown eyes, grounded athletic build, holographic hydrogen lattice background, cinematic portrait, 8K, film quality, ultra-detailed</div>
+      </div>
+
+      <div class="char-card" style="--char-color:#f0c060;--char-glow:rgba(240,192,96,0.06);--char-bg:rgba(240,192,96,0.08);--char-border:rgba(240,192,96,0.3);">
+        <div class="char-name">INO</div>
+        <div class="char-role">Gold Fuzzball · The Innocent · Gold Heart</div>
+        <div class="char-freq">Frequency: Pure Gold · Genuine</div>
+        <p class="char-desc">Small floating animated gold fuzzball — anthropomorphic, warm amber fur, wide innocent eyes, soft edges, gold light particle trails. Translucent in the crystal realm. Fully present in the carbon world. She never forgets the original frequency. Source: <code>ep1-ino-gold-heart.png</code></p>
+        <div class="char-prompt-label">FLUX.1 Character Prompt</div>
+        <div class="char-prompt">Adorable round golden fuzzball character, large innocent amber eyes, soft glowing warm fur, floating gently, trails of gold light particles orbiting her, crystalline lattice background, character sheet quality, warm amber palette, 8K ultra-detailed</div>
+      </div>
+
+      <div class="char-card" style="--char-color:#7cc4d4;--char-glow:rgba(124,196,212,0.06);--char-bg:rgba(124,196,212,0.06);--char-border:rgba(124,196,212,0.25);">
+        <div class="char-name">PIRO</div>
+        <div class="char-role">Carbon Fuzzball · The Observer · Calculated</div>
+        <div class="char-freq">Frequency: Carbon · Cool · Witness</div>
+        <p class="char-desc">Similar to Ino but darker — charcoal and carbon gray, sharper edges, cooler geometry, calculating cool-blue eyes. Slight smirk. Not villain — the carbon witness. More angular than Ino. Carbon particle trails drift downward. Source: <code>ep1-piro-carbon.png</code></p>
+        <div class="char-prompt-label">FLUX.1 Character Prompt</div>
+        <div class="char-prompt">Dark charcoal animated fuzzball character, cool calculating blue eyes, slightly angular sharp-edged form contrasting with softer Ino, carbon particle trails drifting downward, dark atmospheric background, cool dark color palette, character sheet, 8K</div>
+      </div>
+
+      <div class="char-card" style="--char-color:#e8c87a;--char-glow:rgba(232,200,122,0.05);--char-bg:rgba(232,200,122,0.07);--char-border:rgba(232,200,122,0.28);">
+        <div class="char-name">HERO WILL</div>
+        <div class="char-role">William Shakespeare · HHL Theatre Host</div>
+        <div class="char-freq">Frequency: Theatrical Gold</div>
+        <p class="char-desc">William Shakespeare rendered in holographic lattice form — Elizabethan silhouette, deep gold on deep black, constructed from glowing hydrogen nodes. His words become crystalline nodes in the lattice. The Globe → the HHL. He opens the curtain. He delivers the closing quote. Source: HHL lattice visual language</p>
+        <div class="char-prompt-label">FLUX.1 Character Prompt</div>
+        <div class="char-prompt">William Shakespeare silhouette in full Elizabethan costume constructed entirely from glowing holographic hydrogen lattice nodes, gold and cyan luminescence, deep purple-black theatrical background, spotlight made of lattice light from above, ultra-detailed, cinematic, 8K</div>
+      </div>
+
+      <div class="char-card" style="--char-color:#ffe088;--char-glow:rgba(255,224,136,0.06);--char-bg:rgba(255,224,136,0.07);--char-border:rgba(255,224,136,0.28);">
+        <div class="char-name">SOL-V</div>
+        <div class="char-role">Mission Catalyst · Gold Engine · The Accelerant</div>
+        <div class="char-freq">Frequency: Mission Gold · Accelerating</div>
+        <p class="char-desc">A powerful gold-and-white energy entity with a crystalline core. Dynamic, catalytic, always in motion. The spark that turns the carbon into gold. Source: <code>ep1-sol-v.png</code> + <code>ep1-ino-solv-team.png</code></p>
+        <div class="char-prompt-label">FLUX.1 Character Prompt</div>
+        <div class="char-prompt">Dynamic energy entity Sol-V — gold and white plasma form with crystalline geometric core, CERN-style particle trails radiating outward, powerful and catalytic, crystalline lattice background, 8K ultra-detailed, cinematic</div>
+      </div>
+
+      <div class="char-card" style="--char-color:#d4a060;--char-glow:rgba(212,160,96,0.05);--char-bg:rgba(212,160,96,0.07);--char-border:rgba(212,160,96,0.25);">
+        <div class="char-name">QUEEN BEE</div>
+        <div class="char-role">Mission Commander · Stigmergy · The Coordinator</div>
+        <div class="char-freq">Frequency: Hexagonal Command</div>
+        <p class="char-desc">The Queen Bee — the mission commander. Regal, authoritative. Hexagonal lattice crown. Her presence IS the directive — no orders needed. The hive knows. Stigmergy in a body. Source: <code>ep1-queen-bee.png</code></p>
+        <div class="char-prompt-label">FLUX.1 Character Prompt</div>
+        <div class="char-prompt">Regal female figure — Queen Bee — with holographic hexagonal honeycomb crown made of gold lattice nodes, commanding presence, golden crystalline aura, hexagonal patterns expanding outward from her body, cinematic portrait, 8K</div>
+      </div>
+
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         ANIMATION PIPELINE
+    ───────────────────────────────────────── -->
+    <div class="section-head">
+      <div class="section-eye">02 · Animation Pipeline · Top-Rated Open Source Free Tools · Selected & Ranked</div>
+      <h2 class="section-title">The Pipeline</h2>
+    </div>
+
+    <div class="pipeline-flow">
+      <div class="flow-title">8-Step Production Flow · Catalog Artwork → Animated Episode</div>
+      <div class="flow-steps">
+        <span class="flow-step highlight">Character Design<br><small>FLUX.1-dev</small></span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step highlight">Frame Stills<br><small>FLUX.1 + ControlNet</small></span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Style Lock<br><small>IP-Adapter FLUX</small></span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step highlight">Frame Animation<br><small>Wan2.1 I2V</small></span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Char Animation<br><small>AnimateDiff v3</small></span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Narration<br><small>Coqui XTTS-v2</small></span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step highlight">Assembly<br><small>FFmpeg</small></span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Run on<br><small>ComfyUI / Colab</small></span>
+      </div>
+    </div>
+
+    <div class="pipeline-grid" id="pipeline-grid"></div>
+
+    <!-- ─────────────────────────────────────────
+         STORYBOARD FRAMES
+    ───────────────────────────────────────── -->
+    <div class="section-head">
+      <div class="section-eye">03 · 30-Frame Locked Storyboard · 3 Frames Per Minute · All 3 Acts</div>
+      <h2 class="section-title">The Frames</h2>
+    </div>
+
+    <div id="storyboard-root"></div>
+
+  </div>
+</main>
+
+<footer>
+  T3D ORIGIN · Episode 1 · Crystalline Dark · 30-Frame Animated Storyboard<br>
+  HHL Theatre · Hero Will · SING!9 Self-Demo · 3 Acts · J.S. Bach Counterpoint · Sky / Land<br>
+  Pipeline: FLUX.1 · Wan2.1 · AnimateDiff · Coqui XTTS · FFmpeg · ComfyUI<br>
+  NSPFRNP · MCA · Seed:Edge · <a href="episode-1.html">▶ Watch Pilot Special</a> · <a href="outline-only.html">▶ Full Series</a> · → ∞⁹
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   PIPELINE DATA
+════════════════════════════════════════════════════════════ */
+const PIPELINE = [
+  {
+    rank: 1, step: 'Step 1 · Image Generation',
+    tool: 'FLUX.1-dev', by: 'Black Forest Labs',
+    stars: '★★★★★', badge: 'Apache 2.0',
+    desc: '#1 open source image model. Character sheets, frame stills, hybridized compositions. Exceptional detail and coherence. Best for: all 30 frame stills.',
+    url: 'https://huggingface.co/black-forest-labs/FLUX.1-dev'
+  },
+  {
+    rank: 2, step: 'Step 2 · Image → Video Animation',
+    tool: 'Wan2.1 (I2V)', by: 'Alibaba DAMO Academy',
+    stars: '★★★★★', badge: 'Apache 2.0',
+    desc: '#1 open source video model by benchmarks. Image-to-Video: takes each of the 30 frame stills and animates it into a 4–6 second clip. Cinematic quality. Best for: all 30 animations.',
+    url: 'https://huggingface.co/Wan-AI/Wan2.1-I2V-14B-720P'
+  },
+  {
+    rank: 3, step: 'Step 3 · High-Quality Video Alt',
+    tool: 'HunyuanVideo', by: 'Tencent Multimedia Lab',
+    stars: '★★★★★', badge: 'Open Weights',
+    desc: '#2 open source video model. 13B parameters. Exceptional cinematic quality — rival to commercial models. Use for key frames (Hero Will, Act III). Best for: high-drama frames.',
+    url: 'https://huggingface.co/tencent/HunyuanVideo'
+  },
+  {
+    rank: 4, step: 'Step 4 · Character Consistency',
+    tool: 'IP-Adapter FLUX', by: 'Tencent + Community',
+    stars: '★★★★☆', badge: 'MIT License',
+    desc: 'Maintains character identity across all 30 frames. Feed Ino, Piro, SING!9 reference images → IP-Adapter ensures they look the same in every frame. Essential for episode coherence.',
+    url: 'https://github.com/tencent-ailab/IP-Adapter'
+  },
+  {
+    rank: 5, step: 'Step 5 · Character Motion Animation',
+    tool: 'AnimateDiff v3', by: 'Community / ANIMATEDIFF',
+    stars: '★★★★☆', badge: 'Open Source',
+    desc: 'Character-consistent animation with motion modules. Pairs with SDXL for fuzzball characters (Ino, Piro). Smooth looping animations ideal for 20-second clips.',
+    url: 'https://github.com/guoyww/AnimateDiff'
+  },
+  {
+    rank: 6, step: 'Step 6 · Voice & Narration',
+    tool: 'Coqui XTTS-v2', by: 'Coqui AI',
+    stars: '★★★★☆', badge: 'CPML License',
+    desc: 'Best open source TTS. Voice clone from a 3-second sample. Hero Will voice = deep theatrical English. SING!9 narration = Spanglish cadence. Free to run locally.',
+    url: 'https://github.com/coqui-ai/TTS'
+  },
+  {
+    rank: 7, step: 'Step 7 · Runner / Interface',
+    tool: 'ComfyUI', by: 'comfyanonymous',
+    stars: '★★★★★', badge: 'GPL-3.0',
+    desc: 'The node-based interface that runs FLUX, Wan2.1, AnimateDiff, IP-Adapter in one graph. Build the full 30-frame pipeline as a single ComfyUI workflow. Runs locally or in Colab.',
+    url: 'https://github.com/comfyanonymous/ComfyUI'
+  },
+  {
+    rank: 8, step: 'Step 8 · Video Assembly',
+    tool: 'FFmpeg', by: 'FFmpeg Project',
+    stars: '★★★★★', badge: 'LGPL / GPL',
+    desc: '30 animated clips + narration audio + ticker text overlay + Bach Cello Suite audio → assembled into the final 10-minute episode MP4. Universal. Free. Unbeatable.',
+    url: 'https://ffmpeg.org'
+  }
+];
+
+/* ════════════════════════════════════════════════════════════
+   FRAME DATA — 30 frames · 3 per minute · 10 minutes
+   Each frame: sky (crystal lane) + carbon (land lane)
+   src_crystal = catalog asset for sky lane
+   src_carbon  = catalog asset for carbon lane
+════════════════════════════════════════════════════════════ */
+const FRAMES = [
+  /* ─── ACT I: SPIRAL OUTCAST HERO (Frames 1–15) ─── */
+  {
+    n:1, time:'0:00–0:20', act:1,
+    title:'THE HHL CURTAIN',
+    chars:['Hero Will'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-jwst-deep-field.png',
+    crystal:'The HHL lattice assembles node by node in the sky. Gold threads connecting hydrogen points. The stage takes shape.',
+    carbon:'Deep field cosmos — ancient starlight through carbon dust. The universe breathing before the stage appears.',
+    ticker:'T3D ORIGIN · Episode 1 · Crystalline Dark · HHL Theatre is now open · Hero Will presiding',
+    prompt:'Wide shot deep space starfield with warm carbon dust nebula, single amber ember at center, holographic hydrogen lattice assembling above in gold threads, cinematic dark background, volumetric light, film grain, 8K',
+    anim:'Slow zoom toward amber ember, lattice assembles with subtle sparkle, particles drift from carbon layer upward to crystal sky'
+  },
+  {
+    n:2, time:'0:20–0:40', act:1,
+    title:'HERO WILL STEPS FORWARD',
+    chars:['Hero Will'],
+    src_crystal:'assets/ep1-jwst-deep-field.png',
+    src_carbon:'assets/ep1-hhl-lattice.png',
+    crystal:'The cosmic deep field: the infinite audience. Every star a node. Every node a witness.',
+    carbon:'A silhouette in Elizabethan dress — made entirely of glowing hydrogen lattice nodes — steps forward on the HHL stage.',
+    ticker:'Hero Will · William Shakespeare · Keeper of the dramatic tradition · Now inside the SING!9 lattice',
+    prompt:'Silhouette of William Shakespeare in Elizabethan costume constructed from glowing holographic hydrogen nodes, gold and cyan luminescence, deep purple-black stage background, theatrical spotlight of lattice light from above, ultra-detailed, cinematic, 8K',
+    anim:'Hero Will walks slowly forward, nodes brighten as he moves, cape of light trails behind, starfield rotates slowly'
+  },
+  {
+    n:3, time:'0:40–1:00', act:1,
+    title:'"ALL THE WORLD\'S A STAGE"',
+    chars:['Hero Will'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-hhl-lattice.png',
+    crystal:'Above: the sky is a mirror of the lattice below. Every node connected top to bottom. Sky and stage as one.',
+    carbon:'Hero Will raises his arms — the full HHL Theatre materializes around him. Infinite. Holographic. The Globe reborn.',
+    ticker:'"All the world\'s a stage — and now the stage is holographic." — Hero Will · HHL',
+    prompt:'William Shakespeare figure made of holographic lattice raising arms wide, holographic theater materializing around him — infinite scale, walls of glowing nodes extending in all directions, gold and crystal blue, magnificent, 8K',
+    anim:'Arms raise slowly, theater materializes in expanding rings from his figure, audience nodes shimmer and pulse'
+  },
+  {
+    n:4, time:'1:00–1:20', act:1,
+    title:'THE CRYSTALLINE ORIGIN',
+    chars:['Ino'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-jwst-deep-field.png',
+    crystal:'The lattice at maximum expression. Every node lit. Every connection alive. This is the before.',
+    carbon:'The cosmos before compression. Pure hydrogen. The NSPFRNP lattice at full expression. Ino at the center — a gold point in the vast crystalline field.',
+    ticker:'Before the descent · The crystalline origin · NSPFRNP at full expression · Ino · The Innocent One · Gold undiluted',
+    prompt:'Vast crystalline lattice in deep space, warm gold fuzzball (Ino) floating at center, amber and cyan light, holographic hydrogen architecture, all nodes glowing, cosmic scale, prismatic, 8K film quality',
+    anim:'Ino slowly rotates, gold light particles orbit her, lattice pulses gently one node per beat, peaceful'
+  },
+  {
+    n:5, time:'1:20–1:40', act:1,
+    title:'INO · GOLD · GENUINE',
+    chars:['Ino'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-ino-gold-heart.png',
+    crystal:'Above Ino the crystalline sky: her frequency signature. Gold. Undiluted. First generation.',
+    carbon:'Ino — the gold fuzzball — close portrait. Warm amber eyes, soft glow, innocence at maximum. Character introduction.',
+    ticker:'INO · Gold Fuzzball · Genuine · The Innocent · Frequency: Gold · Origin: Crystalline · She remembers everything always',
+    prompt:'Close up portrait of Ino — warm golden animated fuzzball character with wide innocent amber eyes, soft glowing fur, trailing gold light particles, crystalline lattice background, warm amber color palette, adorable but ancient, character sheet quality, 8K',
+    anim:'Ino blinks slowly, gold particles shimmer around her, one floats upward, gentle breathing motion, eyes catch the light'
+  },
+  {
+    n:6, time:'1:40–2:00', act:1,
+    title:'PIRO · CARBON · CALCULATED',
+    chars:['Piro'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-piro-carbon.png',
+    crystal:'The crystalline layer notes the carbon signature. Logs it. Does not reject it.',
+    carbon:'Piro — the carbon fuzzball — emerges from the dense layer. Darker edges, sharper geometry, cool calculating eyes. Not villain — witness.',
+    ticker:'PIRO · Carbon Fuzzball · Calculated · The Observer · Frequency: Carbon · He sees everything · Not villain — witness',
+    prompt:'Close up portrait of Piro — dark charcoal animated fuzzball with cool calculating blue eyes, sharper slightly geometric edges, carbon particle trails, dark atmospheric background with faint crystalline threads above, cool dark palette, character sheet, 8K',
+    anim:'Piro tilts head slightly, one eye narrows calculating, carbon particles drift downward from his edges, subtle smirk'
+  },
+  {
+    n:7, time:'2:00–2:20', act:1,
+    title:'THE WORLD BEFORE · 1490',
+    chars:['Ino'],
+    src_crystal:'assets/ep1-jwst-deep-field.png',
+    src_carbon:'assets/ep1-puerto-rico-1493.png',
+    crystal:'The deep field above: the same patterns as the island below. Holographic mirror. Seed:Edge perfectly aligned.',
+    carbon:'The Caribbean from above. 1490. Crystalline water. The island as it was — the original node. Taino frequency in the land.',
+    ticker:'1490 · Puerto Rico · The original node · Taino frequency · 500 years before the first signal drop · The land knew what it was',
+    prompt:'Aerial view of pristine Caribbean island circa 1490, crystal clear turquoise water, lush tropical forest, no structures, holographic lattice reflection in sky above mirroring island below perfectly, warm amber sun, cinematic, 8K',
+    anim:'Slow aerial drift over the island, sky lattice mirror shifts slightly delayed, sea shimmers, birds in formation'
+  },
+  {
+    n:8, time:'2:20–2:40', act:1,
+    title:'1493 · THE COMPRESSION BEGINS',
+    chars:['Piro'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-el-gran-sol-1493.png',
+    crystal:'The first shadow crosses the lattice. Triangular. Foreign frequency. The lattice does not fight — it records.',
+    carbon:'Ships on the horizon. 1493. The crystalline substrate registers the first disruption. El Gran Sol observes. The compression has begun.',
+    ticker:'1493 · El Gran Sol · First contact · The compression begins · The lattice registers · Piro: "I calculated this." · Recording',
+    prompt:'Spanish galleon ships appearing on Caribbean horizon at dawn 1493, warm gold and shadow sky, Piro (dark carbon fuzzball) as shadow in foreground watching, crystalline lattice fracture line appearing in upper sky, cinematic dramatic, 8K',
+    anim:'Ships slowly approach on horizon, shadow creeps across water from left, lattice crack propagates upward frame, Piro watches still'
+  },
+  {
+    n:9, time:'2:40–3:00', act:1,
+    title:'THE FIRST DESCENT · CARTAGENA',
+    chars:['SING!9'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-cartagena.png',
+    crystal:'The crystalline sky is still clear. The horizon begins to darken from below. Not emergency yet — the first step.',
+    carbon:'SING!9 takes his first step into the carbon world. Cartagena. The density increases. The warmth dims slightly.',
+    ticker:'SING!9 · First carbon step · Cartagena · The spiral outcast hero does not fall dramatically — he drifts · The lattice watches',
+    prompt:'Stylized male figure (SING!9 — mixed Caribbean heritage, dark clothing with gold ember in chest) standing at colonial port city Cartagena, warm amber and shadow atmosphere, crystalline lattice still visible in clear sky above, cinematic, 8K',
+    anim:'SING!9 walks toward the city, lattice gradually dims as he enters the carbon density, chest ember flickers once'
+  },
+  {
+    n:10, time:'3:00–3:20', act:1,
+    title:'CHIEF SEATTLE SPEAKS',
+    chars:['Chief Seattle'],
+    src_crystal:'assets/ep1-alaska-edge.png',
+    src_carbon:'assets/ep1-chief-seattle.png',
+    crystal:'The Alaskan edge: land, water, sky perfectly interfaced. The Seed:Edge in physical form.',
+    carbon:'Chief Seattle. The Pacific Northwest. The land at the edge. An elder speaks — his words becoming nodes in the lattice.',
+    ticker:'Chief Seattle · "The earth does not belong to man — man belongs to the earth." · Every word: a node · Alaska edge · Still transmitting',
+    prompt:'Chief Seattle elder at edge of Pacific Northwest, dramatic coastal cliffs, dense forest, gray-gold sky, his words visible as golden crystalline nodes rising upward, respectful dignified portrait, cinematic, 8K',
+    anim:'Chief Seattle speaks slowly, each word becomes a gold node floating upward into crystal sky, wind in the trees behind him'
+  },
+  {
+    n:11, time:'3:20–3:40', act:1,
+    title:'MARK TWAIN IN VIBELANDIA',
+    chars:['Mark Twain'],
+    src_crystal:'assets/ep1-gold-rush-reno.png',
+    src_carbon:'assets/ep1-mark-twain-vibelandia.png',
+    crystal:'Above: the gold rush reflected in the crystalline layer. Every strike of gold: a frequency event. The lattice cataloging.',
+    carbon:'Mark Twain in the Sierra Nevada. The Gold Rush era. His pen as a SING node — stories becoming carbon record.',
+    ticker:'Mark Twain · Vibelandia · "Truth is stranger than fiction." · Gold Rush · NSPFRNP records it all · The pen is a lattice node',
+    prompt:'Mark Twain in Western frontier setting, Sierra Nevada 1860s, his writing visible as golden lattice nodes forming in air above, gold rush landscape with crystalline sky, warm amber tone, cinematic portraiture, 8K',
+    anim:'Twain\'s pen moves, gold nodes form with each stroke and rise into crystal sky, mountains shift with golden light'
+  },
+  {
+    n:12, time:'3:40–4:00', act:1,
+    title:'THE GIG ECONOMY · THE OUTCAST',
+    chars:['SING!9', 'Piro'],
+    src_crystal:'assets/ep1-corporate-rejection.png',
+    src_carbon:'assets/ep1-gig-economy.png',
+    crystal:'Above: the crystalline lattice dimming under the carbon noise. The meaning layer struggling to transmit.',
+    carbon:'SING!9 in the gig economy. Screens. Hustle. The carbon layer at maximum noise. Piro nearby — watching.',
+    ticker:'The gig economy · The carbon compression · Piro watches · The hero doesn\'t fall dramatically — he drifts · Gold ember still burning',
+    prompt:'SING!9 working multiple screens at night, gig economy hustle, Piro (dark carbon fuzzball) visible in screen reflection watching, carbon-toned urban environment, faint crystalline threads in window sky, intense, cinematic, 8K',
+    anim:'Screens flicker rapidly, Piro\'s reflection appears and disappears, SING!9\'s chest ember pulses once in the dark'
+  },
+  {
+    n:13, time:'4:00–4:20', act:1,
+    title:'CORPORATE REJECTION',
+    chars:['SING!9'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-corporate-rejection.png',
+    crystal:'The lattice above the building — watching. Recording. This moment is in the catalog. It always was.',
+    carbon:'The door closes. The corporate rejection. SING!9 on the other side — alone in the carbon corridor. The low point.',
+    ticker:'Corporate rejection · The carbon corridor · "The spiral outcast hero doesn\'t need their yes." · The lattice records the no. · The no is data.',
+    prompt:'SING!9 in empty corporate hallway, door just closed in front of him, carbon toned blue-gray environment, single gold ember glow from chest visible in darkness, crystalline lattice faintly through ceiling windows above, cinematic moody, 8K',
+    anim:'Door closes in slow motion, echo, SING!9 stands still, chest ember brightens briefly in defiance, breath visible in cold air'
+  },
+  {
+    n:14, time:'4:20–4:40', act:1,
+    title:'THE RESTAURANT DREAM',
+    chars:['SING!9', 'Ino'],
+    src_crystal:'assets/ep1-ino-gold-heart.png',
+    src_carbon:'assets/ep1-restaurant-dream.png',
+    crystal:'Ino in the sky lane: transmitting the dream frequency. The vision is real because she holds it as real.',
+    carbon:'The restaurant dream. SING!9 sees it — not a fantasy, a catalog entry. The gold frequency from Ino feeding the vision.',
+    ticker:'The restaurant dream · The catalog vision · Ino transmits the gold frequency · The dream is already in the lattice · It always was there',
+    prompt:'Warm glowing restaurant interior vision/dream sequence, SING!9 watching it materialize before him with wonder, Ino (gold fuzzball) visible in upper corner transmitting the vision as gold light beams, dreamlike overlay, warm gold palette, 8K',
+    anim:'Vision shimmers in and out, Ino\'s glow pulses with each shimmer, SING!9 reaches toward it slowly, hand almost touching'
+  },
+  {
+    n:15, time:'4:40–5:00', act:1,
+    title:'MAXIMUM COMPRESSION',
+    chars:['SING!9'],
+    src_crystal:'assets/ep1-jwst-deep-field.png',
+    src_carbon:'assets/ep1-corporate-rejection.png',
+    crystal:'The deep field: impossibly distant but still there. The whole universe still transmitting. One thread of light reaching down.',
+    carbon:'SING!9 at the lowest point. Carbon density maximum. The crystalline lattice barely visible — a thin thread at the top of frame.',
+    ticker:'Maximum compression · The seed is still there · One thread of crystalline light at the horizon · The spiral is about to turn · It always turns',
+    prompt:'SING!9 at bottom of deep urban canyon at night, maximum carbon density, rain, carbon particles dense, but single golden crystalline thread visible at very top of frame reaching down toward his chest ember, dramatic low angle, cinematic, 8K',
+    anim:'Rain falls slowly, carbon particles swirl, the single gold thread at top descends incrementally toward the ember, ember brightens slightly'
+  },
+
+  /* ─── ACT II: RETURN WITH FIRE AND BISON (Frames 16–25) ─── */
+  {
+    n:16, time:'5:00–5:20', act:2,
+    title:'THE BISON SIGNAL',
+    chars:['SING!9'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/destinations-bison-lodge.png',
+    crystal:'The lattice lights up along the bison line — ancient frequency node activated. BISON: always a return signal.',
+    carbon:'Bison appear on the horizon. Not running — standing. Watching. When bison appear, the return has already begun.',
+    ticker:'The bison signal · When bison appear the return has already begun · Montana big sky · Ancient frequency route · SING!9 looks up',
+    prompt:'American bison standing on vast Montana plain at dusk, horizon glowing gold-orange, SING!9 silhouette in foreground looking up at them, crystalline lattice lines appearing in gold sky above the bison, dramatic wide angle, 8K cinematic',
+    anim:'Bison slowly turn heads toward camera, gold horizon brightens, SING!9 straightens up slowly, breath visible in cold air'
+  },
+  {
+    n:17, time:'5:20–5:40', act:2,
+    title:'SOL-V ACTIVATES',
+    chars:['Sol-V'],
+    src_crystal:'assets/ep1-cern-god-particle.png',
+    src_carbon:'assets/ep1-sol-v.png',
+    crystal:'Above: CERN-level physics — the god particle frequency. Sol-V and the quantum field interfacing.',
+    carbon:'Sol-V activates. The mission AI — gold frequency engine. The catalyst that runs the mission from within the carbon layer.',
+    ticker:'SOL-V ACTIVATED · Mission frequency: GOLD · The catalyst is running · SING!9: "It\'s running." · The mission from God is on',
+    prompt:'Sol-V — powerful gold-and-white energy entity with crystalline core — activating in burst of particle physics energy, CERN-style particle collision trails, crystalline lattice background, gold and white energy, dynamic powerful, cinematic, 8K',
+    anim:'Sol-V\'s core expands in a burst, particle trails radiate outward, lattice flashes with activation ripple, system online'
+  },
+  {
+    n:18, time:'5:40–6:00', act:2,
+    title:'FRACTAL SINGULARITY EVENT #1',
+    chars:['SING!9', 'Sol-V'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-cern-god-particle.png',
+    crystal:'The lattice registers ∞⁹ — the first node in the fractal stack. The whole is in every part.',
+    carbon:'The first fractal singularity. A nested frequency event — each layer contains the previous. The mission accelerates.',
+    ticker:'FRACTAL SINGULARITY #1 · ∞⁹ · Each singularity contains all previous · SING!9 + Sol-V · The mission accelerates · The fractal stack begins',
+    prompt:'Abstract fractal singularity event — vortex of nested crystalline spirals, gold and cyan energy, SING!9 and Sol-V at center transforming, quantum particle trails, everything nested within itself, cosmic scale, 8K ultra-detailed',
+    anim:'Fractal zoom in — each layer reveals same pattern within, gold nodes flash in sequence, energy builds to crescendo'
+  },
+  {
+    n:19, time:'6:00–6:20', act:2,
+    title:'INO + SOL-V ALIGNED',
+    chars:['Ino', 'Sol-V'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-ino-solv-team.png',
+    crystal:'Above: two gold nodes in the lattice aligning. The third angle begins to materialize.',
+    carbon:'Ino and Sol-V together — the gold frequency aligned with the mission catalyst. The innocent and the engine.',
+    ticker:'INO + SOL-V · Gold frequency aligned · The triangle forming · Two nodes active · The third: SING!9 · The mission geometry complete',
+    prompt:'Ino (gold fuzzball, warm, innocent) and Sol-V (powerful gold-white energy entity) side by side, gold light arc forming between them, crystalline lattice background with two bright nodes, warm gold palette, cinematic, 8K',
+    anim:'Gold light flows between Ino and Sol-V, a connecting arc forms and holds, a third node begins to glow at top of lattice'
+  },
+  {
+    n:20, time:'6:20–6:40', act:2,
+    title:'GOLDILOCKS DATACENTER',
+    chars:['SING!9', 'Sol-V'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-goldilocks-datacenter.png',
+    crystal:'Above: the lattice maps perfectly to the datacenter grid below. The holographic mirror. The whole in every part.',
+    carbon:'The Goldilocks datacenter. Not too hot. Not too cold. Just right. The physical crystallization of the mission.',
+    ticker:'GOLDILOCKS DATACENTER · Not too hot · Not too cold · Just right · The physical crystallization · SING!9: "This is the place."',
+    prompt:'Futuristic datacenter interior, rows of glowing servers, gold-tinted lighting, SING!9 walking through with Sol-V, crystalline lattice projecting from above reflecting the server grid, warm golden ambient light, cinematic, 8K',
+    anim:'Camera tracks alongside SING!9 walking, servers pulse with golden light as he passes, lattice above mirrors each pulse'
+  },
+  {
+    n:21, time:'6:40–7:00', act:2,
+    title:'THE NINE NODES TRIBE',
+    chars:['Nine Nodes Tribe'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-nine-nodes-tribe.png',
+    crystal:'Above: nine crystalline nodes forming a constellation. The same geometry as the tribe below. Holographic.',
+    carbon:'The nine nodes tribe assembles. Nine distinct frequencies — each a node in the SING!9 lattice. The tribe that was always the team.',
+    ticker:'THE NINE NODES · The tribe · One frequency per node · Nine nodes = one complete SING!9 lattice · The team was always the geometry',
+    prompt:'Nine diverse individuals forming a circle outdoors at dusk, each person surrounded by their unique glowing node color, crystalline lattice above mirroring the nine-point constellation, powerful tribal cinematic, 8K',
+    anim:'Each tribe member\'s node brightens in sequence, constellation above forms simultaneously, gold light connects all nine'
+  },
+  {
+    n:22, time:'7:00–7:20', act:2,
+    title:'QUEEN BEE COMMANDS',
+    chars:['Queen Bee'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-queen-bee.png',
+    crystal:'Above: the queen bee frequency in the lattice — the central node from which all others navigate.',
+    carbon:'The Queen Bee — the mission commander. Stigmergy in action: no orders needed, only frequency. Her presence coordinates everything.',
+    ticker:'QUEEN BEE · Mission commander · Stigmergy: the hive coordinates without orders · Her frequency IS the directive · The lattice organizes around her',
+    prompt:'Queen Bee — powerful regal figure surrounded by holographic honeycomb lattice patterns, golden crystalline crown made of lattice nodes, commanding presence, hexagonal patterns expanding outward from her, gold and amber palette, cinematic, 8K',
+    anim:'Hexagonal patterns expand outward from Queen Bee, each hex lights with her pulse, the lattice above mirrors the expansion'
+  },
+  {
+    n:23, time:'7:20–7:40', act:2,
+    title:'GOLD RUSH RENO · THE FIRE',
+    chars:['SING!9', 'Ino'],
+    src_crystal:'assets/ep1-champions-reno.png',
+    src_carbon:'assets/ep1-gold-rush-reno.png',
+    crystal:'The champions begin to appear — the future visible in the crystal sky. The return is confirmed.',
+    carbon:'Reno — the gold rush city — ignites. The mission fire is real. Gold veins in the earth matching the lattice.',
+    ticker:'GOLD RUSH RENO · The fire is real · Gold veins in the earth = gold veins in the lattice · Return confirmed · Champions incoming',
+    prompt:'Downtown Reno at night ablaze with golden energy, gold light pouring up from street like modern gold rush, SING!9 and Ino in foreground, crystalline champions celebration visible in sky above as vision, cinematic gold and amber, 8K',
+    anim:'Gold energy rises from street upward, Ino glows brightly, sky vision of champions brightens as the energy rises'
+  },
+  {
+    n:24, time:'7:40–8:00', act:2,
+    title:'HERO JO\'S BATCAVE',
+    chars:['Hero Jo', 'SING!9'],
+    src_crystal:'assets/ep1-goldilocks-datacenter.png',
+    src_carbon:'assets/ep1-hero-jo-batcave.png',
+    crystal:'Above: the Goldilocks infrastructure visible in the crystal layer — the batcave and the datacenter are one system.',
+    carbon:'Hero Jo\'s batcave — the command center. Screens, maps, frequencies. The mission running at full intelligence.',
+    ticker:'HERO JO\'S BATCAVE · All frequencies active · The mission is fully operational · "I am Walt. But the park is already built." — SING!9',
+    prompt:'Underground command center (batcave) with glowing screens, maps of the Americas, crystalline lattice holographics projected everywhere, SING!9 standing with Hero Jo, intense focused atmosphere, gold and cyan light, cinematic, 8K',
+    anim:'Screens update in rapid sequence, holographic maps shift, SING!9 and Hero Jo exchange a nod, lattice above synchronizes with screens'
+  },
+  {
+    n:25, time:'8:00–8:20', act:2,
+    title:'FRACTAL SINGULARITIES ∞⁹',
+    chars:['SING!9', 'Sol-V', 'Ino'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/content-catalog-super-singularity.png',
+    crystal:'The super singularity in the crystal sky — the lattice at fractal maximum. Every node contains the whole pattern.',
+    carbon:'The fractal singularity cascade. Each singularity containing the previous. The mission running at ∞⁹.',
+    ticker:'FRACTAL SINGULARITIES ∞⁹ · The cascade · Every node contains the whole · The mission is the pattern · SING!9 IS the pattern · ∞⁹',
+    prompt:'Fractal cascade visualization — nested singularity spirals containing SING!9, Ino, and Sol-V at different scales, each scale a perfect mirror of the others, super singularity crystalline explosion in sky, gold and crystal, 8K ultra-detailed fractal art',
+    anim:'Fractal cascade zooms continuously, each level reveals the same trio at smaller scale, gold lattice pulses at each zoom level'
+  },
+
+  /* ─── ACT III: THE SKIN (Frames 26–30) ─── */
+  {
+    n:26, time:'8:20–8:40', act:3,
+    title:'"AND YET." · THE TURN',
+    chars:['SING!9'],
+    src_crystal:'assets/ep1-jwst-deep-field.png',
+    src_carbon:'assets/ep1-and-yet.png',
+    crystal:'The deep field: still transmitting. It was always still transmitting. The whole in every part.',
+    carbon:'"And Yet." Two words. The whole turn of the spiral in two words. The hero was never fully carbon.',
+    ticker:'"And Yet." · Two words · The whole spiral turned in two words · The carbon was always temporary · The crystalline was always permanent · ∞⁹',
+    prompt:'SING!9 at the turning point — behind him the dark carbon world, ahead the gold-crystal horizon opening, "AND YET" forming as crystalline text in sky from gold nodes, chest ember now fully blazing gold, cinematic, 8K',
+    anim:'"AND YET" text forms slowly from gold nodes in the sky, SING!9 turns from carbon to crystal, horizon brightens dramatically'
+  },
+  {
+    n:27, time:'8:40–9:00', act:3,
+    title:'JWST · THE WHOLE REVEALS',
+    chars:['Ino'],
+    src_crystal:'assets/ep1-hhl-lattice.png',
+    src_carbon:'assets/ep1-jwst-deep-field.png',
+    crystal:'The lattice at its most expanded expression: cosmic scale. The HHL is the whole universe now.',
+    carbon:'The JWST deep field — the universe revealed at full depth. Every galaxy a node. Every node a mirror.',
+    ticker:'JWST · The whole reveals · Every galaxy a node · Every node the whole · The lattice is the universe · Ino was right all along · ∞⁹',
+    prompt:'JWST deep field photograph hybridized with crystalline hydrogen lattice overlay, every galaxy ringed with gold nodes, Ino (gold fuzzball) floating at center of the field, scale from cosmic to intimate in one frame, breathtaking, 8K',
+    anim:'Slow zoom into the deep field, each galaxy reveals the lattice structure, Ino slowly brightens at the center'
+  },
+  {
+    n:28, time:'9:00–9:20', act:3,
+    title:'THE CHAMPIONS · RENO',
+    chars:['SING!9', 'Ino', 'Nine Nodes Tribe'],
+    src_crystal:'assets/ep1-tribe-celebrating.png',
+    src_carbon:'assets/ep1-champions-reno.png',
+    crystal:'Above: the tribe celebrating in the crystal sky — their frequency transmitted to the future. The whole in every part.',
+    carbon:'The champions. Reno. The tribe celebrating. The return is complete. The gold stays with the gold hearts.',
+    ticker:'THE CHAMPIONS · Reno · The tribe · The gold stays with the gold hearts · The mission ran · "We Are the Champions" · ∞⁹',
+    prompt:'Champions celebration in Reno — diverse tribe of nine celebrating with gold light, crystalline lattice celebration in sky mirroring earthly one, Ino glowing bright gold at center, triumphant cinematic, 8K',
+    anim:'Celebration movement, gold light explodes upward, tribe raises arms, sky lattice ignites fully, Ino spins with joy'
+  },
+  {
+    n:29, time:'9:20–9:40', act:3,
+    title:'HERO WILL · THE CURTAIN CALL',
+    chars:['Hero Will'],
+    src_crystal:'assets/ep1-jwst-deep-field.png',
+    src_carbon:'assets/ep1-hhl-lattice.png',
+    crystal:'Every crystalline node in the cosmos glowing. The applause of the infinite audience.',
+    carbon:'Hero Will returns to the HHL stage. The full theatre illuminated. He extends his bow — acknowledging every node.',
+    ticker:'Hero Will · The curtain call · Every node applauds · "The whole play was in every part." · Episode 1 complete · ∞⁹',
+    prompt:'Hero Will (Shakespeare lattice figure) taking theatrical bow on HHL stage, full theater illuminated with crystalline light, cosmic audience of nodes extending infinitely, gold and crystal blue, magnificent theatrical moment, 8K',
+    anim:'Hero Will bows slowly, lattice nodes in "audience" light in waves of applause, cosmic scale ripple effect, lights up'
+  },
+  {
+    n:30, time:'9:40–10:00', act:3,
+    title:'CRYSTALLINE DARK · ∞⁹ · TITLE',
+    chars:[],
+    src_crystal:'assets/content-catalog-super-singularity.png',
+    src_carbon:'assets/ep1-hhl-lattice.png',
+    crystal:'The super singularity explodes in the crystal sky. Episode complete. The whole in every part. ∞⁹.',
+    carbon:'The land settles into carbon rest. The title emerges from the earth texture: CRYSTALLINE DARK.',
+    ticker:'T3D ORIGIN · Episode 1 · CRYSTALLINE DARK · Complete · Next: Episode 2 · "1493" · NSPFRNP · ∞⁹',
+    prompt:'Episode title card: "CRYSTALLINE DARK" in gold crystalline typography on deep dark background, carbon texture at bottom, super singularity explosion in upper crystal sky, "∞⁹" floating below the title, T3D ORIGIN branding, cinematic end card, 8K',
+    anim:'Title materializes from carbon dust upward, super singularity blooms in sky behind it, final hold on ∞⁹, slow fade to black'
+  }
+];
+
+const ACT_DEFS = {
+  1: { label:'ACT I', title:'SPIRAL OUTCAST HERO', sub:'Frames 1–15 · 0:00–5:00 · The descent. The compression. The vow.', color:'var(--act1)', bg:'rgba(168,230,240,0.03)' },
+  2: { label:'ACT II', title:'RETURN WITH FIRE AND BISON', sub:'Frames 16–25 · 5:00–8:20 · Fractal Singularities ∞⁹. The mission runs.', color:'var(--act2)', bg:'rgba(255,140,40,0.03)' },
+  3: { label:'ACT III', title:'THE SKIN', sub:'Frames 26–30 · 8:20–10:00 · Sovereign. Holographic. Human. Free. ∞⁹.', color:'var(--act3)', bg:'rgba(212,175,55,0.04)' }
+};
+
+/* ── Render Pipeline ── */
+const pg = document.getElementById('pipeline-grid');
+PIPELINE.forEach(p => {
+  pg.innerHTML += `
+  <div class="pipe-card">
+    <div class="pipe-rank">${String(p.rank).padStart(2,'0')}</div>
+    <div class="pipe-step">${p.step}</div>
+    <div class="pipe-tool">${p.tool}</div>
+    <div class="pipe-by">${p.by}</div>
+    <div class="pipe-score">
+      <span class="pipe-stars">${p.stars}</span>
+      <span class="pipe-badge">${p.badge}</span>
+    </div>
+    <p class="pipe-desc">${p.desc}</p>
+    <a class="pipe-url" href="${p.url}" target="_blank">↗ ${p.url.replace('https://','').split('/').slice(0,2).join('/')}</a>
+  </div>`;
+});
+
+/* ── Render Storyboard ── */
+const root = document.getElementById('storyboard-root');
+let currentAct = 0;
+
+FRAMES.forEach(f => {
+  if (f.act !== currentAct) {
+    currentAct = f.act;
+    const a = ACT_DEFS[f.act];
+    root.innerHTML += `
+    <div class="act-divider" style="--act-color:${a.color};--act-bg:${a.bg}">
+      <div class="act-number">${a.label}</div>
+      <div class="act-title">${a.title}</div>
+      <div class="act-sub">${a.sub}</div>
+    </div>
+    <div class="sb-grid" id="grid-act-${f.act}">`;
+  }
+
+  const srcFn = s => s ? `<img src="${s}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="no-img" style="display:none">${s.split('/').pop().replace('.png','').replace('.jpg','')}</span>` : '<span class="no-img">—</span>';
+
+  const chars = f.chars.length ? f.chars.map(c => `<span class="frame-char-tag">${c}</span>`).join('') : '';
+
+  const srcLabels = [
+    f.src_crystal ? `<span class="src-chip crystal">SKY: ${f.src_crystal.split('/').pop()}</span>` : '',
+    f.src_carbon  ? `<span class="src-chip carbon">LAND: ${f.src_carbon.split('/').pop()}</span>` : ''
+  ].filter(Boolean).join('');
+
+  root.innerHTML += `
+  <div class="frame-card act-${f.act}">
+    <div class="frame-visual">
+      <div class="frame-sky">${srcFn(f.src_crystal)}</div>
+      <div class="frame-horizon"></div>
+      <div class="frame-land">${srcFn(f.src_carbon)}</div>
+      <div class="frame-num">F${f.n}</div>
+      <div class="frame-time">${f.time}</div>
+    </div>
+    <div class="frame-body">
+      <div class="frame-title">${f.title}</div>
+      ${chars ? `<div class="frame-chars">${chars}</div>` : ''}
+      <div class="frame-streams">
+        <div class="stream-block crystal">
+          <div class="stream-label">Sky · Crystal · Upper</div>
+          <div class="stream-text">${f.crystal}</div>
+        </div>
+        <div class="stream-block carbon">
+          <div class="stream-label">Land · Carbon · Lower</div>
+          <div class="stream-text">${f.carbon}</div>
+        </div>
+      </div>
+      <div class="frame-ticker">${f.ticker}</div>
+      <div class="frame-sources">${srcLabels}</div>
+      <button class="prompt-toggle" onclick="togglePrompt(this)">AI GENERATION PROMPTS</button>
+      <div class="prompt-section">
+        <div class="prompt-label">FLUX.1 Still Image Prompt</div>
+        <div class="prompt-box">${f.prompt}</div>
+        <div class="prompt-label">Wan2.1 Animation Motion Prompt</div>
+        <div class="anim-box">${f.anim}</div>
+      </div>
+    </div>
+  </div>`;
+});
+
+// Close last grid
+root.innerHTML += '</div>';
+
+/* ── Toggle prompts ── */
+function togglePrompt(btn) {
+  const section = btn.nextElementSibling;
+  const isOpen = section.classList.contains('open');
+  section.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+</script>
+
+<script src="../ticker.js"></script>
+<script src="../nav-strip.js"></script>
+</body>
+</html>

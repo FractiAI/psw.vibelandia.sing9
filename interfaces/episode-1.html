@@ -981,18 +981,20 @@
       color: rgba(106,80,48,0.5); }
 
     /* ══════════════════════════════════════════════════════
-       SPLASH OVERLAY — simple, auto-dismisses
+       SPLASH — CSS auto-hides after 1.5s (no JS required)
     ══════════════════════════════════════════════════════ */
     #prologue {
       position: fixed; inset: 0; z-index: 150;
       background: #030108;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center;
-      transition: opacity 1s ease;
-      cursor: pointer;
+      text-align: center; cursor: pointer;
+      animation: proSplashHide 0.9s ease-out 1.5s forwards;
     }
-    #prologue.fade-out { opacity: 0; pointer-events: none; }
+    @keyframes proSplashHide {
+      to { opacity: 0; visibility: hidden; pointer-events: none; }
+    }
+    #prologue.gone { display: none; }
     #pro-splash-title {
       font-size: clamp(2.8rem,9vw,7rem); font-weight: 900;
       letter-spacing: 0.06em; text-transform: uppercase;
@@ -2615,19 +2617,20 @@
     });
 
     /* ══════════════════════════════════════════════════════
-       SPLASH ENGINE — auto-dismisses after 1500ms
+       SPLASH ENGINE — CSS handles auto-hide, JS starts film
     ══════════════════════════════════════════════════════ */
     function dismissPrologue() {
       if (prologueDone) return;
       prologueDone = true;
       var el = document.getElementById('prologue');
-      if (el) { el.classList.add('fade-out'); setTimeout(function () { el.style.display = 'none'; }, 1100); }
+      if (el) { el.classList.add('gone'); }
       if (filmReady) { startFilm(); }
       else { var loadEl = document.getElementById('pro-loading'); if (loadEl) loadEl.classList.add('active'); }
     }
 
     function startPrologue() {
-      setTimeout(dismissPrologue, 1500);
+      /* CSS auto-hides the splash. JS starts the film 2.4s after page load. */
+      setTimeout(function () { dismissPrologue(); }, 2400);
     }
 
     document.getElementById('prologue').addEventListener('click', dismissPrologue);
@@ -3014,6 +3017,22 @@
     loadAll();
 
   })();
+  </script>
+
+  <!-- Standalone boot: runs even if main IIFE has an error -->
+  <script>
+    (function () {
+      var el = document.getElementById('prologue');
+      if (!el) return;
+      /* Hide splash after 2.4s via CSS class — belt & suspenders */
+      setTimeout(function () {
+        el.classList.add('gone');
+      }, 2400);
+      /* Tap/click anywhere on splash to dismiss immediately */
+      el.addEventListener('click', function () {
+        el.classList.add('gone');
+      });
+    })();
   </script>
 </body>
 </html>

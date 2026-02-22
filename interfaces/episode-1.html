@@ -1036,6 +1036,13 @@
       animation: pro-pulse-btn 2.2s ease-in-out infinite; }
     @keyframes pro-pulse-btn { 0%,100% { box-shadow: 0 0 20px rgba(212,175,55,0.15); } 50% { box-shadow: 0 0 40px rgba(212,175,55,0.35); } }
     .pro-begin-btn:hover { background: rgba(212,175,55,0.18); box-shadow: 0 0 50px rgba(212,175,55,0.4); }
+    .pro-series-btn { display: inline-block; padding: 0.75rem 2.2rem;
+      border: 1.5px solid rgba(168,230,240,0.45); background: rgba(168,230,240,0.06);
+      color: rgba(168,230,240,0.85); font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
+      cursor: pointer; transition: background 0.2s, box-shadow 0.2s, border-color 0.2s; }
+    .pro-series-btn:hover { background: rgba(168,230,240,0.13);
+      border-color: rgba(168,230,240,0.75); box-shadow: 0 0 30px rgba(168,230,240,0.2); }
     #pro-skip { position: absolute; top: 1rem; right: 1.2rem; font-size: 0.7rem; font-weight: 600;
       letter-spacing: 0.18em; text-transform: uppercase; color: rgba(212,175,55,0.35);
       background: none; border: none; cursor: pointer; z-index: 10;
@@ -1055,6 +1062,9 @@
       color: rgba(212,175,55,0.4); animation: pro-blink 1.2s ease-in-out infinite; }
     #pro-loading.active { display: block; }
     @keyframes pro-blink { 0%,100%{ opacity:0.4; } 50%{ opacity:1; } }
+    #pro-tap-hint { font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(212,175,55,0.28); animation: pro-blink 2.4s ease-in-out infinite; }
+    #prologue { cursor: pointer; }
   </style>
 </head>
 <body>
@@ -1155,7 +1165,7 @@
       </p>
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;margin-top:1.8rem;">
         <button class="pro-begin-btn" id="pro-begin">Begin Pilot Special →</button>
-        <a href="outline-only.html" style="font-size:0.68rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,32,0.5);text-decoration:none;border:1px solid rgba(201,168,32,0.22);padding:0.45rem 1.2rem;border-radius:3px;transition:color 0.2s,border-color 0.2s;" onmouseover="this.style.color='rgba(201,168,32,0.9)';this.style.borderColor='rgba(201,168,32,0.5)'" onmouseout="this.style.color='rgba(201,168,32,0.5)';this.style.borderColor='rgba(201,168,32,0.22)'">▶ Browse Full Series · T3D ORIGIN</a>
+        <a href="outline-only.html" class="pro-series-btn">▶ Browse Full Series · T3D ORIGIN</a>
       </div>
       <div id="pro-loading">Loading&hellip;</div>
     </div>
@@ -1169,6 +1179,7 @@
         <div class="pro-dot" id="pro-dot-4"></div>
       </div>
       <div id="pro-timing-track"><div id="pro-timing-fill"></div></div>
+      <div id="pro-tap-hint">tap anywhere to advance</div>
     </div>
   </div>
 
@@ -2761,7 +2772,7 @@
        PROLOGUE ENGINE
     ══════════════════════════════════════════════════════ */
     var PROLOGUE_SCREENS = 5;
-    var PROLOGUE_SEC     = 14;
+    var PROLOGUE_SEC     = 7;
     var proIdx  = 0;
     var proTick = 0;
     var proTimer = null;
@@ -2815,6 +2826,17 @@
 
     document.getElementById('pro-skip').addEventListener('click', dismissPrologue);
     document.getElementById('pro-begin').addEventListener('click', dismissPrologue);
+
+    /* Click anywhere on prologue to advance (or dismiss on last screen) */
+    document.getElementById('prologue').addEventListener('click', function (e) {
+      var tag = e.target.tagName;
+      if (tag === 'BUTTON' || tag === 'A') return; /* let buttons handle themselves */
+      proTick = 0;
+      var fill = document.getElementById('pro-timing-fill');
+      if (fill) fill.style.width = '0%';
+      if (proIdx >= PROLOGUE_SCREENS - 1) { dismissPrologue(); }
+      else { proIdx++; proSetScreen(proIdx); }
+    });
 
     /* ══════════════════════════════════════════════════════
        TELESCOPE ENGINE — click any frame to zoom in infinitely

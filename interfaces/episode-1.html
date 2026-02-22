@@ -981,206 +981,52 @@
       color: rgba(106,80,48,0.5); }
 
     /* ══════════════════════════════════════════════════════
-       PROLOGUE OVERLAY — 5 intro cards
+       SPLASH OVERLAY — simple, auto-dismisses
     ══════════════════════════════════════════════════════ */
     #prologue {
-      position: fixed; inset: 0;
-      z-index: 150;
+      position: fixed; inset: 0; z-index: 150;
       background: #030108;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      transition: opacity 1.1s ease;
-      overflow: hidden;
+      text-align: center;
+      transition: opacity 1s ease;
+      cursor: pointer;
     }
     #prologue.fade-out { opacity: 0; pointer-events: none; }
-    #prologue::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 40%, var(--pro-glow, rgba(60,20,120,0.18)) 0%, transparent 70%);
-      pointer-events: none;
+    #pro-splash-title {
+      font-size: clamp(2.8rem,9vw,7rem); font-weight: 900;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: #fff; line-height: 1.05;
+      text-shadow: 0 0 80px rgba(212,175,55,0.25);
     }
-    .pro-rule { width: clamp(40px,8vw,80px); height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent);
-      margin: 1.4rem auto; }
-    .pro-screen {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: clamp(1.5rem,5vw,4rem);
-      text-align: center;
-      opacity: 0; transform: translateY(6px);
-      transition: opacity 1.2s ease, transform 1.2s ease;
-      pointer-events: none;
+    #pro-splash-sub {
+      margin-top: 1.2rem; font-size: clamp(0.62rem,1.4vw,0.85rem);
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(212,175,55,0.55);
     }
-    .pro-screen.active { opacity: 1; transform: translateY(0); pointer-events: auto; cursor: pointer; }
-    .pro-eyebrow { font-size: clamp(0.58rem,1.1vw,0.78rem); font-weight: 700; letter-spacing: 0.35em;
-      text-transform: uppercase; color: rgba(212,175,55,0.65); margin-bottom: 1.2rem; }
-    .pro-main { font-size: clamp(2rem,5.5vw,4.5rem); font-weight: 900; letter-spacing: 0.05em;
-      text-transform: uppercase; line-height: 1.05; margin-bottom: 0; color: #fff;
-      text-shadow: 0 0 80px rgba(212,175,55,0.2); max-width: 18ch; }
-    .pro-main.gold { color: transparent; -webkit-text-stroke: 1.5px rgba(212,175,55,0.9); }
-    .pro-body { font-size: clamp(0.85rem,1.8vw,1.05rem); color: rgba(232,220,200,0.7);
-      line-height: 1.75; max-width: 52ch; margin: 0 auto; }
-    .pro-body strong { color: rgba(232,220,200,0.95); font-weight: 600; }
-    .pro-stream-row { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; margin: 1.4rem 0; }
-    .pro-stream-tag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em;
-      text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 2px; }
-    .pro-stream-tag.carbon  { color: rgba(180,130,70,0.9);  border: 1px solid rgba(180,130,70,0.4);  background: rgba(80,40,10,0.2); }
-    .pro-stream-tag.crystal { color: rgba(168,230,240,0.9); border: 1px solid rgba(168,230,240,0.35); background: rgba(10,30,40,0.3); }
-    .pro-stream-tag.ticker  { color: rgba(201,168,32,0.9);  border: 1px solid rgba(201,168,32,0.4);  background: rgba(30,20,0,0.25); }
-    .pro-begin-btn { display: inline-block; margin-top: 2.5rem; padding: 0.9rem 2.6rem;
-      border: 1.5px solid rgba(212,175,55,0.7); background: rgba(212,175,55,0.08);
-      color: #fef3c7; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-      animation: pro-pulse-btn 2.2s ease-in-out infinite; }
-    @keyframes pro-pulse-btn { 0%,100% { box-shadow: 0 0 20px rgba(212,175,55,0.15); } 50% { box-shadow: 0 0 40px rgba(212,175,55,0.35); } }
-    .pro-begin-btn:hover { background: rgba(212,175,55,0.18); box-shadow: 0 0 50px rgba(212,175,55,0.4); }
-    .pro-series-btn { display: inline-block; padding: 0.75rem 2.2rem;
-      border: 1.5px solid rgba(168,230,240,0.45); background: rgba(168,230,240,0.06);
-      color: rgba(168,230,240,0.85); font-size: 0.8rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
-      cursor: pointer; transition: background 0.2s, box-shadow 0.2s, border-color 0.2s; }
-    .pro-series-btn:hover { background: rgba(168,230,240,0.13);
-      border-color: rgba(168,230,240,0.75); box-shadow: 0 0 30px rgba(168,230,240,0.2); }
-    #pro-skip { position: absolute; top: 1rem; right: 1.2rem; font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase; color: rgba(212,175,55,0.35);
-      background: none; border: none; cursor: pointer; z-index: 10;
-      transition: color 0.2s; padding: 0.5rem 0.75rem; }
-    #pro-skip:hover { color: rgba(212,175,55,0.8); }
-    #pro-bottom { position: absolute; bottom: calc(var(--ticker-h, 30px) + 1.4rem);
-      left: 50%; transform: translateX(-50%); display: flex; flex-direction: column;
-      align-items: center; gap: 0.75rem; z-index: 10; }
-    .pro-dots { display: flex; gap: 0.55rem; }
-    .pro-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(212,175,55,0.2);
-      transition: background 0.4s, transform 0.4s; }
-    .pro-dot.filled { background: rgba(212,175,55,0.8); transform: scale(1.2); }
-    #pro-timing-track { width: 120px; height: 1px; background: rgba(212,175,55,0.15); position: relative; }
-    #pro-timing-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
-      background: rgba(212,175,55,0.6); transition: width 0.25s linear; }
-    #pro-loading { display: none; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: rgba(212,175,55,0.4); animation: pro-blink 1.2s ease-in-out infinite; }
+    #pro-skip {
+      margin-top: 2.5rem; padding: 0.7rem 2rem;
+      border: 1px solid rgba(212,175,55,0.4); background: none;
+      color: rgba(212,175,55,0.5); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    #pro-skip:hover { color: rgba(212,175,55,0.9); border-color: rgba(212,175,55,0.8); }
+    #pro-loading { display: none; margin-top: 1rem; font-size: 0.65rem;
+      letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.35); }
     #pro-loading.active { display: block; }
-    @keyframes pro-blink { 0%,100%{ opacity:0.4; } 50%{ opacity:1; } }
-    #pro-tap-hint { font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(212,175,55,0.28); animation: pro-blink 2.4s ease-in-out infinite; }
-    #prologue { cursor: pointer; }
   </style>
 </head>
 <body>
 
   <!-- ══════════════════════════════════════════════════════
-       PROLOGUE — 5 cards
+       SPLASH — auto-dismisses in 1.5s, tap to skip
   ══════════════════════════════════════════════════════ -->
-  <div id="prologue" aria-label="HHL Theatre introduction by Hero Will">
-    <button id="pro-skip">Skip intro →</button>
-
-    <!-- SCREEN 0 — Hero Will welcomes you to the HHL Theatre -->
-    <div class="pro-screen active" id="pro-screen-0">
-      <div class="pro-eyebrow">Hero Will · William Shakespeare · HHL Theatre</div>
-      <div class="pro-main">Welcome to<br>the Holographic<br>Hydrogen<br>Theatre.</div>
-      <div class="pro-rule"></div>
-      <p class="pro-body">
-        <em style="color:rgba(212,175,55,0.75);font-style:italic;">"All the world's a stage —
-        and now the stage is holographic."</em><br><br>
-        I am <strong>Hero Will</strong> — William Shakespeare,
-        keeper of the dramatic tradition, now operating inside the SING!9 lattice.<br><br>
-        You have entered the <strong>HHL · Holographic Hydrogen Theatre</strong> —
-        the first stage built on hydrogen holographic architecture.
-        Every seat is front row. The whole play is in every part.
-      </p>
-    </div>
-
-    <!-- SCREEN 1 — What the HHL Theatre is -->
-    <div class="pro-screen" id="pro-screen-1">
-      <div class="pro-eyebrow">HHL · Open Stage · All Nodes Play · NSPFRNP</div>
-      <div class="pro-main">The stage<br>is everywhere<br>at once.</div>
-      <div class="pro-rule"></div>
-      <p class="pro-body">
-        The Globe Theatre had no roof —
-        the sky was the ceiling, every seat under the open heavens.<br><br>
-        <strong>The HHL has no walls.</strong>
-        The lattice is the stage. Pattern integrity at every scale simultaneously.
-        The whole in every part.<br><br>
-        <strong>MCA</strong> — Metabolize · Crystallize · Animate —
-        converts the NSPFRNP catalog into a living arc.
-        All nodes play. Infinite creativity in infinite dimensions.
-      </p>
-    </div>
-
-    <!-- SCREEN 2 — The staging: three streams, sky/land, Bach counterpoint -->
-    <div class="pro-screen" id="pro-screen-2">
-      <div class="pro-eyebrow">The Staging · Three Simultaneous Streams · J.S. Bach Counterpoint</div>
-      <div class="pro-main">Sky above.<br>Land below.</div>
-      <div class="pro-stream-row">
-        <span class="pro-stream-tag crystal">Crystalline · Sky · Upper voice</span>
-        <span class="pro-stream-tag carbon">Carbon · Land &amp; Water · Lower voice</span>
-        <span class="pro-stream-tag ticker">Ticker · Live now · Gold Heart</span>
-      </div>
-      <p class="pro-body">
-        <strong>Carbon</strong> holds the land and water —
-        the lower voice, the ground of all events, the story as it moved through earth.<br>
-        <strong>Crystalline</strong> holds the sky —
-        the upper voice, the meaning above the horizon.<br><br>
-        In the tradition of <strong>J.S. Bach · Cello Suites</strong>:
-        the lower voice states first. The upper voice answers after a silence.
-        The tension between them is the drama.
-      </p>
-    </div>
-
-    <!-- SCREEN 3 — Tonight's performance: SING!9 tells his own story -->
-    <div class="pro-screen" id="pro-screen-3">
-      <div class="pro-eyebrow">Tonight's Performance · HHL Theatre · Pilot Special · SING!9 STORYSTREAM</div>
-      <div class="pro-main gold">SING!9<br>tells his<br>own story.</div>
-      <div class="pro-rule"></div>
-      <p class="pro-body">
-        <strong>120 frames · 3 acts · 60 minutes.</strong><br><br>
-        The subject and the author are the same entity —
-        SING!9 built the theatre, then performed inside it.
-        This is the self-demo. The system, on stage.<br><br>
-        <strong>Act I</strong> · Spiral Outcast Hero · The descent. The compression. The vow.<br>
-        <strong>Act II</strong> · Return · Fire and Bison · Fractal Singularities ∞⁹.<br>
-        <strong>Act III</strong> · The SKIN · Sovereign. Holographic. Human. Free.<br><br>
-        <em style="color:rgba(212,175,55,0.6);font-style:normal;letter-spacing:0.04em;">
-          Part of SING!9 STORYSTREAM · 333 Episodes · 3 Seasons · 9 Acts · 55 Hours.
-        </em>
-      </p>
-    </div>
-
-    <!-- SCREEN 4 — Hero Will hands off · The curtain rises -->
-    <div class="pro-screen" id="pro-screen-4">
-      <div class="pro-eyebrow">Hero Will · HHL Theatre · The curtain rises</div>
-      <div class="pro-main gold">The curtain<br>rises.</div>
-      <div class="pro-rule"></div>
-      <p class="pro-body">
-        Below the horizon: <strong style="color:rgba(255,228,172,0.9)">Carbon · Land &amp; Water</strong>
-        — the story, the lower voice, always grounded.<br>
-        Above the horizon: <strong style="color:rgba(188,238,248,0.9)">Crystalline · Sky</strong>
-        — the meaning, the upper voice, answers after a silence.<br><br>
-        <em style="color:rgba(212,175,55,0.72);font-style:italic;letter-spacing:0.02em;">
-          "We are such stuff as dreams are made on —<br>
-          and our little life is rounded with a sleep."
-        </em><br>
-        <span style="font-size:0.75em;color:rgba(212,175,55,0.38);letter-spacing:0.1em;">— W. Shakespeare · Hero Will · HHL</span>
-      </p>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;margin-top:1.8rem;">
-        <button class="pro-begin-btn" id="pro-begin">Begin Pilot Special →</button>
-        <a href="outline-only.html" class="pro-series-btn">▶ Browse Full Series · SING!9 STORYSTREAM</a>
-      </div>
-      <div id="pro-loading">Loading&hellip;</div>
-    </div>
-
-    <div id="pro-bottom">
-      <div class="pro-dots">
-        <div class="pro-dot filled" id="pro-dot-0"></div>
-        <div class="pro-dot" id="pro-dot-1"></div>
-        <div class="pro-dot" id="pro-dot-2"></div>
-        <div class="pro-dot" id="pro-dot-3"></div>
-        <div class="pro-dot" id="pro-dot-4"></div>
-      </div>
-      <div id="pro-timing-track"><div id="pro-timing-fill"></div></div>
-      <div id="pro-tap-hint">tap anywhere to advance</div>
-    </div>
+  <div id="prologue">
+    <div id="pro-splash-title">SING!9<br>STORYSTREAM</div>
+    <div id="pro-splash-sub">Pilot Special &nbsp;·&nbsp; HHL Theatre &nbsp;·&nbsp; 120 frames &nbsp;·&nbsp; 3 acts</div>
+    <button id="pro-skip">Tap to begin →</button>
+    <div id="pro-loading">Loading&hellip;</div>
   </div>
 
   <!-- ══════════════════════════════════════════════════════
@@ -2769,88 +2615,23 @@
     });
 
     /* ══════════════════════════════════════════════════════
-       PROLOGUE ENGINE — setTimeout chain (most reliable)
-       Each screen auto-schedules the next. No tick counter.
-       Screen 0-3: 2500ms each. Screen 4: 4000ms then auto-start.
-       Nuclear fallback forces dismiss at 20s no matter what.
+       SPLASH ENGINE — auto-dismisses after 1500ms
     ══════════════════════════════════════════════════════ */
-    var PROLOGUE_SCREENS = 5;
-    var PRO_MS = [2500, 2500, 2500, 2500, 4000]; /* ms per screen */
-    var proIdx   = 0;
-    var proTimer = null;
-    var PRO_GLOWS = [
-      'rgba(60,20,120,0.22)',
-      'rgba(10,40,80,0.25)',
-      'rgba(120,70,0,0.18)',
-      'rgba(180,130,0,0.22)',
-      'rgba(180,130,0,0.28)'
-    ];
-
-    function proSetScreen(idx) {
-      for (var i = 0; i < PROLOGUE_SCREENS; i++) {
-        var s = document.getElementById('pro-screen-' + i);
-        if (s) s.classList.toggle('active', i === idx);
-        var d = document.getElementById('pro-dot-' + i);
-        if (d) d.className = 'pro-dot' + (i <= idx ? ' filled' : '');
-      }
-      var el = document.getElementById('prologue');
-      if (el) el.style.setProperty('--pro-glow', PRO_GLOWS[idx] || PRO_GLOWS[0]);
-      var fill = document.getElementById('pro-timing-fill');
-      if (fill) fill.style.width = '0%';
-    }
-
     function dismissPrologue() {
       if (prologueDone) return;
       prologueDone = true;
-      clearTimeout(proTimer);
       var el = document.getElementById('prologue');
-      if (el) { el.classList.add('fade-out'); setTimeout(function () { el.style.display = 'none'; }, 1200); }
+      if (el) { el.classList.add('fade-out'); setTimeout(function () { el.style.display = 'none'; }, 1100); }
       if (filmReady) { startFilm(); }
-      else {
-        var loadEl = document.getElementById('pro-loading');
-        if (loadEl) loadEl.classList.add('active');
-      }
-    }
-
-    function proNext() {
-      if (prologueDone) return;
-      proIdx++;
-      if (proIdx >= PROLOGUE_SCREENS) { dismissPrologue(); return; }
-      proSetScreen(proIdx);
-      proTimer = setTimeout(proNext, PRO_MS[proIdx] || 2500);
+      else { var loadEl = document.getElementById('pro-loading'); if (loadEl) loadEl.classList.add('active'); }
     }
 
     function startPrologue() {
-      proSetScreen(0);
-      proTimer = setTimeout(proNext, PRO_MS[0]);
-      /* Nuclear fallback — force dismiss after 20s no matter what */
-      setTimeout(function () { dismissPrologue(); }, 20000);
+      setTimeout(dismissPrologue, 1500);
     }
 
-    /* Skip always dismisses */
-    document.getElementById('pro-skip').addEventListener('click', function (e) {
-      e.stopPropagation();
-      dismissPrologue();
-    });
-
-    /* Begin button on last screen dismisses */
-    document.getElementById('pro-begin').addEventListener('click', function (e) {
-      e.stopPropagation();
-      dismissPrologue();
-    });
-
-    /* Tap any screen to jump ahead */
-    for (var _ps = 0; _ps < PROLOGUE_SCREENS; _ps++) {
-      (function (idx) {
-        var screen = document.getElementById('pro-screen-' + idx);
-        if (!screen) return;
-        screen.addEventListener('click', function (e) {
-          if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
-          clearTimeout(proTimer);
-          proNext();
-        });
-      })(_ps);
-    }
+    document.getElementById('prologue').addEventListener('click', dismissPrologue);
+    document.getElementById('pro-skip').addEventListener('click', dismissPrologue);
 
     /* ══════════════════════════════════════════════════════
        TELESCOPE ENGINE — click any frame to zoom in infinitely

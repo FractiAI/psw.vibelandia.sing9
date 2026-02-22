@@ -27,7 +27,7 @@ var POPUP_CONFIG = {
   style: 'gold',
 
   eyebrow:  'SING!9 T3D · HHL Theatre · Now Playing',
-  title:    'T3D ORIGIN',
+  title:    'SING!9 STORYSTREAM',
   subtitle: 'Pilot Special · Hero Will · 3 Acts · ∞⁹',
 
   /* Optional stats chips. Pass [] to hide. */
@@ -43,10 +43,10 @@ var POPUP_CONFIG = {
   cta_href: '/interfaces/episode-1.html',
 
   dismiss_text: 'Not now',
-  nsp: 'T3D ORIGIN · 333 Episodes · NSPFRNP → ∞⁹',
+  nsp: 'SING!9 STORYSTREAM · 333 Episodes · NSPFRNP → ∞⁹',
 
   /* Optional secondary link shown below the main CTA. Pass null to hide. */
-  secondary_text: '▶ Browse Full Series · T3D ORIGIN',
+  secondary_text: '▶ Browse Full Series · SING!9 STORYSTREAM',
   secondary_href: '/interfaces/outline-only.html',
 };
 

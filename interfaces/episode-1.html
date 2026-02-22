@@ -1012,7 +1012,7 @@
       transition: opacity 1.2s ease, transform 1.2s ease;
       pointer-events: none;
     }
-    .pro-screen.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .pro-screen.active { opacity: 1; transform: translateY(0); pointer-events: auto; cursor: pointer; }
     .pro-eyebrow { font-size: clamp(0.58rem,1.1vw,0.78rem); font-weight: 700; letter-spacing: 0.35em;
       text-transform: uppercase; color: rgba(212,175,55,0.65); margin-bottom: 1.2rem; }
     .pro-main { font-size: clamp(2rem,5.5vw,4.5rem); font-weight: 900; letter-spacing: 0.05em;
@@ -1130,7 +1130,7 @@
 
     <!-- SCREEN 3 — Tonight's performance: SING!9 tells his own story -->
     <div class="pro-screen" id="pro-screen-3">
-      <div class="pro-eyebrow">Tonight's Performance · HHL Theatre · Pilot Special · T3D ORIGIN</div>
+      <div class="pro-eyebrow">Tonight's Performance · HHL Theatre · Pilot Special · SING!9 STORYSTREAM</div>
       <div class="pro-main gold">SING!9<br>tells his<br>own story.</div>
       <div class="pro-rule"></div>
       <p class="pro-body">
@@ -1142,7 +1142,7 @@
         <strong>Act II</strong> · Return · Fire and Bison · Fractal Singularities ∞⁹.<br>
         <strong>Act III</strong> · The SKIN · Sovereign. Holographic. Human. Free.<br><br>
         <em style="color:rgba(212,175,55,0.6);font-style:normal;letter-spacing:0.04em;">
-          Part of T3D ORIGIN · 333 Episodes · 3 Seasons · 9 Acts · 55 Hours.
+          Part of SING!9 STORYSTREAM · 333 Episodes · 3 Seasons · 9 Acts · 55 Hours.
         </em>
       </p>
     </div>
@@ -1165,7 +1165,7 @@
       </p>
       <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;margin-top:1.8rem;">
         <button class="pro-begin-btn" id="pro-begin">Begin Pilot Special →</button>
-        <a href="outline-only.html" class="pro-series-btn">▶ Browse Full Series · T3D ORIGIN</a>
+        <a href="outline-only.html" class="pro-series-btn">▶ Browse Full Series · SING!9 STORYSTREAM</a>
       </div>
       <div id="pro-loading">Loading&hellip;</div>
     </div>
@@ -2824,19 +2824,37 @@
       }, 1000);
     }
 
-    document.getElementById('pro-skip').addEventListener('click', dismissPrologue);
-    document.getElementById('pro-begin').addEventListener('click', dismissPrologue);
+    /* Skip always dismisses */
+    document.getElementById('pro-skip').addEventListener('click', function (e) {
+      e.stopPropagation();
+      dismissPrologue();
+    });
 
-    /* Click anywhere on prologue to advance (or dismiss on last screen) */
-    document.getElementById('prologue').addEventListener('click', function (e) {
-      var tag = e.target.tagName;
-      if (tag === 'BUTTON' || tag === 'A') return; /* let buttons handle themselves */
+    /* Begin button on last screen dismisses */
+    document.getElementById('pro-begin').addEventListener('click', function (e) {
+      e.stopPropagation();
+      dismissPrologue();
+    });
+
+    /* Per-screen click handlers — most reliable approach */
+    function proAdvance() {
       proTick = 0;
       var fill = document.getElementById('pro-timing-fill');
       if (fill) fill.style.width = '0%';
       if (proIdx >= PROLOGUE_SCREENS - 1) { dismissPrologue(); }
       else { proIdx++; proSetScreen(proIdx); }
-    });
+    }
+
+    for (var _ps = 0; _ps < PROLOGUE_SCREENS; _ps++) {
+      (function (idx) {
+        var screen = document.getElementById('pro-screen-' + idx);
+        if (!screen) return;
+        screen.addEventListener('click', function (e) {
+          if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+          proAdvance();
+        });
+      })(_ps);
+    }
 
     /* ══════════════════════════════════════════════════════
        TELESCOPE ENGINE — click any frame to zoom in infinitely

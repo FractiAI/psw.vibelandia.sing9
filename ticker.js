@@ -22,7 +22,7 @@ var TICKER_SPEED = 280; /* seconds — slow, calm, heartbeat pace; soft flowing 
 var TICKER_ITEMS = [
 
   /* ── Trailer Loop · Ad Space ── */
-  { text: '▶ STORYSTREAM 9 · Now Playing',                   href: '/interfaces/trailer-loop.html' },
+  { text: '▶ THE NINE GAME · Now Playing',                   href: '/interfaces/trailer-loop.html' },
   { text: 'Trailer · 15s · Looping 24/7',                    href: '/interfaces/trailer-loop.html' },
   { text: '★ THIS SPOT IS AD SPACE · Book it →',             href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20ad%20space%20on%20the%20SING!9%20ticker.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
   { text: 'SING!9 StoryStream · EP Creator Studio',          href: '/interfaces/ep-creator-studio.html' },
@@ -31,7 +31,7 @@ var TICKER_ITEMS = [
   { text: 'What is SING!9 StoryStream? →',                   href: '/interfaces/storystream-9-about.html' },
 
   /* ── StoryStream 9 · OUTLINE ONLY ── */
-  { text: 'STORYSTREAM 9',                                    href: '/interfaces/outline-only.html' },
+  { text: 'THE NINE GAME',                                    href: '/interfaces/outline-only.html' },
   { text: 'OUTLINE ONLY · A SING! 9 Cinema',                 href: '/interfaces/outline-only.html' },
   { text: '120 frames · 3 acts · 14,340 words',              href: '/interfaces/outline-only.html' },
   { text: 'SING! 9 built a story on itself',                 href: null },

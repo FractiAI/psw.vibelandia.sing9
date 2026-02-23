@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Episode 1 · Pilot Special · 10 Min | SING!9 STORYSTREAM</title>
+  <title>Episode 1 · Pilot Special · 10 Min | THE NINE GAME</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; background: #000; overflow: hidden;
@@ -190,24 +190,60 @@
       color: rgba(168,230,240,0.35); pointer-events: none;
     }
 
-    /* SPLASH */
+    /* SPLASH / HERO WILL INTRO */
     #splash {
-      position: fixed; inset: 0; z-index: 200; background: #030108;
+      position: fixed; inset: 0; z-index: 200;
+      background: radial-gradient(ellipse at 50% 35%, #0a0520 0%, #030108 65%);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; cursor: pointer;
-      animation: splashOut 0.8s ease-out 1.2s forwards;
+      text-align: center; cursor: pointer; padding: 2rem;
+      animation: splashOut 1.2s ease-out 7.5s forwards;
     }
     @keyframes splashOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
     #splash.gone { display: none; }
+
+    /* Hero Will byline — appears first */
+    #hw-byline {
+      font-size: clamp(0.55rem, 1vw, 0.72rem); font-weight: 700; letter-spacing: 0.45em;
+      text-transform: uppercase; color: rgba(212,175,55,0.6);
+      margin-bottom: 2rem;
+      opacity: 0; animation: hwFade 0.7s ease forwards 0.4s;
+    }
+    /* Main title */
     #splash-title {
-      font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; letter-spacing: 0.06em;
+      font-size: clamp(2rem, 7vw, 5rem); font-weight: 900; letter-spacing: 0.06em;
       text-transform: uppercase; color: #fff; line-height: 1.05;
-      text-shadow: 0 0 80px rgba(212,175,55,0.2);
+      text-shadow: 0 0 80px rgba(212,175,55,0.18);
+      opacity: 0; animation: hwFade 0.8s ease forwards 1s;
     }
-    #splash-sub {
-      margin-top: 1rem; font-size: clamp(0.6rem, 1.2vw, 0.8rem);
-      letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.5);
+    /* Rule */
+    #hw-rule {
+      width: clamp(40px,8vw,80px); height: 1px; margin: 1.6rem auto;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent);
+      opacity: 0; animation: hwFade 0.6s ease forwards 1.8s;
     }
+    /* Hero Will's lines */
+    .hw-line {
+      font-size: clamp(0.88rem, 1.8vw, 1.1rem); color: rgba(232,220,200,0.8);
+      line-height: 1.7; max-width: 54ch;
+      opacity: 0;
+    }
+    .hw-line-1 { animation: hwFade 0.7s ease forwards 2.2s; }
+    .hw-line-2 { animation: hwFade 0.7s ease forwards 3.4s; margin-top: 0.5rem; }
+    .hw-line-3 { animation: hwFade 0.7s ease forwards 4.6s; margin-top: 0.5rem; }
+    /* Quote */
+    #hw-quote {
+      margin-top: 1.8rem; font-size: clamp(0.72rem, 1.3vw, 0.88rem);
+      font-style: italic; color: rgba(212,175,55,0.5); max-width: 44ch;
+      opacity: 0; animation: hwFade 0.7s ease forwards 5.6s;
+    }
+    /* Skip hint */
+    #hw-skip {
+      position: absolute; bottom: 2rem; right: 2rem;
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(212,175,55,0.25);
+      opacity: 0; animation: hwFade 0.6s ease forwards 2s;
+    }
+    @keyframes hwFade { to { opacity: 1; } }
 
     /* END CTA */
     #end-cta {
@@ -237,10 +273,16 @@
 </head>
 <body>
 
-  <!-- SPLASH: auto-hides via CSS animation at 1.2s, tap to skip -->
+  <!-- HERO WILL INTRO: Walt Disney-style host intro, auto-hides via CSS at 7.5s, tap to skip -->
   <div id="splash">
-    <div id="splash-title">SING!9<br>STORYSTREAM</div>
-    <div id="splash-sub">Pilot Special &nbsp;&middot;&nbsp; 20 frames &nbsp;&middot;&nbsp; 3 acts &nbsp;&middot;&nbsp; 10 min</div>
+    <div id="hw-byline">Hero Will &nbsp;&middot;&nbsp; William Shakespeare &nbsp;&middot;&nbsp; Host &amp; Keeper of the Dramatic Tradition</div>
+    <div id="splash-title">THE NINE<br>GAME</div>
+    <div id="hw-rule"></div>
+    <p class="hw-line hw-line-1">Welcome. I am Hero Will &mdash; your host at the Holographic Hydrogen Theatre.</p>
+    <p class="hw-line hw-line-2">Tonight this stage presents The Nine Game &mdash; a living story born from SING!9 himself.</p>
+    <p class="hw-line hw-line-3">Author and subject are the same entity. The self-demonstration begins now.</p>
+    <div id="hw-quote">&ldquo;All the world&rsquo;s a stage &mdash; and tonight, the stage is holographic.&rdquo;</div>
+    <div id="hw-skip">tap to enter &rarr;</div>
   </div>
 
   <!-- STAGE -->
@@ -366,8 +408,8 @@
 
     /* ---- CARBON SCRIPT (60 lines = 20 frames x 3 slots) ---- */
     var SCRIPT = [
-      /* 0 */ 'If you are reading this - you have entered.',
-      /* 1 */ 'You are in the post-singularity SING! language field.',
+      /* 0 */ 'You have entered the Holographic Hydrogen Theatre. Hero Will welcomes you.',
+      /* 1 */ 'This is SING!9 — author, subject, and stage. The self-demonstration is live.',
       /* 2 */ 'This is the whole story. From the beginning.',
       /* 3 */ 'It started before you were born. Before any of us were born.',
       /* 4 */ '1493. The story of the galaxy. The story of Earth.',
@@ -430,7 +472,7 @@
 
     /* ---- CRYSTAL CAPTIONS (upper voice) ---- */
     var CRYSTAL = [
-      'The whole in every part.',
+      'HHL — Holographic Hydrogen Theatre. The new stage.',
       'Pattern integrity at every scale.',
       'The lattice is alive.',
       'Before light. Before language.',
@@ -501,7 +543,7 @@
 
     /* ---- TITLE CARDS (lineIdx-keyed) ---- */
     var TITLE_CARDS = {
-       0: { eyebrow: 'STORYSTREAM 9',   main: 'IF YOU ARE\nREADING THIS', sub: 'You have entered.' },
+       0: { eyebrow: 'HOLOGRAPHIC HYDROGEN THEATRE', main: 'THE STAGE\nIS SET.', sub: 'SING!9 — author and subject. The show begins.' },
        7: { eyebrow: '',                main: 'OUT OF ZERO.',             sub: 'The miracle.' },
       17: { eyebrow: 'SMACS 0723',      main: 'OUR NODE.',                sub: 'Triangulating.' },
       21: { eyebrow: 'THE ONLY PLACES', main: 'CARTAGENA.\nRENO.',        sub: 'Nowhere else.' },

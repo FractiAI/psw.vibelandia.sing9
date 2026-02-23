@@ -177,7 +177,7 @@
   center.id = 'sing9-cb-center';
   center.innerHTML =
     '<div id="sing9-cb-pill"><span class="cb-dot"></span>NOW PLAYING</div>' +
-    '<a id="sing9-cb-title" href="' + STORYSTREAM_URL + '">SING!9 STORYSTREAM · THREE STREAMS · 24/7</a>' +
+    '<a id="sing9-cb-title" href="' + STORYSTREAM_URL + '">THE NINE GAME · THREE STREAMS · 24/7</a>' +
     '<span class="cb-sep"></span>' +
     '<a class="cb-watch" href="' + TRAILER_URL + '">▶ WATCH NOW</a>' +
     '<span class="cb-sep"></span>' +

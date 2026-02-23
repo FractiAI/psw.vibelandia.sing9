@@ -337,6 +337,14 @@
     }
     .aud-btn.on  { border-color: rgba(212,175,55,0.6); color: rgba(212,175,55,0.85); }
     .aud-btn:hover { color: #fff; border-color: rgba(255,255,255,0.35); }
+    .aud-btn[data-loading] {
+      color: rgba(140,200,255,0.7); border-color: rgba(140,200,255,0.35);
+      animation: kokoroLoad 1.4s ease-in-out infinite;
+      cursor: default;
+    }
+    @keyframes kokoroLoad {
+      0%,100% { opacity: 0.55; } 50% { opacity: 1; }
+    }
 
     /* SMOKY TOGGLE (appears in convergence/goldilocks frames) */
     #smoky-btn {
@@ -912,36 +920,39 @@
       }
     }
 
-    /* ---- TICK (1 Hz) ---- */
+    /* ---- ADVANCE FRAME (shared by speech onend + fallback timer) ---- */
+    var advanceScheduled = false;
+    function advanceFrame() {
+      advanceScheduled = false;
+      if (!playing) return;
+      frameTick = 0; imgTick = 0; imgSlot = 0;
+      hideTC();
+      if (frameIndex >= FRAMES_TOTAL - 1) {
+        playing = false;
+        if (btnPlay) btnPlay.textContent = 'Play';
+        var ec = document.getElementById('end-cta');
+        if (ec) ec.classList.add('vis');
+      } else {
+        frameIndex++;
+        render(true);
+      }
+    }
+
+    /* ---- TICK (1 Hz) ----
+       When voiceOn: bar pulses at 0→100% over FRAME_SEC but does NOT advance
+                     frames — speech onend does that.
+       When voiceOff: bar + timer advance frame every FRAME_SEC seconds.       */
     function startTick() {
       clearInterval(ticker);
       ticker = setInterval(function () {
         if (!playing) return;
         frameTick++;
-        imgTick++;
         if (progBar) progBar.style.width = ((frameTick / FRAME_SEC) * 100).toFixed(1) + '%';
 
-        /* Image slot advance */
-        if (imgTick >= IMG_SEC && imgSlot < IMG_PER_FRAME - 1) {
-          imgTick = 0;
-          imgSlot++;
-          render(false);
-          return;
-        }
-
-        /* Frame advance */
-        if (frameTick >= FRAME_SEC) {
+        /* Timer-driven advance only when voice is off */
+        if (!voiceOn && frameTick >= FRAME_SEC) {
           frameTick = 0; imgTick = 0; imgSlot = 0;
-          hideTC();
-          if (frameIndex >= FRAMES_TOTAL - 1) {
-            playing = false;
-            if (btnPlay) btnPlay.textContent = 'Play';
-            var ec = document.getElementById('end-cta');
-            if (ec) ec.classList.add('vis');
-          } else {
-            frameIndex++;
-            render(true);
-          }
+          advanceFrame();
         }
       }, 1000);
     }
@@ -1008,38 +1019,146 @@
       }
     }
 
-    /* ---- WEB SPEECH API (narration) ---- */
-    var voiceOn  = true;   /* voice ON by default */
-    var voiceBtn = document.getElementById('btnVoice');
-    function speakLine(text, narrator) {
-      if (!voiceOn || !window.speechSynthesis) return;
+    /* ================================================================
+       VOICE ENGINE — Kokoro-82M (open-source neural TTS, in-browser)
+       Voices: bm_george = British male (Hero Will)
+               am_adam   = American male (SING!9)
+       Falls back to Web Speech API while Kokoro is loading.
+       Kokoro model: onnx-community/Kokoro-82M-v1.0 via transformers.js
+       ================================================================ */
+    var voiceOn     = true;
+    var voiceBtn    = document.getElementById('btnVoice');
+    var kokoroReady = false;
+    var kokoroLoading = false;
+    var kokoroPipe  = null;
+    var kokoroAudio = null;   /* active AudioBufferSourceNode */
+    var safetyTimer = null;
+
+    /* --- Web Speech fallback (used until Kokoro is ready) --- */
+    if (window.speechSynthesis) window.speechSynthesis.getVoices();
+
+    function _wsBestVoice(narrator) {
+      var vv = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+      if (narrator === 'HERO WILL') {
+        return vv.find(function(v){ return v.lang.startsWith('en-GB') && /(natural|neural|online|ryan|george|daniel|oliver)/i.test(v.name); })
+            || vv.find(function(v){ return v.lang.startsWith('en-GB'); })
+            || vv.find(function(v){ return /george|daniel|oliver|ryan/i.test(v.name); })
+            || null;
+      } else {
+        return vv.find(function(v){ return v.lang === 'en-US' && /(natural|neural|online|davis|guy|eric|tony|andrew)/i.test(v.name); })
+            || vv.find(function(v){ return v.lang === 'en-US'; })
+            || null;
+      }
+    }
+
+    function _wsFallback(text, narrator, onDone) {
+      if (!window.speechSynthesis) { if (onDone) onDone(); return; }
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
-      u.rate   = narrator === 'HERO WILL' ? 0.82 : 0.94;
-      u.pitch  = narrator === 'HERO WILL' ? 1.1  : 1.0;
-      u.volume = 0.88;
-      /* Pick best available voice */
-      var voices = window.speechSynthesis.getVoices();
-      if (narrator === 'HERO WILL') {
-        var hw = voices.find(function(v){ return v.lang.startsWith('en') && /david|george|daniel|uk|arthur/i.test(v.name); });
-        if (hw) u.voice = hw;
-      } else {
-        var s9 = voices.find(function(v){ return v.lang === 'en-US' && /google|neural|mark|alex|james/i.test(v.name); });
-        if (s9) u.voice = s9;
-      }
-      setTimeout(function(){ window.speechSynthesis.speak(u); }, 350);
+      u.rate   = narrator === 'HERO WILL' ? 0.80 : 0.93;
+      u.pitch  = narrator === 'HERO WILL' ? 1.08 : 1.0;
+      u.volume = 0.90;
+      var v = _wsBestVoice(narrator);
+      if (v) u.voice = v;
+      u.onend = function () { if (onDone) onDone(); };
+      setTimeout(function () { window.speechSynthesis.speak(u); }, 300);
     }
-    /* Pre-load voices immediately so they're ready on first frame */
-    if (window.speechSynthesis) window.speechSynthesis.getVoices();
+
+    /* --- Load Kokoro model in background --- */
+    function _loadKokoro() {
+      if (kokoroReady || kokoroLoading) return;
+      kokoroLoading = true;
+      if (voiceBtn) { voiceBtn.setAttribute('data-loading', '1'); voiceBtn.textContent = '\u23F3 Loading voice\u2026'; }
+      import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.3.3')
+        .then(function(mod) {
+          var env = mod.env;
+          env.allowLocalModels = false;
+          return mod.pipeline('text-to-speech', 'onnx-community/Kokoro-82M-v1.0', { dtype: 'q8', device: 'wasm' });
+        })
+        .then(function(pipe) {
+          kokoroPipe  = pipe;
+          kokoroReady = true;
+          kokoroLoading = false;
+          if (voiceBtn) { voiceBtn.removeAttribute('data-loading'); voiceBtn.textContent = '\uD83D\uDD0A Mute Voice'; }
+          /* Re-speak current frame with high-quality voice */
+          if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
+        })
+        .catch(function(err) {
+          kokoroLoading = false;
+          console.warn('[Kokoro] load failed, using Web Speech:', err);
+          if (voiceBtn) { voiceBtn.removeAttribute('data-loading'); voiceBtn.textContent = '\uD83D\uDD0A Mute Voice'; }
+        });
+    }
+
+    /* --- Stop any active Kokoro playback --- */
+    function _stopKokoro() {
+      if (kokoroAudio) { try { kokoroAudio.stop(); } catch(e){} kokoroAudio = null; }
+    }
+
+    /* --- Speak via Kokoro neural TTS --- */
+    function _kokoroSpeak(text, narrator, onDone) {
+      _stopKokoro();
+      var voice = narrator === 'HERO WILL' ? 'bm_george' : 'am_adam';
+      var speed = narrator === 'HERO WILL' ? 0.82 : 0.95;
+      kokoroPipe(text, { voice: voice, speed: speed })
+        .then(function(out) {
+          /* out.audio = Float32Array, out.sampling_rate = 24000 */
+          var ctx = new (window.AudioContext || window.webkitAudioContext)();
+          var buf = ctx.createBuffer(1, out.audio.length, out.sampling_rate);
+          buf.copyToChannel(out.audio, 0);
+          var src = ctx.createBufferSource();
+          src.buffer = buf;
+          src.connect(ctx.destination);
+          kokoroAudio = src;
+          src.onended = function () { kokoroAudio = null; if (onDone) onDone(); };
+          src.start(0);
+        })
+        .catch(function(err) {
+          console.warn('[Kokoro] synthesis error, falling back:', err);
+          _wsFallback(text, narrator, onDone);
+        });
+    }
+
+    /* --- Main speakLine — called by render() --- */
+    function speakLine(text, narrator) {
+      if (!voiceOn) return;
+      clearTimeout(safetyTimer);
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      _stopKokoro();
+
+      function onDone() {
+        if (!voiceOn || !playing) return;
+        /* Small dramatic pause then advance */
+        var pause = narrator === 'HERO WILL' ? 1400 : 900;
+        setTimeout(advanceFrame, pause);
+      }
+
+      /* Safety net — if onend never fires, advance after max 90s */
+      safetyTimer = setTimeout(function() { if (voiceOn && playing) advanceFrame(); }, 90000);
+
+      if (kokoroReady) {
+        _kokoroSpeak(text, narrator, onDone);
+      } else {
+        /* Start loading Kokoro in background while Web Speech plays */
+        _loadKokoro();
+        _wsFallback(text, narrator, onDone);
+      }
+    }
+
+    /* Kick off Kokoro download immediately (model will be cached for next visit) */
+    _loadKokoro();
 
     if (voiceBtn) {
       voiceBtn.addEventListener('click', function () {
+        if (this.getAttribute('data-loading')) return; /* ignore during load */
         voiceOn = !voiceOn;
         this.classList.toggle('on', voiceOn);
         this.textContent = voiceOn ? '\uD83D\uDD0A Mute Voice' : '\uD83D\uDD07 Unmute Voice';
-        if (!voiceOn && window.speechSynthesis) {
-          window.speechSynthesis.cancel();
-        } else if (voiceOn && window.speechSynthesis) {
+        if (!voiceOn) {
+          if (window.speechSynthesis) window.speechSynthesis.cancel();
+          _stopKokoro();
+          clearTimeout(safetyTimer);
+        } else {
           speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
         }
       });

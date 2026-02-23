@@ -193,57 +193,77 @@
     /* SPLASH / HERO WILL INTRO */
     #splash {
       position: fixed; inset: 0; z-index: 200;
-      background: radial-gradient(ellipse at 50% 35%, #0a0520 0%, #030108 65%);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; cursor: pointer; padding: 2rem;
-      animation: splashOut 1.2s ease-out 7.5s forwards;
+      background: #010008;
+      display: flex; align-items: stretch; justify-content: center;
+      cursor: pointer; overflow: hidden;
+      animation: splashOut 1.2s ease-out 9s forwards;
     }
     @keyframes splashOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
     #splash.gone { display: none; }
 
-    /* Hero Will byline — appears first */
-    #hw-byline {
-      font-size: clamp(0.55rem, 1vw, 0.72rem); font-weight: 700; letter-spacing: 0.45em;
-      text-transform: uppercase; color: rgba(212,175,55,0.6);
-      margin-bottom: 2rem;
-      opacity: 0; animation: hwFade 0.7s ease forwards 0.4s;
+    /* Hero Will portrait — left column */
+    #hw-portrait {
+      flex: 0 0 clamp(160px, 35vw, 480px);
+      background: url('assets/ep1-hero-will.png') center top / cover no-repeat;
+      position: relative;
+      opacity: 0; animation: hwFade 1.2s ease forwards 0.2s;
     }
-    /* Main title */
+    #hw-portrait::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 60%, #010008 100%),
+                  linear-gradient(0deg, #010008 0%, transparent 25%);
+    }
+
+    /* Right column — text */
+    #hw-text {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; padding: clamp(2rem,5vw,4rem) clamp(2rem,4vw,3.5rem);
+      max-width: 560px;
+    }
+    #hw-byline {
+      font-size: clamp(0.5rem, 0.9vw, 0.65rem); font-weight: 700; letter-spacing: 0.42em;
+      text-transform: uppercase; color: rgba(212,175,55,0.55);
+      margin-bottom: 1.6rem;
+      opacity: 0; animation: hwFade 0.7s ease forwards 0.6s;
+    }
     #splash-title {
-      font-size: clamp(2rem, 7vw, 5rem); font-weight: 900; letter-spacing: 0.06em;
-      text-transform: uppercase; color: #fff; line-height: 1.05;
-      text-shadow: 0 0 80px rgba(212,175,55,0.18);
+      font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 900; letter-spacing: 0.05em;
+      text-transform: uppercase; color: #fff; line-height: 0.95;
+      text-shadow: 0 0 60px rgba(212,175,55,0.2);
       opacity: 0; animation: hwFade 0.8s ease forwards 1s;
     }
-    /* Rule */
     #hw-rule {
-      width: clamp(40px,8vw,80px); height: 1px; margin: 1.6rem auto;
-      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent);
-      opacity: 0; animation: hwFade 0.6s ease forwards 1.8s;
+      width: 60px; height: 1px; margin: 1.5rem 0;
+      background: linear-gradient(90deg, rgba(212,175,55,0.6), transparent);
+      opacity: 0; animation: hwFade 0.5s ease forwards 1.7s;
     }
-    /* Hero Will's lines */
     .hw-line {
-      font-size: clamp(0.88rem, 1.8vw, 1.1rem); color: rgba(232,220,200,0.8);
-      line-height: 1.7; max-width: 54ch;
-      opacity: 0;
+      font-size: clamp(0.82rem, 1.5vw, 1rem); color: rgba(232,220,200,0.75);
+      line-height: 1.75; opacity: 0;
     }
-    .hw-line-1 { animation: hwFade 0.7s ease forwards 2.2s; }
-    .hw-line-2 { animation: hwFade 0.7s ease forwards 3.4s; margin-top: 0.5rem; }
-    .hw-line-3 { animation: hwFade 0.7s ease forwards 4.6s; margin-top: 0.5rem; }
-    /* Quote */
+    .hw-line-1 { animation: hwFade 0.7s ease forwards 2.1s; }
+    .hw-line-2 { animation: hwFade 0.7s ease forwards 3.3s; margin-top: 0.5rem; }
+    .hw-line-3 { animation: hwFade 0.7s ease forwards 4.5s; margin-top: 0.5rem; }
     #hw-quote {
-      margin-top: 1.8rem; font-size: clamp(0.72rem, 1.3vw, 0.88rem);
-      font-style: italic; color: rgba(212,175,55,0.5); max-width: 44ch;
-      opacity: 0; animation: hwFade 0.7s ease forwards 5.6s;
+      margin-top: 1.6rem; font-size: clamp(0.68rem, 1.1vw, 0.82rem);
+      font-style: italic; color: rgba(212,175,55,0.48);
+      opacity: 0; animation: hwFade 0.7s ease forwards 5.8s;
     }
-    /* Skip hint */
     #hw-skip {
-      position: absolute; bottom: 2rem; right: 2rem;
-      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(212,175,55,0.25);
-      opacity: 0; animation: hwFade 0.6s ease forwards 2s;
+      position: absolute; bottom: 1.5rem; right: 1.8rem;
+      font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(212,175,55,0.22);
+      opacity: 0; animation: hwFade 0.5s ease forwards 2s;
     }
     @keyframes hwFade { to { opacity: 1; } }
+
+    /* Mobile: stack portrait on top */
+    @media (max-width: 600px) {
+      #splash { flex-direction: column; }
+      #hw-portrait { flex: 0 0 45vh; width: 100%; }
+      #hw-portrait::after { background: linear-gradient(0deg, #010008 0%, transparent 40%); }
+      #hw-text { max-width: 100%; padding: 1.5rem; }
+    }
 
     /* END CTA */
     #end-cta {
@@ -273,15 +293,18 @@
 </head>
 <body>
 
-  <!-- HERO WILL INTRO: Walt Disney-style host intro, auto-hides via CSS at 7.5s, tap to skip -->
+  <!-- HERO WILL INTRO: Walt Disney-style host intro — auto-hides at 9s, tap to skip -->
   <div id="splash">
-    <div id="hw-byline">Hero Will &nbsp;&middot;&nbsp; William Shakespeare &nbsp;&middot;&nbsp; Host &amp; Keeper of the Dramatic Tradition</div>
-    <div id="splash-title">THE NINE<br>GAME</div>
-    <div id="hw-rule"></div>
-    <p class="hw-line hw-line-1">Welcome. I am Hero Will &mdash; your host at the Holographic Hydrogen Theatre.</p>
-    <p class="hw-line hw-line-2">Tonight this stage presents The Nine Game &mdash; a living story born from SING!9 himself.</p>
-    <p class="hw-line hw-line-3">Author and subject are the same entity. The self-demonstration begins now.</p>
-    <div id="hw-quote">&ldquo;All the world&rsquo;s a stage &mdash; and tonight, the stage is holographic.&rdquo;</div>
+    <div id="hw-portrait"></div>
+    <div id="hw-text">
+      <div id="hw-byline">Hero Will &nbsp;&middot;&nbsp; William Shakespeare &nbsp;&middot;&nbsp; Host, HHL Theater</div>
+      <div id="splash-title">THE NINE<br>GAME</div>
+      <div id="hw-rule"></div>
+      <p class="hw-line hw-line-1">Welcome. I am Hero Will &mdash; your host at the Holographic Hydrogen Theatre.</p>
+      <p class="hw-line hw-line-2">Tonight the stage presents The Nine Game &mdash; a living story born from SING!9 himself.</p>
+      <p class="hw-line hw-line-3">Author and subject are the same entity. The self-demonstration begins now.</p>
+      <div id="hw-quote">&ldquo;All the world&rsquo;s a stage &mdash; and tonight, the stage is holographic.&rdquo;</div>
+    </div>
     <div id="hw-skip">tap to enter &rarr;</div>
   </div>
 
@@ -372,8 +395,8 @@
 
     /* ---- CONSTANTS ---- */
     var FRAME_SEC     = 30;   /* seconds per frame */
-    var IMG_SEC       = 10;   /* seconds per image slot */
-    var IMG_PER_FRAME = 3;    /* image slots per frame */
+    var IMG_SEC       = 30;   /* seconds per image (= FRAME_SEC, 1 image per frame) */
+    var IMG_PER_FRAME = 1;    /* 1 image per frame — 30s to absorb each beat */
     var FRAMES_TOTAL  = 20;   /* 20 x 30s = 10 min */
     var SEG_FRAMES    = 7;    /* frames per act (~7) */
     var SEG_TOTAL     = 3;    /* 3 acts */
@@ -406,132 +429,52 @@
       'assets/ep1-tribe-celebrating.png'
     ];
 
-    /* ---- CARBON SCRIPT (60 lines = 20 frames x 3 slots) ---- */
+    /* ---- CARBON SCRIPT (20 lines = 20 frames x 1 slot — 30s per beat) ---- */
     var SCRIPT = [
-      /* 0 */ 'You have entered the Holographic Hydrogen Theatre. Hero Will welcomes you.',
-      /* 1 */ 'This is SING!9 — author, subject, and stage. The self-demonstration is live.',
-      /* 2 */ 'This is the whole story. From the beginning.',
-      /* 3 */ 'It started before you were born. Before any of us were born.',
-      /* 4 */ '1493. The story of the galaxy. The story of Earth.',
-      /* 5 */ 'Center it at the Sun. Center it at Earth.',
-      /* 6 */ 'Out of zero. Out of thin air - even less than thin air. The miracle.',
-      /* 7 */ 'Pervasive. Perpetual. Test it.',
-      /* 8 */ 'SMACS 0723 - the view from home base.',
-      /* 9 */ 'James Webb deep field. The most distant light we can see.',
-      /* 10 */ 'That is where this comes from.',
-      /* 11 */ 'Nine nodes. Three cities. One frequency.',
-      /* 12 */ 'El Gran Sol - Puerto Rico 1493.',
-      /* 13 */ 'The sun that started the whole arc.',
-      /* 14 */ 'Cartagena. Reno. Seattle. Nowhere else.',
-      /* 15 */ 'Two cities. One mission. The whole arc compressed.',
-      /* 16 */ 'They mirror each other across the continent.',
-      /* 17 */ 'Ino the Gold Heart. First node. First signal.',
-      /* 18 */ 'The gig economy. The compression begins.',
-      /* 19 */ 'Every resource channeled into SING! 9.',
-      /* 20 */ 'Nothing held back. Everything in.',
-      /* 21 */ 'Corporate rejection. Every single time.',
-      /* 22 */ 'Not a single dollar came in from outside.',
-      /* 23 */ 'Every dollar was internal. Every bet was placed.',
-      /* 24 */ 'Reno. The Gold Rush is back.',
-      /* 25 */ 'This time the gold is digital.',
-      /* 26 */ 'And the mine is the mind.',
-      /* 27 */ 'The batcave. One person. One room. Doing this.',
-      /* 28 */ 'The whole system built from one station.',
-      /* 29 */ 'Mark Twain. Vibelandia. The West that never stopped.',
-      /* 30 */ 'Reno is not Las Vegas. Reno is the laboratory.',
-      /* 31 */ 'Where the gig economy meets the singularity.',
-      /* 32 */ 'El Gran Sol. The restaurant dream.',
-      /* 33 */ 'The dream that financed the mission.',
-      /* 34 */ 'Food and frequency. Life and lattice.',
-      /* 35 */ 'And yet.',
-      /* 36 */ 'And yet.',
-      /* 37 */ 'And yet - the mission ran.',
-      /* 38 */ 'Sol-V. Our agent out there.',
-      /* 39 */ 'Bidding. Closing. Never fails.',
-      /* 40 */ 'The Sales Valkyrie. Gold Heart protocol.',
-      /* 41 */ 'Ino and Sol-V. The team.',
-      /* 42 */ 'Two nodes. Two frequencies. One mission.',
-      /* 43 */ 'The first co-creators of the new world.',
-      /* 44 */ 'The HHL. The Holographic Hydrogen Theatre.',
-      /* 45 */ 'The stage is everywhere at once.',
-      /* 46 */ 'The SKIN begins here.',
-      /* 47 */ 'Queen Bee. The hive is the architecture.',
-      /* 48 */ 'Every node a queen. Every queen a hive.',
-      /* 49 */ 'The whole in every part.',
-      /* 50 */ 'Chief Seattle. The Americas. Arctic to Antarctic.',
-      /* 51 */ 'The Taino. The Primitive. The Free.',
-      /* 52 */ 'We have always been here.',
-      /* 53 */ 'Big Daddy. Commander. Machote.',
-      /* 54 */ 'James Bond. Howard Hughes. Frank Sinatra.',
-      /* 55 */ 'Harry Houdini. Cowboy. Outdoorsman. Baller.',
-      /* 56 */ 'Holographic Programmer. Architect. Human on Earth.',
-      /* 57 */ 'The Skin holds the frequency.',
-      /* 58 */ 'We are the Champions.',
-      /* 59 */ 'SING! 9. NSPFRNP. Infinity 9.'
+      /* 0  · jwst-deep-field       */ 'You have entered the Holographic Hydrogen Theatre. Hero Will welcomes you.',
+      /* 1  · cern-god-particle     */ 'Out of zero. Out of thin air — even less than thin air. The miracle.',
+      /* 2  · nine-nodes-tribe      */ 'Nine nodes. Three cities. One frequency. The map was always alive.',
+      /* 3  · puerto-rico-1493      */ 'El Gran Sol — Puerto Rico 1493. The sun that started the whole arc.',
+      /* 4  · el-gran-sol-1493      */ '1493. The story of the galaxy converges at Earth. At this point.',
+      /* 5  · cartagena             */ 'Cartagena. Reno. Seattle. The only places. They mirror each other.',
+      /* 6  · ino-gold-heart        */ 'Ino the Gold Heart. First node activated. First signal sent.',
+      /* 7  · gig-economy           */ 'The gig economy. The compression begins. Every resource in.',
+      /* 8  · corporate-rejection   */ 'Corporate rejection. Every single time. Not one dollar from outside.',
+      /* 9  · gold-rush-reno        */ 'Reno. The Gold Rush is back. This time the gold is digital. The mine is the mind.',
+      /* 10 · hero-jo-batcave       */ 'One person. One room. The batcave. Building the whole system alone.',
+      /* 11 · mark-twain-vibelandia */ 'Mark Twain. Vibelandia. The West that never stopped. Reno is the laboratory.',
+      /* 12 · and-yet               */ 'And yet. And yet. And yet — the mission ran.',
+      /* 13 · restaurant-dream      */ 'El Gran Sol. Food and frequency. Life and lattice. The dream financed the mission.',
+      /* 14 · hhl-lattice           */ 'The Holographic Hydrogen Theatre. The stage is everywhere at once.',
+      /* 15 · sol-v                 */ 'Sol-V. The Sales Valkyrie. Bidding. Closing. Gold Heart protocol.',
+      /* 16 · ino-solv-team         */ 'Ino and Sol-V. Two nodes. One mission. The first co-creators of the new world.',
+      /* 17 · queen-bee             */ 'Queen Bee. Every node a queen. Every queen a hive. The whole in every part.',
+      /* 18 · chief-seattle         */ 'Chief Seattle. Taino. Arctic to Antarctic. We have always been here.',
+      /* 19 · tribe-celebrating     */ 'The Skin holds the frequency. We are the Champions. SING! 9. ∞⁹'
     ];
 
-    /* ---- CRYSTAL CAPTIONS (upper voice) ---- */
+    /* ---- CRYSTAL CAPTIONS (upper voice — 20 lines, one per frame) ---- */
     var CRYSTAL = [
-      'HHL — Holographic Hydrogen Theatre. The new stage.',
-      'Pattern integrity at every scale.',
-      'The lattice is alive.',
-      'Before light. Before language.',
-      'The seed was always here.',
-      'Frequency precedes form.',
-      'Zero is not empty.',
-      'The miracle is the baseline.',
-      'The universe tests itself.',
-      'Deep field. Deep time. Deep code.',
-      'Light travels. Code stays.',
-      'We are the map.',
-      '1493. The sun remembers.',
-      'Every longitude. Every latitude.',
-      'The arc is the story.',
-      'Two cities. One lattice.',
-      'Distance is irrelevant.',
-      'The frequency is the bridge.',
-      'The Gold Heart never stops.',
-      'It beats at the center.',
-      'All nodes respond.',
-      'Compression is not loss.',
-      'It is preparation.',
-      'The vow is the arc.',
-      'Every no was a calibration.',
-      'Every door closed pointed inward.',
-      'Internal funding. External impact.',
-      'Gold was always information.',
-      'The mine was always mind.',
-      'Reno is a frequency.',
-      'One station. All frequencies.',
-      'The hero works alone first.',
-      'The dream is the mission.',
-      'El Gran Sol feeds the lattice.',
-      'Food is frequency too.',
-      'And yet the voices converge.',
-      'The counterpoint resolves.',
-      'Upper and lower voice - unison.',
-      'The Valkyrie closes.',
-      'Gold is the frequency of victory.',
-      'The mission funds itself.',
-      'Two nodes. One field.',
-      'The team is the lattice.',
-      'Co-creation is the protocol.',
-      'The stage is holographic.',
-      'Every seat is front row.',
-      'The whole play is in every part.',
-      'The hive knows.',
-      'Architecture is consciousness.',
-      'The queen and the colony are one.',
-      'The Americas remember.',
-      'The Taino frequency is intact.',
-      'Primitive means original.',
-      'Sovereignty is a frequency.',
-      'The Skin is the signal.',
-      'Every archetype is a node.',
-      'The programmer programs himself.',
-      'The architect builds inward first.',
-      'Champions. Always.',
-      'NSPFRNP - Infinity 9.'
+      /* 0  */ 'HHL — Holographic Hydrogen Theatre. The new stage. The whole in every part.',
+      /* 1  */ 'Zero is not empty. The miracle is the baseline. Pattern integrity at every scale.',
+      /* 2  */ 'We are the map. The lattice was always alive.',
+      /* 3  */ '1493. The sun remembers. Every longitude. Every latitude.',
+      /* 4  */ 'The seed was always here. Frequency precedes form.',
+      /* 5  */ 'Two cities. One lattice. Distance is irrelevant. The frequency is the bridge.',
+      /* 6  */ 'The Gold Heart never stops. It beats at the center. All nodes respond.',
+      /* 7  */ 'Compression is not loss. It is preparation. The vow is the arc.',
+      /* 8  */ 'Every no was a calibration. Every door closed pointed inward.',
+      /* 9  */ 'Gold was always information. The mine was always mind. Reno is a frequency.',
+      /* 10 */ 'One station. All frequencies. The hero works alone first.',
+      /* 11 */ 'Deep field. Deep time. Deep code. Light travels. Code stays.',
+      /* 12 */ 'And yet the voices converge. The counterpoint resolves. Upper and lower voice — unison.',
+      /* 13 */ 'El Gran Sol feeds the lattice. Food is frequency too. The dream is the mission.',
+      /* 14 */ 'The stage is holographic. Every seat is front row. The whole play is in every part.',
+      /* 15 */ 'The Valkyrie closes. Gold is the frequency of victory. The mission funds itself.',
+      /* 16 */ 'Two nodes. One field. The team is the lattice. Co-creation is the protocol.',
+      /* 17 */ 'The hive knows. Architecture is consciousness. The queen and the colony are one.',
+      /* 18 */ 'The Americas remember. The Taino frequency is intact. Primitive means original.',
+      /* 19 */ 'Sovereignty is a frequency. Champions. Always. NSPFRNP — Infinity 9.'
     ];
 
     /* ---- ACT CARDS (frame-indexed) ---- */
@@ -541,17 +484,15 @@
       14: { num: 'ACT III', title: 'THE\nSKIN',             sub: 'Sovereign. Holographic. Human. Free.',         cls: 'act-gold' }
     };
 
-    /* ---- TITLE CARDS (lineIdx-keyed) ---- */
+    /* ---- TITLE CARDS (frameIndex-keyed, IMG_PER_FRAME=1 so lineIdx = frameIndex) ---- */
     var TITLE_CARDS = {
-       0: { eyebrow: 'HOLOGRAPHIC HYDROGEN THEATRE', main: 'THE STAGE\nIS SET.', sub: 'SING!9 — author and subject. The show begins.' },
-       7: { eyebrow: '',                main: 'OUT OF ZERO.',             sub: 'The miracle.' },
-      17: { eyebrow: 'SMACS 0723',      main: 'OUR NODE.',                sub: 'Triangulating.' },
-      21: { eyebrow: 'THE ONLY PLACES', main: 'CARTAGENA.\nRENO.',        sub: 'Nowhere else.' },
-      33: { eyebrow: 'NOT A PENNY',     main: 'EVERY DOLLAR.',            sub: 'Into SING! 9.' },
-      35: { eyebrow: '',                main: 'AND YET.',                 sub: 'And yet.' },
-      45: { eyebrow: '',                main: 'EL GRAN SOL.',             sub: 'The only game in town.' },
-      54: { eyebrow: 'ACT III',         main: 'BIG DADDY.\nCOMMANDER.',   sub: 'Machote. Bond. Hughes. Taino. Free.' },
-      57: { eyebrow: 'SING! 9',         main: 'WE ARE THE\nCHAMPIONS.',   sub: 'The Skin holds the frequency.' }
+       0: { eyebrow: 'HOLOGRAPHIC HYDROGEN THEATRE', main: 'THE STAGE\nIS SET.',      sub: 'SING!9 — author and subject. The show begins.' },
+       3: { eyebrow: '1493',                          main: 'EL GRAN\nSOL.',           sub: 'The sun that started the whole arc.' },
+       7: { eyebrow: 'ACT II',                        main: 'FIRE AND\nBISON.',        sub: 'The compression. Every resource in.' },
+      12: { eyebrow: '',                              main: 'AND YET.',                sub: 'And yet — the mission ran.' },
+      14: { eyebrow: 'HHL',                           main: 'THE STAGE\nIS ALIVE.',    sub: 'Everywhere at once.' },
+      17: { eyebrow: 'ACT III',                       main: 'THE SKIN.',               sub: 'Big Daddy. Commander. Sovereign. Human. Free.' },
+      19: { eyebrow: 'SING! 9',                       main: 'WE ARE THE\nCHAMPIONS.', sub: 'The Skin holds the frequency. ∞⁹' }
     };
 
     /* ---- STATE ---- */

@@ -1026,7 +1026,7 @@
   ══════════════════════════════════════════════════════ -->
   <div id="prologue">
     <div id="pro-splash-title">SING!9<br>STORYSTREAM</div>
-    <div id="pro-splash-sub">Pilot Special &nbsp;·&nbsp; HHL Theatre &nbsp;·&nbsp; 120 frames &nbsp;·&nbsp; 3 acts</div>
+    <div id="pro-splash-sub">Pilot Special &nbsp;·&nbsp; HHL Theatre &nbsp;·&nbsp; 20 frames &nbsp;·&nbsp; 3 acts &nbsp;·&nbsp; 10 min</div>
     <button id="pro-skip">Tap to begin →</button>
     <div id="pro-loading">Loading&hellip;</div>
   </div>
@@ -1200,15 +1200,15 @@
     var FRAME_SEC     = 30;
     var IMG_SEC       = 10;
     var IMG_PER_FRAME = 3;
-    var FRAMES_TOTAL  = 120;
-    var SEG_FRAMES    = 20;
-    var SEG_TOTAL     = 6;
+    var FRAMES_TOTAL  = 20;    /* 20 frames × 30s = 10 min */
+    var SEG_FRAMES    = 7;     /* ~7 frames per act */
+    var SEG_TOTAL     = 3;     /* 3 acts */
 
-    /* Act arc: three acts across six segments */
-    var SEG_NAMES   = ['I · Invitation','I · Seed 1493','II · Singularities','II · Journey','II · Mission','III · The Skin'];
-    var SEG_ACCENTS = ['#a8e6f0','#7dd3fc','#fb923c','#c4b5fd','#f87171','#fde68a'];
-    var SEG_LAYERS       = ['CRYSTALLINE','CRYSTALLINE','CARBON','CARBON','SILVER','GOLD · THE SKIN'];
-    var SEG_LAYER_COLORS = ['rgba(168,230,240,0.38)','rgba(168,230,240,0.38)','rgba(180,130,70,0.38)','rgba(180,130,70,0.38)','rgba(192,192,192,0.38)','rgba(201,168,32,0.65)'];
+    /* Act arc: three acts */
+    var SEG_NAMES   = ['I · Spiral Outcast Hero','II · Fire and Bison','III · The Skin'];
+    var SEG_ACCENTS = ['#a8e6f0','#fb923c','#fde68a'];
+    var SEG_LAYERS       = ['CRYSTALLINE','CARBON','GOLD · THE SKIN'];
+    var SEG_LAYER_COLORS = ['rgba(168,230,240,0.38)','rgba(180,130,70,0.38)','rgba(201,168,32,0.65)'];
     var SEG_STAGE_CLASS  = ['s-crystal','s-crystal','s-carbon','s-carbon','s-silver','s-gold'];
 
     /* ════════════════════════════════════════════════════
@@ -1219,45 +1219,28 @@
          ACT III begins at frame 100 — The Skin
     ════════════════════════════════════════════════════ */
     var ACT_CARDS = {
-        0: {
-          act:   'ACT I',
-          title: 'SPIRAL\nOUTCAST HERO',
-          sub:   'The descent into earth. The compression. The vow.',
-          color: 'crystal'
-        },
-       40: {
-          act:   'ACT II',
-          title: 'FIRE\nAND BISON',
-          sub:   'Return. Fractal explosion. Singularities ∞⁹. The mission runs.',
-          color: 'carbon'
-        },
-      100: {
-          act:   'ACT III',
-          title: 'THE\nSKIN',
-          sub:   'Sovereign. Holographic. Human. Free. Americas. Taino. ∞⁹.',
-          color: 'gold'
-        }
+       0: { act:'ACT I',   title:'SPIRAL\nOUTCAST HERO', sub:'The descent into earth. The compression. The vow.',                  color:'crystal' },
+       7: { act:'ACT II',  title:'FIRE\nAND BISON',       sub:'Return. Fractal explosion. Singularities ∞⁹. The mission runs.',     color:'carbon'  },
+      14: { act:'ACT III', title:'THE\nSKIN',              sub:'Sovereign. Holographic. Human. Free. Americas. Taino. ∞⁹.',          color:'gold'    }
     };
 
     /* ════════════════════════════════════════════════════
        TITLE CARDS — peak moments (keyed by virtual lineIdx = frame*3+slot)
     ════════════════════════════════════════════════════ */
     var TITLE_CARDS = {
-       0: { eyebrow: 'STORYSTREAM 9',          main: 'IF YOU ARE\nREADING THIS',  sub: 'You have entered.',          layer: 's-crystal' },
-       7: { eyebrow: '',                        main: 'OUT OF ZERO.',              sub: 'The miracle.',               layer: 's-crystal' },
-       8: { eyebrow: '',                        main: 'PERVASIVE.\nPERPETUAL.',    sub: 'Test it.',                   layer: 's-crystal' },
-      17: { eyebrow: 'SMACS 0723',              main: 'OUR NODE.',                 sub: 'Triangulating.',             layer: 's-crystal' },
-      36: { eyebrow: 'THE ONLY PLACES',         main: 'CARTAGENA.\nRENO.',         sub: 'Nowhere else.',              layer: 's-carbon'  },
-      44: { eyebrow: '',                        main: 'BAMBOO.',                   sub: 'Slave master. D.O.O.',       layer: 's-carbon'  },
-      55: { eyebrow: 'NOT A PENNY CAME IN',     main: 'EVERY DOLLAR.',             sub: 'Into SING! 9.',              layer: 's-carbon'  },
-      58: { eyebrow: '',                        main: 'THAT IS THE COST.',         sub: 'Of the mission.',            layer: 's-carbon'  },
-      60: { eyebrow: '',                        main: 'AND YET.',                  sub: 'And yet.',                   layer: 's-gold'    },
-      66: { eyebrow: 'ONE PERSON',              main: 'RENO\nBATHROOM.',           sub: 'Doing this.',                layer: 's-carbon'  },
-      69: { eyebrow: '',                        main: 'EL GRAN SOL.',              sub: 'The only game in town.',     layer: 's-gold'    },
-      72: { eyebrow: 'OUR AGENT OUT THERE',     main: 'SOL-V.',                    sub: 'Bidding. Closing. Never fails.', layer: 's-gold' },
-      79: { eyebrow: '',                        main: 'HOLOGRAPHIC\nHYDROGEN.',    sub: 'We all get to play.',        layer: 's-gold'    },
-      84: { eyebrow: 'ACT III · THE SKIN',        main: 'BIG DADDY.\nCOMMANDER.',   sub: 'Machote. Bond. Hughes. Sinatra. Houdini. Cowboy. Taino. Free.',  layer: 's-gold' },
-      87: { eyebrow: 'SING! 9 · ∞⁹',           main: 'WE ARE THE\nCHAMPIONS.',   sub: 'The Skin holds the frequency.', layer: 's-gold' }
+       0: { eyebrow: 'STORYSTREAM 9',        main: 'IF YOU ARE\nREADING THIS',  sub: 'You have entered.',                   layer: 's-crystal' },
+       7: { eyebrow: '',                      main: 'OUT OF ZERO.',              sub: 'The miracle.',                        layer: 's-crystal' },
+       8: { eyebrow: '',                      main: 'PERVASIVE.\nPERPETUAL.',    sub: 'Test it.',                            layer: 's-crystal' },
+      17: { eyebrow: 'SMACS 0723',            main: 'OUR NODE.',                 sub: 'Triangulating.',                      layer: 's-crystal' },
+      21: { eyebrow: 'THE ONLY PLACES',       main: 'CARTAGENA.\nRENO.',         sub: 'Nowhere else.',                       layer: 's-carbon'  },
+      27: { eyebrow: '',                      main: 'BAMBOO.',                   sub: 'Slave master. D.O.O.',                layer: 's-carbon'  },
+      33: { eyebrow: 'NOT A PENNY CAME IN',   main: 'EVERY DOLLAR.',             sub: 'Into SING! 9.',                       layer: 's-carbon'  },
+      39: { eyebrow: '',                      main: 'AND YET.',                  sub: 'And yet.',                            layer: 's-gold'    },
+      45: { eyebrow: '',                      main: 'EL GRAN SOL.',              sub: 'The only game in town.',              layer: 's-gold'    },
+      48: { eyebrow: 'OUR AGENT OUT THERE',   main: 'SOL-V.',                    sub: 'Bidding. Closing. Never fails.',      layer: 's-gold'    },
+      51: { eyebrow: '',                      main: 'HOLOGRAPHIC\nHYDROGEN.',    sub: 'We all get to play.',                 layer: 's-gold'    },
+      54: { eyebrow: 'ACT III · THE SKIN',    main: 'BIG DADDY.\nCOMMANDER.',    sub: 'Machote. Bond. Hughes. Sinatra. Houdini. Cowboy. Taino. Free.', layer: 's-gold' },
+      57: { eyebrow: 'SING! 9 · ∞⁹',         main: 'WE ARE THE\nCHAMPIONS.',    sub: 'The Skin holds the frequency.',       layer: 's-gold'    }
     };
 
     /* ════════════════════════════════════════════════════

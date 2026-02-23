@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Episode 1 · Pilot Special · 10 Min | THE NINE GAME</title>
+  <!-- voice-config.js is gitignored — key never enters the repo -->
+  <script src="voice-config.js" onerror="void(0)"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; background: #000; overflow: hidden;
@@ -1089,7 +1091,8 @@
     };
     var audioCache = {};   /* key → blob URL */
 
-    function _elKey() { return localStorage.getItem('el_api_key') || ''; }
+    /* Key loaded from gitignored voice-config.js (local only) or localStorage */
+    function _elKey() { return (window.SING9_EL_KEY || '') || localStorage.getItem('el_api_key') || ''; }
     function _elKeyActive() { return _elKey().length > 8; }
 
     /* Stop whatever is currently playing */

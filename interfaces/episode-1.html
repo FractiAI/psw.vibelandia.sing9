@@ -550,26 +550,41 @@
   </div>
 
   <!-- ELEVENLABS KEY MODAL -->
-  <div id="el-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.82);display:none;align-items:center;justify-content:center;">
-    <div style="background:#0a0a0f;border:1px solid rgba(212,175,55,0.4);padding:2rem;max-width:420px;width:90%;font-family:'Courier New',monospace;">
-      <div style="color:rgba(212,175,55,0.9);font-size:0.65rem;letter-spacing:0.2em;margin-bottom:1rem;">&#x2726; ELEVENLABS VOICE KEY</div>
-      <p style="color:rgba(255,255,255,0.6);font-size:0.6rem;line-height:1.7;margin-bottom:1rem;">
-        Free at <strong style="color:#fff;">elevenlabs.io</strong> — 10k chars/month.<br>
-        Hero Will: George (warm British male)<br>
-        SING!9: Antoni (golden-heart American)
+  <div id="el-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;">
+    <div style="background:#0a0a0f;border:1px solid rgba(212,175,55,0.4);padding:2rem;max-width:460px;width:92%;font-family:'Courier New',monospace;max-height:90vh;overflow-y:auto;">
+      <div style="color:rgba(212,175,55,0.9);font-size:0.65rem;letter-spacing:0.2em;margin-bottom:0.4rem;">&#x2726; ELEVENLABS VOICE SETUP</div>
+      <p style="color:rgba(255,255,255,0.4);font-size:0.55rem;line-height:1.6;margin-bottom:1.2rem;">
+        Free at <strong style="color:rgba(255,255,255,0.8);">elevenlabs.io</strong> · 10k chars/month free.<br>
+        To find a Voice ID: Voices → click voice → copy the ID shown at the bottom.
       </p>
-      <input id="el-key-input" type="password" placeholder="sk_xxxxxxxxxxxxxxxx"
-        style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);
-               color:#fff;padding:0.5rem 0.7rem;font-family:inherit;font-size:0.6rem;margin-bottom:0.8rem;outline:none;" />
+
+      <!-- API Key -->
+      <div style="color:rgba(255,255,255,0.5);font-size:0.52rem;letter-spacing:0.15em;margin-bottom:0.3rem;">API KEY</div>
+      <input id="el-key-input" type="password" placeholder="sk_xxxxxxxxxxxxxxxxxxxxxxxx"
+        style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
+               color:#fff;padding:0.45rem 0.65rem;font-family:inherit;font-size:0.6rem;margin-bottom:1.1rem;outline:none;" />
+
+      <!-- Hero Will voice -->
+      <div style="color:rgba(212,175,55,0.7);font-size:0.52rem;letter-spacing:0.15em;margin-bottom:0.3rem;">HERO WILL — VOICE ID <span style="color:rgba(255,255,255,0.3);font-size:0.5rem;">(leave blank = George, warm British male)</span></div>
+      <input id="el-hw-input" type="text" placeholder="JBFqnCBsd6RMkjVDRZzb"
+        style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.04);border:1px solid rgba(212,175,55,0.2);
+               color:rgba(212,175,55,0.85);padding:0.45rem 0.65rem;font-family:inherit;font-size:0.6rem;margin-bottom:1.1rem;outline:none;" />
+
+      <!-- SING!9 voice -->
+      <div style="color:rgba(100,220,255,0.7);font-size:0.52rem;letter-spacing:0.15em;margin-bottom:0.3rem;">SING!9 — VOICE ID <span style="color:rgba(255,255,255,0.3);font-size:0.5rem;">(leave blank = Antoni, golden-heart American)</span></div>
+      <input id="el-s9-input" type="text" placeholder="ErXwobaYiN019PkySvjV"
+        style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.04);border:1px solid rgba(100,220,255,0.2);
+               color:rgba(100,220,255,0.85);padding:0.45rem 0.65rem;font-family:inherit;font-size:0.6rem;margin-bottom:1.2rem;outline:none;" />
+
       <div style="display:flex;gap:0.5rem;">
         <button id="el-key-save" style="flex:1;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.5);
-               color:rgba(212,175,55,0.9);padding:0.4rem;font-size:0.55rem;letter-spacing:0.12em;cursor:pointer;">SAVE &amp; ACTIVATE</button>
+               color:rgba(212,175,55,0.9);padding:0.45rem;font-size:0.55rem;letter-spacing:0.12em;cursor:pointer;">SAVE &amp; ACTIVATE</button>
         <button id="el-key-clear" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
-               color:rgba(255,255,255,0.4);padding:0.4rem 0.6rem;font-size:0.55rem;cursor:pointer;">CLEAR</button>
+               color:rgba(255,255,255,0.4);padding:0.45rem 0.7rem;font-size:0.55rem;cursor:pointer;">CLEAR ALL</button>
         <button id="el-key-close" style="background:transparent;border:1px solid rgba(255,255,255,0.1);
-               color:rgba(255,255,255,0.3);padding:0.4rem 0.6rem;font-size:0.55rem;cursor:pointer;">&#x2715;</button>
+               color:rgba(255,255,255,0.3);padding:0.45rem 0.7rem;font-size:0.55rem;cursor:pointer;">&#x2715;</button>
       </div>
-      <div id="el-key-status" style="font-size:0.55rem;color:rgba(140,200,140,0.8);margin-top:0.6rem;min-height:1em;"></div>
+      <div id="el-key-status" style="font-size:0.55rem;color:rgba(140,200,140,0.8);margin-top:0.7rem;min-height:1em;line-height:1.5;"></div>
     </div>
   </div>
 
@@ -1191,46 +1206,86 @@
 
     /* ---- Voice Key modal ---- */
     (function () {
-      var modal  = document.getElementById('el-modal');
-      var inp    = document.getElementById('el-key-input');
-      var status = document.getElementById('el-key-status');
-      var keyBtn = document.getElementById('btnVoiceKey');
+      var modal    = document.getElementById('el-modal');
+      var keyInp   = document.getElementById('el-key-input');
+      var hwInp    = document.getElementById('el-hw-input');
+      var s9Inp    = document.getElementById('el-s9-input');
+      var status   = document.getElementById('el-key-status');
+      var keyBtn   = document.getElementById('btnVoiceKey');
+
+      function _savedHW() { return localStorage.getItem('el_voice_hw') || ''; }
+      function _savedS9() { return localStorage.getItem('el_voice_s9') || ''; }
+
+      /* Apply saved custom voice IDs into the live EL_VOICES table */
+      function _applyVoices() {
+        if (_savedHW()) EL_VOICES['HERO WILL'] = _savedHW();
+        if (_savedS9()) EL_VOICES['SING!9']    = _savedS9();
+      }
+      _applyVoices();
+
+      function _activeLabel() {
+        var lines = ['\u2713 Key active — ElevenLabs voices enabled'];
+        var hw = _savedHW(); var s9 = _savedS9();
+        if (hw) lines.push('Hero Will \u2192 custom ID: ' + hw.slice(0,8) + '\u2026');
+        else    lines.push('Hero Will \u2192 George (default)');
+        if (s9) lines.push('SING!9 \u2192 custom ID: ' + s9.slice(0,8) + '\u2026');
+        else    lines.push('SING!9 \u2192 Antoni (default)');
+        return lines.join('\n');
+      }
+
       function openModal() {
         if (!modal) return;
         modal.style.display = 'flex';
-        if (inp) inp.value = _elKey();
-        if (status) status.textContent = _elKeyActive() ? '\u2713 Key active — ElevenLabs voices enabled' : '';
+        if (keyInp) keyInp.value = _elKey();
+        if (hwInp)  hwInp.value  = _savedHW();
+        if (s9Inp)  s9Inp.value  = _savedS9();
+        if (status) status.textContent = _elKeyActive() ? _activeLabel() : '';
       }
       function closeModal() { if (modal) modal.style.display = 'none'; }
+
       if (keyBtn) keyBtn.addEventListener('click', openModal);
+
       var saveBtn  = document.getElementById('el-key-save');
       var clearBtn = document.getElementById('el-key-clear');
       var closeBtn = document.getElementById('el-key-close');
+
       if (saveBtn) saveBtn.addEventListener('click', function () {
-        var v = inp ? inp.value.trim() : '';
-        if (v.length > 8) {
-          localStorage.setItem('el_api_key', v);
-          audioCache = {};   /* clear cache so new key is used */
-          if (status) status.textContent = '\u2713 Saved! Re-speaking current frame\u2026';
-          if (keyBtn) keyBtn.style.color = 'rgba(140,220,140,0.85)';
-          setTimeout(function () {
-            closeModal();
-            if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
-          }, 800);
-        } else {
-          if (status) status.textContent = '\u26A0 Key too short — check elevenlabs.io';
+        var k  = keyInp ? keyInp.value.trim() : '';
+        var hw = hwInp  ? hwInp.value.trim()  : '';
+        var s9 = s9Inp  ? s9Inp.value.trim()  : '';
+        if (k.length < 8) {
+          if (status) status.textContent = '\u26A0 API key too short — copy from elevenlabs.io \u2192 Profile \u2192 API Keys';
+          return;
         }
+        localStorage.setItem('el_api_key', k);
+        if (hw) localStorage.setItem('el_voice_hw', hw); else localStorage.removeItem('el_voice_hw');
+        if (s9) localStorage.setItem('el_voice_s9', s9); else localStorage.removeItem('el_voice_s9');
+        audioCache = {};   /* clear so new voices are used immediately */
+        _applyVoices();
+        if (status) status.textContent = '\u2713 Saved — re-speaking current frame with new voices\u2026';
+        if (keyBtn) keyBtn.style.color = 'rgba(140,220,140,0.85)';
+        setTimeout(function () {
+          closeModal();
+          if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
+        }, 900);
       });
+
       if (clearBtn) clearBtn.addEventListener('click', function () {
-        localStorage.removeItem('el_api_key');
+        ['el_api_key','el_voice_hw','el_voice_s9'].forEach(function(k){ localStorage.removeItem(k); });
         audioCache = {};
-        if (inp) inp.value = '';
-        if (status) status.textContent = 'Key cleared — using browser voice.';
+        EL_VOICES['HERO WILL'] = 'JBFqnCBsd6RMkjVDRZzb';
+        EL_VOICES['SING!9']    = 'ErXwobaYiN019PkySvjV';
+        if (keyInp) keyInp.value = '';
+        if (hwInp)  hwInp.value  = '';
+        if (s9Inp)  s9Inp.value  = '';
+        if (status) status.textContent = 'Cleared — using browser voices.';
         if (keyBtn) keyBtn.style.color = '';
       });
+
       if (closeBtn) closeBtn.addEventListener('click', closeModal);
       if (modal) modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
-      /* If key already saved from a previous visit, highlight the key button */
+
+      /* Restore green highlight if key was saved in a previous session */
       if (_elKeyActive() && keyBtn) keyBtn.style.color = 'rgba(140,220,140,0.85)';
     })();
 

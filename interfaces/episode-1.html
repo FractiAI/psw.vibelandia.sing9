@@ -545,7 +545,32 @@
   <!-- AUDIO CONTROLS -->
   <div id="audio-controls">
     <button class="aud-btn on" id="btnVoice" title="Mute narration voice">&#x1F50A; Mute Voice</button>
+    <button class="aud-btn" id="btnVoiceKey" title="Set ElevenLabs API key for human voices">&#x1F511; Voice Key</button>
     <button class="aud-btn" id="btnMusic" title="Toggle original soundtrack">&#x1F3B5; Music</button>
+  </div>
+
+  <!-- ELEVENLABS KEY MODAL -->
+  <div id="el-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.82);display:none;align-items:center;justify-content:center;">
+    <div style="background:#0a0a0f;border:1px solid rgba(212,175,55,0.4);padding:2rem;max-width:420px;width:90%;font-family:'Courier New',monospace;">
+      <div style="color:rgba(212,175,55,0.9);font-size:0.65rem;letter-spacing:0.2em;margin-bottom:1rem;">&#x2726; ELEVENLABS VOICE KEY</div>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.6rem;line-height:1.7;margin-bottom:1rem;">
+        Free at <strong style="color:#fff;">elevenlabs.io</strong> — 10k chars/month.<br>
+        Hero Will: George (warm British male)<br>
+        SING!9: Antoni (golden-heart American)
+      </p>
+      <input id="el-key-input" type="password" placeholder="sk_xxxxxxxxxxxxxxxx"
+        style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);
+               color:#fff;padding:0.5rem 0.7rem;font-family:inherit;font-size:0.6rem;margin-bottom:0.8rem;outline:none;" />
+      <div style="display:flex;gap:0.5rem;">
+        <button id="el-key-save" style="flex:1;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.5);
+               color:rgba(212,175,55,0.9);padding:0.4rem;font-size:0.55rem;letter-spacing:0.12em;cursor:pointer;">SAVE &amp; ACTIVATE</button>
+        <button id="el-key-clear" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+               color:rgba(255,255,255,0.4);padding:0.4rem 0.6rem;font-size:0.55rem;cursor:pointer;">CLEAR</button>
+        <button id="el-key-close" style="background:transparent;border:1px solid rgba(255,255,255,0.1);
+               color:rgba(255,255,255,0.3);padding:0.4rem 0.6rem;font-size:0.55rem;cursor:pointer;">&#x2715;</button>
+      </div>
+      <div id="el-key-status" style="font-size:0.55rem;color:rgba(140,200,140,0.8);margin-top:0.6rem;min-height:1em;"></div>
+    </div>
   </div>
 
   <!-- SMOKY / GOLDILOCKS TOGGLE -->
@@ -1020,149 +1045,194 @@
     }
 
     /* ================================================================
-       VOICE ENGINE — Kokoro-82M (open-source neural TTS, in-browser)
-       Voices: bm_george = British male (Hero Will)
-               am_adam   = American male (SING!9)
-       Falls back to Web Speech API while Kokoro is loading.
-       Kokoro model: onnx-community/Kokoro-82M-v1.0 via transformers.js
+       VOICE ENGINE — Priority chain:
+         1. ElevenLabs API  (human-quality, free tier, API key required)
+            Hero Will → "George"  (JBFqnCBsd6RMkjVDRZzb) warm British male
+            SING!9    → "Antoni"  (ErXwobaYiN019PkySvjV) golden-heart American
+         2. Microsoft Neural via Web Speech (good on Edge/Windows)
+         3. Any Web Speech voice (last resort)
+       Audio cached in memory — each line only synthesised once.
        ================================================================ */
+
     var voiceOn     = true;
     var voiceBtn    = document.getElementById('btnVoice');
-    var kokoroReady = false;
-    var kokoroLoading = false;
-    var kokoroPipe  = null;
-    var kokoroAudio = null;   /* active AudioBufferSourceNode */
     var safetyTimer = null;
+    var activeAudio = null;  /* current HTMLAudioElement */
 
-    /* --- Web Speech fallback (used until Kokoro is ready) --- */
+    /* ElevenLabs config */
+    var EL_VOICES = {
+      'HERO WILL': 'JBFqnCBsd6RMkjVDRZzb',  /* George — warm, theatrical British male */
+      'SING!9':    'ErXwobaYiN019PkySvjV'    /* Antoni — golden-heart American narrator  */
+    };
+    var EL_SETTINGS = {
+      'HERO WILL': { stability: 0.68, similarity_boost: 0.84, style: 0.28, use_speaker_boost: true },
+      'SING!9':    { stability: 0.52, similarity_boost: 0.78, style: 0.45, use_speaker_boost: true }
+    };
+    var EL_MODEL = {
+      'HERO WILL': 'eleven_multilingual_v2',   /* richer, more theatrical */
+      'SING!9':    'eleven_turbo_v2_5'         /* natural, warm, fast      */
+    };
+    var audioCache = {};   /* key → blob URL */
+
+    function _elKey() { return localStorage.getItem('el_api_key') || ''; }
+    function _elKeyActive() { return _elKey().length > 8; }
+
+    /* Stop whatever is currently playing */
+    function _stopActive() {
+      if (activeAudio) { try { activeAudio.pause(); activeAudio.currentTime = 0; } catch(e){} activeAudio = null; }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    }
+
+    /* Play a blob URL and call onDone when finished */
+    function _playBlob(blobUrl, narrator, onDone) {
+      _stopActive();
+      var a = new Audio(blobUrl);
+      activeAudio = a;
+      a.onended = function () { activeAudio = null; if (onDone) onDone(); };
+      a.onerror  = function () { activeAudio = null; if (onDone) onDone(); };
+      a.play().catch(function(){ if (onDone) onDone(); });
+    }
+
+    /* ElevenLabs synthesis — returns blob URL via callback */
+    function _elSpeak(text, narrator, onDone) {
+      var key     = _elKey();
+      var voiceId = EL_VOICES[narrator] || EL_VOICES['SING!9'];
+      var cacheK  = narrator + '|' + text;
+      if (audioCache[cacheK]) { _playBlob(audioCache[cacheK], narrator, onDone); return; }
+      fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voiceId, {
+        method: 'POST',
+        headers: { 'Accept': 'audio/mpeg', 'Content-Type': 'application/json', 'xi-api-key': key },
+        body: JSON.stringify({
+          text: text,
+          model_id: EL_MODEL[narrator] || 'eleven_turbo_v2_5',
+          voice_settings: EL_SETTINGS[narrator] || EL_SETTINGS['SING!9']
+        })
+      })
+      .then(function(r) {
+        if (!r.ok) throw new Error('EL ' + r.status);
+        return r.blob();
+      })
+      .then(function(blob) {
+        var url = URL.createObjectURL(blob);
+        audioCache[cacheK] = url;
+        _playBlob(url, narrator, onDone);
+      })
+      .catch(function(err) {
+        console.warn('[ElevenLabs] error, falling back to Web Speech:', err);
+        _wsFallback(text, narrator, onDone);
+      });
+    }
+
+    /* Web Speech — pick best available Microsoft Neural voice */
     if (window.speechSynthesis) window.speechSynthesis.getVoices();
-
     function _wsBestVoice(narrator) {
       var vv = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
       if (narrator === 'HERO WILL') {
-        return vv.find(function(v){ return v.lang.startsWith('en-GB') && /(natural|neural|online|ryan|george|daniel|oliver)/i.test(v.name); })
+        return vv.find(function(v){ return v.lang.startsWith('en-GB') && /(online|natural|neural)/i.test(v.name); })
+            || vv.find(function(v){ return v.lang.startsWith('en-GB') && /(ryan|george|daniel|oliver)/i.test(v.name); })
             || vv.find(function(v){ return v.lang.startsWith('en-GB'); })
-            || vv.find(function(v){ return /george|daniel|oliver|ryan/i.test(v.name); })
-            || null;
-      } else {
-        return vv.find(function(v){ return v.lang === 'en-US' && /(natural|neural|online|davis|guy|eric|tony|andrew)/i.test(v.name); })
-            || vv.find(function(v){ return v.lang === 'en-US'; })
             || null;
       }
+      return vv.find(function(v){ return v.lang === 'en-US' && /(online|natural|neural)/i.test(v.name); })
+          || vv.find(function(v){ return v.lang === 'en-US' && /(guy|eric|tony|andrew|davis)/i.test(v.name); })
+          || vv.find(function(v){ return v.lang === 'en-US'; })
+          || null;
     }
-
     function _wsFallback(text, narrator, onDone) {
       if (!window.speechSynthesis) { if (onDone) onDone(); return; }
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
-      u.rate   = narrator === 'HERO WILL' ? 0.80 : 0.93;
-      u.pitch  = narrator === 'HERO WILL' ? 1.08 : 1.0;
-      u.volume = 0.90;
+      u.rate   = narrator === 'HERO WILL' ? 0.78 : 0.91;
+      u.pitch  = narrator === 'HERO WILL' ? 0.95 : 1.02;
+      u.volume = 0.92;
       var v = _wsBestVoice(narrator);
       if (v) u.voice = v;
       u.onend = function () { if (onDone) onDone(); };
-      setTimeout(function () { window.speechSynthesis.speak(u); }, 300);
+      u.onerror = function() { if (onDone) onDone(); };
+      setTimeout(function () { window.speechSynthesis.speak(u); }, 280);
     }
 
-    /* --- Load Kokoro model in background --- */
-    function _loadKokoro() {
-      if (kokoroReady || kokoroLoading) return;
-      kokoroLoading = true;
-      if (voiceBtn) { voiceBtn.setAttribute('data-loading', '1'); voiceBtn.textContent = '\u23F3 Loading voice\u2026'; }
-      import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.3.3')
-        .then(function(mod) {
-          var env = mod.env;
-          env.allowLocalModels = false;
-          return mod.pipeline('text-to-speech', 'onnx-community/Kokoro-82M-v1.0', { dtype: 'q8', device: 'wasm' });
-        })
-        .then(function(pipe) {
-          kokoroPipe  = pipe;
-          kokoroReady = true;
-          kokoroLoading = false;
-          if (voiceBtn) { voiceBtn.removeAttribute('data-loading'); voiceBtn.textContent = '\uD83D\uDD0A Mute Voice'; }
-          /* Re-speak current frame with high-quality voice */
-          if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
-        })
-        .catch(function(err) {
-          kokoroLoading = false;
-          console.warn('[Kokoro] load failed, using Web Speech:', err);
-          if (voiceBtn) { voiceBtn.removeAttribute('data-loading'); voiceBtn.textContent = '\uD83D\uDD0A Mute Voice'; }
-        });
-    }
-
-    /* --- Stop any active Kokoro playback --- */
-    function _stopKokoro() {
-      if (kokoroAudio) { try { kokoroAudio.stop(); } catch(e){} kokoroAudio = null; }
-    }
-
-    /* --- Speak via Kokoro neural TTS --- */
-    function _kokoroSpeak(text, narrator, onDone) {
-      _stopKokoro();
-      var voice = narrator === 'HERO WILL' ? 'bm_george' : 'am_adam';
-      var speed = narrator === 'HERO WILL' ? 0.82 : 0.95;
-      kokoroPipe(text, { voice: voice, speed: speed })
-        .then(function(out) {
-          /* out.audio = Float32Array, out.sampling_rate = 24000 */
-          var ctx = new (window.AudioContext || window.webkitAudioContext)();
-          var buf = ctx.createBuffer(1, out.audio.length, out.sampling_rate);
-          buf.copyToChannel(out.audio, 0);
-          var src = ctx.createBufferSource();
-          src.buffer = buf;
-          src.connect(ctx.destination);
-          kokoroAudio = src;
-          src.onended = function () { kokoroAudio = null; if (onDone) onDone(); };
-          src.start(0);
-        })
-        .catch(function(err) {
-          console.warn('[Kokoro] synthesis error, falling back:', err);
-          _wsFallback(text, narrator, onDone);
-        });
-    }
-
-    /* --- Main speakLine — called by render() --- */
+    /* ---- Main speakLine — called by render() ---- */
     function speakLine(text, narrator) {
-      if (!voiceOn) return;
+      if (!voiceOn || !text) return;
       clearTimeout(safetyTimer);
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
-      _stopKokoro();
+      _stopActive();
 
       function onDone() {
         if (!voiceOn || !playing) return;
-        /* Small dramatic pause then advance */
-        var pause = narrator === 'HERO WILL' ? 1400 : 900;
+        var pause = narrator === 'HERO WILL' ? 1500 : 950;
         setTimeout(advanceFrame, pause);
       }
 
-      /* Safety net — if onend never fires, advance after max 90s */
+      /* 90-second safety net in case audio silently fails */
       safetyTimer = setTimeout(function() { if (voiceOn && playing) advanceFrame(); }, 90000);
 
-      if (kokoroReady) {
-        _kokoroSpeak(text, narrator, onDone);
+      if (_elKeyActive()) {
+        _elSpeak(text, narrator, onDone);
       } else {
-        /* Start loading Kokoro in background while Web Speech plays */
-        _loadKokoro();
         _wsFallback(text, narrator, onDone);
       }
     }
 
-    /* Kick off Kokoro download immediately (model will be cached for next visit) */
-    _loadKokoro();
-
+    /* ---- Mute / Unmute button ---- */
     if (voiceBtn) {
       voiceBtn.addEventListener('click', function () {
-        if (this.getAttribute('data-loading')) return; /* ignore during load */
         voiceOn = !voiceOn;
         this.classList.toggle('on', voiceOn);
         this.textContent = voiceOn ? '\uD83D\uDD0A Mute Voice' : '\uD83D\uDD07 Unmute Voice';
         if (!voiceOn) {
-          if (window.speechSynthesis) window.speechSynthesis.cancel();
-          _stopKokoro();
+          _stopActive();
           clearTimeout(safetyTimer);
         } else {
           speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
         }
       });
     }
+
+    /* ---- Voice Key modal ---- */
+    (function () {
+      var modal  = document.getElementById('el-modal');
+      var inp    = document.getElementById('el-key-input');
+      var status = document.getElementById('el-key-status');
+      var keyBtn = document.getElementById('btnVoiceKey');
+      function openModal() {
+        if (!modal) return;
+        modal.style.display = 'flex';
+        if (inp) inp.value = _elKey();
+        if (status) status.textContent = _elKeyActive() ? '\u2713 Key active — ElevenLabs voices enabled' : '';
+      }
+      function closeModal() { if (modal) modal.style.display = 'none'; }
+      if (keyBtn) keyBtn.addEventListener('click', openModal);
+      var saveBtn  = document.getElementById('el-key-save');
+      var clearBtn = document.getElementById('el-key-clear');
+      var closeBtn = document.getElementById('el-key-close');
+      if (saveBtn) saveBtn.addEventListener('click', function () {
+        var v = inp ? inp.value.trim() : '';
+        if (v.length > 8) {
+          localStorage.setItem('el_api_key', v);
+          audioCache = {};   /* clear cache so new key is used */
+          if (status) status.textContent = '\u2713 Saved! Re-speaking current frame\u2026';
+          if (keyBtn) keyBtn.style.color = 'rgba(140,220,140,0.85)';
+          setTimeout(function () {
+            closeModal();
+            if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
+          }, 800);
+        } else {
+          if (status) status.textContent = '\u26A0 Key too short — check elevenlabs.io';
+        }
+      });
+      if (clearBtn) clearBtn.addEventListener('click', function () {
+        localStorage.removeItem('el_api_key');
+        audioCache = {};
+        if (inp) inp.value = '';
+        if (status) status.textContent = 'Key cleared — using browser voice.';
+        if (keyBtn) keyBtn.style.color = '';
+      });
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (modal) modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+      /* If key already saved from a previous visit, highlight the key button */
+      if (_elKeyActive() && keyBtn) keyBtn.style.color = 'rgba(140,220,140,0.85)';
+    })();
 
     /* ---- YOUTUBE ORIGINAL SOUNDTRACK ---- */
     var musicOn  = false;

@@ -1355,9 +1355,13 @@
     });
 
     /* ---- START ---- */
-    /* Render frame 0 immediately so stage is populated behind the splash */
-    render(true);
+    /* Render visuals immediately; delay first speech by 400ms so
+       voice-config.js and EL key are guaranteed loaded before frame 0 speaks. */
+    render(false);   /* visual only — no speakLine yet */
     startTick();
+    setTimeout(function () {
+      if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'HERO WILL');
+    }, 400);
 
   })();
   </script>

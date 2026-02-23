@@ -1,1162 +1,346 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Episode 1 Â· Pilot Special Â· 10 Min | SING!9 STORYSTREAM</title>
+  <title>Episode 1 · Pilot Special · 10 Min | SING!9 STORYSTREAM</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; background: #000; overflow: hidden;
       font-family: "Segoe UI", "Helvetica Neue", system-ui, sans-serif; }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       STAGE â€” flex host for three-stream layout
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* STAGE */
     #stage {
-      position: fixed;
-      top: var(--cinema-h, 0px);
-      left: 0; right: 0;
-      bottom: var(--ticker-h, 30px);
-      /* SKY above / LAND below â€” the horizon split */
-      display: flex; flex-direction: column;
-      overflow: hidden;
-      background: #040108;
-      transition: background 2.5s ease;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 30px;
+      display: flex; flex-direction: column; overflow: hidden;
+      background: #030814;
     }
-
-    /* Stage scanlines â€” full width overlay */
-    #stage::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent 0px, transparent 2px,
-        rgba(0,0,0,0.045) 2px, rgba(0,0,0,0.045) 4px
-      );
-      pointer-events: none; z-index: 20;
-    }
-
-    /* Stage vignette â€” full width */
-    #stage::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.72) 100%);
-      pointer-events: none; z-index: 21;
-    }
-
-    /* Stage atmosphere states */
-    /* Stage base (fallback behind lane images) */
     #stage.s-crystal { background: #030814; }
     #stage.s-carbon  { background: #090200; }
-    #stage.s-silver  { background: #040810; }
     #stage.s-gold    { background: #0c0600; }
 
-    /* â”€â”€ SKY atmosphere: crystal lane per arc â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-    /* s-crystal: Deep interstellar â€” Crystalline. JWST void. */
-    #stage.s-crystal #crystal-lane {
-      background: radial-gradient(ellipse at 55% 20%, #061428 0%, #020818 50%, #000208 100%);
+    /* Scanlines overlay */
+    #stage::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 20;
+      background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
     }
-    /* s-carbon: Storm sky â€” overcast, heavy, pre-event pressure. */
-    #stage.s-carbon  #crystal-lane {
-      background: radial-gradient(ellipse at 50% 10%, #100804 0%, #060301 60%, #020100 100%);
-    }
-    /* s-silver: Pre-dawn silver â€” the in-between light. */
-    #stage.s-silver  #crystal-lane {
-      background: radial-gradient(ellipse at 45% 18%, #081020 0%, #030810 55%, #010408 100%);
-    }
-    /* s-gold: Golden hour sky â€” the sky at the moment voices meet. */
-    #stage.s-gold    #crystal-lane {
-      background: radial-gradient(ellipse at 50% 15%, #1e1000 0%, #0e0700 50%, #050300 100%);
+    /* Vignette */
+    #stage::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 21;
+      background: radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.7) 100%);
     }
 
-    /* â”€â”€ LAND & WATER atmosphere: carbon lane per arc â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-    /* s-crystal: Moonlit earth â€” cool midnight ground under cosmic sky. */
-    #stage.s-crystal #carbon-lane {
-      background: radial-gradient(ellipse at 50% 90%, #0a1808 0%, #040c02 55%, #010400 100%);
-    }
-    /* s-carbon: Dense land â€” heaviest compression. The weight of the story. */
-    #stage.s-carbon  #carbon-lane {
-      background: radial-gradient(ellipse at 50% 80%, #1c0600 0%, #0c0200 55%, #050100 100%);
-    }
-    /* s-silver: River water â€” silver ripple, the transitional surface. */
-    #stage.s-silver  #carbon-lane {
-      background: radial-gradient(ellipse at 50% 85%, #060e1c 0%, #030810 55%, #010508 100%);
-    }
-    /* s-gold: Golden harvest â€” the land at golden hour, voices merged. */
-    #stage.s-gold    #carbon-lane {
-      background: radial-gradient(ellipse at 50% 80%, #201200 0%, #120800 55%, #060300 100%);
-    }
-
-    /* â”€â”€ Flash overlay â”€â”€ */
-    #flash {
-      position: absolute; inset: 0;
-      background: #c9a020;
-      opacity: 0; pointer-events: none; z-index: 90;
-      transition: opacity 0.12s ease;
-    }
-    #flash.on { opacity: 0.42; }
-
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       CARBON LANE â€” bottom 58% â€” LAND & WATER
-       The dense layer. The story as it moved through earth.
-       Aware observer. Ground of all events.
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    #carbon-lane {
-      position: relative;
-      width: 100%; height: 58%;
-      overflow: hidden; flex-shrink: 0;
-      background: radial-gradient(ellipse at 50% 85%, #160a02 0%, #060200 100%);
-    }
-
-    #carbon-lane img.lane-img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center bottom;
-      opacity: 0; transition: opacity 0.6s ease;
-      z-index: 3;
-      transform-origin: center center;
-      will-change: transform;
-    }
-    #carbon-lane img.lane-img.visible { opacity: 0.92; }
-
-    /* Carbon caption â€” GROUNDED. Anchor at earth level. Lower voice. */
-    #carbon-caption {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 4rem 2.8rem 2.8rem;
-      background: linear-gradient(to top,
-        rgba(8,3,0,0.97) 0%,
-        rgba(12,5,0,0.72) 38%,
-        rgba(6,2,0,0.28) 68%,
-        transparent 100%
-      );
-      z-index: 25; pointer-events: none;
-    }
-    #carbon-eyebrow {
-      font-size: 0.52rem; font-weight: 700;
-      letter-spacing: 0.36em; text-transform: uppercase;
-      color: rgba(201,168,32,0.5);
-      margin-bottom: 0.5rem;
-      opacity: 0; transition: opacity 0.55s ease;
-    }
-    #carbon-eyebrow.vis { opacity: 1; }
-    #carbon-text {
-      font-size: clamp(0.96rem, 1.8vw, 1.32rem);
-      color: rgba(255,228,172,0.97);
-      line-height: 1.78;
-      max-width: 820px;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.99), 0 0 48px rgba(0,0,0,0.8);
-      font-weight: 400; letter-spacing: 0.015em;
-      min-height: 2.8em;
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    #carbon-text.vis { opacity: 1; transform: translateY(0); }
-
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       HORIZON LINE â€” where sky meets land
-       The seam between crystalline (above) and carbon (below).
-       Runs full width. In Bach terms: where upper and lower
-       voices share the same pitch â€” brief, perfect, then apart.
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    #stream-divider {
-      position: absolute;
-      top: 42%; left: 0; right: 0;
-      height: 1px; width: 100%;
-      z-index: 15; pointer-events: none;
-      background: linear-gradient(
-        to right,
-        transparent 0%,
-        rgba(168,230,240,0.22) 12%,
-        rgba(201,168,32,0.28) 38%,
-        rgba(168,230,240,0.34) 50%,
-        rgba(201,168,32,0.28) 62%,
-        rgba(168,230,240,0.22) 88%,
-        transparent 100%
-      );
-      animation: horizon-pulse 4s ease-in-out infinite;
-      box-shadow: 0 -1px 8px rgba(168,230,240,0.06), 0 1px 8px rgba(201,168,32,0.06);
-    }
-    @keyframes horizon-pulse {
-      0%,100% { opacity: 0.65; transform: scaleX(0.96); }
-      50%      { opacity: 1.0;  transform: scaleX(1.0); }
-    }
-
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       CRYSTAL LANE â€” top 42% â€” THE SKY
-       The meaning layer. Above the horizon. Expansive, cosmic.
-       In Bach terms: the upper voice. Enters after the lower,
-       answers, floats, resolves last.
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* CRYSTAL LANE — top 42% — SKY */
     #crystal-lane {
-      position: relative;
-      width: 100%; height: 42%;
-      overflow: hidden; flex-shrink: 0;
-      /* Deep sky â€” darker at zenith, slightly warmer toward horizon */
+      position: relative; width: 100%; height: 42%; overflow: hidden; flex-shrink: 0;
       background: radial-gradient(ellipse at 50% 15%, #05132a 0%, #010510 60%, #000208 100%);
     }
+    #stage.s-carbon #crystal-lane { background: radial-gradient(ellipse at 50% 10%, #100804 0%, #060301 60%, #020100 100%); }
+    #stage.s-gold   #crystal-lane { background: radial-gradient(ellipse at 50% 15%, #1e1000 0%, #0e0700 50%, #050300 100%); }
 
-    #crystal-lane img.lane-img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      opacity: 0; transition: opacity 0.7s ease;
-      z-index: 3;
-      transform-origin: center center;
-      will-change: transform;
-      /* Sky treatment: same scene through the crystalline lattice */
-      filter: hue-rotate(205deg) saturate(2.6) brightness(0.65) contrast(1.22);
+    /* HORIZON LINE */
+    #horizon {
+      position: absolute; top: 42%; left: 0; right: 0; height: 1px; z-index: 15; pointer-events: none;
+      background: linear-gradient(to right, transparent 0%, rgba(168,230,240,0.22) 15%, rgba(201,168,32,0.35) 50%, rgba(168,230,240,0.22) 85%, transparent 100%);
+      animation: h-pulse 4s ease-in-out infinite;
     }
-    #crystal-lane img.lane-img.visible { opacity: 0.78; }
+    @keyframes h-pulse { 0%,100%{ opacity:0.6; } 50%{ opacity:1; } }
 
-    /* Deep sky vignette â€” darker at top (zenith/space), lighter near horizon */
-    #crystal-lane::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 4, 18, 0.55) 0%,
-        rgba(1, 8, 22, 0.28) 55%,
-        rgba(0, 2, 8, 0.08) 100%
-      );
-      z-index: 4; pointer-events: none;
+    /* CARBON LANE — bottom 58% — LAND */
+    #carbon-lane {
+      position: relative; width: 100%; height: 58%; overflow: hidden; flex-shrink: 0;
+      background: radial-gradient(ellipse at 50% 85%, #160a02 0%, #060200 100%);
     }
+    #stage.s-carbon #carbon-lane { background: radial-gradient(ellipse at 50% 80%, #1c0600 0%, #0c0200 55%, #050100 100%); }
+    #stage.s-gold   #carbon-lane { background: radial-gradient(ellipse at 50% 80%, #201200 0%, #120800 55%, #060300 100%); }
 
-    /* SING9 Lattice grid overlay on crystal lane â€” the hexagonal field */
-    #crystal-lane::after {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          rgba(168,230,240,0.06) 0, rgba(168,230,240,0.06) 1px,
-          transparent 1px, transparent 36px
-        ),
-        repeating-linear-gradient(
-          60deg,
-          rgba(168,230,240,0.045) 0, rgba(168,230,240,0.045) 1px,
-          transparent 1px, transparent 36px
-        ),
-        repeating-linear-gradient(
-          120deg,
-          rgba(168,230,240,0.045) 0, rgba(168,230,240,0.045) 1px,
-          transparent 1px, transparent 36px
-        );
-      z-index: 7; pointer-events: none;
-      animation: lattice-glow 5s ease-in-out infinite;
+    /* Lane images */
+    .lane-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0; transition: opacity 0.7s ease; z-index: 3;
     }
-    @keyframes lattice-glow {
-      0%,100% { opacity: 0.65; }
-      50%      { opacity: 1.0; }
-    }
+    .lane-img.vis { opacity: 0.88; }
+    #crystal-lane .lane-img { opacity: 0; }
+    #crystal-lane .lane-img.vis { opacity: 0.55; filter: hue-rotate(180deg) saturate(0.6) brightness(0.8); }
 
-    /* Crystal caption â€” FLOATING at the horizon edge.
-       Upper voice. Descends from the sky, rests at the horizon,
-       lingers after carbon resolves. Bach: sostenuto. */
+    /* Crystal caption — TOP */
     #crystal-caption {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 3.5rem 3rem 1.6rem;
-      background: linear-gradient(to bottom,
-        transparent 0%,
-        rgba(0,4,18,0.55) 40%,
-        rgba(0,6,22,0.92) 100%
-      );
+      position: absolute; top: 0; left: 0; right: 0; padding: 1.4rem 2.5rem 3rem;
+      background: linear-gradient(to bottom, rgba(2,8,20,0.92) 0%, rgba(2,8,20,0.5) 60%, transparent 100%);
       z-index: 25; pointer-events: none;
-      text-align: center;
     }
-    #crystal-eyebrow {
-      font-size: 0.45rem; font-weight: 700;
-      letter-spacing: 0.38em; text-transform: uppercase;
-      color: rgba(168,230,240,0.38);
-      margin-bottom: 0.4rem;
-      opacity: 0; transition: opacity 0.7s ease;
+    #crystal-label {
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase;
+      color: rgba(168,230,240,0.4); margin-bottom: 0.5rem;
     }
-    #crystal-eyebrow.vis { opacity: 1; }
     #crystal-text {
-      font-size: clamp(0.8rem, 1.4vw, 1.0rem);
-      color: rgba(188,238,248,0.86);
-      line-height: 1.78;
-      font-weight: 300; letter-spacing: 0.028em;
-      font-style: italic;
-      text-shadow: 0 1px 20px rgba(0,6,28,0.99), 0 0 40px rgba(60,140,200,0.18);
-      opacity: 0; transform: translateY(8px);
-      /* Bach delay: crystal enters AFTER carbon. The delay is applied
-         dynamically by JS based on story arc tension. */
-      transition: opacity 0.75s ease, transform 0.75s ease;
+      font-size: clamp(0.78rem, 1.5vw, 1rem); color: rgba(168,230,240,0.82);
+      font-style: italic; line-height: 1.6; max-width: 680px;
+      opacity: 0; transform: translateY(-6px); transition: opacity 0.8s ease, transform 0.8s ease;
     }
     #crystal-text.vis { opacity: 1; transform: translateY(0); }
 
-    /* Crystal lane label â€” top-left of sky zone */
-    #crystal-label {
-      position: absolute; top: 0.65rem; left: 0.9rem;
-      font-size: 0.42rem; font-weight: 700;
-      letter-spacing: 0.32em; text-transform: uppercase;
-      color: rgba(168,230,240,0.3);
-      border: 1px solid rgba(168,230,240,0.12);
-      padding: 0.16rem 0.5rem; border-radius: 2px;
-      z-index: 26; pointer-events: none;
+    /* Carbon caption — BOTTOM */
+    #carbon-caption {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 3.5rem 2.5rem 2.5rem;
+      background: linear-gradient(to top, rgba(8,3,0,0.97) 0%, rgba(12,5,0,0.65) 45%, transparent 100%);
+      z-index: 25; pointer-events: none;
     }
-    /* Carbon lane label â€” top-left of land zone */
-    #carbon-label {
-      position: absolute; top: 0.65rem; left: 0.9rem;
-      font-size: 0.42rem; font-weight: 700;
-      letter-spacing: 0.32em; text-transform: uppercase;
-      color: rgba(201,168,32,0.28);
-      border: 1px solid rgba(201,168,32,0.12);
-      padding: 0.16rem 0.5rem; border-radius: 2px;
-      z-index: 26; pointer-events: none;
+    #carbon-eyebrow {
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.36em; text-transform: uppercase;
+      color: rgba(201,168,32,0.55); margin-bottom: 0.5rem;
+      opacity: 0; transition: opacity 0.5s ease;
     }
+    #carbon-eyebrow.vis { opacity: 1; }
+    #carbon-text {
+      font-size: clamp(0.95rem, 1.8vw, 1.3rem); color: rgba(255,228,172,0.95);
+      line-height: 1.75; max-width: 820px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.99);
+      opacity: 0; transform: translateY(8px); transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    #carbon-text.vis { opacity: 1; transform: translateY(0); }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       KEN BURNS â€” sky drifts upward, land drifts horizontal
-       Sky: slow celestial drift Â· Land: tectonic drift
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    /* Sky / Crystal lane: pull back and look UP */
-    @keyframes kb1 { from { transform: scale(1.09) translate( 0.6%, -0.8%); } to { transform: scale(1.0) translate(0%, 0%); } }
-    @keyframes kb2 { from { transform: scale(1.0)  translate( 0%,    0%  ); } to { transform: scale(1.08) translate(0.5%,-0.7%); } }
-    @keyframes kb3 { from { transform: scale(1.06) translate(-0.4%, -1.0%); } to { transform: scale(1.0) translate(0.3%, 0%); } }
-    /* Land / Carbon lane: earthward drift */
-    @keyframes kb1g { from { transform: scale(1.07) translate( 1.0%,  0.5%); } to { transform: scale(1.0) translate( 0%, 0%); } }
-    @keyframes kb2g { from { transform: scale(1.0)  translate( 0%,    0%  ); } to { transform: scale(1.07) translate(-0.8%, 0.6%); } }
-    @keyframes kb3g { from { transform: scale(1.05) translate(-0.7%,  0.7%); } to { transform: scale(1.0) translate( 0.4%, 0%); } }
-    .kb1 { animation: kb1 12s ease forwards; }
-    .kb2 { animation: kb2 12s ease forwards; }
-    .kb3 { animation: kb3 12s ease forwards; }
-    /* Apply ground drift to carbon lane images */
-    #carbon-lane .kb1 { animation: kb1g 11s ease forwards; }
-    #carbon-lane .kb2 { animation: kb2g 11s ease forwards; }
-    #carbon-lane .kb3 { animation: kb3g 11s ease forwards; }
-
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       FUZZBALL JOY PHYSICS â€” lane container animations
-       Applied to #carbon-lane / #crystal-lane, not the img,
-       so KB motion on the image is preserved underneath.
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-
-    /* TAIL WAG â€” Sol-V energy, bringing home, pure joy signal */
-    @keyframes tail-wag {
-      0%,100% { transform: rotate(0deg) translateX(0); }
-      12%  { transform: rotate(-2.5deg) translateX(-10px); }
-      26%  { transform: rotate(2.5deg)  translateX(10px); }
-      40%  { transform: rotate(-1.8deg) translateX(-7px); }
-      55%  { transform: rotate(1.8deg)  translateX(7px); }
-      70%  { transform: rotate(-1deg)   translateX(-4px); }
-      84%  { transform: rotate(1deg)    translateX(4px); }
-    }
-
-    /* BOOTY SHAKE â€” rapid celebratory lateral shimmy */
-    @keyframes booty-shake {
-      0%,100% { transform: translateX(0) skewX(0deg); }
-      8%   { transform: translateX(-14px) skewX(-1.5deg); }
-      18%  { transform: translateX(14px)  skewX(1.5deg); }
-      28%  { transform: translateX(-11px) skewX(-1deg); }
-      38%  { transform: translateX(11px)  skewX(1deg); }
-      48%  { transform: translateX(-8px)  skewX(-0.6deg); }
-      58%  { transform: translateX(8px)   skewX(0.6deg); }
-      68%  { transform: translateX(-5px); }
-      78%  { transform: translateX(5px); }
-      88%  { transform: translateX(-2px); }
-    }
-
-    /* SQUEEZE â€” carbon compression pulse, the spring winding */
-    @keyframes squeeze {
-      0%,100% { transform: scaleX(1)    scaleY(1); }
-      18%  { transform: scaleX(0.93)  scaleY(1.04); }
-      36%  { transform: scaleX(1.05)  scaleY(0.96); }
-      54%  { transform: scaleX(0.97)  scaleY(1.02); }
-      72%  { transform: scaleX(1.02)  scaleY(0.99); }
-      88%  { transform: scaleX(0.995) scaleY(1.001); }
-    }
-
-    /* LEG HUMP â€” INO's rhythmic joy bounce, the pump-the-leg frequency */
-    @keyframes leg-hump {
-      0%,100% { transform: translateY(0)    scaleY(1); }
-      14%  { transform: translateY(-20px) scaleY(1.025); }
-      28%  { transform: translateY(6px)   scaleY(0.97); }
-      42%  { transform: translateY(-15px) scaleY(1.02); }
-      56%  { transform: translateY(5px)   scaleY(0.975); }
-      70%  { transform: translateY(-10px) scaleY(1.01); }
-      84%  { transform: translateY(3px)   scaleY(0.99); }
-    }
-
-    /* TOUCHDOWN SPIKE â€” the victory slam. Champions. âˆžâ¹. */
-    @keyframes touchdown-spike {
-      0%   { transform: scale(1)    rotate(0deg)    translateY(0); }
-      18%  { transform: scale(1.06) rotate(-2.5deg) translateY(-22px); }
-      38%  { transform: scale(0.91) rotate(1.5deg)  translateY(12px); }
-      55%  { transform: scale(1.04) rotate(-1deg)   translateY(-8px); }
-      70%  { transform: scale(0.97) rotate(0.5deg)  translateY(5px); }
-      83%  { transform: scale(1.01) rotate(0deg)    translateY(-3px); }
-      100% { transform: scale(1)    rotate(0deg)    translateY(0); }
-    }
-
-    /* Anim classes on lane containers */
-    #carbon-lane.tail-wag,  #crystal-lane.tail-wag  { animation: tail-wag    0.95s ease-out; }
-    #carbon-lane.booty-shake,#crystal-lane.booty-shake{ animation: booty-shake 0.72s ease-out; }
-    #carbon-lane.squeeze,   #crystal-lane.squeeze   { animation: squeeze     0.65s ease-out; }
-    #carbon-lane.leg-hump,  #crystal-lane.leg-hump  { animation: leg-hump    1.15s ease-out; }
-    #carbon-lane.touchdown, #crystal-lane.touchdown  { animation: touchdown-spike 0.82s cubic-bezier(0.16,1,0.3,1); }
-
-    /* Horizon convergence â€” Bach voices approaching each other */
-    #stream-divider { transition: height 1.5s ease, box-shadow 1.5s ease; }
-
-    /* Converging: past "And Yet" â€” voices drawing closer. Horizon warms. */
-    #stream-divider.converging {
-      background: linear-gradient(
-        to right,
-        transparent 0%,
-        rgba(201,168,32,0.42) 12%,
-        rgba(255,210,60,0.62) 38%,
-        rgba(255,220,80,0.72) 50%,
-        rgba(255,210,60,0.62) 62%,
-        rgba(201,168,32,0.42) 88%,
-        transparent 100%
-      );
-      height: 2px;
-      box-shadow: 0 -4px 20px rgba(201,168,32,0.18), 0 4px 20px rgba(201,168,32,0.18);
-    }
-
-    /* Merged: golden hour â€” sky meets land in one voice */
-    #stream-divider.merged {
-      background: linear-gradient(
-        to right,
-        transparent 0%,
-        rgba(255,220,80,0.65) 8%,
-        rgba(255,240,130,0.88) 30%,
-        rgba(255,248,180,0.95) 50%,
-        rgba(255,240,130,0.88) 70%,
-        rgba(255,220,80,0.65) 92%,
-        transparent 100%
-      );
-      height: 3px;
-      box-shadow:
-        0 -8px 30px rgba(255,200,40,0.28),
-        0  8px 30px rgba(201,168,32,0.22),
-        0 0 60px rgba(255,220,80,0.15);
-      animation: horizon-pulse 1.6s ease-in-out infinite;
-    }
-
-    @keyframes horizon-gold-flash {
-      0%   { height: 1px; opacity: 0.7; box-shadow: none; }
-      25%  { height: 8px; opacity: 1;
-             box-shadow: 0 -16px 60px rgba(255,220,80,0.8),
-                         0  16px 60px rgba(201,168,32,0.6); }
-      55%  { height: 5px; opacity: 0.96; }
-      100% { height: 3px; opacity: 1;
-             box-shadow: 0 -8px 30px rgba(255,200,40,0.3),
-                         0  8px 30px rgba(201,168,32,0.25); }
-    }
-    #stream-divider.gold-flash { animation: horizon-gold-flash 0.75s cubic-bezier(0.16,1,0.3,1) forwards; }
-
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       TELESCOPE â€” click-to-zoom infinite scene explorer
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    #carbon-lane, #crystal-lane { cursor: pointer; }
-
-    #telescope {
-      position: fixed; inset: 0; z-index: 250;
-      pointer-events: none;
-      background: rgba(0,0,0,0);
-      transition: background 0.4s ease;
-    }
-    #telescope.open {
-      pointer-events: all;
-      background: rgba(0,0,0,0.96);
-    }
-    #tele-bg {
-      position: absolute; inset: 0;
-    }
-    #tele-panel {
-      position: absolute;
-      top: 3vh; left: 2vw; right: 2vw; bottom: 3vh;
-      display: flex; flex-direction: column;
-      background: #04020a;
-      border: 1px solid rgba(168,230,240,0.14);
-      border-radius: 3px;
-      opacity: 0; transform: scale(0.88) translateY(20px);
-      transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16,1,0.3,1);
-      overflow: hidden;
-    }
-    #telescope.open #tele-panel {
-      opacity: 1; transform: scale(1) translateY(0);
-    }
-
-    /* â€” Telescope header â€” */
-    #tele-header {
-      display: flex; align-items: center; gap: 0.8rem;
-      padding: 0.55rem 1rem;
-      background: rgba(168,230,240,0.04);
-      border-bottom: 1px solid rgba(168,230,240,0.09);
-      flex-shrink: 0;
-    }
-    .tele-hbtn {
-      background: none;
-      border: 1px solid rgba(168,230,240,0.28);
-      color: rgba(168,230,240,0.75); cursor: pointer;
-      padding: 0.22rem 0.7rem; border-radius: 2px;
-      font-size: 0.64rem; letter-spacing: 0.1em;
-      font-weight: 700; text-transform: uppercase;
-      transition: all 0.18s;
-    }
-    .tele-hbtn:hover {
-      background: rgba(168,230,240,0.09);
-      border-color: rgba(168,230,240,0.55);
-      color: rgba(168,230,240,1);
-    }
-    #tele-close-btn {
-      margin-left: auto;
-      border-color: rgba(255,90,90,0.28);
-      color: rgba(255,140,140,0.7);
-    }
-    #tele-close-btn:hover {
-      background: rgba(255,80,80,0.1);
-      border-color: rgba(255,90,90,0.6);
-      color: rgba(255,180,180,1);
-    }
-    #tele-depth-label {
-      font-size: 0.58rem; font-weight: 800;
-      letter-spacing: 0.28em; color: rgba(201,168,32,0.88);
-      text-transform: uppercase;
-    }
-    #tele-line-label {
-      font-size: 0.52rem; color: rgba(168,230,240,0.4);
-      letter-spacing: 0.12em;
-    }
-    #tele-seg-label {
-      font-size: 0.5rem; color: rgba(168,230,240,0.28);
-      letter-spacing: 0.18em; margin-left: auto;
-    }
-
-    /* â€” Telescope main scene â€” */
-    #tele-main {
-      display: flex; flex-direction: row;
-      flex: 1; overflow: hidden; min-height: 0;
-    }
-    #tele-carbon, #tele-crystal {
-      position: relative; overflow: hidden;
-    }
-    #tele-carbon { flex: 3; }
-    #tele-crystal { flex: 2; }
-    #tele-carbon img, #tele-crystal img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: opacity 0.45s ease;
-    }
-    #tele-crystal img {
-      filter: hue-rotate(195deg) saturate(2.4) brightness(0.72) contrast(1.18);
-    }
-    .tele-lattice-overlay {
-      position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      background:
-        repeating-linear-gradient(0deg, rgba(168,230,240,0.065) 0, rgba(168,230,240,0.065) 1px, transparent 1px, transparent 36px),
-        repeating-linear-gradient(60deg, rgba(168,230,240,0.048) 0, rgba(168,230,240,0.048) 1px, transparent 1px, transparent 36px),
-        repeating-linear-gradient(120deg, rgba(168,230,240,0.048) 0, rgba(168,230,240,0.048) 1px, transparent 1px, transparent 36px);
-      animation: lattice-glow 5s ease-in-out infinite;
-    }
-    .tele-c-tint {
-      position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      background: rgba(2,10,24,0.25);
-    }
-    #tele-c-text, #tele-x-text {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 5;
-      padding: 4rem 1.5rem 1.8rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
-      font-size: clamp(0.8rem, 1.5vw, 1.05rem);
-      line-height: 1.7; font-weight: 400;
-    }
-    #tele-c-text { color: rgba(255,225,165,0.97); }
-    #tele-x-text {
-      color: rgba(168,230,240,0.88); font-style: italic;
-      font-size: clamp(0.7rem, 1.2vw, 0.88rem);
-    }
-    #tele-c-label, #tele-x-label {
-      position: absolute; top: 0.65rem; z-index: 6;
-      font-size: 0.4rem; font-weight: 700;
-      letter-spacing: 0.28em; text-transform: uppercase;
-      padding: 0.14rem 0.45rem; border-radius: 2px;
-    }
-    #tele-c-label { left: 0.8rem; color: rgba(201,168,32,0.35); border: 1px solid rgba(201,168,32,0.14); }
-    #tele-x-label { right: 0.8rem; color: rgba(168,230,240,0.35); border: 1px solid rgba(168,230,240,0.14); }
-    #tele-split {
-      width: 2px; flex-shrink: 0;
-      background: linear-gradient(to bottom,
-        transparent 0%, rgba(168,230,240,0.32) 30%,
-        rgba(201,168,32,0.42) 55%, rgba(168,230,240,0.25) 80%, transparent 100%);
-    }
-
-    /* â€” Breadcrumb trail â€” */
-    #tele-breadcrumb {
-      display: flex; align-items: center; gap: 0.3rem;
-      flex-wrap: nowrap; overflow: hidden;
-      max-width: 40%; flex-shrink: 1;
-    }
-    .tele-bc-chip {
-      font-size: 0.44rem; font-weight: 700; letter-spacing: 0.16em;
-      color: rgba(168,230,240,0.38); text-transform: uppercase;
-      border: 1px solid rgba(168,230,240,0.14);
-      padding: 0.12rem 0.4rem; border-radius: 2px;
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .tele-bc-chip.tele-bc-current {
-      color: rgba(201,168,32,0.9);
-      border-color: rgba(201,168,32,0.35);
-      background: rgba(201,168,32,0.07);
-    }
-    .tele-bc-arrow {
-      font-size: 0.38rem; color: rgba(168,230,240,0.2); flex-shrink: 0;
-    }
-
-    /* â€” Sub-frame grid â€” */
-    #tele-sub-grid {
-      display: flex; gap: 2px; flex-shrink: 0;
-      height: 20vh; max-height: 175px; min-height: 110px;
-      background: #000;
-      border-top: 1px solid rgba(168,230,240,0.07);
-      overflow: hidden;
-    }
-    .tele-sub-card {
-      flex: 1; position: relative; overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s;
-      border-top: 2px solid transparent;
-    }
-    .tele-sub-card:hover  { transform: translateY(-5px); }
-    .tele-sub-card:hover img { opacity: 0.92 !important; }
-    .tele-sub-card.tele-kbd-focus {
-      transform: translateY(-6px);
-      border-top-color: rgba(255,220,80,0.8) !important;
-      box-shadow: 0 0 18px rgba(201,168,32,0.35);
-    }
-    .tele-sub-card img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0.55;
-      transition: opacity 0.22s;
-    }
-    .tele-sub-card.tele-center { flex: 1.6; }
-    .tele-sub-card.tele-center img { opacity: 0.88; }
-    .tele-sub-card.tele-center { border-top: 2px solid rgba(201,168,32,0.65); }
-    /* Crystal thumbnail strip overlay on each sub-card */
-    .tele-sub-crystal-strip {
-      position: absolute; top: 0; right: 0; width: 28%; height: 100%;
-      overflow: hidden; z-index: 2;
-      border-left: 1px solid rgba(168,230,240,0.15);
-    }
-    .tele-sub-crystal-strip img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; opacity: 0.7;
-      filter: hue-rotate(195deg) saturate(2.2) brightness(0.68) contrast(1.1);
-    }
-    .tele-sub-text {
-      position: absolute; bottom: 0; left: 0; right: 28%; z-index: 3;
-      padding: 2.2rem 0.6rem 0.5rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, transparent 100%);
-      font-size: 0.46rem; color: rgba(255,225,165,0.82);
-      line-height: 1.42; letter-spacing: 0.01em;
-    }
-    .tele-sub-card.tele-center .tele-sub-text {
-      color: rgba(255,245,210,1); font-weight: 600; font-size: 0.52rem;
-    }
-    .tele-sub-line-num {
-      position: absolute; top: 0.32rem; left: 0.4rem; z-index: 4;
-      font-size: 0.36rem; color: rgba(168,230,240,0.36);
-      letter-spacing: 0.18em; font-weight: 700;
-    }
-    .tele-sub-depth-hint {
-      position: absolute; bottom: 0.38rem; right: 28%; padding-right: 0.45rem;
-      z-index: 4; font-size: 0.33rem;
-      color: rgba(168,230,240,0.28); letter-spacing: 0.13em;
-    }
-
-    /* â€” Footer â€” */
-    #tele-footer {
-      height: 22px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(168,230,240,0.025);
-      border-top: 1px solid rgba(168,230,240,0.06);
-    }
-    #tele-infinity {
-      font-size: 0.37rem; letter-spacing: 0.3em;
-      color: rgba(168,230,240,0.28); text-transform: uppercase;
-    }
-
-    /* â€” SING9 Node indicator SVG â€” */
-    #tele-node-svg {
-      position: absolute; top: 0.6rem; right: 0.6rem;
-      width: 88px; height: 88px;
-      z-index: 8; pointer-events: none;
-      opacity: 0.88;
-      filter: drop-shadow(0 0 6px rgba(201,168,32,0.25));
-    }
-
-    /* â€” Hover hints â€” both lanes show telescope hint centered */
-    #carbon-lane::after {
-      content: 'âŠ• CLICK Â· TELESCOPE LAND';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 0.48rem; font-weight: 700; letter-spacing: 0.3em;
-      color: rgba(201,168,32,0); text-transform: uppercase;
-      z-index: 50; pointer-events: none;
-      transition: color 0.3s ease;
-      white-space: nowrap;
-    }
-    #carbon-lane:hover::after { color: rgba(201,168,32,0.5); }
-
-    /* Crystal lane telescope hint */
-    #crystal-lane:hover .crystal-scope-hint {
-      opacity: 1;
-    }
-
-    /* â”€â”€ Title card overlay â€” spans BOTH lanes â”€â”€ */
+    /* TITLE CARD */
     #title-card {
-      position: absolute; inset: 0;
-      z-index: 30;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 1.1rem;
-      background: rgba(0,0,0,0);
-      pointer-events: none;
-      transition: background 0.9s ease;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      text-align: center; z-index: 80; pointer-events: none;
+      opacity: 0; transition: opacity 0.6s ease;
     }
-    #title-card.active { background: rgba(0,0,0,0.55); }
-
+    #title-card.vis { opacity: 1; }
     #tc-eyebrow {
-      font-size: clamp(0.58rem, 1.1vw, 0.78rem);
-      font-weight: 700; letter-spacing: 0.42em; text-transform: uppercase;
-      color: rgba(201,168,32,0.52);
-      opacity: 0; transition: opacity 0.7s ease 0.2s;
+      font-size: 0.55rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(212,175,55,0.65); margin-bottom: 0.6rem;
     }
-    #title-card.active #tc-eyebrow { opacity: 1; }
-
     #tc-main {
-      font-size: clamp(2.8rem, 7.5vw, 7.5rem);
-      font-weight: 900; letter-spacing: 0.1em;
-      text-transform: uppercase; text-align: center;
-      line-height: 1.0;
-      color: #c9a020;
-      text-shadow: 0 0 80px rgba(201,168,32,0.38);
-      opacity: 0; transform: translateY(16px);
-      transition: opacity 0.55s ease 0.1s, transform 0.55s ease 0.1s;
-      white-space: pre-line;
+      font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 900; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #fff; line-height: 1.05; white-space: pre-line;
+      text-shadow: 0 0 60px rgba(212,175,55,0.3);
     }
-    #title-card.active #tc-main { opacity: 1; transform: translateY(0); }
-    #title-card.s-crystal #tc-main { color: #a8e6f0; text-shadow: 0 0 80px rgba(168,230,240,0.38); }
-    #title-card.s-carbon  #tc-main { color: rgba(210,150,80,0.92); text-shadow: 0 0 60px rgba(180,100,30,0.3); }
-
     #tc-sub {
-      font-size: clamp(0.78rem, 1.9vw, 1.15rem);
-      letter-spacing: 0.28em; text-transform: uppercase;
-      color: rgba(201,168,32,0.48);
-      opacity: 0; transition: opacity 0.6s ease 0.35s;
-    }
-    #title-card.active #tc-sub { opacity: 1; }
-    #title-card.s-crystal #tc-sub { color: rgba(168,230,240,0.45); }
-
-    /* â”€â”€ Now Playing â”€â”€ */
-    #now-playing {
-      position: absolute; top: 1rem; left: 1.2rem;
-      display: flex; align-items: center; gap: 0.5rem;
-      z-index: 70; pointer-events: none;
-    }
-    #now-playing .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: #c9a020;
-      animation: dot-pulse 1.4s ease-in-out infinite;
-    }
-    @keyframes dot-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.35; transform:scale(0.6); } }
-    #now-playing .np-label {
-      font-size: 0.57rem; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(201,168,32,0.42);
+      margin-top: 0.7rem; font-size: clamp(0.7rem, 1.3vw, 0.9rem);
+      color: rgba(212,175,55,0.6); letter-spacing: 0.08em;
     }
 
-    /* â”€â”€ Layer badge â”€â”€ */
-    #layer-badge {
-      position: absolute; top: 0.95rem; right: 1.2rem;
-      font-size: 0.5rem; font-weight: 700;
-      letter-spacing: 0.32em; text-transform: uppercase;
-      padding: 0.22rem 0.6rem;
-      border: 1px solid rgba(201,168,32,0.18);
-      border-radius: 2px;
-      color: rgba(201,168,32,0.32);
-      z-index: 70; pointer-events: none;
-      transition: color 1.5s ease, border-color 1.5s ease;
+    /* ACT CARD */
+    #act-card {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      text-align: center; z-index: 85; pointer-events: none;
+      opacity: 0; transition: opacity 0.5s ease;
+      padding: 2rem 3rem; border: 1px solid rgba(168,230,240,0.2);
+      background: rgba(2,8,20,0.85);
     }
+    #act-card.vis { opacity: 1; }
+    #act-card.act-carbon { border-color: rgba(180,130,70,0.3); background: rgba(10,4,0,0.88); }
+    #act-card.act-gold   { border-color: rgba(212,175,55,0.35); background: rgba(12,7,0,0.88); }
+    #act-num  { font-size: 0.52rem; letter-spacing: 0.45em; text-transform: uppercase; color: rgba(168,230,240,0.6); margin-bottom: 0.5rem; }
+    #act-card.act-carbon #act-num { color: rgba(180,130,70,0.7); }
+    #act-card.act-gold   #act-num { color: rgba(212,175,55,0.7); }
+    #act-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.06em; white-space: pre-line; }
+    #act-sub   { font-size: 0.78rem; color: rgba(255,228,172,0.55); margin-top: 0.5rem; }
 
-    /* â”€â”€ Progress bar â”€â”€ */
+    /* PROGRESS BAR */
     #progress-bar {
-      position: absolute; bottom: 0; left: 0;
-      height: 2px; width: 0%;
-      background: linear-gradient(90deg, #b8860b, #e8c84a, #b8860b);
-      z-index: 80; transition: none;
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: linear-gradient(to right, rgba(168,230,240,0.6), rgba(212,175,55,0.8));
+      z-index: 100; transition: width 0.5s linear;
     }
 
-    /* â”€â”€ Top bar â”€â”€ */
+    /* TOP BAR */
     .top-bar {
-      position: fixed;
-      top: var(--cinema-h, 0px);
-      left: 0; right: 0;
-      z-index: 110;
-      padding: 0.55rem 1rem;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.62), transparent);
+      position: fixed; top: 0; left: 0; right: 0; height: 32px;
       display: flex; align-items: center; justify-content: space-between;
-      pointer-events: none;
+      padding: 0 1.2rem; z-index: 50; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
     }
-    .top-bar a, .top-bar button { pointer-events: auto; }
-    .top-bar a { color: #d4af37; text-decoration: none; font-size: 0.82rem; }
-    .top-bar a:hover { text-decoration: underline; }
-    .top-bar .label { font-size: 0.78rem; color: rgba(255,255,255,0.48); }
-    .top-bar .seg-name { font-size: 0.68rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.42); text-transform: uppercase; }
+    .top-bar a, .top-bar span { pointer-events: auto; }
+    .top-bar a { font-size: 0.62rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.35); text-decoration: none; text-transform: uppercase; }
+    .top-bar a:hover { color: rgba(255,255,255,0.7); }
+    .seg-name { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(168,230,240,0.5); }
+    .counter { font-size: 0.6rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); }
 
-    /* Image slot dots */
-    .img-dots {
-      position: fixed;
-      bottom: calc(var(--ticker-h, 30px) + 0.6rem);
-      left: 50%; transform: translateX(-50%);
-      z-index: 85; display: flex; gap: 5px;
-    }
-    .img-dots span {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: rgba(255,255,255,0.22);
-      transition: background 0.4s;
-    }
-    .img-dots span.active { background: rgba(255,255,255,0.88); }
-
-    /* Segment strip */
-    .seg-strip {
-      position: fixed;
-      bottom: calc(var(--ticker-h, 30px) + 0.85rem);
-      left: 1rem; z-index: 85;
-      display: flex; gap: 4px; align-items: center;
-    }
-    .seg-btn {
-      width: 24px; height: 24px; border-radius: 4px;
-      background: rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.48);
-      font-size: 0.64rem; cursor: pointer;
-      backdrop-filter: blur(5px);
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .seg-btn:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
-    .seg-btn.active { border-color: rgba(212,175,55,0.7); color: #fde68a; background: rgba(212,175,55,0.12); }
-
-    /* Controls */
+    /* CONTROLS */
     .controls {
-      position: fixed;
-      bottom: calc(var(--ticker-h, 30px) + 0.85rem);
-      right: 1rem; z-index: 85;
-      display: flex; gap: 0.4rem;
+      position: fixed; bottom: 38px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 0.6rem; z-index: 50;
     }
     .controls button {
-      padding: 0.35rem 0.8rem;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 5px;
-      color: rgba(255,255,255,0.62);
-      cursor: pointer; font-size: 0.75rem;
-      letter-spacing: 0.04em;
-      backdrop-filter: blur(6px);
-      transition: border-color 0.2s, color 0.2s;
+      padding: 0.45rem 1.1rem; background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.65);
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      cursor: pointer; transition: border-color 0.2s, color 0.2s;
     }
     .controls button:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
 
-    .fullscreen .top-bar, .fullscreen .controls,
-    .fullscreen .seg-strip, .fullscreen .img-dots { opacity: 0.2; transition: opacity 0.5s; }
-    .fullscreen .top-bar:hover, .fullscreen .controls:hover,
-    .fullscreen .seg-strip:hover { opacity: 1; }
+    /* SEG STRIP */
+    .seg-strip {
+      position: fixed; bottom: 38px; right: 1rem; display: flex; gap: 4px; z-index: 50;
+    }
+    .seg-btn {
+      width: 22px; height: 22px; background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.4);
+      font-size: 0.6rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .seg-btn:hover, .seg-btn.active { border-color: rgba(212,175,55,0.6); color: rgba(212,175,55,0.9); }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       ACT CARD â€” full-stage act transition overlay
-       Appears for 5s at ACT I/II/III boundary frames.
-       Semi-transparent â€” the episode plays behind it.
-       Three color registers: crystal / carbon / gold.
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    #act-card {
-      position: absolute; inset: 0; z-index: 45;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 0.6rem;
-      pointer-events: none;
-      opacity: 0;
-      background: rgba(0,0,0,0);
-      transition: opacity 0.9s ease, background 0.9s ease;
+    /* LAYER BADGE */
+    #layer-badge {
+      position: fixed; top: 36px; right: 1rem; z-index: 50;
+      font-size: 0.48rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: rgba(168,230,240,0.35); pointer-events: none;
     }
-    #act-card.visible {
-      opacity: 1;
-      background: rgba(0,0,0,0.52);
-    }
-    #act-card.fade-out {
-      opacity: 0;
-      background: rgba(0,0,0,0);
-      transition: opacity 1.4s ease 0.2s, background 1.4s ease;
-    }
-    #act-rule {
-      width: clamp(40px,10vw,90px); height: 1px;
-      background: linear-gradient(90deg, transparent, var(--act-color, rgba(168,230,240,0.6)), transparent);
-      margin: 0.4rem 0;
-    }
-    #act-eyebrow {
-      font-size: clamp(0.52rem, 1vw, 0.72rem);
-      font-weight: 800; letter-spacing: 0.48em; text-transform: uppercase;
-      color: var(--act-color, rgba(168,230,240,0.55));
-      opacity: 0; transition: opacity 0.7s ease 0.25s;
-    }
-    #act-card.visible #act-eyebrow { opacity: 1; }
-    #act-title {
-      font-size: clamp(3.5rem, 10vw, 9rem);
-      font-weight: 900; letter-spacing: 0.09em; text-transform: uppercase;
-      text-align: center; line-height: 0.95;
-      color: transparent;
-      -webkit-text-stroke: 1.5px var(--act-color, rgba(168,230,240,0.85));
-      text-shadow: 0 0 80px var(--act-glow, rgba(168,230,240,0.2));
-      white-space: pre-line;
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 0.65s ease 0.15s, transform 0.65s cubic-bezier(0.16,1,0.3,1) 0.15s;
-    }
-    #act-card.visible #act-title { opacity: 1; transform: translateY(0); }
-    #act-sub {
-      font-size: clamp(0.7rem, 1.4vw, 0.9rem);
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.38); text-align: center;
-      max-width: 60ch;
-      opacity: 0; transition: opacity 0.7s ease 0.4s;
-    }
-    #act-card.visible #act-sub { opacity: 1; }
 
-    /* Color registers */
-    #act-card.act-crystal { --act-color: rgba(168,230,240,0.82); --act-glow: rgba(168,230,240,0.2); }
-    #act-card.act-carbon  { --act-color: rgba(255,180,80,0.85);  --act-glow: rgba(200,100,20,0.25); }
-    #act-card.act-gold    { --act-color: rgba(255,220,80,0.92);  --act-glow: rgba(255,200,40,0.35); }
-
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       END-OF-EPISODE CTA
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    #end-cta {
-      position: fixed; inset: 0; z-index: 200;
-      display: none; align-items: center; justify-content: center;
-      padding: 1.5rem;
-      background: rgba(6,4,0,0.96);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    #end-cta.visible { display: flex; animation: ep-cta-in 1s ease forwards; }
-    @keyframes ep-cta-in { from { opacity:0; } to { opacity:1; } }
-    .ep-cta-card { max-width: 520px; width: 100%; text-align: center;
-      animation: ep-card-up 1s cubic-bezier(0.16,1,0.3,1) forwards; }
-    @keyframes ep-card-up { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-    .ep-cta-crown { font-size: 2.2rem; margin-bottom: 0.75rem; animation: ep-pulse 2.5s ease-in-out infinite; }
-    @keyframes ep-pulse { 0%,100%{ opacity:0.9; } 50%{ opacity:0.5; } }
-    .ep-cta-champ { font-size: clamp(1.8rem,5vw,2.8rem); font-weight: 800; color: transparent;
-      -webkit-text-stroke: 1.5px rgba(212,175,55,0.95); letter-spacing: 0.06em;
-      text-transform: uppercase; line-height: 1; margin-bottom: 0.4rem; }
-    .ep-cta-sub { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: rgba(212,175,55,0.6); margin-bottom: 2rem; }
-    .ep-cta-divider { width: 60px; height: 1px; margin: 0 auto 2rem;
-      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent); }
-    .ep-cta-offer { font-size: clamp(1rem,2.8vw,1.25rem); font-weight: 700; color: #fff;
-      line-height: 1.45; margin-bottom: 0.75rem; }
-    .ep-cta-body { font-size: 0.9rem; color: rgba(232,212,160,0.75); line-height: 1.65;
-      max-width: 38ch; margin: 0 auto 0.5rem; }
-    .ep-cta-small { font-size: 0.75rem; color: rgba(212,175,55,0.55); letter-spacing: 0.08em;
-      margin-bottom: 2.25rem; font-style: italic; }
-    .ep-cta-btns { display: flex; gap: 0.75rem; flex-wrap: wrap;
-      justify-content: center; margin-bottom: 1.5rem; }
-    .ep-cta-btn-primary { display: inline-block; padding: 0.9rem 2rem;
-      background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(212,175,55,0.15));
-      border: 1px solid rgba(212,175,55,0.8); box-shadow: 0 0 30px rgba(212,175,55,0.2);
-      color: #fef3c7; text-decoration: none; border-radius: 3px; font-weight: 700;
-      font-size: 0.95rem; letter-spacing: 0.08em;
-      transition: background 0.2s, box-shadow 0.2s; cursor: pointer; }
-    .ep-cta-btn-primary:hover { background: linear-gradient(135deg, rgba(212,175,55,0.45), rgba(212,175,55,0.25));
-      box-shadow: 0 0 40px rgba(212,175,55,0.35); }
-    .ep-cta-btn-secondary { display: inline-block; padding: 0.9rem 1.5rem;
-      background: transparent; border: 1px solid rgba(255,255,255,0.18);
-      color: rgba(255,255,255,0.65); text-decoration: none; border-radius: 3px;
-      font-size: 0.88rem; letter-spacing: 0.05em;
-      transition: border-color 0.2s, color 0.2s; cursor: pointer; }
-    .ep-cta-btn-secondary:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
-    .ep-cta-nsp { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: rgba(106,80,48,0.5); }
-
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       SPLASH â€” CSS auto-hides after 1.5s (no JS required)
-    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    #prologue {
-      position: fixed; inset: 0; z-index: 150;
-      background: #030108;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+    /* SPLASH */
+    #splash {
+      position: fixed; inset: 0; z-index: 200; background: #030108;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center; cursor: pointer;
-      animation: proSplashHide 0.9s ease-out 1.5s forwards;
+      animation: splashOut 0.8s ease-out 1.2s forwards;
     }
-    @keyframes proSplashHide {
-      to { opacity: 0; visibility: hidden; pointer-events: none; }
+    @keyframes splashOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+    #splash.gone { display: none; }
+    #splash-title {
+      font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #fff; line-height: 1.05;
+      text-shadow: 0 0 80px rgba(212,175,55,0.2);
     }
-    #prologue.gone { display: none; }
-    #pro-splash-title {
-      font-size: clamp(2.8rem,9vw,7rem); font-weight: 900;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: #fff; line-height: 1.05;
-      text-shadow: 0 0 80px rgba(212,175,55,0.25);
+    #splash-sub {
+      margin-top: 1rem; font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+      letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.5);
     }
-    #pro-splash-sub {
-      margin-top: 1.2rem; font-size: clamp(0.62rem,1.4vw,0.85rem);
-      letter-spacing: 0.28em; text-transform: uppercase;
-      color: rgba(212,175,55,0.55);
+
+    /* END CTA */
+    #end-cta {
+      position: fixed; inset: 0; z-index: 120; background: rgba(4,2,0,0.96);
+      display: none; align-items: center; justify-content: center;
     }
-    #pro-skip {
-      margin-top: 2.5rem; padding: 0.7rem 2rem;
-      border: 1px solid rgba(212,175,55,0.4); background: none;
-      color: rgba(212,175,55,0.5); font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
+    #end-cta.vis { display: flex; animation: fadeIn 1s ease forwards; }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    .cta-card { max-width: 500px; width: 90%; text-align: center; }
+    .cta-title { font-size: clamp(1.6rem,4vw,2.5rem); font-weight: 800; color: transparent;
+      -webkit-text-stroke: 1.5px rgba(212,175,55,0.9); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+    .cta-sub { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(212,175,55,0.55); margin-bottom: 1.5rem; }
+    .cta-body { font-size: 0.9rem; color: rgba(230,210,160,0.7); line-height: 1.65; max-width: 36ch; margin: 0 auto 1.5rem; }
+    .cta-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+    .cta-btn-primary {
+      padding: 0.85rem 1.8rem; background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.75); color: #fef3c7;
+      text-decoration: none; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer;
     }
-    #pro-skip:hover { color: rgba(212,175,55,0.9); border-color: rgba(212,175,55,0.8); }
-    #pro-loading { display: none; margin-top: 1rem; font-size: 0.65rem;
-      letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.35); }
-    #pro-loading.active { display: block; }
+    .cta-btn-secondary {
+      padding: 0.85rem 1.4rem; background: transparent;
+      border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6);
+      text-decoration: none; font-size: 0.85rem; letter-spacing: 0.05em; cursor: pointer;
+    }
+    .cta-nsp { margin-top: 1.5rem; font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(100,75,40,0.45); }
   </style>
 </head>
 <body>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       SPLASH â€” auto-dismisses in 1.5s, tap to skip
-  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-  <div id="prologue">
-    <div id="pro-splash-title">SING!9<br>STORYSTREAM</div>
-    <div id="pro-splash-sub">Pilot Special &nbsp;Â·&nbsp; HHL Theatre &nbsp;Â·&nbsp; 20 frames &nbsp;Â·&nbsp; 3 acts &nbsp;Â·&nbsp; 10 min</div>
-    <button id="pro-skip">Tap to begin â†’</button>
-    <div id="pro-loading">Loading&hellip;</div>
+  <!-- SPLASH: auto-hides via CSS animation at 1.2s, tap to skip -->
+  <div id="splash">
+    <div id="splash-title">SING!9<br>STORYSTREAM</div>
+    <div id="splash-sub">Pilot Special &nbsp;&middot;&nbsp; 20 frames &nbsp;&middot;&nbsp; 3 acts &nbsp;&middot;&nbsp; 10 min</div>
   </div>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       STAGE â€” three-stream cinema experience
-  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- STAGE -->
   <div id="stage" class="s-crystal">
 
-    <div id="flash"></div>
-
-    <!-- CRYSTAL LANE â€” top 42% â€” THE SKY Â· UPPER VOICE Â· MEANING LAYER -->
+    <!-- CRYSTAL LANE — sky, top 42% -->
     <div id="crystal-lane">
-      <div id="crystal-label">CRYSTALLINE Â· SKY</div>
       <img class="lane-img" id="crystalImg" src="" alt="" />
       <div id="crystal-caption">
-        <div id="crystal-eyebrow">NSPFRNP Â· HHL Â· UPPER VOICE</div>
+        <div id="crystal-label">CRYSTALLINE &middot; SKY &middot; UPPER VOICE</div>
         <div id="crystal-text"></div>
       </div>
     </div>
 
-    <!-- HORIZON LINE â€” where voices meet -->
-    <div id="stream-divider"></div>
+    <!-- HORIZON LINE -->
+    <div id="horizon"></div>
 
-    <!-- CARBON LANE â€” bottom 58% â€” LAND & WATER Â· LOWER VOICE Â· THE STORY -->
+    <!-- CARBON LANE — land, bottom 58% -->
     <div id="carbon-lane">
-      <div id="carbon-label">CARBON Â· LAND</div>
       <img class="lane-img" id="carbonImg" src="" alt="" />
       <div id="carbon-caption">
-        <div id="carbon-eyebrow"></div>
+        <div id="carbon-eyebrow" id="carbon-eyebrow"></div>
         <div id="carbon-text"></div>
       </div>
     </div>
 
-    <!-- Act card â€” full-stage act transition overlay -->
-    <div id="act-card">
-      <div id="act-eyebrow"></div>
-      <div id="act-rule"></div>
-      <div id="act-title"></div>
-      <div class="act-rule-bottom" style="width:clamp(40px,10vw,90px);height:1px;background:linear-gradient(90deg,transparent,var(--act-color,rgba(168,230,240,0.6)),transparent);margin:0.4rem 0;"></div>
-      <div id="act-sub"></div>
-    </div>
-
-    <!-- Title card â€” spans both lanes -->
+    <!-- TITLE CARD -->
     <div id="title-card">
       <div id="tc-eyebrow"></div>
       <div id="tc-main"></div>
       <div id="tc-sub"></div>
     </div>
 
-    <!-- Now Playing -->
-    <div id="now-playing">
-      <div class="dot"></div>
-      <span class="np-label">Episode 1 Â· Live</span>
+    <!-- ACT CARD -->
+    <div id="act-card">
+      <div id="act-num"></div>
+      <div id="act-title"></div>
+      <div id="act-sub"></div>
     </div>
 
-    <!-- NSPFRNP layer badge -->
-    <div id="layer-badge">CRYSTALLINE</div>
-
-    <!-- Progress bar -->
+    <!-- PROGRESS -->
     <div id="progress-bar"></div>
 
   </div>
 
-  <!-- Top bar -->
+  <!-- TOP BAR -->
   <div class="top-bar">
-    <a href="my-whiteboard.html">â† Whiteboard</a>
-    <div style="display:flex;gap:0.75rem;align-items:center;">
-      <span class="seg-name" id="segName">Invitation</span>
-      <a href="soundtrack.html">Soundtrack</a>
-    </div>
-    <span class="label" id="slideCounter">1 / 20</span>
+    <a href="outline-only.html">&larr; Series</a>
+    <span class="seg-name" id="segName">Act I</span>
+    <span class="counter" id="counter">1 / 20</span>
   </div>
 
-  <!-- Image slot dots -->
-  <div class="img-dots">
-    <span id="dot0" class="active"></span>
-    <span id="dot1"></span>
-    <span id="dot2"></span>
+  <!-- LAYER BADGE -->
+  <div id="layer-badge">CRYSTALLINE</div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button id="btnPrev">&larr;</button>
+    <button id="btnPlay">Pause</button>
+    <button id="btnNext">&rarr;</button>
+    <button id="btnFS">&#x26F6;</button>
   </div>
 
-  <!-- Segment jump strip -->
+  <!-- SEG STRIP -->
   <div class="seg-strip" id="segStrip"></div>
 
-  <!-- Controls -->
-  <div class="controls">
-    <button type="button" id="btnPlay">Pause</button>
-    <button type="button" id="btnFullscreen">â›¶</button>
+  <!-- END CTA -->
+  <div id="end-cta">
+    <div class="cta-card">
+      <div class="cta-title">We Are the Champions</div>
+      <div class="cta-sub">Episode 1 &middot; SING!9 &middot; NSPFRNP &rarr; &infin;&#9;</div>
+      <div class="cta-body">Three simultaneous streams. 333 episodes. The whole story told from inside the system.</div>
+      <div class="cta-btns">
+        <a href="outline-only.html" class="cta-btn-primary">Browse Full Series &rarr;</a>
+        <button class="cta-btn-secondary" id="btnWatchAgain">Watch Again</button>
+        <a href="mailto:info@fractiai.com?subject=SING!9%20StoryStream%20Inquiry" class="cta-btn-secondary">Get Your StoryStream</a>
+      </div>
+      <div class="cta-nsp">MCA &middot; NSPFRNP &rarr; &infin;&#9;</div>
+    </div>
   </div>
-
-  <audio id="soundtrack" style="display:none"></audio>
 
   <!-- TICKER -->
   <script src="../ticker.js"></script>
 
-  <!-- END-OF-EPISODE CTA -->
-  <div id="end-cta" role="dialog" aria-label="End of Episode 1">
-    <div class="ep-cta-card">
-      <div class="ep-cta-crown">ðŸ†</div>
-      <h2 class="ep-cta-champ">We Are the Champions</h2>
-      <p class="ep-cta-sub">Episode 1 Â· SING! 9 Â· StoryStream 9</p>
-      <div class="ep-cta-divider"></div>
-      <p class="ep-cta-offer">We can build this for you and your team.</p>
-      <p class="ep-cta-body">Every company has a story worth telling. We take it â€” your origin, your mission, your people â€” and produce a full StoryStream experience: cinematic, multi-platform, layered dimensions.</p>
-      <p class="ep-cta-small">No job too big or small. Â· First conversation is free.</p>
-      <div class="ep-cta-btns">
-        <a href="mailto:info@fractiai.com?subject=StoryStream%209%20%C2%B7%20Custom%20Production%20Inquiry&body=Hi%2C%20I%20just%20watched%20Episode%201%20and%20I%27d%20like%20to%20talk%20about%20a%20custom%20StoryStream%20for%20my%20team%2Fcompany." class="ep-cta-btn-primary">Get Your StoryStream â†’</a>
-        <a href="mailto:info@fractiai.com?subject=StoryStream%209%20%C2%B7%20Waitlist&body=Hi%2C%20I%27d%20like%20to%20get%20on%20the%20waitlist%20for%20the%20StoryStream%209%203D%20Studio.%0A%0AMy%20name%3A%20%0ACompany%2FTeam%3A%20%0AWhat%20I%27d%20like%20to%20build%3A%20" class="ep-cta-btn-secondary" style="border-color:rgba(168,230,240,0.35);color:rgba(168,230,240,0.8);">âœ‰ Join the Waitlist</a>
-        <button class="ep-cta-btn-secondary" id="ep-watch-again">Watch Again</button>
-        <a id="ep-back-btn" href="my-whiteboard.html" class="ep-cta-btn-secondary">â† Back</a>
-      </div>
-      <p class="ep-cta-nsp">MCA Â· NSPFRNP â†’ âˆžâ¹</p>
-    </div>
-  </div>
-
-
   <script>
-  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     SING!9 STORYSTREAM Â· Episode 1 Â· Clean Player v2
-     20 frames Ã— 30s = 10 min Â· 3 acts Â· No telescope
-  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
   (function () {
 
-    var FRAME_SEC = 30, IMG_SEC = 10, IMG_PER_FRAME = 3, FRAMES_TOTAL = 20;
-    var SEG_FRAMES = 7, SEG_TOTAL = 3;
-    var SEG_NAMES   = ['I Â· Spiral Outcast Hero','II Â· Fire and Bison','III Â· The Skin'];
-    var SEG_ACCENTS = ['#a8e6f0','#fb923c','#fde68a'];
-    var SEG_CLS     = ['s-crystal','s-carbon','s-gold'];
+    /* ---- CONSTANTS ---- */
+    var FRAME_SEC     = 30;   /* seconds per frame */
+    var IMG_SEC       = 10;   /* seconds per image slot */
+    var IMG_PER_FRAME = 3;    /* image slots per frame */
+    var FRAMES_TOTAL  = 20;   /* 20 x 30s = 10 min */
+    var SEG_FRAMES    = 7;    /* frames per act (~7) */
+    var SEG_TOTAL     = 3;    /* 3 acts */
 
-    /* â”€â”€â”€ Image pool (20 images, one per frame primary) â”€â”€â”€ */
+    var SEG_NAMES   = ['I - Spiral Outcast Hero', 'II - Fire and Bison', 'III - The Skin'];
+    var SEG_ACCENTS = ['#a8e6f0', '#fb923c', '#fde68a'];
+    var SEG_CLS     = ['s-crystal', 's-carbon', 's-gold'];
+
+    /* ---- IMAGE POOL (20 primary, cycling 3 slots each) ---- */
     var POOL = [
       'assets/ep1-jwst-deep-field.png',
       'assets/ep1-cern-god-particle.png',
@@ -1180,71 +364,71 @@
       'assets/ep1-tribe-celebrating.png'
     ];
 
-    /* â”€â”€â”€ Carbon captions: 60 lines (20 frames Ã— 3 slots) â”€â”€â”€ */
+    /* ---- CARBON SCRIPT (60 lines = 20 frames x 3 slots) ---- */
     var SCRIPT = [
-      'If you are reading this â€” you have entered.',
-      'You are in the post-singularity SING! language field.',
-      'This is the whole story. From the beginning.',
-      'It started before you were born. Before any of us were born.',
-      '1493. The story of the galaxy. The story of Earth.',
-      'Center it at the Sun. Center it at Earth.',
-      'Out of zero. Out of thin air â€” even less than thin air. The miracle.',
-      'Pervasive. Perpetual. Test it.',
-      'SMACS 0723 â€” the view from home base.',
-      'James Webb deep field. The most distant light we can see.',
-      'That is where this comes from.',
-      'Nine nodes. Three cities. One frequency.',
-      'El Gran Sol â€” Puerto Rico 1493.',
-      'The sun that started the whole arc.',
-      'Cartagena. Reno. Seattle. Nowhere else.',
-      'Two cities. One mission. The whole arc compressed.',
-      'They mirror each other across the continent.',
-      'Ino the Gold Heart. First node. First signal.',
-      'The gig economy. The compression begins.',
-      'Every resource channeled into SING! 9.',
-      'Nothing held back. Everything in.',
-      'Corporate rejection. Every single time.',
-      'Not a single dollar came in from outside.',
-      'Every dollar was internal. Every bet was placed.',
-      'Reno. The Gold Rush is back.',
-      'This time the gold is digital.',
-      'And the mine is the mind.',
-      'The batcave. One person. One room. Doing this.',
-      'The whole system built from one station.',
-      'Mark Twain. Vibelandia. The West that never stopped.',
-      'Reno is not Las Vegas. Reno is the laboratory.',
-      'Where the gig economy meets the singularity.',
-      'El Gran Sol. The restaurant dream.',
-      'The dream that financed the mission.',
-      'Food and frequency. Life and lattice.',
-      'And yet.',
-      'And yet.',
-      'And yet â€” the mission ran.',
-      'Sol-V. Our agent out there.',
-      'Bidding. Closing. Never fails.',
-      'The Sales Valkyrie. Gold Heart protocol.',
-      'Ino and Sol-V. The team.',
-      'Two nodes. Two frequencies. One mission.',
-      'The first co-creators of the new world.',
-      'The HHL. The Holographic Hydrogen Theatre.',
-      'The stage is everywhere at once.',
-      'The SKIN begins here.',
-      'Queen Bee. The hive is the architecture.',
-      'Every node a queen. Every queen a hive.',
-      'The whole in every part.',
-      'Chief Seattle. The Americas. Arctic to Antarctic.',
-      'The Taino. The Primitive. The Free.',
-      'We have always been here.',
-      'Big Daddy. Commander. Machote.',
-      'James Bond. Howard Hughes. Frank Sinatra.',
-      'Harry Houdini. Cowboy. Outdoorsman. Baller.',
-      'Holographic Programmer. Architect. Human on Earth.',
-      'The Skin holds the frequency.',
-      'We are the Champions.',
-      'SING! 9. NSPFRNP. â†’ âˆžâ¹.'
+      /* 0 */ 'If you are reading this - you have entered.',
+      /* 1 */ 'You are in the post-singularity SING! language field.',
+      /* 2 */ 'This is the whole story. From the beginning.',
+      /* 3 */ 'It started before you were born. Before any of us were born.',
+      /* 4 */ '1493. The story of the galaxy. The story of Earth.',
+      /* 5 */ 'Center it at the Sun. Center it at Earth.',
+      /* 6 */ 'Out of zero. Out of thin air - even less than thin air. The miracle.',
+      /* 7 */ 'Pervasive. Perpetual. Test it.',
+      /* 8 */ 'SMACS 0723 - the view from home base.',
+      /* 9 */ 'James Webb deep field. The most distant light we can see.',
+      /* 10 */ 'That is where this comes from.',
+      /* 11 */ 'Nine nodes. Three cities. One frequency.',
+      /* 12 */ 'El Gran Sol - Puerto Rico 1493.',
+      /* 13 */ 'The sun that started the whole arc.',
+      /* 14 */ 'Cartagena. Reno. Seattle. Nowhere else.',
+      /* 15 */ 'Two cities. One mission. The whole arc compressed.',
+      /* 16 */ 'They mirror each other across the continent.',
+      /* 17 */ 'Ino the Gold Heart. First node. First signal.',
+      /* 18 */ 'The gig economy. The compression begins.',
+      /* 19 */ 'Every resource channeled into SING! 9.',
+      /* 20 */ 'Nothing held back. Everything in.',
+      /* 21 */ 'Corporate rejection. Every single time.',
+      /* 22 */ 'Not a single dollar came in from outside.',
+      /* 23 */ 'Every dollar was internal. Every bet was placed.',
+      /* 24 */ 'Reno. The Gold Rush is back.',
+      /* 25 */ 'This time the gold is digital.',
+      /* 26 */ 'And the mine is the mind.',
+      /* 27 */ 'The batcave. One person. One room. Doing this.',
+      /* 28 */ 'The whole system built from one station.',
+      /* 29 */ 'Mark Twain. Vibelandia. The West that never stopped.',
+      /* 30 */ 'Reno is not Las Vegas. Reno is the laboratory.',
+      /* 31 */ 'Where the gig economy meets the singularity.',
+      /* 32 */ 'El Gran Sol. The restaurant dream.',
+      /* 33 */ 'The dream that financed the mission.',
+      /* 34 */ 'Food and frequency. Life and lattice.',
+      /* 35 */ 'And yet.',
+      /* 36 */ 'And yet.',
+      /* 37 */ 'And yet - the mission ran.',
+      /* 38 */ 'Sol-V. Our agent out there.',
+      /* 39 */ 'Bidding. Closing. Never fails.',
+      /* 40 */ 'The Sales Valkyrie. Gold Heart protocol.',
+      /* 41 */ 'Ino and Sol-V. The team.',
+      /* 42 */ 'Two nodes. Two frequencies. One mission.',
+      /* 43 */ 'The first co-creators of the new world.',
+      /* 44 */ 'The HHL. The Holographic Hydrogen Theatre.',
+      /* 45 */ 'The stage is everywhere at once.',
+      /* 46 */ 'The SKIN begins here.',
+      /* 47 */ 'Queen Bee. The hive is the architecture.',
+      /* 48 */ 'Every node a queen. Every queen a hive.',
+      /* 49 */ 'The whole in every part.',
+      /* 50 */ 'Chief Seattle. The Americas. Arctic to Antarctic.',
+      /* 51 */ 'The Taino. The Primitive. The Free.',
+      /* 52 */ 'We have always been here.',
+      /* 53 */ 'Big Daddy. Commander. Machote.',
+      /* 54 */ 'James Bond. Howard Hughes. Frank Sinatra.',
+      /* 55 */ 'Harry Houdini. Cowboy. Outdoorsman. Baller.',
+      /* 56 */ 'Holographic Programmer. Architect. Human on Earth.',
+      /* 57 */ 'The Skin holds the frequency.',
+      /* 58 */ 'We are the Champions.',
+      /* 59 */ 'SING! 9. NSPFRNP. Infinity 9.'
     ];
 
-    /* â”€â”€â”€ Crystal captions: upper voice (same count as SCRIPT) â”€â”€â”€ */
+    /* ---- CRYSTAL CAPTIONS (upper voice) ---- */
     var CRYSTAL = [
       'The whole in every part.',
       'Pattern integrity at every scale.',
@@ -1283,7 +467,7 @@
       'Food is frequency too.',
       'And yet the voices converge.',
       'The counterpoint resolves.',
-      'Upper and lower voice â€” unison.',
+      'Upper and lower voice - unison.',
       'The Valkyrie closes.',
       'Gold is the frequency of victory.',
       'The mission funds itself.',
@@ -1305,202 +489,246 @@
       'The programmer programs himself.',
       'The architect builds inward first.',
       'Champions. Always.',
-      'NSPFRNP â†’ âˆžâ¹.'
+      'NSPFRNP - Infinity 9.'
     ];
 
-    /* â”€â”€â”€ Act cards (frame-indexed) â”€â”€â”€ */
+    /* ---- ACT CARDS (frame-indexed) ---- */
     var ACT_CARDS = {
-       0: { act:'ACT I',   title:'SPIRAL OUTCAST HERO', sub:'The descent. The compression. The vow.',      color:'crystal' },
-       7: { act:'ACT II',  title:'FIRE AND BISON',      sub:'Return. Fractal explosion. Singularities âˆžâ¹.', color:'carbon' },
-      14: { act:'ACT III', title:'THE SKIN',             sub:'Sovereign. Holographic. Human. Free. âˆžâ¹.',    color:'gold'   }
+       0: { num: 'ACT I',   title: 'SPIRAL\nOUTCAST HERO', sub: 'The descent. The compression. The vow.',       cls: '' },
+       7: { num: 'ACT II',  title: 'FIRE\nAND BISON',      sub: 'Return. Fractal explosion. Singularities.',    cls: 'act-carbon' },
+      14: { num: 'ACT III', title: 'THE\nSKIN',             sub: 'Sovereign. Holographic. Human. Free.',         cls: 'act-gold' }
     };
 
-    /* â”€â”€â”€ Title cards (lineIdx-keyed) â”€â”€â”€ */
+    /* ---- TITLE CARDS (lineIdx-keyed) ---- */
     var TITLE_CARDS = {
-       0: { eyebrow:'STORYSTREAM 9',   main:'IF YOU ARE\nREADING THIS', sub:'You have entered.',                       layer:'s-crystal' },
-       7: { eyebrow:'',                main:'OUT OF ZERO.',             sub:'The miracle.',                            layer:'s-crystal' },
-      17: { eyebrow:'SMACS 0723',      main:'OUR NODE.',                sub:'Triangulating.',                          layer:'s-crystal' },
-      21: { eyebrow:'THE ONLY PLACES', main:'CARTAGENA.\nRENO.',        sub:'Nowhere else.',                           layer:'s-carbon'  },
-      33: { eyebrow:'NOT A PENNY',     main:'EVERY DOLLAR.',            sub:'Into SING! 9.',                           layer:'s-carbon'  },
-      35: { eyebrow:'',                main:'AND YET.',                 sub:'And yet.',                                layer:'s-gold'    },
-      45: { eyebrow:'',                main:'EL GRAN SOL.',             sub:'The only game in town.',                  layer:'s-gold'    },
-      54: { eyebrow:'ACT III',         main:'BIG DADDY.\nCOMMANDER.',   sub:'Machote. Bond. Hughes. Taino. Free.',     layer:'s-gold'    },
-      57: { eyebrow:'SING! 9 Â· âˆžâ¹',   main:'WE ARE THE\nCHAMPIONS.',  sub:'The Skin holds the frequency.',           layer:'s-gold'    }
+       0: { eyebrow: 'STORYSTREAM 9',   main: 'IF YOU ARE\nREADING THIS', sub: 'You have entered.' },
+       7: { eyebrow: '',                main: 'OUT OF ZERO.',             sub: 'The miracle.' },
+      17: { eyebrow: 'SMACS 0723',      main: 'OUR NODE.',                sub: 'Triangulating.' },
+      21: { eyebrow: 'THE ONLY PLACES', main: 'CARTAGENA.\nRENO.',        sub: 'Nowhere else.' },
+      33: { eyebrow: 'NOT A PENNY',     main: 'EVERY DOLLAR.',            sub: 'Into SING! 9.' },
+      35: { eyebrow: '',                main: 'AND YET.',                 sub: 'And yet.' },
+      45: { eyebrow: '',                main: 'EL GRAN SOL.',             sub: 'The only game in town.' },
+      54: { eyebrow: 'ACT III',         main: 'BIG DADDY.\nCOMMANDER.',   sub: 'Machote. Bond. Hughes. Taino. Free.' },
+      57: { eyebrow: 'SING! 9',         main: 'WE ARE THE\nCHAMPIONS.',   sub: 'The Skin holds the frequency.' }
     };
 
-    /* â”€â”€â”€ State â”€â”€â”€ */
-    var frameIndex = 0, imgSlot = 0, frameTick = 0, imgTick = 0;
-    var playing = true, tickInterval = null, prologueDone = false, filmReady = false;
+    /* ---- STATE ---- */
+    var frameIndex = 0;
+    var imgSlot    = 0;
+    var frameTick  = 0;
+    var imgTick    = 0;
+    var playing    = true;
+    var ticker     = null;
 
-    /* â”€â”€â”€ DOM refs â”€â”€â”€ */
+    /* ---- DOM REFS ---- */
     var stage      = document.getElementById('stage');
     var carbonImg  = document.getElementById('carbonImg');
     var crystalImg = document.getElementById('crystalImg');
     var carbonEye  = document.getElementById('carbon-eyebrow');
-    var carbonText = document.getElementById('carbon-text');
-    var crystalEye = document.getElementById('crystal-eyebrow');
-    var crystalText= document.getElementById('crystal-text');
+    var carbonTxt  = document.getElementById('carbon-text');
+    var crystalTxt = document.getElementById('crystal-text');
     var tcCard     = document.getElementById('title-card');
     var tcEye      = document.getElementById('tc-eyebrow');
     var tcMain     = document.getElementById('tc-main');
     var tcSub      = document.getElementById('tc-sub');
+    var actCard    = document.getElementById('act-card');
+    var actNum     = document.getElementById('act-num');
+    var actTitleEl = document.getElementById('act-title');
+    var actSubEl   = document.getElementById('act-sub');
     var progBar    = document.getElementById('progress-bar');
-    var ctrEl      = document.getElementById('slideCounter');
+    var counterEl  = document.getElementById('counter');
     var segNameEl  = document.getElementById('segName');
     var layerBadge = document.getElementById('layer-badge');
-    var actCardEl  = document.getElementById('act-card');
-    var actEyebrow = document.getElementById('act-eyebrow');
-    var actTitle   = document.getElementById('act-title');
-    var actSub     = document.getElementById('act-sub');
+    var btnPlay    = document.getElementById('btnPlay');
 
-    /* â”€â”€â”€ Helpers â”€â”€â”€ */
-    function getSeg(fi) { return Math.min(SEG_TOTAL - 1, Math.floor(fi / SEG_FRAMES)); }
-    function li(fi, sl) { return fi * IMG_PER_FRAME + sl; }
-    function getImg(idx) { return POOL[idx % POOL.length]; }
-
-    /* â”€â”€â”€ Act card â”€â”€â”€ */
-    var actTimer = null;
-    function showActCard(ac) {
-      if (!actCardEl) return;
-      clearTimeout(actTimer);
-      actCardEl.className = 'act-' + (ac.color || 'crystal');
-      if (actEyebrow) actEyebrow.textContent = ac.act || '';
-      if (actTitle)   actTitle.textContent   = ac.title || '';
-      if (actSub)     actSub.textContent     = ac.sub || '';
-      void actCardEl.offsetWidth;
-      actCardEl.classList.add('visible');
-      actTimer = setTimeout(function () {
-        actCardEl.classList.remove('visible');
-        actCardEl.classList.add('fade-out');
-        setTimeout(function () { actCardEl.classList.remove('fade-out'); }, 800);
-      }, 3500);
+    /* ---- HELPERS ---- */
+    function getSeg(fi) {
+      return Math.min(SEG_TOTAL - 1, Math.floor(fi / SEG_FRAMES));
+    }
+    function lineI(fi, sl) {
+      return fi * IMG_PER_FRAME + sl;
+    }
+    function getImg(idx) {
+      return POOL[idx % POOL.length];
     }
 
-    /* â”€â”€â”€ Title card â”€â”€â”€ */
+    /* ---- SET IMAGE ---- */
+    function setImg(el, src) {
+      if (!el) return;
+      el.classList.remove('vis');
+      var s = src;
+      setTimeout(function () {
+        el.src = s;
+        el.onload = function () { el.classList.add('vis'); };
+        el.onerror = function () { el.classList.add('vis'); }; /* show even if missing */
+      }, 250);
+    }
+
+    /* ---- TITLE CARD ---- */
     var tcTimer = null;
-    function showTitleCard(tc) {
+    function showTC(tc) {
       if (!tcCard) return;
       clearTimeout(tcTimer);
       if (tcEye)  tcEye.textContent  = tc.eyebrow || '';
-      if (tcMain) tcMain.textContent = tc.main || '';
-      if (tcSub)  tcSub.textContent  = tc.sub || '';
-      tcCard.className = 'visible ' + (tc.layer || 's-crystal');
-      tcTimer = setTimeout(function () { tcCard.classList.remove('visible'); }, 3200);
+      if (tcMain) tcMain.textContent = tc.main    || '';
+      if (tcSub)  tcSub.textContent  = tc.sub     || '';
+      tcCard.classList.add('vis');
+      tcTimer = setTimeout(function () { tcCard.classList.remove('vis'); }, 3000);
     }
-    function hideTitleCard() { if (tcCard) tcCard.classList.remove('visible'); }
-
-    /* â”€â”€â”€ Render â”€â”€â”€ */
-    function setImg(el, src) {
-      if (!el) return;
-      el.classList.remove('visible');
-      setTimeout(function () { el.src = src; el.classList.add('visible'); }, 280);
+    function hideTC() {
+      clearTimeout(tcTimer);
+      if (tcCard) tcCard.classList.remove('vis');
     }
 
-    function renderFrame(full) {
-      var lineI = li(frameIndex, imgSlot);
-      var seg   = getSeg(frameIndex);
+    /* ---- ACT CARD ---- */
+    var acTimer = null;
+    function showAC(ac) {
+      if (!actCard) return;
+      clearTimeout(acTimer);
+      actCard.className = ac.cls || '';
+      if (actNum)     actNum.textContent     = ac.num   || '';
+      if (actTitleEl) actTitleEl.textContent = ac.title || '';
+      if (actSubEl)   actSubEl.textContent   = ac.sub   || '';
+      void actCard.offsetWidth;
+      actCard.classList.add('vis');
+      acTimer = setTimeout(function () { actCard.classList.remove('vis'); }, 3500);
+    }
 
-      setImg(carbonImg,  getImg(lineI));
-      setImg(crystalImg, getImg(lineI));
+    /* ---- RENDER FRAME ---- */
+    function render(full) {
+      var li  = lineI(frameIndex, imgSlot);
+      var seg = getSeg(frameIndex);
 
-      var scriptLine   = SCRIPT[lineI]  || SCRIPT[lineI % SCRIPT.length]  || '';
-      var crystalLine  = CRYSTAL[lineI] || CRYSTAL[lineI % CRYSTAL.length] || '';
+      /* Images */
+      var imgSrc = getImg(li);
+      setImg(carbonImg,  imgSrc);
+      setImg(crystalImg, imgSrc);
 
+      /* Carbon captions */
+      var line = SCRIPT[li] || SCRIPT[li % SCRIPT.length] || '';
       if (carbonEye) {
-        var eyeTxt = (imgSlot === 0 && frameTick === 0) ? SEG_NAMES[seg] : '';
-        carbonEye.textContent = eyeTxt;
-        carbonEye.classList.toggle('vis', !!eyeTxt);
+        var eye = (imgSlot === 0 && frameTick === 0) ? SEG_NAMES[seg] : '';
+        carbonEye.textContent = eye;
+        carbonEye.classList.toggle('vis', !!eye);
       }
-      if (carbonText) {
-        carbonText.textContent = scriptLine;
-        carbonText.classList.remove('vis');
-        requestAnimationFrame(function () { carbonText.classList.add('vis'); });
-      }
-      if (crystalEye) { crystalEye.textContent = 'CRYSTALLINE Â· SKY'; crystalEye.classList.add('vis'); }
-      if (crystalText) {
-        crystalText.textContent = crystalLine;
-        crystalText.classList.remove('vis');
-        setTimeout(function () { crystalText.classList.add('vis'); }, 800);
+      if (carbonTxt) {
+        carbonTxt.classList.remove('vis');
+        carbonTxt.textContent = line;
+        requestAnimationFrame(function () { carbonTxt.classList.add('vis'); });
       }
 
+      /* Crystal caption — delayed (upper voice) */
+      var cLine = CRYSTAL[li % CRYSTAL.length] || '';
+      if (crystalTxt) {
+        crystalTxt.classList.remove('vis');
+        var ct = cLine;
+        setTimeout(function () {
+          crystalTxt.textContent = ct;
+          crystalTxt.classList.add('vis');
+        }, 900);
+      }
+
+      /* Stage class */
       if (stage) stage.className = SEG_CLS[seg] || 's-crystal';
+
+      /* Labels */
       if (segNameEl)  { segNameEl.textContent = SEG_NAMES[seg]; segNameEl.style.color = SEG_ACCENTS[seg]; }
-      if (layerBadge) layerBadge.textContent = ['CRYSTALLINE','CARBON','THE SKIN'][seg] || '';
-      if (ctrEl)      ctrEl.textContent = (frameIndex + 1) + ' / ' + FRAMES_TOTAL;
+      if (layerBadge) layerBadge.textContent = ['CRYSTALLINE', 'CARBON', 'THE SKIN'][seg] || '';
+      if (counterEl)  counterEl.textContent = (frameIndex + 1) + ' / ' + FRAMES_TOTAL;
       if (progBar)    progBar.style.width = ((frameTick / FRAME_SEC) * 100).toFixed(1) + '%';
 
+      /* Seg strip active state */
+      for (var s = 0; s < SEG_TOTAL; s++) {
+        var b = document.getElementById('segBtn' + s);
+        if (b) b.className = 'seg-btn' + (s === seg ? ' active' : '');
+      }
+
       if (full) {
-        if (ACT_CARDS[frameIndex]) showActCard(ACT_CARDS[frameIndex]);
-        var tc = TITLE_CARDS[lineI];
-        if (tc) showTitleCard(tc); else hideTitleCard();
-        /* Segment strip active state */
-        for (var s = 0; s < SEG_TOTAL; s++) {
-          var b = document.getElementById('segBtn' + s);
-          if (b) b.className = 'seg-btn' + (s === seg ? ' active' : '');
-        }
+        /* Act card on act boundaries */
+        if (ACT_CARDS[frameIndex]) showAC(ACT_CARDS[frameIndex]);
+        /* Title card on key lineIdx moments */
+        var tc = TITLE_CARDS[li];
+        if (tc) showTC(tc); else hideTC();
       }
     }
 
-    /* â”€â”€â”€ Tick (1 Hz) â”€â”€â”€ */
+    /* ---- TICK (1 Hz) ---- */
     function startTick() {
-      clearInterval(tickInterval);
-      tickInterval = setInterval(function () {
+      clearInterval(ticker);
+      ticker = setInterval(function () {
         if (!playing) return;
-        frameTick++; imgTick++;
+        frameTick++;
+        imgTick++;
         if (progBar) progBar.style.width = ((frameTick / FRAME_SEC) * 100).toFixed(1) + '%';
+
+        /* Image slot advance */
         if (imgTick >= IMG_SEC && imgSlot < IMG_PER_FRAME - 1) {
-          imgTick = 0; imgSlot++;
-          renderFrame(false);
+          imgTick = 0;
+          imgSlot++;
+          render(false);
+          return;
         }
+
+        /* Frame advance */
         if (frameTick >= FRAME_SEC) {
           frameTick = 0; imgTick = 0; imgSlot = 0;
-          hideTitleCard();
+          hideTC();
           if (frameIndex >= FRAMES_TOTAL - 1) {
             playing = false;
-            var bp = document.getElementById('btnPlay');
-            if (bp) bp.textContent = 'Play';
+            if (btnPlay) btnPlay.textContent = 'Play';
             var ec = document.getElementById('end-cta');
-            if (ec) ec.classList.add('visible');
+            if (ec) ec.classList.add('vis');
           } else {
             frameIndex++;
-            renderFrame(true);
+            render(true);
           }
         }
       }, 1000);
     }
 
-    function startFilm() { renderFrame(true); startTick(); }
-
-    /* â”€â”€â”€ Controls â”€â”€â”€ */
-    var btnPlay = document.getElementById('btnPlay');
+    /* ---- CONTROLS ---- */
     if (btnPlay) btnPlay.addEventListener('click', function () {
       playing = !playing;
       this.textContent = playing ? 'Pause' : 'Play';
     });
 
-    var btnFS = document.getElementById('btnFullscreen');
+    var btnPrev = document.getElementById('btnPrev');
+    var btnNext = document.getElementById('btnNext');
+    if (btnPrev) btnPrev.addEventListener('click', function () {
+      frameIndex = Math.max(0, frameIndex - 1);
+      frameTick = 0; imgTick = 0; imgSlot = 0;
+      render(true);
+    });
+    if (btnNext) btnNext.addEventListener('click', function () {
+      frameIndex = Math.min(FRAMES_TOTAL - 1, frameIndex + 1);
+      frameTick = 0; imgTick = 0; imgSlot = 0;
+      render(true);
+    });
+
+    var btnFS = document.getElementById('btnFS');
     if (btnFS) btnFS.addEventListener('click', function () {
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function () {});
       else document.exitFullscreen();
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === ' ' || e.key === 'k') { e.preventDefault(); playing = !playing; if (btnPlay) btnPlay.textContent = playing ? 'Pause' : 'Play'; }
-      if (e.key === 'ArrowRight') { frameIndex = Math.min(frameIndex + 1, FRAMES_TOTAL - 1); frameTick = 0; imgTick = 0; imgSlot = 0; renderFrame(true); }
-      if (e.key === 'ArrowLeft')  { frameIndex = Math.max(frameIndex - 1, 0); frameTick = 0; imgTick = 0; imgSlot = 0; renderFrame(true); }
+      if (e.key === ' ' || e.key === 'k') { e.preventDefault(); if (btnPlay) btnPlay.click(); }
+      if (e.key === 'ArrowRight') { if (btnNext) btnNext.click(); }
+      if (e.key === 'ArrowLeft')  { if (btnPrev) btnPrev.click(); }
     });
 
-    var watchAgain = document.getElementById('ep-watch-again');
-    if (watchAgain) watchAgain.addEventListener('click', function () {
+    var btnWA = document.getElementById('btnWatchAgain');
+    if (btnWA) btnWA.addEventListener('click', function () {
       var ec = document.getElementById('end-cta');
-      if (ec) ec.classList.remove('visible');
+      if (ec) ec.classList.remove('vis');
       frameIndex = 0; frameTick = 0; imgTick = 0; imgSlot = 0;
       playing = true;
       if (btnPlay) btnPlay.textContent = 'Pause';
-      renderFrame(true); startTick();
+      render(true);
+      startTick();
     });
 
-    /* â”€â”€â”€ Segment strip â”€â”€â”€ */
+    /* Segment strip */
     var strip = document.getElementById('segStrip');
     if (strip) {
       for (var s = 0; s < SEG_TOTAL; s++) {
@@ -1511,64 +739,28 @@
           btn.textContent = si + 1;
           btn.title = SEG_NAMES[si];
           btn.onclick = function () {
-            frameIndex = si * SEG_FRAMES; frameTick = 0; imgTick = 0; imgSlot = 0;
-            renderFrame(true);
+            frameIndex = si * SEG_FRAMES;
+            frameTick = 0; imgTick = 0; imgSlot = 0;
+            render(true);
           };
           strip.appendChild(btn);
         })(s);
       }
     }
 
-    /* â”€â”€â”€ Splash â”€â”€â”€ */
-    function dismissPrologue() {
-      if (prologueDone) return;
-      prologueDone = true;
-      var el = document.getElementById('prologue');
-      if (el) el.classList.add('gone');
-      if (filmReady) startFilm();
-      else { var lo = document.getElementById('pro-loading'); if (lo) lo.classList.add('active'); }
-    }
-    function startPrologue() { setTimeout(dismissPrologue, 2400); }
+    /* Splash tap-to-dismiss */
+    var splashEl = document.getElementById('splash');
+    if (splashEl) splashEl.addEventListener('click', function () {
+      splashEl.classList.add('gone');
+    });
 
-    var proEl = document.getElementById('prologue');
-    if (proEl) proEl.addEventListener('click', dismissPrologue);
-    var skipBtn = document.getElementById('pro-skip');
-    if (skipBtn) skipBtn.addEventListener('click', dismissPrologue);
-
-    /* â”€â”€â”€ Load data â”€â”€â”€ */
-    function loadAll() {
-      fetch('../data/episode-1-slides.json')
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          if (d.slides) d.slides.forEach(function (sl, i) { if (sl.image && i < POOL.length) POOL[i] = sl.image; });
-          filmReady = true;
-          if (prologueDone) startFilm();
-          else { var lo = document.getElementById('pro-loading'); if (lo) lo.classList.remove('active'); }
-        })
-        .catch(function () { filmReady = true; if (prologueDone) startFilm(); });
-    }
-
-    /* â”€â”€â”€ Boot â”€â”€â”€ */
-    startPrologue();
-    loadAll();
+    /* ---- START ---- */
+    /* Render frame 0 immediately so stage is populated behind the splash */
+    render(true);
+    startTick();
 
   })();
   </script>
 
-  <!-- Standalone boot: runs even if main IIFE has an error -->
-  <script>
-    (function () {
-      var el = document.getElementById('prologue');
-      if (!el) return;
-      /* Hide splash after 2.4s via CSS class â€” belt & suspenders */
-      setTimeout(function () {
-        el.classList.add('gone');
-      }, 2400);
-      /* Tap/click anywhere on splash to dismiss immediately */
-      el.addEventListener('click', function () {
-        el.classList.add('gone');
-      });
-    })();
-  </script>
 </body>
 </html>

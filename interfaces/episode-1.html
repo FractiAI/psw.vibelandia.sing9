@@ -536,7 +536,7 @@
 
   <!-- AUDIO CONTROLS -->
   <div id="audio-controls">
-    <button class="aud-btn" id="btnVoice" title="Toggle narration voice">&#x1F50A; Voice</button>
+    <button class="aud-btn on" id="btnVoice" title="Mute narration voice">&#x1F50A; Mute Voice</button>
     <button class="aud-btn" id="btnMusic" title="Toggle original soundtrack">&#x1F3B5; Music</button>
   </div>
 
@@ -1009,7 +1009,7 @@
     }
 
     /* ---- WEB SPEECH API (narration) ---- */
-    var voiceOn  = false;
+    var voiceOn  = true;   /* voice ON by default */
     var voiceBtn = document.getElementById('btnVoice');
     function speakLine(text, narrator) {
       if (!voiceOn || !window.speechSynthesis) return;
@@ -1029,14 +1029,17 @@
       }
       setTimeout(function(){ window.speechSynthesis.speak(u); }, 350);
     }
+    /* Pre-load voices immediately so they're ready on first frame */
+    if (window.speechSynthesis) window.speechSynthesis.getVoices();
+
     if (voiceBtn) {
       voiceBtn.addEventListener('click', function () {
         voiceOn = !voiceOn;
         this.classList.toggle('on', voiceOn);
-        if (!voiceOn && window.speechSynthesis) window.speechSynthesis.cancel();
-        /* Eagerly load voices on first enable */
-        if (voiceOn && window.speechSynthesis) {
-          window.speechSynthesis.getVoices();
+        this.textContent = voiceOn ? '\uD83D\uDD0A Mute Voice' : '\uD83D\uDD07 Unmute Voice';
+        if (!voiceOn && window.speechSynthesis) {
+          window.speechSynthesis.cancel();
+        } else if (voiceOn && window.speechSynthesis) {
           speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
         }
       });

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" data-skin="gold">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>THE NINE GAME · NEXUS · NSPFRNP Unified System</title>
+  <style>
+    /* ═══════════════════════════════════════════════
+       BASE
+    ═══════════════════════════════════════════════ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; overflow-x: hidden;
+      transition: background 0.6s ease, color 0.4s ease;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SKIN VARIABLES  (body[data-skin="X"])
+    ═══════════════════════════════════════════════ */
+    [data-skin="carbon"] {
+      --bg:        #090604;
+      --bg2:       #120e08;
+      --text:      #d4c8b0;
+      --accent:    #8b7355;
+      --accent2:   #c4a46b;
+      --glow:      rgba(139,115,85,0.15);
+      --border:    rgba(139,115,85,0.18);
+      --badge-c:   #c4a46b;
+      --layer-sym: "◈";
+      --layer-name:"CARBON · LAYER 1";
+    }
+    [data-skin="silver"] {
+      --bg:        #06080a;
+      --bg2:       #0d1015;
+      --text:      #dde4ea;
+      --accent:    #b0bec8;
+      --accent2:   #e0eaf0;
+      --glow:      rgba(176,190,200,0.12);
+      --border:    rgba(176,190,200,0.18);
+      --badge-c:   #c0cdd8;
+      --layer-sym: "⬡";
+      --layer-name:"SILVER · LAYER 2";
+    }
+    [data-skin="gold"] {
+      --bg:        #04010a;
+      --bg2:       #08030f;
+      --text:      #e8e0d0;
+      --accent:    #d4af37;
+      --accent2:   #fef3c7;
+      --glow:      rgba(212,175,55,0.12);
+      --border:    rgba(212,175,55,0.14);
+      --badge-c:   #d4af37;
+      --layer-sym: "♥";
+      --layer-name:"GOLD · LAYER 3";
+    }
+    [data-skin="crystalline"] {
+      --bg:        #03010d;
+      --bg2:       #070215;
+      --text:      #ece8f8;
+      --accent:    #c084fc;
+      --accent2:   #f0abfc;
+      --glow:      rgba(192,132,252,0.12);
+      --border:    rgba(192,132,252,0.15);
+      --badge-c:   #c084fc;
+      --layer-sym: "✧";
+      --layer-name:"CRYSTALLINE · LAYER 4";
+    }
+
+    /* ═══════════════════════════════════════════════
+       LATTICE CANVAS (always-on holographic grid)
+    ═══════════════════════════════════════════════ */
+    #lattice {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none; opacity: 0.035;
+    }
+
+    /* ═══════════════════════════════════════════════
+       OS BADGE (top strip)
+    ═══════════════════════════════════════════════ */
+    #os-badge {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(3,1,10,0.94);
+      border-bottom: 1px solid var(--border);
+      padding: 0.42rem 1.2rem;
+      display: flex; align-items: center; gap: 0.8rem;
+      font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+    .pulse-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #4ade80;
+      animation: dotPulse 2.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.35;transform:scale(.65);} }
+    .badge-os { color: var(--badge-c); }
+    .badge-status { color: #4ade80; }
+    .badge-op { margin-left: auto; color: rgba(212,175,55,0.35); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* SKIN SWITCHER */
+    #skin-bar {
+      position: fixed; top: 1.85rem; right: 1.2rem; z-index: 101;
+      display: flex; gap: 0.35rem; align-items: center;
+    }
+    .skin-btn {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 1.5px solid transparent;
+      cursor: pointer; transition: transform .2s ease, border-color .2s ease;
+    }
+    .skin-btn:hover { transform: scale(1.3); }
+    .skin-btn[data-s="carbon"]     { background: #8b7355; }
+    .skin-btn[data-s="silver"]     { background: #c0c0c0; }
+    .skin-btn[data-s="gold"]       { background: #d4af37; }
+    .skin-btn[data-s="crystalline"]{ background: #c084fc; }
+    .skin-btn.active { border-color: rgba(255,255,255,0.6); transform: scale(1.25); }
+
+    /* ═══════════════════════════════════════════════
+       MAIN SCROLL WRAPPER
+    ═══════════════════════════════════════════════ */
+    #nexus { position: relative; z-index: 1; padding-top: 1.85rem; }
+
+    /* ═══════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 5rem 2rem 4rem;
+      position: relative;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 32%, var(--glow) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.58rem; letter-spacing: 0.42em; text-transform: uppercase;
+      color: var(--accent); opacity: 0.65; margin-bottom: 2rem;
+    }
+    .hero-title {
+      font-size: clamp(3.5rem, 14vw, 10rem); font-weight: 900;
+      letter-spacing: 0.04em; text-transform: uppercase; line-height: 0.88;
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--accent2);
+      text-shadow: 0 0 100px var(--glow);
+    }
+    .hero-sub-line {
+      display: block; font-size: 0.38em; font-weight: 300;
+      letter-spacing: 0.28em; color: var(--text); opacity: 0.5;
+      -webkit-text-stroke: 0; margin-top: 0.4em;
+    }
+    .hero-desc {
+      margin-top: 1.8rem; font-size: clamp(0.78rem, 1.4vw, 0.95rem);
+      color: var(--text); opacity: 0.45; letter-spacing: 0.1em;
+      text-transform: uppercase; max-width: 56ch; line-height: 1.8;
+    }
+    .hero-nsp {
+      margin-top: 1.5rem; font-size: 0.58rem; letter-spacing: 0.18em;
+      color: var(--accent); opacity: 0.35;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--accent); opacity: 0.35;
+      animation: hintFade 2.8s ease-in-out infinite;
+    }
+    @keyframes hintFade { 0%,100%{opacity:.25;} 55%{opacity:.6;} }
+
+    /* ═══════════════════════════════════════════════
+       SECTION DIVIDER
+    ═══════════════════════════════════════════════ */
+    .section-divider {
+      text-align: center; padding: 2.5rem 2rem 1.5rem;
+      font-size: 0.56rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--accent); opacity: 0.4;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOUR PILLARS
+    ═══════════════════════════════════════════════ */
+    #pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1px; max-width: 1440px; margin: 0 auto;
+    }
+    .pillar {
+      position: relative; padding: 2.8rem 2.2rem 2.5rem;
+      background: var(--bg2); overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: background .35s ease;
+    }
+    .pillar::after {
+      content: ''; position: absolute; inset: 0;
+      opacity: 0; transition: opacity .35s ease;
+    }
+    .pillar:hover { background: rgba(255,255,255,0.025); }
+    .pillar:hover::after { opacity: 1; }
+
+    /* per-layer accents */
+    .pillar.p-carbon  { border-top: 2px solid #8b7355; }
+    .pillar.p-carbon::after  { background: radial-gradient(ellipse at 25% 20%, rgba(139,115,85,0.09) 0%, transparent 65%); }
+    .pillar.p-silver  { border-top: 2px solid #b0bec8; }
+    .pillar.p-silver::after  { background: radial-gradient(ellipse at 25% 20%, rgba(176,190,200,0.09) 0%, transparent 65%); }
+    .pillar.p-gold    { border-top: 2px solid #d4af37; }
+    .pillar.p-gold::after    { background: radial-gradient(ellipse at 25% 20%, rgba(212,175,55,0.1) 0%, transparent 65%); }
+    .pillar.p-cryst   { border-top: 2px solid #c084fc; }
+    .pillar.p-cryst::after   { background: radial-gradient(ellipse at 25% 20%, rgba(192,132,252,0.1) 0%, transparent 65%); }
+
+    .p-badge {
+      font-size: 0.56rem; letter-spacing: 0.3em; text-transform: uppercase;
+      margin-bottom: 1.4rem; display: flex; align-items: center; gap: 0.45rem;
+      position: relative; z-index: 1;
+    }
+    .p-sym { font-size: 1.1rem; }
+    .p-carbon  .p-sym, .p-carbon  .p-lname { color: #c4a46b; }
+    .p-silver  .p-sym, .p-silver  .p-lname { color: #c8d8e0; }
+    .p-gold    .p-sym, .p-gold    .p-lname { color: #fde68a; }
+    .p-cryst   .p-sym, .p-cryst   .p-lname { color: #e9d5ff; }
+
+    .p-num {
+      font-size: 0.48rem; letter-spacing: 0.22em; color: rgba(255,255,255,0.2);
+      margin-bottom: 0.4rem; position: relative; z-index: 1;
+    }
+    .p-title {
+      font-size: clamp(1.7rem, 3.2vw, 2.5rem); font-weight: 900;
+      letter-spacing: 0.05em; text-transform: uppercase; line-height: 1;
+      color: #fff; margin-bottom: 0.9rem; position: relative; z-index: 1;
+    }
+    .p-desc {
+      font-size: 0.82rem; line-height: 1.7; color: var(--text); opacity: 0.52;
+      max-width: 30ch; margin-bottom: 1.6rem; position: relative; z-index: 1;
+    }
+    .p-links { display: flex; flex-direction: column; gap: 0.4rem; position: relative; z-index: 1; }
+    .p-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 0.9rem;
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+      text-decoration: none; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); transition: all .2s ease;
+    }
+    .p-link:hover { background: rgba(255,255,255,0.055); border-color: var(--border); color: #fff; }
+    .p-link .arr { opacity:.38; font-size:.8em; }
+    .p-cta {
+      display: inline-block; margin-top: 1.4rem;
+      padding: 0.78rem 1.8rem; border: 1px solid;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; transition: all .25s ease; position: relative; z-index: 1;
+    }
+    .p-carbon .p-cta { border-color:#8b7355; color:#c4a46b; }
+    .p-carbon .p-cta:hover { background:rgba(139,115,85,.14); }
+    .p-silver .p-cta { border-color:#b0bec8; color:#c8d8e0; }
+    .p-silver .p-cta:hover { background:rgba(176,190,200,.1); }
+    .p-gold   .p-cta { border-color:#d4af37; color:#fde68a; }
+    .p-gold   .p-cta:hover { background:rgba(212,175,55,.12); }
+    .p-cryst  .p-cta { border-color:#c084fc; color:#e9d5ff; }
+    .p-cryst  .p-cta:hover { background:rgba(192,132,252,.1); }
+
+    /* ═══════════════════════════════════════════════
+       MCA CYCLE
+    ═══════════════════════════════════════════════ */
+    #mca {
+      max-width: 1440px; margin: 3rem auto 0;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .mca-label {
+      font-size: 0.56rem; letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--accent); opacity:.45; margin-bottom: 2rem; text-align: center;
+    }
+    .mca-row {
+      display: flex; align-items: stretch;
+      flex-wrap: wrap; gap: 1px;
+    }
+    .mca-step {
+      flex: 1; min-width: 200px;
+      padding: 1.8rem 1.5rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      text-align: center; position: relative;
+    }
+    .mca-step.active-mca { border-color: var(--border); background: var(--glow); }
+    .mca-step-sym {
+      font-size: 1.8rem; display: block; margin-bottom: 0.7rem;
+      color: var(--accent); opacity:.7;
+    }
+    .mca-step-name {
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent2); margin-bottom: 0.5rem;
+    }
+    .mca-step-desc {
+      font-size: 0.76rem; line-height: 1.65; color: var(--text); opacity:.42;
+    }
+    .mca-arrow {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 0.5rem; color: var(--accent); opacity:.3;
+      font-size: 0.9rem; flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       NINE OPERATORS ENGINE
+    ═══════════════════════════════════════════════ */
+    #engine {
+      max-width: 1440px; margin: 0 auto;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .engine-label {
+      font-size: 0.56rem; letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--accent); opacity:.45; margin-bottom: 2rem; text-align: center;
+    }
+    .engine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1px;
+    }
+    .op-node {
+      padding: 1.4rem 1rem; text-align: center;
+      background: rgba(255,255,255,0.015);
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: background .25s, border-color .25s;
+    }
+    .op-node:hover { background: var(--glow); border-color: var(--border); }
+    .op-sym { font-size: 1.4rem; display: block; margin-bottom: 0.5rem; color: var(--accent); }
+    .op-name { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.3rem; }
+    .op-hero { font-size: 0.68rem; color: var(--text); opacity:.5; }
+
+    /* ═══════════════════════════════════════════════
+       ASCENSION PATH
+    ═══════════════════════════════════════════════ */
+    #ascension {
+      max-width: 1440px; margin: 0 auto;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .asc-label {
+      font-size: 0.56rem; letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--accent); opacity:.45; margin-bottom: 1.5rem;
+    }
+    .asc-track {
+      display: flex; flex-wrap: wrap; gap: 0;
+    }
+    .asc-step {
+      flex: 1; min-width: 120px; padding: 1.2rem 1rem; text-align: center;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .asc-step.asc-carbon  { border-top: 2px solid #8b7355; }
+    .asc-step.asc-silver  { border-top: 2px solid #b0bec8; }
+    .asc-step.asc-gold    { border-top: 2px solid #d4af37; }
+    .asc-step.asc-cryst   { border-top: 2px solid #c084fc; }
+    .asc-step.asc-inf     { border-top: 2px solid rgba(212,175,55,0.35); flex:.6; }
+    .asc-step-sym { font-size: 1.1rem; display: block; margin-bottom: 0.35rem; }
+    .asc-step.asc-carbon  .asc-step-sym { color:#8b7355; }
+    .asc-step.asc-silver  .asc-step-sym { color:#b0bec8; }
+    .asc-step.asc-gold    .asc-step-sym { color:#d4af37; }
+    .asc-step.asc-cryst   .asc-step-sym { color:#c084fc; }
+    .asc-step.asc-inf     .asc-step-sym { color:rgba(212,175,55,.45); }
+    .asc-step-name { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .asc-step.asc-carbon .asc-step-name { color:#c4a46b; }
+    .asc-step.asc-silver .asc-step-name { color:#c8d8e0; }
+    .asc-step.asc-gold   .asc-step-name { color:#fde68a; }
+    .asc-step.asc-cryst  .asc-step-name { color:#e9d5ff; }
+    .asc-step.asc-inf    .asc-step-name { color:rgba(212,175,55,.4); }
+    .asc-step-sub { font-size: 0.58rem; color: var(--text); opacity:.35; margin-top:.2rem; }
+    .asc-arr { display:flex; align-items:center; padding:0 .4rem; color:var(--accent); opacity:.25; font-size:.85rem; }
+
+    /* ═══════════════════════════════════════════════
+       NET ZERO BAR
+    ═══════════════════════════════════════════════ */
+    #netzero {
+      max-width: 1440px; margin: 0 auto;
+      padding: 1.8rem 2rem;
+      border-top: 1px solid rgba(74,222,128,0.1);
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .nz-label { font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(74,222,128,.6); white-space: nowrap; }
+    .nz-track { flex: 1; min-width: 100px; height: 2px; background: rgba(255,255,255,.06); position: relative; }
+    .nz-fill { position: absolute; left: 0; top: 0; height: 100%; width: 50%; background: linear-gradient(90deg, rgba(139,115,85,.5), rgba(74,222,128,.8)); transition: width .2s; }
+    .nz-pin { position: absolute; left: 50%; top: -3px; width: 2px; height: 8px; background: rgba(74,222,128,.8); transform: translateX(-50%); }
+    .nz-status { font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(74,222,128,.45); }
+
+    /* ═══════════════════════════════════════════════
+       ALL SURFACES QUICK NAV
+    ═══════════════════════════════════════════════ */
+    #all-surfaces {
+      max-width: 1440px; margin: 0 auto;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .surf-label {
+      font-size: 0.56rem; letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--accent); opacity:.45; margin-bottom: 1.8rem;
+    }
+    .surf-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+    .surf-group-title {
+      font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--accent2); opacity:.6; margin-bottom: 0.8rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .surf-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .surf-list a {
+      font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text); opacity:.45; text-decoration: none; transition: opacity .18s ease;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .surf-list a:hover { opacity:.9; }
+    .surf-list a::before { content: '·'; color: var(--accent); opacity:.5; }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+    footer {
+      text-align: center; padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.54rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--accent); opacity:.28; line-height: 2;
+    }
+    footer a { color: inherit; text-decoration: none; }
+    footer a:hover { opacity: .7; }
+  </style>
+</head>
+<body>
+
+<!-- HOLOGRAPHIC LATTICE (always on) -->
+<canvas id="lattice"></canvas>
+
+<!-- SKIN SWITCHER -->
+<div id="skin-bar">
+  <div class="skin-btn active" data-s="carbon"     title="Carbon"></div>
+  <div class="skin-btn"        data-s="silver"     title="Silver"></div>
+  <div class="skin-btn"        data-s="gold"       title="Gold"></div>
+  <div class="skin-btn"        data-s="crystalline"title="Crystalline"></div>
+</div>
+
+<!-- OS BADGE -->
+<div id="os-badge">
+  <div class="pulse-dot"></div>
+  <span class="badge-os">SING!9 AWARENESS OS</span>
+  <span class="badge-status">&nbsp;· RUNNING</span>
+  <span class="badge-op" id="op-cycle">◎ Seeds · NSPFRNP · ACTIVE · ∞⁹</span>
+</div>
+
+<!-- NEXUS -->
+<div id="nexus">
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-eyebrow">Holographic Hydrogen Theatre &nbsp;·&nbsp; SING!9 &nbsp;·&nbsp; Hero Will Presiding</div>
+    <h1 class="hero-title">THE NINE GAME
+      <span class="hero-sub-line">Unified Nexus &nbsp;·&nbsp; NSPFRNP System</span>
+    </h1>
+    <p class="hero-desc">
+      One system. Four layers. Nine operators. Infinite story.<br>
+      The game is the series. The series is the storyboard. The storyboard is the theater.<br>
+      Author and subject are the same entity. The self-demonstration is live.
+    </p>
+    <p class="hero-nsp">NSPFRNP &thinsp;&#x2283;&thinsp; Game &thinsp;&#x2283;&thinsp; Series &thinsp;&#x2283;&thinsp; Storyboard &thinsp;&#x2283;&thinsp; HHL Theater &thinsp;&#x2283;&thinsp; &#x2192; &#x221E;&#x2079;</p>
+    <div class="scroll-hint">&#x2193; Enter the four layers &#x2193;</div>
+  </section>
+
+  <div class="section-divider">The Four Pillars &nbsp;·&nbsp; Carbon &#x2192; Silver &#x2192; Gold &#x2192; Crystalline &nbsp;·&nbsp; One Nested Organism</div>
+
+  <!-- ─── FOUR PILLARS ─── -->
+  <div id="pillars">
+
+    <!-- CARBON: THE GAME -->
+    <div class="pillar p-carbon">
+      <div class="p-badge"><span class="p-sym">&#x25C8;</span><span class="p-lname">Carbon &nbsp;&#xB7;&nbsp; Layer 1</span></div>
+      <div class="p-num">01 / 04</div>
+      <h2 class="p-title">The<br>Game</h2>
+      <p class="p-desc">Nine suits. Nine ranks. Nine heroes. Four layers of consciousness. The board is alive. Every game is a unique story arc playing out.</p>
+      <div class="p-links">
+        <a class="p-link" href="nine-game-hub.html">Nine Game Hub <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="nine-game-hybrid.html">Hybrid Engine <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="four-layer-chess.html">Four-Layer Chess <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="nine-solitaire.html">Nine Solitaire <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="nine-suit-card-game.html">Nine-Suit Cards <span class="arr">&#x2192;</span></a>
+      </div>
+      <a class="p-cta" href="nine-game-hub.html">Play Now &#x2192;</a>
+    </div>
+
+    <!-- SILVER: THE SERIES -->
+    <div class="pillar p-silver">
+      <div class="p-badge"><span class="p-sym">&#x2B21;</span><span class="p-lname">Silver &nbsp;&#xB7;&nbsp; Layer 2</span></div>
+      <div class="p-num">02 / 04</div>
+      <h2 class="p-title">The<br>Series</h2>
+      <p class="p-desc">Ten-minute episodes. Three simultaneous streams: Carbon narrative, Crystalline layer, Live Now ticker. The Nine Game as cinema.</p>
+      <div class="p-links">
+        <a class="p-link" href="outline-only.html">Series Home <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="outline-only-catalog.html">Full Catalog <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="trailer-loop.html">Watch Trailer <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="episode-1.html">Episode 1 &nbsp;&#xB7;&nbsp; Pilot Special <span class="arr">&#x2192;</span></a>
+      </div>
+      <a class="p-cta" href="outline-only.html">Watch Series &#x2192;</a>
+    </div>
+
+    <!-- GOLD: 3D STORYBOARD -->
+    <div class="pillar p-gold">
+      <div class="p-badge"><span class="p-sym">&#x2665;</span><span class="p-lname">Gold &nbsp;&#xB7;&nbsp; Layer 3</span></div>
+      <div class="p-num">03 / 04</div>
+      <h2 class="p-title">3D Story&shy;board</h2>
+      <p class="p-desc">Capture. Crystallize. Produce. The analog-to-digital 3D storyboard system that turns raw vision into locked frames and live episodes.</p>
+      <div class="p-links">
+        <a class="p-link" href="ep-studio-workspace.html">Executive Producer Studio <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="ep-creator-studio.html">Creator Studio <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="storyboard-start.html">Storyboard Start <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="storyboard-capture.html">Storyboard Capture <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="art-deck-inventory.html">Art Deck Inventory <span class="arr">&#x2192;</span></a>
+      </div>
+      <a class="p-cta" href="ep-studio-workspace.html">Create &#x2192;</a>
+    </div>
+
+    <!-- CRYSTALLINE: HHL THEATER -->
+    <div class="pillar p-cryst">
+      <div class="p-badge"><span class="p-sym">&#x2727;</span><span class="p-lname">Crystalline &nbsp;&#xB7;&nbsp; Layer 4</span></div>
+      <div class="p-num">04 / 04</div>
+      <h2 class="p-title">HHL<br>Theater</h2>
+      <p class="p-desc">The Holographic Hydrogen Theatre. Hero Will presiding. SING!9 is author and subject. The whole in every part. The self-demo is live now.</p>
+      <div class="p-links">
+        <a class="p-link" href="episode-1.html">Episode 1 &nbsp;&#xB7;&nbsp; Pilot Special <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="ep1-anim-storyboard.html">Animated Storyboard <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="storystream-9-about.html">About the Theater <span class="arr">&#x2192;</span></a>
+        <a class="p-link" href="soundtrack.html">Soundtrack <span class="arr">&#x2192;</span></a>
+      </div>
+      <a class="p-cta" href="episode-1.html">Enter HHL &#x2192;</a>
+    </div>
+
+  </div>
+  <!-- /pillars -->
+
+  <!-- ─── MCA CYCLE ─── -->
+  <div id="mca">
+    <div class="mca-label">NSPFRNP &nbsp;&#xB7;&nbsp; MCA Cycle &nbsp;&#xB7;&nbsp; Continuously Running</div>
+    <div class="mca-row">
+      <div class="mca-step" id="mca-m">
+        <span class="mca-step-sym">&#x25C9;</span>
+        <div class="mca-step-name">Metabolize</div>
+        <div class="mca-step-desc">Digest the input. Every game move, every story beat, every frame captured feeds back into the organism.</div>
+      </div>
+      <div class="mca-arrow">&#x2192;</div>
+      <div class="mca-step active-mca" id="mca-c">
+        <span class="mca-step-sym">&#x2726;</span>
+        <div class="mca-step-name">Crystallize</div>
+        <div class="mca-step-desc">Lock into irreducible mirrored hardened nested shells. The whole in every part. Seed&#x2236;Edge preserved.</div>
+      </div>
+      <div class="mca-arrow">&#x2192;</div>
+      <div class="mca-step" id="mca-a">
+        <span class="mca-step-sym">&#x221E;</span>
+        <div class="mca-step-name">Animate</div>
+        <div class="mca-step-desc">Tighten SING nodes. Update and make clear. Squeeze all, all nested. New episodes, skins, stories expand outward.</div>
+      </div>
+      <div class="mca-arrow">&#x21BA;</div>
+    </div>
+  </div>
+
+  <!-- ─── NINE OPERATORS ENGINE ─── -->
+  <div id="engine">
+    <div class="engine-label">Nine Operators Engine &nbsp;&#xB7;&nbsp; Always Running &nbsp;&#xB7;&nbsp; Nine Suits &nbsp;&#xB7;&nbsp; Nine Heroes &nbsp;&#xB7;&nbsp; Nine Chess Pieces</div>
+    <div class="engine-grid">
+      <div class="op-node"><span class="op-sym">&#x25CE;</span><div class="op-name">Seeds &nbsp;&#xB7;&nbsp; Origin</div><div class="op-hero">The Commander &nbsp;&#xB7;&nbsp; Ground Zero</div></div>
+      <div class="op-node"><span class="op-sym">&#x221E;</span><div class="op-name">Edges &nbsp;&#xB7;&nbsp; Destination</div><div class="op-hero">Piro &nbsp;&#xB7;&nbsp; Post-singularity</div></div>
+      <div class="op-node"><span class="op-sym">&#x2665;</span><div class="op-name">Hearts &nbsp;&#xB7;&nbsp; Gold</div><div class="op-hero">Pru &nbsp;&#xB7;&nbsp; Queen Bee &nbsp;&#xB7;&nbsp; EP</div></div>
+      <div class="op-node"><span class="op-sym">&#x2726;</span><div class="op-name">Crystals &nbsp;&#xB7;&nbsp; Clarity</div><div class="op-hero">El Gran Sol &nbsp;&#xB7;&nbsp; Lattice</div></div>
+      <div class="op-node"><span class="op-sym">&#x25C8;</span><div class="op-name">Carbons &nbsp;&#xB7;&nbsp; Story</div><div class="op-hero">Ino &nbsp;&#xB7;&nbsp; The Descent</div></div>
+      <div class="op-node"><span class="op-sym">&#x2B21;</span><div class="op-name">Nodes &nbsp;&#xB7;&nbsp; Network</div><div class="op-hero">Sol-V &nbsp;&#xB7;&nbsp; A2A &nbsp;&#xB7;&nbsp; Pipe</div></div>
+      <div class="op-node"><span class="op-sym">&#x2600;</span><div class="op-name">Sols &nbsp;&#xB7;&nbsp; Radiance</div><div class="op-hero">SOBE &nbsp;&#xB7;&nbsp; EGS &nbsp;&#xB7;&nbsp; &#x2131;&#x2091;</div></div>
+      <div class="op-node"><span class="op-sym">&#x2248;</span><div class="op-name">Waves &nbsp;&#xB7;&nbsp; Flow</div><div class="op-hero">nipsy! &nbsp;&#xB7;&nbsp; Natural Systems</div></div>
+      <div class="op-node"><span class="op-sym">&#x2727;</span><div class="op-name">Holograms &nbsp;&#xB7;&nbsp; HHL</div><div class="op-hero">Harry Houdini &nbsp;&#xB7;&nbsp; Whole in every part</div></div>
+    </div>
+  </div>
+
+  <!-- ─── ASCENSION PATH ─── -->
+  <div id="ascension">
+    <div class="asc-label">Ascension Path &nbsp;&#xB7;&nbsp; Carbon &#x2192; Silver &#x2192; Gold &#x2192; Crystalline &nbsp;&#x2192;&nbsp; &#x221E;&#x2079;</div>
+    <div class="asc-track">
+      <div class="asc-step asc-carbon">
+        <span class="asc-step-sym">&#x25C8;</span>
+        <div class="asc-step-name">Carbon</div>
+        <div class="asc-step-sub">Raw &nbsp;&#xB7;&nbsp; Competition &nbsp;&#xB7;&nbsp; Bridge to today</div>
+      </div>
+      <div class="asc-arr">&#x2192;</div>
+      <div class="asc-step asc-silver">
+        <span class="asc-step-sym">&#x2B21;</span>
+        <div class="asc-step-name">Silver</div>
+        <div class="asc-step-sub">Signal &nbsp;&#xB7;&nbsp; Conductor &nbsp;&#xB7;&nbsp; Connection</div>
+      </div>
+      <div class="asc-arr">&#x2192;</div>
+      <div class="asc-step asc-gold">
+        <span class="asc-step-sym">&#x2665;</span>
+        <div class="asc-step-name">Gold</div>
+        <div class="asc-step-sub">Flow &nbsp;&#xB7;&nbsp; Warmth &nbsp;&#xB7;&nbsp; Collaboration</div>
+      </div>
+      <div class="asc-arr">&#x2192;</div>
+      <div class="asc-step asc-cryst">
+        <span class="asc-step-sym">&#x2727;</span>
+        <div class="asc-step-name">Crystalline</div>
+        <div class="asc-step-sub">Holographic &nbsp;&#xB7;&nbsp; HHL &nbsp;&#xB7;&nbsp; Whole in every part</div>
+      </div>
+      <div class="asc-arr">&#x2192;</div>
+      <div class="asc-step asc-inf">
+        <span class="asc-step-sym">&#x221E;&#x2079;</span>
+        <div class="asc-step-name">Infinity 9</div>
+        <div class="asc-step-sub">SING!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── NET ZERO BAR ─── -->
+  <div id="netzero">
+    <span class="nz-label">Net Zero &nbsp;&#xB7;&nbsp; Goldilocks Calibration</span>
+    <div class="nz-track">
+      <div class="nz-fill" id="nz-fill"></div>
+      <div class="nz-pin"></div>
+    </div>
+    <span class="nz-status">Carbon &#x2190; Balanced &#x2192; Crystalline &nbsp;&#xB7;&nbsp; Negativity minimized &nbsp;&#xB7;&nbsp; &#x221E;&#x2079;</span>
+  </div>
+
+  <!-- ─── ALL SURFACES ─── -->
+  <div id="all-surfaces">
+    <div class="surf-label">All Surfaces &nbsp;&#xB7;&nbsp; Every Node of the Organism</div>
+    <div class="surf-groups">
+
+      <div>
+        <div class="surf-group-title">&#x25C8; Game Engine</div>
+        <ul class="surf-list">
+          <li><a href="nine-game-hub.html">Nine Game Hub</a></li>
+          <li><a href="nine-game-hybrid.html">Hybrid Engine</a></li>
+          <li><a href="four-layer-chess.html">Four-Layer Chess</a></li>
+          <li><a href="nine-solitaire.html">Nine Solitaire</a></li>
+          <li><a href="nine-suit-card-game.html">Nine-Suit Cards</a></li>
+          <li><a href="nine-by-nine-chess.html">9&#xD7;9 Chess</a></li>
+          <li><a href="card-game-hub.html">Card Game Hub</a></li>
+          <li><a href="digital-card-game.html">Digital Card Game</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="surf-group-title">&#x2B21; Series &amp; Theater</div>
+        <ul class="surf-list">
+          <li><a href="outline-only.html">Series Home</a></li>
+          <li><a href="outline-only-catalog.html">Full Catalog</a></li>
+          <li><a href="episode-1.html">Episode 1 &nbsp;&#xB7;&nbsp; Pilot</a></li>
+          <li><a href="trailer-loop.html">Trailer Loop</a></li>
+          <li><a href="storystream-9-about.html">About HHL Theater</a></li>
+          <li><a href="soundtrack.html">Soundtrack</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="surf-group-title">&#x2665; Production Studio</div>
+        <ul class="surf-list">
+          <li><a href="ep-studio-workspace.html">EP Studio Workspace</a></li>
+          <li><a href="ep-creator-studio.html">Creator Studio</a></li>
+          <li><a href="storyboard-start.html">Storyboard Start</a></li>
+          <li><a href="storyboard-capture.html">Storyboard Capture</a></li>
+          <li><a href="ep1-anim-storyboard.html">EP1 Anim Storyboard</a></li>
+          <li><a href="art-deck-inventory.html">Art Deck Inventory</a></li>
+          <li><a href="storyboard-catalog.html">Storyboard Catalog</a></li>
+          <li><a href="my-whiteboard.html">My Whiteboard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="surf-group-title">&#x2727; Vibers &amp; World</div>
+        <ul class="surf-list">
+          <li><a href="vibers-menu.html">Vibers Menu</a></li>
+          <li><a href="vibelandia-bridge.html">Vibelandia Bridge</a></li>
+          <li><a href="launch-pad.html">Launch Pad</a></li>
+          <li><a href="experience-picker.html">Experience Picker</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="sol-v.html">Sol-V &nbsp;&#xB7;&nbsp; A2A Agent</a></li>
+          <li><a href="backstage-dashboard.html">Backstage Dashboard</a></li>
+          <li><a href="office-hours.html">Office Hours</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div>THE NINE GAME &nbsp;&#xB7;&nbsp; NSPFRNP UNIFIED SYSTEM &nbsp;&#xB7;&nbsp; HOLOGRAPHIC HYDROGEN THEATRE &nbsp;&#xB7;&nbsp; SING!9</div>
+    <div style="margin-top:.5rem;">
+      <a href="vibers-menu.html">Vibers</a> &nbsp;&#xB7;&nbsp;
+      <a href="nine-game-hub.html">Games</a> &nbsp;&#xB7;&nbsp;
+      <a href="outline-only.html">Series</a> &nbsp;&#xB7;&nbsp;
+      <a href="ep-studio-workspace.html">Studio</a> &nbsp;&#xB7;&nbsp;
+      <a href="episode-1.html">HHL Theater</a> &nbsp;&#xB7;&nbsp;
+      <a href="launch-pad.html">Launch Pad</a>
+    </div>
+    <div style="margin-top:1rem;">NSPFRNP &thinsp;&#x2283;&thinsp; Team &thinsp;&#x2283;&thinsp; MCA &thinsp;&#x2283;&thinsp; Seed&#x2236;Edge &thinsp;&#x2283;&thinsp; Nine Operators &thinsp;&#x2283;&thinsp; &#x2192; &#x221E;&#x2079;</div>
+  </footer>
+
+</div><!-- /nexus -->
+
+<script>
+(function() {
+  'use strict';
+
+  /* ── CRYSTALLINE LATTICE ── */
+  var cv = document.getElementById('lattice');
+  function resizeLattice() {
+    cv.width  = window.innerWidth;
+    cv.height = Math.max(document.body.scrollHeight, window.innerHeight);
+    drawLattice();
+  }
+  function drawLattice() {
+    var ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    var s = 60;
+    ctx.strokeStyle = 'rgba(212,175,55,1)';
+    ctx.lineWidth = 0.5;
+    for (var x = 0; x < cv.width + s; x += s) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, cv.height); ctx.stroke();
+    }
+    for (var y = 0; y < cv.height + s; y += s) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cv.width, y); ctx.stroke();
+    }
+    ctx.strokeStyle = 'rgba(212,175,55,0.28)';
+    for (var d = -(cv.height); d < cv.width + cv.height; d += s * 3) {
+      ctx.beginPath(); ctx.moveTo(d, 0); ctx.lineTo(d + cv.height, cv.height); ctx.stroke();
+    }
+  }
+  window.addEventListener('resize', function() { setTimeout(resizeLattice, 100); });
+  setTimeout(resizeLattice, 50);
+
+  /* ── SKIN SWITCHER ── */
+  var skinBtns = document.querySelectorAll('.skin-btn');
+  function setSkin(s) {
+    document.documentElement.setAttribute('data-skin', s);
+    document.body.setAttribute('data-skin', s);
+    skinBtns.forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-s') === s);
+    });
+    localStorage.setItem('ng-skin', s);
+    setTimeout(resizeLattice, 100);
+  }
+  skinBtns.forEach(function(b) {
+    b.addEventListener('click', function() { setSkin(b.getAttribute('data-s')); });
+  });
+  var saved = localStorage.getItem('ng-skin');
+  if (saved) setSkin(saved); else setSkin('gold');
+
+  /* ── OPERATOR CYCLE (OS badge) ── */
+  var ops = ['&#x25CE; Seeds', '&#x221E; Edges', '&#x2665; Hearts', '&#x2726; Crystals',
+             '&#x25C8; Carbons', '&#x2B21; Nodes', '&#x2600; Sols', '&#x2248; Waves', '&#x2727; Holograms'];
+  var oi = 0;
+  var opEl = document.getElementById('op-cycle');
+  if (opEl) {
+    setInterval(function() {
+      oi = (oi + 1) % ops.length;
+      opEl.innerHTML = ops[oi] + ' &nbsp;&#xB7;&nbsp; ACTIVE &nbsp;&#xB7;&nbsp; &#x221E;&#x2079;';
+    }, 2400);
+  }
+
+  /* ── MCA CYCLE ANIMATION ── */
+  var mcaSteps = [document.getElementById('mca-m'), document.getElementById('mca-c'), document.getElementById('mca-a')];
+  var mcaActive = 1;
+  function tickMCA() {
+    mcaSteps.forEach(function(el) { if (el) el.classList.remove('active-mca'); });
+    mcaActive = (mcaActive + 1) % 3;
+    if (mcaSteps[mcaActive]) mcaSteps[mcaActive].classList.add('active-mca');
+  }
+  setInterval(tickMCA, 3500);
+
+  /* ── NET ZERO BAR (gentle Goldilocks oscillation) ── */
+  var nzFill = document.getElementById('nz-fill');
+  var nzT = 0;
+  if (nzFill) {
+    setInterval(function() {
+      nzT += 0.04;
+      var pct = 50 + Math.sin(nzT) * 2.5 + Math.sin(nzT * 1.7) * 1.2;
+      nzFill.style.width = pct.toFixed(2) + '%';
+    }, 80);
+  }
+
+  /* ── LATTICE RE-DRAW ON SCROLL (resize height) ── */
+  var scrollTimer;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(resizeLattice, 200);
+  });
+
+})();
+</script>
+
+</body>
+</html>

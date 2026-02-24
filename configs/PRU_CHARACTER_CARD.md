@@ -77,6 +77,8 @@ These are not wounds. They are the compression that powered the launch.
 | 5 | Leo da Vinci | The character companion — the Renaissance polymath active |
 | TOP | Marijuana | On top of the closed cigar case in the felt dice area — the sacred |
 
+
+
 **The Shut the Door Game** currently shows: **3 · 6 · 9**
 
 ---
@@ -86,7 +88,7 @@ These are not wounds. They are the compression that powered the launch.
 *The layers underneath everything Pru does — always present, rarely visible, always operating:*
 
 ```
-TOP ──── Elbron Souls
+TOP ──── El Gran Sol's Constant
          EGS Fractal Constant · 0.0032
          Water Molecule · H₂O
          Fungi · Bacteria · Hysteria · Small Things
@@ -97,7 +99,7 @@ TOP ──── Elbron Souls
 BOTTOM ─ Cosmos · Big Bang · ∞
 ```
 
-This stack is not metaphorical. It is the actual substrate of every story, every deck, every session. The Big Bang is underneath every cup of coffee. The water molecule is underneath every crystal water. The fractal constant is underneath every configuration. Elbron Souls is at the top because soul is the highest refinement of all the material below it.
+This stack is not metaphorical. It is the actual substrate of every story, every deck, every session. The Big Bang is underneath every cup of coffee. The water molecule is underneath every crystal water. The fractal constant is underneath every configuration. El Gran Sol's Constant is at the top because the sun's fundamental frequency is the highest organizing principle above all the material below it — the constant that the fractal (0.0032) derives from.
 
 ---
 

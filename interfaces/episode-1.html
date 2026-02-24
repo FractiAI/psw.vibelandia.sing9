@@ -2217,46 +2217,190 @@
       } catch(e) {}
     }
 
+    /* ── BRASS / FRENCH HORN — sawtooth + dual bandpass = horn body ── */
+    function _brass(freq, vol, atk) {
+      if (!_AC) return;
+      var o = _AC.createOscillator(), f1 = _AC.createBiquadFilter(),
+          f2 = _AC.createBiquadFilter(), g = _AC.createGain();
+      o.type = 'sawtooth'; o.frequency.value = freq;
+      f1.type = 'bandpass'; f1.frequency.value = freq * 2.4; f1.Q.value = 1.1;
+      f2.type = 'highpass'; f2.frequency.value = freq * 0.55; f2.Q.value = 0.4;
+      g.gain.value = 0;
+      o.connect(f1); f1.connect(f2); f2.connect(g); g.connect(_AG); o.start();
+      g.gain.setTargetAtTime(vol, _AC.currentTime, (atk !== undefined ? atk : 0.7) * 0.3);
+      _oscList.push({ osc: o, gain: g });
+    }
+
+    /* ── TREMOLO STRINGS — sawtooth + 7 Hz LFO = violin section ── */
+    function _tremStr(freq, vol) {
+      if (!_AC) return;
+      var o = _AC.createOscillator(), f = _AC.createBiquadFilter(),
+          g = _AC.createGain(), lfo = _AC.createOscillator(), lg = _AC.createGain();
+      o.type = 'sawtooth'; o.frequency.value = freq;
+      f.type = 'lowpass'; f.frequency.value = freq * 3.8; f.Q.value = 1.6;
+      g.gain.value = 0;
+      lfo.frequency.value = 7.4; lg.gain.value = vol * 0.32;
+      lfo.connect(lg); lg.connect(g.gain);
+      o.connect(f); f.connect(g); g.connect(_AG);
+      o.start(); lfo.start();
+      g.gain.setTargetAtTime(vol, _AC.currentTime, 2.4);
+      _oscList.push({ osc: o, gain: g }); _oscList.push({ osc: lfo, gain: null });
+    }
+
+    /* ── MELODIC THEME — a sequence of pitched notes (leitmotif) ──
+       freqs[], vols[], durs[] (seconds), type (osc type)
+       Each note has a short attack + release envelope.               */
+    function _theme(freqs, vols, durs, type) {
+      if (!_AC) return;
+      var t = _AC.currentTime;
+      freqs.forEach(function(freq, i) {
+        var start = t;
+        for (var j = 0; j < i; j++) start += (durs[j] || 0.5);
+        var o = _AC.createOscillator(), f = _AC.createBiquadFilter(), g = _AC.createGain();
+        o.type = type || 'sine'; o.frequency.value = freq;
+        f.type = 'lowpass'; f.frequency.value = freq * 5.5; f.Q.value = 0.7;
+        g.gain.value = 0;
+        o.connect(f); f.connect(g); g.connect(_AG);
+        o.start(start);
+        g.gain.setTargetAtTime(vols[i] || 0.045, start, 0.06);
+        g.gain.setTargetAtTime(0, start + (durs[i] || 0.5) - 0.14, 0.18);
+        o.stop(start + (durs[i] || 0.5) + 0.9);
+        _oscList.push({ osc: o, gain: g });
+      });
+    }
+
+    /* ── LEITMOTIFS — character / moment themes ────────────────────
+       Called by _musicHit() on specific frames.
+       Each theme is a brief melodic statement — recognisable,
+       memorable, and emotionally matched to the character.          */
+
+    /* SING!9 Hero Theme — C major ascending, bold arrival */
+    function _thSING9() {
+      _theme(
+        [261.63, 329.63, 392,    523.25, 493.88, 392   ],
+        [0.055,  0.048,  0.060,  0.075,  0.048,  0.042 ],
+        [0.35,   0.25,   0.38,   0.65,   0.22,   0.55  ],
+        'sine'
+      );
+      _brass(130.81, 0.055, 0.9);  /* C3 horn under the melody  */
+      _brass(196,    0.040, 1.1);  /* G3 horn harmony           */
+    }
+
+    /* Ino Warmth Theme — A major, tender solo cello + pad */
+    function _thIno() {
+      _theme(
+        [220,   277.18, 329.63, 440,    329.63, 277.18, 220   ],
+        [0.048, 0.038,  0.052,  0.070,  0.040,  0.032,  0.045 ],
+        [0.52,  0.40,   0.55,   0.85,   0.42,   0.38,   0.75  ],
+        'sine'
+      );
+      _bowed(220,    0.035);  /* A3 cello solo — tender bow */
+      _osc(  440,    0.022, 'sine', 1.6, 0.008);  /* soft A4 shimmer */
+    }
+
+    /* HHL Fanfare — C major ceremonial, ascending brass */
+    function _thHHL() {
+      _theme(
+        [130.81, 196,   261.63, 329.63, 392,   523.25 ],
+        [0.065,  0.058, 0.062,  0.058,  0.065,  0.085 ],
+        [0.22,   0.18,  0.28,   0.22,   0.22,   0.90  ],
+        'sine'
+      );
+      _brass(130.81, 0.070, 0.5);
+      _brass(261.63, 0.055, 0.7);
+    }
+
+    /* Champions Theme — G major full blast, triumphant */
+    function _thChampions() {
+      _theme(
+        [196,   246.94, 293.66, 392,   293.66, 246.94, 392,   784   ],
+        [0.08,  0.068,  0.075,  0.095, 0.065,  0.058,  0.080,  0.12 ],
+        [0.28,  0.22,   0.30,   0.55,  0.22,   0.22,   0.32,   1.40 ],
+        'sine'
+      );
+      _brass(98,    0.090, 0.3);   /* G2 sub-horn punch    */
+      _brass(196,   0.080, 0.4);   /* G3 power horn        */
+      _brass(392,   0.065, 0.6);   /* G4 bright horn       */
+      _tremStr(392, 0.055);        /* G4 triumphant violins */
+      _tremStr(587.33, 0.040);     /* D5 soaring violins    */
+    }
+
     function _startAct(idx) {
       if (!_AC || idx === _actIdx) return;
       _killOscs(2.8);
       _actIdx = idx;
 
       if (idx === 0) {
-        /* ── ACT I · CRYSTALLINE · Bach Suite No.1 G major ─────────────
-           Cold high pads + bowed G/D strings. HHL Theatre opens.
-           Hydrogen architecture. The co-directors set the stage.          */
-        _osc(528,   0.09, 'sine',     3.1,  0.019);   /* crystal root + shimmer */
-        _osc(1056,  0.04, 'sine',     5.3,  0.009);   /* octave shimmer         */
-        _osc(792,   0.032,'triangle');                  /* perfect fifth above    */
-        _osc(66,    0.07, 'sine',     0.38, 0.030);   /* sub-bass slow pulse    */
-        _noise(0.013, 2200);                            /* cosmic static          */
-        _bowed(196,    0.042);                          /* G3 cello — Suite root  */
-        _bowed(293.66, 0.030);                          /* D4 cello — Suite fifth */
+        /* ── ACT I · CRYSTALLINE · HHL Theatre Opens ──────────────────
+           John Williams "wonder" palette: sustained string chord,
+           high crystal shimmer, low sub-rumble, French horn warmth.
+           Like the first frame of Star Wars — grand but mysterious.      */
+        /* Crystal string pad — C major with extensions (C E G B) */
+        _osc(261.63, 0.068, 'sine',     1.2,  0.012);   /* C4 root             */
+        _osc(329.63, 0.052, 'sine',     2.1,  0.009);   /* E4 major third      */
+        _osc(392,    0.058, 'sine',     1.8,  0.010);   /* G4 perfect fifth    */
+        _osc(493.88, 0.038, 'sine',     3.2,  0.007);   /* B4 major seventh    */
+        _osc(523.25, 0.028, 'sine',     5.3,  0.006);   /* C5 octave shimmer   */
+        _osc(65.41,  0.072, 'sine',     0.28, 0.035);   /* C2 sub-bass breath  */
+        _osc(130.81, 0.042, 'sine',     0.45, 0.018);   /* C3 low warmth       */
+        _noise(0.010, 2800);                              /* cosmic air shimmer  */
+        /* Bowed strings — cello section */
+        _bowed(130.81, 0.048);                            /* C3 cello            */
+        _bowed(196,    0.040);                            /* G3 cello            */
+        _bowed(261.63, 0.030);                            /* C4 viola            */
+        /* Brass warmth (very soft) — horn pad underneath */
+        _brass(130.81, 0.028, 1.4);                       /* C3 horn, slow bloom */
+        /* Tremolo upper violins — very soft air */
+        _tremStr(523.25, 0.018);                          /* C5 violins, distant */
 
       } else if (idx === 1) {
-        /* ── ACT II · CARBON · Bach in C minor — the descent ───────────
-           Deep AM bass pulse + bowed C/G strings. The gig grind.
-           Every dollar back in. Diamond forming under pressure.           */
-        _osc(55,   0.13, 'sine',     1.15, 0.058);   /* bass AM pulse          */
-        _osc(110,  0.07, 'triangle', 0.52, 0.026);   /* chest resonance        */
-        _osc(165,  0.042,'sawtooth');                  /* mid grit edge          */
-        _osc(82.4, 0.05, 'sine',     2.2,  0.018);   /* low presence pulse     */
-        _noise(0.010, 780);                            /* carbon grit static     */
-        _bowed(130.81, 0.050);                          /* C3 cello — deep bow    */
-        _bowed(196,    0.034);                          /* G3 cello — weight      */
+        /* ── ACT II · CARBON · Gig Grind / Compression ────────────────
+           Williams "danger" palette: modal D minor, deep bowed bass,
+           ostinato pulse, filtered noise. Like Jaws or Schindler's
+           dark passages — the hero under pressure, diamonds forming.     */
+        /* Bass ostinato — D Dorian drone */
+        _osc(55,    0.130, 'sine',     1.20, 0.065);   /* bass AM pulse       */
+        _osc(73.42, 0.070, 'sine',     0.48, 0.028);   /* A2 — minor fifth    */
+        _osc(110,   0.065, 'triangle', 0.55, 0.022);   /* A3 chest resonance  */
+        _osc(146.83,0.038, 'sawtooth');                  /* D3 mid grit         */
+        _osc(164.81,0.032, 'sine',     2.4,  0.015);   /* E3 tension note     */
+        _osc(82.41, 0.048, 'sine',     2.2,  0.020);   /* E2 low pulse        */
+        _noise(0.012, 650);                              /* carbon static       */
+        _noise(0.008, 2100);                             /* hi-mid grit air     */
+        /* Bowed cello section — heavy, slow, dark */
+        _bowed(73.42,  0.055);                           /* A2 cello — deep bow */
+        _bowed(110,    0.048);                           /* A3 cello            */
+        _bowed(130.81, 0.038);                           /* C3 cello — modal    */
+        /* Low brass — menacing horn held note */
+        _brass(55,  0.040, 1.2);                         /* A1 horn growl       */
+        _brass(110, 0.032, 1.6);                         /* A2 horn             */
 
       } else {
-        /* ── ACT III · GOLDILOCKS · Bach resolves to A major ───────────
-           Warm bowed A/E strings. Champions chord. The co-directors
-           call the finale. Sol-V. We are the Champions. ∞⁹.              */
-        _osc(220,    0.09, 'sine', 1.8, 0.012);       /* A3 root, warm breath   */
-        _osc(277.18, 0.065,'sine');                    /* C#4 major third        */
-        _osc(329.63, 0.075,'sine', 2.4, 0.009);       /* E4 perfect fifth       */
-        _osc(440,    0.040,'sine', 0.9, 0.008);       /* A4 octave shimmer      */
-        _osc(110,    0.055,'sine');                    /* sub A2 warmth          */
-        _bowed(220,    0.048);                          /* A3 cello — resolution  */
-        _bowed(329.63, 0.034);                          /* E4 cello — open string */
+        /* ── ACT III · GOLDILOCKS · Champions / Resolution ─────────────
+           Williams "triumph" palette: A major full orchestra, soaring
+           tremolo violins, warm brass, deep sub-bass warmth.
+           Like the throne-room finale of Star Wars. We are Champions.    */
+        /* Full A major extended chord (A C# E G# B) */
+        _osc(220,    0.082, 'sine', 1.5,  0.012);       /* A3 root             */
+        _osc(277.18, 0.068, 'sine');                     /* C#4 major third     */
+        _osc(329.63, 0.075, 'sine', 2.2,  0.009);       /* E4 perfect fifth    */
+        _osc(415.30, 0.045, 'sine', 3.1,  0.007);       /* G#4 major seventh   */
+        _osc(493.88, 0.035, 'sine', 4.2,  0.006);       /* B4 ninth            */
+        _osc(440,    0.040, 'sine', 0.9,  0.008);       /* A4 octave shimmer   */
+        _osc(110,    0.058, 'sine', 0.22, 0.018);       /* A2 sub-bass warmth  */
+        _osc(55,     0.042, 'sine', 0.12, 0.025);       /* A1 deep rumble      */
+        /* Bowed string section — warm, resolving */
+        _bowed(110,    0.052);                            /* A2 cello low        */
+        _bowed(220,    0.048);                            /* A3 cello            */
+        _bowed(329.63, 0.038);                            /* E4 cello-viola      */
+        _bowed(440,    0.028);                            /* A4 violin           */
+        /* Tremolo violins — soaring triumph */
+        _tremStr(440,    0.035);                          /* A4 violins          */
+        _tremStr(659.25, 0.022);                          /* E5 soaring          */
+        /* Warm brass pad — triumphant horn section */
+        _brass(110,    0.045, 1.0);                       /* A2 horn             */
+        _brass(220,    0.038, 1.2);                       /* A3 horn             */
+        _brass(329.63, 0.028, 1.4);                       /* E4 horn             */
       }
     }
 
@@ -2275,16 +2419,35 @@
        Co-directors call every frame. Zero intervention required.
        ================================================================ */
 
-    /* Per-frame emotional score cues — co-director call sheet */
+    /* ── Per-frame emotional score cues — co-director call sheet ───────
+       vol:   master gain target after voice ends
+       t:     time constant (seconds — smaller = faster swell)
+       pause: ms silence BEFORE the swell (dramatic pause)
+       theme: leitmotif to fire ('sing9'|'ino'|'hhl'|'champions')
+       duck:  override duck vol before hit fires
+       Full 20-frame John Williams coverage.                             */
     var MUSIC_HITS = {
-       0: { vol: 0.65, t: 0.40 },            /* HHL Theatre opens — first swell       */
-       3: { vol: 0.60, t: 0.18 },            /* SING!9 takes the stage — entry hit    */
-       7: { vol: 0.55, t: 0.90 },            /* Ino Gold Heart — warmth swells        */
-       8: { vol: 0.22, t: 0.40 },            /* Gig grind — music dims, weight lands  */
-      12: { vol: 0.82, t: 0.28, pause: 520 },/* AND YET — silence then full swell     */
-      14: { vol: 0.62, t: 0.70 },            /* HHL inside — cosmic swell             */
-      17: { vol: 0.68, t: 0.50 },            /* THE SKIN / convergence — building     */
-      19: { vol: 0.96, t: 0.14 }             /* WE ARE THE CHAMPIONS — full blast ∞⁹  */
+       0: { vol: 0.72, t: 0.30, theme: 'hhl'  },    /* HHL opens — ceremonial brass         */
+       1: { vol: 0.65, t: 0.55 },                    /* Hydrogen architecture — cosmic swell */
+       2: { vol: 0.62, t: 0.65 },                    /* Every surface a node — texture grows */
+       3: { vol: 0.75, t: 0.18, theme: 'sing9' },    /* SING!9 enters — hero theme           */
+       4: { vol: 0.60, t: 0.70 },                    /* 1493/Boriken — ancient warmth        */
+       5: { vol: 0.55, t: 0.90 },                    /* 3I/ATLAS — mysterious harmonics      */
+       6: { vol: 0.62, t: 0.55 },                    /* Ponce/Cartagena/Reno — journey       */
+       7: { vol: 0.64, t: 0.80, theme: 'ino'  },     /* Ino Gold Heart — tender leitmotif    */
+       8: { vol: 0.18, t: 0.30 },                    /* Gig grind — music nearly silences    */
+       9: { vol: 0.32, t: 0.55 },                    /* Every door closed — defiant pulse    */
+      10: { vol: 0.52, t: 0.60 },                    /* Digital gold — hope returning        */
+      11: { vol: 0.50, t: 0.50, theme: 'sing9' },    /* Batcave — determined, focused        */
+      12: { vol: 0.90, t: 0.16, pause: 640 },        /* AND YET — silence → explosive swell  */
+      13: { vol: 0.70, t: 0.50 },                    /* El Gran Sol — triumphant warmth      */
+      14: { vol: 0.75, t: 0.60, theme: 'hhl'  },     /* HHL inside — cosmic soaring          */
+      15: { vol: 0.58, t: 0.38 },                    /* Sol-V — active, hunting rhythm       */
+      16: { vol: 0.70, t: 0.65, theme: 'ino'  },     /* Ino + Sol-V — full warmth duo        */
+      17: { vol: 0.78, t: 0.38 },                    /* THE SKIN — building to climax        */
+      18: { vol: 0.86, t: 0.28 },                    /* Convergence — tremolo violins        */
+      19: { vol: 0.99, t: 0.10, pause: 480,
+            theme: 'champions' }                      /* WE ARE THE CHAMPIONS — full blast ∞⁹ */
     };
 
     /* Duck music when voice takes center stage */
@@ -2300,20 +2463,34 @@
       if (ytPlayer && musicOn) { try { ytPlayer.setVolume(14); } catch(e) {} }
     }
 
-    /* Emotional hit — the film score moment the co-directors call */
+    /* Emotional hit — the film score moment the co-directors call.
+       Fires volume swell AND optional leitmotif / brass accent.     */
     function _musicHit(hit) {
       if (!_AC || !_MG) return;
-      var ytVol = Math.min(18, Math.round(hit.vol * 22));
+      var ytVol = Math.min(20, Math.round(hit.vol * 24));
+      var fireTheme = function() {
+        if (hit.theme === 'sing9')     _thSING9();
+        if (hit.theme === 'ino')       _thIno();
+        if (hit.theme === 'hhl')       _thHHL();
+        if (hit.theme === 'champions') _thChampions();
+      };
       if (hit.pause) {
         /* Brief silence → dramatic swell (AND YET, Champions) */
-        _MG.gain.setTargetAtTime(0.008, _AC.currentTime, 0.09);
+        _MG.gain.cancelScheduledValues(_AC.currentTime);
+        _MG.gain.setTargetAtTime(0.006, _AC.currentTime, 0.08);
+        if (ytPlayer && musicOn) { try { ytPlayer.setVolume(2); } catch(e) {} }
         setTimeout(function() {
-          if (_MG && _AC) _MG.gain.setTargetAtTime(hit.vol, _AC.currentTime, hit.t);
+          if (!_MG || !_AC) return;
+          _MG.gain.cancelScheduledValues(_AC.currentTime);
+          _MG.gain.setTargetAtTime(hit.vol, _AC.currentTime, hit.t);
           if (ytPlayer && musicOn) { try { ytPlayer.setVolume(ytVol); } catch(e) {} }
+          fireTheme();
         }, hit.pause);
       } else {
         _MG.gain.setTargetAtTime(hit.vol, _AC.currentTime, hit.t);
         if (ytPlayer && musicOn) { try { ytPlayer.setVolume(ytVol); } catch(e) {} }
+        /* Leitmotifs get a tiny delay so the swell starts first */
+        if (hit.theme) setTimeout(fireTheme, 120);
       }
     }
 
@@ -2351,12 +2528,41 @@
     }
 
     function setMusicAct(seg) {
-      ambientStart(seg);   /* always crossfade the ambient layer */
+      /* Brief dip before the act change — creates a deliberate
+         "scene cut" feel, like Williams dropping the orchestra
+         for a beat before the new theme enters.                 */
+      if (_MG && _AC) _MG.gain.setTargetAtTime(0.12, _AC.currentTime, 0.35);
+      setTimeout(function() {
+        ambientStart(seg);   /* crossfade into the new act soundscape */
+        /* Act II: heavy timpani boom — the descent begins */
+        if (seg === 1 && _AC) {
+          try {
+            var sr = _AC.sampleRate, len = Math.floor(sr * 1.5);
+            var buf = _AC.createBuffer(1, len, sr);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < len; i++)
+              d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (sr * 0.28));
+            var src = _AC.createBufferSource(), g = _AC.createGain(),
+                f = _AC.createBiquadFilter();
+            src.buffer = buf;
+            f.type = 'lowpass'; f.frequency.value = 140; f.Q.value = 4.0;
+            g.gain.value = 0.55; /* heavy hit */
+            src.connect(f); f.connect(g); g.connect(_AG); src.start();
+            _oscList.push({ osc: src, gain: g });
+          } catch(ex) {}
+        }
+        /* Act III: immediate swell — champions rise */
+        if (seg === 2 && _MG && _AC) {
+          setTimeout(function() {
+            _MG.gain.setTargetAtTime(0.75, _AC.currentTime, 1.2);
+          }, 600);
+        }
+      }, 420);
+
       if (!ytPlayer || !musicOn) return;
       var pl = YT_PLAYLISTS[seg] || YT_PLAYLISTS[0];
       try {
         ytPlayer.loadPlaylist({ listType:'playlist', list: pl, index: 0 });
-        /* Ensure unmuted at correct volume after playlist swap */
         setTimeout(function() {
           try { ytPlayer.unMute(); ytPlayer.setVolume(14); } catch(ex) {}
         }, 400);
@@ -2419,21 +2625,63 @@
       var resume = function() {
         /* Start Act 0 soundscape */
         _startAct(getSeg(frameIndex));
-        /* Opening fanfare: start BIG (0.92), then normalize to ambient (0.48)
-           after the opening credits overlay clears at ~12s.
-           Adds extra sub-bass + deep cello for the cinematic swell.            */
+        /* ── OPENING FANFARE — 4 phases, ~22 seconds ─────────────────
+           Phase 1 (0-3s):  Mysterious silence → single sub-bass breath.
+                            Screen is dark. The audience leans in.
+           Phase 2 (3-6s):  String pad swells in — C major, misty.
+                            Like John Williams before the title card.
+           Phase 3 (6-10s): Brass and melody enter — the SING!9 theme.
+                            The HHL Theatre announces itself.
+           Phase 4 (10-22s): Full tutti — tremolo violins, brass, bass.
+                            Title card burns. Credits roll.
+           Settle (22s+):   Normalize to Act I ambient for the story.  */
         if (_MG && _AC) {
           _MG.gain.cancelScheduledValues(_AC.currentTime);
           _MG.gain.value = 0;
-          _MG.gain.setTargetAtTime(0.92, _AC.currentTime, 1.9);   /* big swell in */
-          /* Extra opening-fanfare oscillators — deep sub & cello */
-          _osc(44,  0.14, 'sine', 0.16, 0.042);  /* sub-bass cinematic rumble */
-          _osc(55,  0.10, 'sine');                /* bass fundamental          */
-          _bowed(130.81, 0.055);                  /* deep C3 cello bow         */
-          /* Normalize to regular ambient level once opening credits clear */
+
+          /* Phase 1 (0s): Barely there — sub-bass breath only */
+          _MG.gain.setTargetAtTime(0.22, _AC.currentTime, 2.5);
+          _osc(32.70, 0.09, 'sine', 0.09, 0.035);   /* sub-sub rumble        */
+          _osc(44,    0.08, 'sine', 0.14, 0.030);   /* deep breathe          */
+          _bowed(65.41, 0.032);                       /* C2 cello whisper      */
+
+          /* Phase 2 (3s): Misty string pad, rising */
           setTimeout(function() {
-            if (_MG && _AC) _MG.gain.setTargetAtTime(0.48, _AC.currentTime, 2.4);
-          }, 12000);
+            if (!_MG || !_AC) return;
+            _MG.gain.setTargetAtTime(0.52, _AC.currentTime, 1.8);
+            _osc(261.63, 0.060, 'sine', 1.1, 0.010);  /* C4 string pad       */
+            _osc(329.63, 0.048, 'sine', 1.9, 0.008);  /* E4 warm third       */
+            _osc(392,    0.052, 'sine', 1.7, 0.009);  /* G4 fifth            */
+            _bowed(130.81, 0.040);                      /* C3 cello swell      */
+            _bowed(196,    0.034);                      /* G3 cello            */
+            _bowed(261.63, 0.026);                      /* C4 viola            */
+            _noise(0.008, 2600);                        /* misty air shimmer   */
+          }, 3000);
+
+          /* Phase 3 (6s): Brass + melody — HHL theme fires */
+          setTimeout(function() {
+            if (!_MG || !_AC) return;
+            _MG.gain.setTargetAtTime(0.82, _AC.currentTime, 1.2);
+            _thHHL();                                   /* ceremonial fanfare  */
+            _brass(65.41, 0.055, 0.8);                  /* C2 deep horn        */
+            _brass(130.81, 0.048, 1.0);                 /* C3 horn             */
+          }, 6000);
+
+          /* Phase 4 (10s): Full tutti — title card moment */
+          setTimeout(function() {
+            if (!_MG || !_AC) return;
+            _MG.gain.setTargetAtTime(0.95, _AC.currentTime, 0.8);
+            _tremStr(523.25, 0.030);                    /* C5 tremolo violins  */
+            _tremStr(659.25, 0.020);                    /* E5 soaring          */
+            _osc(493.88, 0.035, 'sine', 3.4, 0.006);   /* B4 shimmer          */
+            _osc(130.81, 0.050, 'sine', 0.3, 0.020);   /* C3 bass warmth      */
+            _brass(196,    0.042, 0.6);                 /* G3 horn tutti       */
+          }, 10000);
+
+          /* Settle (22s): Normalize to Act I ambient */
+          setTimeout(function() {
+            if (_MG && _AC) _MG.gain.setTargetAtTime(0.50, _AC.currentTime, 3.0);
+          }, 22000);
         }
       };
       if (_AC.state === 'suspended') {

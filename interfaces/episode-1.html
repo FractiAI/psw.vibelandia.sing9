@@ -1718,8 +1718,9 @@
 
     var voiceOn     = true;
     var voiceBtn    = document.getElementById('btnVoice');
-    var safetyTimer = null;
-    var activeAudio = null;  /* current HTMLAudioElement */
+    var safetyTimer  = null;
+    var _advanceTimer = null;   /* tracks setTimeout(advanceFrame) — cleared on every re-entry */
+    var activeAudio  = null;    /* current HTMLAudioElement */
 
     /* ElevenLabs config */
     var EL_VOICES = {
@@ -1824,7 +1825,10 @@
     /* ---- Main speakLine — called by render() ---- */
     function speakLine(text, narrator) {
       if (!voiceOn || !text) return;
+      /* Cancel every pending advance before starting fresh */
       clearTimeout(safetyTimer);
+      clearTimeout(_advanceTimer);
+      _advanceTimer = null;
       _stopActive();
 
       /* Bach steps back — voice takes center stage */
@@ -1840,7 +1844,7 @@
           _swellMusic(0.48, 2.2);
         }
         var pause = narrator === 'HERO WILL' ? 1500 : 950;
-        setTimeout(advanceFrame, pause);
+        _advanceTimer = setTimeout(advanceFrame, pause);   /* tracked — cancellable */
       }
 
       /* 90-second safety net in case audio silently fails */
@@ -1862,7 +1866,12 @@
         if (!voiceOn) {
           _stopActive();
           clearTimeout(safetyTimer);
+          clearTimeout(_advanceTimer);
+          _advanceTimer = null;
         } else {
+          clearTimeout(_advanceTimer);
+          _advanceTimer = null;
+          frameTick = 0;
           speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
         }
       });
@@ -1930,7 +1939,14 @@
         if (keyBtn) keyBtn.style.color = 'rgba(140,220,140,0.85)';
         setTimeout(function () {
           closeModal();
-          if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
+          if (voiceOn && playing) {
+            /* Kill any advance timer that queued while modal was open,
+               reset the frame clock so the tick doesn't immediately skip. */
+            clearTimeout(_advanceTimer);
+            _advanceTimer = null;
+            frameTick = 0;
+            speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
+          }
         }, 900);
       });
 

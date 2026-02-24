@@ -436,6 +436,20 @@
       animation: kokoroLoad 1.4s ease-in-out infinite;
       cursor: default;
     }
+    .aud-btn.ai-on { border-color: rgba(100,200,255,0.65); color: rgba(100,200,255,0.9); }
+
+    /* AI Score status badge */
+    #ai-score-status {
+      position: fixed; top: 68px; left: 1rem; z-index: 51;
+      font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(100,200,255,0.75); background: rgba(0,0,20,0.75);
+      border: 1px solid rgba(100,200,255,0.25);
+      padding: 0.22rem 0.65rem; border-radius: 2px;
+      pointer-events: none;
+      opacity: 0; transition: opacity 0.4s;
+      max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    #ai-score-status.vis { opacity: 1; }
     @keyframes kokoroLoad {
       0%,100% { opacity: 0.55; } 50% { opacity: 1; }
     }
@@ -1088,6 +1102,31 @@
     <button class="aud-btn on" id="btnVoice" title="Mute narration voice">&#x1F50A; Mute Voice</button>
     <button class="aud-btn" id="btnVoiceKey" title="Set ElevenLabs API key for human voices">&#x1F511; Voice Key</button>
     <button class="aud-btn" id="btnMusic" title="Toggle original soundtrack">&#x1F3B5; Music</button>
+    <button class="aud-btn" id="btnAIScore" title="AI-generated orchestral score · Hugging Face MusicGen">&#x266B; AI Score</button>
+    <button class="aud-btn" id="btnHFKey"   title="Set Hugging Face API key (free at huggingface.co)">&#x1F511; HF Key</button>
+  </div>
+
+  <!-- AI SCORE STATUS BADGE -->
+  <div id="ai-score-status"></div>
+
+  <!-- HUGGING FACE KEY MODAL -->
+  <div id="hf-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.88);align-items:center;justify-content:center;">
+    <div style="background:#070710;border:1px solid rgba(100,200,255,0.35);padding:2rem;max-width:440px;width:92%;font-family:'Courier New',monospace;">
+      <div style="color:rgba(100,200,255,0.85);font-size:0.65rem;letter-spacing:0.22em;margin-bottom:0.5rem;">&#x266B; HUGGING FACE · TEXT-TO-MUSIC</div>
+      <p style="color:rgba(255,255,255,0.4);font-size:0.54rem;line-height:1.7;margin-bottom:1.2rem;">
+        Free API key at <strong style="color:rgba(255,255,255,0.8);">huggingface.co</strong> (sign up → Settings → Access Tokens).<br>
+        Model: <strong style="color:rgba(100,200,255,0.75);">facebook/musicgen-small</strong> — generates real orchestral music from scene descriptions.<br>
+        Works without a key (slower, rate-limited). With a free key: faster &amp; reliable.
+      </p>
+      <label style="display:block;font-size:0.55rem;color:rgba(100,200,255,0.6);letter-spacing:0.15em;margin-bottom:0.35rem;">HUGGING FACE API KEY (optional)</label>
+      <input id="hf-key-input" type="password" placeholder="hf_xxxxxxxxxxxxxxxxxxxxxxxx"
+        style="width:100%;background:rgba(0,0,0,0.6);border:1px solid rgba(100,200,255,0.3);color:rgba(255,255,255,0.85);padding:0.55rem 0.75rem;font-family:'Courier New',monospace;font-size:0.72rem;margin-bottom:0.9rem;outline:none;">
+      <div style="display:flex;gap:0.65rem;flex-wrap:wrap;">
+        <button id="hf-save-btn" style="padding:0.45rem 1.1rem;background:rgba(100,200,255,0.15);border:1px solid rgba(100,200,255,0.4);color:rgba(100,200,255,0.9);font-size:0.6rem;letter-spacing:0.15em;cursor:pointer;">SAVE &amp; ACTIVATE</button>
+        <button id="hf-clear-btn" style="padding:0.45rem 1.1rem;background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.35);font-size:0.6rem;letter-spacing:0.15em;cursor:pointer;">CLEAR KEY</button>
+        <button id="hf-close-btn" style="padding:0.45rem 1.1rem;background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.35);font-size:0.6rem;letter-spacing:0.15em;cursor:pointer;margin-left:auto;">CLOSE</button>
+      </div>
+    </div>
   </div>
 
   <!-- ELEVENLABS KEY MODAL -->
@@ -2536,6 +2575,8 @@
        to let it through. We duck the ambient pad, let silence breathe
        for 80ms, then the melody rises alone above near-quiet.           */
     function _musicHit(hit) {
+      /* Fire frame-specific AI music generation if available */
+      _tmFrameHit(frameIndex);
       if (!_AC || !_MG) return;
       var ytVol = Math.min(14, Math.round(hit.vol * 18));
 
@@ -2609,10 +2650,296 @@
       document.head.appendChild(s);
     }
 
+    /* ════════════════════════════════════════════════════════════════
+       TEXT-TO-MUSIC ENGINE · Hugging Face MusicGen (free, open-source)
+       ----------------------------------------------------------------
+       APIs used:
+         PRIMARY   : facebook/musicgen-small  (HF Inference API — free)
+         FALLBACK 1: facebook/musicgen-stereo-small
+         FALLBACK 2: existing Web Audio synthesizer (always available)
+
+       No API key required — works anonymously (rate-limited).
+       With a free HF key: reliable, faster.
+       Free signup: huggingface.co → Settings → Access Tokens
+
+       Flow per act:
+         1. Build a cinematic text prompt from the act + frame context
+         2. POST to HF Inference API  → binary audio blob (WAV/FLAC)
+         3. Create ObjectURL → play in hidden <audio> element, looping
+         4. Crossfade from Web Audio synthesis to generated audio
+         5. Cache result → no regeneration on rewind
+
+       Flow per key emotional frame (AND YET, Champions, etc.):
+         Frame-specific prompt → short clip → plays at the hit moment
+       ════════════════════════════════════════════════════════════════ */
+
+    /* ── State ── */
+    var _TM_ON     = false;                /* AI Score enabled */
+    var _TM_KEY    = localStorage.getItem('hf_api_key') || '';
+    var _TM_CACHE  = {};                   /* key → ObjectURL string */
+    var _TM_BUSY   = {};                   /* key → true (in-flight) */
+    var _TM_AUDEL  = null;                 /* hidden <audio> element */
+    var _TM_ACT_CUR = -1;                  /* which act audio is playing */
+    var _TM_STATUS = document.getElementById('ai-score-status');
+
+    /* ── HF Inference API endpoints (free, open-source models) ── */
+    var _TM_MODELS = [
+      'facebook/musicgen-small',           /* primary  — text → music (mono) */
+      'facebook/musicgen-stereo-small'     /* fallback — text → music (stereo)*/
+    ];
+    var _TM_MODEL_I = 0;
+
+    /* ── Scene prompts ──────────────────────────────────────────────
+       Each entry is a cinematic text description tuned for MusicGen.
+       Shorter, more specific prompts produce better results.
+       ─────────────────────────────────────────────────────────────── */
+    var _TM_ACT_PROMPTS = [
+      /* Act I — Crystalline / HHL Theatre / Origin */
+      'cinematic orchestral score, gentle strings, quiet wonder, slow tempo, minimal, tender cello melody, misty, mysterious opening, John Williams style, soft',
+
+      /* Act II — Carbon / Gig Grind / Compression */
+      'dark orchestral underscore, low cello ostinato, tense bass pulse, minor key, pressure, cinematic danger, sparse, slow dread, Jaws-style minimal',
+
+      /* Act III — Goldilocks / Champions / Resolution */
+      'triumphant orchestral film score, warm strings, soaring melody, hopeful resolution, major key, John Williams style, emotional, beautiful, building climax'
+    ];
+
+    /* Frame-specific prompts — only for the biggest emotional moments */
+    var _TM_FRAME_PROMPTS = {
+       0: 'ceremonial orchestral fanfare, brass, grand opening, cinematic, film score, majestic strings',
+       3: 'hero entrance theme, bold arrival, rising strings and brass, confident, film score melody',
+       7: 'tender love theme, solo cello, gentle piano, warm intimate, soft emotional, quiet',
+      12: 'dramatic orchestral swell after silence, explosive, turning point, powerful film score moment',
+      19: 'triumphant full orchestra, victory theme, champions finale, epic, strings brass, emotional peak',
+      32: 'final orchestral statement, resolution, beautiful ending, full orchestra, emotional, infinity'
+    };
+
+    /* ── Helpers ── */
+    function _tmStatus(msg) {
+      if (!_TM_STATUS) return;
+      _TM_STATUS.textContent = msg || '';
+      _TM_STATUS.classList.toggle('vis', !!msg);
+    }
+
+    function _tmGetAudioEl() {
+      if (!_TM_AUDEL) {
+        _TM_AUDEL = document.createElement('audio');
+        _TM_AUDEL.loop  = true;
+        _TM_AUDEL.volume = 0;
+        document.body.appendChild(_TM_AUDEL);
+      }
+      return _TM_AUDEL;
+    }
+
+    function _tmFadeTo(targetVol, stepMs, cb) {
+      var el = _tmGetAudioEl();
+      clearInterval(_TM_AUDEL._fadeIv);
+      var step = targetVol > el.volume ? 0.025 : -0.025;
+      _TM_AUDEL._fadeIv = setInterval(function() {
+        var v = el.volume + step;
+        if ((step > 0 && v >= targetVol) || (step < 0 && v <= targetVol)) {
+          v = targetVol;
+          clearInterval(_TM_AUDEL._fadeIv);
+          if (cb) cb();
+        }
+        el.volume = Math.max(0, Math.min(1, v));
+      }, stepMs || 80);
+    }
+
+    function _tmPlay(url, fadeSec) {
+      if (!_TM_ON) return;
+      var el = _tmGetAudioEl();
+      /* If already playing same URL, do nothing */
+      if (el.src === url && !el.paused) return;
+      /* Fade out current, swap, fade in */
+      _tmFadeTo(0, 60, function() {
+        el.src = url;
+        el.play().catch(function(){});
+        _tmFadeTo(0.62, 80);
+        /* Also duck the Web Audio layer while AI plays */
+        if (_MG && _AC) _MG.gain.setTargetAtTime(0.04, _AC.currentTime, 1.0);
+      });
+    }
+
+    function _tmStop() {
+      if (!_TM_AUDEL) return;
+      _tmFadeTo(0, 60, function() {
+        _TM_AUDEL.pause();
+        _TM_AUDEL.src = '';
+        /* Restore Web Audio ambient */
+        if (_MG && _AC) _MG.gain.setTargetAtTime(0.22, _AC.currentTime, 1.5);
+      });
+    }
+
+    /* ── Core generate function ────────────────────────────────────
+       Calls HF Inference API for musicgen-small (text → audio).
+       Returns audio as ObjectURL via callback.
+       ─────────────────────────────────────────────────────────────── */
+    function _tmGenerate(key, prompt, cb) {
+      if (_TM_CACHE[key]) { if (cb) cb(_TM_CACHE[key]); return; }
+      if (_TM_BUSY[key])  return;
+      _TM_BUSY[key] = true;
+
+      var model = _TM_MODELS[_TM_MODEL_I % _TM_MODELS.length];
+      var apiURL = 'https://api-inference.huggingface.co/models/' + model;
+      var headers = { 'Content-Type': 'application/json' };
+      if (_TM_KEY) headers['Authorization'] = 'Bearer ' + _TM_KEY;
+
+      _tmStatus('\u266B Composing: ' + prompt.split(',')[0].trim() + '...');
+
+      fetch(apiURL, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          inputs: prompt,
+          parameters: {
+            max_new_tokens: 1500,   /* ~30 seconds of audio */
+            do_sample: true,
+            guidance_scale: 3.5
+          }
+        })
+      })
+      .then(function(r) {
+        if (r.status === 503) {
+          /* Model loading — wait 20s and retry once */
+          _tmStatus('\u266B Model warming up, retrying...');
+          return new Promise(function(res, rej) {
+            setTimeout(function() {
+              fetch(apiURL, {
+                method: 'POST', headers: headers,
+                body: JSON.stringify({ inputs: prompt,
+                  parameters: { max_new_tokens: 1500, do_sample: true, guidance_scale: 3.5 }})
+              }).then(res).catch(rej);
+            }, 22000);
+          });
+        }
+        if (!r.ok) throw new Error('HF API ' + r.status);
+        return r;
+      })
+      .then(function(r) { return r.blob(); })
+      .then(function(blob) {
+        if (blob.size < 1000) throw new Error('empty response');
+        var url = URL.createObjectURL(blob);
+        _TM_CACHE[key] = url;
+        delete _TM_BUSY[key];
+        _tmStatus('');
+        if (cb) cb(url);
+      })
+      .catch(function(e) {
+        delete _TM_BUSY[key];
+        _tmStatus('');
+        /* Silent fallback — Web Audio synthesis continues */
+      });
+    }
+
+    /* ── Act-level generation (called from setMusicAct) ── */
+    function _tmStartAct(seg) {
+      if (!_TM_ON) return;
+      if (_TM_ACT_CUR === seg && _TM_AUDEL && !_TM_AUDEL.paused) return;
+      var key = 'act_' + seg;
+      var prompt = _TM_ACT_PROMPTS[seg] || _TM_ACT_PROMPTS[0];
+      _tmGenerate(key, prompt, function(url) {
+        /* Only play if still on same act */
+        if (getSeg(frameIndex) === seg && _TM_ON) {
+          _TM_ACT_CUR = seg;
+          _tmPlay(url);
+        }
+      });
+    }
+
+    /* ── Frame-specific emotional hit (called from _musicHit) ── */
+    function _tmFrameHit(fi) {
+      if (!_TM_ON || !_TM_FRAME_PROMPTS[fi]) return;
+      var key = 'frame_' + fi;
+      _tmGenerate(key, _TM_FRAME_PROMPTS[fi], function(url) {
+        if (frameIndex === fi && _TM_ON) {
+          _TM_ACT_CUR = -1;   /* override act music */
+          _tmPlay(url);
+          /* Pre-fetch next act music in background */
+          var nextSeg = getSeg(fi + 1);
+          setTimeout(function() { _tmStartAct(nextSeg); }, 2000);
+        }
+      });
+    }
+
+    /* ── UI: AI Score button ── */
+    (function() {
+      var aiBtn  = document.getElementById('btnAIScore');
+      var hfBtn  = document.getElementById('btnHFKey');
+      var hfMod  = document.getElementById('hf-modal');
+      var hfInp  = document.getElementById('hf-key-input');
+      var hfSave = document.getElementById('hf-save-btn');
+      var hfClear= document.getElementById('hf-clear-btn');
+      var hfClose= document.getElementById('hf-close-btn');
+
+      if (hfInp && _TM_KEY) hfInp.value = _TM_KEY;
+
+      if (aiBtn) aiBtn.addEventListener('click', function() {
+        _TM_ON = !_TM_ON;
+        this.classList.toggle('ai-on', _TM_ON);
+        this.textContent = _TM_ON ? '\u266B AI Score On' : '\u266B AI Score';
+        if (_TM_ON) {
+          /* Start generating current act immediately */
+          _tmStartAct(getSeg(frameIndex));
+          /* Pre-fetch next act in background */
+          var next = Math.min(2, getSeg(frameIndex) + 1);
+          setTimeout(function() { _tmStartAct(next); }, 5000);
+        } else {
+          _tmStop();
+          _tmStatus('');
+        }
+      });
+
+      if (hfBtn) hfBtn.addEventListener('click', function() {
+        if (hfMod) { hfMod.style.display = 'flex'; }
+      });
+
+      if (hfSave) hfSave.addEventListener('click', function() {
+        var v = hfInp ? hfInp.value.trim() : '';
+        _TM_KEY = v;
+        if (v) localStorage.setItem('hf_api_key', v);
+        else   localStorage.removeItem('hf_api_key');
+        if (hfMod) hfMod.style.display = 'none';
+        /* If AI Score is active, restart with new key */
+        if (_TM_ON) { _TM_CACHE = {}; _tmStartAct(getSeg(frameIndex)); }
+      });
+
+      if (hfClear) hfClear.addEventListener('click', function() {
+        _TM_KEY = ''; localStorage.removeItem('hf_api_key');
+        if (hfInp) hfInp.value = '';
+      });
+
+      if (hfClose) hfClose.addEventListener('click', function() {
+        if (hfMod) hfMod.style.display = 'none';
+      });
+
+      if (hfMod) hfMod.addEventListener('click', function(e) {
+        if (e.target === hfMod) hfMod.style.display = 'none';
+      });
+    })();
+
+    /* ── Duck/restore generated audio when voice speaks ──────────── */
+    var _tmOrigDuck = _duckMusic;
+    _duckMusic = function() {
+      _tmOrigDuck();
+      if (_TM_ON && _TM_AUDEL) _tmFadeTo(0.08, 50);
+    };
+    var _tmOrigSwell = _swellMusic;
+    _swellMusic = function(vol, t) {
+      _tmOrigSwell(vol, t);
+      if (_TM_ON && _TM_AUDEL && !_TM_AUDEL.paused) _tmFadeTo(0.62, 80);
+    };
+
+    /* ══ END TEXT-TO-MUSIC ENGINE ════════════════════════════════════ */
+
     function setMusicAct(seg) {
-      /* Brief dip before the act change — creates a deliberate
-         "scene cut" feel, like Williams dropping the orchestra
-         for a beat before the new theme enters.                 */
+      /* Kick off AI music generation for this act (non-blocking) */
+      _tmStartAct(seg);
+      /* Pre-fetch next act in background while current plays */
+      var nextSeg = Math.min(2, seg + 1);
+      if (nextSeg !== seg) setTimeout(function() { _tmStartAct(nextSeg); }, 8000);
+
+      /* Brief dip before the act change */
       if (_MG && _AC) _MG.gain.setTargetAtTime(0.12, _AC.currentTime, 0.35);
       setTimeout(function() {
         ambientStart(seg);   /* crossfade into the new act soundscape */

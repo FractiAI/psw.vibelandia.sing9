@@ -381,7 +381,7 @@
     /* Hero Will portrait — left column */
     #hw-portrait {
       flex: 0 0 clamp(160px, 35vw, 480px);
-      background: url('assets/ep1-hero-will.png') center top / cover no-repeat;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Chandos-portrait.jpg/800px-Chandos-portrait.jpg') center top / cover no-repeat;
       position: relative;
       opacity: 0; animation: hwFade 1.2s ease forwards 0.2s;
     }
@@ -640,28 +640,80 @@
     var SEG_ACCENTS = ['#a8e6f0', '#fb923c', '#fde68a'];
     var SEG_CLS     = ['s-crystal', 's-carbon', 's-gold'];
 
-    /* ---- IMAGE POOL — Disney/Pixar generated frames (one per beat) ---- */
+    /* ---- IMAGE POOL — one cinematic image per narrative beat ---- */
     var POOL = [
-      'assets/ep1-frame-00.png',  /* Hero Will opens the HHL               */
-      'assets/ep1-frame-01.png',  /* Hero Will passes the stage to SING!9  */
-      'assets/ep1-frame-02.png',  /* SING!9 steps into the light           */
-      'assets/ep1-frame-03.png',  /* 1493 · El Gran Sol · Boriken          */
-      'assets/ep1-frame-04.png',  /* JWST deep field · infinite scale      */
-      'assets/ep1-frame-05.png',  /* Cartagena → Reno · the arc            */
-      'assets/ep1-frame-06.png',  /* Ino · Gold Heart · Node One           */
-      'assets/ep1-frame-07.png',  /* All in · gig grind · mission fund     */
-      'assets/ep1-frame-08.png',  /* Every door closed · diamond forming   */
-      'assets/ep1-frame-09.png',  /* Reno · digital gold rush              */
-      'assets/ep1-frame-10.png',  /* The Batcave · one room · all built    */
-      'assets/ep1-frame-11.png',  /* Mark Twain · Vibelandia · the West    */
-      'assets/ep1-frame-12.png',  /* AND YET · the mission ran             */
-      'assets/ep1-frame-13.png',  /* El Gran Sol restaurant · food as freq */
-      'assets/ep1-frame-14.png',  /* Holographic Hydrogen Theatre inside   */
-      'assets/ep1-frame-15.png',  /* Sol-V the Sales Valkyrie              */
-      'assets/ep1-frame-16.png',  /* Ino + Sol-V · first chord             */
-      'assets/ep1-frame-17.png',  /* Queen Bee · THE SKIN · convergence    */
-      'assets/ep1-frame-18.png',  /* Americas · the land remembers         */
-      'assets/ep1-frame-19.png'   /* Champions · Infinity Nine · finale    */
+      /* 00  Hero Will · "Good evening. You have entered the Holographic Hydrogen Theatre."
+             Grand theatre stage, deep dramatic light — the house is full.              */
+      'https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 01  Hero Will · "Holographic Hydrogen. H — ninety percent of the visible universe."
+             JWST SMACS 0723 deep field — the seed of all matter, revealed.             */
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/SMACS_0723_%28Webb%27s_First_Deep_Field%29.jpg/1280px-SMACS_0723_%28Webb%27s_First_Deep_Field%29.jpg',
+
+      /* 02  Hero Will · "From that one principle, everything flows. Every surface a node."
+             Glowing network of connected nodes — the downstream architecture alive.    */
+      'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 03  SING!9 · "Hey. It is me. I built all of this for you."
+             A lone performer steps into the spotlight — author and subject, one entity. */
+      'https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 04  SING!9 · "Fourteen ninety-three. Boriken. El Gran Sol already rising."
+             Caribbean coast at golden sunrise — the bloodline begins here.             */
+      'https://images.pexels.com/photos/994605/pexels-photo-994605.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 05  SING!9 · "3I/ATLAS — the second confirmed visitor from outside our universe."
+             Comet 67P (Rosetta/ESA, public domain) — from outside the known system.   */
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Comet_67P_on_19_September_2014_NavCam.jpg/1280px-Comet_67P_on_19_September_2014_NavCam.jpg',
+
+      /* 06  SING!9 · "Cartagena, Colombia. Then Reno, Nevada. That is the entire map."
+             Cartagena old walled city — where the old world and new world first collided. */
+      'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 07  SING!9 · "Her name is Ino. My Gold Heart. She was the first node."
+             Warm golden portrait — the first person who believed before there was anything. */
+      'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 08  SING!9 · "I drove. I delivered. Every single dollar went back into the mission."
+             Night city street — the gig grind, the hustle, every dollar counted.       */
+      'https://images.pexels.com/photos/1386604/pexels-photo-1386604.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 09  SING!9 · "Every corporate door — closed. Not one external dollar ever came in."
+             Empty office corridor — the rejection that kept the mission pure.           */
+      'https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 10  SING!9 · "Reno. The Gold Rush never ended. Now it is data. And I am in the mine."
+             Reno Arch at night — The Biggest Little City, where the next world is built. */
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Reno_Arch_at_Night.jpg/1280px-Reno_Arch_at_Night.jpg',
+
+      /* 11  SING!9 · "One room. One desk. The Batcave. Every single piece. Alone."
+             Dark single-desk workspace with monitors — the whole architecture built here. */
+      'https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 12  SING!9 · "And yet. The mission ran. Here you are. Which means it worked."
+             Dramatic sky — light breaking through heavy clouds, the turn.               */
+      'https://images.pexels.com/photos/531756/pexels-photo-531756.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 13  SING!9 · "El Gran Sol. My restaurant. Food is frequency. Every table a node."
+             Warm candlelit restaurant interior — the dream that feeds people feeds the mission. */
+      'https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 14  SING!9 · "The HHL Theatre. A living, breathing, thinking organism."
+             Crystalline prismatic light architecture — the whole play in every single part. */
+      'https://images.pexels.com/photos/3889891/pexels-photo-3889891.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 15  SING!9 · "Sol-V. My Sales Valkyrie. Never sleeping. The first of her kind."
+             Hunting dog in golden field — the mission made autonomous, never fails.     */
+      'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 16  SING!9 · "Ino and Sol-V. My first two nodes. Warmth and precision."
+             Two figures in warm light — the first chord of the new world, played together. */
+      'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* 17-19 below are fallback only — POOL_CONV is used for convergence frames       */
+      'https://images.pexels.com/photos/164470/pexels-photo-164470.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      'https://images.pexels.com/photos/355296/pexels-photo-355296.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      'https://images.pexels.com/photos/1059120/pexels-photo-1059120.jpeg?auto=compress&cs=tinysrgb&w=1600'
     ];
 
     /* ---- CARBON SCRIPT — two voices (HERO WILL: 0-1 · SING!9: 2-19) ---- */
@@ -770,14 +822,24 @@
     var CONV_FRAME = 17;   /* frames >= this collapse to single theater */
     var lastSeg = -1;      /* tracks seg changes for music switching */
 
-    /* Stack1 organic originals for convergence frames */
+    /* Convergence frames 17-19 — one theater, streams merged, the SKIN emerges */
     var POOL_CONV = [
-      'assets/stack1/s1-024.jpg',
-      'assets/stack1/s1-033.jpg',
-      'assets/stack1/s1-055.jpg',
-      'assets/stack1/s1-001.jpg',
-      'assets/stack1/s1-060.jpg',
-      'assets/stack1/s1-045.jpg'
+      /* Frame 17 · "Queen Bee. Every node sovereign. Every hive feeds the whole."
+         Golden honeycomb — the architecture of the SKIN, the whole in every part.  */
+      'https://images.pexels.com/photos/164470/pexels-photo-164470.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* Frame 18 · "Chief Seattle — Si'Awk. We are part of the earth. 3I/ATLAS overhead."
+         Misty Pacific Northwest old-growth forest — interstellar, ancient, indigenous. */
+      'https://images.pexels.com/photos/355296/pexels-photo-355296.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* Frame 19 · "We are the champions. Of a frequency. Infinity nine."
+         Person arms open against golden sky — the SKIN holds the frequency. ∞⁹      */
+      'https://images.pexels.com/photos/1059120/pexels-photo-1059120.jpeg?auto=compress&cs=tinysrgb&w=1600',
+
+      /* Backup cycle — warm earth / golden light / triumph                          */
+      'https://images.pexels.com/photos/1547892/pexels-photo-1547892.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      'https://images.pexels.com/photos/1167355/pexels-photo-1167355.jpeg?auto=compress&cs=tinysrgb&w=1600',
+      'https://images.pexels.com/photos/1261728/pexels-photo-1261728.jpeg?auto=compress&cs=tinysrgb&w=1600'
     ];
 
     /* Style label lookup */
@@ -1337,22 +1399,152 @@
       /* Restore green highlight if key was saved in a previous session */
       if (_elKeyActive() && keyBtn) keyBtn.style.color = 'rgba(140,220,140,0.85)';
     })();
-60
-    /* ---- YOUTUBE ORIGINAL SOUNDTRACK ---- */
-    var musicOn  = false;
+
+    /* ================================================================
+       WEB AUDIO AMBIENT ENGINE — zero API · zero key · zero network.
+       Three acts / three sonic textures. Starts on first user gesture.
+
+       Act I  · Crystalline : Cold high pads. 528 Hz crystal root.
+                              Hydrogen frequencies. HHL Theatre breathes.
+       Act II · Carbon      : Deep AM bass pulse. Sawtooth grit.
+                              The compression. Diamond forming.
+       Act III· Goldilocks  : Warm A-major triad swell. Bach resolves.
+                              Champions. ∞⁹.
+       ================================================================ */
+
+    var _AC      = null;  /* AudioContext */
+    var _MG      = null;  /* master gain  */
+    var _AG      = null;  /* act bus gain */
+    var _actIdx  = -1;    /* active act   */
+    var _oscList = [];    /* {osc, gain|null} */
+
+    function _initAC() {
+      if (_AC) return;
+      try {
+        _AC = new (window.AudioContext || window.webkitAudioContext)();
+        _MG = _AC.createGain(); _MG.gain.value = 0;
+        _AG = _AC.createGain(); _AG.gain.value = 1;
+        _AG.connect(_MG);
+        _MG.connect(_AC.destination);
+        _MG.gain.setTargetAtTime(0.48, _AC.currentTime, 0.9); /* 0.9s fade-in */
+      } catch(e) { _AC = null; }
+    }
+
+    function _killOscs(fadeSec) {
+      var t = _AC ? _AC.currentTime : 0;
+      var snap = _oscList.slice(); _oscList = [];
+      snap.forEach(function(n) {
+        if (n.gain) {
+          try { n.gain.gain.setTargetAtTime(0, t, fadeSec * 0.25); } catch(e) {}
+        }
+        setTimeout(function(){ try { n.osc.stop(); } catch(e) {} }, (fadeSec + 0.7) * 1000);
+      });
+    }
+
+    /* Add an oscillator. Optional LFO tremolo on its gain. */
+    function _osc(freq, vol, type, lfoHz, lfoDp) {
+      if (!_AC) return;
+      var o = _AC.createOscillator(), g = _AC.createGain();
+      o.type = type || 'sine'; o.frequency.value = freq;
+      g.gain.value = 0;
+      o.connect(g); g.connect(_AG); o.start();
+      g.gain.setTargetAtTime(vol, _AC.currentTime, 1.9);
+      if (lfoHz && lfoDp) {
+        var lfo = _AC.createOscillator(), lg = _AC.createGain();
+        lfo.frequency.value = lfoHz;
+        lg.gain.value = lfoDp;
+        lfo.connect(lg); lg.connect(g.gain); lfo.start();
+        _oscList.push({ osc: lfo, gain: null });
+      }
+      _oscList.push({ osc: o, gain: g });
+    }
+
+    /* Add band-pass filtered noise (cosmic static / carbon grit). */
+    function _noise(vol, bpFreq) {
+      if (!_AC) return;
+      try {
+        var sr = _AC.sampleRate, len = sr * 4;
+        var buf = _AC.createBuffer(1, len, sr);
+        var d = buf.getChannelData(0);
+        for (var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+        var src = _AC.createBufferSource(), g = _AC.createGain(), f = _AC.createBiquadFilter();
+        src.buffer = buf; src.loop = true;
+        f.type = 'bandpass'; f.frequency.value = bpFreq || 1800; f.Q.value = 0.65;
+        src.connect(f); f.connect(g); g.connect(_AG); src.start();
+        g.gain.value = 0;
+        g.gain.setTargetAtTime(vol, _AC.currentTime, 2.4);
+        _oscList.push({ osc: src, gain: g });
+      } catch(e) {}
+    }
+
+    function _startAct(idx) {
+      if (!_AC || idx === _actIdx) return;
+      _killOscs(2.8);
+      _actIdx = idx;
+
+      if (idx === 0) {
+        /* ── ACT I · CRYSTALLINE ─────────────────────────────────────────
+           Cold high pads. The HHL Theatre opens. Hydrogen architecture.
+           528 Hz crystal root · octave shimmer · perfect fifth · sub-pulse  */
+        _osc(528,   0.09, 'sine',     3.1,  0.019);   /* crystal root + shimmer */
+        _osc(1056,  0.04, 'sine',     5.3,  0.009);   /* octave shimmer         */
+        _osc(792,   0.032,'triangle');                  /* perfect fifth above    */
+        _osc(66,    0.07, 'sine',     0.38, 0.030);   /* sub-bass slow pulse    */
+        _noise(0.013, 2200);                            /* cosmic static          */
+
+      } else if (idx === 1) {
+        /* ── ACT II · CARBON ────────────────────────────────────────────
+           Deep AM bass pulse. The gig grind. The compression.
+           Every dollar back in. Diamond forming.                          */
+        _osc(55,   0.13, 'sine',     1.15, 0.058);   /* bass AM pulse          */
+        _osc(110,  0.07, 'triangle', 0.52, 0.026);   /* chest resonance        */
+        _osc(165,  0.042,'sawtooth');                  /* mid grit edge          */
+        _osc(82.4, 0.05, 'sine',     2.2,  0.018);   /* low presence pulse     */
+        _noise(0.010, 780);                            /* carbon grit static     */
+
+      } else {
+        /* ── ACT III · GOLDILOCKS / CONVERGENCE ─────────────────────────
+           Warm A-major triad. Bach voices merge to near-unison.
+           Sol-V. Champions. ∞⁹.                                          */
+        _osc(220,    0.09, 'sine', 1.8, 0.012);       /* A3 root, warm breath   */
+        _osc(277.18, 0.065,'sine');                    /* C#4 major third        */
+        _osc(329.63, 0.075,'sine', 2.4, 0.009);       /* E4 perfect fifth       */
+        _osc(440,    0.040,'sine', 0.9, 0.008);       /* A4 octave shimmer      */
+        _osc(110,    0.055,'sine');                    /* sub A2 warmth          */
+      }
+    }
+
+    /* Public entry — called from splash init and setMusicAct() */
+    function ambientStart(actIdx) {
+      _initAC();
+      _startAct(actIdx);
+    }
+
+    /* ── end Web Audio ambient engine ──────────────────────────────── */
+
+    /* ---- YOUTUBE ORIGINAL SOUNDTRACK (BandLab original tracks) ---- */
+    var musicOn  = true;    /* auto-starts on first user gesture (splash click) */
     var ytPlayer = null;
     var musicBtn = document.getElementById('btnMusic');
+    if (musicBtn) musicBtn.classList.add('on');  /* show as active by default */
+
     function loadYTAPI() {
       if (document.getElementById('yt-api')) return;
+      /* mute:1 + autoplay:1 = always permitted by browsers.
+         We unmute at vol 14 after 800ms — fully automatic, zero intervention. */
       window.onYouTubeIframeAPIReady = function () {
         ytPlayer = new YT.Player('yt-player', {
           height: '1', width: '1',
-          playerVars: { listType:'playlist', list: YT_PLAYLISTS[0],
-                        autoplay:0, controls:0, loop:1, playsinline:1 },
+          playerVars: {
+            listType: 'playlist', list: YT_PLAYLISTS[0],
+            autoplay: 1, controls: 0, loop: 1, playsinline: 1, mute: 1
+          },
           events: {
             onReady: function(e) {
-              e.target.setVolume(22);
-              if (musicOn) e.target.playVideo();
+              e.target.playVideo();
+              setTimeout(function() {
+                try { e.target.unMute(); e.target.setVolume(14); } catch(ex) {}
+              }, 800);
             }
           }
         });
@@ -1362,23 +1554,32 @@
       s.src = 'https://www.youtube.com/iframe_api';
       document.head.appendChild(s);
     }
+
     function setMusicAct(seg) {
+      ambientStart(seg);   /* always crossfade the ambient layer */
       if (!ytPlayer || !musicOn) return;
       var pl = YT_PLAYLISTS[seg] || YT_PLAYLISTS[0];
       try {
         ytPlayer.loadPlaylist({ listType:'playlist', list: pl, index: 0 });
-        ytPlayer.setVolume(22);
+        /* Ensure unmuted at correct volume after playlist swap */
+        setTimeout(function() {
+          try { ytPlayer.unMute(); ytPlayer.setVolume(14); } catch(ex) {}
+        }, 400);
       } catch(e) {}
     }
+
     if (musicBtn) {
       musicBtn.addEventListener('click', function () {
         musicOn = !musicOn;
         this.classList.toggle('on', musicOn);
+        this.textContent = musicOn ? '\uD83C\uDFB5 Music' : '\uD83C\uDFB5 Music Off';
         if (musicOn) {
           if (!ytPlayer) { loadYTAPI(); }
           else { ytPlayer.playVideo(); }
+          if (_MG) _MG.gain.setTargetAtTime(0.48, _AC.currentTime, 0.5);
         } else {
           if (ytPlayer) ytPlayer.pauseVideo();
+          if (_MG) _MG.gain.setTargetAtTime(0,    _AC.currentTime, 0.5);
         }
       });
     }
@@ -1394,16 +1595,60 @@
       });
     }
 
-    /* Splash tap-to-dismiss */
+    /* Splash — tap/click = early dismiss only (cosmetic). Audio is NOT blocked by this. */
     var splashEl = document.getElementById('splash');
     if (splashEl) splashEl.addEventListener('click', function () {
       splashEl.classList.add('gone');
     });
 
+    /* ================================================================
+       FULLY AUTOMATIC AUDIO INIT — no human intervention required.
+
+       Strategy (layered):
+         1. Attempt AudioContext immediately on load (works in most desktop
+            browsers when user navigated here, or if MEI is established).
+         2. If AudioContext is suspended, resume on ANY passive event —
+            mousemove, scroll, pointerdown, touchstart, keydown.
+            The FIRST of these (even accidental hover) unlocks audio.
+         3. YouTube: start MUTED with autoplay:1 — muted autoplay is
+            always permitted by browsers. Unmute at vol 14 after 800ms.
+            Original BandLab beats play from the first frame, always.
+       ================================================================ */
+
+    var _audioUnlocked = false;
+
+    function _tryUnlockAudio() {
+      if (_audioUnlocked) return;
+      _initAC();
+      if (!_AC) return;
+      var resume = function() { _startAct(getSeg(frameIndex)); };
+      if (_AC.state === 'suspended') {
+        _AC.resume().then(resume).catch(resume);
+      } else {
+        resume();
+      }
+      _audioUnlocked = true;
+    }
+
+    /* Attempt immediately — succeeds on most desktop browsers */
+    setTimeout(_tryUnlockAudio, 80);
+
+    /* Passive-event fallback — fires on first mouse, touch, scroll, key */
+    var _passiveEvents = ['mousemove','pointerdown','touchstart','scroll','keydown','click'];
+    function _passiveFire() {
+      _tryUnlockAudio();
+      _passiveEvents.forEach(function(ev) {
+        document.removeEventListener(ev, _passiveFire, true);
+      });
+    }
+    _passiveEvents.forEach(function(ev) {
+      document.addEventListener(ev, _passiveFire, { capture: true, passive: true, once: true });
+    });
+
+    loadYTAPI();   /* fire immediately — muted autoplay, unmutes at 800ms */
+
     /* ---- START ---- */
-    /* Render visuals immediately; delay first speech by 400ms so
-       voice-config.js and EL key are guaranteed loaded before frame 0 speaks. */
-    render(false);   /* visual only — no speakLine yet */
+    render(false);   /* visuals immediately */
     startTick();
     setTimeout(function () {
       if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'HERO WILL');

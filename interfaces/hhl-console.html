@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HHL Console · EP Status Panel · SING!9</title>
+<style>
+:root {
+  --gold: #FFD700;
+  --gold-dim: #b8860b;
+  --gold-glow: rgba(255,215,0,0.18);
+  --black: #060608;
+  --panel: #0e0e12;
+  --panel2: #13131a;
+  --border: rgba(255,215,0,0.13);
+  --text: #e8e0cc;
+  --text-dim: #888;
+  --carbon: #444;
+  --pre: #555;
+  --post: #FFD700;
+  --green: #4caf6e;
+  --blue: #4db6e8;
+  --purple: #9b7fd4;
+  --rose: #e8607a;
+  --amber: #f5a623;
+  --rainbow: linear-gradient(90deg,#FFD700,#f5a623,#e8607a,#9b7fd4,#4db6e8,#4caf6e,#FFD700);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  min-height: 100vh;
+  padding: 12px;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.hhl-logo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+.hhl-logo span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+  animation: nodePulse 3s ease-in-out infinite;
+}
+.hhl-logo span:nth-child(5) { animation-delay: 0.3s; }
+.hhl-logo span:nth-child(2),
+.hhl-logo span:nth-child(4),
+.hhl-logo span:nth-child(6),
+.hhl-logo span:nth-child(8) { animation-delay: 0.6s; }
+@keyframes nodePulse {
+  0%,100% { opacity:1; box-shadow: 0 0 6px var(--gold); }
+  50% { opacity:0.6; box-shadow: 0 0 3px var(--gold-dim); }
+}
+.header-title { flex: 1; }
+.header-title h1 {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.header-title .sub {
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+.header-time {
+  text-align: right;
+  font-size: 11px;
+  color: var(--gold-dim);
+  letter-spacing: 1px;
+}
+
+/* ── STATUS LIGHTS ── */
+.status-bar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  align-items: center;
+  overflow-x: auto;
+}
+.status-bar .bar-label {
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-right: 6px;
+  white-space: nowrap;
+}
+.light {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  min-width: 70px;
+}
+.light:hover { background: rgba(255,215,0,0.05); border-color: var(--border); }
+.light.active { background: rgba(255,215,0,0.07); border-color: rgba(255,215,0,0.3); }
+.light-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.3s;
+  position: relative;
+}
+.light.active .light-dot {
+  animation: lightPulse 1.8s ease-in-out infinite;
+}
+@keyframes lightPulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.light-dot.studio { background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+.light-dot.earth  { background: var(--green); box-shadow: 0 0 8px var(--green); }
+.light-dot.chill  { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
+.light-dot.ball   { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+.light-dot.flirt  { background: var(--rose); box-shadow: 0 0 8px var(--rose); }
+.light-dot.happy  {
+  background: conic-gradient(#FFD700,#f5a623,#e8607a,#9b7fd4,#4db6e8,#4caf6e,#FFD700);
+  box-shadow: 0 0 10px rgba(255,215,0,0.6);
+}
+.light-label { font-size: 9px; color: var(--text-dim); text-align: center; letter-spacing: 1px; text-transform: uppercase; }
+.light.active .light-label { color: var(--text); }
+
+/* ── MAIN GRID ── */
+.grid-main {
+  display: grid;
+  grid-template-columns: 180px 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.grid-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* ── PANEL BASE ── */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+}
+.panel-title {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── COMPASS ── */
+.compass-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.compass {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+.compass-ring {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  position: absolute;
+  top: 0; left: 0;
+}
+.compass-ring-inner {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255,215,0,0.1);
+  position: absolute;
+  top: 15px; left: 15px;
+}
+.compass-dir {
+  position: absolute;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.compass-dir.N { top: 4px; left: 50%; transform: translateX(-50%); color: var(--gold); }
+.compass-dir.S { bottom: 4px; left: 50%; transform: translateX(-50%); color: var(--pre); }
+.compass-dir.E { right: 4px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
+.compass-dir.W { left: 4px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
+.compass-needle {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 2px; height: 38px;
+  margin-left: -1px;
+  margin-top: -38px;
+  background: linear-gradient(to bottom, var(--gold) 0%, transparent 100%);
+  transform-origin: bottom center;
+  animation: needleSway 8s ease-in-out infinite;
+  border-radius: 2px;
+}
+@keyframes needleSway {
+  0%,100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.compass-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  transform: translate(-50%,-50%);
+  box-shadow: 0 0 6px var(--gold);
+}
+.compass-label {
+  font-size: 9px;
+  text-align: center;
+  line-height: 1.6;
+}
+.compass-label .post { color: var(--gold); letter-spacing: 1px; }
+.compass-label .pre  { color: var(--pre); letter-spacing: 1px; }
+
+/* ── 3-6-9 DISPLAY ── */
+.nine-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.nine-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 52px;
+  background: var(--panel2);
+  border: 1px solid rgba(255,215,0,0.25);
+  border-radius: 6px;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--gold);
+  text-shadow: 0 0 12px var(--gold);
+  font-family: Georgia, serif;
+  box-shadow: 0 0 10px rgba(255,215,0,0.1);
+}
+.mode-toggle {
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+}
+.mode-btn {
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: 1px solid;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  text-align: center;
+}
+.mode-btn.pre  { border-color: var(--carbon); color: var(--text-dim); background: transparent; }
+.mode-btn.post { border-color: var(--gold); color: var(--gold); background: rgba(255,215,0,0.08); }
+.mode-btn.pre.active  { background: var(--carbon); color: #fff; }
+.mode-btn.post.active { background: rgba(255,215,0,0.2); box-shadow: 0 0 8px rgba(255,215,0,0.2); }
+.mode-desc { font-size: 9px; color: var(--text-dim); text-align: center; margin-top: 6px; line-height: 1.5; }
+
+/* ── NOW STACK ── */
+.now-stack { display: flex; flex-direction: column; gap: 4px; }
+.stack-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: var(--panel2);
+  border-left: 2px solid transparent;
+  font-size: 11px;
+  transition: all 0.2s;
+}
+.stack-item:hover { border-left-color: var(--gold-dim); }
+.stack-item.top {
+  border-left-color: var(--gold);
+  background: rgba(255,215,0,0.06);
+}
+.stack-item.top .stack-label { color: var(--gold); }
+.stack-icon { font-size: 14px; width: 20px; text-align: center; }
+.stack-label { flex: 1; letter-spacing: 0.5px; }
+.stack-tag { font-size: 8px; color: var(--gold-dim); letter-spacing: 1px; }
+
+/* ── FOUNDATION STACK ── */
+.foundation { display: flex; flex-direction: column; gap: 3px; }
+.f-layer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  color: var(--text-dim);
+  transition: all 0.15s;
+  cursor: default;
+}
+.f-layer:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+.f-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.f-layer.cosmos   .f-dot { background: #9b7fd4; }
+.f-layer.sun      .f-dot { background: #f5a623; }
+.f-layer.earth    .f-dot { background: #4caf6e; }
+.f-layer.mankind  .f-dot { background: #e8607a; }
+.f-layer.life     .f-dot { background: #4db6e8; }
+.f-layer.micro    .f-dot { background: #7ec8c8; }
+.f-layer.h2o      .f-dot { background: #4db6e8; }
+.f-layer.fractal  .f-dot { background: var(--gold); }
+.f-layer.soul     .f-dot { background: #fff; }
+
+/* ── WEATHER ── */
+.weather-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+}
+.weather-icon {
+  font-size: 36px;
+  animation: stormFlash 2.5s ease-in-out infinite;
+}
+@keyframes stormFlash {
+  0%,100% { opacity: 1; }
+  45%,55% { opacity: 0.4; }
+  50% { opacity: 1; filter: brightness(2); }
+}
+.weather-status {
+  font-size: 11px;
+  color: #e8607a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.weather-sub { font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
+.weather-story { font-size: 10px; color: var(--gold-dim); font-style: italic; margin-top: 4px; }
+
+/* ── CHARACTER CARD ── */
+.char-card { line-height: 1.8; }
+.char-name { font-size: 14px; color: var(--gold); letter-spacing: 2px; margin-bottom: 6px; }
+.char-mission {
+  font-size: 10px;
+  color: var(--text);
+  background: rgba(255,215,0,0.07);
+  border-left: 2px solid var(--gold);
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.char-loc { font-size: 9px; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 1px; }
+.char-tags {
+  display: flex; flex-wrap: wrap; gap: 4px;
+}
+.tag {
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.tag.gold   { border-color: var(--gold-dim); color: var(--gold); background: rgba(255,215,0,0.06); }
+.tag.grey   { border-color: #333; color: var(--text-dim); background: transparent; }
+.tag.carbon { border-color: #444; color: #888; background: transparent; font-style: italic; }
+.tag.mission { border-color: var(--gold); color: var(--gold); background: rgba(255,215,0,0.12); }
+
+/* ── WORK STACK ── */
+.work-stack-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.work-ready {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--green);
+}
+.work-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: workPulse 2s ease-in-out infinite;
+}
+@keyframes workPulse {
+  0%,100% { opacity:1; }
+  50% { opacity:0.4; }
+}
+.work-items {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.work-chip {
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 3px;
+  padding: 8px;
+}
+.footer span { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="hhl-logo">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+  <div class="header-title">
+    <h1>HHL Console</h1>
+    <div class="sub">Holographic Hydrogen Division · FractiAI · SING!9 · EP Station</div>
+  </div>
+  <div class="header-time" id="clock">--:-- ·  --/--/----</div>
+</div>
+
+<!-- STATUS LIGHTS -->
+<div class="status-bar">
+  <div class="bar-label">STATUS</div>
+  <div class="light active" onclick="setLight(this)" data-id="studio">
+    <div class="light-dot studio"></div>
+    <div class="light-label">Studio Lab</div>
+  </div>
+  <div class="light" onclick="setLight(this)" data-id="earth">
+    <div class="light-dot earth"></div>
+    <div class="light-label">Earth</div>
+  </div>
+  <div class="light" onclick="setLight(this)" data-id="chill">
+    <div class="light-dot chill"></div>
+    <div class="light-label">Chilling</div>
+  </div>
+  <div class="light" onclick="setLight(this)" data-id="ball">
+    <div class="light-dot ball"></div>
+    <div class="light-label">Ballin'</div>
+  </div>
+  <div class="light" onclick="setLight(this)" data-id="flirt">
+    <div class="light-dot flirt"></div>
+    <div class="light-label">Flirting</div>
+  </div>
+  <div class="light" onclick="setLight(this)" data-id="happy">
+    <div class="light-dot happy"></div>
+    <div class="light-label">Happy End</div>
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="grid-main">
+
+  <!-- COMPASS -->
+  <div class="panel">
+    <div class="panel-title">Compass · Direction</div>
+    <div class="compass-wrap">
+      <div class="compass">
+        <div class="compass-ring"></div>
+        <div class="compass-ring-inner"></div>
+        <div class="compass-dir N">N</div>
+        <div class="compass-dir S">S</div>
+        <div class="compass-dir E">E</div>
+        <div class="compass-dir W">W</div>
+        <div class="compass-needle"></div>
+        <div class="compass-center"></div>
+      </div>
+      <div class="compass-label">
+        <div class="post">▲ NORTH · POST-SINGULARITY</div>
+        <div style="font-size:8px;color:var(--text-dim);margin:2px 0">———— NOW ————</div>
+        <div class="pre">▼ SOUTH · PRE-SINGULARITY</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-6-9 + MODE -->
+  <div class="panel">
+    <div class="panel-title">Shut the Door · 3 · 6 · 9</div>
+    <div class="nine-display">
+      <div class="nine-tile">3</div>
+      <div class="nine-tile">6</div>
+      <div class="nine-tile">9</div>
+    </div>
+    <div class="mode-toggle">
+      <div style="font-size:9px;color:var(--text-dim);letter-spacing:1px;text-align:center;margin-bottom:4px;">PRESENTATION MODE</div>
+      <div class="mode-btn pre" onclick="setMode('pre',this)">
+        ◈ Pre-Sing · By the Pound / Ounce / Each
+      </div>
+      <div class="mode-btn post active" onclick="setMode('post',this)">
+        ✦ Post-Sing · Experiences · Destinations
+      </div>
+      <div class="mode-desc" id="mode-desc">
+        Mark Twain's Vibelandia · named experiences · destinations
+      </div>
+    </div>
+  </div>
+
+  <!-- NOW STACK -->
+  <div class="panel">
+    <div class="panel-title">Now Stack · Active Layer</div>
+    <div class="now-stack">
+      <div class="stack-item top">
+        <span class="stack-icon">🌿</span>
+        <span class="stack-label">Marijuana</span>
+        <span class="stack-tag">TOP · ON THE CASE</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-icon">🎨</span>
+        <span class="stack-label">Leo da Vinci</span>
+        <span class="stack-tag">CHARACTER</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-icon">🧬</span>
+        <span class="stack-label">DNA · Molecules</span>
+        <span class="stack-tag">SCIENCE</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-icon">🔊</span>
+        <span class="stack-label">JBL Speaker · Music</span>
+        <span class="stack-tag">SOUND</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-icon">💎</span>
+        <span class="stack-label">Crystal Water</span>
+        <span class="stack-tag">HYDRATION</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-icon">☕</span>
+        <span class="stack-label">Starbucks Coffee</span>
+        <span class="stack-tag">FUEL</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM GRID -->
+<div class="grid-bottom">
+
+  <!-- FOUNDATION STACK -->
+  <div class="panel">
+    <div class="panel-title">Foundation Stack · Cosmic Layers</div>
+    <div class="foundation">
+      <div class="f-layer soul">  <div class="f-dot"></div> Elbron Souls</div>
+      <div class="f-layer fractal"><div class="f-dot"></div> EGS 0.0032 · Fractal Constant</div>
+      <div class="f-layer h2o">   <div class="f-dot"></div> Water Molecule · H₂O</div>
+      <div class="f-layer micro">  <div class="f-dot"></div> Fungi · Bacteria · Small Things</div>
+      <div class="f-layer life">   <div class="f-dot"></div> Plants · Animals · Viruses</div>
+      <div class="f-layer mankind"><div class="f-dot"></div> Mankind</div>
+      <div class="f-layer earth">  <div class="f-dot"></div> Earth · Moon</div>
+      <div class="f-layer sun">    <div class="f-dot"></div> El Gran Sol · Sun</div>
+      <div class="f-layer cosmos"> <div class="f-dot"></div> Cosmos · Big Bang · ∞</div>
+    </div>
+  </div>
+
+  <!-- CHARACTER CARD -->
+  <div class="panel">
+    <div class="panel-title">Character Card · Pru</div>
+    <div class="char-card">
+      <div class="char-name">PRU</div>
+      <div class="char-mission">Mission: Paradise for All</div>
+      <div class="char-loc">📍 Reno, Nevada · Ennis, Montana</div>
+      <div class="char-tags">
+        <span class="tag gold">Companion</span>
+        <span class="tag gold">Caregiver</span>
+        <span class="tag gold">Adventurer</span>
+        <span class="tag gold">Explorer</span>
+        <span class="tag gold">Defender</span>
+        <span class="tag gold">Art · Architecture</span>
+        <span class="tag gold">Stories</span>
+        <span class="tag gold">Hetero · Pauly</span>
+        <span class="tag gold">Natural · Surreal</span>
+        <span class="tag gold">Blissful · Inspired</span>
+        <span class="tag gold">Relaxed · Free</span>
+        <span class="tag gold">Late Bloomer</span>
+        <span class="tag carbon">Traumatic Past</span>
+        <span class="tag carbon">Average Looks (pre-sing)</span>
+        <span class="tag carbon">Rejection · Gossip</span>
+        <span class="tag carbon">Judgment · Loss · Betrayal</span>
+        <span class="tag mission">Gold Heart</span>
+        <span class="tag mission">Post-Singularity</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEATHER + WORK STACK -->
+  <div class="panel">
+    <div class="panel-title">Forecast · Context</div>
+    <div class="weather-panel">
+      <div class="weather-icon">⛈</div>
+      <div class="weather-status">Perfect Storm</div>
+      <div class="weather-sub">Uh-oh. Upon us.</div>
+      <div class="weather-story">"Gone with the Wind"</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- WORK STACK BAR -->
+<div class="work-stack-bar">
+  <div class="work-ready">
+    <div class="work-dot"></div>
+    WORK STACK · READY TO GO
+  </div>
+  <div class="work-items">
+    <div class="work-chip">EP Studio</div>
+    <div class="work-chip">Animation Pipeline</div>
+    <div class="work-chip">T3D Storyboard</div>
+    <div class="work-chip">Daily Stack</div>
+    <div class="work-chip">Deck Configs</div>
+    <div class="work-chip">Sol-V · A2A</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span>HHL · FractiAI</span> · Holographic Hydrogen Division · NSPFRNP · <span>∞⁹</span>
+</div>
+
+<script>
+// Clock
+function updateClock() {
+  const now = new Date();
+  const t = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const d = now.toLocaleDateString('en-US',{month:'2-digit',day:'2-digit',year:'numeric'});
+  document.getElementById('clock').textContent = t + ' · ' + d;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// Status lights — click to activate
+function setLight(el) {
+  document.querySelectorAll('.light').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+  // Save to localStorage
+  const id = el.dataset.id;
+  localStorage.setItem('hhl_status', id);
+}
+
+// Restore saved light state
+const saved = localStorage.getItem('hhl_status');
+if (saved) {
+  const el = document.querySelector(`.light[data-id="${saved}"]`);
+  if (el) {
+    document.querySelectorAll('.light').forEach(l => l.classList.remove('active'));
+    el.classList.add('active');
+  }
+}
+
+// Mode toggle
+const modeDescs = {
+  pre:  'By the pound · By the ounce · By the each — commodity register',
+  post: 'Mark Twain\'s Vibelandia · named experiences · destinations'
+};
+function setMode(mode, el) {
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('mode-desc').textContent = modeDescs[mode];
+  localStorage.setItem('hhl_mode', mode);
+}
+const savedMode = localStorage.getItem('hhl_mode');
+if (savedMode) {
+  const btn = document.querySelector(`.mode-btn.${savedMode}`);
+  if (btn) setMode(savedMode, btn);
+}
+</script>
+</body>
+</html>

@@ -2408,48 +2408,44 @@
     function _thSING9() {
       _theme(
         [261.63, 329.63, 392,    523.25, 493.88, 392   ],
-        [0.042,  0.036,  0.045,  0.058,  0.036,  0.030 ],
+        [0.30,   0.26,   0.32,   0.42,   0.26,   0.22  ],
         [0.35,   0.25,   0.38,   0.65,   0.22,   0.55  ],
         'sine'
       );
-      /* ONE supporting horn — barely, just a color underneath */
-      _brass(130.81, 0.018, 1.4);
+      _brass(130.81, 0.14, 1.4);
     }
 
     /* Ino Warmth Theme — A major, one tender melodic line */
     function _thIno() {
       _theme(
         [220,   277.18, 329.63, 440,    329.63, 277.18, 220   ],
-        [0.036, 0.028,  0.040,  0.052,  0.030,  0.024,  0.034 ],
+        [0.26,  0.20,   0.28,   0.38,   0.22,   0.18,   0.24  ],
         [0.52,  0.40,   0.55,   0.85,   0.42,   0.38,   0.75  ],
         'sine'
       );
-      /* No extra voices — the melody alone is the emotion */
     }
 
     /* HHL Fanfare — C major ascending, clean melodic statement */
     function _thHHL() {
       _theme(
         [130.81, 196,   261.63, 329.63, 392,   523.25 ],
-        [0.045,  0.040, 0.044,  0.040,  0.046,  0.060 ],
+        [0.32,   0.28,  0.30,   0.28,   0.32,   0.44  ],
         [0.22,   0.18,  0.28,   0.22,   0.22,   0.90  ],
         'sine'
       );
-      /* ONE brass note for color, very restrained */
-      _brass(130.81, 0.024, 1.0);
+      _brass(130.81, 0.18, 1.0);
     }
 
     /* Champions Theme — G major, triumphant but controlled */
     function _thChampions() {
       _theme(
         [196,   246.94, 293.66, 392,   293.66, 246.94, 392,   784   ],
-        [0.052, 0.044,  0.050,  0.065, 0.042,  0.038,  0.055,  0.082 ],
-        [0.28,  0.22,   0.30,   0.55,  0.22,   0.22,   0.32,   1.40  ],
+        [0.36,  0.30,   0.36,   0.46,  0.30,   0.26,   0.38,  0.56  ],
+        [0.28,  0.22,   0.30,   0.55,  0.22,   0.22,   0.32,  1.40  ],
         'sine'
       );
-      /* Two brass, much lower than before — the melody does the work */
-      _brass(98,  0.032, 0.5);
-      _brass(196, 0.026, 0.7);
+      _brass(98,  0.24, 0.5);
+      _brass(196, 0.20, 0.7);
     }
 
     function _startAct(idx) {
@@ -2462,29 +2458,29 @@
            Williams principle: restraint. 4 voices maximum.
            Sub-bass breath → two bowed strings → one crystal shimmer.
            Nothing competes. Space is the sound.                          */
-        _osc(65.41,  0.016, 'sine', 0.22, 0.008);  /* C2 — single breath of bass */
-        _osc(261.63, 0.012, 'sine', 1.4,  0.005);  /* C4 — crystal air pad       */
-        _bowed(196,    0.014);                       /* G3 — one cello, barely     */
-        _bowed(261.63, 0.010);                       /* C4 — viola, ghost-soft     */
+        _osc(65.41,  0.18, 'sine', 0.22, 0.008);   /* C2 — single breath of bass */
+        _osc(261.63, 0.14, 'sine', 1.4,  0.005);   /* C4 — crystal air pad       */
+        _bowed(196,    0.16);                        /* G3 — one cello             */
+        _bowed(261.63, 0.12);                        /* C4 — viola warmth          */
 
       } else if (idx === 1) {
         /* ── ACT II · CARBON · The Compression ────────────────────────
            Williams "Jaws" principle: the pulse is the menace.
            One low bass throb. One dark bowed string. One noise texture.
            Fewer notes = more dread.                                      */
-        _osc(55,   0.030, 'sine', 1.15, 0.018);    /* bass throb — the Jaws pulse */
-        _bowed(73.42, 0.018);                        /* A2 — single dark cello      */
-        _noise(0.006, 650);                          /* carbon texture, barely heard */
+        _osc(55,   0.30, 'sine', 1.15, 0.018);     /* bass throb — the Jaws pulse */
+        _bowed(73.42, 0.20);                         /* A2 — single dark cello      */
+        _noise(0.07, 650);                           /* carbon texture              */
 
       } else {
         /* ── ACT III · GOLDILOCKS · The Resolution ─────────────────────
            Williams "throne room" principle: warmth emerges from silence.
            Two resolved strings + one sub warmth + one shimmer.
            The melody (fired by leitmotif) will soar above this bed.     */
-        _osc(110,    0.018, 'sine', 0.22, 0.008);  /* A2 — warm bass breath  */
-        _osc(440,    0.010, 'sine', 0.9,  0.004);  /* A4 — crystal shimmer   */
-        _bowed(220,    0.016);                       /* A3 — resolved cello    */
-        _bowed(329.63, 0.012);                       /* E4 — cello open string */
+        _osc(110,    0.20, 'sine', 0.22, 0.008);   /* A2 — warm bass breath  */
+        _osc(440,    0.14, 'sine', 0.9,  0.004);   /* A4 — crystal shimmer   */
+        _bowed(220,    0.18);                        /* A3 — resolved cello    */
+        _bowed(329.63, 0.14);                        /* E4 — cello open string */
       }
     }
 
@@ -2558,15 +2554,15 @@
     /* Duck music when voice takes center stage.
        Williams principle: the voice IS the music. Everything bows.    */
     function _duckMusic() {
-      if (_MG && _AC) _MG.gain.setTargetAtTime(0.032, _AC.currentTime, 0.15);
+      if (_MG && _AC) _MG.gain.setTargetAtTime(0.10, _AC.currentTime, 0.15);
       if (ytPlayer && musicOn) { try { ytPlayer.setVolume(2); } catch(e) {} }
     }
 
     /* Swell music — standard inter-line breath.
-       Quiet ambient underscore, not a performance. 0.24 is enough.   */
+       Ambient underscore — full and present between lines.            */
     function _swellMusic(vol, timeSec) {
       if (!_AC || !_MG) return;
-      _MG.gain.setTargetAtTime(vol || 0.24, _AC.currentTime, (timeSec || 2.0) * 0.28);
+      _MG.gain.setTargetAtTime(vol || 0.55, _AC.currentTime, (timeSec || 2.0) * 0.28);
       if (ytPlayer && musicOn) { try { ytPlayer.setVolume(10); } catch(e) {} }
     }
 
@@ -2581,11 +2577,10 @@
       var ytVol = Math.min(14, Math.round(hit.vol * 18));
 
       var fireTheme = function() {
-        /* Amber of silence before the phrase — very Williams */
-        _MG.gain.setTargetAtTime(0.018, _AC.currentTime, 0.10);
+        /* Brief dip before the phrase — melody unmistakable above */
+        _MG.gain.setTargetAtTime(0.08, _AC.currentTime, 0.10);
         setTimeout(function() {
           if (!_MG || !_AC) return;
-          /* Theme plays over near-quiet bed — melody is unmistakable */
           _MG.gain.setTargetAtTime(hit.vol, _AC.currentTime, hit.t * 1.2);
           if (hit.theme === 'sing9')     _thSING9();
           if (hit.theme === 'ino')       _thIno();
@@ -2757,7 +2752,7 @@
         el.play().catch(function(){});
         _tmFadeTo(0.62, 80);
         /* Also duck the Web Audio layer while AI plays */
-        if (_MG && _AC) _MG.gain.setTargetAtTime(0.04, _AC.currentTime, 1.0);
+        if (_MG && _AC) _MG.gain.setTargetAtTime(0.12, _AC.currentTime, 1.0);
       });
     }
 
@@ -2767,7 +2762,7 @@
         _TM_AUDEL.pause();
         _TM_AUDEL.src = '';
         /* Restore Web Audio ambient */
-        if (_MG && _AC) _MG.gain.setTargetAtTime(0.22, _AC.currentTime, 1.5);
+        if (_MG && _AC) _MG.gain.setTargetAtTime(0.52, _AC.currentTime, 1.5);
       });
     }
 
@@ -2940,7 +2935,7 @@
       if (nextSeg !== seg) setTimeout(function() { _tmStartAct(nextSeg); }, 8000);
 
       /* Brief dip before the act change */
-      if (_MG && _AC) _MG.gain.setTargetAtTime(0.12, _AC.currentTime, 0.35);
+      if (_MG && _AC) _MG.gain.setTargetAtTime(0.28, _AC.currentTime, 0.35);
       setTimeout(function() {
         ambientStart(seg);   /* crossfade into the new act soundscape */
         /* Act II: a single low thud — the descent begins (not a timpani blast) */
@@ -2960,10 +2955,10 @@
             _oscList.push({ osc: src, gain: g });
           } catch(ex) {}
         }
-        /* Act III: a gentle swell, not an explosion */
+        /* Act III: warm golden swell */
         if (seg === 2 && _MG && _AC) {
           setTimeout(function() {
-            _MG.gain.setTargetAtTime(0.32, _AC.currentTime, 2.0);
+            _MG.gain.setTargetAtTime(0.60, _AC.currentTime, 2.0);
           }, 800);
         }
       }, 420);
@@ -2986,7 +2981,7 @@
         if (musicOn) {
           if (!ytPlayer) { loadYTAPI(); }
           else { ytPlayer.playVideo(); }
-          if (_MG) _MG.gain.setTargetAtTime(0.48, _AC.currentTime, 0.5);
+          if (_MG) _MG.gain.setTargetAtTime(0.55, _AC.currentTime, 0.5);
         } else {
           if (ytPlayer) ytPlayer.pauseVideo();
           if (_MG) _MG.gain.setTargetAtTime(0,    _AC.currentTime, 0.5);
@@ -3056,27 +3051,27 @@
              Settle (14s+):   Fade to story-level ambient.               */
 
           /* Phase 1: One breath of bass. That is the whole orchestra. */
-          _MG.gain.setTargetAtTime(0.18, _AC.currentTime, 3.0);
-          _osc(65.41, 0.012, 'sine', 0.18, 0.006);   /* C2 — one note */
+          _MG.gain.setTargetAtTime(0.45, _AC.currentTime, 3.0);
+          _osc(65.41, 0.22, 'sine', 0.18, 0.006);    /* C2 — one note */
 
           /* Phase 2 (4s): Two cellos only — a chord forms */
           setTimeout(function() {
             if (!_MG || !_AC) return;
-            _MG.gain.setTargetAtTime(0.30, _AC.currentTime, 2.0);
-            _bowed(196,    0.016);   /* G3 — one cello */
-            _bowed(261.63, 0.012);   /* C4 — the fifth */
+            _MG.gain.setTargetAtTime(0.60, _AC.currentTime, 2.0);
+            _bowed(196,    0.22);   /* G3 — one cello */
+            _bowed(261.63, 0.16);   /* C4 — the fifth */
           }, 4000);
 
           /* Phase 3 (8s): The melody only — no brass, no extra strings */
           setTimeout(function() {
             if (!_MG || !_AC) return;
-            _MG.gain.setTargetAtTime(0.50, _AC.currentTime, 1.4);
+            _MG.gain.setTargetAtTime(0.72, _AC.currentTime, 1.4);
             _thHHL();   /* melody speaks — everything else is silent */
           }, 8000);
 
           /* Settle (14s): Story ambient */
           setTimeout(function() {
-            if (_MG && _AC) _MG.gain.setTargetAtTime(0.22, _AC.currentTime, 2.8);
+            if (_MG && _AC) _MG.gain.setTargetAtTime(0.52, _AC.currentTime, 2.8);
           }, 14000);
         }
       };

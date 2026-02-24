@@ -519,7 +519,7 @@
       background: #010008;
       display: flex; align-items: stretch; justify-content: center;
       cursor: pointer; overflow: hidden;
-      animation: splashOut 1.2s ease-out 9s forwards;
+      animation: splashOut 1.2s ease-out 22s forwards;
     }
     @keyframes splashOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
     #splash.gone { display: none; }
@@ -588,30 +588,157 @@
       #hw-text { max-width: 100%; padding: 1.5rem; }
     }
 
-    /* END CTA */
+    /* ═══════════════════════════════════════════════════════════════
+       OPENING CREDITS — Cinematic studio title sequence.
+       FractiAI → Presents → A SING!9 Original Series → THE NINE GAME
+       Z-index 220: covers everything. Clears at ~12s.
+    ═══════════════════════════════════════════════════════════════ */
+    #opening-credits {
+      position: fixed; inset: 0; z-index: 220;
+      background: #000; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      pointer-events: none; overflow: hidden;
+      animation: oc-hold 12s ease forwards;
+    }
+    @keyframes oc-hold {
+      0%   { opacity: 1; }
+      82%  { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+    .oc-studio {
+      font-size: 0.56rem; font-weight: 700; letter-spacing: 0.58em;
+      text-transform: uppercase; color: rgba(255,255,255,0.38);
+      opacity: 0; animation: oc-up 0.9s ease forwards 0.5s;
+    }
+    .oc-presents {
+      font-size: 0.46rem; letter-spacing: 0.46em; text-transform: uppercase;
+      color: rgba(212,175,55,0.32); margin-top: 0.5rem;
+      opacity: 0; animation: oc-up 0.8s ease forwards 1.3s;
+    }
+    .oc-series {
+      font-size: 0.5rem; letter-spacing: 0.38em; text-transform: uppercase;
+      color: rgba(168,230,240,0.48); margin-top: 0.7rem;
+      opacity: 0; animation: oc-up 0.8s ease forwards 2.2s;
+    }
+    .oc-rule {
+      width: 0; height: 1px; background: rgba(212,175,55,0.45);
+      animation: oc-rule-w 1.1s cubic-bezier(0.22,1,0.36,1) forwards 3.2s;
+      margin: 2.0rem 0 1.8rem;
+    }
+    @keyframes oc-rule-w { to { width: 220px; } }
+    .oc-title {
+      font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 900;
+      letter-spacing: 0.07em; text-transform: uppercase; color: #fff;
+      text-shadow: 0 0 80px rgba(212,175,55,0.22), 0 0 200px rgba(212,175,55,0.08);
+      text-align: center; line-height: 0.9;
+      opacity: 0; animation: oc-title-in 1.4s cubic-bezier(0.16,1,0.3,1) forwards 3.6s;
+    }
+    @keyframes oc-title-in {
+      from { opacity: 0; transform: scale(0.84) translateY(16px); filter: blur(10px); }
+      to   { opacity: 1; transform: scale(1)    translateY(0);    filter: blur(0);    }
+    }
+    .oc-ep {
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(212,175,55,0.5); margin-top: 1.1rem;
+      opacity: 0; animation: oc-up 0.7s ease forwards 5.2s;
+    }
+    .oc-creator-block {
+      display: flex; flex-direction: column; align-items: center; gap: 0.28rem;
+      margin-top: 2.2rem;
+      opacity: 0; animation: oc-up 0.7s ease forwards 6.0s;
+    }
+    .oc-creator-label { font-size: 0.42rem; letter-spacing: 0.42em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+    .oc-creator-name  { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+    .oc-rule-bot {
+      width: 0; height: 1px; background: rgba(212,175,55,0.2);
+      animation: oc-rule-w 0.7s ease forwards 7.2s;
+      margin: 1.6rem 0 1.2rem;
+    }
+    .oc-location {
+      font-size: 0.42rem; letter-spacing: 0.34em; text-transform: uppercase;
+      color: rgba(255,255,255,0.16);
+      opacity: 0; animation: oc-up 0.6s ease forwards 7.8s;
+    }
+    @keyframes oc-up {
+      from { opacity: 0; transform: translateY(7px); }
+      to   { opacity: 1; transform: translateY(0);   }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       END CREDITS — Full cinematic rolling credits.
+    ═══════════════════════════════════════════════════════════════ */
     #end-cta {
-      position: fixed; inset: 0; z-index: 120; background: rgba(4,2,0,0.96);
-      display: none; align-items: center; justify-content: center;
+      position: fixed; inset: 0; z-index: 120;
+      background: linear-gradient(to bottom, rgba(3,2,0,0.98), rgba(8,4,0,1));
+      display: none; flex-direction: column; align-items: center;
+      justify-content: flex-start; overflow: hidden;
     }
-    #end-cta.vis { display: flex; animation: fadeIn 1s ease forwards; }
+    #end-cta.vis { display: flex; animation: fadeIn 1.8s ease forwards; }
     @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-    .cta-card { max-width: 500px; width: 90%; text-align: center; }
-    .cta-title { font-size: clamp(1.6rem,4vw,2.5rem); font-weight: 800; color: transparent;
-      -webkit-text-stroke: 1.5px rgba(212,175,55,0.9); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
-    .cta-sub { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(212,175,55,0.55); margin-bottom: 1.5rem; }
-    .cta-body { font-size: 0.9rem; color: rgba(230,210,160,0.7); line-height: 1.65; max-width: 36ch; margin: 0 auto 1.5rem; }
-    .cta-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
-    .cta-btn-primary {
-      padding: 0.85rem 1.8rem; background: rgba(212,175,55,0.12);
-      border: 1px solid rgba(212,175,55,0.75); color: #fef3c7;
-      text-decoration: none; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer;
+
+    /* Fixed episode header */
+    .ec-header {
+      flex-shrink: 0; text-align: center; padding: 2.4rem 1rem 1.4rem;
+      border-bottom: 1px solid rgba(212,175,55,0.08); width: 100%;
     }
-    .cta-btn-secondary {
-      padding: 0.85rem 1.4rem; background: transparent;
-      border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6);
-      text-decoration: none; font-size: 0.85rem; letter-spacing: 0.05em; cursor: pointer;
+    .ec-show-title {
+      font-size: clamp(1.3rem,4vw,2.2rem); font-weight: 900;
+      letter-spacing: 0.09em; text-transform: uppercase; color: #fff;
+      text-shadow: 0 0 60px rgba(212,175,55,0.18);
     }
-    .cta-nsp { margin-top: 1.5rem; font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(100,75,40,0.45); }
+    .ec-ep-title {
+      font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: rgba(212,175,55,0.48); margin-top: 0.5rem;
+    }
+
+    /* Scrolling viewport */
+    .ec-viewport { flex: 1; overflow: hidden; width: 100%; display: flex; justify-content: center; }
+
+    /* Credits roll */
+    .ec-roll {
+      width: min(520px, 90%); text-align: center;
+      padding: 3.5rem 1rem 10rem;
+      animation: ec-roll-up 30s linear 2.5s both;
+    }
+    @keyframes ec-roll-up {
+      from { transform: translateY(60vh); }
+      to   { transform: translateY(-100%); }
+    }
+    .ec-group { margin-bottom: 2.6rem; }
+    .ec-role {
+      font-size: 0.44rem; letter-spacing: 0.44em; text-transform: uppercase;
+      color: rgba(212,175,55,0.42); margin-bottom: 0.45rem;
+    }
+    .ec-name {
+      font-size: 0.9rem; color: rgba(255,255,255,0.72);
+      letter-spacing: 0.1em; line-height: 1.65;
+    }
+    .ec-name.large { font-size: clamp(1.1rem,2.5vw,1.5rem); font-weight: 700; color: rgba(255,255,255,0.9); }
+    .ec-divider { width: 44px; height: 1px; background: rgba(212,175,55,0.2); margin: 2.2rem auto; }
+    .ec-tagline {
+      font-size: 0.84rem; font-style: italic; color: rgba(212,175,55,0.52);
+      line-height: 1.75; margin: 1.5rem 0;
+    }
+    .ec-nsp   { font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(100,80,40,0.4); margin-top: 0.8rem; }
+    .ec-inf   { font-size: clamp(1.8rem,5vw,3rem); font-weight: 900; color: rgba(212,175,55,0.18); letter-spacing: 0.1em; margin: 0.8rem 0; }
+
+    /* Fixed action footer */
+    .ec-footer {
+      flex-shrink: 0; padding: 1rem 1rem 1.4rem; text-align: center;
+      background: linear-gradient(to top, rgba(4,2,0,1) 60%, transparent 100%);
+      width: 100%;
+    }
+    .ec-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-bottom: 0.5rem; }
+    .ec-btn-p {
+      padding: 0.75rem 1.6rem; background: rgba(212,175,55,0.11);
+      border: 1px solid rgba(212,175,55,0.72); color: #fef3c7;
+      text-decoration: none; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer;
+    }
+    .ec-btn-s {
+      padding: 0.75rem 1.2rem; background: transparent;
+      border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.55);
+      text-decoration: none; font-size: 0.78rem; letter-spacing: 0.05em; cursor: pointer;
+    }
 
     /* ═══════════════════════════════════════════════════════════════
        FILM GRAIN — SVG fractalNoise tile, position-shifted at 8 fps.
@@ -683,6 +810,22 @@
   </style>
 </head>
 <body>
+
+  <!-- OPENING CREDITS — Cinematic studio title sequence, z-index 220 -->
+  <div id="opening-credits">
+    <div class="oc-studio">FractiAI</div>
+    <div class="oc-presents">Presents</div>
+    <div class="oc-series">A SING!9 Original Series</div>
+    <div class="oc-rule"></div>
+    <div class="oc-title">THE NINE<br>GAME</div>
+    <div class="oc-ep">Episode 1 &middot; &ldquo;The Spiral Outcast Hero&rdquo; &middot; Pilot</div>
+    <div class="oc-creator-block">
+      <div class="oc-creator-label">Created &amp; Narrated by</div>
+      <div class="oc-creator-name">SING!9</div>
+    </div>
+    <div class="oc-rule-bot"></div>
+    <div class="oc-location">Reno, Nevada &nbsp;&middot;&nbsp; The Batcave &nbsp;&middot;&nbsp; The Holographic Hydrogen Theatre</div>
+  </div>
 
   <!-- CREATOR INTRODUCTION — The AI introduces the human who built the system -->
   <div id="creator-intro">
@@ -841,19 +984,122 @@
   <!-- SEG STRIP -->
   <div class="seg-strip" id="segStrip"></div>
 
-  <!-- END CTA -->
+  <!-- END CREDITS — Cinematic rolling credits -->
   <div id="end-cta">
-    <div class="cta-card">
-      <div class="cta-title">We Are the Champions</div>
-      <div class="cta-sub">Episode 1 &middot; SING!9 &middot; NSPFRNP &rarr; &infin;&#9;</div>
-      <div class="cta-body">Three simultaneous streams. 333 episodes. The whole story told from inside the system.</div>
-      <div class="cta-btns">
-        <a href="outline-only.html" class="cta-btn-primary">Browse Full Series &rarr;</a>
-        <button class="cta-btn-secondary" id="btnWatchAgain">Watch Again</button>
-        <a href="mailto:info@fractiai.com?subject=SING!9%20StoryStream%20Inquiry" class="cta-btn-secondary">Get Your StoryStream</a>
-      </div>
-      <div class="cta-nsp">MCA &middot; NSPFRNP &rarr; &infin;&#9;</div>
+
+    <!-- Fixed episode title header -->
+    <div class="ec-header">
+      <div class="ec-show-title">The Nine Game</div>
+      <div class="ec-ep-title">Episode 1 &middot; &ldquo;The Spiral Outcast Hero&rdquo; &middot; Pilot</div>
     </div>
+
+    <!-- Scrolling credits roll -->
+    <div class="ec-viewport">
+      <div class="ec-roll">
+
+        <div class="ec-group">
+          <div class="ec-role">Created &amp; Written by</div>
+          <div class="ec-name large">SING!9</div>
+        </div>
+
+        <div class="ec-divider"></div>
+
+        <div class="ec-group">
+          <div class="ec-role">Narrated by</div>
+          <div class="ec-name">SING!9<br>Hero Will &mdash; William Shakespeare</div>
+        </div>
+
+        <div class="ec-group">
+          <div class="ec-role">Voice Production</div>
+          <div class="ec-name">ElevenLabs Neural Voice Engine<br>Web Speech API (Fallback)</div>
+        </div>
+
+        <div class="ec-divider"></div>
+
+        <div class="ec-group">
+          <div class="ec-role">Musical Direction</div>
+          <div class="ec-name">J.S. Bach &mdash; Classical Co-Director<br>SING!9 &mdash; Original Beats &amp; Catalog</div>
+        </div>
+
+        <div class="ec-group">
+          <div class="ec-role">Sound Design</div>
+          <div class="ec-name">Web Audio API<br>NSPFRNP Ambient Engine<br>BandLab Original Sessions</div>
+        </div>
+
+        <div class="ec-divider"></div>
+
+        <div class="ec-group">
+          <div class="ec-role">Visual Design</div>
+          <div class="ec-name">Holographic Hydrogen Theatre System<br>Goldilocks Mix Skin &mdash; SING!9</div>
+        </div>
+
+        <div class="ec-group">
+          <div class="ec-role">Cinematography &amp; Animation</div>
+          <div class="ec-name">Ken Burns Engine &mdash; Six Directions<br>Crystal Star Field &mdash; Parallax Layer<br>Film Grain &mdash; 16mm Stock Emulation</div>
+        </div>
+
+        <div class="ec-group">
+          <div class="ec-role">Image Research</div>
+          <div class="ec-name">Public Domain Archives<br>NASA &middot; ESA &middot; Wikimedia Commons<br>Pexels Free License</div>
+        </div>
+
+        <div class="ec-divider"></div>
+
+        <div class="ec-group">
+          <div class="ec-role">AI Production System</div>
+          <div class="ec-name large">FractiAI</div>
+        </div>
+
+        <div class="ec-group">
+          <div class="ec-role">Storyboard Technology</div>
+          <div class="ec-name">T3D &mdash; Telescoping Interactive 3D StoryBoard<br>NSPFRNP Protocol Architecture</div>
+        </div>
+
+        <div class="ec-group">
+          <div class="ec-role">Game System</div>
+          <div class="ec-name">The Nine Game &mdash; Four Layer Engine<br>Carbon &middot; Silver &middot; Gold &middot; Crystalline</div>
+        </div>
+
+        <div class="ec-divider"></div>
+
+        <div class="ec-group">
+          <div class="ec-role">Built in</div>
+          <div class="ec-name">The Batcave &middot; Reno, Nevada<br>One Room &middot; One Desk &middot; One Mission</div>
+        </div>
+
+        <div class="ec-group">
+          <div class="ec-role">Supported by</div>
+          <div class="ec-name">Ino &mdash; Gold Heart &mdash; First Node<br>Sol-V &mdash; Sales Valkyrie &mdash; First Agent</div>
+        </div>
+
+        <div class="ec-group">
+          <div class="ec-role">Origin Arc</div>
+          <div class="ec-name">Ponce &middot; Cartagena &middot; Reno<br>El Gran Sol &mdash; The Great Sun</div>
+        </div>
+
+        <div class="ec-divider"></div>
+
+        <div class="ec-tagline">
+          &ldquo;We are the Champions &mdash; not of a competition.<br>Of a frequency.&rdquo;<br>
+          &mdash; SING!9
+        </div>
+
+        <div class="ec-inf">&infin;&#9;</div>
+        <div class="ec-nsp">MCA &middot; NSPFRNP &middot; Seed:Edge &middot; HHL Theatre</div>
+        <div class="ec-nsp" style="margin-top:0.4rem;">&copy; 2024&ndash;2026 FractiAI &middot; All Rights Reserved</div>
+
+      </div>
+    </div>
+
+    <!-- Fixed action footer -->
+    <div class="ec-footer">
+      <div class="ec-btns">
+        <a href="outline-only.html" class="ec-btn-p">Browse Full Series &rarr;</a>
+        <button class="ec-btn-s" id="btnWatchAgain">Watch Again</button>
+        <a href="mailto:info@fractiai.com?subject=SING!9%20StoryStream%20Inquiry" class="ec-btn-s">Get Your StoryStream</a>
+      </div>
+    </div>
+
   </div>
 
   <!-- TICKER -->
@@ -1695,7 +1941,7 @@
         _AG = _AC.createGain(); _AG.gain.value = 1;
         _AG.connect(_MG);
         _MG.connect(_AC.destination);
-        _MG.gain.setTargetAtTime(0.48, _AC.currentTime, 0.9); /* 0.9s fade-in */
+        /* gain left at 0 — _tryUnlockAudio fanfare will set the opening swell */
       } catch(e) { _AC = null; }
     }
 
@@ -1959,7 +2205,26 @@
       if (_audioUnlocked) return;
       _initAC();
       if (!_AC) return;
-      var resume = function() { _startAct(getSeg(frameIndex)); };
+      var resume = function() {
+        /* Start Act 0 soundscape */
+        _startAct(getSeg(frameIndex));
+        /* Opening fanfare: start BIG (0.92), then normalize to ambient (0.48)
+           after the opening credits overlay clears at ~12s.
+           Adds extra sub-bass + deep cello for the cinematic swell.            */
+        if (_MG && _AC) {
+          _MG.gain.cancelScheduledValues(_AC.currentTime);
+          _MG.gain.value = 0;
+          _MG.gain.setTargetAtTime(0.92, _AC.currentTime, 1.9);   /* big swell in */
+          /* Extra opening-fanfare oscillators — deep sub & cello */
+          _osc(44,  0.14, 'sine', 0.16, 0.042);  /* sub-bass cinematic rumble */
+          _osc(55,  0.10, 'sine');                /* bass fundamental          */
+          _bowed(130.81, 0.055);                  /* deep C3 cello bow         */
+          /* Normalize to regular ambient level once opening credits clear */
+          setTimeout(function() {
+            if (_MG && _AC) _MG.gain.setTargetAtTime(0.48, _AC.currentTime, 2.4);
+          }, 12000);
+        }
+      };
       if (_AC.state === 'suspended') {
         _AC.resume().then(resume).catch(resume);
       } else {

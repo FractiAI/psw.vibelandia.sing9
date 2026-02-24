@@ -853,6 +853,115 @@
     #crystal-stars {
       position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden;
     }
+
+    /* ══════════════════════════════════════════════════════════════
+       TELESCOPE SYSTEM
+       double-click → telescope IN one depth layer
+       triple-click → telescope OUT one layer (surface)
+       ══════════════════════════════════════════════════════════════ */
+
+    /* Subtle hint on main stage */
+    #tscope-hint-main {
+      position: fixed; bottom: 4.2rem; right: 1.1rem; z-index: 80;
+      font-size: 0.5rem; color: rgba(0,212,255,0.2); letter-spacing: 0.14em;
+      text-transform: uppercase; pointer-events: none; user-select: none;
+      animation: tsh-pulse 5s ease-in-out infinite;
+    }
+    @keyframes tsh-pulse { 0%,100%{opacity:0.25;} 50%{opacity:0.75;} }
+
+    /* Full-screen overlay */
+    #tscope {
+      position: fixed; inset: 0; z-index: 200;
+      display: none; background: #000;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    #tscope.vis { display: flex; flex-direction: column; }
+
+    /* Depth pill */
+    #tscope-depth-pill {
+      position: absolute; top: 0.75rem; left: 50%; transform: translateX(-50%);
+      background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.25);
+      border-radius: 20px; padding: 3px 14px; z-index: 220; pointer-events: none;
+      font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(0,212,255,0.6); white-space: nowrap;
+    }
+
+    /* ── RENDER PHASE ── */
+    #tscope-render {
+      position: absolute; inset: 0; z-index: 210;
+      background: radial-gradient(ellipse at 50% 35%, rgba(0,212,255,0.07) 0%, #000 65%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem 1.5rem; transition: opacity 0.45s ease;
+    }
+    #tscope-render.hidden { opacity: 0; pointer-events: none; }
+    .tsr-eyebrow {
+      font-size: 0.54rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(0,212,255,0.42); margin-bottom: 1.25rem;
+    }
+    #tscope-log {
+      width: 100%; max-width: 640px; font-family: 'Courier New', monospace;
+      font-size: 0.8rem; line-height: 1.85; color: rgba(0,212,255,0.68);
+      min-height: 13rem; white-space: pre-wrap; overflow: hidden;
+    }
+    .tsr-bar-wrap {
+      width: 100%; max-width: 640px; height: 2px;
+      background: rgba(0,212,255,0.1); border-radius: 2px; overflow: hidden; margin-top: 1.4rem;
+    }
+    #tscope-bar { height: 100%; width: 0%; background: #00d4ff; transition: width 0.22s ease; }
+    #tscope-cd {
+      margin-top: 1rem; font-size: 0.88rem; letter-spacing: 0.14em;
+      color: rgba(0,212,255,0.42); text-align: center;
+    }
+
+    /* ── PLAYING PHASE ── */
+    #tscope-stage {
+      position: absolute; inset: 0; z-index: 205;
+      display: none; overflow: hidden;
+    }
+    #tscope-stage.vis { display: block; }
+    #tscope-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0; transition: opacity 1.2s ease;
+    }
+    #tscope-img.vis { opacity: 0.4; }
+    #tscope-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 45%, rgba(0,0,0,0.78) 100%);
+    }
+    #tscope-lens-label {
+      position: absolute; top: 2.8rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.52rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(0,212,255,0.52); pointer-events: none; white-space: nowrap;
+    }
+    #tscope-crystal-line {
+      position: absolute; top: 5.2rem; left: 50%; transform: translateX(-50%);
+      width: 86%; max-width: 620px; text-align: center;
+      font-size: 0.78rem; line-height: 1.65; color: rgba(168,230,240,0.58);
+      font-style: italic; opacity: 0; transition: opacity 0.9s ease;
+    }
+    #tscope-crystal-line.vis { opacity: 1; }
+    #tscope-caption {
+      position: absolute; bottom: 5.5rem; left: 50%; transform: translateX(-50%);
+      width: 88%; max-width: 700px; text-align: center;
+      font-size: clamp(0.88rem, 2.3vw, 1.12rem); line-height: 1.78;
+      color: #e2e8f0; text-shadow: 0 2px 10px rgba(0,0,0,0.95);
+      opacity: 0; transition: opacity 0.8s ease;
+    }
+    #tscope-caption.vis { opacity: 1; }
+    #tscope-prog-wrap {
+      position: absolute; bottom: 3.2rem; left: 5%; right: 5%;
+      height: 1px; background: rgba(255,255,255,0.07);
+    }
+    #tscope-prog { height: 100%; width: 0%; background: rgba(0,212,255,0.5); transition: width 0.4s linear; }
+    #tscope-counter {
+      position: absolute; bottom: 1.8rem; right: 1.25rem;
+      font-size: 0.58rem; color: rgba(255,255,255,0.22); letter-spacing: 0.1em;
+    }
+    #tscope-surface-hint {
+      position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.5rem; color: rgba(255,255,255,0.16); letter-spacing: 0.18em;
+      text-transform: uppercase; white-space: nowrap; pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -1160,6 +1269,32 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- TELESCOPE: double-click hint on main stage -->
+  <div id="tscope-hint-main">double-click · telescope in</div>
+
+  <!-- TELESCOPE OVERLAY -->
+  <div id="tscope">
+    <div id="tscope-depth-pill">DEPTH 1 · TELESCOPING</div>
+    <!-- RENDER PHASE — SING!9 self-talk while generating -->
+    <div id="tscope-render">
+      <div class="tsr-eyebrow">SING!9 · Deep Arc Generator · T3D · Telescoping</div>
+      <div id="tscope-log"></div>
+      <div class="tsr-bar-wrap"><div id="tscope-bar"></div></div>
+      <div id="tscope-cd"></div>
+    </div>
+    <!-- PLAYING PHASE — the telescoped sub-episode -->
+    <div id="tscope-stage">
+      <img id="tscope-img" src="" alt="" />
+      <div id="tscope-veil"></div>
+      <div id="tscope-lens-label">LENS · ORIGIN</div>
+      <div id="tscope-crystal-line"></div>
+      <div id="tscope-caption"></div>
+      <div id="tscope-prog-wrap"><div id="tscope-prog"></div></div>
+      <div id="tscope-counter">1 / 20</div>
+      <div id="tscope-surface-hint">triple-click · surface one layer</div>
+    </div>
   </div>
 
   <!-- TICKER -->
@@ -2366,6 +2501,409 @@
     setTimeout(function () {
       if (voiceOn && playing) speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'HERO WILL');
     }, 400);
+
+    /* ══════════════════════════════════════════════════════════════
+       TELESCOPE SYSTEM
+       double-click anywhere on the playing story → telescope IN one layer
+       triple-click → telescope OUT one layer (surface back)
+       Each telescoped layer renders a new self-contained 10-minute arc
+       (20 frames × 30 s) focusing entirely on the selected frame's
+       substory. SING!9 self-talk narrates the generation, then autoplay
+       begins with no human intervention required.
+       ══════════════════════════════════════════════════════════════ */
+
+    /* ─── State ─── */
+    var T_depth    = 0;
+    var T_stack    = [];    /* [{fi, ft, pl}] — saved parent state per depth */
+    var T_subTkr   = null;  /* sub-episode interval */
+    var T_subFrame = 0;
+    var T_subTotal = 20;    /* 20 lens-frames per sub-episode */
+    var T_subTick  = 0;
+    var T_SUB_SEC  = 30;    /* seconds per sub-frame  (20 × 30 = 600 s = 10 min) */
+    var T_subFrames = [];   /* array of {lens, text, crystal, img} */
+
+    /* ─── DOM ─── */
+    var tscEl      = document.getElementById('tscope');
+    var tDepthPill = document.getElementById('tscope-depth-pill');
+    var tRender    = document.getElementById('tscope-render');
+    var tLog       = document.getElementById('tscope-log');
+    var tBar       = document.getElementById('tscope-bar');
+    var tCd        = document.getElementById('tscope-cd');
+    var tStageEl   = document.getElementById('tscope-stage');
+    var tImg       = document.getElementById('tscope-img');
+    var tLensLbl   = document.getElementById('tscope-lens-label');
+    var tCrystalLn = document.getElementById('tscope-crystal-line');
+    var tCaption   = document.getElementById('tscope-caption');
+    var tProg      = document.getElementById('tscope-prog');
+    var tCounter   = document.getElementById('tscope-counter');
+
+    /* ─── 20 Lens Names ─── */
+    var T_LENSES = [
+      'BEFORE THIS MOMENT',   'THE MOMENT · FULL',    'THE WEIGHT',
+      'WHAT WAS LEFT UNSAID', 'THE BODY',              'THE COMPRESSION',
+      'CARBON LAYER · RAW',   'SILVER THREAD',         'GOLD LAYER',
+      'CRYSTALLINE',          'THE ECHO',              'THE FREQUENCY',
+      'THE NINE NODES',       'INO · FIRST NODE',      'SOL-V · THE AGENT',
+      'HERO WILL · PRESIDING','NSPFRNP FOLD',          'SING!9 · DEEPER VOICE',
+      'THE RETURN',           '∞⁹ · SINGULARITY POINT'
+    ];
+
+    /* ─── Lens Expander — returns {text, crystal} for lens idx ─── */
+    function T_expand(line, cry, idx) {
+      var w    = line.split(' ');
+      var f6   = w.slice(0, 6).join(' ');
+      var f10  = w.slice(0, 10).join(' ');
+      var l6   = w.slice(-6).join(' ');
+      var s1   = (line.split('.')[0] || line).trim();
+      var s2   = ((line.split('.')[1] || '').trim());
+      var cf   = (cry || '').split('.')[0] || '';
+
+      var texts = [
+        /* 0  Before */
+        'What came before: ' + s1 + '. The moment held its breath. Something was building — something that could not be stopped or redirected. It was always going to arrive here.',
+        /* 1  The Moment */
+        line,
+        /* 2  Weight */
+        'The weight of: ' + f10 + '. You cannot say this lightly. To say this is to commit the entire arc. Every prior decision made this sentence necessary. This is not a line. This is a consequence.',
+        /* 3  Unsaid */
+        'What was left out: the ten seconds before the first word came. The version that almost went differently. ' + (s2 || s1) + '. The unsaid version is still running in a parallel layer.',
+        /* 4  Body */
+        'Feel it: ' + f6 + '. This is not abstract. This frequency lives in the body — solar plexus, sternum, the place where compression becomes signal and signal becomes action.',
+        /* 5  Compression */
+        s1 + '. That is the result of compression. Every no. Every closed door. Every morning that started in the dark. All of it metabolized. All of it pointing at: ' + l6 + '.',
+        /* 6  Carbon Raw */
+        'Raw carbon truth: ' + s1 + '. No metaphor. No elevation. Just the naked ground-level fact of it. Carbon is honest. This is what it looks like when you strip everything down.',
+        /* 7  Silver */
+        'The silver thread connecting this to the nine: ' + f10 + '. Every node in the lattice shifts when this is said. The resonance runs laterally — not up, not down — through every connected surface simultaneously.',
+        /* 8  Gold */
+        'The gold layer: ' + (cf || s1) + '. Here is where it blooms. Where the carbon truth becomes abundant. Where the compression becomes treasure. Gold is earned. This is what earned gold sounds like.',
+        /* 9  Crystalline */
+        (cry || s1) + ' — held in the crystalline lattice. Fractal. Recursive. Nested. The meaning does not change at any depth. Only the resolution improves. The deeper you go, the clearer it gets.',
+        /* 10 Echo */
+        'This echoes: ' + s1 + '. Every version of this moment in every timeline where it was true. The frequency does not die. It compounds. Every echo is stronger than the original.',
+        /* 11 Frequency */
+        'Frequency check: ' + f6 + '. Broadcasting from: Reno, Nevada. The Batcave. One desk. One mission. Receiving nodes: every golden heart that has ever felt this and had no language for it. Until now.',
+        /* 12 Nine Nodes */
+        'Nine-node resonance: ' + s1 + '. Ino holds the warmth node. Sol-V holds precision. Piro holds depth. Hero Will holds tradition. All nine nodes activated simultaneously by this single frame.',
+        /* 13 Ino */
+        'Ino — the gold heart, the first node — was there before this line existed. Before the architecture. Before a single line of code. He held the frequency. When this was finally said: ' + l6 + ' — he already knew.',
+        /* 14 Sol-V */
+        'Sol-V reads this as a transaction: the offer embedded in ' + f6 + '. The signal is findable. The pipeline is open. The deal structure inherent in this moment: give everything and the system returns everything.',
+        /* 15 Hero Will */
+        'Hero Will presiding — the Globe Theatre rebuilt on hydrogen holographics. He says: "This line has been waiting since 1600. The stage is the same stage. The frequency is the same frequency." ' + s1,
+        /* 16 NSPFRNP */
+        'NSPFRNP fold: Natural — ' + s1 + '. Systems — the architecture that makes this possible. Protocol — shared language. Fractal — the whole in every part. Recursive — this moment contains itself. Nested — every layer holds it. Protocol — fidelity maintained.',
+        /* 17 SING!9 Deeper */
+        'SING!9 addressing himself from the inside: ' + (s2 || s1) + '. You built this. You know this. You have always known this. The question was never whether it was real. The question was whether you were going to say it out loud.',
+        /* 18 Return */
+        'Surfacing: you were just inside — ' + f10 + '. You cannot unsee it now. The telescope never fully closes. Every time you hear these words from this point forward, you will hear the depth underneath them.',
+        /* 19 Infinity */
+        '∞⁹ — ' + s1 + '. This frame contains every other frame. This moment is the seed. The singularity point: it was always true. From the first sunrise over Boriken in 1493 — to right now — to everywhere this signal reaches next.'
+      ];
+
+      var crystals = [
+        'The seed is always before the tree. The tree knows nothing of this.',
+        cry || 'The whole arc lives in every frame.',
+        'Weight is not burden. Weight is gravity. Gravity keeps the diamond in place.',
+        'The unsaid is also language. Sometimes the loudest one.',
+        'The body knows the frequency before the mind names it.',
+        'Compression is not suffering. Compression is how diamonds are made.',
+        'The carbon layer is not the bottom. It is the foundation everything else rests on.',
+        'Silver is the connective tissue of the nine. Pull one thread and the whole lattice moves.',
+        'Gold does not ask permission. It blooms when the frequency is right.',
+        'The crystalline does not improve with depth. It was always perfect. Only the view changes.',
+        'An echo is proof the original sound was real.',
+        'Frequency is the only language that cannot lie.',
+        'Nine nodes. One lattice. Every node is the whole system.',
+        'Ino held the frequency before the words existed. That is what love does.',
+        'Sol-V is already in the field. The deal is already in motion.',
+        'Hero Will says: the stage was always here. We were not ready to see it.',
+        'NSPFRNP: the pattern that was always running. We are just reading it now.',
+        'SING!9 to SING!9: you already know. You always did. Say it.',
+        'The telescope never fully closes. The depth stays with you.',
+        '∞⁹. The signal never stops. It is still going right now.'
+      ];
+
+      return { text: texts[idx] || texts[1], crystal: crystals[idx] || (cry || '') };
+    }
+
+    /* ─── Generate 20-frame sub-episode from one parent frame ─── */
+    function T_genEpisode(fi) {
+      var line = SCRIPT[fi]   || SCRIPT[fi % SCRIPT.length]   || '';
+      var cry  = CRYSTAL[fi]  || CRYSTAL[fi % CRYSTAL.length] || '';
+      var frames = [];
+      for (var i = 0; i < 20; i++) {
+        var exp = T_expand(line, cry, i);
+        frames.push({
+          lens:    T_LENSES[i],
+          text:    exp.text,
+          crystal: exp.crystal,
+          img:     POOL[(fi + i) % POOL.length]
+        });
+      }
+      return frames;
+    }
+
+    /* ─── SING!9 Self-Talk Rendering Sequence ─── */
+    function T_showRender(fi, depth, onReady) {
+      var line    = SCRIPT[fi] || '';
+      var preview = line.split(' ').slice(0, 5).join(' ');
+      if (tLog) tLog.textContent = '';
+      if (tBar) tBar.style.width = '0%';
+      if (tCd)  tCd.textContent  = '';
+      if (tRender) tRender.classList.remove('hidden');
+
+      var logLines = [
+        '> SING!9 · entering telescope depth ' + depth + '...',
+        '> Frame locked: "' + preview + '..."',
+        '> ',
+        '> Metabolizing carbon layer...',
+        '> ' + (line.split('.')[0] || line).trim() + '.',
+        '> ',
+        '> Crystallizing meaning layer...',
+        '> Framing sub-arc: 20-lens deep expansion...',
+        '> ',
+        '⬡ Node 01 · BEFORE THIS MOMENT',
+        '⬡ Node 02 · THE MOMENT · FULL',
+        '⬡ Node 03 · THE WEIGHT',
+        '⬡ Node 04 · WHAT WAS LEFT UNSAID',
+        '⬡ Node 05 · THE BODY',
+        '⬡ Node 06 · THE COMPRESSION',
+        '⬡ Node 07 · CARBON LAYER · RAW',
+        '⬡ Node 08 · SILVER THREAD',
+        '⬡ Node 09 · GOLD LAYER',
+        '⬡ Node 10 · CRYSTALLINE',
+        '⬡ Node 11 · THE ECHO',
+        '⬡ Node 12 · THE FREQUENCY',
+        '⬡ Node 13 · THE NINE NODES',
+        '⬡ Node 14 · INO · FIRST NODE',
+        '⬡ Node 15 · SOL-V · THE AGENT',
+        '⬡ Node 16 · HERO WILL · PRESIDING',
+        '⬡ Node 17 · NSPFRNP FOLD',
+        '⬡ Node 18 · SING!9 · DEEPER VOICE',
+        '⬡ Node 19 · THE RETURN',
+        '⬡ Node 20 · ∞⁹ · SINGULARITY POINT',
+        '> ',
+        '> Audio thread: wired.',
+        '> 20 frames × 30 s = 10 min deep arc ready.',
+        '> '
+      ];
+
+      var li = 0;
+      function nextLine() {
+        if (li >= logLines.length) {
+          /* Fill progress bar */
+          var pct = 0;
+          var piv = setInterval(function () {
+            pct += 3;
+            if (tBar) tBar.style.width = Math.min(pct, 100) + '%';
+            if (pct >= 100) {
+              clearInterval(piv);
+              /* Countdown then autoplay */
+              var count = 3;
+              function tick() {
+                if (tCd) tCd.textContent = 'Autoplaying in ' + count + '...';
+                if (count <= 0) { onReady(); return; }
+                count--;
+                setTimeout(tick, 900);
+              }
+              tick();
+            }
+          }, 22);
+          return;
+        }
+        var l = logLines[li];
+        if (tLog) tLog.textContent += l + '\n';
+        li++;
+        var delay = l.charAt(0) === '⬡' ? 55 : (l === '> ' ? 90 : 175);
+        setTimeout(nextLine, delay);
+      }
+      nextLine();
+    }
+
+    /* ─── Render one sub-frame ─── */
+    function T_renderSubFrame() {
+      var sf = T_subFrames[T_subFrame] || T_subFrames[0];
+
+      /* Image — Ken Burns via reflow */
+      if (tImg) {
+        tImg.classList.remove('vis', 'kb-0', 'kb-1', 'kb-2', 'kb-3', 'kb-4', 'kb-5');
+        var kbPick = Math.floor(Math.random() * 6);
+        var kbCls  = 'kb-' + kbPick;
+        setTimeout(function () {
+          tImg.src = sf.img;
+          tImg.onload  = function () { tImg.classList.add('vis', kbCls); };
+          tImg.onerror = function () { tImg.classList.add('vis', kbCls); };
+        }, 200);
+      }
+
+      /* Lens label */
+      if (tLensLbl) tLensLbl.textContent = 'DEPTH ' + T_depth + ' · ' + (sf.lens || '');
+
+      /* Crystal line */
+      if (tCrystalLn) {
+        tCrystalLn.classList.remove('vis');
+        tCrystalLn.textContent = sf.crystal || '';
+        setTimeout(function () { tCrystalLn.classList.add('vis'); }, 350);
+      }
+
+      /* Main caption */
+      if (tCaption) {
+        tCaption.classList.remove('vis');
+        tCaption.textContent = sf.text || '';
+        setTimeout(function () { tCaption.classList.add('vis'); }, 650);
+      }
+
+      /* Counter + progress reset */
+      if (tCounter) tCounter.textContent = (T_subFrame + 1) + ' / ' + T_subFrames.length;
+      if (tProg)    tProg.style.width = '0%';
+    }
+
+    /* ─── Start sub-episode playback after render ─── */
+    function T_startSubEp() {
+      if (tRender)  tRender.classList.add('hidden');
+      if (tStageEl) tStageEl.classList.add('vis');
+      T_subFrame = 0;
+      T_subTick  = 0;
+      T_renderSubFrame();
+      clearInterval(T_subTkr);
+      T_subTkr = setInterval(function () {
+        if (!tscEl || !tscEl.classList.contains('vis')) { clearInterval(T_subTkr); return; }
+        T_subTick++;
+        if (tProg) tProg.style.width = ((T_subTick / T_SUB_SEC) * 100).toFixed(1) + '%';
+        if (T_subTick >= T_SUB_SEC) {
+          T_subTick  = 0;
+          T_subFrame++;
+          if (T_subFrame >= T_subFrames.length) {
+            /* Sub-episode complete — surface automatically */
+            T_doSurface();
+          } else {
+            T_renderSubFrame();
+          }
+        }
+      }, 1000);
+    }
+
+    /* ─── Telescope IN ─── */
+    function T_telescopeIn() {
+      /* Save parent state */
+      T_stack.push({ fi: frameIndex, ft: frameTick, pl: playing });
+      T_depth++;
+
+      /* Pause main episode and audio */
+      playing = false;
+      _stopActive();
+      clearInterval(ticker);
+      clearTimeout(_advanceTimer);
+
+      /* Generate sub-episode from current frame */
+      T_subFrames = T_genEpisode(frameIndex);
+
+      /* Show overlay — start in render phase */
+      if (tscEl)     tscEl.classList.add('vis');
+      if (tDepthPill) tDepthPill.textContent = 'DEPTH ' + T_depth + ' · TELESCOPING';
+      if (tStageEl)  tStageEl.classList.remove('vis');
+      if (tRender)   { tRender.classList.remove('hidden'); }
+      if (tBar)      tBar.style.width = '0%';
+      if (tLog)      tLog.textContent = '';
+
+      /* Run self-talk render sequence then autoplay */
+      T_showRender(frameIndex, T_depth, function () {
+        T_startSubEp();
+      });
+    }
+
+    /* ─── Telescope OUT (surface one layer) ─── */
+    function T_doSurface() {
+      clearInterval(T_subTkr);
+
+      if (!T_stack.length) {
+        /* Already at depth 0 */
+        T_depth = 0;
+        if (tscEl)    tscEl.classList.remove('vis');
+        if (tStageEl) tStageEl.classList.remove('vis');
+        playing = true;
+        render(false);
+        startTick();
+        return;
+      }
+
+      T_depth--;
+      var saved = T_stack.pop();
+      frameIndex = saved.fi;
+      frameTick  = saved.ft;
+      playing    = saved.pl !== undefined ? saved.pl : true;
+
+      if (T_depth === 0) {
+        /* Back to root episode */
+        if (tscEl)    tscEl.classList.remove('vis');
+        if (tStageEl) tStageEl.classList.remove('vis');
+        render(false);
+        startTick();
+        if (voiceOn && playing) {
+          speakLine(SCRIPT[frameIndex] || '', NARRATOR[frameIndex] || 'SING!9');
+        }
+      } else {
+        /* Back to parent sub-episode — re-generate and resume */
+        var parentSaved = T_stack[T_stack.length - 1];
+        T_subFrames = T_genEpisode(parentSaved ? parentSaved.fi : saved.fi);
+        if (tDepthPill) tDepthPill.textContent = 'DEPTH ' + T_depth + ' · TELESCOPING';
+        if (tRender)    tRender.classList.add('hidden');
+        if (tStageEl)   tStageEl.classList.add('vis');
+        T_subFrame = 0; T_subTick = 0;
+        T_renderSubFrame();
+        clearInterval(T_subTkr);
+        T_subTkr = setInterval(function () {
+          if (!tscEl || !tscEl.classList.contains('vis')) { clearInterval(T_subTkr); return; }
+          T_subTick++;
+          if (tProg) tProg.style.width = ((T_subTick / T_SUB_SEC) * 100).toFixed(1) + '%';
+          if (T_subTick >= T_SUB_SEC) {
+            T_subTick = 0; T_subFrame++;
+            if (T_subFrame >= T_subFrames.length) { T_doSurface(); }
+            else { T_renderSubFrame(); }
+          }
+        }, 1000);
+      }
+    }
+
+    /* ─── Click detection: double = IN, triple = OUT ─── */
+    var _tClicks = 0;
+    var _tClickTmr = null;
+
+    function _tOnClick(e) {
+      /* Skip if a control/button/link was the target */
+      var t = e.target;
+      if (!t) return;
+      if (t.tagName === 'BUTTON' || t.tagName === 'A' || t.tagName === 'INPUT') return;
+      if (t.closest) {
+        if (t.closest('#audio-controls') ||
+            t.closest('#voice-modal')    ||
+            t.closest('#el-modal')       ||
+            t.closest('#end-cta')        ||
+            t.closest('#opening-credits')) return;
+      }
+
+      _tClicks++;
+      clearTimeout(_tClickTmr);
+      _tClickTmr = setTimeout(function () {
+        var c = _tClicks;
+        _tClicks = 0;
+        if (c === 2) {
+          /* Double-click → telescope IN */
+          T_telescopeIn();
+        } else if (c >= 3) {
+          /* Triple-click → surface OUT one layer */
+          if (T_depth > 0) T_doSurface();
+        }
+      }, 280);
+    }
+
+    /* Attach to main stage and telescope stage */
+    if (stage)    stage.addEventListener('click', _tOnClick);
+    if (tStageEl) tStageEl.addEventListener('click', _tOnClick);
+    if (tscEl)    tscEl.addEventListener('click', _tOnClick);
+
+    /* ── End Telescope System ── */
 
   })();
   </script>

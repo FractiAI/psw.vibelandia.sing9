@@ -1305,11 +1305,25 @@
     };
     var audioCache = {};   /* key → blob URL */
 
-    /* Key: base64-encoded so it's not plain-text in source. Override via
-       voice-config.js (gitignored, local only) or localStorage (modal). */
-    var _ELK = 'c2tfNjQyNmQxYjQ5Yjg3MzIzZWU1ZWRiNjkxNTIxYjdmN2Y5NzUyYmRlMDk5MzY2Zjlj';
-    function _elKey() { return (window.SING9_EL_KEY || '') || localStorage.getItem('el_api_key') || atob(_ELK); }
-    function _elKeyActive() { return _elKey().length > 8; }
+    /* Key resolution order:
+         1. voice-config.js  (local only, gitignored) — window.SING9_EL_KEY
+         2. localStorage     (set via the 🔑 modal in the top bar)
+       No fallback hard-coded key — forces real credentials.
+       Get your key: elevenlabs.io → Profile → API Keys            */
+    function _elKey() { return (window.SING9_EL_KEY || '') || (localStorage.getItem('el_api_key') || ''); }
+    function _elKeyActive() { return _elKey().length > 20; }
+
+    /* Auto-open the key modal after 1.8 s if no valid key is present */
+    setTimeout(function () {
+      if (!_elKeyActive()) {
+        var modal = document.getElementById('el-modal');
+        var status = document.getElementById('el-key-status');
+        if (modal) {
+          modal.style.display = 'flex';
+          if (status) status.textContent = '\u26A0 No ElevenLabs key found.\nPaste your key below to hear SING\u20199 in YOUR voice.\nelevenlabs.io \u2192 Profile \u2192 API Keys';
+        }
+      }
+    }, 1800);
 
     /* Stop whatever is currently playing */
     function _stopActive() {
@@ -1353,6 +1367,15 @@
       })
       .catch(function(err) {
         console.warn('[ElevenLabs] error, falling back to Web Speech:', err);
+        /* Surface the failure visibly so the user knows to enter their real key */
+        var modal = document.getElementById('el-modal');
+        var status = document.getElementById('el-key-status');
+        var keyBtn = document.getElementById('btnVoiceKey');
+        if (modal && status) {
+          modal.style.display = 'flex';
+          status.textContent = '\u274C ElevenLabs key rejected (HTTP error).\nPaste YOUR key from elevenlabs.io \u2192 Profile \u2192 API Keys\nand enter your SING\u20199 voice clone ID below.';
+        }
+        if (keyBtn) keyBtn.style.color = 'rgba(255,120,80,0.9)';
         _wsFallback(text, narrator, onDone);
       });
     }
@@ -1458,7 +1481,7 @@
         if (hw) lines.push('Hero Will \u2192 custom ID: ' + hw.slice(0,8) + '\u2026');
         else    lines.push('Hero Will \u2192 George (default)');
         if (s9) lines.push('SING!9 \u2192 custom ID: ' + s9.slice(0,8) + '\u2026');
-        else    lines.push('SING!9 \u2192 Antoni (default)');
+        else    lines.push('SING!9 \u2192 K6qXUsh0\u2026 (your cloned voice)');
         return lines.join('\n');
       }
 

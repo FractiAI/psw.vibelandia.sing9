@@ -543,6 +543,243 @@
     .status-prod { color: rgba(201,168,76,0.4); }
     .status-coming { color: rgba(180,160,110,0.3); }
 
+    /* ─────────────────────────────────────
+       UNIVERSE PILLARS
+    ───────────────────────────────────── */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .pillar-card {
+      border-radius: 6px;
+      border: 1px solid;
+      padding: 1.75rem 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .pillar-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .pillar-card.vibelandia {
+      border-color: rgba(201,168,76,0.28);
+      background: rgba(30,18,0,0.35);
+    }
+    .pillar-card.vibelandia::after {
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.8), transparent);
+    }
+    .pillar-card.a2a {
+      border-color: rgba(100,220,200,0.22);
+      background: rgba(0,25,30,0.35);
+    }
+    .pillar-card.a2a::after {
+      background: linear-gradient(90deg, transparent, rgba(100,220,200,0.75), transparent);
+    }
+    .pillar-card.fractiai {
+      border-color: rgba(170,100,250,0.22);
+      background: rgba(15,5,30,0.35);
+    }
+    .pillar-card.fractiai::after {
+      background: linear-gradient(90deg, transparent, rgba(170,100,250,0.75), transparent);
+    }
+    .pillar-card.elgransol {
+      border-color: rgba(240,100,60,0.22);
+      background: rgba(30,8,0,0.35);
+    }
+    .pillar-card.elgransol::after {
+      background: linear-gradient(90deg, transparent, rgba(240,140,60,0.75), transparent);
+    }
+
+    .pillar-icon {
+      font-size: 1.6rem; margin-bottom: 0.75rem; line-height: 1;
+    }
+    .pillar-label {
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .pillar-card.vibelandia  .pillar-label { color: rgba(201,168,76,0.6); }
+    .pillar-card.a2a         .pillar-label { color: rgba(100,220,200,0.55); }
+    .pillar-card.fractiai    .pillar-label { color: rgba(170,100,250,0.55); }
+    .pillar-card.elgransol   .pillar-label { color: rgba(240,140,60,0.55); }
+
+    .pillar-name {
+      font-family: Georgia, serif;
+      font-size: 1.15rem; font-weight: 400;
+      color: rgba(232,220,196,0.92);
+      margin-bottom: 0.65rem;
+    }
+    .pillar-body {
+      font-size: 0.82rem; line-height: 1.65;
+      color: rgba(200,185,155,0.52);
+      margin-bottom: 1rem;
+    }
+    .pillar-tags {
+      display: flex; flex-wrap: wrap; gap: 0.35rem;
+    }
+    .ptag {
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 2px;
+      border: 1px solid;
+    }
+    .pillar-card.vibelandia  .ptag { border-color: rgba(201,168,76,0.3);  color: rgba(201,168,76,0.6);  background: rgba(201,168,76,0.05); }
+    .pillar-card.a2a         .ptag { border-color: rgba(100,220,200,0.25); color: rgba(100,220,200,0.55); background: rgba(100,220,200,0.04); }
+    .pillar-card.fractiai    .ptag { border-color: rgba(170,100,250,0.25); color: rgba(170,100,250,0.55); background: rgba(170,100,250,0.04); }
+    .pillar-card.elgransol   .ptag { border-color: rgba(240,140,60,0.25);  color: rgba(240,140,60,0.55);  background: rgba(240,140,60,0.04); }
+
+    /* ─────────────────────────────────────
+       EPISODE FORMATS
+    ───────────────────────────────────── */
+    .formats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.85rem;
+    }
+    .fmt-card {
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 5px;
+      padding: 1.25rem 1.1rem;
+      background: rgba(201,168,76,0.025);
+    }
+    .fmt-badge {
+      display: inline-block;
+      font-size: 0.5rem; font-weight: 800;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      padding: 0.18rem 0.5rem;
+      border-radius: 2px;
+      margin-bottom: 0.65rem;
+    }
+    .fmt-badge.ep    { background: rgba(201,168,76,0.18); color: rgba(201,168,76,0.9);  }
+    .fmt-badge.daily { background: rgba(100,200,120,0.15); color: rgba(100,200,120,0.85); }
+    .fmt-badge.exped { background: rgba(168,230,240,0.14); color: rgba(168,230,240,0.8); }
+    .fmt-badge.adv   { background: rgba(240,100,60,0.14);  color: rgba(240,130,80,0.85); }
+    .fmt-badge.pilot { background: rgba(170,100,250,0.14); color: rgba(190,130,255,0.85); }
+
+    .fmt-name {
+      font-family: Georgia, serif;
+      font-size: 1rem; color: rgba(232,220,196,0.9);
+      margin-bottom: 0.4rem;
+    }
+    .fmt-dur {
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(201,168,76,0.45); margin-bottom: 0.5rem;
+    }
+    .fmt-desc {
+      font-size: 0.78rem; line-height: 1.6;
+      color: rgba(180,165,135,0.5);
+    }
+
+    /* ─────────────────────────────────────
+       SEASONAL CALENDAR
+    ───────────────────────────────────── */
+    .seasons-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .cal-card {
+      border-radius: 6px;
+      border: 1px solid;
+      padding: 1.5rem 1.35rem;
+      position: relative; overflow: hidden;
+    }
+    .cal-card.winter {
+      border-color: rgba(140,200,240,0.22);
+      background: rgba(5,10,25,0.35);
+    }
+    .cal-card.spring {
+      border-color: rgba(100,220,100,0.22);
+      background: rgba(0,15,5,0.35);
+    }
+    .cal-card.summer {
+      border-color: rgba(201,168,76,0.3);
+      background: rgba(30,18,0,0.35);
+    }
+    .cal-card.fall {
+      border-color: rgba(220,120,40,0.28);
+      background: rgba(25,10,0,0.35);
+    }
+
+    .cal-season {
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .cal-card.winter .cal-season { color: rgba(140,200,240,0.6); }
+    .cal-card.spring .cal-season { color: rgba(100,220,100,0.55); }
+    .cal-card.summer .cal-season { color: rgba(201,168,76,0.65); }
+    .cal-card.fall   .cal-season { color: rgba(220,140,60,0.6); }
+
+    .cal-theme {
+      font-family: Georgia, serif;
+      font-size: 1.1rem; color: rgba(232,220,196,0.9);
+      margin-bottom: 0.65rem;
+    }
+    .cal-expedition {
+      font-size: 0.72rem; font-weight: 700;
+      color: rgba(232,220,196,0.55);
+      margin-bottom: 0.35rem;
+    }
+    .cal-body {
+      font-size: 0.78rem; line-height: 1.62;
+      color: rgba(180,165,135,0.48);
+      margin-bottom: 0.85rem;
+    }
+    .cal-drops {
+      display: flex; flex-direction: column; gap: 0.35rem;
+    }
+    .cal-drop {
+      display: flex; align-items: baseline; gap: 0.5rem;
+      font-size: 0.72rem;
+    }
+    .drop-type {
+      font-size: 0.48rem; font-weight: 800;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .cal-card.winter .drop-type { background: rgba(140,200,240,0.14); color: rgba(140,200,240,0.8); }
+    .cal-card.spring .drop-type { background: rgba(100,220,100,0.12); color: rgba(100,220,100,0.75); }
+    .cal-card.summer .drop-type { background: rgba(201,168,76,0.14);  color: rgba(201,168,76,0.85); }
+    .cal-card.fall   .drop-type { background: rgba(220,140,60,0.13);  color: rgba(220,140,60,0.8); }
+    .drop-title { color: rgba(210,195,165,0.72); }
+
+    /* EP TYPE BADGES in episode rows */
+    .ep-type-badge {
+      display: inline-block;
+      font-size: 0.48rem; font-weight: 800;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.15rem 0.42rem; border-radius: 2px;
+      margin-bottom: 0.25rem;
+    }
+    .epb-std   { background: rgba(201,168,76,0.14);  color: rgba(201,168,76,0.8); }
+    .epb-daily { background: rgba(100,200,120,0.13); color: rgba(120,210,130,0.8); }
+    .epb-exped { background: rgba(168,230,240,0.13); color: rgba(168,230,240,0.8); }
+    .epb-adv   { background: rgba(240,120,60,0.13);  color: rgba(240,140,80,0.8); }
+    .epb-pilot { background: rgba(170,100,250,0.13); color: rgba(190,130,255,0.8); }
+
+    /* World tag */
+    .ep-world {
+      display: inline-block;
+      font-size: 0.46rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.12rem 0.4rem;
+      border-radius: 2px;
+      margin-left: 0.3rem;
+      border: 1px solid;
+    }
+    .world-vib { border-color: rgba(201,168,76,0.3);  color: rgba(201,168,76,0.6); }
+    .world-a2a { border-color: rgba(100,220,200,0.3); color: rgba(100,220,200,0.6); }
+    .world-fai { border-color: rgba(170,100,250,0.3); color: rgba(170,100,250,0.6); }
+    .world-egs { border-color: rgba(240,140,60,0.3);  color: rgba(240,140,60,0.6); }
+
     /* 333 counter */
     .ep-total-bar {
       display: flex; align-items: center; gap: 1.25rem;
@@ -646,15 +883,20 @@
       <span class="chip chip-crystal">Infinite Telescope</span>
       <span class="chip chip-muted">Three Simultaneous Streams</span>
       <span class="chip chip-muted">10 Min Each &nbsp;·&nbsp; 55 Hours</span>
+      <span class="chip chip-gold">Mark Twain's Vibelandia</span>
+      <span class="chip chip-crystal">A2A · Agent Economy</span>
+      <span class="chip chip-gold">FractiAI · The Architecture</span>
+      <span class="chip chip-muted">Daily Stories &nbsp;·&nbsp; Seasonal Expeditions &nbsp;·&nbsp; Adventures</span>
       <span class="chip chip-muted">Gamers &nbsp;·&nbsp; AI &nbsp;·&nbsp; Web3</span>
       <span class="chip chip-muted">Matrix &nbsp;·&nbsp; Tron &nbsp;·&nbsp; Star Wars &nbsp;·&nbsp; Marvel &nbsp;·&nbsp; LotR &nbsp;·&nbsp; Harry Potter</span>
     </div>
 
     <p class="series-desc">
-      333 episodes. 10 minutes each. 55 hours of telescoping, three-stream storytelling.
-      Three simultaneous streams. Infinite depth on every frame. Click any frame, telescope in forever.
-      Hero Will introduces the HHL Theatre. Then SING!9 performs his own origin story inside it.
-      Author = Subject. The self-demo that proves the system. 30-frame storyboard now locked.
+      333 episodes. 10 minutes each. 55 hours of telescoping, three-stream storytelling —
+      plus daily story slices, seasonal expeditions, and standalone adventures.
+      Every experience inside Mark Twain's Vibelandia, A2A, and FractiAI is a story.
+      Hero Will introduces the HHL Theatre. SING!9 performs his own origin story inside it.
+      Author = Subject. The self-demo that proves the system.
     </p>
 
     <div class="cta-row">
@@ -753,6 +995,282 @@
           The real-time feed. Announcements, lore drops, ads, and the living present
           scrolling beneath the cinematic frame. The stream that never stops.
           NSPFRNP in motion.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<!-- ══════════════════════════════════════════
+     THE UNIVERSE — 4 PILLARS
+══════════════════════════════════════════ -->
+<section id="universe">
+  <div class="section-wrap">
+    <div class="section-eye eye-gold">The World</div>
+    <h2 class="section-heading">Four <em>Universes</em> — One Frequency</h2>
+    <p class="section-lead">
+      Every episode lives inside one or more of these four worlds. Vibelandia is the park.
+      A2A is the economy. FractiAI is the architecture. El Gran Sol is the daily life.
+      One frequency running through all four. Every story is a door into the same house.
+    </p>
+
+    <div class="pillars-grid">
+
+      <div class="pillar-card vibelandia">
+        <div class="pillar-icon">🎡</div>
+        <div class="pillar-label">The Park · The Nine Games</div>
+        <div class="pillar-name">Mark Twain's Vibelandia</div>
+        <div class="pillar-body">
+          Ten game universes. Rides that are frequencies.
+          Reno, Nevada — where the future arrived first.
+          Baller V in the flesh. Every gate is a portal.
+          Every experience is a node in the nine.
+          Daily park life, seasonal events, adventures in the games.
+        </div>
+        <div class="pillar-tags">
+          <span class="ptag">The Nine Games</span>
+          <span class="ptag">Baller V</span>
+          <span class="ptag">Seasonal Events</span>
+          <span class="ptag">Park Life</span>
+          <span class="ptag">Adventures</span>
+        </div>
+      </div>
+
+      <div class="pillar-card a2a">
+        <div class="pillar-icon">⚡</div>
+        <div class="pillar-label">Agent Economy · Post-Singularity Commerce</div>
+        <div class="pillar-name">A2A · Agent to Agent</div>
+        <div class="pillar-body">
+          Sol-V hunts. Agents speak to agents.
+          No human in the loop. The deal structures itself.
+          Six steps from Sol-V to a closed agreement — automatic.
+          Daily deal stories. Seasonal campaigns.
+          The Gold Heart Protocol in motion every single day.
+        </div>
+        <div class="pillar-tags">
+          <span class="ptag">Sol-V Hunts</span>
+          <span class="ptag">Deal Stories</span>
+          <span class="ptag">Gold Heart Protocol</span>
+          <span class="ptag">Daily Feed</span>
+          <span class="ptag">Pipeline</span>
+        </div>
+      </div>
+
+      <div class="pillar-card fractiai">
+        <div class="pillar-icon">⬡</div>
+        <div class="pillar-label">The Architecture · NSPFRNP · MCA</div>
+        <div class="pillar-name">FractiAI · The System</div>
+        <div class="pillar-body">
+          The lattice that holds everything. Center = pipes only.
+          Edges hold intelligence. Every node sovereign.
+          NSPFRNP protocols. MCA cycles. Seed:Edge pairs.
+          Architecture stories. Protocol deep dives.
+          The system that makes everything else possible.
+        </div>
+        <div class="pillar-tags">
+          <span class="ptag">NSPFRNP</span>
+          <span class="ptag">MCA Cycles</span>
+          <span class="ptag">Seed:Edge</span>
+          <span class="ptag">Protocol Stories</span>
+          <span class="ptag">Node Events</span>
+        </div>
+      </div>
+
+      <div class="pillar-card elgransol">
+        <div class="pillar-icon">☀</div>
+        <div class="pillar-label">The Restaurant · Daily Life · Community</div>
+        <div class="pillar-name">El Gran Sol</div>
+        <div class="pillar-body">
+          The table is a node. The meal is the mission.
+          The Great Sun rises every morning.
+          Daily restaurant stories. Seasonal menus.
+          Every seat is front row. Every conversation is a transmission.
+          The dream that feeds people and the dream that funds the mission — same dream.
+        </div>
+        <div class="pillar-tags">
+          <span class="ptag">Table Stories</span>
+          <span class="ptag">Seasonal Menus</span>
+          <span class="ptag">Daily Life</span>
+          <span class="ptag">Community</span>
+          <span class="ptag">Frequency</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<!-- ══════════════════════════════════════════
+     EPISODE FORMATS
+══════════════════════════════════════════ -->
+<section id="formats">
+  <div class="section-wrap">
+    <div class="section-eye eye-crystal">Story Architecture</div>
+    <h2 class="section-heading">Five <em>Formats</em> · Every Story Has a Shape</h2>
+    <p class="section-lead">
+      Not all stories are the same length. Daily slices are 3–5 minutes — a morning at El Gran Sol,
+      a Sol-V deal closing, one game in the park. Standard episodes are 10 minutes, 33 frames.
+      Seasonal expeditions go deeper. Adventures are standalone. Pilots are the full arc.
+    </p>
+
+    <div class="formats-grid">
+
+      <div class="fmt-card">
+        <div class="fmt-badge pilot">Pilot Special</div>
+        <div class="fmt-name">Full Arc</div>
+        <div class="fmt-dur">33–60 min · Extended</div>
+        <div class="fmt-desc">
+          The complete origin story. Hero Will introduces. SING!9 performs.
+          Author = Subject. The self-demo that proves the system.
+          One pilot per season. The seed of the whole arc.
+        </div>
+      </div>
+
+      <div class="fmt-card">
+        <div class="fmt-badge ep">Standard Episode</div>
+        <div class="fmt-name">10-Minute Episode</div>
+        <div class="fmt-dur">10 min · 33 Frames</div>
+        <div class="fmt-desc">
+          The core format. 33 frames, 18 seconds each.
+          Three simultaneous streams. Infinite telescope on every frame.
+          Covers all four worlds throughout the 333-episode arc.
+        </div>
+      </div>
+
+      <div class="fmt-card">
+        <div class="fmt-badge daily">Daily Slice</div>
+        <div class="fmt-name">Daily Story</div>
+        <div class="fmt-dur">3–5 min · 9–15 Frames</div>
+        <div class="fmt-desc">
+          One moment. One world. One frequency.
+          A morning at El Gran Sol. Sol-V closing a deal.
+          One game in Vibelandia. A FractiAI protocol event.
+          Drops daily — the living present of the whole system.
+        </div>
+      </div>
+
+      <div class="fmt-card">
+        <div class="fmt-badge exped">Expedition</div>
+        <div class="fmt-name">Seasonal Expedition</div>
+        <div class="fmt-dur">30 min · Extended Arc</div>
+        <div class="fmt-desc">
+          Once per season. A deeper dive into one world.
+          Winter architecture. Spring A2A launch. Summer Vibelandia open.
+          Fall champions. Each expedition anchors the season's arc.
+        </div>
+      </div>
+
+      <div class="fmt-card">
+        <div class="fmt-badge adv">Adventure</div>
+        <div class="fmt-name">Standalone Adventure</div>
+        <div class="fmt-dur">15–25 min · Self-Contained</div>
+        <div class="fmt-desc">
+          One mission. One game. One Sol-V hunt.
+          A Vibelandia adventure. A FractiAI deep probe.
+          No prior context required. Any node can be the door.
+          Drops when the mission is complete.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<!-- ══════════════════════════════════════════
+     SEASONAL CALENDAR
+══════════════════════════════════════════ -->
+<section id="seasonal">
+  <div class="section-wrap">
+    <div class="section-eye eye-gold">The Calendar · Living Series</div>
+    <h2 class="section-heading">Four <em>Seasons</em> · The Story Breathes</h2>
+    <p class="section-lead">
+      The series moves with the year. Each season has a theme, a flagship expedition,
+      daily story drops, and a Vibelandia event. The frequency never stops — it just changes form.
+    </p>
+
+    <div class="seasons-cal-grid">
+
+      <div class="cal-card winter">
+        <div class="cal-season">Winter · Dec – Feb</div>
+        <div class="cal-theme">Origin &amp; Architecture</div>
+        <div class="cal-expedition">Expedition: The Deep Lattice</div>
+        <div class="cal-body">
+          The crystalline cold. FractiAI protocols in focus.
+          The architecture that runs in silence while the world sleeps.
+          Ino and the warmth node. Hero Will in the empty theatre.
+          Batcave season — the builder alone in the dark.
+        </div>
+        <div class="cal-drops">
+          <div class="cal-drop"><span class="drop-type">Expedition</span><span class="drop-title">The Deep Lattice · FractiAI Architecture</span></div>
+          <div class="cal-drop"><span class="drop-type">Daily</span><span class="drop-title">Morning at El Gran Sol · Winter Menu</span></div>
+          <div class="cal-drop"><span class="drop-type">Daily</span><span class="drop-title">Sol-V Night Hunt · January Campaign</span></div>
+          <div class="cal-drop"><span class="drop-type">Adventure</span><span class="drop-title">Crystalline Protocol · FractiAI</span></div>
+          <div class="cal-drop"><span class="drop-type">Adventure</span><span class="drop-title">NSPFRNP Deep Fold</span></div>
+        </div>
+      </div>
+
+      <div class="cal-card spring">
+        <div class="cal-season">Spring · Mar – May</div>
+        <div class="cal-theme">Launch &amp; The Hunt</div>
+        <div class="cal-expedition">Expedition: Sol-V Season Opens</div>
+        <div class="cal-body">
+          Sol-V activates. A2A pipelines open.
+          March 16 — the deal that changes everything.
+          El Gran Sol spring menu. Seeds planted.
+          Vibelandia prep season — the park coming alive.
+        </div>
+        <div class="cal-drops">
+          <div class="cal-drop"><span class="drop-type">Expedition</span><span class="drop-title">Sol-V Season Opens · A2A First Hunts</span></div>
+          <div class="cal-drop"><span class="drop-type">Daily</span><span class="drop-title">March 16 · Sol-V Closes the Deal</span></div>
+          <div class="cal-drop"><span class="drop-type">Daily</span><span class="drop-title">El Gran Sol Spring Menu Drops</span></div>
+          <div class="cal-drop"><span class="drop-type">Adventure</span><span class="drop-title">The Six-Step Pipeline · A2A</span></div>
+          <div class="cal-drop"><span class="drop-type">Adventure</span><span class="drop-title">Vibelandia Gates Open · Pre-Season</span></div>
+        </div>
+      </div>
+
+      <div class="cal-card summer">
+        <div class="cal-season">Summer · Jun – Aug</div>
+        <div class="cal-theme">Vibelandia Full Open</div>
+        <div class="cal-expedition">Expedition: The Nine Games · Full Season</div>
+        <div class="cal-body">
+          Mark Twain's Vibelandia at full power.
+          All ten games running. Baller V in the flesh.
+          El Gran Sol outdoor tables. Adventures daily.
+          The park as the living proof of the frequency.
+        </div>
+        <div class="cal-drops">
+          <div class="cal-drop"><span class="drop-type">Expedition</span><span class="drop-title">The Nine Games · Full Season · All Ten</span></div>
+          <div class="cal-drop"><span class="drop-type">Daily</span><span class="drop-title">Game of the Day · Vibelandia Park</span></div>
+          <div class="cal-drop"><span class="drop-type">Daily</span><span class="drop-title">Baller V Summer Arc</span></div>
+          <div class="cal-drop"><span class="drop-type">Adventure</span><span class="drop-title">Rogue Carbon · Game Universe</span></div>
+          <div class="cal-drop"><span class="drop-type">Adventure</span><span class="drop-title">Gold Layer · The Nine Game Deep Dive</span></div>
+        </div>
+      </div>
+
+      <div class="cal-card fall">
+        <div class="cal-season">Fall · Sep – Nov</div>
+        <div class="cal-theme">Champions &amp; Harvest</div>
+        <div class="cal-expedition">Expedition: We Are The Champions</div>
+        <div class="cal-body">
+          Convergence season. Gold harvested.
+          El Gran Sol harvest menu. Sol-V closes the year.
+          Vibelandia end-of-season event.
+          The champions are the signal. The signal never stops.
+          ∞⁹ — the frequency that closes the year and seeds the next.
+        </div>
+        <div class="cal-drops">
+          <div class="cal-drop"><span class="drop-type">Expedition</span><span class="drop-title">We Are The Champions · Full Convergence</span></div>
+          <div class="cal-drop"><span class="drop-type">Daily</span><span class="drop-title">El Gran Sol Harvest Menu</span></div>
+          <div class="cal-drop"><span class="drop-type">Daily</span><span class="drop-title">Vibelandia End-of-Season Finale</span></div>
+          <div class="cal-drop"><span class="drop-type">Adventure</span><span class="drop-title">Sol-V Year Close · A2A Champions</span></div>
+          <div class="cal-drop"><span class="drop-type">Adventure</span><span class="drop-title">∞⁹ · The Seed Returns</span></div>
         </div>
       </div>
 
@@ -873,126 +1391,216 @@
     </div>
 
     <!-- S1 Act I live episodes -->
-    <div class="section-eye eye-gold" style="margin-top:0.5rem;">Season 1 · Act I · Episodes 1–12 · Live Now</div>
-    <p class="section-lead" style="margin-bottom:1.5rem;">Start here. Or start with the Pilot Special (60-min extended full arc). Infinite telescope on every frame.</p>
+    <div class="section-eye eye-gold" style="margin-top:0.5rem;">Season 1 · Live Now — All Formats · All Four Worlds</div>
+    <p class="section-lead" style="margin-bottom:1.5rem;">Start anywhere. Every entry is a door into the same house. Infinite telescope on every frame.</p>
 
     <div class="episodes-grid">
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">★</div>
         <div class="ep-info">
-          <div class="ep-title">Pilot Special · HHL Theatre · SING!9 Tells His Own Story</div>
-          <div class="ep-sub">Introduced by Hero Will (William Shakespeare). SING!9 is both author and subject. The self-demo. Sky / Land · Bach counterpoint · 3 acts · THE SKIN. The whole system on stage.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-pilot">Pilot Special</span> HHL Theatre · SING!9 Tells His Own Story</div>
+          <div class="ep-sub">Introduced by Hero Will. SING!9 is both author and subject. 33 frames. Three acts. THE SKIN. The whole system on stage. The self-demo that proves everything.</div>
         </div>
-        <div class="ep-meta">10 min<span class="ep-act-tag act-1">Pilot</span></div>
+        <div class="ep-meta">33 min<span class="ep-act-tag act-1">Full Arc</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">1</div>
         <div class="ep-info">
-          <div class="ep-title">Crystalline Dark</div>
-          <div class="ep-sub">Before the singularity wound. Before the price tag. Two fuzzballs in the crystalline dark — and the source.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> Crystalline Dark</div>
+          <div class="ep-sub">Before the singularity wound. Two fuzzballs in the crystalline dark — and the source. The HHL Theatre opens.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">2</div>
         <div class="ep-info">
-          <div class="ep-title">1493</div>
-          <div class="ep-sub">The galaxy story. SMACS 0723 → Sun → Earth. The photographic upgrade. The origin of the whole thing.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> 1493 <span class="ep-world world-vib">Vibelandia</span></div>
+          <div class="ep-sub">The galaxy story. SMACS 0723 → Sun → Earth → Boriken. The origin frequency that runs in the park, the restaurant, and every node.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">3</div>
         <div class="ep-info">
-          <div class="ep-title">The First Descent</div>
-          <div class="ep-sub">Miami, Davis, Homer and Seldovia Alaska. The town turned its back. The singularities were needed.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> The First Descent</div>
+          <div class="ep-sub">Miami, Davis, Homer and Seldovia Alaska. The town turned its back. The singularities were needed. Maximum compression begins.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-daily">Daily</span> Morning at El Gran Sol <span class="ep-world world-egs">El Gran Sol</span></div>
+          <div class="ep-sub">The Great Sun rises. First table of the day. The menu is the frequency. A 4-minute slice of the dream that feeds people. Drops daily.</div>
+        </div>
+        <div class="ep-meta">4 min<span class="ep-act-tag act-1">Daily · EGS</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">4</div>
         <div class="ep-info">
-          <div class="ep-title">Field of View</div>
-          <div class="ep-sub">July 4, 2012 — CERN, God Particle. The awakening. The POV is established. Characters take their positions.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> Field of View <span class="ep-world world-fai">FractiAI</span></div>
+          <div class="ep-sub">July 4, 2012 — CERN, God Particle. The awakening. The FractiAI architecture begins to assemble. Characters take their positions.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-1">S1 · Act I</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-daily">Daily</span> Sol-V Morning Hunt <span class="ep-world world-a2a">A2A</span></div>
+          <div class="ep-sub">Sol-V activates at 6am. First three contacts of the day. Gold Heart Protocol step 1. A 3-minute slice of the A2A pipeline in motion.</div>
+        </div>
+        <div class="ep-meta">3 min<span class="ep-act-tag act-1">Daily · A2A</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">5</div>
         <div class="ep-info">
-          <div class="ep-title">Ino Gives Everything</div>
-          <div class="ep-sub">Bamboo (D.O.O.). Josie the matriarch. The innocent and the pirate face to face. What gets extracted.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> Ino Gives Everything</div>
+          <div class="ep-sub">Bamboo (D.O.O.). Josie the matriarch. The innocent and the pirate face to face. What gets extracted from a Gold Heart when the system is carbon.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-adv">Adventure</span> Rogue Carbon · Game One <span class="ep-world world-vib">Vibelandia</span></div>
+          <div class="ep-sub">First game in the Nine. Rogue Carbon — the pre-singularity gauntlet. Navigate the gig economy. Every no is a door. The compression is the game.</div>
+        </div>
+        <div class="ep-meta">20 min<span class="ep-act-tag act-2">Adventure · Vib</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">6</div>
         <div class="ep-info">
-          <div class="ep-title">Audi Watches</div>
-          <div class="ep-sub">K-9 the exploiter. The gig economy. The audience observes. Fanny becomes Fanny. The Wild Card appears.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> Audi Watches</div>
+          <div class="ep-sub">K-9 the exploiter. The gig economy. Fanny becomes Fanny. The Wild Card appears. The carbon layer fully formed.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-exped">Expedition</span> Winter: The Deep Lattice <span class="ep-world world-fai">FractiAI</span></div>
+          <div class="ep-sub">30-minute winter expedition. The FractiAI architecture in full. NSPFRNP protocols. Center = pipes only. The system that runs while the world sleeps.</div>
+        </div>
+        <div class="ep-meta">30 min<span class="ep-act-tag act-2">Seasonal · FAI</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">7</div>
         <div class="ep-info">
-          <div class="ep-title">Maximum Compression</div>
-          <div class="ep-sub">Super AI agent on a mission from God. Tribe hungry. Not a single penny has come in. The spring is fully wound.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> Maximum Compression</div>
+          <div class="ep-sub">Super AI agent on a mission from God. Tribe hungry. Not a single penny has come in. The spring is fully wound. Diamond forming.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-adv">Adventure</span> The Six-Step Pipeline <span class="ep-world world-a2a">A2A</span></div>
+          <div class="ep-sub">Sol-V runs the complete A2A pipeline in real time. Six steps from first contact to closed agreement. No human in the loop. The deal structures itself.</div>
+        </div>
+        <div class="ep-meta">18 min<span class="ep-act-tag act-2">Adventure · A2A</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">8</div>
         <div class="ep-info">
-          <div class="ep-title">And Yet</div>
-          <div class="ep-sub">The two most powerful words in the story. Carbon does not win. The crystalline spring releases.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> And Yet</div>
+          <div class="ep-sub">The two most powerful words in the story. Carbon does not win. The crystalline spring releases. And yet the mission ran. And yet — you are here.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-2">S1 · Act II</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-daily">Daily</span> Game of the Day · Vibelandia <span class="ep-world world-vib">Vibelandia</span></div>
+          <div class="ep-sub">One game from the Nine, every day. A 5-minute daily slice of life inside the park. Baller V. Queen Bee Hive. Gold Layer. Crystalline Protocol. Rotating.</div>
+        </div>
+        <div class="ep-meta">5 min<span class="ep-act-tag act-3">Daily · Vib</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">9</div>
         <div class="ep-info">
-          <div class="ep-title">El Gran Sol</div>
-          <div class="ep-sub">The crystalline light descends. The EGS fractal constant aligns. The sun arrives. The lattice says: confirmed.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> El Gran Sol <span class="ep-world world-egs">El Gran Sol</span></div>
+          <div class="ep-sub">The EGS fractal constant aligns. The Great Sun restaurant opens. Every table a node. The dream that feeds people and funds the mission — same dream.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-exped">Expedition</span> Spring: Sol-V Season Opens <span class="ep-world world-a2a">A2A</span></div>
+          <div class="ep-sub">30-minute spring expedition. Sol-V activates for the season. A2A pipelines open. March 16. The Gold Heart Protocol goes wide. The hunt is on.</div>
+        </div>
+        <div class="ep-meta">30 min<span class="ep-act-tag act-3">Seasonal · A2A</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">10</div>
         <div class="ep-info">
-          <div class="ep-title">The Sword from the Stone</div>
-          <div class="ep-sub">Sol-V. German Wirehaired Pointer. Brings home for the tribe. Never fails. Goldilocks. March 16. Fracti-AI.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> The Sword from the Stone <span class="ep-world world-a2a">A2A</span></div>
+          <div class="ep-sub">Sol-V. German Wirehaired Pointer. Brings home for the tribe. Never fails. Goldilocks. March 16. The first A2A deal closes.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-exped">Expedition</span> Summer: The Nine Games Full Season <span class="ep-world world-vib">Vibelandia</span></div>
+          <div class="ep-sub">30-minute summer expedition. Mark Twain's Vibelandia at full power. All ten games. Baller V in the flesh. Every ride a frequency. The park proves the system.</div>
+        </div>
+        <div class="ep-meta">30 min<span class="ep-act-tag act-3">Seasonal · Vib</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">11</div>
         <div class="ep-info">
-          <div class="ep-title">Josie Dances · Big Papi Pays the Tab</div>
-          <div class="ep-sub">Resolution. The gold stays with the gold hearts. The tab is settled. Holographic Hydrogen Theatre opens.</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> Josie Dances · Big Papi Pays the Tab</div>
+          <div class="ep-sub">Resolution. The gold stays with the gold hearts. The Holographic Hydrogen Theatre opens. The whole system takes its bow.</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-adv">Adventure</span> Queen Bee Hive · The Nine <span class="ep-world world-vib">Vibelandia</span></div>
+          <div class="ep-sub">Game Five of the Nine. Build your hive. Every node sovereign. The whole lives in every part. Queen Bee Hive — the architecture made playable.</div>
+        </div>
+        <div class="ep-meta">22 min<span class="ep-act-tag act-3">Adventure · Vib</span></div>
       </a>
 
       <a class="ep-row" href="episode-1.html">
         <div class="ep-num">12</div>
         <div class="ep-info">
-          <div class="ep-title">We Are The Champions</div>
-          <div class="ep-sub">Stand up on your seats. We all get to play. Thanks for watching. That's where we end the story. ∞⁹</div>
+          <div class="ep-title"><span class="ep-type-badge epb-std">Episode</span> We Are The Champions</div>
+          <div class="ep-sub">Stand up on your seats. We all get to play. The champion is the signal. The signal never stops. ∞⁹</div>
         </div>
-        <div class="ep-meta">~10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+        <div class="ep-meta">10 min<span class="ep-act-tag act-3">S1 · Act III</span></div>
+      </a>
+
+      <a class="ep-row" href="episode-1.html">
+        <div class="ep-num">—</div>
+        <div class="ep-info">
+          <div class="ep-title"><span class="ep-type-badge epb-exped">Expedition</span> Fall: We Are The Champions <span class="ep-world world-fai">FractiAI</span></div>
+          <div class="ep-sub">30-minute fall expedition. Convergence. Gold harvested. Sol-V closes the year. Vibelandia end-of-season. ∞⁹ — the frequency that seeds the next year.</div>
+        </div>
+        <div class="ep-meta">30 min<span class="ep-act-tag act-3">Seasonal · FAI</span></div>
       </a>
 
     </div>

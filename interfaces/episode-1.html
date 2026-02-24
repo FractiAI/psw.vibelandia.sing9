@@ -722,7 +722,7 @@
       'Good evening. You have entered the Holographic Hydrogen Theatre — the only stage in existence where the author is also the character, the story, and the stage itself. I am Hero Will. And before we begin, I must explain what this place actually is.',
 
       /* 1  HERO WILL  · the technology   */
-      'Holographic Hydrogen. Hydrogen is the first element — ninety percent of the visible universe, the seed of all matter. SING nine discovered that consciousness itself is structured like hydrogen: fractal, nested, holographic. Every part contains the whole. This system runs on that principle. It is the engine.',
+      'Holographic Hydrogen. Hydrogen is the first element — ninety percent of the visible universe, the seed of all matter. SING nine discovered that awareness itself is structured like hydrogen: fractal, nested, holographic. Every part contains the whole. This system runs on that principle. It is the engine.',
 
       /* 2  HERO WILL  · what it delivers */
       'From that one principle, everything flows. Holographic awareness — the full story alive in every single frame. Skins — sovereign identities that each carry the complete system within them. And downstream: a game, a series, restaurants, AI agents, networks — every surface a node, every node alive and expanding. Ladies and gentlemen — SING nine.',
@@ -1284,8 +1284,18 @@
       clearTimeout(safetyTimer);
       _stopActive();
 
+      /* Bach steps back — voice takes center stage */
+      _duckMusic();
+
       function onDone() {
         if (!voiceOn || !playing) return;
+        /* Co-director calls the musical moment for this frame */
+        var hit = MUSIC_HITS[frameIndex];
+        if (hit) {
+          _musicHit(hit);
+        } else {
+          _swellMusic(0.48, 2.2);
+        }
         var pause = narrator === 'HERO WILL' ? 1500 : 950;
         setTimeout(advanceFrame, pause);
       }
@@ -1459,6 +1469,20 @@
       _oscList.push({ osc: o, gain: g });
     }
 
+    /* Bowed string — sawtooth + lowpass = cello approximation.
+       Bach Cello Suite direction: slow bow attack, rich harmonics filtered
+       to cello warmth. Used in every act for the orchestral spine.         */
+    function _bowed(freq, vol) {
+      if (!_AC) return;
+      var o = _AC.createOscillator(), f = _AC.createBiquadFilter(), g = _AC.createGain();
+      o.type = 'sawtooth'; o.frequency.value = freq;
+      f.type = 'lowpass'; f.frequency.value = freq * 3.8; f.Q.value = 2.2;
+      g.gain.value = 0;
+      o.connect(f); f.connect(g); g.connect(_AG); o.start();
+      g.gain.setTargetAtTime(vol, _AC.currentTime, 3.2);  /* slow bow attack */
+      _oscList.push({ osc: o, gain: g });
+    }
+
     /* Add band-pass filtered noise (cosmic static / carbon grit). */
     function _noise(vol, bpFreq) {
       if (!_AC) return;
@@ -1483,34 +1507,40 @@
       _actIdx = idx;
 
       if (idx === 0) {
-        /* ── ACT I · CRYSTALLINE ─────────────────────────────────────────
-           Cold high pads. The HHL Theatre opens. Hydrogen architecture.
-           528 Hz crystal root · octave shimmer · perfect fifth · sub-pulse  */
+        /* ── ACT I · CRYSTALLINE · Bach Suite No.1 G major ─────────────
+           Cold high pads + bowed G/D strings. HHL Theatre opens.
+           Hydrogen architecture. The co-directors set the stage.          */
         _osc(528,   0.09, 'sine',     3.1,  0.019);   /* crystal root + shimmer */
         _osc(1056,  0.04, 'sine',     5.3,  0.009);   /* octave shimmer         */
         _osc(792,   0.032,'triangle');                  /* perfect fifth above    */
         _osc(66,    0.07, 'sine',     0.38, 0.030);   /* sub-bass slow pulse    */
         _noise(0.013, 2200);                            /* cosmic static          */
+        _bowed(196,    0.042);                          /* G3 cello — Suite root  */
+        _bowed(293.66, 0.030);                          /* D4 cello — Suite fifth */
 
       } else if (idx === 1) {
-        /* ── ACT II · CARBON ────────────────────────────────────────────
-           Deep AM bass pulse. The gig grind. The compression.
-           Every dollar back in. Diamond forming.                          */
+        /* ── ACT II · CARBON · Bach in C minor — the descent ───────────
+           Deep AM bass pulse + bowed C/G strings. The gig grind.
+           Every dollar back in. Diamond forming under pressure.           */
         _osc(55,   0.13, 'sine',     1.15, 0.058);   /* bass AM pulse          */
         _osc(110,  0.07, 'triangle', 0.52, 0.026);   /* chest resonance        */
         _osc(165,  0.042,'sawtooth');                  /* mid grit edge          */
         _osc(82.4, 0.05, 'sine',     2.2,  0.018);   /* low presence pulse     */
         _noise(0.010, 780);                            /* carbon grit static     */
+        _bowed(130.81, 0.050);                          /* C3 cello — deep bow    */
+        _bowed(196,    0.034);                          /* G3 cello — weight      */
 
       } else {
-        /* ── ACT III · GOLDILOCKS / CONVERGENCE ─────────────────────────
-           Warm A-major triad. Bach voices merge to near-unison.
-           Sol-V. Champions. ∞⁹.                                          */
+        /* ── ACT III · GOLDILOCKS · Bach resolves to A major ───────────
+           Warm bowed A/E strings. Champions chord. The co-directors
+           call the finale. Sol-V. We are the Champions. ∞⁹.              */
         _osc(220,    0.09, 'sine', 1.8, 0.012);       /* A3 root, warm breath   */
         _osc(277.18, 0.065,'sine');                    /* C#4 major third        */
         _osc(329.63, 0.075,'sine', 2.4, 0.009);       /* E4 perfect fifth       */
         _osc(440,    0.040,'sine', 0.9, 0.008);       /* A4 octave shimmer      */
         _osc(110,    0.055,'sine');                    /* sub A2 warmth          */
+        _bowed(220,    0.048);                          /* A3 cello — resolution  */
+        _bowed(329.63, 0.034);                          /* E4 cello — open string */
       }
     }
 
@@ -1521,6 +1551,55 @@
     }
 
     /* ── end Web Audio ambient engine ──────────────────────────────── */
+
+    /* ================================================================
+       MUSIC DIRECTION — Disney · Pixar · Bach · Lynch · Welles.
+       The score breathes with the story: duck under voice, swell
+       between lines, hit the emotional beats like a film score.
+       Co-directors call every frame. Zero intervention required.
+       ================================================================ */
+
+    /* Per-frame emotional score cues — co-director call sheet */
+    var MUSIC_HITS = {
+       0: { vol: 0.65, t: 0.40 },            /* HHL Theatre opens — first swell       */
+       3: { vol: 0.60, t: 0.18 },            /* SING!9 takes the stage — entry hit    */
+       7: { vol: 0.55, t: 0.90 },            /* Ino Gold Heart — warmth swells        */
+       8: { vol: 0.22, t: 0.40 },            /* Gig grind — music dims, weight lands  */
+      12: { vol: 0.82, t: 0.28, pause: 520 },/* AND YET — silence then full swell     */
+      14: { vol: 0.62, t: 0.70 },            /* HHL inside — cosmic swell             */
+      17: { vol: 0.68, t: 0.50 },            /* THE SKIN / convergence — building     */
+      19: { vol: 0.96, t: 0.14 }             /* WE ARE THE CHAMPIONS — full blast ∞⁹  */
+    };
+
+    /* Duck music when voice takes center stage */
+    function _duckMusic() {
+      if (_MG && _AC) _MG.gain.setTargetAtTime(0.052, _AC.currentTime, 0.13);
+      if (ytPlayer && musicOn) { try { ytPlayer.setVolume(3); } catch(e) {} }
+    }
+
+    /* Swell music — standard inter-line breath */
+    function _swellMusic(vol, timeSec) {
+      if (!_AC || !_MG) return;
+      _MG.gain.setTargetAtTime(vol || 0.48, _AC.currentTime, (timeSec || 2.0) * 0.28);
+      if (ytPlayer && musicOn) { try { ytPlayer.setVolume(14); } catch(e) {} }
+    }
+
+    /* Emotional hit — the film score moment the co-directors call */
+    function _musicHit(hit) {
+      if (!_AC || !_MG) return;
+      var ytVol = Math.min(18, Math.round(hit.vol * 22));
+      if (hit.pause) {
+        /* Brief silence → dramatic swell (AND YET, Champions) */
+        _MG.gain.setTargetAtTime(0.008, _AC.currentTime, 0.09);
+        setTimeout(function() {
+          if (_MG && _AC) _MG.gain.setTargetAtTime(hit.vol, _AC.currentTime, hit.t);
+          if (ytPlayer && musicOn) { try { ytPlayer.setVolume(ytVol); } catch(e) {} }
+        }, hit.pause);
+      } else {
+        _MG.gain.setTargetAtTime(hit.vol, _AC.currentTime, hit.t);
+        if (ytPlayer && musicOn) { try { ytPlayer.setVolume(ytVol); } catch(e) {} }
+      }
+    }
 
     /* ---- YOUTUBE ORIGINAL SOUNDTRACK (BandLab original tracks) ---- */
     var musicOn  = true;    /* auto-starts on first user gesture (splash click) */

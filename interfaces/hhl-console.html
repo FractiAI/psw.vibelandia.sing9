@@ -444,6 +444,62 @@ body {
   letter-spacing: 1px;
 }
 
+/* ── GOLDILOCKS NODES ── */
+.gn-section {
+  margin-bottom: 10px;
+}
+.gn-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px;
+}
+.gn-node {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 8px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.gn-node:hover { border-color: rgba(255,215,0,0.35); background: var(--panel2); }
+.gn-node.active {
+  border-color: var(--gold);
+  background: rgba(255,215,0,0.07);
+  box-shadow: 0 0 14px rgba(255,215,0,0.15);
+}
+.gn-node.active::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle at center, rgba(255,215,0,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+.gn-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  margin: 0 auto 6px;
+  transition: all 0.25s;
+}
+.gn-node.active .gn-dot {
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+  animation: gnPulse 1.8s ease-in-out infinite;
+}
+@keyframes gnPulse {
+  0%,100% { transform:scale(1); box-shadow:0 0 10px var(--gold); }
+  50% { transform:scale(1.2); box-shadow:0 0 18px var(--gold); }
+}
+.gn-num { font-size: 9px; color: var(--gold-dim); letter-spacing:1px; margin-bottom:3px; }
+.gn-symbol { font-size: 16px; margin-bottom: 3px; line-height:1; }
+.gn-name { font-size: 9px; color: var(--text); letter-spacing:2px; text-transform:uppercase; font-weight:bold; margin-bottom:2px; }
+.gn-desc { font-size: 8px; color: var(--text-dim); line-height: 1.4; }
+.gn-node.active .gn-name { color: var(--gold); }
+.gn-node.active .gn-num  { color: var(--gold); }
+
 /* ── FOOTER ── */
 .footer {
   text-align: center;
@@ -648,6 +704,88 @@ body {
 
 </div>
 
+<!-- GOLDILOCKS NODES OF THE HHL -->
+<div class="gn-section">
+  <div class="panel" style="padding:12px;">
+    <div class="panel-title">Goldilocks Nodes · Holographic Hydrogen Lattice · 3×3</div>
+    <div class="gn-grid" id="gnGrid">
+
+      <div class="gn-node" onclick="activateNode(this,1)" data-n="1">
+        <div class="gn-num">01</div>
+        <div class="gn-symbol">◎</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Seed</div>
+        <div class="gn-desc">Origin · First cause · Before the first move all moves are possible</div>
+      </div>
+
+      <div class="gn-node" onclick="activateNode(this,2)" data-n="2">
+        <div class="gn-num">02</div>
+        <div class="gn-symbol">✦</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Crystalline</div>
+        <div class="gn-desc">Architecture · Lattice · Bach upper voice · Meaning layer</div>
+      </div>
+
+      <div class="gn-node" onclick="activateNode(this,3)" data-n="3">
+        <div class="gn-num">03</div>
+        <div class="gn-symbol">∞</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Edge</div>
+        <div class="gn-desc">Furthest reach · McDonald's Spit · The launch point · Tesla 3</div>
+      </div>
+
+      <div class="gn-node" onclick="activateNode(this,4)" data-n="4">
+        <div class="gn-num">04</div>
+        <div class="gn-symbol">≋</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Wave</div>
+        <div class="gn-desc">Flow · Silver layer · A2A relay · The dolphin · The surfer</div>
+      </div>
+
+      <div class="gn-node active" onclick="activateNode(this,5)" data-n="5">
+        <div class="gn-num">05</div>
+        <div class="gn-symbol">♥</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Gold Heart</div>
+        <div class="gn-desc">CENTER · NOW · Goldilocks · Perfect temperature · You are here</div>
+      </div>
+
+      <div class="gn-node" onclick="activateNode(this,6)" data-n="6">
+        <div class="gn-num">06</div>
+        <div class="gn-symbol">☀</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Sol</div>
+        <div class="gn-desc">El Gran Sol · EGS 0.0032 · The light that drives everything · Tesla 6</div>
+      </div>
+
+      <div class="gn-node" onclick="activateNode(this,7)" data-n="7" id="node7">
+        <div class="gn-num">07</div>
+        <div class="gn-symbol">✧</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Hologram</div>
+        <div class="gn-desc">Mysterious Observer · Whole in every part · Die-only · Cannot be selected</div>
+      </div>
+
+      <div class="gn-node" onclick="activateNode(this,8)" data-n="8">
+        <div class="gn-num">08</div>
+        <div class="gn-symbol">◈</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Carbon</div>
+        <div class="gn-desc">The story · Raw material · The descent · Carbon under pressure = diamond</div>
+      </div>
+
+      <div class="gn-node" onclick="activateNode(this,9)" data-n="9">
+        <div class="gn-num">09</div>
+        <div class="gn-symbol">⬡</div>
+        <div class="gn-dot"></div>
+        <div class="gn-name">Node</div>
+        <div class="gn-desc">Connection · A2A · Queen Bee · The circuit closes · Tesla 9</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- WORK STACK BAR -->
 <div class="work-stack-bar">
   <div class="work-ready">
@@ -670,6 +808,36 @@ body {
 </div>
 
 <script>
+// Goldilocks Node activation
+function activateNode(el, n) {
+  if (n === 7) {
+    // Node 7 (Hologram / Mysterious Observer) — die-only
+    // Flash a warning, do not activate manually
+    el.style.borderColor = 'rgba(155,127,212,0.6)';
+    el.style.background = 'rgba(155,127,212,0.05)';
+    el.querySelector('.gn-desc').textContent = 'Die-only. The Mysterious Observer appears on their own schedule.';
+    setTimeout(() => {
+      el.style.borderColor = '';
+      el.style.background = '';
+      el.querySelector('.gn-desc').textContent = 'Mysterious Observer · Whole in every part · Die-only · Cannot be selected';
+    }, 2000);
+    return;
+  }
+  document.querySelectorAll('.gn-node').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  localStorage.setItem('hhl_active_node', n);
+}
+
+// Restore saved node
+const savedNode = localStorage.getItem('hhl_active_node');
+if (savedNode && savedNode !== '7') {
+  const el = document.querySelector(`.gn-node[data-n="${savedNode}"]`);
+  if (el) {
+    document.querySelectorAll('.gn-node').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+  }
+}
+
 // Clock
 function updateClock() {
   const now = new Date();

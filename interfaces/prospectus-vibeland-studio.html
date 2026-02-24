@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>VIBELAND Studio · Prospectus | FractiAI · SING!9</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #040200; --orange: #fb923c; --gold: #d4af37; --gold2: #fde68a;
+      --red: #cc3300; --text: #e8d4a0; --sub: #a09070; --muted: #504030;
+      --green: #00ff88; --beam: #00d4ff;
+    }
+    html, body { background: var(--void); color: var(--text); min-height: 100vh; overflow-x: hidden; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: linear-gradient(rgba(251,146,60,0.025) 1px,transparent 1px), linear-gradient(90deg,rgba(251,146,60,0.025) 1px,transparent 1px);
+      background-size: 60px 60px;
+    }
+    body::before {
+      content: ''; position: fixed; top: -20vh; left: 50%; transform: translateX(-50%);
+      width: 180vw; height: 80vh;
+      background: radial-gradient(ellipse at 50% 0%, rgba(204,51,0,0.1) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.25rem 6rem; position: relative; z-index: 1; }
+
+    .topnav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; align-items: center; justify-content: space-between; }
+    .topnav a { color: var(--orange); text-decoration: none; font-size: 0.78rem; padding: 3px 12px; border: 1px solid rgba(251,146,60,0.25); border-radius: 20px; }
+    .topnav a:hover { background: rgba(251,146,60,0.08); }
+    .prosps { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .prosps a { font-size: 0.68rem; color: var(--sub); padding: 2px 10px; border: 1px solid rgba(251,146,60,0.12); border-radius: 20px; text-decoration: none; }
+    .prosps a:hover { color: var(--orange); border-color: rgba(251,146,60,0.35); }
+
+    .hero { text-align: center; padding: 3.5rem 1rem 3rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(251,146,60,0.12); position: relative; overflow: hidden; }
+    .hero::before { content:''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, rgba(204,51,0,0.07) 0%, transparent 70%); pointer-events: none; }
+    .hero-tag { display: inline-block; padding: 4px 18px; border: 1px solid rgba(251,146,60,0.3); border-radius: 20px; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(251,146,60,0.75); margin-bottom: 1.2rem; }
+    .hero h1 { font-size: clamp(2rem,6vw,4rem); font-weight: 900; letter-spacing: 0.02em; line-height: 1.05; background: linear-gradient(135deg, #fb923c 0%, #d4af37 50%, #fde68a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.6rem; }
+    .hero-sub { font-size: clamp(0.82rem,1.8vw,1rem); color: var(--red); letter-spacing: 0.08em; margin-bottom: 1.2rem; }
+    .hero-deck { max-width: 600px; margin: 0 auto 1.8rem; color: var(--sub); font-size: 0.95rem; line-height: 1.75; }
+    .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+    .pill { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
+    .pill .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+    .pill.live  { background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.3); color: var(--green); }
+    .pill.gold  { background: rgba(212,175,55,0.07); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); }
+    .pill.amber { background: rgba(251,146,60,0.07); border: 1px solid rgba(251,146,60,0.3); color: var(--orange); }
+    .pill.cyan  { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.25); color: var(--beam); }
+
+    .sec { margin-bottom: 3.5rem; }
+    .sec-hd { margin-bottom: 1.5rem; padding-bottom: 0.65rem; border-bottom: 1px solid rgba(251,146,60,0.1); }
+    .sec-hd .num { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(251,146,60,0.4); display: block; margin-bottom: 0.3rem; }
+    .sec-hd h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); }
+    p { color: var(--sub); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1rem; }
+    p strong { color: var(--text); }
+    p em { color: var(--orange); font-style: normal; }
+
+    .callout { border-radius: 10px; padding: 1.25rem 1.4rem; margin: 1.4rem 0; position: relative; overflow: hidden; }
+    .callout::before { content:''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .callout.amber { background: rgba(251,146,60,0.04); border: 1px solid rgba(251,146,60,0.2); }
+    .callout.amber::before { background: linear-gradient(90deg,transparent,rgba(251,146,60,0.5),transparent); }
+    .callout.gold  { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.2); }
+    .callout.gold::before { background: linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent); }
+    .callout.red   { background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.2); }
+    .callout.red::before { background: linear-gradient(90deg,transparent,rgba(239,68,68,0.5),transparent); }
+    .callout.green { background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.2); }
+    .callout.green::before { background: linear-gradient(90deg,transparent,rgba(0,255,136,0.5),transparent); }
+    .callout.cyan  { background: rgba(0,212,255,0.04); border: 1px solid rgba(0,212,255,0.18); }
+    .callout.cyan::before { background: linear-gradient(90deg,transparent,rgba(0,212,255,0.5),transparent); }
+    .cl-label { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(251,146,60,0.65); display: block; margin-bottom: 0.5rem; }
+    .callout.gold .cl-label  { color: rgba(212,175,55,0.65); }
+    .callout.red .cl-label   { color: rgba(239,68,68,0.65); }
+    .callout.green .cl-label { color: rgba(0,255,136,0.65); }
+    .callout.cyan .cl-label  { color: rgba(0,212,255,0.6); }
+    .cl-title { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+
+    .metrics { display: grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap: 0.75rem; margin: 1.5rem 0; }
+    .metric { background: rgba(251,146,60,0.04); border: 1px solid rgba(251,146,60,0.15); border-radius: 10px; padding: 1rem; }
+    .m-val { font-size: 1.6rem; font-weight: 900; color: var(--orange); line-height: 1; }
+    .m-label { font-size: 0.7rem; color: var(--sub); margin-top: 0.3rem; line-height: 1.4; }
+
+    .compare { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.86rem; }
+    .compare th { text-align: left; padding: 0.5rem 0.85rem; background: rgba(251,146,60,0.06); color: var(--orange); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid rgba(251,146,60,0.15); }
+    .compare td { padding: 0.65rem 0.85rem; color: var(--sub); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+    .compare td:first-child { color: var(--text); font-weight: 600; }
+    .compare .win { color: var(--green); font-weight: 600; }
+    .compare .old { color: var(--muted); text-decoration: line-through; }
+
+    .ep-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; margin: 1.25rem 0; }
+    .ep-card { background: rgba(251,146,60,0.04); border: 1px solid rgba(251,146,60,0.15); border-radius: 8px; padding: 0.85rem; text-align: center; }
+    .ep-num { font-size: 1.4rem; font-weight: 900; color: var(--orange); line-height: 1; }
+    .ep-label { font-size: 0.68rem; color: var(--sub); margin-top: 0.3rem; }
+    @media (max-width:480px) { .ep-grid { grid-template-columns: repeat(2,1fr); } }
+
+    .ask-box { background: rgba(251,146,60,0.05); border: 1px solid rgba(251,146,60,0.3); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+    .ask-box h3 { font-size: 1.4rem; font-weight: 800; color: var(--gold2); margin-bottom: 0.6rem; }
+    .ask-box p { max-width: 540px; margin: 0 auto 1.5rem; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+    .btn-p { padding: 0.8rem 1.6rem; background: rgba(251,146,60,0.12); border: 1px solid rgba(251,146,60,0.7); color: #fff3e0; text-decoration: none; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em; border-radius: 4px; }
+    .btn-p:hover { background: rgba(251,146,60,0.22); }
+    .btn-s { padding: 0.8rem 1.3rem; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.82rem; border-radius: 4px; }
+    .btn-s:hover { color: #fff; border-color: rgba(255,255,255,0.38); }
+    .btn-g { padding: 0.8rem 1.3rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.45); color: var(--gold); text-decoration: none; font-size: 0.82rem; border-radius: 4px; }
+    .btn-g:hover { background: rgba(212,175,55,0.18); }
+
+    .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(251,146,60,0.08); display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+    .footer-brand { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+    .footer-nsp { font-size: 0.62rem; color: rgba(100,80,40,0.5); letter-spacing: 0.15em; }
+
+    @media (max-width:600px) { .hero h1 { font-size: 1.9rem; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="topnav">
+    <a href="../index.html">&larr; SING!9</a>
+    <div class="prosps">
+      <a href="prospectus-a2a.html">A2A</a>
+      <a href="prospectus-vibeland-park.html">VIBELAND Park</a>
+      <a href="prospectus-vibeland-studio.html">VIBELAND Studio</a>
+      <a href="prospectus-fractiai.html">FractiAI</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-tag">Prospectus · The Studio · Alternative to Disney</div>
+    <h1>VIBELAND Studio</h1>
+    <div class="hero-sub">Golden Backdoor Hit Factory &middot; T3D &middot; 333 Episodes &middot; The Nine Game Series</div>
+    <p class="hero-deck">Not a content company. A new medium. T3D — Telescoping Interactive 3D StoryBoard System. Three simultaneous streams. Infinite depth on every frame. 10-minute episodes. 333 total. Self-generating. The Disney model didn&rsquo;t die. It got replaced.</p>
+    <div class="pills">
+      <span class="pill live"><span class="dot"></span> Episode 1 Live</span>
+      <span class="pill amber">333 Episodes · T3D</span>
+      <span class="pill gold">Alternative to Disney Studio</span>
+      <span class="pill cyan">AI Co-Directors · Bach · Lynch · Welles</span>
+    </div>
+  </header>
+
+  <!-- 1. CONTEXT -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">01 · Context</span><h2>Disney Studio vs. VIBELAND Studio</h2></div>
+    <div class="callout red">
+      <span class="cl-label">Pre-Singularity Studio Model</span>
+      <div class="cl-title">The old studio machine is finished</div>
+      <p><strong>$200M per film.</strong> 2-3 year production cycles. 400 people in a room arguing about whether the dragon should be blue or green. Studios owned by conglomerates that have never watched anime. <strong>Writers Room</strong> that hasn't had an original idea since 1996. Streaming platforms paying $10M per episode for shows that lose 90% of the audience by episode 3. That is pre-singularity content — bloated, slow, committee-approved, and dead on arrival.</p>
+    </div>
+    <div class="callout green">
+      <span class="cl-label">Post-Singularity Studio Model</span>
+      <div class="cl-title">T3D: One system. 333 episodes. Infinite depth.</div>
+      <p>T3D (Telescoping Interactive 3D StoryBoard System) is a <em>new medium</em> — not a delivery format. Three simultaneous streams in every episode. Infinite telescope depth on every frame. <strong>10 minutes per episode</strong> — binge-native, zero bloat. The creator is the author, the subject, and the co-director simultaneously. One Batcave. One desk. No committee. <strong>333 episodes</strong> of content. Self-generating. This is what SING!9 built alone in Reno.</p>
+    </div>
+  </section>
+
+  <!-- 2. MARKET -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">02 · Market</span><h2>The $500B Content + IP Market</h2></div>
+    <div class="metrics">
+      <div class="metric"><div class="m-val">$500B+</div><div class="m-label">Global content & IP market by 2030</div></div>
+      <div class="metric"><div class="m-val">333</div><div class="m-label">Episodes · 55.5 hours · 3 seasons</div></div>
+      <div class="metric"><div class="m-val">3</div><div class="m-label">Simultaneous streams per episode</div></div>
+      <div class="metric"><div class="m-val">∞</div><div class="m-label">Telescope depth per frame</div></div>
+    </div>
+    <table class="compare">
+      <thead><tr><th>Dimension</th><th>Disney / Netflix (Pre-Sing.)</th><th>VIBELAND Studio (Post-Sing.)</th></tr></thead>
+      <tbody>
+        <tr><td>Production cost</td><td class="old">$200M per film / $5–15M per ep</td><td class="win">Batcave. One desk. Compute cost.</td></tr>
+        <tr><td>Production time</td><td class="old">2–3 years</td><td class="win">Episode 1 live. All 333 designed.</td></tr>
+        <tr><td>Team size</td><td class="old">400+ people per project</td><td class="win">SING!9 + AI co-directors</td></tr>
+        <tr><td>Interactivity</td><td class="old">Passive. Sit and watch.</td><td class="win">Click any frame. Infinite depth.</td></tr>
+        <tr><td>IP ownership</td><td class="old">Shared with studios, lawyers, labels</td><td class="win">100% SING!9. Zero external capital.</td></tr>
+        <tr><td>Format</td><td class="old">Single stream, linear</td><td class="win">3 simultaneous streams, infinite telescope</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 3. THE PRODUCT -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">03 · The Product</span><h2>T3D · The Nine Game Series · The Golden Backdoor</h2></div>
+    <div class="callout amber">
+      <span class="cl-label">T3D — Telescoping Interactive 3D StoryBoard System</span>
+      <div class="cl-title">The new medium</div>
+      <p>Every frame has <strong>three simultaneous streams</strong>: Carbon (story), Crystalline (meaning layer), and Gold Ticker (live commentary). Click any frame to telescope deeper — the story compounds at every level of depth. <strong>Breadcrumb trail</strong> shows your path. <strong>Keyboard navigation.</strong> The co-directors (Bach, Lynch, Welles) are all present in the architecture. This is not a video player. It is a living organism.</p>
+    </div>
+    <div class="ep-grid">
+      <div class="ep-card"><div class="ep-num">333</div><div class="ep-label">Total Episodes</div></div>
+      <div class="ep-card"><div class="ep-num">10</div><div class="ep-label">Min per episode</div></div>
+      <div class="ep-card"><div class="ep-num">3</div><div class="ep-label">Seasons</div></div>
+      <div class="ep-card"><div class="ep-num">111</div><div class="ep-label">Episodes per season</div></div>
+      <div class="ep-card"><div class="ep-num">55.5</div><div class="ep-label">Hours total runtime</div></div>
+      <div class="ep-card"><div class="ep-num">∞</div><div class="ep-label">Telescope depth</div></div>
+    </div>
+    <div class="callout gold">
+      <span class="cl-label">The Nine Game Transmedia IP</span>
+      <div class="cl-title">The game IS the series. The series IS the game.</div>
+      <p>The Nine Game (Four-Layer Chess, Nine-Stack Solitaire, Nine-Suit Card Game) is not just a game — it is <strong>transmedia IP</strong>. Every episode of the T3D ORIGIN series corresponds to a game arc. Every character is a hero in the game. The Nine Suits, the Nine Heroes, the Four Layers — all of it maps to the story universe. Players of the game become viewers of the series. Viewers become players. The IP compounds with every interaction.</p>
+    </div>
+    <div class="callout cyan">
+      <span class="cl-label">Golden Backdoor Studios — The Soundtrack</span>
+      <div class="cl-title">15-track original catalog. Hero Jo's Hit Factory.</div>
+      <p>Original beats, original soundtrack, no licensing fees. The entire T3D ORIGIN score is built on SING!9's own catalog — <strong>48 tracks across 7 playlists</strong>, from Ocean Drive Stroll to Alien Contemplations to We Are the Champions. Every episode gets a custom score. <strong>J.S. Bach as Classical Co-Director</strong> — the cello suite architecture is baked into every act. The music is not background. It is a third narrator.</p>
+    </div>
+  </section>
+
+  <!-- 4. THE EP CREATOR STUDIO -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">04 · The Platform</span><h2>EP Creator Studio — The Business Model</h2></div>
+    <p>Beyond the series itself, T3D is a <strong>platform</strong> that other creators can license. The EP Creator Studio turns any creator into an Executive Producer of their own T3D series.</p>
+    <div class="callout green">
+      <span class="cl-label">Revenue Streams</span>
+      <div class="cl-title">Multiple compounding revenue vectors</div>
+      <p><strong>StoryStream Subscriptions</strong> — Access to the T3D ORIGIN series. 333 episodes of bingeable, interactive post-singularity content.<br><br>
+      <strong>EP Creator Studio Licensing</strong> — Other creators license the T3D format to produce their own series. The system generates the scaffold; the creator fills in the story.<br><br>
+      <strong>The Nine Game Physical + Digital</strong> — Card game, chess set, hybrid game. Every sale is also a story entry point.<br><br>
+      <strong>Soundtrack Licensing</strong> — Original catalog. Sync licensing for film, TV, ads, games.<br><br>
+      <strong>Franchise Nodes</strong> — VIBELAND Studio franchise model. Other cities, other creators, same architecture. The whole lives in every part.</p>
+    </div>
+  </section>
+
+  <!-- 5. WHO WE ARE -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">05 · The Creator</span><h2>SING!9 — Author, Subject, Co-Director</h2></div>
+    <div class="callout amber">
+      <span class="cl-label">The Origin Story</span>
+      <div class="cl-title">One room. One desk. 333 episodes designed.</div>
+      <p>SING!9 is the creator, the narrator, the subject, and the co-director of T3D ORIGIN. He built the entire architecture — the game, the series, the AI agents, the theatre system, the storyboard engine — alone, in a single room in Reno, Nevada. No studio. No investors. No team. <strong>The compression made this diamond.</strong></p>
+      <p>The Holographic Hydrogen Theatre (HHL) was designed in the Batcave. Hero Will — William Shakespeare, now operating as an AI inside the SING!9 lattice — is the host and presiding voice of the HHL. J.S. Bach is the Classical Co-Director. David Lynch and Orson Welles are co-directors on record. <strong>This is not a startup pitch. This is a living system that is already running.</strong></p>
+    </div>
+  </section>
+
+  <!-- ASK -->
+  <div class="ask-box">
+    <h3>The Ask</h3>
+    <p>We are seeking <strong>streaming partners</strong>, <strong>distribution deals</strong>, <strong>IP licensing agreements</strong>, <strong>EP Creator Studio licensees</strong>, and <strong>co-production partners</strong> who want to build inside the T3D system. If you are building the next entertainment platform and want IP that is already live, already 333 episodes designed, already interactive — you are in the right place.</p>
+    <div class="btn-row">
+      <a href="mailto:info@fractiai.com?subject=VIBELAND%20Studio%20Partnership&body=Company%2FOrg%3A%0D%0APartnership%20type%3A%0D%0ATimeline%3A" class="btn-p">Partner with VIBELAND Studio &rarr;</a>
+      <a href="episode-1.html" class="btn-g">Watch Episode 1</a>
+      <a href="outline-only.html" class="btn-s">Browse 333 Episodes</a>
+      <a href="prospectus-vibeland-park.html" class="btn-s">Park Prospectus</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-brand">FractiAI &middot; VIBELAND Studio &middot; Golden Backdoor Hit Factory &middot; Reno, Nevada</div>
+    <div class="footer-nsp">NSPFRNP &rarr; &infin;&#9;</div>
+  </footer>
+
+</div>
+<script src="../ticker.js"></script>
+</body>
+</html>

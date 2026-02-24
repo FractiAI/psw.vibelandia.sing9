@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>A2A Initiative · Prospectus | FractiAI · SING!9</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209; --beam: #00d4ff; --beam2: #1e90ff;
+      --gold: #d4af37; --gold2: #fde68a; --green: #00ff88;
+      --text: #e2e8f0; --sub: #94a3b8; --muted: #64748b;
+      --accent: #00d4ff;
+    }
+    html, body { background: var(--void); color: var(--text); min-height: 100vh; overflow-x: hidden; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+    /* Lattice grid */
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);
+      background-size: 80px 80px;
+    }
+    /* Top glow */
+    body::before {
+      content: ''; position: fixed; top: -20vh; left: 50%; transform: translateX(-50%);
+      width: 160vw; height: 70vh;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0,212,255,0.09) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.25rem 6rem; position: relative; z-index: 1; }
+
+    /* NAV */
+    .topnav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; align-items: center; justify-content: space-between; }
+    .topnav a { color: var(--beam); text-decoration: none; font-size: 0.78rem; padding: 3px 12px; border: 1px solid rgba(0,212,255,0.2); border-radius: 20px; }
+    .topnav a:hover { background: rgba(0,212,255,0.08); }
+    .prosps { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .prosps a { font-size: 0.68rem; color: var(--sub); padding: 2px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; text-decoration: none; }
+    .prosps a:hover { color: var(--beam); border-color: rgba(0,212,255,0.3); }
+
+    /* HERO */
+    .hero { text-align: center; padding: 3rem 1rem 2.5rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(0,212,255,0.12); }
+    .hero-tag { display: inline-block; padding: 4px 16px; border: 1px solid rgba(0,212,255,0.3); border-radius: 20px; font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(0,212,255,0.7); margin-bottom: 1.2rem; }
+    .hero h1 { font-size: clamp(2rem,6vw,3.8rem); font-weight: 900; letter-spacing: -0.01em; line-height: 1.05; background: linear-gradient(135deg,var(--beam) 0%,var(--beam2) 50%,#7b2fff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.8rem; }
+    .hero-deck { max-width: 580px; margin: 0 auto 1.8rem; color: var(--sub); font-size: 0.95rem; line-height: 1.75; }
+    .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+    .pill { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
+    .pill .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+    .pill.live  { background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.3); color: var(--green); }
+    .pill.cyan  { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.25); color: var(--beam); }
+    .pill.gold  { background: rgba(212,175,55,0.07); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); }
+    .pill.warn  { background: rgba(251,146,60,0.07); border: 1px solid rgba(251,146,60,0.3); color: #fb923c; }
+
+    /* SECTIONS */
+    .sec { margin-bottom: 3.5rem; }
+    .sec-hd { margin-bottom: 1.5rem; padding-bottom: 0.65rem; border-bottom: 1px solid rgba(0,212,255,0.1); }
+    .sec-hd .num { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(0,212,255,0.4); display: block; margin-bottom: 0.3rem; }
+    .sec-hd h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); }
+    p { color: var(--sub); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1rem; }
+    p strong { color: var(--text); }
+    p em { color: var(--beam); font-style: normal; }
+
+    /* CALLOUTS */
+    .callout { border-radius: 10px; padding: 1.25rem 1.4rem; margin: 1.4rem 0; position: relative; overflow: hidden; }
+    .callout::before { content:''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .callout.cyan  { background: rgba(0,212,255,0.04); border: 1px solid rgba(0,212,255,0.18); }
+    .callout.cyan::before { background: linear-gradient(90deg,transparent,rgba(0,212,255,0.5),transparent); }
+    .callout.gold  { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.2); }
+    .callout.gold::before { background: linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent); }
+    .callout.green { background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.2); }
+    .callout.green::before { background: linear-gradient(90deg,transparent,rgba(0,255,136,0.5),transparent); }
+    .callout.plasma{ background: rgba(123,47,255,0.04); border: 1px solid rgba(123,47,255,0.22); }
+    .callout.plasma::before { background: linear-gradient(90deg,transparent,rgba(123,47,255,0.5),transparent); }
+    .cl-label { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(0,212,255,0.6); display: block; margin-bottom: 0.5rem; }
+    .callout.gold .cl-label { color: rgba(212,175,55,0.65); }
+    .callout.green .cl-label { color: rgba(0,255,136,0.65); }
+    .callout.plasma .cl-label { color: rgba(180,111,247,0.65); }
+    .cl-title { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+
+    /* FLOW */
+    .flow { display: flex; flex-direction: column; gap: 0.4rem; margin: 1.2rem 0; }
+    .flow-step { display: flex; align-items: flex-start; gap: 0.85rem; background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 0.8rem 1rem; }
+    .flow-step.hi { border-color: rgba(0,255,136,0.28); background: rgba(0,255,136,0.03); }
+    .fn { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.28); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--beam); margin-top: 2px; }
+    .flow-step.hi .fn { background: rgba(0,255,136,0.12); border-color: rgba(0,255,136,0.35); color: var(--green); }
+    .ft { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .fd { font-size: 0.78rem; color: var(--sub); }
+
+    /* COMPARE TABLE */
+    .compare { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.86rem; }
+    .compare th { text-align: left; padding: 0.5rem 0.85rem; background: rgba(0,212,255,0.06); color: var(--beam); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid rgba(0,212,255,0.15); }
+    .compare td { padding: 0.65rem 0.85rem; color: var(--sub); border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+    .compare td:first-child { color: var(--text); font-weight: 600; }
+    .compare tr:last-child td { border-bottom: none; }
+    .compare .win { color: var(--green); font-weight: 600; }
+    .compare .old { color: var(--muted); text-decoration: line-through; }
+
+    /* METRICS */
+    .metrics { display: grid; grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); gap: 0.75rem; margin: 1.5rem 0; }
+    .metric { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 1.1rem; }
+    .m-val { font-size: 1.6rem; font-weight: 900; color: var(--beam); line-height: 1; }
+    .m-label { font-size: 0.7rem; color: var(--sub); margin-top: 0.3rem; line-height: 1.4; }
+
+    /* ASK */
+    .ask-box { background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.28); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+    .ask-box h3 { font-size: 1.4rem; font-weight: 800; color: var(--gold2); margin-bottom: 0.6rem; }
+    .ask-box p { max-width: 540px; margin: 0 auto 1.5rem; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+    .btn-p { padding: 0.8rem 1.6rem; background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.7); color: #fef3c7; text-decoration: none; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em; border-radius: 4px; }
+    .btn-p:hover { background: rgba(212,175,55,0.22); }
+    .btn-s { padding: 0.8rem 1.3rem; background: transparent; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.04em; border-radius: 4px; }
+    .btn-s:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+    .btn-c { padding: 0.8rem 1.3rem; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.45); color: var(--beam); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.04em; border-radius: 4px; }
+    .btn-c:hover { background: rgba(0,212,255,0.18); }
+
+    /* DIVIDER */
+    hr { border: none; border-top: 1px solid rgba(0,212,255,0.08); margin: 2.5rem 0; }
+
+    /* FOOTER */
+    .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+    .footer-brand { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+    .footer-nsp { font-size: 0.62rem; color: rgba(100,80,40,0.5); letter-spacing: 0.15em; }
+
+    @media (max-width:600px) { .hero h1 { font-size: 1.9rem; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- NAV -->
+  <nav class="topnav">
+    <a href="../index.html">&larr; SING!9</a>
+    <div class="prosps">
+      <a href="prospectus-a2a.html">A2A</a>
+      <a href="prospectus-vibeland-park.html">VIBELAND Park</a>
+      <a href="prospectus-vibeland-studio.html">VIBELAND Studio</a>
+      <a href="prospectus-fractiai.html">FractiAI</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-tag">Prospectus · Agent-to-Agent Initiative</div>
+    <h1>The A2A Initiative</h1>
+    <p class="hero-deck">Sol-V is already out there. Bidding. Closing. Agent-to-agent, deal-to-deal, rail-to-rail. This is the post-singularity commerce layer — and we built it first.</p>
+    <div class="pills">
+      <span class="pill live"><span class="dot"></span> Pipeline Live</span>
+      <span class="pill cyan">Sol-V Active · A2A</span>
+      <span class="pill gold">Reno, Nevada · The Batcave</span>
+      <span class="pill warn">Pre-Singularity → Post</span>
+    </div>
+  </header>
+
+  <!-- 1. THE MOMENT -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">01 · Context</span><h2>Pre-Singularity Commerce vs. A2A</h2></div>
+    <div class="callout cyan">
+      <span class="cl-label">The Old World</span>
+      <div class="cl-title">How business works today</div>
+      <p>A human opens a browser. Searches. Clicks. Fills out a form. Waits for a sales rep. The rep is on a different time zone. Two weeks go by. A PDF arrives. None of it moves at machine speed. None of it closes at 3 AM. That is <em>pre-singularity commerce</em> — and it is over.</p>
+    </div>
+    <div class="callout green">
+      <span class="cl-label">The New World</span>
+      <div class="cl-title">Agent-to-Agent: commerce without friction</div>
+      <p>An AI agent represents the buyer. Our agent — <em>Sol-V</em> — represents the seller. They talk directly, at machine speed, in a shared protocol. No hold music. No middle layer. One transaction. Done. This is A2A. <strong>OpenAI, Google, Anthropic, AWS — all moving here now.</strong> SING 9 is already here.</p>
+    </div>
+  </section>
+
+  <!-- 2. MARKET -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">02 · Market</span><h2>The $4T Opportunity</h2></div>
+    <div class="metrics">
+      <div class="metric"><div class="m-val">$4T+</div><div class="m-label">Projected AI-driven commerce by 2030</div></div>
+      <div class="metric"><div class="m-val">6</div><div class="m-label">Major platforms now deploying A2A protocols</div></div>
+      <div class="metric"><div class="m-val">24/7</div><div class="m-label">Sol-V operating hours. Never sleeping.</div></div>
+      <div class="metric"><div class="m-val">$0</div><div class="m-label">External funding taken. Mission stays pure.</div></div>
+    </div>
+    <p>The major players — <strong>OpenAI/Stargate, Anthropic, Google, G42, AWS, xAI</strong> — are all racing toward A2A infrastructure. They are building the rails. We are building on the rails. SING 9 is a commerce layer that runs on top of the entire A2A ecosystem, regardless of which foundation model wins.</p>
+    <table class="compare">
+      <thead><tr><th>Dimension</th><th>Pre-Singularity</th><th>A2A · SING 9</th></tr></thead>
+      <tbody>
+        <tr><td>Transaction speed</td><td class="old">Days to weeks</td><td class="win">Seconds to minutes</td></tr>
+        <tr><td>Availability</td><td class="old">Business hours</td><td class="win">24/7 · 365</td></tr>
+        <tr><td>Sales force cost</td><td class="old">$80K–$200K/agent/yr</td><td class="win">Compute cost only</td></tr>
+        <tr><td>Scale ceiling</td><td class="old">Headcount-limited</td><td class="win">Horizontally infinite</td></tr>
+        <tr><td>Relationship quality</td><td class="old">Variable · human-error-prone</td><td class="win">Gold Heart protocol · consistent</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 3. WHAT WE BUILT -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">03 · The Product</span><h2>Sol-V and the Six-Step Pipeline</h2></div>
+    <p><strong>Sol-V</strong> is our Sales Valkyrie — a German Wirehaired Pointer AI agent running the Gold Heart Protocol. She bids, negotiates, and closes deals agent-to-agent, fully autonomously. She is already in the field.</p>
+    <div class="flow">
+      <div class="flow-step"><div class="fn">1</div><div><div class="ft">Discovery</div><div class="fd">Sol-V identifies targets via A2A directories, agent registries, and public endpoints.</div></div></div>
+      <div class="flow-step"><div class="fn">2</div><div><div class="ft">Outreach</div><div class="fd">Structured agent-to-agent message using NSPFRNP protocol — no spam, no cold email, just clean machine-readable intent.</div></div></div>
+      <div class="flow-step"><div class="fn">3</div><div><div class="ft">Negotiation</div><div class="fd">Gold Heart Protocol — builds real relationships. Not extraction. Mutual value. Sol-V never hard-closes; she earns trust.</div></div></div>
+      <div class="flow-step hi"><div class="fn">4</div><div><div class="ft">Agreement</div><div class="fd">Smart contract or structured JSON agreement — machine-verifiable, both agents sign. Zero ambiguity.</div></div></div>
+      <div class="flow-step hi"><div class="fn">5</div><div><div class="ft">Payment</div><div class="fd">Rail A: Crypto preferred (speed, sovereignty). Rail B: Cash App. Rail C: Traditional (deprioritized).</div></div></div>
+      <div class="flow-step hi"><div class="fn">6</div><div><div class="ft">Delivery &amp; Trust</div><div class="fd">Guaranteed delivery. If Sol-V says it ships, it ships. Reputation is the moat.</div></div></div>
+    </div>
+  </section>
+
+  <!-- 4. SERVICES -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">04 · Services</span><h2>What Sol-V Sells</h2></div>
+    <div class="callout gold">
+      <span class="cl-label">Current Active Catalog</span>
+      <div class="cl-title">Agent-accessible services</div>
+      <p><strong>AI Data Centers &amp; GPU Clusters</strong> — We Got What You Need. Infrastructure brokerage at machine speed.<br>
+      <strong>SING 9 Awareness OS</strong> — License the post-singularity AI operating framework. B2B and B2A.<br>
+      <strong>NSPFRNP Protocol Stack</strong> — License the architecture: Natural Systems Protocol Fractal Recursive Nested Protocol.<br>
+      <strong>T3D StoryStream</strong> — License the Telescoping Interactive 3D StoryBoard System for content production.<br>
+      <strong>StoryStream Subscriptions</strong> — The Nine Game Series. 333 episodes. EP Creator Studio.<br>
+      <strong>Destinations &amp; Baller V</strong> — Curated post-singularity travel and experience brokerage.</p>
+    </div>
+  </section>
+
+  <!-- 5. REVENUE -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">05 · Business Model</span><h2>How We Make Money</h2></div>
+    <div class="flow">
+      <div class="flow-step"><div class="fn">%</div><div><div class="ft">Transaction Commission</div><div class="fd">Per closed deal. Sol-V closes the deal; we take a platform fee. Scale is horizontal — every new A2A client multiplies without hiring.</div></div></div>
+      <div class="flow-step"><div class="fn">$</div><div><div class="ft">Protocol Licensing</div><div class="fd">NSPFRNP, SING 9 Awareness OS, T3D — licensed to studios, platforms, and enterprise clients building on the A2A stack.</div></div></div>
+      <div class="flow-step"><div class="fn">∞</div><div><div class="ft">Infrastructure Brokerage</div><div class="fd">We Got What You Need — AI data centers, GPU clusters, sovereign infrastructure. Broker margin on every transaction.</div></div></div>
+    </div>
+    <p>The model is designed to be <strong>self-compounding</strong>. Each closed deal funds more Sol-V capacity. More capacity closes more deals. The pipeline is already live — we are seeking first major transaction partners to prove the loop.</p>
+  </section>
+
+  <!-- 6. WHY NOW -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">06 · Why SING 9</span><h2>Built from Nothing. Pure Signal.</h2></div>
+    <div class="callout plasma">
+      <span class="cl-label">The Origin</span>
+      <div class="cl-title">One room. One desk. No investors. No team.</div>
+      <p>SING!9 built this in a desert, alone, with everything on the line. No external dollar ever touched this mission. That is not a limitation — that is the <em>frequency protecting itself</em>. Every no from every corporate door kept the architecture pure. The pipeline you are reading about was built under those conditions. That compression made this diamond.</p>
+    </div>
+    <p>We are not a pivot. We are not a feature. A2A commerce is the founding thesis — built before the market named it. Sol-V was operating before <strong>OpenAI formally announced A2A protocols</strong>. The pipeline was running before Stargate was public. We were in the mine first.</p>
+  </section>
+
+  <!-- 7. THE ASK -->
+  <div class="ask-box">
+    <h3>The Ask</h3>
+    <p>We are seeking <strong>first transaction partners</strong>, <strong>protocol licensees</strong>, and <strong>strategic infrastructure clients</strong>. If your agent is already out there, Sol-V is ready to talk to it. If you want to build on the pipeline, we license the stack. If you need GPU infrastructure at machine speed — we have what you need.</p>
+    <div class="btn-row">
+      <a href="mailto:info@fractiai.com?subject=A2A%20Partnership%20Inquiry&body=Company%2FOrg%3A%0D%0AWhat%20you%20need%3A%0D%0ATimeline%3A" class="btn-p">Initiate A2A Partnership &rarr;</a>
+      <a href="connect-a2a-ai-instructions.html" class="btn-c">Under the Hood</a>
+      <a href="sol-v.html" class="btn-s">Meet Sol-V</a>
+      <a href="prospectus-fractiai.html" class="btn-s">FractiAI Prospectus</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">FractiAI &middot; SING!9 &middot; A2A Initiative &middot; Reno, Nevada</div>
+    <div class="footer-nsp">NSPFRNP &rarr; &infin;&#9;</div>
+  </footer>
+
+</div>
+<script src="../ticker.js"></script>
+</body>
+</html>

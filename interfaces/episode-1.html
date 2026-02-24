@@ -664,6 +664,37 @@
       to   { opacity: 1; transform: translateY(0);   }
     }
 
+    /* Opening credits — animated image background layer */
+    #oc-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0;
+      transition: opacity 1.6s ease; z-index: 0;
+    }
+    #oc-bg.vis { opacity: 1; }
+    #oc-bg.vis.kb-0 { animation: kb-0 16s linear forwards; }
+    #oc-bg.vis.kb-1 { animation: kb-1 16s linear forwards; }
+    #oc-bg.vis.kb-2 { animation: kb-2 16s linear forwards; }
+    #oc-bg.vis.kb-3 { animation: kb-3 16s linear forwards; }
+    #oc-bg.vis.kb-4 { animation: kb-4 16s linear forwards; }
+    #oc-bg.vis.kb-5 { animation: kb-5 16s linear forwards; }
+    /* Dark cinematic overlay — keeps credits text readable */
+    #oc-overlay {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.82) 0%,
+        rgba(0,0,0,0.60) 40%,
+        rgba(0,0,0,0.60) 60%,
+        rgba(0,0,0,0.82) 100%
+      );
+    }
+    /* All credits text sits above the image */
+    .oc-content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+
     /* ═══════════════════════════════════════════════════════════════
        END CREDITS — Full cinematic rolling credits.
     ═══════════════════════════════════════════════════════════════ */
@@ -813,18 +844,25 @@
 
   <!-- OPENING CREDITS — Cinematic studio title sequence, z-index 220 -->
   <div id="opening-credits">
-    <div class="oc-studio">FractiAI</div>
-    <div class="oc-presents">Presents</div>
-    <div class="oc-series">A SING!9 Original Series</div>
-    <div class="oc-rule"></div>
-    <div class="oc-title">THE NINE<br>GAME</div>
-    <div class="oc-ep">Episode 1 &middot; &ldquo;The Spiral Outcast Hero&rdquo; &middot; Pilot</div>
-    <div class="oc-creator-block">
-      <div class="oc-creator-label">Created &amp; Narrated by</div>
-      <div class="oc-creator-name">SING!9</div>
+    <!-- Animated Ken Burns image backdrop (sourced from POOL, cycled by JS) -->
+    <img id="oc-bg" src="" alt="" />
+    <!-- Dark overlay: keeps credits legible over any image -->
+    <div id="oc-overlay"></div>
+    <!-- All credits text above the image layer -->
+    <div class="oc-content">
+      <div class="oc-studio">FractiAI</div>
+      <div class="oc-presents">Presents</div>
+      <div class="oc-series">A SING!9 Original Series</div>
+      <div class="oc-rule"></div>
+      <div class="oc-title">THE NINE<br>GAME</div>
+      <div class="oc-ep">Episode 1 &middot; &ldquo;The Spiral Outcast Hero&rdquo; &middot; Pilot</div>
+      <div class="oc-creator-block">
+        <div class="oc-creator-label">Created &amp; Narrated by</div>
+        <div class="oc-creator-name">SING!9</div>
+      </div>
+      <div class="oc-rule-bot"></div>
+      <div class="oc-location">Reno, Nevada &nbsp;&middot;&nbsp; The Batcave &nbsp;&middot;&nbsp; The Holographic Hydrogen Theatre</div>
     </div>
-    <div class="oc-rule-bot"></div>
-    <div class="oc-location">Reno, Nevada &nbsp;&middot;&nbsp; The Batcave &nbsp;&middot;&nbsp; The Holographic Hydrogen Theatre</div>
   </div>
 
   <!-- CREATOR INTRODUCTION — The AI introduces the human who built the system -->
@@ -2249,6 +2287,40 @@
     });
 
     loadYTAPI();   /* fire immediately — muted autoplay, unmutes at 800ms */
+
+    /* ================================================================
+       OPENING CREDITS — ANIMATED IMAGE BACKDROP
+       Cycles through hand-picked POOL images with Ken Burns motion.
+       Four images, ~3s each, cross-fading for the 12s credits window.
+       Theatre → Deep Field → Spotlight → HHL Architecture → Reno Night
+       ================================================================ */
+    var OC_POOL = [ POOL[0], POOL[1], POOL[3], POOL[14], POOL[10] ];
+    var _ocBgEl  = document.getElementById('oc-bg');
+    var _ocKB    = ['kb-0','kb-1','kb-2','kb-3','kb-4','kb-5'];
+    var _ocLast  = -1;
+    function _loadOCImg(idx) {
+      if (!_ocBgEl) return;
+      var src = OC_POOL[idx % OC_POOL.length];
+      _ocBgEl.classList.remove('vis','kb-0','kb-1','kb-2','kb-3','kb-4','kb-5');
+      var pick; do { pick = Math.floor(Math.random() * 6); } while (pick === _ocLast);
+      _ocLast = pick;
+      var kb = _ocKB[pick];
+      /* brief blank between images — cinematic cut */
+      setTimeout(function() {
+        _ocBgEl.src = src;
+        _ocBgEl.onload  = function() { _ocBgEl.classList.add('vis', kb); };
+        _ocBgEl.onerror = function() { _ocBgEl.classList.add('vis', kb); };
+      }, 180);
+    }
+    /* Fire each image at matching credit beat:
+       0.0s  → Theatre stage (FractiAI Presents)
+       3.2s  → JWST deep field (THE NINE GAME title swell)
+       6.6s  → Performer in spotlight (Created by SING!9)
+       9.8s  → HHL crystalline architecture (Reno / Batcave)         */
+    _loadOCImg(0);
+    setTimeout(function() { _loadOCImg(1); }, 3200);
+    setTimeout(function() { _loadOCImg(2); }, 6600);
+    setTimeout(function() { _loadOCImg(3); }, 9800);
 
     /* ---- START ---- */
     render(false);   /* visuals immediately */

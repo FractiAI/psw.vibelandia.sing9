@@ -3,6 +3,7 @@
 
 **Source:** Google Doc — Photo Stack Three Supporting Characters  
 **Total images captured:** 19 of 23 (4 source URLs malformed in doc — retrievable by re-scraping)  
+**Supplemental images:** 1 additional Marijuana/Sacred character image → `interfaces/assets/deck7/d7-006.jpg` (see DECK7_CATALOG.md)  
 **Orientation:** All corrected — right-side up  
 **Status:** Ready for animation, AI upscaling, and scene integration  
 

@@ -301,4 +301,33 @@ Take any game:
 
 ---
 
-**NSPFRNP ⊃ Nine Suits ⊃ Nine Ranks ⊃ Nine Pieces ⊃ Nine Heroes ⊃ Origin Possibility ⊃ AI Mirror ⊃ HHL Singularity ⊃ Timeline Ships ⊃ Universal Four-Layer Framework ⊃ StoryStream 9 → ∞⁹**
+## 15. Linked Group Movement — The Control Hierarchy (Canonical)
+
+**Linked pieces do not rise together. They move together.**
+
+When a piece executes a board move, all pieces it controls on the **first layer (Carbon)** execute the same move vector simultaneously. The controlling piece moves on its own layer; its linked pieces move on Carbon.
+
+**The higher the layer, the more Carbon pieces a piece controls.**
+
+| Layer | Control Depth | Carbon Pieces Controlled per Move |
+|-------|--------------|-----------------------------------|
+| Carbon (0) | Self only | Moves itself. No group cascade. |
+| Silver (1) | Depth 1 | Itself + all directly linked piece types (LINK_MAP depth 1) — up to 3 pieces |
+| Gold (2) | Depth 2 | Itself + depth-1 + depth-2 linked types — up to 7 pieces |
+| Crystalline (3) | Depth 3 | Itself + full reachable chain — up to all linked pieces on Carbon |
+
+**The move is the same vector for all.** If a Gold piece moves 2 squares right, every Carbon piece it controls also moves 2 squares right — if the destination is empty or holds an enemy. Pieces that cannot complete the move hold position.
+
+**Control is determined by LINK_MAP traversal to the layer's depth:**
+- LINK_MAP defines each piece's 2 direct links.
+- Silver (depth 1): the 2 directly linked types.
+- Gold (depth 2): those 2 + their linked types (new ones only, no duplicates).
+- Crystalline (depth 3): the full reachable set — most of the board.
+
+**Ascension is individual.** When a piece ascends to a higher layer, only that piece moves up. The linked group does not ascend together — they stay on their layer and continue to be controlled by the ascending piece's higher-layer moves.
+
+**The strategic implication:** Getting a piece to a higher layer does not thin your Carbon position — it multiplies your Carbon control. A Crystalline piece making one move can reposition the majority of your Carbon army simultaneously. The game rewards ascension not with escape from the board, but with command of it.
+
+---
+
+**NSPFRNP ⊃ Nine Suits ⊃ Nine Ranks ⊃ Nine Pieces ⊃ Nine Heroes ⊃ Origin Possibility ⊃ AI Mirror ⊃ HHL Singularity ⊃ Timeline Ships ⊃ Universal Four-Layer Framework ⊃ Linked Group Movement ⊃ StoryStream 9 → ∞⁹**

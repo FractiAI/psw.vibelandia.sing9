@@ -1017,30 +1017,79 @@ function enterAscendMode(){
 }
 
 function ascendGroup(layerIdx,r,c){
+  // Linked pieces do NOT rise together — only the selected piece ascends.
+  // Once at a higher layer it controls more Carbon pieces per move (see moveLinkedGroupOnCarbon).
   const cell=boards[layerIdx][r][c];if(!cell||cell.color!=='w')return;
   const targetLayer=layerIdx+1;if(targetLayer>=unlockedLayers)return;
-  const linkedTypes=LINK_MAP[cell.piece]||[];
-  const linkedPos=[];
-  for(let nr=0;nr<9;nr++)for(let nc=0;nc<9;nc++){
-    const tc=boards[layerIdx][nr][nc];
-    if(tc&&tc.color==='w'&&linkedTypes.includes(tc.piece)&&linkedPos.length<2)linkedPos.push([nr,nc]);
+  // Ascend the single piece only
+  const p=boards[layerIdx][r][c];
+  if(!boards[targetLayer][r][c]){
+    boards[targetLayer][r][c]=p;
+  } else {
+    // Find nearest empty square on target layer
+    let placed=false;
+    for(let d=1;d<9&&!placed;d++){
+      const candidates=[[r+d,c],[r-d,c],[r,c+d],[r,c-d]];
+      for(const[nr2,nc2]of candidates){
+        if(inBounds(nr2,nc2)&&!boards[targetLayer][nr2][nc2]){boards[targetLayer][nr2][nc2]=p;placed=true;break;}
+      }
+    }
   }
-  const toMove=[[r,c],...linkedPos];
-  toMove.forEach(([pr,pc])=>{
-    const p=boards[layerIdx][pr][pc];if(!p)return;
-    if(!boards[targetLayer][pr][pc])boards[targetLayer][pr][pc]=p;
-    else{for(let d=1;d<9;d++){const candidates=[[pr+d,pc],[pr-d,pc],[pr,pc+d],[pr,pc-d]];let placed=false;for(const[nr2,nc2]of candidates){if(inBounds(nr2,nc2)&&!boards[targetLayer][nr2][nc2]){boards[targetLayer][nr2][nc2]=p;placed=true;break;}}if(placed)break;}}
-    boards[layerIdx][pr][pc]=null;
-  });
+  boards[layerIdx][r][c]=null;
   ascendMode=false;
   document.getElementById('ascendNote').classList.remove('visible');
   document.getElementById('ascendBtn').classList.remove('visible');
   currentLayer=targetLayer;
   turn='b';
-  document.getElementById('statusMsg').textContent=`Group ascended to ${LAYERS[targetLayer].name}!`;
+  const depth=targetLayer;
+  const controlled=getControlledPieceTypes(p.piece,depth);
+  document.getElementById('statusMsg').textContent=
+    `${p.piece} ascended to ${LAYERS[targetLayer].name} — now controls ${controlled.size} piece type${controlled.size>1?'s':''} on Carbon per move.`;
   checkHHL('w');
   render();
   setTimeout(()=>scheduleAI(),300);
+}
+
+// ── LINKED GROUP MOVEMENT — higher layer = more Carbon pieces controlled ──────
+// Traverse LINK_MAP to depth = layer index.
+// Carbon(0): self only. Silver(1): depth 1. Gold(2): depth 2. Crystalline(3): depth 3.
+function getControlledPieceTypes(pieceType, depth) {
+  const visited = new Set([pieceType]);
+  let frontier = [pieceType];
+  for (let d = 0; d < depth; d++) {
+    const next = [];
+    frontier.forEach(function(p) {
+      (LINK_MAP[p] || []).forEach(function(linked) {
+        if (!visited.has(linked)) { visited.add(linked); next.push(linked); }
+      });
+    });
+    frontier = next;
+    if (!frontier.length) break;
+  }
+  return visited;
+}
+
+// When a piece at layer > 0 moves, its controlled Carbon pieces execute the same delta.
+// Pieces that cannot complete the move (out of bounds or friendly block) hold position.
+function moveLinkedGroupOnCarbon(movingPiece, movingColor, dr, dc) {
+  if (currentLayer === 0) return;
+  const controlled = getControlledPieceTypes(movingPiece.piece, currentLayer);
+  const cb = boards[0]; // Carbon is always layer 0
+  controlled.forEach(function(pieceType) {
+    if (pieceType === movingPiece.piece) return; // moving piece is on its own layer
+    for (let r = 0; r < 9; r++) {
+      for (let c = 0; c < 9; c++) {
+        const cell = cb[r][c];
+        if (!cell || cell.piece !== pieceType || cell.color !== movingColor) continue;
+        const nr = r + dr, nc = c + dc;
+        if (nr < 0 || nr > 8 || nc < 0 || nc > 8) continue; // out of bounds — hold
+        const dest = cb[nr][nc];
+        if (dest && dest.color === movingColor) continue; // friendly block — hold
+        cb[nr][nc] = cell;
+        cb[r][c] = null;
+      }
+    }
+  });
 }
 
 // ── EXECUTE MOVE ─────────────────────────────────────────────────
@@ -1058,6 +1107,18 @@ function executeMove(fr,fc,tr,tc,isAI=false){
   }
   if(!isAI)checkAchievements(captured?.piece,fr,tr,currentLayer);
   b[tr][tc]=moving;b[fr][fc]=null;
+  // Linked group movement: higher layer piece moves its controlled Carbon pieces with it
+  if(currentLayer>0){
+    const dr=tr-fr, dc=tc-fc;
+    moveLinkedGroupOnCarbon(moving, moving.color, dr, dc);
+    if(!isAI&&currentLayer>0){
+      const depth=currentLayer;
+      const controlled=getControlledPieceTypes(moving.piece,depth);
+      const count=controlled.size-1; // exclude moving piece itself
+      if(count>0) document.getElementById('statusMsg').textContent=
+        `${LAYERS[currentLayer].name} move — ${count} linked Carbon piece${count>1?'s':''} moved with it.`;
+    }
+  }
   // Gold layer: Seed field pulse — adjacent friendlies advance with Seed's move
   if(currentLayer===2&&moving.piece==='seed'&&!isAI){
     goldSeedPulse(b,fr,fc,tr,tc);

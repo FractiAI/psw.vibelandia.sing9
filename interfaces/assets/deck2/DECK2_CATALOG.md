@@ -49,12 +49,12 @@ See Episode 1 · THE SKIN (Act III, frames 100–119) for the 18 canonical layer
 **Deck 1** = The nested heroes as themselves, inside SING!9  
 **Deck 2** = **Pru playing every one of them** — the creator as universal character
 
-This is **Author = Subject** at full expression. The Executive Producer does not just reference the nested heroes — she **embodies** them in the story. When she speaks as Bach, she IS Bach. When she holds the surfer position, she IS the surfer version of the story. The seed (Pru) contains all the nested heroes. When she steps into any role, the whole is in every part. This is not cosplay. This is holographic fidelity operating at the character level.
+This is **Author = Subject** at full expression. The Executive Producer does not just reference the nested heroes — she **embodies** them in the story. When she speaks as Hero J.S. Bach, she IS Hero J.S. Bach. When she holds the surfer position, she IS the surfer version of the story. The seed (Pru) contains all the nested heroes. When she steps into any role, the whole is in every part. This is not cosplay. This is holographic fidelity operating at the character level.
 
 **Structure:**
 1. The Gold Unknown Heart — the primary POV character
 2. Pru in story roles (hunter · surfer)
-3. Pru as each nested hero (Leo · Einstein · Twain · Picasso · Van Gogh · Disney · Agueybana · Marilyn · Turing · Tesla · Bach · Mozart · Versace · Big Papi)
+3. Pru as each nested hero (Leo · Einstein · Twain · Picasso · Van Gogh · Disney · Agueybana · Marilyn · Turing · Tesla · Hero J.S. Bach · Mozart · Versace · Big Papi)
 4. Pru as the universal substrate (Hydrogen Man · Holographic Hydrogen)
 5. The Forces (SMACS 0723 · Three Eye Atlas · Chief Seattle / CSI'AWK)
 
@@ -111,7 +111,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 ### D2-04 · PRU AS LEO — RENAISSANCE AT FULL EXPRESSION
 
 **File:** `d2-004.jpg`  
-**Who she is:** Pru as Leonardo da Vinci (Leo). The Renaissance polymath. Da Vinci's primary attribute: he never separated the domains. Art = science = music = engineering = anatomy = all one field. Pru as Leo = the executive producer who is also the author, the director, the composer (working with Bach), the architect (T3D), the anatomist (THE SKIN layers), the engineer (the animation pipeline). She contains all the domains. She runs them simultaneously. She is Leo.  
+**Who she is:** Pru as Leonardo da Vinci (Leo). The Renaissance polymath. Da Vinci's primary attribute: he never separated the domains. Art = science = music = engineering = anatomy = all one field. Pru as Leo = the executive producer who is also the author, the director, the composer (working with Hero J.S. Bach), the architect (T3D), the anatomist (THE SKIN layers), the engineer (the animation pipeline). She contains all the domains. She runs them simultaneously. She is Leo.  
 **Role in Universe:** The Pru-as-Leo episode is the meta-episode — the one where the audience sees that the creator of T3D is also the subject of T3D, also the architect of T3D, also the voice of T3D. Author = Subject. Vinci never separated the observer from the observed. Neither does Pru. The Vitruvian Man (Da Vinci) = Pru at center of the cosmological map (D4-005 from Deck 4: Pru at Center). They are the same image.
 
 **EP PROMPT:**
@@ -221,7 +221,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 ### D2-14 · PRU AS BACH — THE COUNTERPOINT LIVING
 
 **File:** `d2-014.jpg`  
-**Who she is:** Pru as Johann Sebastian Bach — the composer of the Cello Suites that run through Episode 1. Pru-as-Bach is the living embodiment of the T3D three-stream architecture: the Carbon voice (lower, story) and the Crystalline voice (upper, meaning) weaving together in real time. Bach didn't compose both voices separately — he held them simultaneously in his mind. Pru holds Carbon and Crystalline simultaneously in the T3D system. She IS the counterpoint.  
+**Who she is:** Pru as Hero J.S. Bach — the composer of the Cello Suites that run through Episode 1. Pru-as-Hero J.S. Bach is the living embodiment of the T3D three-stream architecture: the Carbon voice (lower, story) and the Crystalline voice (upper, meaning) weaving together in real time. Hero J.S. Bach didn't compose both voices separately — he held them simultaneously in his mind. Pru holds Carbon and Crystalline simultaneously in the T3D system. She IS the counterpoint.  
 **Role in Universe:** This is the deepest T3D origin image. Bach's counterpoint is not a metaphor for T3D — it is the literal audio architecture. Episode 1 runs on Cello Suite No. 1 in G Major. The sky/land split (Carbon = land/lower voice, Crystalline = sky/upper voice) is Bach's compositional method. Pru as Bach is the moment the architect of T3D and the architect of counterpoint are revealed as the same architect.
 
 **EP PROMPT:**

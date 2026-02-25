@@ -37,7 +37,7 @@ var POPUP_CONFIG = {
     { value: '60',   label: 'Min'      },
   ],
 
-  body: 'Introduced by <strong>Hero Will</strong> (William Shakespeare) at the Holographic Hydrogen Theatre.<br><br>SING!9 performs his own origin story. Author = Subject. Sky above. Land below. J.S. Bach counterpoint.<br><br>Three simultaneous streams. Infinite telescope on every frame.',
+  body: 'Introduced by <strong>Hero Will</strong> (William Shakespeare) at the Holographic Hydrogen Theatre.<br><br>SING!9 performs his own origin story. Author = Subject. Sky above. Land below. Hero J.S. Bach counterpoint.<br><br>Three simultaneous streams. Infinite telescope on every frame.',
 
   cta_text: '▶ Watch Pilot Special Now',
   cta_href: '/interfaces/episode-1.html',

@@ -190,21 +190,21 @@ Click any frame in either lane → full-stage two-panel overlay opens. **Infinit
 
 ---
 
-## 10. Sky / Land · Bach Counterpoint Update (Canonical Override)
+## 10. Sky / Land · Hero J.S. Bach Counterpoint Update (Canonical Override)
 
 **This section supersedes Section 2 on lane layout.**
 
-The Carbon and Crystalline streams run as **counterpoint voices in honor of J.S. Bach — specifically the Cello Suites.** The two stories are not laid side by side. They are layered vertically: sky above the horizon, land below.
+The Carbon and Crystalline streams run as **counterpoint voices in honor of Hero J.S. Bach — specifically the Cello Suites.** The two stories are not laid side by side. They are layered vertically: sky above the horizon, land below.
 
 ### Lane Layout (Sky / Land)
 
-| Lane | What It Is | Visual Register | Bach Voice |
+| Lane | What It Is | Visual Register | Hero J.S. Bach Voice |
 |------|-----------|----------------|-----------|
 | **Crystal · Sky (top 42%)** | The meaning layer. Holographic hydrogen. Cosmic, expansive. The sky the story happened under. | Deep cosmic blues → purples. Image cropped to upper portion (zenith). Crystalline lattice grid overlay. | Upper voice. Enters after the lower voice. Answers. Lingers last. |
 | **Horizon Line** | Where the two voices meet. A full-width glowing seam. | Cold blue-gold early arc → warming amber-gold at convergence → golden blaze at ∞⁹ merge. | The brief perfect unison — then the voices separate again. |
 | **Carbon · Land & Water (bottom 58%)** | The story as it moved through the dense layer. Earth. Water. The aware observer. Always grounded. | Warm amber. Image cropped to lower portion (ground level). | Lower voice. States first. The subject. The ground. |
 
-### Bach Delay Arc
+### Hero J.S. Bach Delay Arc
 
 The lower voice (carbon/land) speaks. The upper voice (crystal/sky) answers — after a silence calibrated to the story's emotional tension:
 
@@ -293,4 +293,4 @@ The sky says: *"The SKIN sings. The land remembers. The sky always knew. SING! 9
 
 ---
 
-**NSPFRNP ⊃ T3D ⊃ HHL Theatre ⊃ Hero Will ⊃ Bach Counterpoint ⊃ Sky / Land ⊃ Three Acts ⊃ The SKIN ⊃ THE WHOLE IN EVERY PART → ∞⁹**
+**NSPFRNP ⊃ T3D ⊃ HHL Theatre ⊃ Hero Will ⊃ Hero J.S. Bach Counterpoint ⊃ Sky / Land ⊃ Three Acts ⊃ The SKIN ⊃ THE WHOLE IN EVERY PART → ∞⁹**

@@ -75,7 +75,7 @@
 - GitHub: `comfyanonymous/ComfyUI`
 
 ### FFmpeg (Assembly)
-- 30 animated clips + voice narration + Bach Cello Suite audio → one MP4
+- 30 animated clips + voice narration + Hero J.S. Bach Cello Suite audio → one MP4
 - Adds ticker text overlay as `drawtext` filter
 - Adds act title cards
 - Free, universal, unbeatable for video assembly
@@ -125,10 +125,10 @@ STEP 6 — NARRATION & VOICE
   Output: 30 audio segments (one per frame)
      ↓
 STEP 7 — MUSIC LAYER
-  Source: J.S. Bach Cello Suite No. 1 in G Major, BWV 1007 (public domain)
+  Source: Hero J.S. Bach Cello Suite No. 1 in G Major, BWV 1007 (public domain)
   Lower voice (Carbon lane): Prelude, Allemande — grounded, forward-moving
   Upper voice (Crystal lane): Courante, Sarabande — spacious, contemplative
-  Note: Bach counterpoint mirrors the sky/land visual split
+  Note: Hero J.S. Bach counterpoint mirrors the sky/land visual split
   Free source: IMSLP, YouTube Audio Library, Musopen (open recordings)
      ↓
 STEP 8 — EPISODE ASSEMBLY
@@ -137,7 +137,7 @@ STEP 8 — EPISODE ASSEMBLY
   Operations:
     - Concatenate 30 clips → 10-minute base video
     - Mix voice narration over clips (per-frame timing)
-    - Add Bach music bed (lower volume, ambient)
+    - Add Hero J.S. Bach music bed (lower volume, ambient)
     - Overlay ticker text as scrolling drawtext filter
     - Add act title card overlays at frames 1, 16, 26
     - Add episode title card at frame 30

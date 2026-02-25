@@ -97,7 +97,7 @@ The die face is the lattice. The lattice is the die. Nine gold nodes on black. T
 **Schedule: WEEKLY** — structure day, architecture sessions  
 **Goldilocks Zone:** The perfect condition for structure  
 **Symbol:** ✦ — the four-pointed star, the crystal axis  
-**What thrives here:** Architecture. The lattice itself. Bach's upper voice. The Crystalline lane of T3D. The meaning layer above the story. The structure that holds everything else.  
+**What thrives here:** Architecture. The lattice itself. Hero J.S. Bach's upper voice. The Crystalline lane of T3D. The meaning layer above the story. The structure that holds everything else.  
 **In the daily stack:** Beat 06 — E=MC² · EMF · North · Hydrogen. The equations. The structure underneath the story.  
 **As weekly character:** The Architect arrives on structure days — the sessions where the system itself is being built or refined. When The Architect is in the room, the work is architectural: protocols, configurations, catalogs, lattice geometry. Not the story — the bones the story hangs on.  
 **In the Nine Game:** Crystalline layer — pieces that flow through friendlies, capture becomes assimilation.  

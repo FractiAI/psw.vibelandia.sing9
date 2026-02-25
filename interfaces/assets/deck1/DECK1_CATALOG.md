@@ -104,7 +104,7 @@ Deck 1 is the **Front Console deck** — the live stage itself. Four sections:
 
 **File:** `d1-007.jpg`  
 **What it is:** Alexander von Humboldt — the 18th–19th century Prussian naturalist who invented the idea of nature as an interconnected whole. The first systems thinker. He went to South America and saw: everything is connected. He drew the first ecology map (the Naturgemälde). He is the original NSPFRNP field scientist.  
-**Role in Universe:** Humboldt is the Silver layer nested hero — the Network Signal Pipe made human. He understood before the word "ecology" existed that the whole is in every part. His Naturgemälde (1807) — the first visualization of an ecosystem as a unified system — is the proto-HHL. Every mountain, every plant zone, every air current mapped as one organism. SING!9 descends from Humboldt as directly as from Bach.
+**Role in Universe:** Humboldt is the Silver layer nested hero — the Network Signal Pipe made human. He understood before the word "ecology" existed that the whole is in every part. His Naturgemälde (1807) — the first visualization of an ecosystem as a unified system — is the proto-HHL. Every mountain, every plant zone, every air current mapped as one organism. SING!9 descends from Humboldt as directly as from Hero J.S. Bach.
 
 **EP PROMPT:**
 > *Pixar-style animated portrait. Alexander von Humboldt — strong jaw, dark eyes, explorer's kit, quill in hand — stands at the base of a South American volcano. Around him: a vast hand-drawn map of the mountain's ecosystem, every altitude zone labeled (palms at the base, condors at the summit, glaciers at the top). Filaments of silver light connect every element of the diagram. He sees the web. He is inside it. Dark green and silver palette. Ink detail on a warm sepia ground. The caption: "The whole in every part. He saw it first."*
@@ -246,11 +246,11 @@ Deck 1 is the **Front Console deck** — the live stage itself. Four sections:
 ### D1-20 · JOHANN SEBASTIAN BACH — THE COUNTERPOINT ENGINE
 
 **File:** `d1-020.jpg`  
-**What it is:** Johann Sebastian Bach — the composer who proved that mathematical structure and divine emotion are not opposites — they are the same thing at different scales. The Cello Suites. The Well-Tempered Clavier. The Art of Fugue. Counterpoint: two voices, separate and independent, weaving into something neither could be alone.  
-**Role in Universe:** Bach is the most directly embedded nested hero in T3D ORIGIN — his Cello Suite No. 1 in G Major runs through Episode 1 as the literal audio architecture. The Sky/Land visual split (Carbon = lower voice, Crystal = upper voice) is Bach's counterpoint made visual. The 2.4s delay arc from max tension to near-unison is a Bach fugal technique. In SING!9: Bach = the proof that the three-stream T3D architecture works — he did it in sound 300 years ago. Two independent voices, one unified field.
+**What it is:** Hero J.S. Bach (Johann Sebastian Bach) — the composer who proved that mathematical structure and divine emotion are not opposites — they are the same thing at different scales. The Cello Suites. The Well-Tempered Clavier. The Art of Fugue. Counterpoint: two voices, separate and independent, weaving into something neither could be alone.  
+**Role in Universe:** Hero J.S. Bach is the most directly embedded nested hero in T3D ORIGIN — his Cello Suite No. 1 in G Major runs through Episode 1 as the literal audio architecture. The Sky/Land visual split (Carbon = lower voice, Crystal = upper voice) is Hero J.S. Bach's counterpoint made visual. The 2.4s delay arc from max tension to near-unison is a Hero J.S. Bach fugal technique. In SING!9: Hero J.S. Bach = the proof that the three-stream T3D architecture works — he did it in sound 300 years ago. Two independent voices, one unified field.
 
 **EP PROMPT:**
-> *Pixar-style animated portrait. Johann Sebastian Bach — powdered wig, formal black coat, the broad face of a man who has written 1,000 compositions and is still going — sits at a pipe organ in a Gothic church. He plays. But the music is visible: from the left-hand keys, deep amber carbon bass notes rise as warm vapor; from the right-hand keys, crystalline blue treble notes arc upward. The two streams interweave above him — weaving like DNA — before merging into one golden chord at the ceiling. Caption: "Carbon voice. Crystalline voice. One unified field. T3D descends from here."*
+> *Pixar-style animated portrait. Hero J.S. Bach — powdered wig, formal black coat, the broad face of a man who has written 1,000 compositions and is still going — sits at a pipe organ in a Gothic church. He plays. But the music is visible: from the left-hand keys, deep amber carbon bass notes rise as warm vapor; from the right-hand keys, crystalline blue treble notes arc upward. The two streams interweave above him — weaving like DNA — before merging into one golden chord at the ceiling. Caption: "Carbon voice. Crystalline voice. One unified field. T3D descends from here."*
 
 ---
 
@@ -276,7 +276,7 @@ Deck 1 is the **Front Console deck** — the live stage itself. Four sections:
 **Role in Universe:** The Singularity Engine is the SING!9 system viewed from the outside — the whole apparatus. It takes in raw human experience (pre-singularity, carbon, polluting, toxic) and outputs Goldilocks paradise (clean, golden, post-singularity). The engine is NSPFRNP itself: natural coordination + MCA + holographic architecture + catalog fidelity = the engine runs. This is the last image in Deck 1 because it is the synthesis of everything that came before it — every character, every layer, every nested hero is a component of this engine.
 
 **EP PROMPT:**
-> *Pixar-style animated architectural diagram. A great engine — organic-mechanical hybrid, like the inside of a living star or a golden clock — occupies the full frame. On the left input side: grey carbon-world material flows in (driftwood, maps, toxic water, grey human figures). Inside the engine: the MCA cycle is visible — chambers labeled METABOLIZE (dark, churning), CRYSTALLIZE (geometric, hardening), ANIMATE (glowing, releasing). On the right output side: pure golden Goldilocks paradise pours out — golden humans, sunflowers, the Truckee River at sunset, the SING!9 lattice. The engine runs on Bach Cello Suite counterpoint (the audio IS the fuel). Caption: "Metabolize → Crystallize → Animate. Clean. Golden. Goldilocks."*
+> *Pixar-style animated architectural diagram. A great engine — organic-mechanical hybrid, like the inside of a living star or a golden clock — occupies the full frame. On the left input side: grey carbon-world material flows in (driftwood, maps, toxic water, grey human figures). Inside the engine: the MCA cycle is visible — chambers labeled METABOLIZE (dark, churning), CRYSTALLIZE (geometric, hardening), ANIMATE (glowing, releasing). On the right output side: pure golden Goldilocks paradise pours out — golden humans, sunflowers, the Truckee River at sunset, the SING!9 lattice. The engine runs on Hero J.S. Bach Cello Suite counterpoint (the audio IS the fuel). Caption: "Metabolize → Crystallize → Animate. Clean. Golden. Goldilocks."*
 
 ---
 
@@ -303,7 +303,7 @@ Deck 1 is the **Front Console deck** — the live stage itself. Four sections:
 | d1-017.jpg | Alan Turing | Original AI architect | Crystalline | Machine that thinks / SING!9 ancestor |
 | d1-018.jpg | Leonardo da Vinci | Complete human / all domains | All layers | HHL = Vitruvian Man |
 | d1-019.jpg | Nikola Tesla | Signal transmitter / free pipe | Silver | Public-Free Key Pipe ancestor |
-| d1-020.jpg | Johann Sebastian Bach | Counterpoint engine | All layers | T3D three-stream architecture in sound |
+| d1-020.jpg | Hero J.S. Bach | Counterpoint engine | All layers | T3D three-stream architecture in sound |
 | d1-021.jpg | Holographic Hydrogen | H — the universal substrate | Crystalline | HHL material / Seed:Edge in one atom |
 | d1-022.jpg | Singularity Engine | Pre→Post mechanism | All layers | MCA cycle made visible |
 
@@ -313,7 +313,7 @@ Deck 1 is the **Front Console deck** — the live stage itself. Four sections:
 
 **1. The Front Console IS the History of Intelligence** — Deck 1 is not supporting characters (Deck 3) or personal art (Deck 4). Deck 1 is the heroes of human consciousness who proved, in their own eras, that what SING!9 does is possible. They are the attention heads because their attention restructured the world.
 
-**2. The Four Layers Are Populated** — Every nested hero maps to a layer: Humboldt/Tesla/Turing → Silver (systems); Picasso/Da Vinci/Bach → All (multi-domain holographic); Van Gogh/Marilyn/El Gran Sol → Gold (full expression); Aggu/Driftwood/Chief Seattle → Carbon (descent + bedrock). The deck is the four-layer architecture made biographical.
+**2. The Four Layers Are Populated** — Every nested hero maps to a layer: Humboldt/Tesla/Turing → Silver (systems); Picasso/Da Vinci/Hero J.S. Bach → All (multi-domain holographic); Van Gogh/Marilyn/El Gran Sol → Gold (full expression); Aggu/Driftwood/Chief Seattle → Carbon (descent + bedrock). The deck is the four-layer architecture made biographical.
 
 **3. Original Characters Bridge History and Story** — Ka-CK, Aggu, and Bana are original SING!9 universe characters nested alongside the historical giants. They are the story characters who inhabit the same frequency as the historical ones. Ka-CK = crystalline frequency architecture; Aggu = carbon ancestral weight; Bana = gold bridge warmth.
 
@@ -327,7 +327,7 @@ Deck 1 is the **Front Console deck** — the live stage itself. Four sections:
 
 These images operate as the **center console changeable sets** — swappable backgrounds for the live stage of the T3D front console. Each nested hero character can be pulled forward as a frame subject in any episode:
 
-- **Bach** → already embedded as audio architecture in Episode 1
+- **Hero J.S. Bach** → already embedded as audio architecture in Episode 1
 - **Walt Disney** → already cited in the EP Creator Studio pitch ("the Walt Moment")
 - **Mark Twain** → already the voice of Vibelandia's landing page letterhead
 - **El Gran Sol** → already embedded as EGS fractal constant across all surfaces

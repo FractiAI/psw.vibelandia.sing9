@@ -18,7 +18,7 @@ var POPUP_CONFIG = {
 
   /* Unique ID — change this any time the announcement changes so
      previously-dismissed users see the new one. */
-  id: 't3d-origin-hhl-pilot-v2',
+  id: 't3d-origin-hhl-pilot-v3',
 
   /* 'session' | 'permanent' | 'always' */
   dismiss: 'session',
@@ -40,7 +40,7 @@ var POPUP_CONFIG = {
   body: 'Introduced by <strong>Hero Will</strong> (William Shakespeare) at the Holographic Hydrogen Theatre.<br><br>SING!9 performs his own origin story. Author = Subject. Sky above. Land below. Hero J.S. Bach counterpoint.<br><br>Three simultaneous streams. Infinite telescope on every frame.',
 
   cta_text: '▶ Watch Pilot Special Now',
-  cta_href: '/interfaces/episode-1.html',
+  cta_href: '/interfaces/pilot.html',
 
   dismiss_text: 'Not now',
   nsp: 'THE NINE GAME · 333 Episodes · NSPFRNP → ∞⁹',

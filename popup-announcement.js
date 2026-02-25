@@ -42,7 +42,7 @@ var POPUP_CONFIG = {
   cta_text: '▶ Watch Pilot Special Now',
   cta_href: '/interfaces/pilot.html',
 
-  dismiss_text: 'Not now',
+  dismiss_text: '✕ &nbsp; Skip for now',
   nsp: 'THE NINE GAME · 333 Episodes · NSPFRNP → ∞⁹',
 
   /* Optional secondary link shown below the main CTA. Pass null to hide. */
@@ -163,8 +163,8 @@ var POPUP_CONFIG = {
     '.' + uid + '-cta:hover{background:' + p.ctaHover + ';box-shadow:' + p.ctaHoverShadow + ';}',
     '.' + uid + '-secondary{display:block;margin-top:0.6rem;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(168,230,240,0.65);text-decoration:none;position:relative;z-index:1;transition:color 0.2s;}',
     '.' + uid + '-secondary:hover{color:rgba(168,230,240,0.95);}',
-    '.' + uid + '-dismiss{display:block;margin-top:0.6rem;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(106,80,48,0.7);cursor:pointer;background:none;border:none;font-family:Georgia,serif;transition:color 0.2s;position:relative;z-index:1;}',
-    '.' + uid + '-dismiss:hover{color:rgba(201,168,76,0.5);}',
+    '.' + uid + '-dismiss{display:block;margin-top:0.85rem;padding:0.65rem 1.8rem;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,180,140,0.65);cursor:pointer;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:2px;font-family:Georgia,serif;transition:color 0.2s,border-color 0.2s,background 0.2s;position:relative;z-index:1;width:100%;}',
+    '.' + uid + '-dismiss:hover{color:rgba(255,255,255,0.85);border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);}',
     '.' + uid + '-nsp{margin-top:1.5rem;font-size:0.55rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(106,80,48,0.5);}',
   ].join('\n');
   document.head.appendChild(style);

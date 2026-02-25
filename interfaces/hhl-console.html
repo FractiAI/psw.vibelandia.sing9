@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="stylesheet" href="mobile-shared.css">
 <title>HHL Console · EP Status Panel · SING!9</title>
 <style>
 :root {
@@ -509,6 +510,107 @@ body {
   padding: 8px;
 }
 .footer span { color: var(--gold); }
+
+/* ══════════════════════════════════════════════════════
+   MOBILE — iPhone & Android first-class experience
+   ══════════════════════════════════════════════════════ */
+
+/* Touch defaults */
+* { -webkit-tap-highlight-color: transparent; }
+.light, .gn-node, .mode-btn, .stack-item { touch-action: manipulation; }
+
+/* Base mobile font bump */
+@media (max-width: 767px) {
+  body { font-size: 13px; padding: 8px; }
+
+  /* Header */
+  .header { padding: 10px 12px; gap: 10px; }
+  .hhl-logo { width: 32px; height: 32px; }
+  .header-title h1 { font-size: 13px; letter-spacing: 2px; }
+  .header-title .sub { font-size: 9px; letter-spacing: 1px; }
+  .header-time { font-size: 10px; }
+
+  /* Status lights — scrollable row, bigger tap targets */
+  .status-bar { gap: 4px; padding: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .light { min-width: 60px; padding: 10px 8px; min-height: 56px; }
+  .light-dot { width: 16px; height: 16px; }
+  .light-label { font-size: 9px; }
+
+  /* Grid — collapse all columns to single column */
+  .grid-main { grid-template-columns: 1fr; }
+  .grid-bottom { grid-template-columns: 1fr 1fr; }
+
+  /* Compass — wider on mobile */
+  .compass, .compass-ring { width: 120px; height: 120px; }
+  .compass-ring-inner { width: 88px; height: 88px; top: 16px; left: 16px; }
+  .compass-needle { height: 42px; margin-top: -42px; }
+
+  /* Nine tiles — bigger tap targets */
+  .nine-tile { width: 56px; height: 64px; font-size: 32px; }
+  .mode-btn { padding: 10px 12px; font-size: 11px; min-height: 44px; }
+  .mode-desc { font-size: 10px; }
+
+  /* Stack items */
+  .stack-item { padding: 10px 10px; font-size: 12px; min-height: 44px; }
+  .stack-icon { font-size: 16px; }
+  .stack-label { font-size: 12px; }
+  .stack-tag { font-size: 9px; }
+
+  /* Foundation layers */
+  .f-layer { padding: 8px 8px; font-size: 11px; min-height: 36px; }
+
+  /* Panel title */
+  .panel-title { font-size: 10px; letter-spacing: 2px; }
+
+  /* Character card */
+  .char-name { font-size: 16px; }
+  .char-mission { font-size: 11px; padding: 6px 10px; }
+  .char-loc { font-size: 10px; }
+  .tag { font-size: 9px; padding: 4px 8px; }
+
+  /* Work chips */
+  .work-chip { font-size: 10px; padding: 5px 10px; }
+  .work-ready { font-size: 11px; }
+
+  /* Weather */
+  .weather-icon { font-size: 44px; }
+  .weather-status { font-size: 13px; }
+  .weather-sub { font-size: 10px; }
+  .weather-story { font-size: 11px; }
+
+  /* Goldilocks nodes — larger touch targets */
+  .gn-grid { gap: 10px; }
+  .gn-node { padding: 14px 10px 12px; min-height: 80px; }
+  .gn-dot { width: 18px; height: 18px; margin-bottom: 8px; }
+  .gn-num { font-size: 10px; }
+  .gn-symbol { font-size: 20px; margin-bottom: 4px; }
+  .gn-name { font-size: 10px; letter-spacing: 1px; margin-bottom: 3px; }
+  .gn-desc { font-size: 9px; }
+
+  /* Work stack bar */
+  .work-stack-bar { flex-wrap: wrap; gap: 8px; padding: 10px 12px; }
+}
+
+/* Small phone */
+@media (max-width: 390px) {
+  .grid-bottom { grid-template-columns: 1fr; }
+  .nine-tile { width: 50px; height: 58px; font-size: 28px; }
+  .nine-display { gap: 10px; }
+}
+
+/* Landscape phone */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  .grid-main { grid-template-columns: 160px 1fr 1fr; }
+  .grid-bottom { grid-template-columns: 1fr 1fr 1fr; }
+  body { font-size: 11px; padding: 6px; }
+  .gn-node { min-height: 60px; padding: 10px 8px; }
+}
+
+/* Touch active states */
+.light:active { background: rgba(255,215,0,0.08); }
+.gn-node:active { border-color: rgba(255,215,0,0.5); background: rgba(255,215,0,0.06); }
+.mode-btn:active { opacity: 0.7; }
+.stack-item:active { background: rgba(255,215,0,0.05); }
 </style>
 </head>
 <body>

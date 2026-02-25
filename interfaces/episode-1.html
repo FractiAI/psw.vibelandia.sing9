@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <link rel="stylesheet" href="mobile-shared.css">
   <title>Episode 1 · Pilot Special · 10 Min | THE NINE GAME</title>
   <!-- voice-config.js is gitignored — key never enters the repo -->
   <script src="voice-config.js" onerror="void(0)"></script>
@@ -976,6 +977,127 @@
       font-size: 0.5rem; color: rgba(255,255,255,0.16); letter-spacing: 0.18em;
       text-transform: uppercase; white-space: nowrap; pointer-events: none;
     }
+
+    /* ════════════════════════════════════════════════════════════════
+       MOBILE — iPhone & Android first-class experience
+       Portrait: stacked lanes (Crystal top, Carbon bottom)
+       Landscape: side-by-side (original layout preserved)
+    ════════════════════════════════════════════════════════════════ */
+    * { -webkit-tap-highlight-color: transparent; }
+
+    /* Touch targets for interactive elements */
+    #splash, .tscope-card, #tscope-close { touch-action: manipulation; }
+
+    /* PORTRAIT PHONE — stack the two lanes vertically */
+    @media (max-width: 767px) and (orientation: portrait) {
+      /* Stage fills whole screen */
+      #stage { bottom: 24px; flex-direction: column; }
+
+      /* Crystal lane — top 38% */
+      #crystal-lane { height: 38%; flex-shrink: 0; }
+      /* Carbon lane — bottom 62% */
+      #carbon-lane  { height: 62%; flex-shrink: 0; }
+
+      /* Horizon stays between them */
+      #horizon { top: 38%; }
+
+      /* Ticker */
+      #ticker { height: 24px; line-height: 24px; }
+
+      /* Crystal caption — tighter padding */
+      #crystal-caption { padding: 2.8rem 1.2rem 1.5rem; }
+      #crystal-label   { font-size: 0.44rem; }
+      #crystal-text    { font-size: clamp(0.78rem, 3.2vw, 0.92rem); }
+
+      /* Carbon caption — tighter */
+      #carbon-caption  { padding: 2rem 1.2rem 1.8rem; }
+      #carbon-eyebrow  { font-size: 0.44rem; }
+      #carbon-text     { font-size: clamp(0.88rem, 3.8vw, 1.1rem); line-height: 1.65; }
+
+      /* Act card smaller */
+      #act-card { padding: 1.2rem 1.8rem; }
+      #act-title { font-size: clamp(1.4rem, 6vw, 2.2rem); }
+      #act-sub   { font-size: 0.7rem; }
+
+      /* Title card */
+      #tc-main { font-size: clamp(1.8rem, 7vw, 3rem); }
+
+      /* Opening credits */
+      .oc-title { font-size: clamp(2rem, 9vw, 4rem); }
+
+      /* Telescope overlay — full screen on mobile */
+      #telescope { top: 0; left: 0; right: 0; bottom: 0; border-radius: 0; }
+      .tscope-card { min-height: 80px; }
+
+      /* Splash screen */
+      #splash { flex-direction: column; }
+      #hw-portrait { flex: 0 0 42vh; width: 100%; }
+      #hw-text { padding: 1.2rem; max-width: 100%; }
+      #hw-text h2 { font-size: clamp(1.4rem, 5vw, 2rem); }
+
+      /* Lattice grid — slightly more visible on small screens */
+      #lattice-grid { opacity: 0.6; }
+    }
+
+    /* Small portrait phones */
+    @media (max-width: 390px) and (orientation: portrait) {
+      #crystal-lane { height: 35%; }
+      #carbon-lane  { height: 65%; }
+      #horizon { top: 35%; }
+      #crystal-text { font-size: 0.78rem; }
+      #carbon-text  { font-size: 0.9rem; }
+    }
+
+    /* LANDSCAPE PHONE — preserve original side-by-side layout but scale down text */
+    @media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+      #crystal-caption { padding: 2.2rem 1.5rem 1.2rem; }
+      #carbon-caption  { padding: 1.5rem 1.5rem 1.5rem; }
+      #crystal-text { font-size: clamp(0.72rem, 1.8vw, 0.88rem); }
+      #carbon-text  { font-size: clamp(0.82rem, 2vw, 1rem); }
+      #act-card { padding: 0.8rem 1.6rem; }
+      #act-title { font-size: clamp(1.2rem, 3.5vw, 1.8rem); }
+    }
+
+    /* TABLET portrait — maintain two lanes but tighten spacing */
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+      #crystal-caption { padding: 3.5rem 2rem 2rem; }
+      #carbon-caption  { padding: 2.5rem 2rem 2rem; }
+      #crystal-text { font-size: clamp(0.82rem, 1.6vw, 1rem); }
+      #carbon-text  { font-size: clamp(0.95rem, 1.9vw, 1.2rem); }
+    }
+
+    /* Controls bar — bigger tap targets on mobile */
+    @media (max-width: 767px) {
+      .controls {
+        bottom: 30px; gap: 0.5rem;
+        background: rgba(0,0,0,0.4);
+        padding: 4px 8px; border-radius: 6px;
+      }
+      .controls button {
+        padding: 0.7rem 1.3rem; font-size: 0.75rem;
+        min-height: 44px; min-width: 44px;
+        touch-action: manipulation;
+      }
+      .seg-strip { bottom: 30px; right: 0.5rem; gap: 3px; }
+      .seg-btn { width: 28px; height: 28px; font-size: 0.65rem; min-height: 28px; }
+      #smoky-btn {
+        min-height: 44px; padding: 0.5rem 1rem; font-size: 0.7rem;
+        touch-action: manipulation;
+      }
+    }
+
+    /* Safe-area insets for iPhone home bar */
+    .controls { bottom: calc(38px + env(safe-area-inset-bottom, 0px)); }
+    .seg-strip { bottom: calc(38px + env(safe-area-inset-bottom, 0px)); }
+    @media (max-width: 767px) {
+      .controls { bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
+      .seg-strip { bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
+    }
+
+    /* Active states for touch (telescope cards, etc.) */
+    .tscope-card:active { border-color: rgba(212,175,55,0.5); background: rgba(255,255,255,0.06); }
+    #tscope-close:active { opacity: 0.7; }
+    .controls button:active { border-color: rgba(255,255,255,0.5); color: #fff; }
   </style>
 </head>
 <body>
@@ -1956,6 +2078,36 @@
       if (e.key === 'ArrowRight') { if (btnNext) btnNext.click(); }
       if (e.key === 'ArrowLeft')  { if (btnPrev) btnPrev.click(); }
     });
+
+    /* ── MOBILE SWIPE GESTURES ──
+       Left  → next frame     Right → prev frame
+       Tap stage → play/pause     Swipe up → open telescope  */
+    (function () {
+      var sx = 0, sy = 0, stageEl = document.getElementById('stage');
+      if (!stageEl) return;
+      stageEl.addEventListener('touchstart', function (e) {
+        sx = e.changedTouches[0].clientX;
+        sy = e.changedTouches[0].clientY;
+      }, { passive: true });
+      stageEl.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - sx;
+        var dy = e.changedTouches[0].clientY - sy;
+        var adx = Math.abs(dx), ady = Math.abs(dy);
+        /* Swipe threshold 40px */
+        if (adx < 40 && ady < 40) {
+          /* Tap = play/pause */
+          if (btnPlay) btnPlay.click();
+        } else if (adx > ady) {
+          /* Horizontal swipe */
+          if (dx < 0) { if (btnNext) btnNext.click(); }
+          else        { if (btnPrev) btnPrev.click(); }
+        } else if (dy < -60) {
+          /* Swipe up → telescope into current lane */
+          var crystalLane = document.getElementById('crystal-lane');
+          if (crystalLane) crystalLane.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        }
+      }, { passive: true });
+    })();
 
     var btnWA = document.getElementById('btnWatchAgain');
     if (btnWA) btnWA.addEventListener('click', function () {

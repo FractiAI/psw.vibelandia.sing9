@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="stylesheet" href="mobile-shared.css">
 <title>T3D ORIGIN · PILOT SPECIAL · SING!9</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -140,6 +141,63 @@ html, body { width:100vw; height:100vh; overflow:hidden; background:#000; }
 #start .dur { font-size:10px;color:rgba(255,215,0,.5);letter-spacing:3px;font-family:'Courier New',monospace;margin-bottom:36px; }
 #start .play { font-size:11px;color:#FFD700;border:1px solid #FFD700;padding:10px 32px;letter-spacing:4px;border-radius:2px;font-family:'Courier New',monospace; }
 #start .play:hover { background:rgba(255,215,0,.1); }
+
+/* ══════════════════════════════════════════════════════
+   MOBILE — iPhone & Android first-class experience
+   ══════════════════════════════════════════════════════ */
+#start, #start .play { touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+.layer { -webkit-backface-visibility:hidden; backface-visibility:hidden; }
+
+@media (max-width:767px) {
+  #logo { width:24px; height:24px; top:10px; left:10px; gap:2px; }
+  #epinfo .t1 { font-size:9px; letter-spacing:2px; }
+  #epinfo .t2 { display:none; }
+  #act-card .an { font-size:9px; letter-spacing:3px; }
+  #act-card .at { font-size:clamp(22px,6vw,34px); letter-spacing:3px; }
+  #act-card .as { font-size:9px; letter-spacing:2px; }
+  #beat-card .bn { font-size:8px; }
+  #beat-card .bt { font-size:clamp(18px,5vw,26px); letter-spacing:3px; }
+  #cap { bottom:48px; width:96vw; padding:0 4px; }
+  #cap .ct { font-size:clamp(14px,3.8vw,16px); line-height:1.6; }
+  #slide-label { font-size:8px; letter-spacing:3px; }
+  #prog-wrap { height:4px; }
+  #timeshow { font-size:9px; bottom:8px; right:10px; }
+  #start .big-logo { width:54px; height:54px; gap:7px; margin-bottom:24px; }
+  #start h1 { font-size:9px; letter-spacing:5px; }
+  #start h2 { font-size:clamp(24px,7vw,36px); letter-spacing:3px; margin-bottom:4px; }
+  #start h3 { font-size:10px; letter-spacing:3px; margin-bottom:10px; }
+  #start .dur { font-size:9px; letter-spacing:2px; margin-bottom:28px; }
+  #start .play { padding:16px 44px; font-size:14px; letter-spacing:3px; min-height:48px; border-radius:4px; }
+}
+@media (max-width:390px) {
+  #cap .ct { font-size:14px; }
+  #act-card .at { font-size:20px; }
+  #beat-card .bt { font-size:17px; }
+  #start h2 { font-size:22px; }
+  #start .play { padding:14px 36px; font-size:13px; }
+}
+@media (max-width:900px) and (orientation:landscape) and (max-height:500px) {
+  #epinfo { display:none; }
+  #act-card .at { font-size:clamp(16px,4vw,24px); letter-spacing:2px; }
+  #cap { bottom:30px; }
+  #cap .ct { font-size:clamp(12px,2.5vw,14px); line-height:1.5; }
+  #start { flex-direction:row; flex-wrap:wrap; gap:16px; padding:16px 32px; justify-content:center; align-content:center; }
+  #start .big-logo { width:44px; height:44px; gap:6px; margin-bottom:0; }
+  #start h1 { display:none; }
+  #start h2 { font-size:20px; margin-bottom:2px; }
+  #start h3 { font-size:9px; margin-bottom:0; }
+  #start .dur { font-size:8px; margin-bottom:0; }
+  #start .play { padding:12px 32px; font-size:12px; }
+  #timeshow { display:none; }
+}
+#start .play:active { background:rgba(255,215,0,.15); transform:scale(.98); transition:transform .1s; }
+
+/* Safe-area insets for iPhone notch / home bar */
+#prog-wrap { padding-bottom: env(safe-area-inset-bottom, 0px); }
+#cap { bottom: calc(48px + env(safe-area-inset-bottom, 0px)); }
+#timeshow { bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
+#logo { top: calc(10px + env(safe-area-inset-top, 0px)); }
+#epinfo { top: calc(14px + env(safe-area-inset-top, 0px)); }
 </style>
 </head>
 <body>

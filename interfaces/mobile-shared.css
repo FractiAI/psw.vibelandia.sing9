@@ -1,0 +1,118 @@
+/* ════════════════════════════════════════════════════════════
+   SING!9 · MOBILE SHARED CSS
+   Drop one line into any interface file to get full mobile
+   polish: touch targets, readable fonts, safe areas, active states.
+
+   Usage:
+     <link rel="stylesheet" href="mobile-shared.css">
+   ════════════════════════════════════════════════════════════ */
+
+/* ── BASELINE TOUCH RESET ── */
+*, *::before, *::after { -webkit-tap-highlight-color: transparent; }
+button, a, [role="button"], [onclick] { touch-action: manipulation; cursor: pointer; }
+input, select, textarea { touch-action: manipulation; font-size: 16px !important; } /* prevents iOS zoom */
+
+/* ── SAFE AREA (iPhone notch / Dynamic Island / Android cutout) ── */
+:root {
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+}
+body {
+  padding-top:    var(--safe-top);
+  padding-right:  var(--safe-right);
+  padding-bottom: var(--safe-bottom);
+  padding-left:   var(--safe-left);
+}
+
+/* ── MINIMUM TOUCH TARGET SIZE (WCAG 2.5.5 — 44×44px) ── */
+button, a, [role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── READABLE BASE FONT ON MOBILE ── */
+@media (max-width: 767px) {
+  body { font-size: max(13px, 1em); }
+  p, li, td, th, label, span.text, div.text { font-size: max(14px, 1em); line-height: 1.6; }
+  h1 { font-size: clamp(20px, 5vw, 32px); }
+  h2 { font-size: clamp(17px, 4vw, 26px); }
+  h3 { font-size: clamp(15px, 3.5vw, 22px); }
+}
+
+/* ── SCROLLABLE OVERFLOW ── */
+.scroll-x  { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.scroll-y  { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+/* ── PANELS: full-width on small screens ── */
+@media (max-width: 640px) {
+  .panel, .card, .box, [class*="panel-"], [class*="-panel"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+}
+
+/* ── GRIDS: collapse on small screens ── */
+@media (max-width: 640px) {
+  .grid, [class*="grid-"] {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+}
+
+/* ── TABLES: horizontal scroll on mobile ── */
+@media (max-width: 767px) {
+  .table-wrap, table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+}
+
+/* ── IMAGES: responsive by default ── */
+img { max-width: 100%; height: auto; }
+
+/* ── BUTTONS: visible active states ── */
+button:active, a:active, [role="button"]:active {
+  opacity: 0.75;
+  transform: scale(0.97);
+  transition: transform 0.08s, opacity 0.08s;
+}
+
+/* ── FONT SIZE CLASSES (use on any element) ── */
+.text-mobile-sm  { font-size: clamp(11px, 2.5vw, 13px) !important; }
+.text-mobile-md  { font-size: clamp(13px, 3vw,  15px) !important; }
+.text-mobile-lg  { font-size: clamp(15px, 4vw,  18px) !important; }
+.text-mobile-xl  { font-size: clamp(18px, 5vw,  24px) !important; }
+
+/* ── HIDE/SHOW UTILITIES ── */
+.desktop-only { display: none !important; }
+@media (min-width: 768px) {
+  .desktop-only { display: unset !important; }
+  .mobile-only  { display: none !important; }
+}
+
+/* ── LANDSCAPE PHONE ADJUSTMENTS ── */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  body { font-size: 11px; }
+  button, a, [role="button"] { min-height: 36px; }
+}
+
+/* ── HIGH-DPI / RETINA ── */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Crisper borders */
+  [class*="border"], .panel, .card { border-width: 0.5px; }
+}
+
+/* ── FULLSCREEN SUPPORT ── */
+:fullscreen body, :-webkit-full-screen body { background: #000; }
+
+/* ── PREVENT TEXT SIZE ADJUSTMENT ON ROTATION (iOS) ── */
+body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }

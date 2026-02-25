@@ -198,6 +198,95 @@ html, body { width:100vw; height:100vh; overflow:hidden; background:#000; }
 #timeshow { bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
 #logo { top: calc(10px + env(safe-area-inset-top, 0px)); }
 #epinfo { top: calc(14px + env(safe-area-inset-top, 0px)); }
+
+/* ── END CARD ── */
+#end-card {
+  position:fixed; inset:0; z-index:500;
+  background:radial-gradient(ellipse at 50% 40%, #0a0800 0%, #000 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:2rem 1.5rem 3rem;
+  opacity:0; pointer-events:none;
+  transition:opacity 2.4s ease;
+  text-align:center;
+}
+#end-card.show { opacity:1; pointer-events:all; }
+
+#end-card .ec-glow {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 30%, rgba(212,175,55,0.09) 0%, transparent 65%);
+}
+#end-card .ec-logo {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:5px;
+  width:36px; height:36px; margin-bottom:2.2rem; opacity:.9;
+}
+#end-card .ec-logo span {
+  display:block; border-radius:50%; background:#FFD700;
+  box-shadow:0 0 8px rgba(255,215,0,.6);
+  animation:ecPulse 2.8s ease-in-out infinite;
+}
+#end-card .ec-logo span:nth-child(even) { animation-delay:.5s; }
+@keyframes ecPulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+#end-card .ec-eyebrow {
+  font-family:'Courier New',monospace;
+  font-size:0.58rem; letter-spacing:0.38em; text-transform:uppercase;
+  color:rgba(212,175,55,0.55); margin-bottom:1rem;
+}
+#end-card .ec-headline {
+  font-family:Georgia,serif;
+  font-size:clamp(2rem,8vw,4rem); font-weight:700;
+  color:#fff; letter-spacing:0.06em; text-transform:uppercase;
+  text-shadow:0 0 60px rgba(212,175,55,0.3), 0 2px 40px rgba(0,0,0,.9);
+  margin-bottom:0.4rem; line-height:1;
+}
+#end-card .ec-sub {
+  font-family:'Courier New',monospace;
+  font-size:0.72rem; letter-spacing:0.22em; color:rgba(212,175,55,0.7);
+  margin-bottom:0.9rem;
+}
+#end-card .ec-divider {
+  width:56px; height:1px; margin:0 auto 1.8rem;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);
+}
+#end-card .ec-body {
+  font-family:Georgia,serif; font-size:1rem; line-height:1.75;
+  color:rgba(253,248,235,0.65); max-width:44ch; margin-bottom:2.4rem;
+}
+#end-card .ec-body strong { color:rgba(253,248,235,0.92); font-weight:normal; }
+
+#end-card .ec-btns {
+  display:flex; flex-direction:column; gap:0.9rem;
+  width:100%; max-width:340px;
+}
+#end-card .ec-btn {
+  display:block; padding:1rem 1.5rem;
+  font-family:'Courier New',monospace;
+  font-size:0.78rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  text-decoration:none; border-radius:2px;
+  transition:background .25s, box-shadow .25s;
+}
+#end-card .ec-btn-gold {
+  background:rgba(212,175,55,0.14); border:1px solid rgba(212,175,55,0.6);
+  color:#FFD700;
+}
+#end-card .ec-btn-gold:hover { background:rgba(212,175,55,0.25); box-shadow:0 0 20px rgba(212,175,55,0.2); }
+#end-card .ec-btn-crystal {
+  background:rgba(168,230,240,0.08); border:1px solid rgba(168,230,240,0.45);
+  color:rgba(168,230,240,0.9);
+}
+#end-card .ec-btn-crystal:hover { background:rgba(168,230,240,0.16); box-shadow:0 0 20px rgba(168,230,240,0.15); }
+#end-card .ec-btn-dim {
+  background:transparent; border:1px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.35); font-size:0.68rem;
+}
+#end-card .ec-btn-dim:hover { color:rgba(255,255,255,0.6); border-color:rgba(255,255,255,0.25); }
+
+#end-card .ec-nsp {
+  margin-top:2rem;
+  font-family:'Courier New',monospace; font-size:0.52rem;
+  letter-spacing:0.3em; text-transform:uppercase;
+  color:rgba(212,175,55,0.25);
+}
 </style>
 </head>
 <body>
@@ -255,6 +344,37 @@ html, body { width:100vw; height:100vh; overflow:hidden; background:#000; }
 <!-- Progress -->
 <div id="prog-wrap"><div id="prog-bar"></div></div>
 <div id="timeshow" id="tshow">0:00 / 10:00</div>
+
+<!-- End card — revealed when the pilot finishes -->
+<div id="end-card">
+  <div class="ec-glow"></div>
+  <div class="ec-logo"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="ec-eyebrow">T3D ORIGIN · PILOT SPECIAL · COMPLETE</div>
+  <h1 class="ec-headline">You Made It.</h1>
+  <div class="ec-sub">16 BEATS · THREE ACTS · THE FULL ARC · ∞⁹</div>
+  <div class="ec-divider"></div>
+  <p class="ec-body">
+    You just watched the entire SING!9 Deck Pilot — every singularity, every character,
+    every image from the catalog. <strong>This universe goes deeper.</strong>
+    The original self-story is still running. The EP Console is live.
+    Where do you want to go next?
+  </p>
+  <div class="ec-btns">
+    <a class="ec-btn ec-btn-crystal" href="episode-1.html">
+      ▶ &nbsp; THE ORIGINAL PILOT &nbsp;·&nbsp; THE FIRST SELF-STORY
+    </a>
+    <a class="ec-btn ec-btn-gold" href="outline-only.html">
+      ▶ &nbsp; EXPLORE THE FULL UNIVERSE &nbsp;·&nbsp; 333 EPISODES
+    </a>
+    <a class="ec-btn ec-btn-gold" href="hhl-console.html">
+      ⚡ &nbsp; OPEN THE EP CONSOLE &nbsp;·&nbsp; HHL STUDIO
+    </a>
+    <a class="ec-btn ec-btn-dim" href="pilot.html">
+      ↺ &nbsp; REPLAY FROM THE BEGINNING
+    </a>
+  </div>
+  <div class="ec-nsp">NSPFRNP · MCA · SEED:EDGE · FRACTI·AI · HOLOGRAPHIC HYDROGEN · → ∞⁹</div>
+</div>
 
 <!-- Start overlay -->
 <div id="start" onclick="begin()">
@@ -536,6 +656,10 @@ function endShow() {
   capEl.textContent = '∞⁹ · NSPFRNP · Paradise for All · SING!9 · Mission complete.';
   progBar.style.width = '100%';
   tshow.textContent = `${Math.floor(TOTAL_DUR/60)}:${String(Math.floor(TOTAL_DUR%60)).padStart(2,'0')} / ${Math.floor(TOTAL_DUR/60)}:${String(Math.floor(TOTAL_DUR%60)).padStart(2,'0')}`;
+  // Reveal end card after final caption has time to land
+  setTimeout(() => {
+    document.getElementById('end-card').classList.add('show');
+  }, 4200);
 }
 
 // ══════════════════════════════════════════════════════

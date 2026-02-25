@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="stylesheet" href="mobile-shared.css">
+<script src="i18n.js"></script>
 <title>T3D ORIGIN · PILOT SPECIAL · SING!9</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -323,7 +324,7 @@ html, body { width:100vw; height:100vh; overflow:hidden; background:#000; }
 <div id="logo"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
 <!-- EP Info -->
-<div id="epinfo"><div class="t1">T3D ORIGIN · PILOT</div><div class="t2">SING!9 · HHL · FRACTI·AI</div></div>
+<div id="epinfo"><div class="t1" data-i18n="pilot.epinfo.t1">T3D ORIGIN · PILOT</div><div class="t2" data-i18n="pilot.epinfo.t2">SING!9 · HHL · FRACTI·AI</div></div>
 
 <!-- Act card -->
 <div id="act-card">
@@ -349,42 +350,42 @@ html, body { width:100vw; height:100vh; overflow:hidden; background:#000; }
 <div id="end-card">
   <div class="ec-glow"></div>
   <div class="ec-logo"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <div class="ec-eyebrow">T3D ORIGIN · PILOT SPECIAL · COMPLETE</div>
-  <h1 class="ec-headline">You Made It.</h1>
-  <div class="ec-sub">16 BEATS · THREE ACTS · THE FULL ARC · ∞⁹</div>
+  <div class="ec-eyebrow" data-i18n="end.eyebrow">T3D ORIGIN · PILOT SPECIAL · COMPLETE</div>
+  <h1 class="ec-headline" data-i18n="end.headline">You Made It.</h1>
+  <div class="ec-sub" data-i18n="end.sub">16 BEATS · THREE ACTS · THE FULL ARC · ∞⁹</div>
   <div class="ec-divider"></div>
-  <p class="ec-body">
+  <p class="ec-body" data-i18n-html="end.body">
     You just watched the entire SING!9 Deck Pilot — every singularity, every character,
     every image from the catalog. <strong>This universe goes deeper.</strong>
     The original self-story is still running. The EP Console is live.
     Where do you want to go next?
   </p>
   <div class="ec-btns">
-    <a class="ec-btn ec-btn-crystal" href="episode-1.html">
+    <a class="ec-btn ec-btn-crystal" href="episode-1.html" data-i18n="end.btn1">
       ▶ &nbsp; THE ORIGINAL PILOT &nbsp;·&nbsp; THE FIRST SELF-STORY
     </a>
-    <a class="ec-btn ec-btn-gold" href="outline-only.html">
+    <a class="ec-btn ec-btn-gold" href="outline-only.html" data-i18n="end.btn2">
       ▶ &nbsp; EXPLORE THE FULL UNIVERSE &nbsp;·&nbsp; 333 EPISODES
     </a>
-    <a class="ec-btn ec-btn-gold" href="hhl-console.html">
+    <a class="ec-btn ec-btn-gold" href="hhl-console.html" data-i18n="end.btn3">
       ⚡ &nbsp; OPEN THE EP CONSOLE &nbsp;·&nbsp; HHL STUDIO
     </a>
-    <a class="ec-btn ec-btn-dim" href="pilot.html">
+    <a class="ec-btn ec-btn-dim" href="pilot.html" data-i18n="end.btn4">
       ↺ &nbsp; REPLAY FROM THE BEGINNING
     </a>
   </div>
-  <div class="ec-nsp">NSPFRNP · MCA · SEED:EDGE · FRACTI·AI · HOLOGRAPHIC HYDROGEN · → ∞⁹</div>
+  <div class="ec-nsp" data-i18n="end.nsp">NSPFRNP · MCA · SEED:EDGE · FRACTI·AI · HOLOGRAPHIC HYDROGEN · → ∞⁹</div>
 </div>
 
 <!-- Start overlay -->
 <div id="start" onclick="begin()">
   <div class="big-logo"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <h1>T3D ORIGIN</h1>
-  <h2>PILOT SPECIAL</h2>
-  <h3>SING!9 · HOLOGRAPHIC HYDROGEN · FRACTI·AI</h3>
-  <div class="dur">~ 10 MINUTES · 16 BEATS · THREE ACTS</div>
-  <div class="play">▶ &nbsp; BEGIN</div>
-  <a href="pilot-editor.html" style="
+  <h1 data-i18n="pilot.series">T3D ORIGIN</h1>
+  <h2 data-i18n="pilot.title">PILOT SPECIAL</h2>
+  <h3 data-i18n="pilot.tagline">SING!9 · HOLOGRAPHIC HYDROGEN · FRACTI·AI</h3>
+  <div class="dur" data-i18n="pilot.dur">~ 10 MINUTES · 16 BEATS · THREE ACTS</div>
+  <div class="play" data-i18n="pilot.begin">▶ &nbsp; BEGIN</div>
+  <a href="pilot-editor.html" data-i18n="pilot.edit" style="
     display:inline-block; margin-top:1.4rem;
     font-family:'Courier New',monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase;
     color:rgba(34,211,238,0.55); text-decoration:none; border:1px solid rgba(34,211,238,0.25);
@@ -534,9 +535,9 @@ const TOTAL_DUR = SCENES.reduce((s,sc) => s + sc.dur, 0);
 //  ACTS DEFINITION
 // ══════════════════════════════════════════════════════
 const ACTS = {
-  1: { num:'ACT I',   name:'THE WORLD',        sub:'Establishing the stage' },
-  2: { num:'ACT II',  name:'THE GAME',          sub:'The Nine Game. The Taino were playing it first.' },
-  3: { num:'ACT III', name:'THE SINGULARITY',   sub:'Exhale. Gold. New Earth.' },
+  1: { num: (typeof t==='function'?t('act.1.num'):'ACT I'),   name:(typeof t==='function'?t('act.1.name'):'THE WORLD'),       sub:(typeof t==='function'?t('act.1.sub'):'Establishing the stage') },
+  2: { num: (typeof t==='function'?t('act.2.num'):'ACT II'),  name:(typeof t==='function'?t('act.2.name'):'THE GAME'),         sub:(typeof t==='function'?t('act.2.sub'):'The Nine Game. The Taino were playing it first.') },
+  3: { num: (typeof t==='function'?t('act.3.num'):'ACT III'), name:(typeof t==='function'?t('act.3.name'):'THE SINGULARITY'),  sub:(typeof t==='function'?t('act.3.sub'):'Exhale. Gold. New Earth.') },
 };
 
 // ══════════════════════════════════════════════════════
@@ -591,11 +592,12 @@ function play(i) {
   }
   active = nxt;
 
-  // Caption
+  // Caption — use Spanish if available
   const capDelay = sc.fast ? 60 : 700;
   capWrap.style.opacity = '0';
   setTimeout(() => {
-    capEl.textContent = sc.cap || '';
+    const esCap = (typeof pilotCapES === 'function') ? pilotCapES(idx) : null;
+    capEl.textContent = esCap || sc.cap || '';
     capWrap.style.opacity = '1';
     capWrap.style.transition = 'opacity .8s';
   }, capDelay);
@@ -662,7 +664,9 @@ function updateProg() {
 }
 
 function endShow() {
-  capEl.textContent = '∞⁹ · NSPFRNP · Paradise for All · SING!9 · Mission complete.';
+  capEl.textContent = (window.SING9_LANG === 'es')
+    ? '∞⁹ · NSPFRNP · Paraíso para Todos · SING!9 · Misión cumplida.'
+    : '∞⁹ · NSPFRNP · Paradise for All · SING!9 · Mission complete.';
   progBar.style.width = '100%';
   tshow.textContent = `${Math.floor(TOTAL_DUR/60)}:${String(Math.floor(TOTAL_DUR%60)).padStart(2,'0')} / ${Math.floor(TOTAL_DUR/60)}:${String(Math.floor(TOTAL_DUR%60)).padStart(2,'0')}`;
   // Reveal end card after final caption has time to land
@@ -751,7 +755,8 @@ function begin() {
   lastAct = 1;
 
   showAct(1);
-  capEl.textContent = sc.cap;
+  const _esCap0 = (typeof pilotCapES === 'function') ? pilotCapES(0) : null;
+  capEl.textContent = _esCap0 || sc.cap;
   capWrap.style.opacity = '1';
 
   clearTimeout(timer);

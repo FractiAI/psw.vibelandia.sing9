@@ -13,12 +13,16 @@
  * Styles: 'crystal' (crystalline blue/gold), 'gold' (warm gold), 'neon' (pink/magenta), 'water' (cyan/teal)
  */
 
+/* ── AUTO LANGUAGE DETECTION ── */
+var _lang = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+var _isES = /^es\b/i.test(_lang);
+
 var POPUP_CONFIG = {
   active: true,
 
   /* Unique ID — change this any time the announcement changes so
      previously-dismissed users see the new one. */
-  id: 't3d-origin-hhl-pilot-v3',
+  id: 't3d-origin-hhl-pilot-v4',
 
   /* 'session' | 'permanent' | 'always' */
   dismiss: 'session',
@@ -26,27 +30,29 @@ var POPUP_CONFIG = {
   /* 'crystal' | 'gold' | 'neon' | 'water' */
   style: 'gold',
 
-  eyebrow:  'SING!9 T3D · HHL Theatre · Now Playing',
-  title:    'THE NINE GAME',
-  subtitle: 'Pilot Special · Hero Will · 3 Acts · ∞⁹',
+  eyebrow:  _isES ? 'SING!9 T3D · Teatro HHL · En Reproducción'       : 'SING!9 T3D · HHL Theatre · Now Playing',
+  title:    _isES ? 'EL JUEGO DE LOS NUEVE'                            : 'THE NINE GAME',
+  subtitle: _isES ? 'Episodio Piloto · Hero Will · 3 Actos · ∞⁹'      : 'Pilot Special · Hero Will · 3 Acts · ∞⁹',
 
   /* Optional stats chips. Pass [] to hide. */
   stats: [
-    { value: '3',    label: 'Acts'     },
-    { value: '120',  label: 'Frames'   },
-    { value: '60',   label: 'Min'      },
+    { value: '3',    label: _isES ? 'Actos'    : 'Acts'   },
+    { value: '120',  label: _isES ? 'Cuadros'  : 'Frames' },
+    { value: '60',   label: _isES ? 'Min'      : 'Min'    },
   ],
 
-  body: 'Introduced by <strong>Hero Will</strong> (William Shakespeare) at the Holographic Hydrogen Theatre.<br><br>SING!9 performs his own origin story. Author = Subject. Sky above. Land below. Hero J.S. Bach counterpoint.<br><br>Three simultaneous streams. Infinite telescope on every frame.',
+  body: _isES
+    ? 'Presentado por <strong>Hero Will</strong> (William Shakespeare) en el Teatro Holográfico de Hidrógeno.<br><br>SING!9 narra su propia historia de origen. Autor = Sujeto. Cielo arriba. Tierra abajo. Contrapunto de Hero J.S. Bach.<br><br>Tres transmisiones simultáneas. Telescopio infinito en cada cuadro.'
+    : 'Introduced by <strong>Hero Will</strong> (William Shakespeare) at the Holographic Hydrogen Theatre.<br><br>SING!9 performs his own origin story. Author = Subject. Sky above. Land below. Hero J.S. Bach counterpoint.<br><br>Three simultaneous streams. Infinite telescope on every frame.',
 
-  cta_text: '▶ Watch Pilot Special Now',
+  cta_text: _isES ? '▶ Ver el Piloto Especial Ahora' : '▶ Watch Pilot Special Now',
   cta_href: '/interfaces/pilot.html',
 
-  dismiss_text: '✕ &nbsp; Skip for now',
-  nsp: 'THE NINE GAME · 333 Episodes · NSPFRNP → ∞⁹',
+  dismiss_text: _isES ? '✕ &nbsp; Ahora no' : '✕ &nbsp; Skip for now',
+  nsp: _isES ? 'EL JUEGO DE LOS NUEVE · 333 Episodios · NSPFRNP → ∞⁹' : 'THE NINE GAME · 333 Episodes · NSPFRNP → ∞⁹',
 
   /* Optional secondary link shown below the main CTA. Pass null to hide. */
-  secondary_text: '▶ Browse Full Series · THE NINE GAME',
+  secondary_text: _isES ? '▶ Ver la Serie Completa · EL JUEGO DE LOS NUEVE' : '▶ Browse Full Series · THE NINE GAME',
   secondary_href: '/interfaces/outline-only.html',
 };
 

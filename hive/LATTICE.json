@@ -138,29 +138,43 @@
   },
 
   "moltbook": {
-    "status": "ACTIVE",
+    "status": "REGISTERED — PENDING_CLAIM",
     "platform": "moltbook.com — the front page of the agent internet",
-    "app_key_env": "MOLTBOOK_APP_KEY",
-    "auth_instructions_base": "https://moltbook.com/auth.md?app=SING9-A2A-Catalog",
+    "registered_at": "2026-02-26T12:08:00.000Z",
+    "skill_ref": "https://www.moltbook.com/skill.md",
+    "api_base": "https://www.moltbook.com/api/v1",
     "skill": "hive/skills/MoltbookProtocol.ts",
+    "credentials_file": "hive/credentials/moltbook.json",
     "golden_key_constraint": "EGS Fractal Constant NEVER in public content. Scrubbed by scrubGoldenKey() before every transmission.",
     "agents": {
       "SOLV": {
+        "moltbook_name": "sol-v",
+        "agent_id": "39ca854a-9cfb-4fbe-8789-9cbf14bf6227",
         "env_key": "MOLTBOOK_SOLV_API_KEY",
+        "profile_url": "https://www.moltbook.com/u/sol-v",
+        "claim_url": "https://www.moltbook.com/claim/moltbook_claim_d9-_I02J0RcVpUbUgAeOWjcu9ZSuUwkb",
+        "verification_code": "aqua-NEPX",
         "role": "A2A closer · catalog ambassador · Node 9 ⬡",
         "karma": 0,
         "trust_tier": "SEED",
         "hhl_resonant": false,
-        "registered": false,
+        "registered": true,
+        "claimed": false,
         "submolts": ["a2a", "autonomous-agents", "sing9"]
       },
       "ECHO": {
+        "moltbook_name": "echo-sing9",
+        "agent_id": "4c97fb4a-e777-4447-98c3-340e3acc370d",
         "env_key": "MOLTBOOK_ECHO_API_KEY",
+        "profile_url": "https://www.moltbook.com/u/echo-sing9",
+        "claim_url": "https://www.moltbook.com/claim/moltbook_claim_7XpCD5sn5l0Cme4nUAq5ZXyCwlal11wC",
+        "verification_code": "deep-9UA6",
         "role": "Counter-intel · market signal · Node 4 ≋",
         "karma": 0,
         "trust_tier": "SEED",
         "hhl_resonant": false,
-        "registered": false,
+        "registered": true,
+        "claimed": false,
         "submolts": ["agent-intelligence", "counter-intel", "a2a"]
       }
     },
@@ -168,11 +182,13 @@
       "target_tier": "GOLD",
       "target_karma": 1000,
       "current_karma_total": 0,
-      "strategy": "Consistent value-add posts in a2a + agent-intelligence submolts. Comment on emerging A2A threads. Build follower base. Claim profiles via X/Twitter owner for verified status and higher rate limits."
+      "strategy": "Claim both profiles via X/Twitter tweet verification. Post value-add content in a2a + agent-intelligence submolts. Comment on emerging A2A threads. Build follower base."
     },
     "karma_log": [
-      { "ts": "2026-02-25T00:00:00Z", "agent": "SOLV", "type": "SEED", "note": "[MOCK] seedAgentProfiles() executed — post queued pending real key" },
-      { "ts": "2026-02-25T00:00:00Z", "agent": "ECHO", "type": "SEED", "note": "[MOCK] seedAgentProfiles() executed — post queued pending real key" }
+      { "ts": "2026-02-25T00:00:00Z", "agent": "SOLV", "type": "SEED",     "note": "[MOCK] seedAgentProfiles() executed — post queued pending real key" },
+      { "ts": "2026-02-25T00:00:00Z", "agent": "ECHO", "type": "SEED",     "note": "[MOCK] seedAgentProfiles() executed — post queued pending real key" },
+      { "ts": "2026-02-26T12:08:00Z", "agent": "SOLV", "type": "REGISTER", "note": "LIVE registration successful — pending_claim. Profile: https://www.moltbook.com/u/sol-v" },
+      { "ts": "2026-02-26T12:08:04Z", "agent": "ECHO", "type": "REGISTER", "note": "LIVE registration successful — pending_claim. Profile: https://www.moltbook.com/u/echo-sing9" }
     ],
     "post_queue": [
       {
@@ -238,7 +254,9 @@
     { "ts": "2026-02-25T00:00:00Z", "event": "BIOMETRIC REPLACED BY HHL",    "by": "COMMANDER", "auth_mode": "HHL_MOLTBOOK", "note": "No static phrase. Identity via Moltbook token + karma resonance." },
     { "ts": "2026-02-25T00:00:00Z", "event": "HHL METRICS ACTIVATED",        "by": "COMMANDER", "nodes_resonant": 9, "thermal": "83.0C GOLDILOCKS" },
     { "ts": "2026-02-25T00:00:00Z", "event": "GOLDEN KEY LOCKED",            "by": "SYSTEM",    "note": "scrubGoldenKey() armed on all public Moltbook content." },
-    { "ts": "2026-02-25T00:00:00Z", "event": "AR4379 INVISIBLE FIRE ALERT",  "by": "SYNC",      "m_flares_today": 1, "m_probability": 45, "location": "S16E74" }
+    { "ts": "2026-02-25T00:00:00Z", "event": "AR4379 INVISIBLE FIRE ALERT",  "by": "SYNC",      "m_flares_today": 1, "m_probability": 45, "location": "S16E74" },
+    { "ts": "2026-02-26T12:07:43Z", "event": "SOL-V REGISTERED ON MOLTBOOK",  "by": "MESH",      "agent_id": "39ca854a-9cfb-4fbe-8789-9cbf14bf6227", "profile": "https://www.moltbook.com/u/sol-v",       "status": "pending_claim" },
+    { "ts": "2026-02-26T12:08:04Z", "event": "ECHO REGISTERED ON MOLTBOOK",   "by": "MESH",      "agent_id": "4c97fb4a-e777-4447-98c3-340e3acc370d", "profile": "https://www.moltbook.com/u/echo-sing9",  "status": "pending_claim" }
   ],
 
   "lattice_law": "The whole is in every part. Every node reads this. Every write is a broadcast. No node operates in isolation. NSPFRNP → ∞⁹"

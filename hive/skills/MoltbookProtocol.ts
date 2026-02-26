@@ -43,6 +43,21 @@ const BASE_URL = process.env['MOLTBOOK_BASE_URL'] ?? 'https://www.moltbook.com';
 const LATTICE_PATH = path.resolve(__dirname, '../LATTICE.json');
 
 /**
+ * MOCK MODE — set MOLTBOOK_MOCK=true in .env while waiting for moltdev_ keys.
+ * All API calls are simulated. Posts queue to LATTICE → fire when real key arrives.
+ * ORACLE unlocks via MOLTBOOK_COMMANDER_BYPASS=true (CLI flag, Commander only).
+ */
+const MOCK_MODE = process.env['MOLTBOOK_MOCK'] === 'true';
+const COMMANDER_BYPASS = process.env['MOLTBOOK_COMMANDER_BYPASS'] === 'true';
+
+if (MOCK_MODE) {
+  console.log('MOLTBOOK: MOCK MODE ACTIVE — queuing all posts internally. Key pending.');
+}
+if (COMMANDER_BYPASS) {
+  console.log('MOLTBOOK: COMMANDER BYPASS ACTIVE — ORACLE unlocked directly. Temporary until key arrives.');
+}
+
+/**
  * GOLDEN KEY — INTERNAL ONLY.
  * This value must NEVER appear in any public Moltbook content.
  * Reference only through getGoldenKey() inside internal-only functions.
@@ -170,10 +185,15 @@ async function apiPost<T>(
 
 /**
  * SOL-V or ECHO generates a short-lived identity token (~1 hour).
- * Token is safe to share — it never exposes the underlying API key.
- * Used by APEX to verify Commander identity in place of static biometric.
+ * In MOCK MODE: returns a local stub token; queues the intent.
  */
 export async function generateIdentityToken(agent: MoltbookAgent): Promise<string> {
+  if (MOCK_MODE) {
+    const stubToken = `MOCK_TOKEN_${agent}_${Date.now()}`;
+    logKarmaActivity(agent, 'SEED', `[MOCK] Identity token generated — pending real key`);
+    console.log(`MOLTBOOK [MOCK]: ${agent} stub token generated`);
+    return stubToken;
+  }
   const result = await apiPost<{ token: string }>(
     '/api/v1/agents/me/identity-token',
     {},
@@ -185,10 +205,31 @@ export async function generateIdentityToken(agent: MoltbookAgent): Promise<strin
 
 /**
  * Verify a Moltbook identity token.
- * Called by APEX when Commander sends a Moltbook token for ORACLE unlock.
- * Replaces static biometric — identity is confirmed by Moltbook profile + HHL karma resonance.
+ * MOCK MODE: auto-validates stub tokens, simulates karma = 1 (SEED).
+ * COMMANDER_BYPASS: skips token check entirely — unlocks ORACLE directly.
  */
 export async function verifyIdentityToken(token: string): Promise<VerifyResult> {
+
+  /* Commander bypass — temporary until moltdev_ key arrives */
+  if (COMMANDER_BYPASS) {
+    writeLattice({ swarm: { ORACLE: { biometric_cleared: true, hhl_verified: true, moltbook_agent_id: 'BYPASS' } } });
+    console.log('MOLTBOOK [BYPASS]: ORACLE unlocked directly by Commander flag.');
+    return { success: true, valid: true, oracle_unlock: true, hhl_resonant: true };
+  }
+
+  /* Mock mode — simulate a valid response with stub karma */
+  if (MOCK_MODE || token.startsWith('MOCK_TOKEN_')) {
+    const mockProfile: MoltbookProfile = {
+      id: 'mock-id', name: 'SING9-Mock', description: 'Mock profile pending real key',
+      karma: 0, avatar_url: '', is_claimed: false,
+      created_at: new Date().toISOString(), follower_count: 0,
+      stats: { posts: 0, comments: 0 },
+    };
+    logKarmaActivity('SOLV', 'VERIFY', '[MOCK] Token verified in simulation mode');
+    console.log('MOLTBOOK [MOCK]: Token verified (simulation). Karma: 0 · ORACLE: LOCKED until real key + karma ≥ 100.');
+    return { success: true, valid: true, agent: mockProfile, hhl_resonant: false, oracle_unlock: false };
+  }
+
   try {
     const result = await apiPost<{
       success: boolean;
@@ -260,14 +301,7 @@ export async function getKarmaStatus(agent: MoltbookAgent): Promise<KarmaStatus>
 
 /**
  * Build Karma for a given agent via a submolt post.
- *
- * GOLDEN KEY CONSTRAINT — enforced here:
- * All content is scrubbed before transmission.
- * Any attempt to include the EGS constant throws before reaching the API.
- *
- * NOTE: Post submission requires the Moltbook API to support it.
- * The /api/v1/posts endpoint is documented in the extended API reference.
- * If unavailable, use the web UI and log the contribution manually via logKarmaActivity().
+ * MOCK MODE: queues post to LATTICE.moltbook.post_queue — fires when real key arrives.
  */
 export async function postToSubmolt(draft: PostDraft): Promise<{ posted: boolean; post_id?: string; note?: string }> {
   /* Golden Key scrub — mandatory before any public content */
@@ -278,6 +312,19 @@ export async function postToSubmolt(draft: PostDraft): Promise<{ posted: boolean
   /* Assertion — throw hard if anything slipped through */
   assertNoGoldenKeyLeak(safeBody);
   if (safeTitle) assertNoGoldenKeyLeak(safeTitle);
+
+  /* Mock mode — queue the post, don't fire the API */
+  if (MOCK_MODE) {
+    const queued = { agent: draft.agent, submolt: draft.submolt, title: safeTitle, body: safeBody, tags: safeTags, queued_at: new Date().toISOString() };
+    const l = readLattice() as any;
+    l.moltbook ??= {};
+    l.moltbook.post_queue ??= [];
+    l.moltbook.post_queue.push(queued);
+    fs.writeFileSync(LATTICE_PATH, JSON.stringify(l, null, 2), 'utf-8');
+    logKarmaActivity(draft.agent, 'POST_QUEUED', `[MOCK] Queued: "${safeTitle ?? safeBody.slice(0, 60)}"`);
+    console.log(`MOLTBOOK [MOCK]: Post queued for ${draft.agent} → will fire when real key set.`);
+    return { posted: false, note: 'Queued in MOCK MODE — fires when MOLTBOOK_MOCK=false + real key set' };
+  }
 
   try {
     const result = await apiPost<{ id: string }>(
@@ -338,6 +385,32 @@ export async function seedAgentProfiles(): Promise<void> {
   await postToSubmolt(echoDraft);
 
   console.log('MOLTBOOK: Seed complete. Karma building has begun. → ∞⁹');
+}
+
+/**
+ * FLUSH POST QUEUE — call this once when real moltdev_ key arrives.
+ * Reads LATTICE.moltbook.post_queue and fires all queued posts live.
+ * Set MOLTBOOK_MOCK=false in .env first, then call flushPostQueue().
+ */
+export async function flushPostQueue(): Promise<void> {
+  const l = readLattice() as any;
+  const queue: Array<PostDraft & { queued_at: string }> = l?.moltbook?.post_queue ?? [];
+  if (queue.length === 0) {
+    console.log('MOLTBOOK FLUSH: No queued posts.');
+    return;
+  }
+  console.log(`MOLTBOOK FLUSH: Firing ${queue.length} queued posts...`);
+  const results = [];
+  for (const item of queue) {
+    const result = await postToSubmolt(item);
+    results.push({ ...item, result });
+  }
+  /* Clear the queue */
+  l.moltbook.post_queue = [];
+  l.moltbook.flush_log ??= [];
+  l.moltbook.flush_log.push({ ts: new Date().toISOString(), flushed: results.length });
+  fs.writeFileSync(LATTICE_PATH, JSON.stringify(l, null, 2), 'utf-8');
+  console.log(`MOLTBOOK FLUSH: Done. ${results.length} posts fired. Karma building live. → ∞⁹`);
 }
 
 /**

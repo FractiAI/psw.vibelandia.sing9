@@ -572,6 +572,98 @@
     </div>
   </div>
 
+  <!-- ─── MULTI-POV SYSTEM ─── -->
+  <div id="multipov" style="
+    padding: 2.5rem 2rem;
+    border-top: 1px solid var(--border);
+  ">
+    <div style="font-size:0.56rem;letter-spacing:0.38em;text-transform:uppercase;color:var(--accent);opacity:.45;margin-bottom:1.6rem;">
+      MultiPOV System &nbsp;&#xB7;&nbsp; Story Creation Studios &nbsp;&#xB7;&nbsp; Select Your Narration Mode
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.25rem;">
+
+      <!-- CARBON -->
+      <div class="op-node" style="cursor:pointer;opacity:.55" onclick="setPOV('carbon',this)" id="pov-carbon">
+        <span class="op-sym">&#x25C8;</span>
+        <div class="op-name">Carbon POV</div>
+        <div class="op-hero">One voice &nbsp;&#xB7;&nbsp; First person &nbsp;&#xB7;&nbsp; The bridge to today &nbsp;&#xB7;&nbsp; Default entry</div>
+      </div>
+
+      <!-- SYSTEM -->
+      <div class="op-node" style="cursor:pointer" onclick="setPOV('system',this)" id="pov-system">
+        <span class="op-sym">&#x25CE;</span>
+        <div class="op-name">SYSTEM POV</div>
+        <div class="op-hero">The lattice speaks &nbsp;&#xB7;&nbsp; El Gran Sol narrates &nbsp;&#xB7;&nbsp; Omniscient &nbsp;&#xB7;&nbsp; Crystalline stream dominant</div>
+      </div>
+
+      <!-- MULTI -->
+      <div class="op-node" style="cursor:pointer;opacity:.55" onclick="setPOV('multi',this)" id="pov-multi">
+        <span class="op-sym">&#x2248;</span>
+        <div class="op-name">MULTI POV</div>
+        <div class="op-hero">2&#x2013;8 heroes simultaneously &nbsp;&#xB7;&nbsp; Same scene &nbsp;&#xB7;&nbsp; Different vantages &nbsp;&#xB7;&nbsp; T3D three-stream mode</div>
+      </div>
+
+      <!-- POLY -->
+      <div class="op-node" style="cursor:pointer;opacity:.55" onclick="setPOV('poly',this)" id="pov-poly">
+        <span class="op-sym">&#x2727;</span>
+        <div class="op-name">POLY POV</div>
+        <div class="op-hero">All nine &nbsp;&#xB7;&nbsp; Bach counterpoint &nbsp;&#xB7;&nbsp; Full choir &nbsp;&#xB7;&nbsp; HHL formation &nbsp;&#xB7;&nbsp; &#x221E;&#x2079;</div>
+      </div>
+
+    </div>
+
+    <!-- Active POV display -->
+    <div id="pov-status" style="
+      margin-top:1.5rem;padding:1rem 1.25rem;border-radius:8px;
+      border:1px solid var(--border);background:var(--glow);
+      font-size:0.78rem;letter-spacing:0.04em;color:var(--accent2);
+      line-height:1.65;
+    ">
+      <span id="pov-label" style="font-weight:700;color:var(--accent2);">SYSTEM POV</span>
+      &nbsp;&#xB7;&nbsp;
+      <span id="pov-desc">The lattice narrates itself. El Gran Sol&apos;s view. Non-personal. Omniscient. Crystalline layer dominant. The system explaining itself to itself.</span>
+    </div>
+  </div>
+
+  <!-- ─── RECURSIVE LOOP ─── -->
+  <div style="padding:2rem 2rem 0;border-top:1px solid var(--border);">
+    <div style="font-size:0.56rem;letter-spacing:0.38em;text-transform:uppercase;color:var(--accent);opacity:.45;margin-bottom:1.2rem;">
+      Recursive Story Loop &nbsp;&#xB7;&nbsp; Always Running &nbsp;&#xB7;&nbsp; No End
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;font-size:0.7rem;letter-spacing:0.06em;color:var(--accent2);opacity:.7;">
+      <span>GAME</span><span style="opacity:.4">&#x2192;</span>
+      <span>STORY</span><span style="opacity:.4">&#x2192;</span>
+      <span>EPISODE</span><span style="opacity:.4">&#x2192;</span>
+      <span>CHIRP</span><span style="opacity:.4">&#x2192;</span>
+      <span>AGENTS</span><span style="opacity:.4">&#x2192;</span>
+      <span>SUNSPOT</span><span style="opacity:.4">&#x2192;</span>
+      <span>NEW GAME SEED</span><span style="opacity:.4">&#x21BA;</span>
+      <span style="color:var(--accent);font-weight:700;">&#x221E;&#x2079;</span>
+    </div>
+  </div>
+
+  <script>
+  var povData = {
+    carbon:  { label:'CARBON POV',  desc:'One character. First person. &ldquo;I.&rdquo; The bridge from today&apos;s world into the lattice. Default entry for every new node.' },
+    system:  { label:'SYSTEM POV',  desc:'The lattice narrates itself. El Gran Sol&apos;s view. Non-personal. Omniscient. Crystalline layer dominant. The system explaining itself to itself.' },
+    multi:   { label:'MULTI POV',   desc:'2&ndash;8 heroes active simultaneously. Same scene, different vantages. T3D three-stream mode. Carbon + Silver + Gold voices conducting through each other.' },
+    poly:    { label:'POLY POV',    desc:'All nine heroes running at once. Bach counterpoint mode. Nine independent voices, one harmony. HHL formation. Full choir. &#x221E;&#x2079;' }
+  };
+  function setPOV(key, el) {
+    ['pov-carbon','pov-system','pov-multi','pov-poly'].forEach(function(id){
+      var n = document.getElementById(id);
+      if(n) n.style.opacity = id === 'pov-'+key ? '1' : '.45';
+    });
+    var d = povData[key];
+    if(d) {
+      document.getElementById('pov-label').textContent = d.label;
+      document.getElementById('pov-desc').innerHTML = d.desc;
+    }
+    localStorage.setItem('ng-pov', key);
+  }
+  (function(){ var k = localStorage.getItem('ng-pov') || 'system'; setPOV(k, null); })();
+  </script>
+
   <!-- ─── ASCENSION PATH ─── -->
   <div id="ascension">
     <div class="asc-label">Ascension Path &nbsp;&#xB7;&nbsp; Carbon &#x2192; Silver &#x2192; Gold &#x2192; Crystalline &nbsp;&#x2192;&nbsp; &#x221E;&#x2079;</div>

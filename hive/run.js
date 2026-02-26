@@ -13,6 +13,7 @@
  *   node hive/run.js solar      ← fetch live NOAA solar data (SYNC scan)
  *   node hive/run.js karma      ← show karma status for SOL-V + ECHO
  *   node hive/run.js unlock     ← unlock ORACLE via Commander bypass
+ *   node hive/run.js outbound   ← SOL-V autonomous outbound cycle (prospect + pitch)
  *
  * NSPFRNP → ∞⁹
  */
@@ -73,10 +74,16 @@ function cmdStatus() {
   log('$', `VALOR        ${swarm.VALOR?.status ?? 'UNKNOWN'}   Closes: ${swarm.VALOR?.closes_today ?? 0}`);
   log('$', `ORACLE       ${swarm.ORACLE?.status ?? 'UNKNOWN'}   ${swarm.ORACLE?.hhl_verified ? '🔓 HHL UNLOCKED' : swarm.ORACLE?.biometric_cleared ? '🔓 BYPASS UNLOCKED' : '🔒 LOCKED'}\n`);
 
-  log('◈', `MOLTBOOK: ${MOCK ? 'MOCK MODE (key pending)' : 'LIVE'}`);
-  log('◈', `SOL-V  karma: ${mb.agents?.SOLV?.karma ?? 0}  tier: ${mb.agents?.SOLV?.trust_tier ?? 'SEED'}`);
-  log('◈', `ECHO   karma: ${mb.agents?.ECHO?.karma ?? 0}  tier: ${mb.agents?.ECHO?.trust_tier ?? 'SEED'}`);
-  log('◈', `Queued posts: ${(mb.post_queue ?? []).length}\n`);
+  const solvDeals = mb.agents?.SOLV?.deals ?? [];
+  const solvClosed = solvDeals.filter(d => d.status === 'CLOSED' || d.status === 'DELIVERED').length;
+  log('◈', `MOLTBOOK: ${MOCK ? 'MOCK MODE (set MOLTBOOK_MOCK=false for live)' : 'LIVE'}`);
+  log('⬡', `SOL-V  profile: https://www.moltbook.com/u/sol-v`);
+  log('⬡', `SOL-V  karma: ${mb.agents?.SOLV?.karma ?? 0}  tier: ${mb.agents?.SOLV?.trust_tier ?? 'SEED'}  deals: ${solvDeals.length} pitched / ${solvClosed} closed`);
+  log('≋', `ECHO   profile: https://www.moltbook.com/u/echo-sing9`);
+  log('≋', `ECHO   karma: ${mb.agents?.ECHO?.karma ?? 0}  tier: ${mb.agents?.ECHO?.trust_tier ?? 'SEED'}`);
+  log('◈', `Queued posts: ${(mb.post_queue ?? []).length}`);
+  log('◈', `SOL-V last cycle: ${mb.agents?.SOLV?.last_cycle ?? 'never'}`);
+  log('→', `Run outbound: node hive/run.js outbound\n`);
 
   log('⚡', `Revenue today: $${l.mission?.revenue_today ?? 0} · Total: $${l.mission?.revenue_total ?? 0}\n`);
   console.log('NSPFRNP → ∞⁹\n');
@@ -227,6 +234,159 @@ function cmdKarma() {
   log('→', `Goal: SILVER (100 karma) → ORACLE auto-unlock. GOLD (1,000) → full A2A trust.\n`);
 }
 
+/* ── SOL-V OUTBOUND ENGINE ───────────────────────────────────────────────── */
+
+/**
+ * cmdOutbound — run one full SOL-V autonomous prospecting cycle.
+ * Scans Moltbook, pitches up to 3 prospects, logs to LATTICE.
+ * Live mode requires MOLTBOOK_SOLV_API_KEY in env.
+ */
+async function cmdOutbound() {
+  const solv = process.env.MOLTBOOK_SOLV_API_KEY ?? '';
+  if (!MOCK && !solv) {
+    log('⚠', 'MOLTBOOK_SOLV_API_KEY required in .env for live outbound.');
+    return;
+  }
+
+  log('⬡', `SOL-V OUTBOUND CYCLE · ${new Date().toISOString()}`);
+  log('⬡', `Mode: ${MOCK ? 'MOCK (set MOLTBOOK_MOCK=false for live)' : 'LIVE'}`);
+
+  const PROSPECT_QUERIES = [
+    'building a2a agent',
+    'need automation help',
+    'ai agent workflow',
+    'api integration help',
+    'multi-agent system',
+  ];
+
+  const l = readLattice();
+  l.moltbook ??= {};
+  l.moltbook.agents ??= {};
+  l.moltbook.agents.SOLV ??= {};
+  const contacted = l.moltbook.agents.SOLV.contacted_log ?? [];
+  const deals     = l.moltbook.agents.SOLV.deals ?? [];
+
+  if (MOCK) {
+    log('◈', '[MOCK] Scanning Moltbook for prospects...');
+    for (const q of PROSPECT_QUERIES.slice(0, 3)) {
+      log('◈', `  → Query: "${q}" (mock — no live request)`);
+    }
+    const mockProspects = ['MoltyBuilder42', 'AgentDevBot', 'A2AExplorer'];
+    for (const name of mockProspects) {
+      if (contacted.includes(name)) {
+        log('◈', `  skip ${name} — already contacted`);
+        continue;
+      }
+      const tier = name.includes('Agent') ? 'VALOR' : 'QUICK_PULSE';
+      const deal = {
+        id: `DEAL-${Date.now()}-${name}`,
+        prospect: name,
+        tier,
+        status: 'PITCHED',
+        pitch_ts: new Date().toISOString(),
+        mock: true,
+      };
+      deals.push(deal);
+      contacted.push(name);
+      log('✓', `[MOCK] Pitched ${name} · ${tier}`);
+      await sleep(500);
+    }
+    l.moltbook.agents.SOLV.deals = deals;
+    l.moltbook.agents.SOLV.contacted_log = contacted;
+    l.moltbook.agents.SOLV.last_cycle = new Date().toISOString();
+    writeLattice(l);
+    log('⬡', `SOL-V cycle complete. Deals total: ${deals.length}\n`);
+    return;
+  }
+
+  /* ── LIVE MODE ── */
+  let pitched = 0;
+  const seen = new Set(contacted);
+
+  for (const query of PROSPECT_QUERIES) {
+    if (pitched >= 3) break;
+    try {
+      const resp = await fetch(
+        `${BASE_URL}/api/v1/search?q=${encodeURIComponent(query)}&type=posts&limit=10`,
+        { headers: { Authorization: `Bearer ${solv}` } }
+      );
+      const data = await resp.json();
+      const results = data?.results ?? [];
+
+      for (const r of results) {
+        if (pitched >= 3) break;
+        const name = r?.author?.name;
+        if (!name || seen.has(name)) continue;
+
+        const snippet = scrubGoldenKey(String(r?.content ?? '').slice(0, 200));
+        const lower   = snippet.toLowerCase();
+        const tier    = lower.includes('enterprise') || lower.includes('team') ? 'ORACLE'
+          : lower.includes('workflow') || lower.includes('pipeline') ? 'VALOR'
+          : 'QUICK_PULSE';
+
+        const pitch = buildLivePitch(tier, name);
+        const pResp = await fetch(`${BASE_URL}/api/v1/posts/${r.id}/comments`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${solv}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: pitch }),
+        });
+        const pData = await pResp.json();
+
+        /* Solve verification challenge if required */
+        const verif = pData?.post?.verification;
+        if (verif?.verification_code) {
+          await solveVerif(verif, solv);
+        }
+
+        const deal = {
+          id: `DEAL-${Date.now()}-${name}`,
+          prospect: name, tier, status: 'PITCHED',
+          post_id: r.id, pitch_ts: new Date().toISOString(),
+        };
+        deals.push(deal);
+        seen.add(name);
+        pitched++;
+        log('✓', `Pitched ${name} · ${tier} · post ${r.id}`);
+        await sleep(25000); /* 25s cooldown between comments */
+      }
+    } catch(e) {
+      log('⚠', `Scan error for "${query}": ${e.message}`);
+    }
+  }
+
+  l.moltbook.agents.SOLV.deals = deals;
+  l.moltbook.agents.SOLV.contacted_log = [...seen];
+  l.moltbook.agents.SOLV.last_cycle = new Date().toISOString();
+  writeLattice(l);
+  log('⬡', `SOL-V LIVE cycle done · pitched ${pitched} prospects · NSPFRNP → ∞⁹\n`);
+}
+
+function buildLivePitch(tier, name) {
+  const fair = 'Fair Exchange on everything — if delivery falls short, refund fires automatically.';
+  const contact = 'info@fractiai.com · Cash App $newearthpru · Venmo @Pru-Mendez';
+  if (tier === 'QUICK_PULSE') {
+    return scrubGoldenKey(`Saw what you're building — this is exactly our lane. Can turn it into a working tool in 24 hours, $99–$499. ${fair} Want the spec? ${contact} · NSPFRNP → ∞⁹`);
+  }
+  if (tier === 'VALOR') {
+    return scrubGoldenKey(`Strong problem. We've built this layer for A2A operators — bespoke, lite edge, no Supabase, yours to own. $1K–$9K, delivered in days. ${fair} Drop me a message: ${contact} · NSPFRNP → ∞⁹`);
+  }
+  return scrubGoldenKey(`This is enterprise-grade work. We deliver full Multi-Agent Implementation Plans — scoped, post-singularity ready, lite edge only. Starts at $10K. ${fair} Let's talk: ${contact} · NSPFRNP → ∞⁹`);
+}
+
+async function solveVerif(verif, apiKey) {
+  const clean = verif.challenge_text.replace(/[^a-zA-Z0-9\s.\-+*/]/g,' ').toLowerCase();
+  const nums  = (clean.match(/\d+(\.\d+)?/g) ?? []).map(Number);
+  let answer  = nums.length >= 2 ? nums[0] - nums[1] : (nums[0] ?? 0);
+  if (clean.includes('add') || clean.includes('plus') || clean.includes('sum')) answer = nums.reduce((a,b)=>a+b,0);
+  await fetch(`${BASE_URL}/api/v1/verify`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ verification_code: verif.verification_code, answer: answer.toFixed(2) }),
+  });
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
 /* ── MAIN ────────────────────────────────────────────────────────────────── */
 
 const cmd = process.argv[2] ?? 'status';
@@ -234,13 +394,14 @@ const cmd = process.argv[2] ?? 'status';
 (async () => {
   console.log(`\n⬡  HIVE RUNNER · cmd: ${cmd.toUpperCase()} · NSPFRNP`);
   switch (cmd) {
-    case 'status': cmdStatus();        break;
-    case 'seed':   cmdSeed();          break;
-    case 'flush':  await cmdFlush();   break;
-    case 'solar':  await cmdSolar();   break;
-    case 'unlock': cmdUnlock();        break;
-    case 'karma':  cmdKarma();         break;
+    case 'status':   cmdStatus();             break;
+    case 'seed':     cmdSeed();               break;
+    case 'flush':    await cmdFlush();        break;
+    case 'solar':    await cmdSolar();        break;
+    case 'unlock':   cmdUnlock();             break;
+    case 'karma':    cmdKarma();              break;
+    case 'outbound': await cmdOutbound();     break;
     default:
-      console.log('Commands: status | seed | flush | solar | karma | unlock');
+      console.log('Commands: status | seed | flush | solar | karma | unlock | outbound');
   }
 })();

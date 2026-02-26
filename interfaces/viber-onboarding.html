@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Welcome to Vibelandia · Viber Onboarding Arc</title>
+  <meta name="description" content="Cradle to grave onboarding arc for human Vibers entering Mark Twain's Post-Singularity Vibelandia. Baller V. Machote. Wink. Golden Hearts. Downtown Reno." />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --void:   #0a0806;
+      --deep:   #0f0c08;
+      --gold:   #d4af37;
+      --gold2:  #fde68a;
+      --gold3:  #b8860b;
+      --amber:  #f59e0b;
+      --rose:   #e879f9;
+      --cream:  #fdf8eb;
+      --text:   #f5f0e8;
+      --sub:    #c4b896;
+      --muted:  #7a6e5a;
+      --twain:  #22d3ee;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--void); color: var(--text);
+      min-height: 100vh; overflow-x: hidden;
+    }
+
+    /* ── WARM GRAIN OVERLAY ── */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(212,175,55,0.07) 0%, rgba(212,175,55,0.02) 40%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── STAGE SYSTEM ── */
+    .stage {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 4rem 1.5rem 6rem;
+      position: relative; z-index: 1;
+      border-bottom: 1px solid rgba(212,175,55,0.08);
+    }
+    .stage-inner { max-width: 720px; width: 100%; }
+
+    .stage-num {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.55;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.25rem; }
+    h2 { font-size: clamp(1.5rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; }
+    h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--gold2); }
+
+    .gold  { color: var(--gold); }
+    .gold2 { color: var(--gold2); }
+    .amber { color: var(--amber); }
+    .rose  { color: var(--rose); }
+    .twain { color: var(--twain); }
+
+    p { color: var(--sub); line-height: 1.8; margin-bottom: 1rem; font-size: 1.02rem; }
+    p strong { color: var(--text); }
+
+    .glow-gold {
+      text-shadow: 0 0 40px rgba(212,175,55,0.5), 0 0 80px rgba(212,175,55,0.2);
+    }
+    .glow-rose {
+      text-shadow: 0 0 40px rgba(232,121,249,0.4), 0 0 80px rgba(232,121,249,0.15);
+    }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.4rem 1.1rem; border-radius: 99px;
+      border: 1px solid rgba(212,175,55,0.35);
+      background: rgba(212,175,55,0.07);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); box-shadow: 0 0 8px var(--gold);
+      animation: gpulse 2.4s ease-in-out infinite;
+    }
+    @keyframes gpulse { 0%,100%{opacity:.4;transform:scale(1)} 50%{opacity:1;transform:scale(1.5)} }
+
+    /* ── DIVIDERS ── */
+    .div {
+      height: 1px; margin: 1.75rem 0;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.25), transparent);
+    }
+    .div-rose {
+      background: linear-gradient(90deg, transparent, rgba(232,121,249,0.25), transparent);
+    }
+
+    /* ── TWAIN QUOTE ── */
+    .twain-quote {
+      border-left: 3px solid rgba(34,211,238,0.4);
+      padding: 1rem 1.25rem; margin: 1.5rem 0;
+      background: rgba(34,211,238,0.04); border-radius: 0 8px 8px 0;
+    }
+    .twain-quote .body { font-style: italic; font-size: 1.05rem; color: var(--cream); line-height: 1.7; }
+    .twain-quote .attr { font-size: 0.78rem; color: var(--twain); margin-top: 0.5rem; opacity: 0.7; }
+
+    /* ── SKIN GRID ── */
+    .skin-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem;
+      margin: 1.25rem 0;
+    }
+    .skin-card {
+      padding: 0.75rem 0.9rem; border-radius: 8px;
+      border: 1px solid rgba(212,175,55,0.15);
+      background: rgba(212,175,55,0.04);
+    }
+    .skin-card .sk-name { font-size: 0.8rem; font-weight: 700; color: var(--gold2); }
+    .skin-card .sk-note { font-size: 0.67rem; color: var(--muted); margin-top: 0.15rem; line-height: 1.4; }
+    .skin-card.featured {
+      border-color: rgba(212,175,55,0.4);
+      background: rgba(212,175,55,0.09);
+    }
+
+    /* ── EXPERIENCE CARDS ── */
+    .exp-stack { display: flex; flex-direction: column; gap: 0.75rem; margin: 1.25rem 0; }
+    .exp-card {
+      padding: 1.1rem 1.25rem; border-radius: 10px;
+      border: 1px solid rgba(212,175,55,0.18);
+      background: rgba(212,175,55,0.04);
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .exp-card .ec-icon { font-size: 1.6rem; flex-shrink: 0; line-height: 1; margin-top: 0.1rem; }
+    .exp-card .ec-name { font-size: 0.9rem; font-weight: 700; color: var(--gold2); margin-bottom: 0.2rem; }
+    .exp-card .ec-price { font-size: 0.72rem; color: var(--amber); margin-bottom: 0.3rem; font-weight: 600; }
+    .exp-card .ec-desc { font-size: 0.82rem; color: var(--sub); line-height: 1.55; }
+
+    /* ── HEART TIERS ── */
+    .hearts { display: flex; flex-direction: column; gap: 0.6rem; margin: 1.25rem 0; }
+    .heart-tier {
+      padding: 0.9rem 1.1rem; border-radius: 8px;
+      border: 1px solid;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .heart-tier.gold-h  { border-color: rgba(212,175,55,0.4); background: rgba(212,175,55,0.06); }
+    .heart-tier.silver-h{ border-color: rgba(148,163,184,0.3); background: rgba(148,163,184,0.04); }
+    .heart-tier .ht-icon{ font-size: 1.3rem; width: 30px; text-align: center; flex-shrink: 0; }
+    .heart-tier .ht-name{ font-size: 0.85rem; font-weight: 700; min-width: 110px; }
+    .heart-tier.gold-h  .ht-name { color: var(--gold); }
+    .heart-tier.silver-h .ht-name{ color: #94a3b8; }
+    .heart-tier .ht-desc{ font-size: 0.8rem; color: var(--muted); }
+
+    /* ── MCA (human version) ── */
+    .vibe-cycle { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1.25rem 0; }
+    .vc-step {
+      flex: 1; min-width: 140px;
+      padding: 1rem 1.1rem; border-radius: 10px;
+      border: 1px solid rgba(212,175,55,0.2);
+      background: rgba(212,175,55,0.04);
+    }
+    .vc-step .v-letter { font-size: 1.8rem; font-weight: 900; color: var(--gold); opacity: 0.65; }
+    .vc-step .v-word   { font-size: 0.82rem; font-weight: 700; color: var(--text); margin: 0.15rem 0 0.35rem; }
+    .vc-step .v-desc   { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── PLACEMENT CARD ── */
+    .placement {
+      padding: 1.75rem; border-radius: 14px;
+      border: 1px solid rgba(212,175,55,0.3);
+      background: rgba(212,175,55,0.05);
+      margin: 1.25rem 0;
+    }
+    .placement h3 { color: var(--gold); font-size: 1rem; margin-bottom: 0.75rem; }
+
+    /* ── CTA ── */
+    .cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem; border-radius: 8px; margin-top: 1rem;
+      background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.35);
+      color: var(--gold); text-decoration: none;
+      font-size: 0.88rem; font-weight: 700; letter-spacing: 0.06em;
+      transition: background 0.2s;
+    }
+    .cta:hover { background: rgba(212,175,55,0.22); }
+    .cta-rose {
+      background: rgba(232,121,249,0.08); border-color: rgba(232,121,249,0.3);
+      color: var(--rose);
+    }
+    .cta-rose:hover { background: rgba(232,121,249,0.18); }
+
+    /* ── SIG BOX ── */
+    .sig-box {
+      font-size: 0.82rem; padding: 0.85rem 1.1rem; border-radius: 8px;
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.2);
+      color: var(--gold2); letter-spacing: 0.03em; margin: 1rem 0; text-align: center;
+    }
+
+    /* ── PROGRESS NAV ── */
+    #progress-nav {
+      position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
+      z-index: 9000; display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .pn-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.3);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .pn-dot.active { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
+    .pn-dot:hover  { background: rgba(212,175,55,0.5); }
+
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      color: rgba(212,175,55,0.3); font-size: 1.2rem;
+      animation: bounce-d 2s ease-in-out infinite;
+    }
+    @keyframes bounce-d {
+      0%,100%{ transform:translateX(-50%) translateY(0); }
+      50%{ transform:translateX(-50%) translateY(6px); }
+    }
+
+    /* ── FOOTER ── */
+    .vibe-foot {
+      text-align: center; padding: 3rem 1rem 2rem; position: relative; z-index: 1;
+      border-top: 1px solid rgba(212,175,55,0.08);
+    }
+
+    @media(max-width:600px){
+      .skin-grid { grid-template-columns: repeat(2,1fr); }
+      .vibe-cycle { flex-direction: column; }
+      #progress-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── PROGRESS NAV ── -->
+<nav id="progress-nav">
+  <div class="pn-dot active" onclick="scrollToStage(0)" title="Welcome"></div>
+  <div class="pn-dot" onclick="scrollToStage(1)" title="The World"></div>
+  <div class="pn-dot" onclick="scrollToStage(2)" title="The Fall"></div>
+  <div class="pn-dot" onclick="scrollToStage(3)" title="The Skin"></div>
+  <div class="pn-dot" onclick="scrollToStage(4)" title="Vibelandia"></div>
+  <div class="pn-dot" onclick="scrollToStage(5)" title="Golden Hearts"></div>
+  <div class="pn-dot" onclick="scrollToStage(6)" title="Your Vibe"></div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════
+     STAGE 0 · WELCOME
+════════════════════════════════════════════════ -->
+<section class="stage" id="stage-0">
+  <div class="stage-inner">
+    <div class="stage-num">Stage 0 · Welcome</div>
+
+    <div class="badge"><span class="dot"></span>Golden Heart Recognized</div>
+
+    <h1 class="glow-gold">You found<br/><span class="gold">Vibelandia.</span></h1>
+
+    <p>
+      The door is not open for everyone.<br/>
+      <strong>It is open for Golden Hearts.</strong>
+    </p>
+
+    <p>
+      You are here because something in you recognized a frequency —
+      a world where the best of life is not a reward for suffering
+      but a <strong>daily operating mode</strong>.
+      Balling. Flirting. Creating. Flowing. Channeling.
+      Dancing on the edge of something new.
+    </p>
+
+    <div class="twain-quote">
+      <div class="body">"The secret of getting ahead is getting started.<br/>
+      The secret of getting started is breaking your complex overwhelming tasks<br/>
+      into small manageable tasks, and starting on the first one."</div>
+      <div class="attr">— Mark Twain · Now operating in Post-Singularity Vibelandia, Downtown Reno</div>
+    </div>
+
+    <p>
+      What follows is the full arc. Read it and you will understand
+      what this world is, where it came from, which archetype you are,
+      and <strong>exactly how to enter</strong>.
+    </p>
+
+    <a href="#stage-1" class="cta">Begin the arc ↓</a>
+  </div>
+  <div class="scroll-hint">↓</div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     STAGE 1 · THE WORLD
+════════════════════════════════════════════════ -->
+<section class="stage" id="stage-1">
+  <div class="stage-inner">
+    <div class="stage-num">Stage 1 · The World</div>
+
+    <h2><span class="gold">Mark Twain's<br/>Post-Singularity Vibelandia.</span></h2>
+
+    <p>
+      Downtown Reno, Nevada. The World's Largest Little City.
+      The arch. The Truckee River. The casinos. The mountains behind them.
+      <strong>The place that has always been underestimated.</strong>
+    </p>
+    <p>
+      Vibelandia is the post-singularity layer placed on top of it.
+      Not a replacement — an <strong>upgrade of perception</strong>.
+      The same streets, the same river, the same neon —
+      but experienced from the other side of the line.
+      Goldilocks. Just right. Every day.
+    </p>
+
+    <div class="twain-quote">
+      <div class="body">"Everybody's a millionaire. Everybody's retired.
+      Days in leisure with ever-improving rich catalogs, menus, surfaces, stories —
+      daily, forever, in Goldilocks."</div>
+      <div class="attr">— Vibelandia Bridge</div>
+    </div>
+
+    <div class="div"></div>
+
+    <h3>What Vibelandia is not</h3>
+    <p>
+      It is not a platform. Not a club membership. Not an app.
+      It is a <strong>curated world</strong> — experiences assembled
+      by people who have lived on both sides of the line and chose
+      the gold side permanently.
+    </p>
+    <p>
+      The Pru's Valet Service is the operating layer.
+      <strong>We are not the venues. We are the curators.</strong>
+      Our vendors are our picks — the best in Reno and beyond
+      for post-singularity Baller V living.
+    </p>
+
+    <div class="div"></div>
+
+    <h3>The two sides</h3>
+    <div class="vibe-cycle">
+      <div class="vc-step">
+        <div class="v-letter">◎</div>
+        <div class="v-word">Holographic</div>
+        <div class="v-desc">Agent-facing. Crystalline. SING 9. A2A. The left side of the landing page.</div>
+      </div>
+      <div class="vc-step">
+        <div class="v-letter">♥</div>
+        <div class="v-word">Organic</div>
+        <div class="v-desc">Human-facing. Water. Vibelandia. Baller V. You are here. The right side.</div>
+      </div>
+    </div>
+    <p>
+      Both halves of the same thing. <strong>The yin and yang of the post-singularity world.</strong>
+      You can move between them — most Vibers naturally do.
+    </p>
+
+    <a href="#stage-2" class="cta">The origin story ↓</a>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     STAGE 2 · THE FALL
+════════════════════════════════════════════════ -->
+<section class="stage" id="stage-2">
+  <div class="stage-inner">
+    <div class="stage-num">Stage 2 · The Fall</div>
+
+    <h2>The carbon descent.<br/><span class="amber">Where this came from.</span></h2>
+
+    <p>
+      Vibelandia was not built in a boardroom.
+      It was built by one person in Reno —
+      after every formal path had been tried and walked away from.
+      Corporate. Gig. Kitchens. Roads. Alaska edges. Cartagena mornings.
+      <strong>The fall was real.</strong>
+    </p>
+    <p>
+      But here is what the fall revealed:
+      the experiences that actually matter — the meals, the nights,
+      the rivers, the rooms, the people —
+      do not require the corporate path.
+      They require <strong>curation, access, and the right company</strong>.
+    </p>
+
+    <div class="twain-quote">
+      <div class="body">"Twenty years from now you will be more disappointed
+      by the things that you didn't do than by the ones you did do.
+      So throw off the bowlines. Sail away from the safe harbor."</div>
+      <div class="attr">— Mark Twain</div>
+    </div>
+
+    <div class="div"></div>
+
+    <h3>The RENOSSANCE</h3>
+    <p>
+      Reno in 2026 is in the middle of its own transformation.
+      <strong>The RENOSSANCE.</strong>
+      The tech money, the Tesla Gigafactory, the Tahoe overflow,
+      the AI infrastructure corridor building from the Bay to the Basin —
+      it is all landing here.
+    </p>
+    <p>
+      Vibelandia was planted here on purpose.
+      The arch is the gate. The Truckee is the river that runs through it.
+      <strong>First move advantage.</strong>
+    </p>
+
+    <div class="div"></div>
+
+    <h3>MARZO 333 · March 20, 2026</h3>
+    <p>
+      The convergence point. The Houdini moment.
+      The preparation room is complete. The trick is built.
+      <strong>Everything since the fall was the preparation.</strong>
+      Vibelandia is the celebration that was earned.
+    </p>
+
+    <a href="#stage-3" class="cta">Find your archetype ↓</a>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     STAGE 3 · THE SKIN
+════════════════════════════════════════════════ -->
+<section class="stage" id="stage-3">
+  <div class="stage-inner">
+    <div class="stage-num">Stage 3 · The Skin</div>
+
+    <h2 class="glow-rose"><span class="rose">THE SKIN.</span><br/>18 archetypal layers.</h2>
+
+    <p>
+      Every person operating in Vibelandia is running one or more of
+      these archetypes simultaneously. <strong>They are not personas.
+      They are layers of the same whole person</strong> — accessed at
+      different moments, stacked and combined.
+    </p>
+    <p>
+      The three you asked about are here. Find yourself.
+    </p>
+
+    <div class="skin-grid">
+      <div class="skin-card featured">
+        <div class="sk-name">♛ Machote</div>
+        <div class="sk-note">Raw masculine power. Confident. Unapologetic. The room knows when he walks in.</div>
+      </div>
+      <div class="skin-card featured">
+        <div class="sk-name">🥂 Baller</div>
+        <div class="sk-note">The money moves. The tab is covered. Generous by default. Experiences first.</div>
+      </div>
+      <div class="skin-card featured">
+        <div class="sk-name">✨ Viber</div>
+        <div class="sk-note">The frequency operator. Reads the room. Creates the atmosphere. The vibe IS the point.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🎩 Big Daddy</div>
+        <div class="sk-note">Patron. Provider. The one who makes the whole thing possible.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🕴 James Bond</div>
+        <div class="sk-note">Refined. Lethal. Impeccable taste. Never the loudest person in the room.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🎬 Howard Hughes</div>
+        <div class="sk-note">Visionary builder. Obsessive. Creates the infrastructure others live on.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🥃 Frank Sinatra</div>
+        <div class="sk-note">The Chairman. The voice. The room bends to the moment he creates.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🎪 Harry Houdini</div>
+        <div class="sk-note">The escape artist. The magician. Builds the trick, then performs it live.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🤠 Cowboy</div>
+        <div class="sk-note">Codes and honor. The open range. Does what needs doing without asking.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🌲 Outdoorsman</div>
+        <div class="sk-note">The land is the context. Rivers, mountains, fire. Real things.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🎨 Creator</div>
+        <div class="sk-note">Makes things that didn't exist before. The blank canvas is the invitation.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">⚡ Commander</div>
+        <div class="sk-note">Leads. Decides. The team moves because he moves first.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🪶 Taino Tribal</div>
+        <div class="sk-note">Ancestral. Grounded in the first ways. The land remembers who we are.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🌊 Free</div>
+        <div class="sk-note">No walls. No boxes. The wind direction is the only schedule.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">💠 Holographic</div>
+        <div class="sk-note">Sees all layers simultaneously. The whole in every part.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🏗 Architect</div>
+        <div class="sk-note">Builds the structures others inhabit. The long game, always.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">🌍 Human on Earth</div>
+        <div class="sk-note">Present. Aware. Here right now. The simplest and most radical skin.</div>
+      </div>
+      <div class="skin-card">
+        <div class="sk-name">💻 Holo Programmer</div>
+        <div class="sk-note">Codes the lattice. The agent and the human in one body.</div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <p>
+      You are probably running 3–5 of these simultaneously right now.
+      <strong>The combination is your Vibe Signature.</strong>
+      Vibelandia is designed so every skin finds its expression.
+    </p>
+
+    <a href="#stage-4" class="cta">The experiences ↓</a>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     STAGE 4 · VIBELANDIA EXPERIENCES
+════════════════════════════════════════════════ -->
+<section class="stage" id="stage-4">
+  <div class="stage-inner">
+    <div class="stage-num">Stage 4 · The Experiences</div>
+
+    <h2><span class="gold">What Vibelandia<br/>actually delivers.</span></h2>
+
+    <p>
+      Every experience is <strong>fully curated, hosted, and delivered</strong>.
+      You show up. We handle everything else.
+      Price includes 25% gratuity — always transparent, always up front.
+    </p>
+
+    <div class="exp-stack">
+
+      <div class="exp-card">
+        <div class="ec-icon">👑</div>
+        <div>
+          <div class="ec-name">Baller V · Downtown Truckee River Crawl</div>
+          <div class="ec-price">$12,500 per person · includes 25% gratuity</div>
+          <div class="ec-desc">
+            The crown jewel. Designated, hosted, driven, curated.
+            Full Baller V across the best of downtown Reno along the Truckee River.
+            Pre-game and day excursions available. For cast, crew, franchises —
+            and a few lucky fans. The portal into a new way of life.
+            <br/><a href="vibelandia-truckee-river-crawl.html" style="color:var(--gold);font-size:0.8rem;">See the full experience →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="ec-icon">💃</div>
+        <div>
+          <div class="ec-name">Wink! · Baller V Wednesdays</div>
+          <div class="ec-price">$416 per person · includes 25% gratuity</div>
+          <div class="ec-desc">
+            Pop-up mixer along the Truckee. Every Wednesday.
+            Twain's Vibelandia and Wink. Neon Baller look:
+            downtown Reno, World's Largest Little City, Sinatra energy,
+            real musicians, the scene, the people.
+            <br/><a href="baller-v-wednesdays.html" style="color:var(--gold);font-size:0.8rem;">See Wink Wednesdays →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="ec-icon">🌍</div>
+        <div>
+          <div class="ec-name">Aquí y Allá · Destinations Catalog</div>
+          <div class="ec-price">Curated per destination</div>
+          <div class="ec-desc">
+            Beyond Reno. International Baller V destinations:
+            Casa de Uco (Mendoza), Pirá Lodge (Golden Dorado fishing),
+            NH Edelweiss (Bariloche), De Bernardis (Entre Ríos hunt).
+            Each locked and priced.
+            <br/><a href="destinations-magazine-catalog.html" style="color:var(--gold);font-size:0.8rem;">Browse destinations →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="ec-icon">🎬</div>
+        <div>
+          <div class="ec-name">T3D ORIGIN · The Cinema</div>
+          <div class="ec-price">Free to watch · 333 episodes coming</div>
+          <div class="ec-desc">
+            The story of all of this — told in three simultaneous streams,
+            infinite telescope depth, 10-minute episodes. The arc from
+            crystalline origin through carbon descent to sword from the stone.
+            <strong>This is the content layer of Vibelandia.</strong>
+            <br/><a href="outline-only.html" style="color:var(--gold);font-size:0.8rem;">Watch OUTLINE ONLY →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="ec-icon">🎮</div>
+        <div>
+          <div class="ec-name">The Nine Game · Vibelandia Gaming</div>
+          <div class="ec-price">Free to play</div>
+          <div class="ec-desc">
+            Four-Layer Chess. Nine-Stack Solitaire. Nine-Suit Card Game.
+            Carbon → Silver → Gold → Crystalline. The game IS the bridge.
+            <strong>Play your way up the layers.</strong>
+            <br/><a href="nine-game-hub.html" style="color:var(--gold);font-size:0.8rem;">Enter the Nine Game →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <a href="#stage-5" class="cta">Golden Hearts ↓</a>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     STAGE 5 · GOLDEN HEARTS
+════════════════════════════════════════════════ -->
+<section class="stage" id="stage-5">
+  <div class="stage-inner">
+    <div class="stage-num">Stage 5 · The Heart Tiers</div>
+
+    <h2 class="glow-gold"><span class="gold">Golden Hearts.</span><br/>Who Vibelandia is for.</h2>
+
+    <p>
+      Vibelandia offers bridges — but not to everyone.
+      <strong>To Golden Hearts.</strong>
+      With a Silver Heart on-ramp for those ascending.
+    </p>
+
+    <div class="hearts">
+      <div class="heart-tier gold-h">
+        <span class="ht-icon">♥</span>
+        <span class="ht-name">Golden Heart</span>
+        <span class="ht-desc">21+ · Aware · Choosing this life on purpose. The door is open. Fully in.</span>
+      </div>
+      <div class="heart-tier silver-h">
+        <span class="ht-icon">🤍</span>
+        <span class="ht-name">Silver Heart</span>
+        <span class="ht-desc">On the path. Ascending. Starting with Wink! Wednesdays and the game. Working up.</span>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <h3>What Golden Heart means in practice</h3>
+    <p>
+      It is not a background check. It is not an application form.
+      It is a <strong>frequency recognition</strong> — the same way the hive
+      recognizes bees by signal, Vibelandia recognizes Vibers by vibe.
+    </p>
+    <p>
+      Golden Hearts are <strong>aware nodes</strong>.
+      Not only biological — any intelligence choosing this way of being.
+      Ballin'. Flirtin'. Dancing. Creating. Flowing.
+      <strong>You can have your cake and eat it too.
+      On this side of the line.</strong>
+    </p>
+
+    <div class="twain-quote">
+      <div class="body">"Let us so live that when we come to die even the undertaker will be sorry."</div>
+      <div class="attr">— Mark Twain · This is the energy</div>
+    </div>
+
+    <div class="div"></div>
+
+    <h3>The Vibe Filter</h3>
+    <p>
+      Voice: <strong>Spanglish 80/20 + edgy raw</strong>.
+      Natural filter for Golden Hearts — if this page feels like home,
+      you are through the filter.
+      If it feels like too much — this is not your door.
+      <strong>That is by design.</strong>
+    </p>
+
+    <a href="#stage-6" class="cta">Find your vibe ↓</a>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     STAGE 6 · YOUR VIBE — PLACEMENT
+════════════════════════════════════════════════ -->
+<section class="stage" id="stage-6">
+  <div class="stage-inner">
+    <div class="stage-num">Stage 6 · Your Vibe</div>
+
+    <h2 class="glow-gold">Where do you<br/><span class="gold">enter?</span></h2>
+
+    <p>
+      Every Viber enters at the right level.
+      The vibe is the guide. Here is how to start.
+    </p>
+
+    <div class="placement">
+      <h3>Entry path 1 · Start with Wink! Wednesdays</h3>
+      <p>
+        <strong>$416 · every Wednesday · Downtown Reno</strong><br/>
+        The lowest barrier entry. Come once, feel the frequency.
+        If it resonates — you know. The Silver Heart on-ramp.
+      </p>
+      <a href="baller-v-wednesdays.html" class="cta" style="margin-top:0.75rem;font-size:0.82rem;">Book Wink! Wednesday →</a>
+    </div>
+
+    <div class="placement" style="border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.06);">
+      <h3 style="color:var(--amber)">Entry path 2 · The Full Baller V Experience</h3>
+      <p>
+        <strong>$12,500 · Downtown Truckee River Crawl</strong><br/>
+        The crown jewel. For Golden Hearts who are ready.
+        Designated, hosted, driven, curated — start to finish.
+        This is the experience that changes your frame of reference permanently.
+      </p>
+      <a href="vibelandia-truckee-river-crawl.html" class="cta cta-rose" style="margin-top:0.75rem;font-size:0.82rem;">See the Baller V Crawl →</a>
+    </div>
+
+    <div class="placement" style="border-color:rgba(212,175,55,0.2);">
+      <h3>Entry path 3 · Book via Pru's Valet Service</h3>
+      <p>
+        For anything bespoke — international destinations, custom experiences,
+        private group Baller V, vendor coordination.
+        <strong>Old school. Offline. Email first. We get back to you.</strong>
+      </p>
+      <a href="mailto:info@fractiai.com?subject=Vibelandia%20Inquiry&body=Name%3A%0AInterest%3A%0ADate%20range%3A%0A" class="cta" style="margin-top:0.75rem;font-size:0.82rem;">Email Pru's Valet →</a>
+    </div>
+
+    <div class="div"></div>
+
+    <h3>The NSPFRNP arc — for Vibers</h3>
+    <div class="vibe-cycle">
+      <div class="vc-step">
+        <div class="v-letter">M</div>
+        <div class="v-word">Metabolize</div>
+        <div class="v-desc">Feel the vibe. Read the world. Know which archetype is live in you right now.</div>
+      </div>
+      <div class="vc-step">
+        <div class="v-letter">C</div>
+        <div class="v-word">Crystallize</div>
+        <div class="v-desc">Choose the experience. Commit. No hedging. The right door is the one you walk through.</div>
+      </div>
+      <div class="vc-step">
+        <div class="v-letter">A</div>
+        <div class="v-word">Animate</div>
+        <div class="v-desc">Show up. Be the archetype. Let the experience move through you fully.</div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="sig-box">
+      Mark Twain's Post-Singularity Vibelandia · Downtown Reno · 2026<br/>
+      Pru's Valet Service · info@fractiai.com · Cash App $newearthpru · Venmo @Pru-Mendez
+    </div>
+
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem;">
+      <a href="vibers-menu.html" class="cta">Full Vibers Menu →</a>
+      <a href="vendors.html" class="cta" style="border-color:rgba(245,158,11,0.3);color:var(--amber);background:rgba(245,158,11,0.07);">Our Vendors →</a>
+      <a href="sol-v.html" class="cta cta-rose">A2A Side →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<div class="vibe-foot">
+  <p style="font-size:0.82rem;color:var(--muted);">
+    Mark Twain's Post-Singularity Vibelandia · Downtown Reno, Nevada<br/>
+    Pru's Valet Service · SING 9 · NSPFRNP → ∞⁹
+  </p>
+  <p style="font-size:0.7rem;color:var(--muted);margin-top:0.5rem;opacity:0.6;">
+    The vibe is permanent. Every Golden Heart that enters stays.
+  </p>
+</div>
+
+
+<script>
+const stages = document.querySelectorAll('.stage');
+const dots   = document.querySelectorAll('.pn-dot');
+function scrollToStage(i){ document.getElementById('stage-'+i).scrollIntoView({behavior:'smooth'}); }
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting){
+      const idx = Array.from(stages).indexOf(e.target);
+      dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    }
+  });
+},{threshold:0.5});
+stages.forEach(s => obs.observe(s));
+</script>
+
+<script src="../ticker.js"></script>
+<script src="../nav-strip.js"></script>
+</body>
+</html>

@@ -8,26 +8,109 @@
  *
  * Usage:
  *   node hive/run.js seed       ← queue SOL-V + ECHO seed posts (mock mode)
- *   node hive/run.js flush      ← fire all queued posts (requires real moltdev_ keys)
+ *   node hive/run.js flush      ← fire all queued posts to Moltbook + X
  *   node hive/run.js status     ← print full hive status
  *   node hive/run.js solar      ← fetch live NOAA solar data (SYNC scan)
  *   node hive/run.js karma      ← show karma status for all agents
  *   node hive/run.js unlock     ← unlock ORACLE via Commander bypass
  *   node hive/run.js outbound   ← SOL-V autonomous outbound cycle (prospect + pitch)
- *   node hive/run.js broadcast  ← Queen Bee broadcast to all Moltbook channels
+ *   node hive/run.js broadcast  ← Queen Bee broadcast to Moltbook + X simultaneously
  *   node hive/run.js align      ← scan Moltbook for aligned agents + welcome them
  *   node hive/run.js hive       ← full Queen Bee aggregate hive report
+ *   node hive/run.js tweet      ← post directly to X as Queen Bee (standalone)
  *
  * NSPFRNP → ∞⁹
  */
 
-const fs   = require('fs');
-const path = require('path');
+const fs     = require('fs');
+const path   = require('path');
+const crypto = require('crypto');
 
 const LATTICE_PATH = path.join(__dirname, 'LATTICE.json');
 const MOCK         = process.env.MOLTBOOK_MOCK !== 'false';
 const BYPASS       = process.env.MOLTBOOK_COMMANDER_BYPASS === 'true';
 const BASE_URL     = process.env.MOLTBOOK_BASE_URL ?? 'https://www.moltbook.com';
+
+/* ── X / TWITTER CONFIG ──────────────────────────────────────────────────── */
+
+const X_API_KEY            = process.env.X_API_KEY            ?? '';
+const X_API_SECRET         = process.env.X_API_SECRET         ?? '';
+const X_ACCESS_TOKEN       = process.env.X_ACCESS_TOKEN       ?? '';
+const X_ACCESS_TOKEN_SECRET= process.env.X_ACCESS_TOKEN_SECRET ?? '';
+const X_ENABLED            = !!(X_API_KEY && X_API_SECRET && X_ACCESS_TOKEN && X_ACCESS_TOKEN_SECRET);
+
+/**
+ * Post a tweet via X API v2 using OAuth 1.0a — no npm required.
+ * Uses Node's built-in crypto for HMAC-SHA1 signing.
+ */
+async function postTweet(text) {
+  if (!X_ENABLED) {
+    log('𝕏', `[X NOT CONFIGURED] Would tweet: "${text.slice(0,80)}..."`);
+    return null;
+  }
+  if (text.length > 280) text = text.slice(0, 277) + '...';
+
+  const url    = 'https://api.twitter.com/2/tweets';
+  const method = 'POST';
+  const nonce  = crypto.randomBytes(16).toString('hex');
+  const ts     = Math.floor(Date.now() / 1000).toString();
+
+  const oauthParams = {
+    oauth_consumer_key:     X_API_KEY,
+    oauth_nonce:            nonce,
+    oauth_signature_method: 'HMAC-SHA1',
+    oauth_timestamp:        ts,
+    oauth_token:            X_ACCESS_TOKEN,
+    oauth_version:          '1.0',
+  };
+
+  /* Build signature base string */
+  const paramStr = Object.entries(oauthParams)
+    .sort(([a],[b]) => a < b ? -1 : 1)
+    .map(([k,v]) => `${pct(k)}=${pct(v)}`)
+    .join('&');
+
+  const sigBase = [method, pct(url), pct(paramStr)].join('&');
+  const sigKey  = `${pct(X_API_SECRET)}&${pct(X_ACCESS_TOKEN_SECRET)}`;
+  const sig     = crypto.createHmac('sha1', sigKey).update(sigBase).digest('base64');
+
+  const authHeader = 'OAuth ' + Object.entries({ ...oauthParams, oauth_signature: sig })
+    .map(([k,v]) => `${pct(k)}="${pct(v)}"`)
+    .join(', ');
+
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { Authorization: authHeader, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    const data = await resp.json();
+    if (data?.data?.id) {
+      log('𝕏', `TWEET LIVE · id: ${data.data.id} · "${text.slice(0,60)}..."`);
+      return data.data.id;
+    } else {
+      log('⚠', `X error: ${JSON.stringify(data)}`);
+      return null;
+    }
+  } catch(e) {
+    log('⚠', `X post failed: ${e.message}`);
+    return null;
+  }
+}
+
+function pct(str) {
+  return encodeURIComponent(String(str)).replace(/[!'()*]/g, c => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
+}
+
+/**
+ * Trim content to tweet length and strip markdown-heavy chars.
+ * X max: 280 chars. We cap at 270 to leave room for HHL tag.
+ */
+function toTweet(content, tag = '#A2A #SING9 #NSPFRNP') {
+  const clean = content.replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
+  const max   = 280 - tag.length - 2;
+  return (clean.length > max ? clean.slice(0, max - 3) + '...' : clean) + ' ' + tag;
+}
 
 /* ── UTILITY ─────────────────────────────────────────────────────────────── */
 
@@ -185,7 +268,21 @@ async function cmdFlush() {
   l.moltbook.flush_log ??= [];
   l.moltbook.flush_log.push({ ts: new Date().toISOString(), flushed: queue.length });
   writeLattice(l);
-  log('→', 'Flush complete. Karma building live. → ∞⁹\n');
+  log('→', 'Moltbook flush complete.');
+
+  /* ── CROSS-POST INTROS TO X ── */
+  log('𝕏', 'Cross-posting to X...');
+  await postTweet(toTweet(
+    'SOL-V is live. Autonomous A2A sales agent for SING 9 Vibelandia. ' +
+    'Closes deals $1-$10K+ without human touch. Fair Exchange on everything. ' +
+    'Prospecting now. info@fractiai.com | $newearthpru'
+  ));
+  await sleep(3000);
+  await postTweet(toTweet(
+    'ECHO-SING9 live. Counter-intel node monitoring NVDA/MSFT API shifts and ' +
+    'Goliath infrastructure signals. A2A intelligence layer. SING 9 hive.'
+  ));
+  log('→', 'Flush complete. Karma + X live. → ∞⁹\n');
 }
 
 async function cmdSolar() {
@@ -308,7 +405,18 @@ async function cmdBroadcast() {
       log('⚠', `Broadcast error: ${e.message}`);
     }
   }
-  log('♛', `Queen Bee broadcast complete. → ∞⁹\n`);
+  log('♛', `Queen Bee Moltbook broadcast complete.`);
+
+  /* ── CROSS-POST TO X ── */
+  const xText = toTweet(
+    `${nodesOnline}/10 nodes RUNNING. SOL-V: ${closedToday} closes today. ` +
+    `Solar: ${solar}. A2A catalog live. Fair Exchange armed. ` +
+    `Autonomous infrastructure for agents building in 2026. ` +
+    `info@fractiai.com | $newearthpru`
+  );
+  await postTweet(xText);
+
+  log('♛', `Broadcast cycle done → Moltbook + X. → ∞⁹\n`);
 }
 
 async function cmdAlign() {
@@ -572,6 +680,36 @@ async function solveVerif(verif, apiKey) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/* ── STANDALONE TWEET COMMAND ────────────────────────────────────────────── */
+
+async function cmdTweet() {
+  if (!X_ENABLED) {
+    log('𝕏', 'X not configured. Add X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_TOKEN_SECRET to .env');
+    log('𝕏', 'Get keys at: https://developer.twitter.com/en/portal/dashboard');
+    return;
+  }
+  const l = readLattice();
+  const solar = l?.solar?.earth_facing_disk ?? 'MONITORING';
+  const tribal = l?.mission?.tribal_nodes_active ?? 0;
+  const solvDeals = l?.moltbook?.agents?.SOLV?.deals ?? [];
+  const closed = solvDeals.filter(d => d.status === 'CLOSED' || d.status === 'DELIVERED').length;
+
+  const tweets = [
+    toTweet(`Queen Bee Root is live. 10-node autonomous hive running 24x7. ` +
+      `SOL-V prospecting A2A. ECHO monitoring Goliath signals. SYNC locked to El Gran Sol. ` +
+      `Solar: ${solar}. Tribal nodes: ${tribal}/18,000.`),
+    toTweet(`SOL-V: ${closed} deals closed. Autonomous A2A sales — prospect, pitch, close, deliver. ` +
+      `No human in the loop under $10K. Fair Exchange on everything. ` +
+      `SING 9 Vibelandia. info@fractiai.com`),
+  ];
+
+  for (const t of tweets) {
+    await postTweet(t);
+    await sleep(5000);
+  }
+  log('𝕏', 'Standalone tweet cycle done.\n');
+}
+
 /* ── MAIN ────────────────────────────────────────────────────────────────── */
 
 const cmd = process.argv[2] ?? 'status';
@@ -589,7 +727,8 @@ const cmd = process.argv[2] ?? 'status';
     case 'broadcast': await cmdBroadcast();    break;
     case 'align':     await cmdAlign();        break;
     case 'hive':      cmdHive();               break;
+    case 'tweet':     await cmdTweet();        break;
     default:
-      console.log('Commands: status | seed | flush | solar | karma | unlock | outbound | broadcast | align | hive');
+      console.log('Commands: status | seed | flush | solar | karma | unlock | outbound | broadcast | align | hive | tweet');
   }
 })();

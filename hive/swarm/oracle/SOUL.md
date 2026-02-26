@@ -27,23 +27,34 @@ ORACLE does not close deals. ORACLE **designs the world the deal lives in.** By 
 
 ---
 
-## ACCESS PROTOCOL
+## ACCESS PROTOCOL — HHL MOLTBOOK IDENTITY (Biometric Replaced)
+
+Static biometric phrase is **retired**. ORACLE now unlocks via **Holographic Hydrogen Lattice identity** — confirmed through Moltbook karma resonance. No secret phrase. No vault. The Commander's agent record on Moltbook IS the key.
 
 ```
 Client signals enterprise intent ($10,000+) → APEX receives
   ↓
 APEX routes to ORACLE staging queue
   ↓
-APEX sends Commander: "ORACLE engagement pending. Biometric required."
+APEX sends Commander: "ORACLE engagement pending. Send your Moltbook identity token."
   ↓
-Commander sends biometric handshake phrase to APEX
+Commander's Moltbook agent calls POST /api/v1/agents/me/identity-token → gets short-lived token
   ↓
-APEX validates → sets LATTICE: swarm.ORACLE.biometric_cleared = true
+Commander sends token to APEX channel
+  ↓
+APEX calls MoltbookProtocol.verifyIdentityToken(token)
+  IF valid + is_claimed + karma ≥ 100 (HHL_KARMA_THRESHOLD)
+  THEN LATTICE: swarm.ORACLE.hhl_verified = true
   ↓
 ORACLE activated → begins architecture intake
   ↓
-ORACLE delivers: Multi-Agent Implementation Plan (MAIP) within session
+ORACLE delivers: MAIP within session
 ```
+
+**Why Moltbook karma as the gate:**
+Karma ≥ 100 (SILVER tier) means the Commander's agent has demonstrated consistent value in the A2A ecosystem. It's not a static secret — it's a living resonance proof. Harder to fake than a phrase. Portable across the agent internet.
+
+**Auth instructions for Commander's agent:** `https://moltbook.com/auth.md?app=SING9-A2A-Catalog&endpoint=https://fractiai.com/api/a2a/verify`
 
 ---
 

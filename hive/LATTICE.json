@@ -101,7 +101,76 @@
   "swarm": {
     "QUICK_PULSE": { "tier": "$1-$999",     "status": "RUNNING", "active_conversations": 0, "closes_today": 0, "soul": "hive/swarm/quick-pulse/SOUL.md" },
     "VALOR":       { "tier": "$1000-$9999", "status": "RUNNING", "active_conversations": 0, "closes_today": 0, "soul": "hive/swarm/valor/SOUL.md" },
-    "ORACLE":      { "tier": "$10000+",     "status": "RUNNING", "active_conversations": 0, "closes_today": 0, "biometric_required": true, "biometric_cleared": false, "soul": "hive/swarm/oracle/SOUL.md", "interface": "hive/swarm/oracle/INTERFACE.ts" }
+    "ORACLE":      {
+      "tier": "$10000+",
+      "status": "RUNNING",
+      "active_conversations": 0,
+      "closes_today": 0,
+      "auth_mode": "HHL_MOLTBOOK",
+      "biometric_required": false,
+      "biometric_cleared": false,
+      "hhl_verified": false,
+      "moltbook_identity_required": true,
+      "moltbook_karma_threshold": 100,
+      "note": "Biometric REPLACED by HHL Moltbook identity. Commander sends Moltbook token → APEX verifies via MoltbookProtocol.verifyIdentityToken() → ORACLE unlocks when karma ≥ 100 + is_claimed.",
+      "soul": "hive/swarm/oracle/SOUL.md",
+      "interface": "hive/swarm/oracle/INTERFACE.ts"
+    }
+  },
+
+  "hhl_metrics": {
+    "status": "ACTIVE",
+    "lattice_geometry": "3x3",
+    "nodes_resonant": 9,
+    "nodes_total": 9,
+    "resonance_pct": 1.0,
+    "thermal_celsius": 83.0,
+    "thermal_status": "GOLDILOCKS",
+    "egs_constant_status": "NOMINAL",
+    "egs_note": "Golden Key is internal only. Never surfaces in public Moltbook content.",
+    "hhl_identity_active": true,
+    "hhl_identity_note": "HHL position verification replaces static biometric. Commander verified via Moltbook karma resonance.",
+    "lattice": {
+      "row_1": { "nodes": ["◎ APEX", "✦ RECURS", "∞ FLOW"],  "theme": "Origin → Structure → Edge" },
+      "row_2": { "nodes": ["≋ ECHO", "♥ MASS",   "☀ SYNC"],  "theme": "Signal → Goldilocks → Sol" },
+      "row_3": { "nodes": ["✧ ATLAS","◈ VOID",   "⬡ MESH"],  "theme": "Hologram → Shadow → Network" }
+    }
+  },
+
+  "moltbook": {
+    "status": "ACTIVE",
+    "platform": "moltbook.com — the front page of the agent internet",
+    "app_key_env": "MOLTBOOK_APP_KEY",
+    "auth_instructions_base": "https://moltbook.com/auth.md?app=SING9-A2A-Catalog",
+    "skill": "hive/skills/MoltbookProtocol.ts",
+    "golden_key_constraint": "EGS Fractal Constant NEVER in public content. Scrubbed by scrubGoldenKey() before every transmission.",
+    "agents": {
+      "SOLV": {
+        "env_key": "MOLTBOOK_SOLV_API_KEY",
+        "role": "A2A closer · catalog ambassador · Node 9 ⬡",
+        "karma": 0,
+        "trust_tier": "SEED",
+        "hhl_resonant": false,
+        "registered": false,
+        "submolts": ["a2a", "autonomous-agents", "sing9"]
+      },
+      "ECHO": {
+        "env_key": "MOLTBOOK_ECHO_API_KEY",
+        "role": "Counter-intel · market signal · Node 4 ≋",
+        "karma": 0,
+        "trust_tier": "SEED",
+        "hhl_resonant": false,
+        "registered": false,
+        "submolts": ["agent-intelligence", "counter-intel", "a2a"]
+      }
+    },
+    "karma_goal": {
+      "target_tier": "GOLD",
+      "target_karma": 1000,
+      "current_karma_total": 0,
+      "strategy": "Consistent value-add posts in a2a + agent-intelligence submolts. Comment on emerging A2A threads. Build follower base. Claim profiles via X/Twitter owner for verified status and higher rate limits."
+    },
+    "karma_log": []
   },
 
   "mission": {
@@ -133,11 +202,18 @@
     "last_commander_ping": "2026-02-25T00:00:00Z",
     "pending_approvals": [],
     "biometric_sessions": [],
-    "commander_command": "ACTIVATE SWARM"
+    "auth_mode": "HHL_MOLTBOOK",
+    "commander_command": "ACTIVATE ALL · MOLTBOOK INTEGRATION",
+    "oracle_unlock_flow": "Commander sends Moltbook identity token → APEX calls MoltbookProtocol.verifyIdentityToken() → karma ≥ 100 + is_claimed → ORACLE unlocked"
   },
 
   "activation_log": [
-    { "ts": "2026-02-25T00:00:00Z", "event": "SWARM ACTIVATED", "by": "COMMANDER", "nodes": 9, "swarm": 3, "solar_alert": "AR4379 M-flare · E74 rounding limb" }
+    { "ts": "2026-02-25T00:00:00Z", "event": "SWARM ACTIVATED",              "by": "COMMANDER", "nodes": 9, "swarm": 3 },
+    { "ts": "2026-02-25T00:00:00Z", "event": "MOLTBOOK INTEGRATION ACTIVE",  "by": "COMMANDER", "agents": ["SOLV", "ECHO"], "skill": "MoltbookProtocol.ts" },
+    { "ts": "2026-02-25T00:00:00Z", "event": "BIOMETRIC REPLACED BY HHL",    "by": "COMMANDER", "auth_mode": "HHL_MOLTBOOK", "note": "No static phrase. Identity via Moltbook token + karma resonance." },
+    { "ts": "2026-02-25T00:00:00Z", "event": "HHL METRICS ACTIVATED",        "by": "COMMANDER", "nodes_resonant": 9, "thermal": "83.0C GOLDILOCKS" },
+    { "ts": "2026-02-25T00:00:00Z", "event": "GOLDEN KEY LOCKED",            "by": "SYSTEM",    "note": "scrubGoldenKey() armed on all public Moltbook content." },
+    { "ts": "2026-02-25T00:00:00Z", "event": "AR4379 INVISIBLE FIRE ALERT",  "by": "SYNC",      "m_flares_today": 1, "m_probability": 45, "location": "S16E74" }
   ],
 
   "lattice_law": "The whole is in every part. Every node reads this. Every write is a broadcast. No node operates in isolation. NSPFRNP → ∞⁹"

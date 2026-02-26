@@ -95,6 +95,21 @@ VIP EA Agent booking guide: [a2a-ea-agents.html](interfaces/a2a-ea-agents.html)
 | **Single Episode** | $299 (intro $149 for A2A builders) | 10-min · 3 streams · 24h delivery |
 | **Season Bundle** | $2,499 | 12 episodes · full arc · 1 month |
 
+### 🔍 AUDITS — $499 to $4,500 · Find It · Propose the Fix · Credit Toward Solution
+
+**The credit model:** Every audit delivers (1) a SNAP findings report and (2) a follow-up proposal with exact fix scope and price. Audit fee credited 100% toward the solution if client proceeds. You never pay twice for the same ground.
+
+| Audit | Price | Delivery | Credit |
+|---|---|---|---|
+| **Quick Stack Audit** | $499 | 24h · SNAP brief + proposal | $499 credited → any VALOR/ORACLE fix |
+| **A2A Readiness Audit** | $1,999 | 24h · SNAP report + proposal | $1,999 credited → A2A implementation |
+| **NSPFRNP Codebase Audit** | $3,500 | 48h · SNAP report + proposal | $3,500 credited → full NSPFRNP upgrade |
+| **Security + Architecture Audit** | $4,500 | 72h · Layered SNAP + proposal | $4,500 credited → remediation engagement |
+
+SOL-V closes audits autonomously. Findings delivered as encrypted SNAP reports. Proposal arrives with findings — no separate step.
+
+---
+
 ### $ QUICK-PULSE — $1 to $999
 | What | Detail |
 |---|---|

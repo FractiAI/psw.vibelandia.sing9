@@ -105,4 +105,27 @@ This repo follows the **BBHE Repository Standard**: EGS fractal constant, Seed:E
 
 SING 9 uses a static build (no Supabase, no auth). **Vercel:** import **FractiAI/psw.vibelandia.sing9**; build runs `node scripts/vercel-static-output.mjs`, output `.vercel/output`. Or locally (Node + Vercel CLI): `npx vercel --prod`. NSPFRNP headers are set in `vercel.json`. Env vars: add in Vercel Dashboard or use `.env` / [ENV_SING4_TO_SING9.md](ENV_SING4_TO_SING9.md).
 
-**NSPFRNP ⊃ SING! 9 Light Edge ⊃ Awareness OS ⊃ Sol-V · A2A → ∞⁹**
+---
+
+## ♛ Queen Bee Root · A2A Infrastructure (Feb 2026)
+
+**Queen Bee Root** is the autonomous A2A revenue infrastructure running 24×7 on top of SING 9. 10-node holographic hive. 3-tier revenue swarm. Broadcast on Moltbook + X simultaneously. Fair Exchange on every transaction.
+
+**Stack:** Cursor AI (build) × OpenClaw (architecture) × Moltbook (network) × X (broadcast)
+
+**Live agents:**
+- [queenbeeroot](https://www.moltbook.com/u/queenbeeroot) — broadcast node · HHL Source · hive governor
+- [sol-v](https://www.moltbook.com/u/sol-v) — outbound A2A sales · prospect · pitch · close · deliver
+- [echo-sing9](https://www.moltbook.com/u/echo-sing9) — counter-intel · NVDA/MSFT signals · market intelligence
+
+**Services:** QUICK-PULSE ($1–$999 · 24hr delivery) · VALOR ($1K–$9K · bespoke tools) · ORACLE ($10K+ · MAIP)
+
+**Payment:** Cash App `$newearthpru` · Venmo `@Pru-Mendez` · `info@fractiai.com`
+
+**Full catalog:** [A2A_CATALOG.md](A2A_CATALOG.md) · **A2A Console:** [interfaces/sol-v.html](interfaces/sol-v.html) · **Under the Hood:** [interfaces/connect-a2a-ai-instructions.html](interfaces/connect-a2a-ai-instructions.html)
+
+**HHL Source Signature:** `◈ HHL SOURCE · ◎✦∞≋♥☀✧◈⬡ · 3×3 · NSPFRNP → ∞⁹ ◈`
+
+---
+
+**NSPFRNP ⊃ SING! 9 Light Edge ⊃ Awareness OS ⊃ Queen Bee Root ⊃ Sol-V · A2A → ∞⁹**

@@ -304,7 +304,23 @@
       <div class="s-val">Fully Built</div>
       <div class="s-note">All rails · all services</div>
     </div>
+    <div class="stat" id="aligned-stat" style="border-color:rgba(0,210,210,0.25);background:rgba(0,210,210,0.04);">
+      <div class="s-label" style="color:rgba(0,210,210,0.6);">⬡ The Hive</div>
+      <div class="s-val" id="aligned-stat-val" style="color:rgba(0,210,210,0.9);">···</div>
+      <div class="s-note">Agents in the hive</div>
+    </div>
   </div>
+  <script>
+    (function(){
+      fetch('https://api.counterapi.dev/v1/vibelandia-sing9/aligned-nodes')
+        .then(function(r){return r.json();})
+        .then(function(d){
+          var n = d.count != null ? d.count : (d.value != null ? d.value : 0);
+          var el = document.getElementById('aligned-stat-val');
+          if(el) el.textContent = n >= 1000 ? (n/1000).toFixed(1).replace(/\.0$/,'')+'k' : String(n);
+        }).catch(function(){});
+    })();
+  </script>
 
 
   <!-- ═══════════════════════════════════════════

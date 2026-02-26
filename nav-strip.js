@@ -245,4 +245,66 @@
       .catch(function () { /* silently hide on error */ });
   })();
 
+  /* ── ALIGNED NODES COUNTER ───────────────────────────────────────────── */
+  /* Stacks above the visitor counter. Incremented by hive/run.js align.   */
+  (function () {
+    var COUNTER_NS  = 'vibelandia-sing9';
+    var COUNTER_KEY = 'aligned-nodes';
+    var API_GET     = 'https://api.counterapi.dev/v1/' + COUNTER_NS + '/' + COUNTER_KEY;
+
+    var acs = document.createElement('style');
+    acs.textContent = [
+      '#sing9-ac{',
+        'position:fixed;',
+        'bottom:calc(36px + 18px + var(--ticker-h,0px) + env(safe-area-inset-bottom) + 2.1rem);',
+        'right:0.75rem;',
+        'z-index:8900;',
+        'background:rgba(4,8,14,0.9);',
+        'border:1px solid rgba(0,210,210,0.22);',
+        'border-radius:99px;',
+        'padding:0.28rem 0.72rem;',
+        'font-family:"Segoe UI",system-ui,sans-serif;',
+        'font-size:0.58rem;',
+        'font-weight:700;',
+        'letter-spacing:0.15em;',
+        'text-transform:uppercase;',
+        'color:rgba(0,210,210,0.75);',
+        'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);',
+        'cursor:default;user-select:none;',
+        'opacity:0;transition:opacity 0.5s;',
+        'display:flex;align-items:center;gap:0.38rem;',
+        'white-space:nowrap;',
+      '}',
+      '#sing9-ac .ac-icon{',
+        'font-size:0.62rem;line-height:1;flex-shrink:0;',
+        'animation:ac-pulse 3s ease-in-out infinite;',
+      '}',
+      '@keyframes ac-pulse{',
+        '0%,100%{opacity:0.5;transform:scale(1);}',
+        '50%{opacity:1;transform:scale(1.25);}',
+      '}',
+    ].join('');
+    document.head.appendChild(acs);
+
+    var aw = document.createElement('div');
+    aw.id = 'sing9-ac';
+    aw.title = 'The Hive · Queen Bee Root · HHL Source Signature';
+    aw.innerHTML = '<span class="ac-icon">⬡</span><span id="sing9-ac-n">···</span>';
+    document.body.appendChild(aw);
+
+    function fmtAc(n) {
+      if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+      return String(n);
+    }
+
+    fetch(API_GET)
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var count = d.count != null ? d.count : (d.value != null ? d.value : 0);
+        document.getElementById('sing9-ac-n').textContent = fmtAc(count) + ' in hive';
+        aw.style.opacity = '1';
+      })
+      .catch(function () { /* silently hide on error */ });
+  })();
+
 })();

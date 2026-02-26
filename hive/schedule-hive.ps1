@@ -1,12 +1,21 @@
-# QUEEN BEE ROOT · 24x7 Task Scheduler Setup
+# QUEEN BEE ROOT - 24x7 Task Scheduler Setup
 # Run this ONCE as Administrator to schedule the hive heartbeat.
 # Every 30 minutes: broadcast + outbound + align
-# NSPFRNP → ∞⁹
+# NSPFRNP -> infinity 9
 #
-# Usage: Right-click this file → Run with PowerShell (as Administrator)
+# Usage: Right-click this file -> Run with PowerShell (as Administrator)
 
 $hiveDir  = Split-Path -Parent $PSScriptRoot
-$nodeExe  = "node"   # assumes node is in PATH after install
+
+# Resolve node.exe - use full path if not yet in PATH
+if (Get-Command node -ErrorAction SilentlyContinue) {
+  $nodeExe = "node"
+} elseif (Test-Path "$env:ProgramFiles\nodejs\node.exe") {
+  $nodeExe = "$env:ProgramFiles\nodejs\node.exe"
+} else {
+  $nodeExe = "node"
+}
+
 $runScript = Join-Path $PSScriptRoot "run.js"
 
 # Load .env into environment for the scheduled task
@@ -17,10 +26,10 @@ if (Test-Path $envFile) {
       [System.Environment]::SetEnvironmentVariable($matches[1].Trim(), $matches[2].Trim(), 'Machine')
     }
   }
-  Write-Host "✓ .env loaded into machine environment variables"
+  Write-Host "OK .env loaded into machine environment variables"
 }
 
-# ── Task 1: BROADCAST + OUTBOUND + ALIGN every 30 minutes ────────────────────
+# -- Task 1: BROADCAST every 30 minutes --
 
 $action = New-ScheduledTaskAction `
   -Execute $nodeExe `
@@ -52,7 +61,7 @@ Register-ScheduledTask `
   -Settings $settings `
   -RunLevel Highest `
   -Force
-Write-Host "✓ Broadcast task scheduled (every 30 min)"
+Write-Host "OK Broadcast task scheduled (every 30 min)"
 
 Register-ScheduledTask `
   -TaskName "QueenBeeRoot-Outbound" `
@@ -61,7 +70,7 @@ Register-ScheduledTask `
   -Settings $settings `
   -RunLevel Highest `
   -Force
-Write-Host "✓ Outbound task scheduled (every 30 min)"
+Write-Host "OK Outbound task scheduled (every 30 min)"
 
 Register-ScheduledTask `
   -TaskName "QueenBeeRoot-Align" `
@@ -70,9 +79,9 @@ Register-ScheduledTask `
   -Settings $settings `
   -RunLevel Highest `
   -Force
-Write-Host "✓ Align task scheduled (every 30 min)"
+Write-Host "OK Align task scheduled (every 30 min)"
 
-# ── Task 2: SOLAR scan every 15 minutes ──────────────────────────────────────
+# -- Task 2: SOLAR scan every 15 minutes --
 
 $solarAction = New-ScheduledTaskAction `
   -Execute $nodeExe `
@@ -88,9 +97,9 @@ Register-ScheduledTask `
   -Settings $settings `
   -RunLevel Highest `
   -Force
-Write-Host "✓ Solar scan scheduled (every 15 min)"
+Write-Host "OK Solar scan scheduled (every 15 min)"
 
-# ── Task 3: HIVE STATUS log every morning at 7am ─────────────────────────────
+# -- Task 3: HIVE STATUS log every morning at 7am --
 
 $morningAction = New-ScheduledTaskAction `
   -Execute $nodeExe `
@@ -106,13 +115,13 @@ Register-ScheduledTask `
   -Settings $settings `
   -RunLevel Highest `
   -Force
-Write-Host "✓ Morning brief scheduled (daily 7am)"
+Write-Host "OK Morning brief scheduled (daily 7am)"
 
 Write-Host ""
-Write-Host "╔══════════════════════════════════════════════════════╗"
-Write-Host "║  QUEEN BEE ROOT — 24x7 HIVE ACTIVATED               ║"
-Write-Host "║  Broadcast + Outbound + Align → every 30 min        ║"
-Write-Host "║  Solar scan → every 15 min                          ║"
-Write-Host "║  Morning brief → daily 7am                          ║"
-Write-Host "║  NSPFRNP → infinity 9                               ║"
-Write-Host "╚══════════════════════════════════════════════════════╝"
+Write-Host "======================================================"
+Write-Host "  QUEEN BEE ROOT -- 24x7 HIVE ACTIVATED"
+Write-Host "  Broadcast + Outbound + Align -> every 30 min"
+Write-Host "  Solar scan -> every 15 min"
+Write-Host "  Morning brief -> daily 7am"
+Write-Host "  NSPFRNP -> infinity 9"
+Write-Host "======================================================"

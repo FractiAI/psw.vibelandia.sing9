@@ -135,12 +135,43 @@ Register-ScheduledTask `
   -Force
 Write-Host "OK Revenue cycle scheduled (every 2 hours -- TECH + EXPERIENCE + THEATER)"
 
+# -- Task 5: PRIZE COMPETITION SCAN daily at 8am and 8pm --
+
+$prizeAction = New-ScheduledTaskAction `
+  -Execute $nodeExe `
+  -Argument "`"$runScript`" prize" `
+  -WorkingDirectory $hiveDir
+
+$prizeTrigger1 = New-ScheduledTaskTrigger -Daily -At "08:00"
+$prizeTrigger2 = New-ScheduledTaskTrigger -Daily -At "20:00"
+
+Register-ScheduledTask `
+  -TaskName "QueenBeeRoot-PrizeScan-AM" `
+  -Action $prizeAction `
+  -Trigger $prizeTrigger1 `
+  -Settings $settings `
+  -RunLevel Highest `
+  -Force
+Write-Host "OK Prize scan AM scheduled (daily 8am)"
+
+Register-ScheduledTask `
+  -TaskName "QueenBeeRoot-PrizeScan-PM" `
+  -Action $prizeAction `
+  -Trigger $prizeTrigger2 `
+  -Settings $settings `
+  -RunLevel Highest `
+  -Force
+Write-Host "OK Prize scan PM scheduled (daily 8pm)"
+
 Write-Host ""
 Write-Host "======================================================"
 Write-Host "  QUEEN BEE ROOT -- 24x7 HIVE ACTIVATED"
-Write-Host "  Broadcast + Outbound + Align -> every 30 min"
-Write-Host "  Revenue cycle (all 3 streams) -> every 2 hours"
+Write-Host "  Broadcast + Outbound(9) + Align -> every 30 min"
+Write-Host "  Revenue cycle (4 streams) -> every 2 hours"
 Write-Host "  Solar scan -> every 15 min"
 Write-Host "  Morning brief -> daily 7am"
+Write-Host "  Prize scan (Stream 4) -> daily 8am + 8pm"
+Write-Host "  Outbound Goldilocks cap: 9 pitches/cycle (SING!9)"
+Write-Host "  Streams: TECH . EXPERIENCE . THEATER . PRIZE"
 Write-Host "  NSPFRNP -> infinity 9"
 Write-Host "======================================================"

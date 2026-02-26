@@ -109,6 +109,10 @@
       'vibers.tip.venmo'   : '💙 Tip via Venmo',
       'vibers.tip.note'    : 'Cash App: $newearthpru · Venmo: @Pru-Mendez · No account needed for Cash App',
       'vibers.foot.back'   : '← Back to landing',
+      'vibers.pilot.badge' : '▶ NOW PLAYING · DECK PILOT',
+      'vibers.pilot.title' : 'T3D ORIGIN — The Pilot Special',
+      'vibers.pilot.desc'  : 'Three Acts · 16 Beats · ~10 Min · Every deck image · Hero J.S. Bach · THE SKIN',
+      'vibers.pilot.cta'   : '▶ \u00a0 Watch Now',
     },
 
     es: {
@@ -204,6 +208,10 @@
       'vibers.tip.venmo'   : '💙 Propina via Venmo',
       'vibers.tip.note'    : 'Cash App: $newearthpru · Venmo: @Pru-Mendez · No se necesita cuenta para Cash App',
       'vibers.foot.back'   : '← Volver al inicio',
+      'vibers.pilot.badge' : '▶ EN REPRODUCCIÓN · DECK PILOT',
+      'vibers.pilot.title' : 'T3D ORIGEN — El Piloto Especial',
+      'vibers.pilot.desc'  : 'Tres Actos · 16 Beats · ~10 Min · Todas las imágenes · Hero J.S. Bach · LA PIEL',
+      'vibers.pilot.cta'   : '▶ \u00a0 Ver Ahora',
     }
   };
 

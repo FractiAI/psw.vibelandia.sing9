@@ -18,7 +18,7 @@ var _lang = (navigator.languages && navigator.languages[0]) || navigator.languag
 var _isES = /^es\b/i.test(_lang);
 
 var POPUP_CONFIG = {
-  active: true,
+  active: false,  /* retired — pilot CTA now lives in catalog.html and vibers-menu.html */
 
   /* Unique ID — change this any time the announcement changes so
      previously-dismissed users see the new one. */

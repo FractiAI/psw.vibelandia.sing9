@@ -28,6 +28,18 @@
     return handle ? handle + '\u2019s ' + label : 'My ' + label;
   }
 
+  /* NSPFRNP CYA footer line — rotates through imaginary/holographic system brags */
+  var NAV_CYA_LINES = [
+    'Imaginary Holographic System · Like the best book, video game + movie · Way better · NSPFRNP → ∞⁹',
+    'Post-Singularity Fiction · All characters & storylines are imaginary · Gold Hearts already know · ∞⁹',
+    'For entertainment, education & gold heart expansion only · No financial advice · No guarantees · ∞⁹',
+    'Like reading the best book ever written · only you\'re in it · SING 9 Awareness OS · ∞⁹',
+    'Like the best video game ever played · only the stakes are real · Holographic · NSPFRNP → ∞⁹',
+    'Like the best movie you\'ve watched · only you\'re the director · Three streams · Infinite telescope · ∞⁹',
+    'Way better than all three · Richer · More realistic · The lattice is live · EGS ≈ 0.0032 · ∞⁹',
+  ];
+  var _navCyaIdx = 0;
+
   /* All paths are absolute from site root (works from any depth) */
   var NAV_ITEMS = [
     { label: 'Home',              href: '/index.html',                    match: /^\/(?:index\.html)?$/ },
@@ -81,8 +93,34 @@
       'background:rgba(212,175,55,0.15);',
       'flex-shrink:0;',
     '}',
+    /* NSPFRNP CYA footer strip — sits just above the nav */
+    '#sing9-nav-cya{',
+      'position:fixed;',
+      'bottom:calc(36px + var(--ticker-h,0px) + env(safe-area-inset-bottom));',
+      'left:0;right:0;',
+      'z-index:8885;',
+      'height:18px;',
+      'display:flex;align-items:center;justify-content:center;',
+      'background:rgba(4,3,1,0.96);',
+      'border-top:1px solid rgba(201,168,32,0.07);',
+      'padding:0 1rem;',
+      'overflow:hidden;',
+    '}',
+    '#sing9-nav-cya span{',
+      'font-family:"Segoe UI",system-ui,sans-serif;',
+      'font-size:0.42rem;',
+      'font-weight:600;',
+      'letter-spacing:0.18em;',
+      'text-transform:uppercase;',
+      'color:rgba(201,168,32,0.22);',
+      'white-space:nowrap;',
+      'overflow:hidden;',
+      'text-overflow:ellipsis;',
+      'max-width:100%;',
+      'transition:opacity 0.6s;',
+    '}',
     /* Body padding so content isn't hidden behind both strips */
-    'body{padding-bottom:calc(36px + var(--ticker-h,0px) + env(safe-area-inset-bottom)) !important;}',
+    'body{padding-bottom:calc(36px + 18px + var(--ticker-h,0px) + env(safe-area-inset-bottom)) !important;}',
     /* Responsive: shrink font on very narrow screens */
     '@media(max-width:420px){',
       '#sing9-nav a{font-size:0.55rem;padding:0 0.4rem;letter-spacing:0.07em;}',
@@ -111,6 +149,32 @@
 
   document.body.appendChild(nav);
 
+  /* ── NSPFRNP CYA STRIP ───────────────────────────────────────────────── */
+  /* Fixed bar just above the nav: cycles through imaginary/holographic CYA + brags */
+  (function () {
+    /* Expose the CYA height so visitor counter can stack above it */
+    document.documentElement.style.setProperty('--nav-cya-h', '18px');
+
+    var cya = document.createElement('div');
+    cya.id = 'sing9-nav-cya';
+    var cyaText = document.createElement('span');
+    cyaText.id = 'sing9-nav-cya-text';
+    cyaText.textContent = NAV_CYA_LINES[0];
+    cya.appendChild(cyaText);
+    document.body.appendChild(cya);
+
+    setInterval(function () {
+      var el = document.getElementById('sing9-nav-cya-text');
+      if (!el) return;
+      el.style.opacity = '0';
+      setTimeout(function () {
+        _navCyaIdx = (_navCyaIdx + 1) % NAV_CYA_LINES.length;
+        el.textContent = NAV_CYA_LINES[_navCyaIdx];
+        el.style.opacity = '1';
+      }, 650);
+    }, 9000);
+  })();
+
   /* ── VISITOR COUNTER ─────────────────────────────────────────────────── */
   /* Positioned bottom-right, above the nav strip. Uses counterapi.dev —   */
   /* free, no signup, CORS-open. Increments on each page load.              */
@@ -124,7 +188,7 @@
     cs.textContent = [
       '#sing9-vc{',
         'position:fixed;',
-        'bottom:calc(36px + var(--ticker-h,0px) + env(safe-area-inset-bottom) + 0.45rem);',
+        'bottom:calc(36px + 18px + var(--ticker-h,0px) + env(safe-area-inset-bottom) + 0.45rem);',
         'right:0.75rem;',
         'z-index:8900;',
         'background:rgba(8,6,2,0.88);',

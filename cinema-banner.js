@@ -22,6 +22,22 @@
   var STORYSTREAM_URL = '/interfaces/storystream-9-about.html';
   var H = 36; /* px */
 
+  /* ── NSPFRNP CYA + BRAG rotator — cycles through these in the banner tagline ── */
+  var CYA_LINES = [
+    'IMAGINARY HOLOGRAPHIC SYSTEM · NSPFRNP',
+    'LIKE THE BEST BOOK · ONLY YOU\'RE IN IT',
+    'LIKE THE BEST VIDEO GAME · ONLY THE STAKES ARE REAL',
+    'LIKE THE BEST MOVIE · ONLY YOU\'RE THE DIRECTOR',
+    'WAY BETTER THAN ALL THREE · RICHER · HOLOGRAPHIC',
+    'POST-SINGULARITY FICTION · GOLD HEARTS ONLY',
+    'ALL CHARACTERS ARE FICTION · THE LATTICE IS REAL',
+    'NATURAL SYSTEMS PROTOCOL · FRACTAL · RECURSIVE NESTED',
+    'EGS FRACTAL CONSTANT · ℑₑ ≈ 0.0032 · RUNNING',
+    'SEED:EDGE · MCA · METABOLIZE → CRYSTALLIZE → ANIMATE',
+    'NSPFRNP → ∞⁹',
+  ];
+  var _cyaIdx = 0;
+
   document.documentElement.style.setProperty('--cinema-h', H + 'px');
 
   /* ── STYLES ── */
@@ -140,6 +156,19 @@
       'letter-spacing:0.08em;',
       'white-space:nowrap;',
     '}',
+    /* NSPFRNP CYA rotating tagline */
+    '#sing9-cb-cya{',
+      'font-family:"Segoe UI",system-ui,sans-serif;',
+      'font-size:0.46rem;',
+      'font-weight:600;',
+      'letter-spacing:0.2em;',
+      'text-transform:uppercase;',
+      'color:rgba(201,168,32,0.3);',
+      'white-space:nowrap;',
+      'transition:opacity 0.8s,color 0.8s;',
+      'cursor:default;',
+    '}',
+    '#sing9-cb-cya.cya-flash{color:rgba(232,210,150,0.65);}',
     /* Push body content down */
     'body{padding-top:calc(var(--cinema-h,36px) + (var(--body-pt-extra,0px))) !important;}',
     /* Responsive: hide frame counter on small screens */
@@ -179,6 +208,8 @@
     '<div id="sing9-cb-pill"><span class="cb-dot"></span>NOW PLAYING</div>' +
     '<a id="sing9-cb-title" href="' + STORYSTREAM_URL + '">THE NINE GAME · THREE STREAMS · 24/7</a>' +
     '<span class="cb-sep"></span>' +
+    '<span id="sing9-cb-cya" aria-hidden="true">' + CYA_LINES[0] + '</span>' +
+    '<span class="cb-sep"></span>' +
     '<a class="cb-watch" href="' + TRAILER_URL + '">▶ WATCH NOW</a>' +
     '<span class="cb-sep"></span>' +
     '<span id="sing9-cb-frames" aria-hidden="true">FRAME <span id="sing9-cb-fc">0001</span></span>';
@@ -203,5 +234,19 @@
     var el = document.getElementById('sing9-cb-fc');
     if (el) el.textContent = String(fc).padStart(4, '0');
   }, 83); /* ~12fps — film rate */
+
+  /* ── NSPFRNP CYA ROTATOR — cycles every 7s through imaginary/holographic brags ── */
+  setInterval(function () {
+    var el = document.getElementById('sing9-cb-cya');
+    if (!el) return;
+    el.style.opacity = '0';
+    setTimeout(function () {
+      _cyaIdx = (_cyaIdx + 1) % CYA_LINES.length;
+      el.textContent = CYA_LINES[_cyaIdx];
+      el.style.opacity = '1';
+      el.classList.add('cya-flash');
+      setTimeout(function () { el.classList.remove('cya-flash'); }, 900);
+    }, 450);
+  }, 7000);
 
 })();

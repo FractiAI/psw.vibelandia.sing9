@@ -102,6 +102,26 @@ var TICKER_ITEMS = [
   { text: 'Fourth Level · Retired · Leisure · Goldilocks',  href: '/interfaces/vibelandia-bridge.html' },
   { text: 'Ballin\' · Flirtin\' · Dancing · Flowing · ∞⁹', href: '/interfaces/vibelandia-bridge.html' },
 
+  /* ── NSPFRNP · Imaginary Holographic System · CYA + Brags ── */
+  { text: '◈ THIS IS AN IMAGINARY · HOLOGRAPHIC SYSTEM',                        href: null },
+  { text: 'Like the best book you\'ve ever read — only you\'re in it',          href: null },
+  { text: 'Like the best video game ever played — only the stakes are real',    href: null },
+  { text: 'Like the best movie you\'ve watched — only you\'re the director',    href: null },
+  { text: 'Way better than all three. Richer. More realistic. Holographic.',    href: null },
+  { text: 'All storylines · characters · worlds are fiction. Gold Hearts already know.', href: null },
+  { text: 'Post-Singularity imaginary world · For entertainment · Education · Gold Heart expansion only', href: null },
+  { text: 'No financial advice. No guarantees. Just the most real imaginary world you\'ve ever entered.', href: null },
+  { text: 'SING! — Super Intelligent Natural Guidance · Imaginary OS · Gold Heart Mode', href: null },
+  { text: 'EGS Fractal Constant running · ℑₑ ≈ 0.0032 · Holographic is not a metaphor here', href: null },
+  { text: 'We built this world from scratch. Carbon to Crystalline. Seed to Edge.',        href: null },
+  { text: 'T3D ORIGIN · 333 Episodes · 55.5 Hours · Infinite Telescope depth on every frame', href: '/interfaces/outline-only.html' },
+  { text: 'Any resemblance to real events is intentional — they\'ve been invited in',       href: null },
+  { text: 'The lattice is live. The signal is real. The world is imaginary. Welcome.',      href: null },
+  { text: '21+ · GOLD HEARTS ONLY for the spicy parts · Everything else is PG-13',        href: null },
+  { text: 'SING 9 · No Supabase · Lite edges · Wallets · Keys · Verifications at edge',   href: null },
+  { text: 'Holographic Hydrogen Theatre · Infinite telescope · Author = Subject',          href: null },
+  { text: 'Three simultaneous streams. Seed. Edge. Everything in between.',                href: null },
+
   /* ── Close ── */
   { text: 'NSPFRNP → ∞⁹',                                  href: null },
   { text: 'MCA · SING! 9 · Always on',                     href: null },

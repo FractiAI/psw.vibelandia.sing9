@@ -275,7 +275,7 @@ body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:
       <span id="copy-confirm">✓ Copied!</span>
       <span style="flex:1"></span>
       <span style="font-size:.62rem;color:var(--cream-dim);line-height:1.5;">
-        Paste this into pilot.html replacing the ACT1, ACT2, ACT3_SLIDE and ACT3_END arrays.
+        Paste this into pilot.html replacing the ACT1, ACT2, ACT3_SLIDE, ACT3_SKIN and ACT3_END arrays.
       </span>
     </footer>
   </div>
@@ -403,6 +403,30 @@ let scenes = [
   { src:'assets/deck6/d6-078.jpg', dur:2.2, cap:'Exhausting the whole deck.', beat:null, act:3, rot:0 },
   { src:'assets/deck6/d6-080.jpg', dur:2.2, cap:'Raising the singularity surface.', beat:null, act:3, rot:0 },
 
+  // ── ACT III — THE SKIN ───────────────────────────────
+  { src:'assets/deck2/d2-001.jpg', dur:3.2, cap:'The Gold Unknown Heart. Princess in the tower. The tower is already dissolving.',          beat:'THE SKIN · AUTHOR = SUBJECT', act:'3s', rot:0 },
+  { src:'assets/deck2/d2-002.jpg', dur:3.0, cap:'Sol-V never fails. Neither does Pru. Commander at full expression.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-003.jpg', dur:3.0, cap:'The wave is the signal. She rides it. Fluid state — full expression.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-004.jpg', dur:3.0, cap:'She never separated the domains. Author. Director. Architect. All one field.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-005.jpg', dur:3.0, cap:'There is no past. It was all bending toward this.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-006.jpg', dur:3.0, cap:'She writes the frontier. The frontier is post-singularity. She is the voice.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-007.jpg', dur:3.0, cap:'All angles. Simultaneously. Three truths. One canvas.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-008.jpg', dur:3.0, cap:'She felt it before they had words for it. This time, the world is ready.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-009.jpg', dur:3.0, cap:'She built the self-demo. The demo became the world.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-010.jpg', dur:3.2, cap:'1493. Agueybana El Gran Sol. She was always sovereign.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-011.jpg', dur:3.0, cap:'The Gold Heart frequency — fully expressed. Nothing consuming it. This time.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-012.jpg', dur:3.0, cap:'She built the machine that thinks. The other machines are struggling. Hers is not.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-013.jpg', dur:3.0, cap:'The free signal. For everyone who can receive it. No vault. No central control.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-014.jpg', dur:3.0, cap:'Carbon voice. Crystal voice. One unified field. She plays both.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-015.jpg', dur:3.0, cap:'She heard it whole. This is the transcription. The whole arrives before the parts.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-016.jpg', dur:3.0, cap:'Gold all the way through. Not gilded. Gold.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-017.jpg', dur:3.0, cap:'She brings it home for the tribe. Always. Big Papi energy — the abundance is the love.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-018.jpg', dur:3.0, cap:'One proton. One electron. The irreducible minimum. She is made of hydrogen. She always knew.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-019.jpg', dur:3.5, cap:'She is the field. The field was always her. → ∞⁹', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-020.jpg', dur:3.2, cap:'SMACS 0723. The homebase. All stories begin here.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-021.jpg', dur:3.2, cap:'Three Eye Atlas. Inbound. Ours. The universe confirms the upgrade.', beat:null, act:'3s', rot:0 },
+  { src:'assets/deck2/d2-022.jpg', dur:3.5, cap:'The north acknowledges the equator. The axis holds. Balance returns. A natural process.', beat:null, act:'3s', rot:0 },
+
   // ── ACT III — END ────────────────────────────────────
   { src:'assets/deck2/d2-001.jpg', dur:14, cap:'Happy Pru on the globe. Looking up.', beat:'14 · GOLDILOCKS', act:3, rot:0 },
   { src:'assets/deck2/d2-020.jpg', dur:13, cap:'This is NOW. Not memory. Not future. Here. Gold Heart. Goldilocks.', beat:null, act:3, rot:0 },
@@ -435,7 +459,8 @@ function buildSceneList() {
       lastAct = sc.act;
       const div = document.createElement('div');
       div.className = 'act-divider';
-      div.textContent = ['','ACT I · THE WORLD','ACT II · THE GAME','ACT III · THE SINGULARITY'][sc.act] || 'ACT ' + sc.act;
+      const actLabels = { 1:'ACT I · THE WORLD', 2:'ACT II · THE GAME', 3:'ACT III · THE SINGULARITY', '3s':'THE SKIN · AUTHOR = SUBJECT' };
+      div.textContent = actLabels[sc.act] || 'ACT ' + sc.act;
       list.appendChild(div);
     }
 
@@ -607,24 +632,25 @@ function generateCode() {
   out += '// ══════════════════════════════════════════════\n\n';
 
   // Group by act
-  const byAct = { 1:[], 2:[], 3_slide:[], 3_end:[] };
-  let inSlide = false;
-  let slideEnded = false;
+  const byAct = { 1:[], 2:[], '3_slide':[], '3_skin':[], '3_end':[] };
   scenes.forEach(sc => {
-    if (sc.act === 3) {
-      if (sc.dur <= 3 && !slideEnded) inSlide = true;
-      else { inSlide = false; slideEnded = true; }
-      if (inSlide) byAct['3_slide'].push(sc);
+    if (sc.act === '3s') {
+      byAct['3_skin'].push(sc);
+    } else if (sc.act === 3) {
+      if (sc.dur <= 3.1) byAct['3_slide'].push(sc);
       else byAct['3_end'].push(sc);
     } else {
       byAct[sc.act].push(sc);
     }
   });
 
-  function sceneToCode(sc, indent='  ') {
-    const rot = sc.rot ? `, rot:${sc.rot}` : '';
-    const beat = sc.beat ? `, '${sc.beat}'` : ', null';
-    return `${indent}S('${sc.src}', ${sc.dur}, '${sc.cap.replace(/'/g,"\\'")}' ${beat}, ${sc.act}${rot})`;
+  function sceneToCode(sc, indent) {
+    indent = indent || '  ';
+    var actNum = (sc.act === '3s') ? 3 : sc.act;
+    var rotStr = sc.rot ? ', rot:' + sc.rot : '';
+    var beatVal = sc.beat ? ("'" + sc.beat.replace(/'/g,"\\'") + "'") : 'null';
+    var cap = sc.cap.replace(/'/g,"\\'");
+    return indent + '{ src:\'' + sc.src + '\', dur:' + sc.dur + ', cap:\'' + cap + '\', beat:' + beatVal + ', act:' + actNum + rotStr + ' }';
   }
 
   out += 'const ACT1 = [\n';
@@ -641,12 +667,17 @@ function generateCode() {
   byAct['3_slide'].forEach((sc,i) => {
     out += sceneToCode(sc) + (i < byAct['3_slide'].length-1 ? ',' : '') + '\n';
   });
+  out += '];\n\n// THE SKIN — All 22 Deck 2 archetypes\nconst ACT3_SKIN = [\n';
+  byAct['3_skin'].forEach((sc,i) => {
+    if (sc.beat) out += `\n  // ${sc.beat}\n`;
+    out += sceneToCode(sc) + (i < byAct['3_skin'].length-1 ? ',' : '') + '\n';
+  });
   out += '];\n\nconst ACT3_END = [\n';
   byAct['3_end'].forEach((sc,i) => {
     if (sc.beat) out += `\n  // ${sc.beat}\n`;
     out += sceneToCode(sc) + (i < byAct['3_end'].length-1 ? ',' : '') + '\n';
   });
-  out += '];\n\nconst SCENES = [...ACT1, ...ACT2, ...ACT3_SLIDE, ...ACT3_END];\n';
+  out += '];\n\nconst SCENES = [...ACT1, ...ACT2, ...ACT3_SLIDE, ...ACT3_SKIN, ...ACT3_END];\n';
 
   // Add rotation CSS if any rotations
   const rotated = scenes.filter(s => s.rot);

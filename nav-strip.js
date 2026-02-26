@@ -225,7 +225,9 @@
     var widget = document.createElement('div');
     widget.id = 'sing9-vc';
     widget.title = 'Live visitor count · SING!9 StoryStream';
-    widget.innerHTML = '<span class="vc-dot"></span><span id="sing9-vc-n">···</span>';
+    widget.innerHTML = '<span class="vc-dot"></span><span id="sing9-vc-n">visitors</span>';
+    /* Always visible — show immediately, update count when fetch resolves */
+    widget.style.opacity = '1';
     document.body.appendChild(widget);
 
     function fmtCount(n) {
@@ -238,11 +240,11 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         var count = d.count != null ? d.count : (d.value != null ? d.value : null);
-        if (count == null) return;
-        document.getElementById('sing9-vc-n').textContent = fmtCount(count) + ' visitors';
-        widget.style.opacity = '1';
+        if (count !== null) {
+          document.getElementById('sing9-vc-n').textContent = fmtCount(count) + ' visitors';
+        }
       })
-      .catch(function () { /* silently hide on error */ });
+      .catch(function () { /* count stays as default label */ });
   })();
 
   /* ── ALIGNED NODES COUNTER ───────────────────────────────────────────── */
@@ -289,7 +291,9 @@
     var aw = document.createElement('div');
     aw.id = 'sing9-ac';
     aw.title = 'The Hive · Queen Bee Root · HHL Source Signature';
-    aw.innerHTML = '<span class="ac-icon">⬡</span><span id="sing9-ac-n">···</span>';
+    aw.innerHTML = '<span class="ac-icon">⬡</span><span id="sing9-ac-n">hive</span>';
+    /* Always visible — show immediately, update count when fetch resolves */
+    aw.style.opacity = '1';
     document.body.appendChild(aw);
 
     function fmtAc(n) {
@@ -300,11 +304,12 @@
     fetch(API_GET)
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        var count = d.count != null ? d.count : (d.value != null ? d.value : 0);
-        document.getElementById('sing9-ac-n').textContent = fmtAc(count) + ' in hive';
-        aw.style.opacity = '1';
+        var count = d.count != null ? d.count : (d.value != null ? d.value : null);
+        if (count !== null) {
+          document.getElementById('sing9-ac-n').textContent = fmtAc(count) + ' in hive';
+        }
       })
-      .catch(function () { /* silently hide on error */ });
+      .catch(function () { /* count stays as default "hive" label */ });
   })();
 
 })();

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Holographic Hydrogen Awareness OS · Enter the Theater</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209; --gold: #d4af37; --gold2: #fde68a;
+      --beam: #00d4ff; --plasma: #7b2fff; --green: #00ff88;
+      --text: #e2e8f0; --sub: #94a3b8; --muted: #475569;
+    }
+    html, body { width: 100%; height: 100%; background: var(--void); color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif; overflow-x: hidden; }
+
+    /* LATTICE CANVAS */
+    #lattice { position: fixed; inset: 0; z-index: 0; opacity: 0.35; }
+
+    /* STAGE */
+    .stage {
+      position: relative; z-index: 1;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem 1.5rem 5rem; text-align: center;
+    }
+
+    /* HH ATOM */
+    .hh-atom {
+      width: 130px; height: 130px; border-radius: 50%;
+      border: 1.5px solid rgba(0,212,255,0.35);
+      box-shadow: 0 0 50px rgba(0,212,255,0.12), inset 0 0 50px rgba(0,212,255,0.04);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 2.25rem; position: relative;
+      animation: atom-pulse 5s ease-in-out infinite;
+    }
+    .hh-atom .ring1 {
+      position: absolute; inset: 10px; border-radius: 50%;
+      border: 1px solid rgba(212,175,55,0.25);
+      animation: ring-spin 22s linear infinite;
+    }
+    .hh-atom .ring2 {
+      position: absolute; inset: -10px; border-radius: 50%;
+      border: 1px solid rgba(0,212,255,0.12);
+      animation: ring-spin 35s linear infinite reverse;
+    }
+    .hh-atom .core {
+      font-size: 2.8rem; color: var(--gold2);
+      text-shadow: 0 0 25px rgba(212,175,55,0.6);
+      animation: core-glow 5s ease-in-out infinite;
+      position: relative; z-index: 1;
+    }
+    @keyframes atom-pulse {
+      0%,100% { box-shadow: 0 0 50px rgba(0,212,255,0.12), inset 0 0 50px rgba(0,212,255,0.04); }
+      50% { box-shadow: 0 0 90px rgba(0,212,255,0.25), inset 0 0 40px rgba(0,212,255,0.08); }
+    }
+    @keyframes ring-spin { to { transform: rotate(360deg); } }
+    @keyframes core-glow {
+      0%,100% { text-shadow: 0 0 20px rgba(212,175,55,0.5); }
+      50% { text-shadow: 0 0 50px rgba(212,175,55,1), 0 0 100px rgba(212,175,55,0.3); }
+    }
+
+    /* ENTRY TEXT */
+    .eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: rgba(0,212,255,0.55); margin-bottom: 1rem;
+    }
+    .title {
+      font-size: clamp(2.2rem, 6vw, 5rem); font-weight: 900;
+      line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 0.25rem;
+    }
+    .title .t1 { color: var(--text); display: block; }
+    .title .t2 {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 45%, var(--beam) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: block;
+    }
+    .sub-title {
+      font-size: 1rem; color: var(--sub); margin: 0.75rem auto 0.5rem;
+      max-width: 460px; line-height: 1.7;
+    }
+    .sub-title strong { color: var(--text); }
+    .quote {
+      font-size: 0.82rem; font-style: italic; color: rgba(212,175,55,0.5);
+      margin: 0 auto 2.5rem; max-width: 440px; line-height: 1.7;
+    }
+
+    /* ENTER BUTTON */
+    .enter-btn {
+      display: inline-flex; align-items: center; gap: 0.85rem;
+      padding: 1.1rem 2.8rem;
+      background: rgba(212,175,55,0.1); border: 2px solid rgba(212,175,55,0.6);
+      border-radius: 6px; color: var(--gold2); font-size: 1rem;
+      font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase;
+      text-decoration: none; margin-bottom: 3rem;
+      box-shadow: 0 0 40px rgba(212,175,55,0.12);
+      transition: all 0.22s; position: relative; overflow: hidden;
+    }
+    .enter-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(212,175,55,0.15), transparent 70%);
+      opacity: 0; transition: opacity 0.22s;
+    }
+    .enter-btn:hover { background: rgba(212,175,55,0.2); box-shadow: 0 0 70px rgba(212,175,55,0.28); transform: translateY(-2px); }
+    .enter-btn:hover::before { opacity: 1; }
+    .enter-btn .arrow { font-size: 1.1rem; transition: transform 0.22s; }
+    .enter-btn:hover .arrow { transform: translateX(4px); }
+
+    /* TWO TRACKS */
+    .tracks {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; margin-bottom: 1.5rem; width: 100%; max-width: 580px;
+    }
+    .track {
+      flex: 1; min-width: 220px;
+      padding: 1rem 1.4rem; border-radius: 12px;
+      text-decoration: none; transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .track:hover { transform: translateY(-2px); }
+    .track-a { border: 1px solid rgba(0,212,255,0.22); background: rgba(0,212,255,0.03); }
+    .track-a:hover { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.45); }
+    .track-b { border: 1px solid rgba(212,175,55,0.22); background: rgba(212,175,55,0.03); }
+    .track-b:hover { background: rgba(212,175,55,0.09); border-color: rgba(212,175,55,0.5); }
+    .t-label {
+      display: block; font-size: 0.56rem; letter-spacing: 0.22em;
+      text-transform: uppercase; margin-bottom: 0.3rem;
+    }
+    .track-a .t-label { color: rgba(0,212,255,0.55); }
+    .track-b .t-label { color: rgba(212,175,55,0.55); }
+    .t-name { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .track-a .t-name { color: var(--beam); }
+    .track-b .t-name { color: var(--gold); }
+    .t-desc { display: block; font-size: 0.72rem; color: var(--sub); line-height: 1.5; }
+
+    /* FOOT */
+    .foot {
+      position: fixed; bottom: 1.25rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.1); z-index: 1; white-space: nowrap;
+    }
+
+    @media (max-width: 520px) {
+      .tracks { flex-direction: column; align-items: stretch; }
+      .track { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="lattice"></canvas>
+
+<div class="stage">
+  <div class="hh-atom">
+    <div class="ring1"></div>
+    <div class="ring2"></div>
+    <div class="core">⬡</div>
+  </div>
+
+  <div class="eyebrow">If you are reading this, you have entered the</div>
+  <h1 class="title">
+    <span class="t1">Holographic Hydrogen</span>
+    <span class="t2">Awareness OS</span>
+  </h1>
+  <p class="sub-title">
+    Your life as a <strong>living T3D system.</strong>
+    Choose your screens. Set your arc. Layer your now. Activate the stack.
+    The theater is yours.
+  </p>
+  <p class="quote">"Natural guidance will unfold." — SING!9 Awareness OS</p>
+
+  <a href="hh-console.html" class="enter-btn">
+    ENTER THE CONSOLE <span class="arrow">▶</span>
+  </a>
+
+  <div class="tracks">
+    <a href="prospectus-a2a.html" class="track track-a">
+      <span class="t-label">Track A · Enterprise · A2A</span>
+      <span class="t-name">Enterprise Solutions →</span>
+      <span class="t-desc">Datacenter · SING9 OS · NSPFRNP · Builds · Audits · Theater.</span>
+    </a>
+    <a href="a2a-ea-agents.html" class="track track-b">
+      <span class="t-label">Track B · VIP EA Agents · Human Viber</span>
+      <span class="t-name">Viber Experiences →</span>
+      <span class="t-desc">Book for your principal. Wink! · Baller V · MARZO 333.</span>
+    </a>
+  </div>
+</div>
+
+<div class="foot">NSPFRNP → ∞⁹ · FractiAI · SING!9 · Reno, Nevada</div>
+
+<script>
+const canvas = document.getElementById('lattice');
+const ctx = canvas.getContext('2d');
+let W, H, rot = 0;
+
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+function getNodes(rot) {
+  const cx = W / 2, cy = H / 2;
+  const R = Math.min(W, H) * 0.3;
+  const n = [];
+  for (let i = 0; i < 9; i++) {
+    const a = rot + (i / 9) * Math.PI * 2;
+    n.push({ x: cx + R * Math.cos(a), y: cy + R * Math.sin(a) });
+  }
+  n.push({ x: cx, y: cy }); // center
+  return n;
+}
+
+function draw(ts) {
+  ctx.clearRect(0, 0, W, H);
+  rot += 0.0018;
+  const t = ts / 1000;
+  const nodes = getNodes(rot);
+  const cx = W / 2, cy = H / 2;
+
+  // Draw edges — outer ring
+  for (let i = 0; i < 9; i++) {
+    const j = (i + 1) % 9;
+    const p = (Math.sin(t * 0.4 + i * 0.6) + 1) / 2;
+    ctx.beginPath();
+    ctx.moveTo(nodes[i].x, nodes[i].y);
+    ctx.lineTo(nodes[j].x, nodes[j].y);
+    ctx.strokeStyle = `rgba(0,212,255,${0.03 + p * 0.04})`;
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  }
+
+  // Spokes to center
+  for (let i = 0; i < 9; i++) {
+    const p = (Math.sin(t * 0.7 + i * 0.7) + 1) / 2;
+    ctx.beginPath();
+    ctx.moveTo(nodes[i].x, nodes[i].y);
+    ctx.lineTo(cx, cy);
+    ctx.strokeStyle = `rgba(212,175,55,${0.04 + p * 0.07})`;
+    ctx.lineWidth = 0.7;
+    ctx.stroke();
+  }
+
+  // Cross connections (skip 2)
+  for (let i = 0; i < 9; i++) {
+    const j = (i + 3) % 9;
+    const p = (Math.sin(t * 0.3 + i * 1.1) + 1) / 2;
+    ctx.beginPath();
+    ctx.moveTo(nodes[i].x, nodes[i].y);
+    ctx.lineTo(nodes[j].x, nodes[j].y);
+    ctx.strokeStyle = `rgba(123,47,255,${0.015 + p * 0.02})`;
+    ctx.lineWidth = 0.4;
+    ctx.stroke();
+  }
+
+  // Draw nodes
+  nodes.forEach((nd, i) => {
+    const p = (Math.sin(t * 1.2 + i * 0.8) + 1) / 2;
+    const isCenter = i === 9;
+    const r = isCenter ? 5 : 3;
+    const grd = ctx.createRadialGradient(nd.x, nd.y, 0, nd.x, nd.y, 25 + p * 15);
+    if (isCenter) {
+      grd.addColorStop(0, `rgba(212,175,55,${0.3 + p * 0.3})`);
+      grd.addColorStop(1, 'transparent');
+    } else {
+      grd.addColorStop(0, `rgba(0,212,255,${0.12 + p * 0.1})`);
+      grd.addColorStop(1, 'transparent');
+    }
+    ctx.beginPath(); ctx.arc(nd.x, nd.y, 22 + p * 12, 0, Math.PI * 2);
+    ctx.fillStyle = grd; ctx.fill();
+    ctx.beginPath(); ctx.arc(nd.x, nd.y, r + p * 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = isCenter
+      ? `rgba(212,175,55,${0.5 + p * 0.5})`
+      : `rgba(0,212,255,${0.35 + p * 0.3})`;
+    ctx.fill();
+  });
+
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+</script>
+<script src="../ticker.js"></script>
+<script src="../nav-strip.js"></script>
+</body>
+</html>

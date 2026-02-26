@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>HH Awareness OS Console · SING!9</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209; --deep: #070710;
+      --gold: #d4af37; --gold2: #fde68a; --gold-dim: rgba(212,175,55,0.15);
+      --beam: #00d4ff; --beam-dim: rgba(0,212,255,0.12);
+      --plasma: #7b2fff; --plasma-dim: rgba(123,47,255,0.12);
+      --green: #00ff88; --green-dim: rgba(0,255,136,0.1);
+      --amber: #fb923c; --rose: #e879f9;
+      --text: #e2e8f0; --sub: #94a3b8; --muted: #475569;
+      --border: rgba(255,255,255,0.07);
+      --card: rgba(255,255,255,0.025);
+    }
+
+    html { height: 100%; }
+    body {
+      height: 100%; background: var(--void); color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    /* ═══ TOP BAR ═══ */
+    .top-bar {
+      height: 48px; flex-shrink: 0;
+      background: rgba(7,7,16,0.95);
+      border-bottom: 1px solid rgba(212,175,55,0.12);
+      display: flex; align-items: center;
+      padding: 0 1.25rem; gap: 1rem;
+      backdrop-filter: blur(10px);
+    }
+    .tb-logo {
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold2); font-weight: 800; white-space: nowrap;
+    }
+    .tb-logo span { color: rgba(0,212,255,0.6); }
+    .tb-user {
+      flex: 1; font-size: 0.72rem; color: var(--sub); overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap;
+    }
+    .tb-user strong { color: var(--gold); }
+    .tb-time { font-size: 0.68rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .tb-back {
+      font-size: 0.7rem; color: var(--sub); text-decoration: none;
+      padding: 3px 10px; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;
+      transition: color 0.2s; white-space: nowrap;
+    }
+    .tb-back:hover { color: var(--text); }
+
+    /* ═══ TAB NAV ═══ */
+    .tab-nav {
+      height: 42px; flex-shrink: 0;
+      background: var(--deep);
+      border-bottom: 1px solid var(--border);
+      display: flex; overflow-x: auto; scrollbar-width: none;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab {
+      flex-shrink: 0; padding: 0 1.1rem;
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent;
+      transition: color 0.18s, border-color 0.18s; user-select: none;
+      white-space: nowrap;
+    }
+    .tab:hover { color: var(--sub); }
+    .tab.active { color: var(--gold2); border-bottom-color: var(--gold); }
+    .tab .ti { font-size: 0.88rem; }
+
+    /* ═══ CONTENT AREA ═══ */
+    .content {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      padding: 1.5rem 1.25rem 2rem;
+      scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.2) transparent;
+    }
+    .content::-webkit-scrollbar { width: 4px; }
+    .content::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.2); border-radius: 2px; }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ═══ BOTTOM TICKER ═══ */
+    .now-bar {
+      height: 32px; flex-shrink: 0;
+      background: rgba(7,7,16,0.95);
+      border-top: 1px solid rgba(212,175,55,0.1);
+      display: flex; align-items: center;
+      padding: 0 1rem; gap: 0.75rem; overflow: hidden;
+    }
+    .nb-label {
+      font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(212,175,55,0.5); flex-shrink: 0;
+    }
+    .nb-ticker {
+      flex: 1; overflow: hidden; font-size: 0.72rem; color: var(--sub);
+      white-space: nowrap; mask-image: linear-gradient(90deg,transparent,black 40px,black calc(100% - 40px),transparent);
+    }
+    .nb-ticker .nbi { display: inline; padding: 0 1.5rem; color: var(--gold2); }
+    .nb-ticker .nbi::after { content: ' · '; color: rgba(212,175,55,0.3); }
+
+    /* ═══ SETUP OVERLAY ═══ */
+    .setup-overlay {
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(2,2,9,0.97);
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .setup-box {
+      width: 100%; max-width: 520px;
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 16px; padding: 2.5rem 2rem;
+      background: rgba(7,7,16,0.9);
+      position: relative; overflow: hidden;
+    }
+    .setup-box::before {
+      content: ''; position: absolute; top: 0; left: 15%; right: 15%; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.7), transparent);
+    }
+    .setup-eyebrow {
+      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(0,212,255,0.55); margin-bottom: 0.5rem;
+    }
+    .setup-title { font-size: 1.5rem; font-weight: 800; color: var(--gold2); margin-bottom: 0.5rem; }
+    .setup-lede { font-size: 0.85rem; color: var(--sub); line-height: 1.65; margin-bottom: 1.75rem; }
+
+    .field-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub); margin-bottom: 0.5rem; display: block; }
+    .field-input {
+      width: 100%; padding: 0.65rem 0.9rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+      color: var(--text); font-size: 0.9rem; font-family: inherit;
+      outline: none; transition: border-color 0.18s; margin-bottom: 1.25rem;
+    }
+    .field-input:focus { border-color: rgba(212,175,55,0.4); }
+
+    .archetype-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1.5rem;
+    }
+    .arch-chip {
+      padding: 0.5rem 0.7rem; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--card); cursor: pointer; text-align: center;
+      font-size: 0.72rem; color: var(--sub); transition: all 0.15s; user-select: none;
+    }
+    .arch-chip:hover { border-color: rgba(212,175,55,0.3); color: var(--gold2); }
+    .arch-chip.chosen { border-color: rgba(212,175,55,0.6); background: rgba(212,175,55,0.08); color: var(--gold2); }
+
+    .btn-primary {
+      display: block; width: 100%; padding: 0.9rem;
+      background: rgba(212,175,55,0.15); border: 2px solid rgba(212,175,55,0.6);
+      border-radius: 8px; color: var(--gold2); font-size: 0.95rem; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer;
+      transition: all 0.18s; font-family: inherit;
+    }
+    .btn-primary:hover { background: rgba(212,175,55,0.28); box-shadow: 0 0 30px rgba(212,175,55,0.18); }
+
+    /* ═══ SHARED COMPONENTS ═══ */
+    .sec-hd { margin-bottom: 1.25rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+    .sec-hd .sec-tag { font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(0,212,255,0.45); display: block; margin-bottom: 0.3rem; }
+    .sec-hd h2 { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+    .sec-hd p { font-size: 0.8rem; color: var(--sub); margin-top: 0.3rem; line-height: 1.6; }
+
+    .add-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .add-input {
+      flex: 1; padding: 0.5rem 0.75rem; background: var(--card);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-size: 0.85rem; font-family: inherit;
+      outline: none; transition: border-color 0.18s;
+    }
+    .add-input:focus { border-color: rgba(212,175,55,0.35); }
+    .add-input::placeholder { color: var(--muted); }
+
+    .btn-add {
+      padding: 0.5rem 1rem; background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.4); border-radius: 8px;
+      color: var(--gold); font-size: 0.8rem; font-weight: 700;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: inherit;
+    }
+    .btn-add:hover { background: rgba(212,175,55,0.2); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; min-height: 32px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.3rem 0.65rem 0.3rem 0.75rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; font-size: 0.75rem; color: var(--sub);
+      transition: border-color 0.15s;
+    }
+    .chip:hover { border-color: rgba(212,175,55,0.3); }
+    .chip-text { color: var(--text); }
+    .chip-stack {
+      font-size: 0.62rem; padding: 1px 5px; border-radius: 10px; cursor: pointer;
+      background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25);
+      color: var(--gold); transition: all 0.15s; font-weight: 700;
+    }
+    .chip-stack:hover { background: rgba(212,175,55,0.22); }
+    .chip-stack.stacked { background: rgba(0,255,136,0.12); border-color: rgba(0,255,136,0.4); color: var(--green); }
+    .chip-del {
+      font-size: 0.7rem; color: var(--muted); cursor: pointer;
+      padding: 0 2px; transition: color 0.15s;
+    }
+    .chip-del:hover { color: #ef4444; }
+
+    /* ═══ SCREENS SECTION ═══ */
+    .screens-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .screen-slot {
+      aspect-ratio: 4/3; border-radius: 10px;
+      border: 1px dashed rgba(255,255,255,0.1);
+      background: var(--card); cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.4rem; transition: all 0.18s; position: relative; overflow: hidden;
+      padding: 0.75rem;
+    }
+    .screen-slot:hover { border-color: rgba(0,212,255,0.4); background: rgba(0,212,255,0.04); }
+    .screen-slot.filled { border-style: solid; }
+    .screen-slot .s-icon { font-size: 1.4rem; }
+    .screen-slot .s-name { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; }
+    .screen-slot .s-clear { position: absolute; top: 4px; right: 6px; font-size: 0.7rem; color: var(--muted); cursor: pointer; }
+    .screen-slot .s-clear:hover { color: #ef4444; }
+    .screen-slot .s-num { position: absolute; top: 5px; left: 8px; font-size: 0.55rem; color: var(--muted); }
+
+    .screen-picker { margin-top: 1rem; display: none; }
+    .screen-picker.open { display: block; }
+    .sp-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub); margin-bottom: 0.6rem; }
+    .sp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.5rem; }
+    .sp-opt {
+      padding: 0.7rem; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--card); cursor: pointer; transition: all 0.15s;
+      font-size: 0.78rem; text-align: center;
+    }
+    .sp-opt:hover { border-color: rgba(0,212,255,0.4); color: var(--beam); }
+    .sp-opt .sp-icon { display: block; font-size: 1.2rem; margin-bottom: 0.3rem; }
+
+    /* ═══ ARC SECTION ═══ */
+    .arc-stage-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+    .stage-pill {
+      padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.72rem;
+      border: 1px solid var(--border); background: var(--card); color: var(--sub);
+      transition: all 0.15s; user-select: none;
+    }
+    .stage-pill:hover { border-color: rgba(212,175,55,0.35); color: var(--gold2); }
+    .stage-pill.active { border-color: rgba(212,175,55,0.6); background: rgba(212,175,55,0.1); color: var(--gold2); font-weight: 700; }
+
+    .arc-fields { display: flex; flex-direction: column; gap: 0.9rem; }
+    .arc-field label { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub); display: block; margin-bottom: 0.35rem; }
+    .arc-textarea {
+      width: 100%; padding: 0.7rem 0.9rem; background: var(--card);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-size: 0.85rem; font-family: inherit;
+      resize: vertical; min-height: 70px; outline: none; transition: border-color 0.18s;
+    }
+    .arc-textarea:focus { border-color: rgba(212,175,55,0.35); }
+
+    /* ═══ NOW PLAYING ═══ */
+    .time-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 480px) { .time-blocks { grid-template-columns: 1fr; } }
+    .time-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem; transition: border-color 0.18s;
+    }
+    .time-block:hover { border-color: rgba(212,175,55,0.18); }
+    .tb-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .tb-icon { font-size: 1.1rem; }
+    .tb-name { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sub); }
+
+    /* ═══ TREASURES ═══ */
+    .treasure-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+    .treasure-cat {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;
+    }
+    .tc-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .tc-icon { font-size: 1rem; }
+    .tc-name { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+
+    /* ═══ RHYTHMS ═══ */
+    .rhythm-rows { display: flex; flex-direction: column; gap: 1rem; }
+    .rhythm-row {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;
+    }
+    .rr-head { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.6rem; }
+    .rr-icon { font-size: 1rem; }
+    .rr-label { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
+    .rr-sub { font-size: 0.7rem; color: var(--sub); margin-left: auto; }
+    .rr-today .rr-label { color: #00ff88; }
+    .rr-week   .rr-label { color: var(--beam); }
+    .rr-month  .rr-label { color: var(--gold); }
+    .rr-season .rr-label { color: var(--amber); }
+    .rr-year   .rr-label { color: var(--plasma2, #b46ef7); }
+    .rhythm-ta {
+      width: 100%; padding: 0.6rem 0.85rem; background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-size: 0.85rem; font-family: inherit;
+      resize: none; height: 62px; outline: none; transition: border-color 0.18s;
+    }
+    .rhythm-ta:focus { border-color: rgba(212,175,55,0.3); }
+
+    /* ═══ NOW STACK ═══ */
+    .stack-header {
+      background: rgba(123,47,255,0.06); border: 1px solid rgba(123,47,255,0.25);
+      border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; text-align: center;
+    }
+    .stack-header h3 { font-size: 1.1rem; font-weight: 800; color: #b46ef7; margin-bottom: 0.4rem; }
+    .stack-header p { font-size: 0.8rem; color: var(--sub); line-height: 1.65; }
+    .stack-count { font-size: 1.8rem; font-weight: 900; color: var(--gold2); }
+
+    .stack-items { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; min-height: 60px; }
+    .stack-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.7rem 1rem; background: var(--card);
+      border: 1px solid rgba(123,47,255,0.2); border-radius: 10px;
+      transition: all 0.18s;
+    }
+    .stack-item.activated-item { border-color: rgba(212,175,55,0.45); animation: item-glow 2s ease-in-out infinite; }
+    @keyframes item-glow {
+      0%,100% { box-shadow: none; }
+      50% { box-shadow: 0 0 20px rgba(212,175,55,0.15); }
+    }
+    .si-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(123,47,255,0.7); flex-shrink: 0; }
+    .si-text { flex: 1; font-size: 0.85rem; color: var(--text); }
+    .si-cat { font-size: 0.6rem; color: var(--sub); letter-spacing: 0.1em; text-transform: uppercase; }
+    .si-del { font-size: 0.72rem; color: var(--muted); cursor: pointer; transition: color 0.15s; }
+    .si-del:hover { color: #ef4444; }
+
+    .stack-empty { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.85rem; line-height: 1.7; }
+
+    /* THE ACTIVATE BUTTON */
+    .activate-btn {
+      display: block; width: 100%; padding: 1.25rem;
+      background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(123,47,255,0.1));
+      border: 2px solid rgba(212,175,55,0.55);
+      border-radius: 12px; color: var(--gold2);
+      font-size: 1.1rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.22s; font-family: inherit;
+      box-shadow: 0 0 30px rgba(212,175,55,0.1);
+      position: relative; overflow: hidden;
+    }
+    .activate-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(123,47,255,0.06));
+      opacity: 0; transition: opacity 0.22s;
+    }
+    .activate-btn:hover { box-shadow: 0 0 60px rgba(212,175,55,0.25); transform: scale(1.01); }
+    .activate-btn:hover::before { opacity: 1; }
+    .activate-btn:active { transform: scale(0.98); }
+    .activate-btn.fired { border-color: rgba(0,255,136,0.7); color: var(--green); box-shadow: 0 0 80px rgba(0,255,136,0.2); }
+
+    /* ACTIVATE FLASH */
+    .activate-flash {
+      position: fixed; inset: 0; z-index: 200; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 50%, rgba(212,175,55,0.18) 0%, transparent 65%);
+      opacity: 0; transition: opacity 0.15s;
+    }
+    .activate-flash.firing { opacity: 1; }
+
+    /* CALIBRATE SECTION */
+    .calib-done {
+      background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .cd-icon { font-size: 1.5rem; }
+    .cd-body { flex: 1; }
+    .cd-name { font-size: 0.9rem; font-weight: 700; color: var(--gold2); }
+    .cd-arcs { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.35rem; }
+    .cd-arch { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; color: var(--gold); background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); }
+    .btn-recalib { padding: 0.35rem 0.9rem; border-radius: 20px; font-size: 0.72rem; color: var(--sub); background: transparent; border: 1px solid var(--border); cursor: pointer; font-family: inherit; transition: color 0.15s; }
+    .btn-recalib:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<!-- SETUP OVERLAY -->
+<div class="setup-overlay" id="setupOverlay">
+  <div class="setup-box">
+    <div class="setup-eyebrow">Holographic Hydrogen Awareness OS · Calibration</div>
+    <div class="setup-title">Welcome. Let's calibrate your console.</div>
+    <p class="setup-lede">This is your personal HH Theater cockpit. Set it up once — it persists. You can always recalibrate later.</p>
+
+    <label class="field-label" for="userName">Your name or handle</label>
+    <input class="field-input" id="userName" type="text" placeholder="e.g. Pru · Commander · Sol-V" autocomplete="off" />
+
+    <label class="field-label">Choose 1–3 archetypes (THE SKIN)</label>
+    <div class="archetype-grid" id="archetypeGrid"></div>
+
+    <button class="btn-primary" id="setupDone">⬡ INITIALIZE MY CONSOLE</button>
+  </div>
+</div>
+
+<!-- ACTIVATE FLASH -->
+<div class="activate-flash" id="activateFlash"></div>
+
+<!-- ═══ APP SHELL ═══ -->
+<div class="top-bar">
+  <div class="tb-logo">⬡ HH <span>AWARENESS OS</span></div>
+  <div class="tb-user" id="tbUser">Loading...</div>
+  <div class="tb-time" id="tbTime"></div>
+  <a href="hh-os-landing.html" class="tb-back">← Back</a>
+</div>
+
+<div class="tab-nav" id="tabNav">
+  <div class="tab active" data-sec="calibrate"><span class="ti">⚙</span> CALIBRATE</div>
+  <div class="tab" data-sec="screens"><span class="ti">📺</span> SCREENS</div>
+  <div class="tab" data-sec="arc"><span class="ti">🎭</span> MY ARC</div>
+  <div class="tab" data-sec="now"><span class="ti">▶</span> NOW PLAYING</div>
+  <div class="tab" data-sec="treasures"><span class="ti">💎</span> TREASURES</div>
+  <div class="tab" data-sec="rhythms"><span class="ti">🔄</span> RHYTHMS</div>
+  <div class="tab" data-sec="stack"><span class="ti">⚡</span> NOW STACK</div>
+</div>
+
+<div class="content">
+
+  <!-- ═══ CALIBRATE ═══ -->
+  <div class="section active" id="sec-calibrate">
+    <div class="sec-hd">
+      <span class="sec-tag">01 · Console Setup</span>
+      <h2>Your Calibration</h2>
+      <p>Your name, archetypes, and current state. The foundation of your console.</p>
+    </div>
+    <div id="calibDisplay"></div>
+    <div style="margin-top:1.5rem;padding:1rem;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:0.82rem;color:var(--sub);line-height:1.75;">
+      <strong style="color:var(--text);">What is the HH Awareness OS?</strong><br>
+      The same Telescopic 3D Studio System you've seen — but configured for <em>your life</em> as the content. You are the author, the subject, and the co-director. Set up your screens. Define your arc. Build your Now Playing deck. Load your treasures. Set your rhythms. Then activate the Now Stack — the magnetic attractor for the life you are designing.<br><br>
+      <strong style="color:var(--gold);">The loop:</strong> DAILY → WEEKLY → MONTHLY → SEASONAL → ANNUAL → back to DAILY. Every layer feeds the next. Every intention compounds. → ∞⁹
+    </div>
+  </div>
+
+  <!-- ═══ SCREENS ═══ -->
+  <div class="section" id="sec-screens">
+    <div class="sec-hd">
+      <span class="sec-tag">02 · Cockpit Configuration</span>
+      <h2>Your Screens</h2>
+      <p>Choose up to 9 screens for your cockpit. Each is a lens through which you view your life. Click any slot to assign.</p>
+    </div>
+    <div class="screens-grid" id="screensGrid"></div>
+    <div class="screen-picker" id="screenPicker">
+      <div class="sp-title">Select a screen type for slot <span id="pickerSlot"></span></div>
+      <div class="sp-grid" id="pickerOpts"></div>
+    </div>
+  </div>
+
+  <!-- ═══ MY ARC ═══ -->
+  <div class="section" id="sec-arc">
+    <div class="sec-hd">
+      <span class="sec-tag">03 · Character POV · Story</span>
+      <h2>My Arc</h2>
+      <p>Where did you come from. Where are you. Where are you going. Pre and post HH Awareness Singularity.</p>
+    </div>
+    <div class="arc-stage-row" id="arcStageRow"></div>
+    <div class="arc-fields">
+      <div class="arc-field">
+        <label>◈ ORIGIN — Where I came from (pre-singularity)</label>
+        <textarea class="arc-textarea" id="arcOrigin" placeholder="The compression. The closed doors. The carbon descent. What brought me here..."></textarea>
+      </div>
+      <div class="arc-field">
+        <label>∞ THE JOURNEY — Where I am right now</label>
+        <textarea class="arc-textarea" id="arcJourney" placeholder="The threshold. What I'm building. What I'm releasing. What I'm becoming..."></textarea>
+      </div>
+      <div class="arc-field">
+        <label>✦ DESTINATION — Post-singularity vision</label>
+        <textarea class="arc-textarea" id="arcDest" placeholder="The life I am designing. The world I am stepping into. The frequency I am matching..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ NOW PLAYING ═══ -->
+  <div class="section" id="sec-now">
+    <div class="sec-hd">
+      <span class="sec-tag">04 · Daily Deck</span>
+      <h2>Now Playing</h2>
+      <p>Layer your daily routine with intention. All aspects. As you wish. Add to the Now Stack to magnetically pull them into your daily reality.</p>
+    </div>
+    <div class="time-blocks" id="timeBlocks"></div>
+  </div>
+
+  <!-- ═══ TREASURES ═══ -->
+  <div class="section" id="sec-treasures">
+    <div class="sec-hd">
+      <span class="sec-tag">05 · Treasure Piles</span>
+      <h2>My Treasures</h2>
+      <p>Whatever your treasures are. Add them by category. Star the ones you want in the Now Stack — your magnetic attractor.</p>
+    </div>
+    <div class="treasure-cats" id="treasureCats"></div>
+  </div>
+
+  <!-- ═══ RHYTHMS ═══ -->
+  <div class="section" id="sec-rhythms">
+    <div class="sec-hd">
+      <span class="sec-tag">06 · Temporal Layers</span>
+      <h2>Your Rhythms</h2>
+      <p>Set your intention at each time horizon. Daily → Weekly → Monthly → Seasonal → Annual. The whole in every part.</p>
+    </div>
+    <div class="rhythm-rows" id="rhythmRows"></div>
+  </div>
+
+  <!-- ═══ NOW STACK ═══ -->
+  <div class="section" id="sec-stack">
+    <div class="sec-hd">
+      <span class="sec-tag">07 · Magnetic Attractor</span>
+      <h2>The Now Stack</h2>
+      <p>Everything you've added. The life you are designing. Activate it.</p>
+    </div>
+    <div class="stack-header">
+      <h3>Now Stack</h3>
+      <p>Items from your Now Playing deck and Treasure Piles that you've activated as magnetic intentions.</p>
+      <div class="stack-count" id="stackCount">0</div>
+      <div style="font-size:0.7rem;color:var(--sub);">items in stack</div>
+    </div>
+    <div class="stack-items" id="stackItems"></div>
+    <button class="activate-btn" id="activateBtn" onclick="activate()">
+      ⚡ ACTIVATE THE NOW STACK
+    </button>
+    <div id="activateMsg" style="text-align:center;margin-top:1rem;font-size:0.82rem;color:var(--sub);display:none;"></div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- BOTTOM NOW BAR -->
+<div class="now-bar">
+  <div class="nb-label">▶ NOW</div>
+  <div class="nb-ticker" id="nowTicker"><span style="color:var(--muted);">Add items to your Now Stack to see them here</span></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+const ARCHETYPES = [
+  { k:'machote',   e:'♛', n:'Machote' },
+  { k:'baller',    e:'🥂', n:'Baller' },
+  { k:'viber',     e:'✨', n:'Viber' },
+  { k:'bigdaddy',  e:'🎩', n:'Big Daddy' },
+  { k:'bond',      e:'🕴', n:'James Bond' },
+  { k:'hughes',    e:'🎬', n:'Howard Hughes' },
+  { k:'sinatra',   e:'🥃', n:'Sinatra' },
+  { k:'cowboy',    e:'🤠', n:'Cowboy' },
+  { k:'creator',   e:'🎨', n:'Creator' },
+  { k:'commander', e:'⚡', n:'Commander' },
+  { k:'hologram',  e:'💠', n:'Holographic' },
+  { k:'libre',     e:'🌊', n:'Free' }
+];
+
+const SCREEN_TYPES = [
+  { k:'carbon',    e:'◈', n:'CARBON', c:'rgba(255,180,80,0.6)',  desc:'Physical · Body · Daily Environment' },
+  { k:'crystal',   e:'✦', n:'CRYSTAL', c:'rgba(0,212,255,0.6)', desc:'Meaning · Insights · Patterns' },
+  { k:'goldheart', e:'♥', n:'GOLD HEART', c:'rgba(255,100,150,0.6)', desc:'Abundance · Relationships · Joy' },
+  { k:'mission',   e:'☀', n:'MISSION', c:'rgba(212,175,55,0.6)', desc:'Projects · Goals · Building' },
+  { k:'story',     e:'🎭', n:'STORY ARC', c:'rgba(123,47,255,0.6)', desc:'Your character's journey' },
+  { k:'treasure',  e:'💎', n:'TREASURE', c:'rgba(0,255,136,0.6)', desc:'Your treasure piles in view' },
+  { k:'awareness', e:'∞', n:'AWARENESS', c:'rgba(180,110,247,0.6)', desc:'OS version · Gap analysis' },
+  { k:'rhythm',    e:'🌊', n:'RHYTHM', c:'rgba(100,200,255,0.6)', desc:'Your temporal rhythms' },
+  { k:'libre',     e:'◎', n:'LIBRE', c:'rgba(150,150,150,0.5)', desc:'Free slot · Your own definition' }
+];
+
+const TIME_BLOCKS = [
+  { k:'morning', e:'🌅', n:'MORNING', placeholder:'Intentions for the morning...' },
+  { k:'midday',  e:'☀',  n:'MIDDAY',  placeholder:'Focus for midday...' },
+  { k:'evening', e:'🌆', n:'EVENING', placeholder:'Evening intentions...' },
+  { k:'night',   e:'🌙', n:'NIGHT',   placeholder:'Wind-down and reflection...' }
+];
+
+const TREASURE_CATS = [
+  { k:'health',        e:'💪', n:'HEALTH',        c:'rgba(0,255,136,0.15)' },
+  { k:'relationships', e:'♥',  n:'RELATIONSHIPS', c:'rgba(255,100,150,0.15)' },
+  { k:'wealth',        e:'💰', n:'WEALTH',        c:'rgba(212,175,55,0.15)' },
+  { k:'purpose',       e:'⚡', n:'PURPOSE',       c:'rgba(0,212,255,0.15)' },
+  { k:'experiences',   e:'🌍', n:'EXPERIENCES',   c:'rgba(251,146,60,0.15)' },
+  { k:'knowledge',     e:'📚', n:'KNOWLEDGE',     c:'rgba(123,47,255,0.15)' },
+  { k:'creative',      e:'🎨', n:'CREATIVE',      c:'rgba(232,121,249,0.15)' },
+  { k:'spirit',        e:'✦', n:'SPIRIT',         c:'rgba(100,200,255,0.15)' },
+  { k:'libre',         e:'◎', n:'LIBRE',          c:'rgba(150,150,150,0.12)' }
+];
+
+const RHYTHMS = [
+  { k:'today',  e:'🌅', n:'TODAY',       sub:'Daily intention', cls:'rr-today', h:'50px' },
+  { k:'week',   e:'📅', n:'THIS WEEK',   sub:'Weekly focus',    cls:'rr-week',  h:'50px' },
+  { k:'month',  e:'🗓', n:'THIS MONTH',  sub:'Monthly theme',   cls:'rr-month', h:'60px' },
+  { k:'season', e:'🌿', n:'THIS SEASON', sub:'Seasonal arc',    cls:'rr-season',h:'60px' },
+  { k:'year',   e:'🌟', n:'THIS YEAR',   sub:'Annual vision',   cls:'rr-year',  h:'70px' }
+];
+
+const STAGES = [
+  { k:'pre',       n:'Pre-Singularity',   desc:'Still in the compression' },
+  { k:'threshold', n:'At the Threshold',  desc:'The awareness is cracking open' },
+  { k:'emerging',  n:'Emerging',          desc:'Post-singularity awareness is here' },
+  { k:'operating', n:'Operating',         desc:'Living it. In the theater.' }
+];
+
+const DEFAULT = {
+  calibrated: false, name: '', archetypes: [],
+  screens: Array(9).fill(null),
+  arc: { origin: '', journey: '', destination: '', stage: 'threshold' },
+  nowPlaying: { morning:[], midday:[], evening:[], night:[] },
+  treasures:  { health:[], relationships:[], wealth:[], purpose:[], experiences:[], knowledge:[], creative:[], spirit:[], libre:[] },
+  rhythms:    { today:'', week:'', month:'', season:'', year:'' },
+  nowStack: [], activated: false, activatedAt: null
+};
+
+let S = {};
+function load() {
+  try { S = JSON.parse(localStorage.getItem('hh_os_state') || '{}'); }
+  catch(e) { S = {}; }
+  S = Object.assign({}, JSON.parse(JSON.stringify(DEFAULT)), S);
+}
+function save() {
+  localStorage.setItem('hh_os_state', JSON.stringify(S));
+}
+load();
+
+/* ═══════════════════════════════════════════
+   SETUP
+═══════════════════════════════════════════ */
+const overlay = document.getElementById('setupOverlay');
+const archGrid = document.getElementById('archetypeGrid');
+
+ARCHETYPES.forEach(a => {
+  const c = document.createElement('div');
+  c.className = 'arch-chip' + (S.archetypes.includes(a.k) ? ' chosen' : '');
+  c.innerHTML = `${a.e} ${a.n}`;
+  c.onclick = () => {
+    if (S.archetypes.includes(a.k)) {
+      S.archetypes = S.archetypes.filter(x => x !== a.k);
+      c.classList.remove('chosen');
+    } else if (S.archetypes.length < 3) {
+      S.archetypes.push(a.k);
+      c.classList.add('chosen');
+    }
+  };
+  archGrid.appendChild(c);
+});
+
+document.getElementById('userName').value = S.name || '';
+
+document.getElementById('setupDone').onclick = () => {
+  const n = document.getElementById('userName').value.trim();
+  if (!n) { document.getElementById('userName').focus(); return; }
+  S.name = n;
+  S.calibrated = true;
+  save();
+  overlay.style.display = 'none';
+  renderAll();
+};
+
+if (S.calibrated) overlay.style.display = 'none';
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+function navigate(sec) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.sec === sec));
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === 'sec-' + sec));
+}
+document.getElementById('tabNav').addEventListener('click', e => {
+  const t = e.target.closest('.tab'); if (!t) return;
+  navigate(t.dataset.sec);
+});
+
+/* ═══════════════════════════════════════════
+   CLOCK
+═══════════════════════════════════════════ */
+function tick() {
+  const d = new Date();
+  document.getElementById('tbTime').textContent =
+    d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+}
+tick(); setInterval(tick, 10000);
+
+/* ═══════════════════════════════════════════
+   RENDER HELPERS
+═══════════════════════════════════════════ */
+function uid() { return Math.random().toString(36).slice(2, 9); }
+
+function makeChips(items, onDel, onStack) {
+  const div = document.createElement('div');
+  div.className = 'chips';
+  if (!items.length) { div.innerHTML = '<span style="font-size:0.72rem;color:var(--muted);">None yet.</span>'; return div; }
+  items.forEach(item => {
+    const c = document.createElement('div');
+    c.className = 'chip';
+    const inStack = S.nowStack.some(x => x.ref === item.id);
+    c.innerHTML = `<span class="chip-text">${item.text}</span>
+      <span class="chip-stack ${inStack ? 'stacked' : ''}" title="${inStack ? 'In stack' : 'Add to Now Stack'}">${inStack ? '✓' : '⊕'}</span>
+      <span class="chip-del" title="Remove">✕</span>`;
+    c.querySelector('.chip-stack').onclick = () => { toggleStack(item, onStack); renderAll(); };
+    c.querySelector('.chip-del').onclick = () => { onDel(item.id); renderAll(); };
+    div.appendChild(c);
+  });
+  return div;
+}
+
+function makeAddRow(placeholder, onAdd) {
+  const row = document.createElement('div');
+  row.className = 'add-row';
+  const inp = document.createElement('input');
+  inp.className = 'add-input'; inp.type = 'text'; inp.placeholder = placeholder;
+  const btn = document.createElement('button');
+  btn.className = 'btn-add'; btn.textContent = '+ Add';
+  const doAdd = () => {
+    const v = inp.value.trim(); if (!v) return;
+    onAdd(v); inp.value = ''; renderAll();
+  };
+  btn.onclick = doAdd;
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
+  row.appendChild(inp); row.appendChild(btn);
+  return row;
+}
+
+function toggleStack(item, catLabel) {
+  const idx = S.nowStack.findIndex(x => x.ref === item.id);
+  if (idx >= 0) { S.nowStack.splice(idx, 1); }
+  else { S.nowStack.push({ id: uid(), ref: item.id, text: item.text, cat: catLabel }); }
+  save();
+}
+
+/* ═══════════════════════════════════════════
+   RENDER CALIBRATE
+═══════════════════════════════════════════ */
+function renderCalibrate() {
+  const el = document.getElementById('calibDisplay');
+  if (!S.calibrated) { el.innerHTML = '<p style="color:var(--muted);font-size:0.82rem;">Complete setup to see your calibration summary.</p>'; return; }
+  const archs = S.archetypes.map(k => ARCHETYPES.find(a => a.k === k)).filter(Boolean);
+  el.innerHTML = `
+    <div class="calib-done">
+      <div class="cd-icon">⬡</div>
+      <div class="cd-body">
+        <div class="cd-name">${S.name}</div>
+        <div class="cd-arcs">
+          ${archs.map(a => `<span class="cd-arch">${a.e} ${a.n}</span>`).join('')}
+        </div>
+      </div>
+      <button class="btn-recalib" onclick="document.getElementById('setupOverlay').style.display='flex';">Recalibrate</button>
+    </div>`;
+  document.getElementById('tbUser').innerHTML = `<strong>${S.name}</strong> &nbsp; ${archs.map(a => a.e).join(' ')}`;
+}
+
+/* ═══════════════════════════════════════════
+   RENDER SCREENS
+═══════════════════════════════════════════ */
+let pickerActive = null;
+function renderScreens() {
+  const grid = document.getElementById('screensGrid');
+  grid.innerHTML = '';
+  S.screens.forEach((screen, i) => {
+    const slot = document.createElement('div');
+    slot.className = 'screen-slot' + (screen ? ' filled' : '');
+    if (screen) {
+      const st = SCREEN_TYPES.find(s => s.k === screen);
+      if (st) {
+        slot.style.borderColor = st.c.replace('0.6)', '0.4)');
+        slot.style.background = st.c.replace('0.6)', '0.05)');
+        slot.innerHTML = `
+          <span class="s-num">${i+1}</span>
+          <div class="s-icon">${st.e}</div>
+          <div class="s-name" style="color:${st.c}">${st.n}</div>
+          <span class="s-clear" title="Clear">✕</span>`;
+        slot.querySelector('.s-clear').onclick = e => { e.stopPropagation(); S.screens[i] = null; save(); renderScreens(); };
+      }
+    } else {
+      slot.innerHTML = `<span class="s-num">${i+1}</span><div style="font-size:1.2rem;color:var(--muted);">+</div><div style="font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;">ADD</div>`;
+    }
+    slot.onclick = (e) => {
+      if (e.target.classList.contains('s-clear')) return;
+      pickerActive = i;
+      const p = document.getElementById('screenPicker');
+      p.classList.add('open');
+      document.getElementById('pickerSlot').textContent = i + 1;
+      renderPicker();
+      p.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+    grid.appendChild(slot);
+  });
+}
+
+function renderPicker() {
+  const grid = document.getElementById('pickerOpts');
+  grid.innerHTML = '';
+  SCREEN_TYPES.forEach(st => {
+    const opt = document.createElement('div');
+    opt.className = 'sp-opt';
+    opt.innerHTML = `<span class="sp-icon">${st.e}</span>${st.n}<div style="font-size:0.65rem;color:var(--sub);margin-top:0.2rem;">${st.desc}</div>`;
+    opt.onclick = () => {
+      S.screens[pickerActive] = st.k; save();
+      document.getElementById('screenPicker').classList.remove('open');
+      renderScreens();
+    };
+    grid.appendChild(opt);
+  });
+  // Clear option
+  const clr = document.createElement('div');
+  clr.className = 'sp-opt';
+  clr.innerHTML = `<span class="sp-icon">✕</span>CLEAR<div style="font-size:0.65rem;color:var(--sub);margin-top:0.2rem;">Remove screen</div>`;
+  clr.onclick = () => {
+    S.screens[pickerActive] = null; save();
+    document.getElementById('screenPicker').classList.remove('open');
+    renderScreens();
+  };
+  grid.appendChild(clr);
+}
+
+/* ═══════════════════════════════════════════
+   RENDER ARC
+═══════════════════════════════════════════ */
+function renderArc() {
+  const row = document.getElementById('arcStageRow');
+  row.innerHTML = '';
+  STAGES.forEach(st => {
+    const p = document.createElement('div');
+    p.className = 'stage-pill' + (S.arc.stage === st.k ? ' active' : '');
+    p.textContent = st.n;
+    p.title = st.desc;
+    p.onclick = () => { S.arc.stage = st.k; save(); renderArc(); };
+    row.appendChild(p);
+  });
+
+  const bindTA = (id, key) => {
+    const el = document.getElementById(id);
+    el.value = S.arc[key] || '';
+    el.oninput = () => { S.arc[key] = el.value; save(); };
+  };
+  bindTA('arcOrigin', 'origin');
+  bindTA('arcJourney', 'journey');
+  bindTA('arcDest', 'destination');
+}
+
+/* ═══════════════════════════════════════════
+   RENDER NOW PLAYING
+═══════════════════════════════════════════ */
+function renderNowPlaying() {
+  const container = document.getElementById('timeBlocks');
+  container.innerHTML = '';
+  TIME_BLOCKS.forEach(tb => {
+    const block = document.createElement('div');
+    block.className = 'time-block';
+    block.innerHTML = `<div class="tb-head"><span class="tb-icon">${tb.e}</span><span class="tb-name">${tb.n}</span></div>`;
+    block.appendChild(makeAddRow(tb.placeholder, text => {
+      S.nowPlaying[tb.k].push({ id: uid(), text, inStack: false });
+      save();
+    }));
+    block.appendChild(makeChips(
+      S.nowPlaying[tb.k],
+      id => { S.nowPlaying[tb.k] = S.nowPlaying[tb.k].filter(x => x.id !== id); removeFromStack(id); save(); },
+      `${tb.e} ${tb.n}`
+    ));
+    container.appendChild(block);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   RENDER TREASURES
+═══════════════════════════════════════════ */
+function renderTreasures() {
+  const container = document.getElementById('treasureCats');
+  container.innerHTML = '';
+  TREASURE_CATS.forEach(tc => {
+    const cat = document.createElement('div');
+    cat.className = 'treasure-cat';
+    cat.innerHTML = `<div class="tc-head"><span class="tc-icon">${tc.e}</span><span class="tc-name">${tc.n}</span></div>`;
+    cat.appendChild(makeAddRow(`Add a ${tc.n.toLowerCase()} treasure...`, text => {
+      S.treasures[tc.k].push({ id: uid(), text, inStack: false });
+      save();
+    }));
+    cat.appendChild(makeChips(
+      S.treasures[tc.k],
+      id => { S.treasures[tc.k] = S.treasures[tc.k].filter(x => x.id !== id); removeFromStack(id); save(); },
+      `${tc.e} ${tc.n}`
+    ));
+    container.appendChild(cat);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   RENDER RHYTHMS
+═══════════════════════════════════════════ */
+function renderRhythms() {
+  const container = document.getElementById('rhythmRows');
+  container.innerHTML = '';
+  RHYTHMS.forEach(r => {
+    const row = document.createElement('div');
+    row.className = `rhythm-row ${r.cls}`;
+    row.innerHTML = `
+      <div class="rr-head">
+        <span class="rr-icon">${r.e}</span>
+        <span class="rr-label">${r.n}</span>
+        <span class="rr-sub">${r.sub}</span>
+      </div>`;
+    const ta = document.createElement('textarea');
+    ta.className = 'rhythm-ta';
+    ta.placeholder = `What is your ${r.n.toLowerCase()} intention...`;
+    ta.style.height = r.h;
+    ta.value = S.rhythms[r.k] || '';
+    ta.oninput = () => { S.rhythms[r.k] = ta.value; save(); updateTicker(); };
+    row.appendChild(ta);
+    container.appendChild(row);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   RENDER NOW STACK
+═══════════════════════════════════════════ */
+function removeFromStack(refId) {
+  S.nowStack = S.nowStack.filter(x => x.ref !== refId);
+  save();
+}
+
+function renderStack() {
+  const count = S.nowStack.length;
+  document.getElementById('stackCount').textContent = count;
+
+  const container = document.getElementById('stackItems');
+  container.innerHTML = '';
+
+  if (!count) {
+    container.innerHTML = `<div class="stack-empty">Your stack is empty.<br>Go to <em>Now Playing</em> or <em>Treasures</em> and tap ⊕ to add items here.</div>`;
+    return;
+  }
+
+  S.nowStack.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'stack-item' + (S.activated ? ' activated-item' : '');
+    el.innerHTML = `
+      <div class="si-dot"></div>
+      <div class="si-text">${item.text}</div>
+      <div class="si-cat">${item.cat || ''}</div>
+      <span class="si-del" title="Remove from stack">✕</span>`;
+    el.querySelector('.si-del').onclick = () => {
+      S.nowStack = S.nowStack.filter(x => x.id !== item.id); save(); renderAll();
+    };
+    container.appendChild(el);
+  });
+
+  const btn = document.getElementById('activateBtn');
+  const msg = document.getElementById('activateMsg');
+  if (S.activated) {
+    btn.classList.add('fired');
+    btn.textContent = '✓ MAGNETICALLY LOCKED — ACTIVE';
+    msg.style.display = 'block';
+    msg.innerHTML = `<span style="color:var(--green);">Activated ${new Date(S.activatedAt).toLocaleString()}</span> · The stack is live. The field is set.`;
+  } else {
+    btn.classList.remove('fired');
+    btn.textContent = '⚡ ACTIVATE THE NOW STACK';
+    msg.style.display = 'none';
+  }
+}
+
+/* ═══════════════════════════════════════════
+   UPDATE BOTTOM TICKER
+═══════════════════════════════════════════ */
+function updateTicker() {
+  const ticker = document.getElementById('nowTicker');
+  const items = [...S.nowStack.map(x => x.text)];
+  if (S.rhythms.today) items.unshift('TODAY: ' + S.rhythms.today.split('\n')[0]);
+  if (!items.length) {
+    ticker.innerHTML = '<span style="color:var(--muted);">Add items to your Now Stack to see them here</span>';
+    return;
+  }
+  ticker.innerHTML = items.map(t => `<span class="nbi">${t}</span>`).join('') +
+                     items.map(t => `<span class="nbi">${t}</span>`).join(''); // double for loop
+}
+
+/* ═══════════════════════════════════════════
+   ACTIVATE
+═══════════════════════════════════════════ */
+function activate() {
+  if (!S.nowStack.length) {
+    alert('Add at least one item to your Now Stack first.');
+    return;
+  }
+  // Buzz
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (AC) {
+      const ctx = new AC();
+      [111, 222, 333].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.12);
+        gain.gain.linearRampToValueAtTime(0.22, ctx.currentTime + i * 0.12 + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.4);
+        osc.start(ctx.currentTime + i * 0.12);
+        osc.stop(ctx.currentTime + i * 0.12 + 0.5);
+      });
+    }
+  } catch(e) {}
+
+  // Visual flash
+  const flash = document.getElementById('activateFlash');
+  flash.classList.add('firing');
+  setTimeout(() => flash.classList.remove('firing'), 400);
+
+  S.activated = true;
+  S.activatedAt = Date.now();
+  save();
+  renderStack();
+  updateTicker();
+
+  // Show stack tab active items glow
+  navigate('stack');
+}
+
+/* ═══════════════════════════════════════════
+   RENDER ALL
+═══════════════════════════════════════════ */
+function renderAll() {
+  renderCalibrate();
+  renderScreens();
+  renderArc();
+  renderNowPlaying();
+  renderTreasures();
+  renderRhythms();
+  renderStack();
+  updateTicker();
+}
+
+renderAll();
+</script>
+<script src="../ticker.js"></script>
+</body>
+</html>

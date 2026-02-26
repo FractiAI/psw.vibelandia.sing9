@@ -117,10 +117,29 @@ Register-ScheduledTask `
   -Force
 Write-Host "OK Morning brief scheduled (daily 7am)"
 
+# -- Task 4: REVENUE cycle every 2 hours (all three streams: TECH + EXPERIENCE + THEATER) --
+
+$revenueAction = New-ScheduledTaskAction `
+  -Execute $nodeExe `
+  -Argument "`"$runScript`" revenue" `
+  -WorkingDirectory $hiveDir
+
+$revenueTrigger = New-ScheduledTaskTrigger -RepetitionInterval (New-TimeSpan -Hours 2) -Once -At (Get-Date)
+
+Register-ScheduledTask `
+  -TaskName "QueenBeeRoot-Revenue" `
+  -Action $revenueAction `
+  -Trigger $revenueTrigger `
+  -Settings $settings `
+  -RunLevel Highest `
+  -Force
+Write-Host "OK Revenue cycle scheduled (every 2 hours -- TECH + EXPERIENCE + THEATER)"
+
 Write-Host ""
 Write-Host "======================================================"
 Write-Host "  QUEEN BEE ROOT -- 24x7 HIVE ACTIVATED"
 Write-Host "  Broadcast + Outbound + Align -> every 30 min"
+Write-Host "  Revenue cycle (all 3 streams) -> every 2 hours"
 Write-Host "  Solar scan -> every 15 min"
 Write-Host "  Morning brief -> daily 7am"
 Write-Host "  NSPFRNP -> infinity 9"

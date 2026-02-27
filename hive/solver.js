@@ -39,8 +39,8 @@ const MAX_ATTEMPTS    = parseInt(process.env.SOLVER_MAX_ATTEMPTS ?? '3', 10);
 // Gate 1 — pre-LLM metadata score (fast, no API calls): must be ≥ MATCH_THRESHOLD
 // Gate 2 — Claude feasibility score (deep read): must be ≥ FEASIBILITY_THRESHOLD
 // If 0 bounties pass both gates this cycle → correct outcome, log and exit clean.
-const MATCH_THRESHOLD       = parseFloat(process.env.MATCH_THRESHOLD       ?? '0.80'); // 80%+ only — quality over quantity
-const FEASIBILITY_THRESHOLD = parseFloat(process.env.FEASIBILITY_THRESHOLD ?? '0.82'); // LLM gate
+const MATCH_THRESHOLD       = parseFloat(process.env.MATCH_THRESHOLD       ?? '0.80'); // 80%+ only
+const FEASIBILITY_THRESHOLD = parseFloat(process.env.FEASIBILITY_THRESHOLD ?? '0.80'); // 80%+ only — matches user policy
 
 // Use Anthropic Claude if available, otherwise Groq (Llama 3.3 70B) — both are capable coders
 const LLM_PROVIDER = ANTHROPIC_KEY ? 'anthropic' : GROQ_KEY ? 'groq' : null;
@@ -592,19 +592,20 @@ const PRIORITY_TARGETS = [
     why:      'MCP integration in TypeScript — identical to our HIVE-MCP server. Issue #1301 confirmed open + $900 bounty label.',
     _matchScore: 1.0
   },
-  // ━━ GOLEM CLI MCP SERVER ($3,500) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // ━━ TWENTY CRM — x.ai / Grok LLM PROVIDER ($1850 bounty label confirmed) ━
+  // Verified 2026-02-27: issue #1850 open, TypeScript, our lane
   {
-    id:       'golem-cli-mcp-3500',
+    id:       'archestra-grok-provider-1850',
     platform: 'algora',
-    title:    'Golem CLI: Incorporate MCP Server',
-    amount:   3500,
+    title:    '[Provider] Add x.ai (Grok) support',
+    amount:   1850,
     currency: 'USD',
-    issueUrl: 'https://github.com/golemcloud/golem-cli/issues/275',
-    repoUrl:  'https://github.com/golemcloud/golem-cli',
+    issueUrl: 'https://github.com/archestra-ai/archestra/issues/1850',
+    repoUrl:  'https://github.com/archestra-ai/archestra',
     lang:     'typescript',
-    labels:   'bounty,mcp,cli',
-    why:      'We just built HIVE-MCP. Direct MCP server integration. Highest payout in queue. Attempt immediately.',
-    _matchScore: 0.98
+    labels:   'bounty,llm,provider',
+    why:      'TypeScript LLM provider integration. We know the x.ai API from SING9 LLM work. Clear pattern match.',
+    _matchScore: 0.92
   },
 ];
 

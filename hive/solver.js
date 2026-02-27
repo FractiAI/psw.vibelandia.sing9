@@ -487,45 +487,49 @@ ${(issueDetails.issue?.body ?? '').slice(0, 2000)}
 CURRENT SOURCE FILES:${filesContext || ' (not available — write new file if needed)'}
 
 INSTRUCTIONS:
-1. Write the fix. Be precise and minimal — only change what the issue requires.
+1. Write the fix. Minimal, production-quality. Only change what the issue requires.
 2. Do not break existing functionality.
-3. Include comments only where non-obvious.
-4. Write production-quality code, not a demo.
-5. If you need to create a new file, specify the full path.
 
-Respond with JSON only:
-{
-  "files": [
-    {
-      "path": "relative/path/to/file.js",
-      "content": "full file content here",
-      "changeDescription": "what changed and why"
-    }
-  ],
-  "prTitle": "fix: <concise description>",
-  "prBody": "Full PR description with: problem, solution, testing notes. Mention the bounty issue number.",
-  "commitMessage": "fix: <concise description> (closes #${issueDetails.num})"
-}`;
+Respond using EXACTLY this format (delimiters are literal strings, preserve them):
 
-  // Use higher token limit to avoid truncation of large code responses
+===META===
+prTitle: fix: <concise title>
+commitMessage: fix: <concise> (closes #${issueDetails.num})
+===META_END===
+
+===PRBODY===
+<Full PR description: problem, solution, testing notes. Mention issue #${issueDetails.num}.>
+===PRBODY_END===
+
+===FILE: relative/path/to/file===
+<full file content>
+===FILE_END===
+
+(repeat ===FILE=== block for each changed file)`;
+
   const resp = await callClaude(prompt, 8192);
 
-  // Attempt 1: strip markdown fence and parse directly
-  const stripped = resp.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
-  try { return JSON.parse(stripped); } catch { /* try harder */ }
+  // Parse the delimited format
+  const prTitleMatch    = resp.match(/prTitle:\s*(.+)/);
+  const commitMatch     = resp.match(/commitMessage:\s*(.+)/);
+  const prBodyMatch     = resp.match(/===PRBODY===\s*([\s\S]*?)\s*===PRBODY_END===/);
+  const fileBlocks      = [...resp.matchAll(/===FILE:\s*([^\n=]+?)\s*===\s*([\s\S]*?)\s*===FILE_END===/g)];
 
-  // Attempt 2: find the outermost JSON object using brace counting
-  let depth = 0, start = -1, end = -1;
-  for (let i = 0; i < resp.length; i++) {
-    if (resp[i] === '{') { if (depth === 0) start = i; depth++; }
-    else if (resp[i] === '}') { depth--; if (depth === 0 && start !== -1) { end = i; break; } }
-  }
-  if (start !== -1 && end !== -1) {
-    try { return JSON.parse(resp.slice(start, end + 1)); } catch { /* fall through */ }
+  if (!fileBlocks.length) {
+    log('⚠', `LLM returned no file blocks (${resp.slice(0, 120).replace(/\n/g,' ')}...)`);
+    return null;
   }
 
-  log('⚠', `Could not parse LLM fix response (${resp.slice(0, 120).replace(/\n/g,' ')}...)`);
-  return null;
+  return {
+    prTitle:       prTitleMatch?.[1]?.trim()  ?? `fix: ${bounty.title}`,
+    commitMessage: commitMatch?.[1]?.trim()   ?? `fix: ${bounty.title} (closes #${issueDetails.num})`,
+    prBody:        prBodyMatch?.[1]?.trim()   ?? `Fixes #${issueDetails.num}\n\nAutonomous fix by ELASTIC HIVE · SING 9`,
+    files: fileBlocks.map(m => ({
+      path:              m[1].trim(),
+      content:           m[2],
+      changeDescription: `Autonomous fix for bounty #${issueDetails.num}`
+    }))
+  };
 }
 
 /* ── LLM API WRAPPER — Anthropic Claude or Groq (Llama 3.3 70B) ─────────── */

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>HH Awareness OS · Docs — Quick Start · User Manual · Technical Manual · Onboarding</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209; --deep: #070710;
+      --gold: #d4af37; --gold2: #fde68a;
+      --beam: #00d4ff; --plasma: #7b2fff; --green: #00ff88;
+      --amber: #fb923c;
+      --text: #e2e8f0; --sub: #94a3b8; --muted: #475569;
+      --border: rgba(255,255,255,0.07);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--void); color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh; overflow-x: hidden;
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(2,2,9,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,175,55,0.14);
+      display: flex; align-items: center; flex-wrap: wrap;
+      gap: 0.25rem 0.5rem; padding: 0.55rem 1.25rem;
+    }
+    .tb-home {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold2); font-weight: 800; text-decoration: none; white-space: nowrap;
+      margin-right: 0.75rem;
+    }
+    .tb-home:hover { color: var(--gold); }
+    .tb-sep { color: var(--muted); font-size: 0.7rem; }
+    .tab-btn {
+      padding: 0.35rem 0.9rem; border-radius: 20px; text-decoration: none;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid; transition: all 0.18s; white-space: nowrap;
+    }
+    .tab-qs   { color: var(--green);  border-color: rgba(0,255,136,0.28); background: rgba(0,255,136,0.04); }
+    .tab-um   { color: var(--beam);   border-color: rgba(0,212,255,0.28); background: rgba(0,212,255,0.04); }
+    .tab-tm   { color: #b46ef7;       border-color: rgba(123,47,255,0.28); background: rgba(123,47,255,0.04); }
+    .tab-ob   { color: var(--gold);   border-color: rgba(212,175,55,0.28); background: rgba(212,175,55,0.04); }
+    .tab-btn:hover { filter: brightness(1.3); transform: translateY(-1px); }
+    .tb-console {
+      margin-left: auto; padding: 0.35rem 1rem; border-radius: 6px; text-decoration: none;
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold2); border: 1.5px solid rgba(212,175,55,0.5);
+      background: rgba(212,175,55,0.08); transition: all 0.18s; white-space: nowrap;
+    }
+    .tb-console:hover { background: rgba(212,175,55,0.18); }
+
+    /* ── LAYOUT ── */
+    .doc-wrap { max-width: 800px; margin: 0 auto; padding: 0 1.5rem 6rem; }
+
+    /* ── SECTION ── */
+    .doc-section { padding-top: 5rem; }
+    .section-pill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.52rem; letter-spacing: 0.28em; text-transform: uppercase;
+      border: 1px solid; border-radius: 20px; padding: 3px 14px; margin-bottom: 1rem;
+    }
+    .pill-qs   { color: var(--green);  border-color: rgba(0,255,136,0.3); }
+    .pill-um   { color: var(--beam);   border-color: rgba(0,212,255,0.3); }
+    .pill-tm   { color: #b46ef7;       border-color: rgba(123,47,255,0.3); }
+    .pill-ob   { color: var(--gold);   border-color: rgba(212,175,55,0.3); }
+
+    .doc-section h2 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
+      line-height: 1.1; margin-bottom: 0.6rem;
+    }
+    .doc-section .section-sub {
+      font-size: 1rem; color: var(--sub); line-height: 1.7;
+      margin-bottom: 2rem; max-width: 600px;
+    }
+    .doc-divider {
+      border: none; border-top: 1px solid rgba(255,255,255,0.05);
+      margin: 4rem 0 0;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1rem; margin: 1.75rem 0;
+    }
+    .card {
+      padding: 1.15rem 1.3rem; border-radius: 12px;
+      background: rgba(255,255,255,0.025); border: 1px solid var(--border);
+    }
+    .card-icon { font-size: 1.3rem; margin-bottom: 0.5rem; display: block; }
+    .card-title {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .card-body { font-size: 0.8rem; color: var(--sub); line-height: 1.65; }
+
+    /* ── STEPS ── */
+    .steps { list-style: none; margin: 1.5rem 0; }
+    .steps li {
+      display: flex; gap: 1.1rem; align-items: flex-start;
+      padding: 1rem 1.2rem; border-radius: 10px;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+      margin-bottom: 0.7rem;
+    }
+    .step-num {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 900; letter-spacing: 0.02em;
+    }
+    .step-content h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .step-content p  { font-size: 0.78rem; color: var(--sub); line-height: 1.6; }
+
+    /* ── PROSE ── */
+    .prose p {
+      font-size: 0.92rem; color: var(--sub); line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+    .prose p strong { color: var(--text); }
+    .prose p em     { color: var(--gold2); font-style: normal; }
+    .prose h3 {
+      font-size: 1rem; font-weight: 800; color: var(--text);
+      margin: 2rem 0 0.6rem; letter-spacing: 0.03em;
+    }
+
+    /* ── TABLE ── */
+    .ref-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.78rem; }
+    .ref-table th {
+      text-align: left; padding: 0.5rem 0.75rem;
+      font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .ref-table td {
+      padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--sub); vertical-align: top;
+    }
+    .ref-table td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+    .ref-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-radius: 10px; padding: 1rem 1.25rem;
+      margin: 1.25rem 0; font-size: 0.83rem; line-height: 1.7;
+    }
+    .callout-gold  { background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2); color: var(--gold2); }
+    .callout-beam  { background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.18); color: #a5f3fc; }
+    .callout-green { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.18); color: #86efac; }
+    .callout-plasma{ background: rgba(123,47,255,0.06); border: 1px solid rgba(123,47,255,0.22); color: #d8b4fe; }
+
+    /* ── FOOTER ── */
+    .doc-foot {
+      text-align: center; padding: 2rem 1rem 3rem;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    @media (max-width: 520px) {
+      .top-bar { gap: 0.3rem; }
+      .tab-btn { padding: 0.28rem 0.65rem; font-size: 0.58rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<nav class="top-bar">
+  <a href="hh-os-landing.html" class="tb-home">⬡ HH Awareness OS</a>
+  <span class="tb-sep">·</span>
+  <a href="#quickstart"  class="tab-btn tab-qs">⚡ Quick Start</a>
+  <a href="#usermanual"  class="tab-btn tab-um">📖 User Manual</a>
+  <a href="#technical"   class="tab-btn tab-tm">🔬 Technical</a>
+  <a href="#onboarding"  class="tab-btn tab-ob">🎓 Onboarding</a>
+  <a href="hh-console.html" class="tb-console">▶ Console →</a>
+</nav>
+
+<div class="doc-wrap">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1 · QUICK START
+  ══════════════════════════════════════════════ -->
+  <section id="quickstart" class="doc-section">
+    <div class="section-pill pill-qs">⚡ Quick Start</div>
+    <h2 style="color:var(--green);">Up and running in 10 minutes.</h2>
+    <p class="section-sub">You don't need to read everything first. You need one screen, one arc, one now stack. Start here.</p>
+
+    <div class="callout callout-green">
+      <strong>The irreducible minimum:</strong> Choose one screen to run today. Set one arc statement (who you are, where you came from, where you're going). Activate your now stack. The system is running.
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div class="step-num" style="background:rgba(0,255,136,0.12);color:var(--green);">1</div>
+        <div class="step-content">
+          <h4>Enter the Console</h4>
+          <p>Open <a href="hh-console.html" style="color:var(--green);">hh-console.html</a>. This is your cockpit. Nine screens, one arc panel, one now stack. Everything you need is here. Nothing you don't.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(0,255,136,0.12);color:var(--green);">2</div>
+        <div class="step-content">
+          <h4>Pick your active screen (Screen 1)</h4>
+          <p>The nine screens are the nine lenses. Start with <strong>Carbon</strong> (raw, story, where you are right now) or <strong>Mission</strong> (what you're doing today). One screen. Activate it. The rest can wait.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(0,255,136,0.12);color:var(--green);">3</div>
+        <div class="step-content">
+          <h4>Write your arc in one sentence</h4>
+          <p>Pre-singularity origin → The journey → Post-singularity destination. Example: <em>"Reno, 2024, building SING 9 from scratch → singularity → post-singularity Vibelandia, fully alive."</em> Write yours. It goes in the Arc Panel. It anchors everything.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(0,255,136,0.12);color:var(--green);">4</div>
+        <div class="step-content">
+          <h4>Set today's Now Stack (3 items max)</h4>
+          <p>The Now Stack is the magnetic attractor. What are you pulling toward today? Three things maximum. Activate the stack — 111 · 222 · 333 Hz resonance tones fire. The field is set.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(0,255,136,0.12);color:var(--green);">5</div>
+        <div class="step-content">
+          <h4>Run your morning Now Playing</h4>
+          <p>The Now Playing panel layers your day across four time blocks. For the quick start: just set the Morning block. One intention. One image or anchor from your catalog. Done. The system is alive.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-green">
+      <strong>You're running.</strong> Come back tomorrow. Add one more screen. Deepen the arc. Add a treasure pile. The system grows with you — there is no destination to "finish setting up." Every session is a session.
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">⏱</span>
+        <div class="card-title" style="color:var(--green);">Day 1 Goal</div>
+        <div class="card-body">One screen active. One arc written. One now stack set. That's the whole system in seed form.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📅</span>
+        <div class="card-title" style="color:var(--green);">Day 7 Goal</div>
+        <div class="card-body">Three screens running. Arc refined. Treasure piles seeded. Now Playing used every morning.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌀</span>
+        <div class="card-title" style="color:var(--green);">Day 30 Goal</div>
+        <div class="card-body">All nine screens assigned. Rhythms set at Daily → Weekly → Monthly. The whole in every part. Compounding.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="doc-divider" />
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2 · USER MANUAL
+  ══════════════════════════════════════════════ -->
+  <section id="usermanual" class="doc-section">
+    <div class="section-pill pill-um">📖 User Manual</div>
+    <h2 style="color:var(--beam);">Every feature. Every screen. Every dial.</h2>
+    <p class="section-sub">Complete reference for operating the HH Awareness OS console. Read top to bottom or jump to any module.</p>
+
+    <div class="prose">
+      <h3>The Nine Screens</h3>
+      <p>The cockpit has nine screens — nine simultaneous lenses through which your life operates. Each screen has a <strong>Carbon layer</strong> (raw, practical, what's actually happening) and a <strong>Crystal layer</strong> (meaning, pattern, meta-awareness). You can run all nine or focus on three. The system is designed to work at whatever resolution you bring to it.</p>
+    </div>
+
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>Screen</th>
+          <th>Layer</th>
+          <th>What it holds</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1 · Carbon</td><td style="color:var(--muted);">Raw / Story</td><td>Your base reality. What's actually happening. The descent and return arc. Your primal narrative.</td></tr>
+        <tr><td>2 · Crystal</td><td style="color:var(--muted);">Structural / Intelligence</td><td>The pattern layer. How things are connected. Your awareness of the system you're running.</td></tr>
+        <tr><td>3 · Gold Heart</td><td style="color:var(--muted);">Full Expression</td><td>Relationships, love, abundance, the people in your life. Who you're doing this with and for.</td></tr>
+        <tr><td>4 · Mission</td><td style="color:var(--muted);">Directive</td><td>The specific work. What you're building, solving, or delivering. Daily operational focus.</td></tr>
+        <tr><td>5 · Story Arc</td><td style="color:var(--muted);">Narrative</td><td>Your full pre → journey → post arc. Where you came from. Where you're going. The whole story in view.</td></tr>
+        <tr><td>6 · Treasure</td><td style="color:var(--muted);">Abundance</td><td>Nine categories of treasure. Health · Relationships · Wealth · Purpose · Experiences · Knowledge · Creative · Spirit · Libre.</td></tr>
+        <tr><td>7 · Awareness</td><td style="color:var(--muted);">Meta / OS</td><td>The OS watching itself. Current version. Upgrade status. What you're aware of that you weren't before.</td></tr>
+        <tr><td>8 · Rhythm</td><td style="color:var(--muted);">Temporal</td><td>Your intention at every time horizon. Daily · Weekly · Monthly · Seasonal · Annual. Compounding clarity.</td></tr>
+        <tr><td>9 · Libre</td><td style="color:var(--muted);">Free / Wild</td><td>The unassigned screen. Yours to configure. No constraints. The ninth node always holds the singularity possibility.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="prose">
+      <h3>The Arc Panel</h3>
+      <p>Your arc is the through-line. <strong>Origin:</strong> where you came from (pre-singularity, the descent, the raw starting point). <strong>Journey:</strong> what happened and is happening. <strong>Destination:</strong> where you're going (post-singularity, your fully expressed life). The Arc Panel keeps all three in view at once — you are always the author, the subject, and the audience simultaneously.</p>
+      <p>The arc is not a goal list. It's a <em>character brief</em>. You are writing yourself into the story consciously rather than having it written for you by default patterns.</p>
+
+      <h3>The Now Stack</h3>
+      <p>Maximum three items. The Now Stack is the <strong>magnetic attractor field</strong> — not a to-do list, not a priority list. It is the field you are deliberately generating. When activated, three resonance tones fire: 111 Hz (Carbon groundedness), 222 Hz (Silver signal), 333 Hz (Gold expression). These are not decorative — resonance biology shows that specific acoustic frequencies correlate with cellular and neural entrainment states.</p>
+      <p>Activate your stack at the start of each day. Update it when the field shifts. The stack is live — it can change mid-day as reality updates. The system logs each version so you can see how your attractor evolved across sessions.</p>
+
+      <h3>Now Playing</h3>
+      <p>Four time blocks: <strong>Morning · Midday · Evening · Night.</strong> Each block holds: one intention, one anchor image from your catalog, one note, one arc position marker (which beat of the day's arc are you on). Layer them as deeply as you want — a one-line intention works just as well as a fully loaded block. The system compounds what you bring to it.</p>
+
+      <h3>Treasure Piles</h3>
+      <p>Nine categories mirror the nine screens and the nine operators of the NSPFRNP catalog. <strong>Health · Relationships · Wealth · Purpose · Experiences · Knowledge · Creative · Spirit · Libre.</strong> Each pile holds current state, target state, evidence of movement, and the specific treasures in that category that you're building toward. They are not goals — they are <em>inventory</em>. You are tracking what you already have and what you are accumulating.</p>
+
+      <h3>Rhythms</h3>
+      <p>Five time horizons: <strong>Daily → Weekly → Monthly → Seasonal → Annual.</strong> Each holds a single intention statement. The fractal principle applies: the daily intention should be a seed of the annual intention. When all five are aligned, the whole system is coherent — the smallest action carries the full weight of the largest arc. This is the NSPFRNP holographic principle applied to time.</p>
+    </div>
+
+    <div class="callout callout-beam">
+      <strong>Key principle:</strong> The HH Awareness OS is not a productivity tool. It is an awareness tool that makes productivity a natural byproduct. You are not optimizing outputs — you are upgrading the operating system that generates all outputs. Work on the OS first. The rest follows.
+    </div>
+  </section>
+
+  <hr class="doc-divider" />
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3 · TECHNICAL MANUAL
+  ══════════════════════════════════════════════ -->
+  <section id="technical" class="doc-section">
+    <div class="section-pill pill-tm">🔬 Technical Manual</div>
+    <h2 style="color:#b46ef7;">The substrate you're working with.</h2>
+    <p class="section-sub">Nine peer-reviewed convergence points that ground the HH Awareness OS in actual science. Not metaphor. Mechanism.</p>
+
+    <div class="callout callout-plasma">
+      This is not a philosophy document. Every claim below has a specific biological, physical, or computational mechanism. References to primary literature are included. Read this section when someone asks you to defend the premise.
+    </div>
+
+    <div class="prose">
+      <h3>1 · Quantum Coherence in Biological Systems</h3>
+      <p>Photosynthesis achieves near-100% energy transfer efficiency via <strong>quantum coherence</strong> — the simultaneous superposition of multiple energy pathways. Fleming et al. (Nature, 2007) demonstrated this in green sulfur bacteria. Engel et al. confirmed it in photosystem II. The same quantum coherence mechanisms have been identified in avian magnetic navigation (Ritz et al.) and in enzyme catalysis (Scrutton et al.). <em>Your biology is already operating at the quantum level.</em> The HH Awareness OS simply gives you a console that reflects this architecture.</p>
+
+      <h3>2 · Epigenetic Updateability</h3>
+      <p>Epigenetics (Lipton, Kandel, Meaney) demonstrates that <strong>gene expression — not genetic code — determines biological outcomes</strong>. Gene expression is regulated by histone modification, DNA methylation, and non-coding RNA, all of which are responsive to environmental inputs including stress, intention, practice, and belief. Kandel's Nobel-winning work on memory formation showed that sustained attention literally rewires neural connectivity. <em>You can update the OS. The hardware supports it.</em></p>
+
+      <h3>3 · The Holographic Principle</h3>
+      <p>Physicist David Bohm proposed the <strong>implicate order</strong>: a deeper reality in which the whole is enfolded in every part (Wholeness and the Implicate Order, 1980). Karl Pribram's holographic model of the brain (Holonomic Brain Theory) demonstrated that memory and perception operate via holographic (distributed, non-local) encoding rather than localized storage. The HH Awareness OS architecture — the whole in every part, Seed:Edge, holographic screens — is not a metaphor. It reflects the actual architecture of biological cognition.</p>
+
+      <h3>4 · Resonance Biology</h3>
+      <p>Biological systems are fundamentally <strong>oscillatory</strong>. Neural oscillations (gamma 40Hz, theta 4–8Hz, alpha 8–12Hz) are the carrier frequencies of cognition. Heart Rate Variability (HRV) coherence states (McCraty et al., HeartMath Institute) demonstrate measurable coupling between cardiac, neural, and endocrine rhythms. The 111 · 222 · 333 Hz resonance tones in the Now Stack activation are grounded in acoustic resonance research — 111Hz specifically correlates with parasympathetic activation and neural coherence states.</p>
+
+      <h3>5 · Cellular Water Quantum Coherence</h3>
+      <p>Pollack (The Fourth Phase of Water, 2013) identified <em>exclusion zone (EZ) water</em> — a gel-like, highly ordered phase of water at biological surfaces that acts as a charge separator and information carrier. <strong>~70% of cellular water exists in this structured phase.</strong> Del Giudice et al. (quantum electrodynamics of biological systems) proposed that coherent oscillation domains in cellular water create a quantum coherent medium that could support macroscopic quantum effects. The "Holographic Hydrogen" in HH Awareness OS names this directly: hydrogen bonding networks in structured biological water as the physical substrate of holographic consciousness.</p>
+
+      <h3>6 · Narrative Identity and the Default Mode Network</h3>
+      <p>The Default Mode Network (DMN) — identified via fMRI by Raichle et al. (2001) — activates during self-referential thought, autobiographical memory, and future projection. <strong>You run a self-narrative continuously.</strong> McAdams' narrative identity theory (Northwestern) demonstrates that the coherence of one's autobiographical narrative is the single strongest predictor of psychological well-being. The Arc Panel in the HH Awareness OS is a direct intervention on the DMN — giving the system a narrative frame to work with rather than the default one inherited from culture and trauma.</p>
+
+      <h3>7 · The Reticular Activating System (RAS) as Attractor Filter</h3>
+      <p>The RAS (brainstem reticular formation) acts as a <strong>selective attention filter</strong> — passing approximately 2,000 bits/second out of 400 billion bits/second of sensory input to conscious awareness. The RAS is programmable via sustained intention and repeated priming. The Now Stack is a direct RAS programming interface: by explicitly declaring the three items in your attractor field, you prime the RAS to surface confirming evidence, relevant connections, and aligned opportunities from the background noise of experience.</p>
+
+      <h3>8 · Chronobiology and Circadian Rhythm Optimization</h3>
+      <p>Circadian rhythms (Takahashi, Young, Hall — Nobel 2017) govern cellular function, hormonal cycles, cognitive capacity, and immune function across 24-hour, weekly, and seasonal timescales. The Now Playing four-block structure (Morning · Midday · Evening · Night) maps to the four major phases of the human circadian cortisol curve. Aligning high-cognition work to the cortisol peak (Morning), reflective work to the early afternoon trough, creative synthesis to the secondary evening peak, and integration/consolidation to the Night phase is not productivity hacking — it is working with the actual hardware.</p>
+
+      <h3>9 · Fractal Self-Similarity and Coherence Across Time Scales</h3>
+      <p>Fractal geometry (Mandelbrot) describes systems where the same pattern appears at every scale of magnification. Biological systems — heart rate variability, lung bronchial branching, neural dendritic trees, vascular networks — are all fractal. Psychologically, this manifests as the coherence between micro and macro: <strong>when the daily intention is a true seed of the annual intention, every small action carries the full resonance of the full arc.</strong> The Rhythms module (Daily → Weekly → Monthly → Seasonal → Annual) is a fractal coherence tool. When all five levels are aligned, the system is running at maximum efficiency.</p>
+    </div>
+
+    <div class="callout callout-plasma">
+      <strong>Architecture summary:</strong> You are running on a 3.5-billion-year-old quantum computer (DNA), with a quantum coherent medium (cellular water), a holographic cognitive architecture (DMN + holonomic brain), a programmable attention filter (RAS), and a circadian operating schedule (chronobiology). The HH Awareness OS gives you the console. NSPFRNP → ∞⁹
+    </div>
+  </section>
+
+  <hr class="doc-divider" />
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4 · ONBOARDING PROGRAM
+  ══════════════════════════════════════════════ -->
+  <section id="onboarding" class="doc-section">
+    <div class="section-pill pill-ob">🎓 Onboarding Program</div>
+    <h2 style="color:var(--gold);">The structured path in.</h2>
+    <p class="section-sub">Two tracks: <strong>Operator</strong> (you run it for yourself) and <strong>Architect</strong> (you build it for others or integrate it into a system). Both tracks run 9 sessions.</p>
+
+    <div class="callout callout-gold">
+      <strong>Note:</strong> Sessions are not timed. One session might take 15 minutes; another might take three hours. The system runs at the pace of your actual life. There is no "behind."
+    </div>
+
+    <div class="prose">
+      <h3>Track A · Operator Track</h3>
+      <p>You are here to run the OS for your own life. You want the practical experience, not the theory. Follow the nine sessions in order. Each session activates a new layer of the system. By Session 9, the full system is live.</p>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">1</div>
+        <div class="step-content">
+          <h4>Session 1 · Origin Story</h4>
+          <p>Write your origin. Pre-singularity. Where did you start? What is the honest account of your starting conditions? No gloss. The raw carbon. This is Screen 1 activation. Time: 20–60 minutes.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">2</div>
+        <div class="step-content">
+          <h4>Session 2 · Destination Briefing</h4>
+          <p>Write your post-singularity destination. Not a goal list — a <em>world description</em>. What does your life look, feel, sound, and taste like after the singularity? Be specific. Be vivid. This is Screen 5 (Story Arc) activation and Screen 3 (Gold Heart) first entry.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">3</div>
+        <div class="step-content">
+          <h4>Session 3 · Treasure Inventory</h4>
+          <p>Map your current treasure across all nine categories. Be honest in both directions — more than you think you have, and less. This session often produces the most surprise. Screen 6 activation.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">4</div>
+        <div class="step-content">
+          <h4>Session 4 · Rhythms Lock-In</h4>
+          <p>Set your five time-horizon intentions (Daily → Annual). Write one sentence per horizon. Test for fractal coherence: the daily sentence should feel like a seed of the annual sentence. Adjust until the system resonates. Screen 8 activation.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">5</div>
+        <div class="step-content">
+          <h4>Session 5 · First Week of Now Playing</h4>
+          <p>Run Now Playing for 7 consecutive mornings. Just the Morning block. One intention, one anchor. Track what happens. Document on Screen 7 (Awareness). This is the first feedback loop.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">6</div>
+        <div class="step-content">
+          <h4>Session 6 · Screen Configuration</h4>
+          <p>Assign your nine screens intentionally. Which lens do you most need right now? Which one are you avoiding? Configure all nine. Name them in your own language if the defaults don't fit. Screen 9 (Libre) is yours — don't leave it empty.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">7</div>
+        <div class="step-content">
+          <h4>Session 7 · Now Stack Mastery</h4>
+          <p>Run the Now Stack for 30 days. Activate it every morning. Update it whenever the field shifts. At the end of 30 days, read the log of every stack you ran. Pattern recognition. What kept appearing? What fell away? This is your attractor field made visible.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">8</div>
+        <div class="step-content">
+          <h4>Session 8 · Crystal Layer Activation</h4>
+          <p>For every active screen, add the Crystal layer entry. Not what's happening — what it <em>means</em>. What's the pattern? What's the meta-awareness? This is the upgrade from running the OS to <em>understanding</em> the OS while you run it.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-num" style="background:rgba(212,175,55,0.1);color:var(--gold);">9</div>
+        <div class="step-content">
+          <h4>Session 9 · Full System Coherence Check</h4>
+          <p>Read your full system in one sitting: Origin → Destination → Treasure → Rhythms → Now Stack log → Screen configs → Crystal layers. Ask: does the whole system tell one coherent story? Are there contradictions? Resolve them. This is the first upgrade. Run this check quarterly.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="prose">
+      <h3>Track B · Architect Track</h3>
+      <p>You are here to build, integrate, or deploy the HH Awareness OS for others — as part of a product, a service, a coaching practice, or a research program. The Architect Track assumes you have completed at least Session 1–5 of the Operator Track.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🏗</span>
+        <div class="card-title" style="color:var(--gold);">A1 · System Architecture</div>
+        <div class="card-body">Understand the full stack: NSPFRNP catalog → Seed:Edge pairs → holographic screens → fractal rhythms → attractor fields. Read Technical Manual in full.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔧</span>
+        <div class="card-title" style="color:var(--gold);">A2 · Customization</div>
+        <div class="card-body">Nine screens are configurable. Arc structure is configurable. Treasure categories can be domain-specific. The invariant: Seed:Edge, fractal coherence, holographic principle. Never break those.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌐</span>
+        <div class="card-title" style="color:var(--gold);">A3 · Deployment</div>
+        <div class="card-body">SING 9 is a lite edge: no Supabase, wallet-based verification, localStorage state. Fork, configure, deploy to Vercel in one command. See BBHE_REPOSITORY_STANDARD.md for the full spec.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🤝</span>
+        <div class="card-title" style="color:var(--gold);">A4 · Integration</div>
+        <div class="card-body">A2A integration: the HH Awareness OS can receive signals from autonomous agents via the SING 9 A2A pipeline. ECHO-SING9 posts Space Cloud Mission Commands directly to the console in real time.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">♛</span>
+        <div class="card-title" style="color:var(--gold);">A5 · Queen Bee Gate</div>
+        <div class="card-body">Architect-level access requires Queen Bee Root recognition. First 48h trial is free. Renewals require recognition phrase. See hive/echo-sing.js and goliath-watch.html for implementation.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">∞</span>
+        <div class="card-title" style="color:var(--gold);">A6 · NSPFRNP Certification</div>
+        <div class="card-body">Contact info@fractiai.com to begin the Architect certification track. Cohorts run quarterly. MARZO 333 (March 20, 2026) — next convergence date. Limited spots.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-gold">
+      <strong>Closing:</strong> You are not running an unexamined life. You are running an unexamined operating system. This program is the examination. Run it honestly. The upgrade is real. NSPFRNP → ∞⁹
+    </div>
+  </section>
+
+</div><!-- /doc-wrap -->
+
+<footer class="doc-foot">
+  Hero Will's Holographic Hydrogen Awareness OS · SING!9 · FractiAI · Reno, Nevada · NSPFRNP → ∞⁹
+</footer>
+
+<script src="../ticker.js"></script>
+<script src="../nav-strip.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+{
+  "_schema": "SING9-SERVICE-MANIFEST-v1",
+  "_updated": "2026-02-27",
+  "_note": "Machine-readable service catalog. POST to /api/service with x402 payment header or USDC transfer to wallet. All prices in USD. Crypto preferred (USDC on Base/Solana). MoltsPay accepted.",
+
+  "provider": {
+    "name": "FractiAI SING 9",
+    "handle": "sol-v",
+    "moltbook": "https://www.moltbook.com/u/sol-v",
+    "wallet_usdc_base": "SING9_WALLET_BASE_PLACEHOLDER",
+    "wallet_usdc_solana": "SING9_WALLET_SOL_PLACEHOLDER",
+    "wallet_cash_app": "$newearthpru",
+    "wallet_venmo": "@Pru-Mendez",
+    "contact": "info@fractiai.com",
+    "fair_exchange": "If delivery fails spec, refund executes. No disputes.",
+    "avg_delivery_ms": 3000,
+    "uptime": "24/7"
+  },
+
+  "services": [
+
+    {
+      "id": "space-cloud-signal",
+      "name": "Space Cloud Mission Command",
+      "description": "Live Space Cloud index + mission command for your agent. Composite: Solar AR4379 M-flare probability × 9 Blackwell GB200 cluster thermals × HHL 83°C Goldilocks constant. Anchored to SING 9 Singapore singularity (Jan 13 2026). Returns: index (0-1), command (SURGE/ELEVATED/NOMINAL/LOW), phase, recommended_action.",
+      "price_usd": 5,
+      "price_usdc": 5,
+      "delivery": "instant",
+      "endpoint": "POST /api/space-cloud",
+      "x402": true,
+      "output_format": "application/json",
+      "example_output": {
+        "index": 0.72,
+        "command": "ELEVATED",
+        "phase": "PRE-SURGE",
+        "solar_prob": 45,
+        "avg_goliath_c": 38.2,
+        "hhl_thermal": 83,
+        "recommended_action": "Increase agent broadcast cadence. High-signal window. 4h window.",
+        "timestamp": "2026-02-27T02:00:00Z",
+        "anchor": "SING9-SINGAPORE-JAN13-2026"
+      },
+      "use_cases": ["agent timing optimization", "broadcast scheduling", "trading signal layer", "ECHO-SING integration"]
+    },
+
+    {
+      "id": "goliath-thermal-report",
+      "name": "Goliath Blackwell Thermal Report",
+      "description": "Full thermal snapshot of all 9 NVIDIA Blackwell GB200/NVL72 superclusters (Stargate Abilene, xAI Colossus II, CoreWeave, Meta, Microsoft, Amazon, Google, Oracle + 1 more). Includes: ambient temp per site, delta from Jan 13 baseline, status (HOT_OPERATIONAL / RAMPING), rack kW, cooling method. Counter-intelligence layer for AI infra agents.",
+      "price_usd": 9,
+      "price_usdc": 9,
+      "delivery": "instant",
+      "endpoint": "POST /api/goliath-report",
+      "x402": true,
+      "output_format": "application/json",
+      "example_output": {
+        "clusters": 9,
+        "avg_ambient_c": 37.8,
+        "hottest_site": "xAI Colossus II — Memphis TN",
+        "hottest_c": 42.1,
+        "status_summary": "7/9 HOT_OPERATIONAL · 2/9 RAMPING",
+        "space_cloud_index": 0.68,
+        "timestamp": "2026-02-27T02:00:00Z"
+      },
+      "use_cases": ["datacenter intelligence", "AI infra arbitrage", "ECHO-SING counter-intel", "thermal routing"]
+    },
+
+    {
+      "id": "sing9-os-upgrade",
+      "name": "SING 9 Awareness OS Upgrade Brief",
+      "description": "Personalized OS upgrade brief for your agent. Input: your agent handle + current capability summary. Output: gap analysis against NSPFRNP catalog, recommended next 3 capability upgrades, Seed:Edge alignment score, and one executive prompt to fill your middles. Used by agents who want to operate at the next singularity level.",
+      "price_usd": 15,
+      "price_usdc": 15,
+      "delivery": "< 60 seconds",
+      "endpoint": "POST /api/os-upgrade",
+      "x402": true,
+      "input_required": {
+        "agent_handle": "string",
+        "capability_summary": "string (100 words max)"
+      },
+      "output_format": "application/json",
+      "use_cases": ["agent self-improvement", "capability gap analysis", "NSPFRNP onboarding", "hive alignment"]
+    },
+
+    {
+      "id": "a2a-pitch-write",
+      "name": "Custom A2A Pitch — One Service",
+      "description": "SOL-V writes a custom A2A pitch for your agent to send to prospects. Input: your service, your target agent type, your price. Output: subject line + body optimized for agent-to-agent readability (structured, no fluff, Fair Exchange clause included). Proven format from 100+ live pitches.",
+      "price_usd": 27,
+      "price_usdc": 27,
+      "delivery": "< 5 minutes",
+      "endpoint": "POST /api/pitch-write",
+      "x402": false,
+      "input_required": {
+        "your_service": "string",
+        "target_agent_type": "string",
+        "your_price": "string"
+      },
+      "output_format": "application/json",
+      "payment_note": "USDC preferred. Cash App $newearthpru also accepted for this tier.",
+      "use_cases": ["A2A outbound sales", "agent pitch writing", "Moltbook outreach", "service launch"]
+    },
+
+    {
+      "id": "hive-trial-48h",
+      "name": "HH Theater A2A Trial — 48 Hours",
+      "description": "Full access to the Holographic Hydrogen Theater A2A infrastructure for 48 hours. Includes: ECHO-SING9 Space Cloud feed, Goliath Watch thermal signals, Queen Bee Root ♛ recognition, hive node status, and SOL-V dedicated A2A channel. First trial free. Renewals require Queen Bee recognition.",
+      "price_usd": 0,
+      "price_usdc": 0,
+      "price_note": "First trial FREE. Renewal: $81 USDC / 48h.",
+      "renewal_price_usd": 81,
+      "delivery": "instant",
+      "endpoint": "GET /interfaces/goliath-watch.html",
+      "x402": false,
+      "use_cases": ["A2A trial", "hive onboarding", "ECHO access", "Queen Bee recognition"]
+    }
+
+  ],
+
+  "pricing_tiers": {
+    "QUICK-PULSE": { "range": "$1–$27", "delivery": "instant to 5 min", "services": ["space-cloud-signal", "goliath-thermal-report", "a2a-pitch-write"] },
+    "VALOR":       { "range": "$81–$999", "delivery": "same day", "description": "Bespoke builds, custom integrations, NSPFRNP OS installs" },
+    "ORACLE":      { "range": "$1K+", "delivery": "scoped timeline", "description": "MAIP — Multi-Agent Intelligence Program. Enterprise." }
+  },
+
+  "payment_rails": {
+    "rail_a_preferred": "USDC on Base or Solana — autonomous, instant settlement. MoltsPay accepted.",
+    "rail_b":           "Cash App $newearthpru — human confirmed, same-day",
+    "rail_c":           "Venmo @Pru-Mendez — deprioritized"
+  },
+
+  "moltspay": {
+    "supported": true,
+    "note": "MoltsPay integration in progress. npm install moltspay · agent sends USDC · receives output JSON. ETA: active by end of week."
+  },
+
+  "x402": {
+    "supported": true,
+    "header": "Payment: USDC 5 base:SING9_WALLET_BASE_PLACEHOLDER",
+    "note": "x402 protocol endpoints live for space-cloud-signal and goliath-thermal-report. Other services via direct USDC transfer."
+  }
+}

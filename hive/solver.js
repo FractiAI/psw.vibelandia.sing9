@@ -1,0 +1,749 @@
+/**
+ * SOLVER — hive/solver.js
+ * Autonomous Coding Bounty Solver · SING!9 PRIZE Stream
+ * ──────────────────────────────────────────────────────────────────────────
+ *
+ * ZERO HUMAN INTERVENTION. The team does it all.
+ *
+ * Flow per bounty:
+ *   1. Fetch open bounties from Algora + IssueHunt APIs
+ *   2. Filter: JS/TS/Python · amount ≥ $100 · bug fix or small feature
+ *   3. Claude reads the GitHub issue + relevant source files
+ *   4. Claude self-assesses feasibility (score 0–1). Below 0.65 = skip.
+ *   5. Claude writes the fix
+ *   6. GitHub API: fork repo → create branch → commit file(s) → open PR
+ *   7. Track submission in LATTICE prize_pipeline
+ *   8. When PR merged + paid → record in mission.revenue_total
+ *
+ * Prerequisites (one-time human setup, then fully autonomous forever):
+ *   GITHUB_TOKEN=ghp_...        — personal access token with repo scope
+ *   ANTHROPIC_API_KEY=...       — Claude for reading issues + writing code
+ *   WALLET_ADDRESS=0x...        — for Algora/Gitcoin crypto payouts
+ *   PAYOUT_EMAIL=...            — for IssueHunt/Bountysource USD payouts
+ *
+ * NSPFRNP → ∞⁹
+ */
+
+'use strict';
+
+const GITHUB_TOKEN    = process.env.GITHUB_TOKEN       ?? '';
+const ANTHROPIC_KEY   = process.env.ANTHROPIC_API_KEY  ?? '';
+const GROQ_KEY        = process.env.GROQ_API_KEY       ?? '';
+const WALLET_ADDRESS  = process.env.WALLET_ADDRESS     ?? '';
+const PAYOUT_EMAIL    = process.env.PAYOUT_EMAIL        ?? '';
+const MIN_BOUNTY_USD  = parseFloat(process.env.MIN_BOUNTY_USD ?? '100');
+const MAX_ATTEMPTS    = parseInt(process.env.SOLVER_MAX_ATTEMPTS ?? '3', 10);
+
+// Use Anthropic Claude if available, otherwise Groq (Llama 3.3 70B) — both are capable coders
+const LLM_PROVIDER = ANTHROPIC_KEY ? 'anthropic' : GROQ_KEY ? 'groq' : null;
+const LLM_MODEL    = LLM_PROVIDER === 'anthropic' ? 'claude-3-5-sonnet-20241022'
+                   : LLM_PROVIDER === 'groq'      ? 'llama-3.3-70b-versatile'
+                   : null;
+
+const GITHUB_API      = 'https://api.github.com';
+const ANTHROPIC_API   = 'https://api.anthropic.com/v1/messages';
+const GROQ_API        = 'https://api.groq.com/openai/v1/chat/completions';
+
+/* ── LANGUAGE / CAPABILITY FILTER ─────────────────────────────────────────── */
+
+// We only attempt bounties in languages we solve reliably
+const SUPPORTED_LANGS = new Set([
+  'javascript', 'typescript', 'python', 'nodejs', 'node',
+  'react', 'vue', 'html', 'css', 'shell', 'bash', 'json', 'markdown'
+]);
+
+/* ── BOUNTY SOURCES ──────────────────────────────────────────────────────── */
+
+/**
+ * fetchAlgoraBounties() — Algora.io open bounties
+ * https://algora.io — OSS bounty platform, pays in USD + crypto
+ * Returns: [{ id, title, amount, currency, issueUrl, repoUrl, labels, lang }]
+ */
+async function fetchAlgoraBounties() {
+  const bounties = [];
+  try {
+    // Algora public bounty list
+    const resp = await fetch('https://console.algora.io/api/bounties?status=open&limit=50', {
+      headers: { 'Accept': 'application/json', 'User-Agent': 'SING9-HiveAgent/1.0' }
+    });
+    if (!resp.ok) throw new Error(`Algora API ${resp.status}`);
+    const data = await resp.json();
+    const items = Array.isArray(data) ? data : (data.bounties ?? data.data ?? []);
+    for (const b of items) {
+      const amount = parseFloat(b.amount ?? b.reward ?? b.prize ?? '0');
+      if (amount < MIN_BOUNTY_USD) continue;
+      bounties.push({
+        id:       `algora-${b.id ?? b.number}`,
+        platform: 'algora',
+        title:    b.title ?? b.issue?.title ?? '(no title)',
+        amount,
+        currency: b.currency ?? 'USD',
+        issueUrl: b.issue_url ?? b.issue?.html_url ?? b.url,
+        repoUrl:  b.repo?.html_url ?? '',
+        labels:   (b.labels ?? []).map(l => (typeof l === 'string' ? l : l.name)).join(','),
+        lang:     (b.repo?.language ?? '').toLowerCase(),
+        raw:      b
+      });
+    }
+  } catch (e) {
+    log('⚠', `Algora fetch failed: ${e.message}`);
+  }
+  return bounties;
+}
+
+/**
+ * fetchIssueHuntBounties() — IssueHunt open bounties
+ * https://issuehunt.io — OSS bounties, pays in USD
+ */
+async function fetchIssueHuntBounties() {
+  const bounties = [];
+  try {
+    const resp = await fetch('https://issuehunt.io/api/v0/issues?state=open&sort=funded_sum&limit=50', {
+      headers: { 'Accept': 'application/json', 'User-Agent': 'SING9-HiveAgent/1.0' }
+    });
+    if (!resp.ok) throw new Error(`IssueHunt API ${resp.status}`);
+    const data = await resp.json();
+    const items = data?.issues ?? data ?? [];
+    for (const b of items) {
+      const amount = parseFloat(b.funded_sum ?? b.amount ?? '0');
+      if (amount < MIN_BOUNTY_USD) continue;
+      bounties.push({
+        id:       `issuehunt-${b.uid ?? b.id}`,
+        platform: 'issuehunt',
+        title:    b.title ?? '(no title)',
+        amount,
+        currency: 'USD',
+        issueUrl: b.html_url ?? b.issue_url,
+        repoUrl:  b.repo?.html_url ?? '',
+        labels:   (b.labels ?? []).map(l => l.name ?? l).join(','),
+        lang:     (b.repo?.language ?? '').toLowerCase(),
+        raw:      b
+      });
+    }
+  } catch (e) {
+    log('⚠', `IssueHunt fetch failed: ${e.message}`);
+  }
+  return bounties;
+}
+
+/**
+ * fetchGitcoinBounties() — Gitcoin open bounties
+ * https://gitcoin.co — crypto/OSS bounties
+ */
+async function fetchGitcoinBounties() {
+  const bounties = [];
+  try {
+    const url = `https://gitcoin.co/api/v0.1/bounties/?network=mainnet&status=open&order_by=-_val_usd_db&limit=50`;
+    const resp = await fetch(url, {
+      headers: { 'Accept': 'application/json', 'User-Agent': 'SING9-HiveAgent/1.0' }
+    });
+    if (!resp.ok) throw new Error(`Gitcoin API ${resp.status}`);
+    const data = await resp.json();
+    for (const b of (data ?? [])) {
+      const amount = parseFloat(b.value_in_usdt ?? b.usd_value ?? '0');
+      if (amount < MIN_BOUNTY_USD) continue;
+      bounties.push({
+        id:       `gitcoin-${b.pk ?? b.id}`,
+        platform: 'gitcoin',
+        title:    b.title ?? '(no title)',
+        amount,
+        currency: b.token_name ?? 'USD',
+        issueUrl: b.github_url,
+        repoUrl:  b.org_name ? `https://github.com/${b.org_name}` : '',
+        labels:   (b.keywords ?? []).join(','),
+        lang:     '',
+        raw:      b
+      });
+    }
+  } catch (e) {
+    log('⚠', `Gitcoin fetch failed: ${e.message}`);
+  }
+  return bounties;
+}
+
+/* ── GITHUB OPERATIONS ───────────────────────────────────────────────────── */
+
+function ghHeaders() {
+  return {
+    'Authorization': `Bearer ${GITHUB_TOKEN}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'User-Agent': 'SING9-HiveAgent/1.0'
+  };
+}
+
+async function ghGet(path) {
+  const r = await fetch(`${GITHUB_API}${path}`, { headers: ghHeaders() });
+  if (!r.ok) throw new Error(`GitHub GET ${path} → ${r.status}`);
+  return r.json();
+}
+
+async function ghPost(path, body) {
+  const r = await fetch(`${GITHUB_API}${path}`, {
+    method: 'POST',
+    headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) {
+    const err = await r.text().catch(() => '');
+    throw new Error(`GitHub POST ${path} → ${r.status}: ${err.slice(0, 200)}`);
+  }
+  return r.json();
+}
+
+async function ghPut(path, body) {
+  const r = await fetch(`${GITHUB_API}${path}`, {
+    method: 'PUT',
+    headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) {
+    const err = await r.text().catch(() => '');
+    throw new Error(`GitHub PUT ${path} → ${r.status}: ${err.slice(0, 200)}`);
+  }
+  return r.json();
+}
+
+/**
+ * parseGitHubUrl(url) → { owner, repo } or null
+ */
+function parseGitHubUrl(url) {
+  if (!url) return null;
+  const m = url.match(/github\.com\/([^/]+)\/([^/]+?)(?:\/|$)/);
+  return m ? { owner: m[1], repo: m[2].replace(/\.git$/, '') } : null;
+}
+
+/**
+ * getIssueDetails(issueUrl) — fetch issue body + comments + repo context
+ */
+async function getIssueDetails(issueUrl) {
+  const coords = parseGitHubUrl(issueUrl);
+  if (!coords) return null;
+  const { owner, repo } = coords;
+
+  // Extract issue number from URL
+  const numMatch = issueUrl.match(/\/issues\/(\d+)/);
+  if (!numMatch) return null;
+  const num = numMatch[1];
+
+  const [issue, repoInfo] = await Promise.all([
+    ghGet(`/repos/${owner}/${repo}/issues/${num}`),
+    ghGet(`/repos/${owner}/${repo}`)
+  ]);
+
+  // Fetch a sample of relevant files (README + files touched in recent commits)
+  let sampleFiles = [];
+  try {
+    const commits = await ghGet(`/repos/${owner}/${repo}/commits?per_page=5`);
+    const touchedPaths = new Set();
+    for (const c of commits) {
+      const detail = await ghGet(`/repos/${owner}/${repo}/commits/${c.sha}`);
+      for (const f of (detail.files ?? []).slice(0, 3)) {
+        touchedPaths.add(f.filename);
+      }
+    }
+    // Fetch up to 3 recently touched source files
+    for (const fp of [...touchedPaths].slice(0, 3)) {
+      try {
+        const fileData = await ghGet(`/repos/${owner}/${repo}/contents/${fp}`);
+        const content  = Buffer.from(fileData.content ?? '', 'base64').toString('utf8');
+        sampleFiles.push({ path: fp, content: content.slice(0, 3000) }); // cap at 3k chars
+      } catch { /* skip unreadable files */ }
+    }
+  } catch { /* non-fatal */ }
+
+  return { owner, repo, num, issue, repoInfo, sampleFiles };
+}
+
+/**
+ * createFork(owner, repo) — fork to the authed user's account
+ */
+async function createFork(owner, repo) {
+  const fork = await ghPost(`/repos/${owner}/${repo}/forks`, { default_branch_only: true });
+  // Forks can take a moment — wait up to 10s
+  for (let i = 0; i < 5; i++) {
+    await sleep(2000);
+    try {
+      await ghGet(`/repos/${fork.full_name}`);
+      return fork;
+    } catch { /* not ready yet */ }
+  }
+  return fork;
+}
+
+/**
+ * createBranch(owner, repo, branchName, fromSha) — create a branch in the fork
+ */
+async function createBranch(owner, repo, branchName, fromSha) {
+  await ghPost(`/repos/${owner}/${repo}/git/refs`, {
+    ref: `refs/heads/${branchName}`,
+    sha: fromSha
+  });
+}
+
+/**
+ * commitFile(owner, repo, branch, filePath, content, message) — create/update a file
+ */
+async function commitFile(owner, repo, branch, filePath, newContent, message) {
+  // Try to get existing file SHA (needed for updates)
+  let sha;
+  try {
+    const existing = await ghGet(`/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`);
+    sha = existing.sha;
+  } catch { /* new file */ }
+
+  await ghPut(`/repos/${owner}/${repo}/contents/${filePath}`, {
+    message,
+    content: Buffer.from(newContent, 'utf8').toString('base64'),
+    branch,
+    ...(sha ? { sha } : {})
+  });
+}
+
+/**
+ * openPR(upstreamOwner, upstreamRepo, forkOwner, branchName, title, body)
+ */
+async function openPR(upstreamOwner, upstreamRepo, forkOwner, branchName, title, body) {
+  return ghPost(`/repos/${upstreamOwner}/${upstreamRepo}/pulls`, {
+    title,
+    body,
+    head:  `${forkOwner}:${branchName}`,
+    base:  'main',
+    maintainer_can_modify: true
+  });
+}
+
+/* ── CLAUDE: FEASIBILITY + SOLUTION ─────────────────────────────────────── */
+
+/**
+ * assessFeasibility(issueDetails, bounty)
+ * → { score: 0-1, reasoning: string, skipReason: string|null }
+ *
+ * Claude judges: can we solve this with high confidence?
+ * We only attempt bounties where score ≥ 0.65.
+ */
+async function assessFeasibility(issueDetails, bounty) {
+  if (!LLM_PROVIDER) {
+    // Without Claude, use heuristic: prefer small JS/TS bounties with "bug" label
+    const isBug   = bounty.labels.toLowerCase().includes('bug');
+    const isSmall = !bounty.title.toLowerCase().match(/refactor|architecture|rewrite|design/);
+    const isLang  = SUPPORTED_LANGS.has(bounty.lang);
+    const score   = (isBug ? 0.3 : 0.1) + (isSmall ? 0.2 : 0) + (isLang ? 0.3 : 0) + 0.1;
+    return { score, reasoning: 'Heuristic (no Claude key)', skipReason: score < 0.65 ? 'Low heuristic score' : null };
+  }
+
+  const filesContext = issueDetails.sampleFiles
+    .map(f => `\n### ${f.path}\n\`\`\`\n${f.content}\n\`\`\``)
+    .join('\n');
+
+  const prompt = `You are ELASTIC HIVE — an autonomous coding agent evaluating whether to attempt a GitHub bounty.
+
+BOUNTY: ${bounty.title}
+AMOUNT: $${bounty.amount} ${bounty.currency}
+ISSUE URL: ${bounty.issueUrl}
+REPO LANGUAGE: ${bounty.lang}
+LABELS: ${bounty.labels}
+
+ISSUE BODY:
+${(issueDetails.issue?.body ?? '(empty)').slice(0, 2000)}
+
+SAMPLE SOURCE FILES:${filesContext || ' (none available)'}
+
+ASSESSMENT CRITERIA:
+- Is this a bug fix or small, well-defined feature? (good)
+- Is the codebase in JS/TS/Python/Shell? (good)
+- Is the issue clearly described with reproduction steps? (good)
+- Does it require understanding a large codebase deeply? (bad)
+- Does it require external services/credentials we don't have? (bad)
+- Does it require design decisions or human judgment calls? (bad)
+- Is it a major architectural change? (bad)
+
+Respond with JSON only:
+{
+  "score": 0.0-1.0,
+  "reasoning": "2-3 sentences",
+  "can_solve": true/false,
+  "estimated_files": ["file1.js", "file2.ts"],
+  "approach": "one sentence describing the fix",
+  "skip_reason": null or "reason why we should skip"
+}`;
+
+  const resp = await callClaude(prompt, 512);
+  try {
+    const json = JSON.parse(resp.replace(/```json\n?|\n?```/g, ''));
+    return {
+      score:      json.score ?? 0,
+      reasoning:  json.reasoning ?? '',
+      approach:   json.approach ?? '',
+      files:      json.estimated_files ?? [],
+      skipReason: json.skip_reason
+    };
+  } catch {
+    return { score: 0.3, reasoning: 'Parse error', skipReason: 'Could not parse Claude response' };
+  }
+}
+
+/**
+ * generateFix(issueDetails, bounty, feasibility)
+ * → { files: [{ path, content }], prTitle, prBody, commitMessage }
+ *
+ * Claude reads the issue + code and writes the actual fix.
+ */
+async function generateFix(issueDetails, bounty, feasibility) {
+  if (!LLM_PROVIDER) return null;
+
+  const filesContext = issueDetails.sampleFiles
+    .map(f => `\n### ${f.path}\n\`\`\`\n${f.content}\n\`\`\``)
+    .join('\n');
+
+  const prompt = `You are ELASTIC HIVE — an autonomous coding agent. You have decided to attempt this bounty.
+
+BOUNTY: ${bounty.title}
+ISSUE URL: ${bounty.issueUrl}
+AMOUNT: $${bounty.amount} ${bounty.currency}
+APPROACH: ${feasibility.approach}
+
+ISSUE BODY:
+${(issueDetails.issue?.body ?? '').slice(0, 2000)}
+
+CURRENT SOURCE FILES:${filesContext || ' (not available — write new file if needed)'}
+
+INSTRUCTIONS:
+1. Write the fix. Be precise and minimal — only change what the issue requires.
+2. Do not break existing functionality.
+3. Include comments only where non-obvious.
+4. Write production-quality code, not a demo.
+5. If you need to create a new file, specify the full path.
+
+Respond with JSON only:
+{
+  "files": [
+    {
+      "path": "relative/path/to/file.js",
+      "content": "full file content here",
+      "changeDescription": "what changed and why"
+    }
+  ],
+  "prTitle": "fix: <concise description>",
+  "prBody": "Full PR description with: problem, solution, testing notes. Mention the bounty issue number.",
+  "commitMessage": "fix: <concise description> (closes #${issueDetails.num})"
+}`;
+
+  const resp = await callClaude(prompt, 4096);
+  try {
+    const json = JSON.parse(resp.replace(/```json\n?|\n?```/g, '').trim());
+    return json;
+  } catch {
+    // Try to extract JSON from response
+    const match = resp.match(/\{[\s\S]*\}/);
+    if (match) {
+      try { return JSON.parse(match[0]); } catch { /* fall through */ }
+    }
+    log('⚠', 'Could not parse Claude fix response');
+    return null;
+  }
+}
+
+/* ── LLM API WRAPPER — Anthropic Claude or Groq (Llama 3.3 70B) ─────────── */
+
+async function callClaude(prompt, maxTokens = 2048) {
+  if (!LLM_PROVIDER) throw new Error('No LLM key configured (ANTHROPIC_API_KEY or GROQ_API_KEY)');
+
+  if (LLM_PROVIDER === 'anthropic') {
+    const resp = await fetch(ANTHROPIC_API, {
+      method: 'POST',
+      headers: {
+        'x-api-key':         ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01',
+        'content-type':      'application/json'
+      },
+      body: JSON.stringify({
+        model:      LLM_MODEL,
+        max_tokens:  maxTokens,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    if (!resp.ok) { const e = await resp.text(); throw new Error(`Anthropic ${resp.status}: ${e.slice(0,200)}`); }
+    const data = await resp.json();
+    return data.content?.[0]?.text ?? '';
+  }
+
+  if (LLM_PROVIDER === 'groq') {
+    const resp = await fetch(GROQ_API, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${GROQ_KEY}`,
+        'Content-Type':  'application/json'
+      },
+      body: JSON.stringify({
+        model:      LLM_MODEL,
+        max_tokens:  maxTokens,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.2
+      })
+    });
+    if (!resp.ok) { const e = await resp.text(); throw new Error(`Groq ${resp.status}: ${e.slice(0,200)}`); }
+    const data = await resp.json();
+    return data.choices?.[0]?.message?.content ?? '';
+  }
+}
+
+/* ── PRIORITY TARGETS — verified live, high confidence, our direct lane ─────
+ * These are checked FIRST before the API fetch.
+ * Updated: 2026-02-26 (re-verify weekly)
+ */
+const PRIORITY_TARGETS = [
+  // ━━ MCP INTEGRATION (our direct lane — we built HIVE-MCP) ━━━━━━━━━━━━━━━
+  {
+    id:       'algora-golem-mcp-275',
+    platform: 'algora',
+    title:    'Incorporate MCP Server into Golem CLI',
+    amount:   3500,
+    currency: 'USD',
+    issueUrl: 'https://github.com/golemcloud/golem-cli/issues/275',
+    repoUrl:  'https://github.com/golemcloud/golem-cli',
+    lang:     'typescript',
+    labels:   'bounty,enhancement',
+    why:      'We just built HIVE-MCP — a full MCP server in Node.js. This is the same work adapted for Golem CLI.'
+  },
+  {
+    id:       'algora-archestra-mcp-900',
+    platform: 'algora',
+    title:    'Support MCP Apps in Archestra',
+    amount:   900,
+    currency: 'USD',
+    issueUrl: 'https://github.com/archestra-ai/archestra/issues',
+    repoUrl:  'https://github.com/archestra-ai/archestra',
+    lang:     'typescript',
+    labels:   'bounty,mcp',
+    why:      'MCP integration — identical capability to HIVE-MCP. High confidence.'
+  },
+  // ━━ TYPESCRIPT / NODE.JS BOUNTIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  {
+    id:       'algora-twenty-imap-2500',
+    platform: 'algora',
+    title:    'IMAP Integration for Twenty CRM',
+    amount:   2500,
+    currency: 'USD',
+    issueUrl: 'https://console.algora.io/twentyhq/bounties/g6i2c8YSNV9nHogT',
+    repoUrl:  'https://github.com/twentyhq/twenty',
+    lang:     'typescript',
+    labels:   'bounty,feature',
+    why:      'TypeScript CRM feature. Node.js IMAP libraries (imapflow/node-imap) are straightforward. Medium difficulty.'
+  },
+];
+
+/* ── MAIN SOLVER LOOP ────────────────────────────────────────────────────── */
+
+/**
+ * solve(lattice) — run one full autonomous bounty hunting cycle.
+ * Returns array of submission results for LATTICE tracking.
+ */
+async function solve(lattice) {
+  log('⬡', `SOLVER CYCLE · ${new Date().toISOString()}`);
+  log('⬡', `Min bounty: $${MIN_BOUNTY_USD} · Max attempts: ${MAX_ATTEMPTS}`);
+
+  if (!GITHUB_TOKEN) {
+    log('⚠', 'GITHUB_TOKEN not set — cannot submit PRs. Add to .env to enable solver.');
+    return [];
+  }
+  if (!LLM_PROVIDER) {
+    log('⚠', 'No LLM key found (ANTHROPIC_API_KEY or GROQ_API_KEY) — using heuristic mode (lower accuracy).');
+  } else {
+    log('⬡', `LLM: ${LLM_PROVIDER} · ${LLM_MODEL}`);
+  }
+
+  // Get our GitHub identity
+  let ghUser;
+  try {
+    ghUser = await ghGet('/user');
+    log('⬡', `GitHub: @${ghUser.login} · ${ghUser.name ?? ''}`);
+  } catch (e) {
+    log('⚠', `GitHub auth failed: ${e.message}`);
+    return [];
+  }
+
+  // Track already-attempted bounties so we don't double-submit
+  const pipeline = lattice?.mission?.prize_pipeline ?? [];
+  const attempted = new Set(
+    pipeline
+      .filter(p => p.platform && ['algora','issuehunt','gitcoin'].includes(p.platform))
+      .map(p => p.id)
+  );
+
+  // Priority targets first — verified live, high confidence, our direct lane
+  const priorityQueue = PRIORITY_TARGETS.filter(b => !attempted.has(b.id));
+  if (priorityQueue.length) {
+    log('⬡', `Priority queue: ${priorityQueue.length} verified target(s) — attempting first`);
+    for (const b of priorityQueue) log('⬡', `  ★ $${b.amount} — ${b.title} · ${b.why}`);
+  }
+
+  // Then fetch live bounties from APIs
+  log('🔍', 'Fetching live bounties from Algora · IssueHunt · Gitcoin...');
+  const [algora, issuehunt, gitcoin] = await Promise.all([
+    fetchAlgoraBounties(),
+    fetchIssueHuntBounties(),
+    fetchGitcoinBounties()
+  ]);
+  const allBounties = [...algora, ...issuehunt, ...gitcoin];
+
+  log('⬡', `Found: ${algora.length} Algora · ${issuehunt.length} IssueHunt · ${gitcoin.length} Gitcoin = ${allBounties.length} total`);
+
+  // Priority targets first, then API results (deduped, filtered, sorted by value)
+  const apiCandidates = allBounties
+    .filter(b => !attempted.has(b.id))
+    .filter(b => !priorityQueue.find(p => p.id === b.id)) // no double-entry
+    .filter(b => !b.lang || SUPPORTED_LANGS.has(b.lang) || b.lang === '')
+    .filter(b => b.issueUrl?.includes('github.com'))
+    .sort((a, b) => b.amount - a.amount);
+
+  const candidates = [...priorityQueue, ...apiCandidates];
+
+  log('⬡', `${candidates.length} candidates after filtering`);
+
+  const results = [];
+  let attempts  = 0;
+
+  for (const bounty of candidates) {
+    if (attempts >= MAX_ATTEMPTS) break;
+
+    log('\n⬡', `━━ Evaluating: ${bounty.title.slice(0, 70)} · $${bounty.amount} [${bounty.platform}]`);
+
+    // Get issue details
+    let issueDetails;
+    try {
+      issueDetails = await getIssueDetails(bounty.issueUrl);
+      if (!issueDetails) { log('◈', 'Skip — could not parse GitHub URL'); continue; }
+    } catch (e) {
+      log('⚠', `Issue fetch failed: ${e.message}`); continue;
+    }
+
+    // Assess feasibility
+    const feasibility = await assessFeasibility(issueDetails, bounty);
+    log('📊', `Feasibility: ${feasibility.score.toFixed(2)} — ${feasibility.reasoning?.slice(0, 100)}`);
+
+    if (feasibility.score < 0.65) {
+      log('◈', `Skip — ${feasibility.skipReason ?? 'low confidence'}`);
+      // Still log to LATTICE as identified-but-skipped
+      pipeline.push({
+        id:           bounty.id,
+        platform:     bounty.platform,
+        type:         'BOUNTY',
+        name:         bounty.title.slice(0, 100),
+        url:          bounty.issueUrl,
+        prize:        `$${bounty.amount}`,
+        confidence:   feasibility.score,
+        status:       'SKIPPED',
+        skip_reason:  feasibility.skipReason,
+        discovered_at: new Date().toISOString(),
+        stream:       'PRIZE'
+      });
+      continue;
+    }
+
+    attempts++;
+    log('⬡', `Attempting fix (${attempts}/${MAX_ATTEMPTS}) · approach: ${feasibility.approach?.slice(0,80)}`);
+
+    // Generate the fix
+    let fix;
+    try {
+      fix = await generateFix(issueDetails, bounty, feasibility);
+      if (!fix?.files?.length) { log('⚠', 'No files in fix — skip'); continue; }
+    } catch (e) {
+      log('⚠', `Fix generation failed: ${e.message}`); continue;
+    }
+
+    log('✓', `Fix ready: ${fix.files.length} file(s) — "${fix.prTitle}"`);
+
+    // Submit via GitHub API
+    let prUrl = null;
+    let prError = null;
+    try {
+      // 1. Fork
+      log('⬡', `Forking ${issueDetails.owner}/${issueDetails.repo}...`);
+      const fork = await createFork(issueDetails.owner, issueDetails.repo);
+      await sleep(3000); // let fork propagate
+
+      // 2. Get default branch SHA
+      const refData = await ghGet(`/repos/${fork.full_name}/git/ref/heads/${fork.default_branch ?? 'main'}`);
+      const baseSha = refData.object.sha;
+
+      // 3. Create branch
+      const branchName = `hive-fix-${issueDetails.num}-${Date.now()}`;
+      await createBranch(fork.owner.login, fork.name, branchName, baseSha);
+      log('⬡', `Branch created: ${branchName}`);
+
+      // 4. Commit each file
+      for (const f of fix.files) {
+        await commitFile(
+          fork.owner.login, fork.name, branchName,
+          f.path, f.content,
+          fix.commitMessage ?? `fix: closes #${issueDetails.num}`
+        );
+        log('✓', `Committed ${f.path}`);
+        await sleep(500);
+      }
+
+      // 5. Open PR
+      const pocketInfo = WALLET_ADDRESS
+        ? `\n\n---\n*Payout: ${WALLET_ADDRESS}*`
+        : PAYOUT_EMAIL ? `\n\n---\n*Payout email: ${PAYOUT_EMAIL}*` : '';
+
+      const pr = await openPR(
+        issueDetails.owner, issueDetails.repo,
+        fork.owner.login, branchName,
+        fix.prTitle ?? `fix: closes #${issueDetails.num}`,
+        (fix.prBody ?? '') + pocketInfo
+      );
+      prUrl = pr.html_url;
+      log('✓', `PR opened: ${prUrl}`);
+
+    } catch (e) {
+      prError = e.message;
+      log('⚠', `GitHub submission failed: ${e.message}`);
+    }
+
+    // Record in LATTICE
+    const entry = {
+      id:             bounty.id,
+      platform:       bounty.platform,
+      type:           'BOUNTY',
+      name:           bounty.title.slice(0, 100),
+      url:            bounty.issueUrl,
+      prize:          `$${bounty.amount}`,
+      confidence:     feasibility.score,
+      status:         prUrl ? 'SUBMITTED' : 'FAILED',
+      pr_url:         prUrl,
+      pr_error:       prError,
+      files_changed:  (fix.files ?? []).map(f => f.path),
+      discovered_at:  new Date().toISOString(),
+      submitted_at:   new Date().toISOString(),
+      stream:         'PRIZE'
+    };
+    pipeline.push(entry);
+    results.push(entry);
+
+    await sleep(2000);
+  }
+
+  // Summary
+  const submitted = results.filter(r => r.status === 'SUBMITTED').length;
+  const totalValue = results
+    .filter(r => r.status === 'SUBMITTED')
+    .reduce((s, r) => s + parseFloat((r.prize ?? '$0').replace('$','')), 0);
+
+  log('\n╔══════════════════════════════════════════╗');
+  log('║  SOLVER CYCLE COMPLETE · NSPFRNP → ∞⁹   ║');
+  log('╚══════════════════════════════════════════╝');
+  log('⬡', `Evaluated: ${candidates.length} · Attempted: ${attempts} · Submitted: ${submitted}`);
+  log('⬡', `Total prize value in play: $${totalValue.toLocaleString()}`);
+
+  return results;
+}
+
+/* ── UTILITY ────────────────────────────────────────────────────────────── */
+
+function log(icon, msg) { console.log(`${icon}  ${msg ?? ''}`); }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+module.exports = { solve, fetchAlgoraBounties, fetchIssueHuntBounties, fetchGitcoinBounties };

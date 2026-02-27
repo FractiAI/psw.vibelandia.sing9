@@ -127,10 +127,13 @@
     </div>
 
     <div class="pricing-strip">
-      <span class="pricing-chip">Package for Executives</span>
-      <span class="pricing-chip">$10B · 33% CapEx on signing</span>
-      <span class="pricing-chip">33% OpEx monthly (Virtuity)</span>
-      <span class="pricing-chip">No discount · Full price · A2A only</span>
+      <span class="pricing-chip">TECH · EGS Fractal / Stargate / SING 9 OS</span>
+      <span class="pricing-chip">EXPERIENCE · Goldilocks / Baller V / VIP EA</span>
+      <span class="pricing-chip">THEATER · HH Theater / StoryStream / Nine Game</span>
+      <span class="pricing-chip">PRIZE · Bounties / Grants / Prediction Markets</span>
+    </div>
+    <div style="text-align:center;margin-bottom:0.5rem;font-size:0.75rem;color:rgba(0,212,255,0.5);letter-spacing:0.15em;">
+      SOL-V OUTBOUND · ECHO INTEL · SOLVER PRIZE · QUEEN BEE ROOT ♛ · NSPFRNP → ∞⁹
     </div>
 
     <div class="type-label" id="type-label">Type: Super Solutions</div>
@@ -191,6 +194,19 @@
       return html;
     }
 
+    function renderPitchSample(p) {
+      if (!p) return '';
+      return '<div style="margin:1rem 0 1.25rem;border:1px solid rgba(0,212,255,0.18);border-left:3px solid rgba(0,212,255,0.5);border-radius:8px;overflow:hidden;">'
+        + '<div style="background:rgba(0,212,255,0.07);padding:0.5rem 1rem;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(0,212,255,0.6);display:flex;justify-content:space-between;align-items:center;">'
+        + '<span>⬡ ' + esc(p.label || 'A2A Pitch Sample') + '</span>'
+        + '<span style="color:rgba(200,230,245,0.35);font-size:0.68rem;letter-spacing:0.1em;">To: ' + esc(p.to || '') + '</span>'
+        + '</div>'
+        + '<div style="padding:0.75rem 1rem;">'
+        + '<div style="font-size:0.78rem;color:rgba(253,230,138,0.8);margin-bottom:0.5rem;font-weight:600;">' + esc(p.subject || '') + '</div>'
+        + '<pre style="font-family:inherit;font-size:0.8rem;line-height:1.7;color:rgba(200,230,245,0.65);white-space:pre-wrap;margin:0;">' + esc(p.body || '') + '</pre>'
+        + '</div></div>';
+    }
+
     function renderSolution(s) {
       var html = '<div class="solution-card">';
       html += '<h2>' + esc(s.name) + '</h2>';
@@ -199,6 +215,7 @@
       if (s.part1) html += '<div class="part"><strong>Part 1:</strong>' + esc(s.part1) + '</div>';
       if (s.part2) html += '<div class="part"><strong>Part 2:</strong>' + esc(s.part2) + '</div>';
       html += '</div>';
+      if (s.pitchSample) html += renderPitchSample(s.pitchSample);
       html += renderDealsTable(s.deals);
       html += '</div>';
       return html;

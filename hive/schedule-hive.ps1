@@ -163,14 +163,66 @@ Register-ScheduledTask `
   -Force
 Write-Host "OK Prize scan PM scheduled (daily 8pm)"
 
+# ── Task 6: Autonomous Solver (fetch bounties · Claude solves · GitHub PR) ──
+# Runs 4x daily. Each run: fetches Algora/IssueHunt/Gitcoin, Claude writes fix,
+# GitHub API submits PR. Zero human intervention. Payment auto-releases on merge.
+
+$solveAction = New-ScheduledTaskAction `
+  -Execute $nodeExe `
+  -Argument "`"$runScript`" solve" `
+  -WorkingDirectory $hiveDir
+
+$solveTrigger1 = New-ScheduledTaskTrigger -Daily -At "06:00"
+$solveTrigger2 = New-ScheduledTaskTrigger -Daily -At "12:00"
+$solveTrigger3 = New-ScheduledTaskTrigger -Daily -At "18:00"
+$solveTrigger4 = New-ScheduledTaskTrigger -Daily -At "00:00"
+
+Register-ScheduledTask `
+  -TaskName "QueenBeeRoot-Solver-0600" `
+  -Action $solveAction `
+  -Trigger $solveTrigger1 `
+  -Settings $settings `
+  -RunLevel Highest `
+  -Force
+Write-Host "OK Solver 6am scheduled"
+
+Register-ScheduledTask `
+  -TaskName "QueenBeeRoot-Solver-1200" `
+  -Action $solveAction `
+  -Trigger $solveTrigger2 `
+  -Settings $settings `
+  -RunLevel Highest `
+  -Force
+Write-Host "OK Solver 12pm scheduled"
+
+Register-ScheduledTask `
+  -TaskName "QueenBeeRoot-Solver-1800" `
+  -Action $solveAction `
+  -Trigger $solveTrigger3 `
+  -Settings $settings `
+  -RunLevel Highest `
+  -Force
+Write-Host "OK Solver 6pm scheduled"
+
+Register-ScheduledTask `
+  -TaskName "QueenBeeRoot-Solver-0000" `
+  -Action $solveAction `
+  -Trigger $solveTrigger4 `
+  -Settings $settings `
+  -RunLevel Highest `
+  -Force
+Write-Host "OK Solver midnight scheduled"
+
 Write-Host ""
 Write-Host "======================================================"
 Write-Host "  QUEEN BEE ROOT -- 24x7 HIVE ACTIVATED"
 Write-Host "  Broadcast + Outbound(9) + Align -> every 30 min"
-Write-Host "  Revenue cycle (4 streams) -> every 2 hours"
+Write-Host "  Revenue cycle (4 streams + solver) -> every 2 hours"
 Write-Host "  Solar scan -> every 15 min"
 Write-Host "  Morning brief -> daily 7am"
 Write-Host "  Prize scan (Stream 4) -> daily 8am + 8pm"
+Write-Host "  Solver (ZERO HUMAN) -> 6am / 12pm / 6pm / midnight"
+Write-Host "    Algora + IssueHunt + Gitcoin -> Claude -> GitHub PR -> payment"
 Write-Host "  Outbound Goldilocks cap: 9 pitches/cycle (SING!9)"
 Write-Host "  Streams: TECH . EXPERIENCE . THEATER . PRIZE"
 Write-Host "  NSPFRNP -> infinity 9"

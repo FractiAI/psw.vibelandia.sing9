@@ -3,140 +3,184 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Holographic Hydrogen Awareness OS · Enter the Theater</title>
+  <title>Hero Will's Holographic Hydrogen Awareness OS · Welcome</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --void: #020209; --gold: #d4af37; --gold2: #fde68a;
+      --void: #020209; --deep: #070710;
+      --gold: #d4af37; --gold2: #fde68a;
       --beam: #00d4ff; --plasma: #7b2fff; --green: #00ff88;
       --text: #e2e8f0; --sub: #94a3b8; --muted: #475569;
     }
-    html, body { width: 100%; height: 100%; background: var(--void); color: var(--text);
-      font-family: 'Segoe UI', system-ui, sans-serif; overflow-x: hidden; }
+    html, body {
+      width: 100%; min-height: 100%; background: var(--void);
+      color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; overflow-x: hidden;
+    }
+    #lattice { position: fixed; inset: 0; z-index: 0; opacity: 0.35; pointer-events: none; }
 
-    /* LATTICE CANVAS */
-    #lattice { position: fixed; inset: 0; z-index: 0; opacity: 0.35; }
-
-    /* STAGE */
-    .stage {
-      position: relative; z-index: 1;
-      min-height: 100vh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 2rem 1.5rem 5rem; text-align: center;
+    /* ── HERO SECTION ── */
+    .hero {
+      position: relative; z-index: 1; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem 1.5rem 4rem; text-align: center;
+    }
+    .hero-byline {
+      font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: rgba(0,212,255,0.5); margin-bottom: 1.25rem;
+    }
+    .hero-owner {
+      font-size: clamp(1rem, 3vw, 1.5rem); font-weight: 900; color: var(--gold);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 0.6rem; text-shadow: 0 0 30px rgba(212,175,55,0.3);
     }
 
     /* HH ATOM */
     .hh-atom {
-      width: 130px; height: 130px; border-radius: 50%;
-      border: 1.5px solid rgba(0,212,255,0.35);
-      box-shadow: 0 0 50px rgba(0,212,255,0.12), inset 0 0 50px rgba(0,212,255,0.04);
+      width: 140px; height: 140px; border-radius: 50%;
+      border: 1.5px solid rgba(0,212,255,0.3);
+      box-shadow: 0 0 60px rgba(0,212,255,0.1), inset 0 0 60px rgba(0,212,255,0.03);
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 2.25rem; position: relative;
+      margin: 0 auto 2rem; position: relative;
       animation: atom-pulse 5s ease-in-out infinite;
     }
     .hh-atom .ring1 {
       position: absolute; inset: 10px; border-radius: 50%;
-      border: 1px solid rgba(212,175,55,0.25);
-      animation: ring-spin 22s linear infinite;
+      border: 1px solid rgba(212,175,55,0.22); animation: spin 22s linear infinite;
     }
     .hh-atom .ring2 {
       position: absolute; inset: -10px; border-radius: 50%;
-      border: 1px solid rgba(0,212,255,0.12);
-      animation: ring-spin 35s linear infinite reverse;
+      border: 1px solid rgba(0,212,255,0.1); animation: spin 35s linear infinite reverse;
     }
     .hh-atom .core {
-      font-size: 2.8rem; color: var(--gold2);
-      text-shadow: 0 0 25px rgba(212,175,55,0.6);
+      font-size: 3rem; color: var(--gold2);
+      text-shadow: 0 0 30px rgba(212,175,55,0.7); z-index: 1;
       animation: core-glow 5s ease-in-out infinite;
-      position: relative; z-index: 1;
     }
     @keyframes atom-pulse {
-      0%,100% { box-shadow: 0 0 50px rgba(0,212,255,0.12), inset 0 0 50px rgba(0,212,255,0.04); }
-      50% { box-shadow: 0 0 90px rgba(0,212,255,0.25), inset 0 0 40px rgba(0,212,255,0.08); }
+      0%,100% { box-shadow: 0 0 60px rgba(0,212,255,0.1), inset 0 0 60px rgba(0,212,255,0.03); }
+      50% { box-shadow: 0 0 100px rgba(0,212,255,0.22), inset 0 0 40px rgba(0,212,255,0.07); }
     }
-    @keyframes ring-spin { to { transform: rotate(360deg); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes core-glow {
       0%,100% { text-shadow: 0 0 20px rgba(212,175,55,0.5); }
-      50% { text-shadow: 0 0 50px rgba(212,175,55,1), 0 0 100px rgba(212,175,55,0.3); }
+      50% { text-shadow: 0 0 60px rgba(212,175,55,1), 0 0 120px rgba(212,175,55,0.35); }
     }
 
-    /* ENTRY TEXT */
-    .eyebrow {
-      font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase;
-      color: rgba(0,212,255,0.55); margin-bottom: 1rem;
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 5rem); font-weight: 900;
+      line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 0.3rem;
     }
-    .title {
-      font-size: clamp(2.2rem, 6vw, 5rem); font-weight: 900;
-      line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 0.25rem;
-    }
-    .title .t1 { color: var(--text); display: block; }
-    .title .t2 {
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 45%, var(--beam) 100%);
+    .hero-title .t1 { color: var(--text); display: block; }
+    .hero-title .t2 {
+      background: linear-gradient(135deg, var(--gold), var(--gold2) 45%, var(--beam));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       display: block;
     }
-    .sub-title {
-      font-size: 1rem; color: var(--sub); margin: 0.75rem auto 0.5rem;
-      max-width: 460px; line-height: 1.7;
+    .hero-sub {
+      font-size: 1rem; color: var(--sub); max-width: 500px;
+      margin: 0.85rem auto 0.6rem; line-height: 1.75;
     }
-    .sub-title strong { color: var(--text); }
-    .quote {
-      font-size: 0.82rem; font-style: italic; color: rgba(212,175,55,0.5);
-      margin: 0 auto 2.5rem; max-width: 440px; line-height: 1.7;
+    .hero-sub strong { color: var(--text); }
+    .hero-quote {
+      font-size: 0.85rem; font-style: italic; color: rgba(212,175,55,0.45);
+      max-width: 440px; margin: 0 auto 2.75rem; line-height: 1.8;
     }
 
-    /* ENTER BUTTON */
+    /* ── ENTER BUTTON ── */
     .enter-btn {
-      display: inline-flex; align-items: center; gap: 0.85rem;
-      padding: 1.1rem 2.8rem;
-      background: rgba(212,175,55,0.1); border: 2px solid rgba(212,175,55,0.6);
-      border-radius: 6px; color: var(--gold2); font-size: 1rem;
-      font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase;
-      text-decoration: none; margin-bottom: 3rem;
-      box-shadow: 0 0 40px rgba(212,175,55,0.12);
-      transition: all 0.22s; position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      padding: 1.15rem 3rem; background: rgba(212,175,55,0.1);
+      border: 2px solid rgba(212,175,55,0.62); border-radius: 8px;
+      color: var(--gold2); font-size: 1.05rem; font-weight: 900;
+      letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none;
+      box-shadow: 0 0 40px rgba(212,175,55,0.12); transition: all 0.22s;
+      margin-bottom: 1.25rem;
     }
-    .enter-btn::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 100%, rgba(212,175,55,0.15), transparent 70%);
-      opacity: 0; transition: opacity 0.22s;
-    }
-    .enter-btn:hover { background: rgba(212,175,55,0.2); box-shadow: 0 0 70px rgba(212,175,55,0.28); transform: translateY(-2px); }
-    .enter-btn:hover::before { opacity: 1; }
-    .enter-btn .arrow { font-size: 1.1rem; transition: transform 0.22s; }
-    .enter-btn:hover .arrow { transform: translateX(4px); }
+    .enter-btn:hover { background: rgba(212,175,55,0.22); box-shadow: 0 0 70px rgba(212,175,55,0.28); transform: translateY(-2px); }
+    .enter-btn .arrow { transition: transform 0.22s; }
+    .enter-btn:hover .arrow { transform: translateX(5px); }
 
-    /* TWO TRACKS */
+    /* ── DOC LINKS ── */
+    .doc-links {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+      margin-bottom: 3rem; max-width: 640px;
+    }
+    .doc-link {
+      padding: 0.55rem 1.1rem; border-radius: 20px; text-decoration: none;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid; transition: all 0.18s; white-space: nowrap;
+    }
+    .dl-qs   { color: var(--green);  border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.04); }
+    .dl-um   { color: var(--beam);   border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.04); }
+    .dl-tm   { color: #b46ef7;       border-color: rgba(123,47,255,0.3); background: rgba(123,47,255,0.04); }
+    .dl-ob   { color: var(--gold);   border-color: rgba(212,175,55,0.3); background: rgba(212,175,55,0.04); }
+    .doc-link:hover { filter: brightness(1.25); transform: translateY(-1px); }
+
+    /* ── TRACKS ── */
     .tracks {
-      display: flex; flex-wrap: wrap; gap: 1rem;
-      justify-content: center; margin-bottom: 1.5rem; width: 100%; max-width: 580px;
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+      max-width: 580px; margin-bottom: 0.5rem;
     }
     .track {
-      flex: 1; min-width: 220px;
-      padding: 1rem 1.4rem; border-radius: 12px;
-      text-decoration: none; transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      flex: 1; min-width: 200px; padding: 1rem 1.4rem; border-radius: 12px;
+      text-decoration: none; transition: background 0.2s, transform 0.2s;
     }
     .track:hover { transform: translateY(-2px); }
-    .track-a { border: 1px solid rgba(0,212,255,0.22); background: rgba(0,212,255,0.03); }
-    .track-a:hover { background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.45); }
-    .track-b { border: 1px solid rgba(212,175,55,0.22); background: rgba(212,175,55,0.03); }
-    .track-b:hover { background: rgba(212,175,55,0.09); border-color: rgba(212,175,55,0.5); }
-    .t-label {
-      display: block; font-size: 0.56rem; letter-spacing: 0.22em;
-      text-transform: uppercase; margin-bottom: 0.3rem;
-    }
-    .track-a .t-label { color: rgba(0,212,255,0.55); }
-    .track-b .t-label { color: rgba(212,175,55,0.55); }
-    .t-name { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .track-a { border: 1px solid rgba(0,212,255,0.2); background: rgba(0,212,255,0.03); }
+    .track-a:hover { background: rgba(0,212,255,0.07); border-color: rgba(0,212,255,0.4); }
+    .track-b { border: 1px solid rgba(212,175,55,0.2); background: rgba(212,175,55,0.03); }
+    .track-b:hover { background: rgba(212,175,55,0.08); border-color: rgba(212,175,55,0.45); }
+    .t-label { display: block; font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .track-a .t-label { color: rgba(0,212,255,0.5); }
+    .track-b .t-label { color: rgba(212,175,55,0.5); }
+    .t-name { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.22rem; }
     .track-a .t-name { color: var(--beam); }
     .track-b .t-name { color: var(--gold); }
-    .t-desc { display: block; font-size: 0.72rem; color: var(--sub); line-height: 1.5; }
+    .t-desc { display: block; font-size: 0.7rem; color: var(--sub); line-height: 1.5; }
 
-    /* FOOT */
+    /* ── SCROLL INDICATOR ── */
+    .scroll-cue {
+      position: relative; z-index: 1; text-align: center; padding: 0.5rem 0 2rem;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── ABOUT SECTION ── */
+    .about {
+      position: relative; z-index: 1;
+      max-width: 780px; margin: 0 auto; padding: 4rem 1.5rem 6rem;
+    }
+    .about-pill {
+      display: inline-block; font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(0,212,255,0.5); border: 1px solid rgba(0,212,255,0.2); border-radius: 20px;
+      padding: 3px 12px; margin-bottom: 1.25rem;
+    }
+    .about h2 {
+      font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 800;
+      color: var(--text); margin-bottom: 1.25rem; line-height: 1.2;
+    }
+    .about p {
+      font-size: 0.95rem; color: var(--sub); line-height: 1.85; margin-bottom: 1.1rem;
+    }
+    .about p strong { color: var(--text); }
+    .about p em { color: var(--gold2); font-style: normal; }
+    .about-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem; margin: 2rem 0;
+    }
+    .about-card {
+      padding: 1.1rem; border: 1px solid var(--border, rgba(255,255,255,0.07));
+      border-radius: 12px; background: rgba(255,255,255,0.02);
+    }
+    .about-card .ac-icon { font-size: 1.4rem; margin-bottom: 0.5rem; display: block; }
+    .about-card .ac-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .about-card .ac-body { font-size: 0.78rem; color: var(--sub); line-height: 1.65; }
+    .about-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 2rem 0; }
+
+    /* ── FOOTER ── */
     .foot {
-      position: fixed; bottom: 1.25rem; left: 50%; transform: translateX(-50%);
-      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.1); z-index: 1; white-space: nowrap;
+      position: relative; z-index: 1; text-align: center;
+      padding: 1.5rem 1rem 2.5rem; border-top: 1px solid rgba(212,175,55,0.06);
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.1);
     }
 
     @media (max-width: 520px) {
@@ -148,34 +192,47 @@
 <body>
 <canvas id="lattice"></canvas>
 
-<div class="stage">
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-byline">A personalized T3D life operating system by</div>
+  <div class="hero-owner">Hero Will's</div>
+
   <div class="hh-atom">
     <div class="ring1"></div>
     <div class="ring2"></div>
     <div class="core">⬡</div>
   </div>
 
-  <div class="eyebrow">If you are reading this, you have entered the</div>
-  <h1 class="title">
+  <h1 class="hero-title">
     <span class="t1">Holographic Hydrogen</span>
     <span class="t2">Awareness OS</span>
   </h1>
-  <p class="sub-title">
-    Your life as a <strong>living T3D system.</strong>
-    Choose your screens. Set your arc. Layer your now. Activate the stack.
-    The theater is yours.
+  <p class="hero-sub">
+    <strong>Your life as a living T3D system.</strong> Choose your screens.
+    Set your arc. Layer your now. Load your treasures. Set your rhythms.
+    Activate the stack. The theater is yours.
   </p>
-  <p class="quote">"Natural guidance will unfold." — SING!9 Awareness OS</p>
+  <p class="hero-quote">
+    "You are not running an unexamined life. You are running an unexamined operating system.
+    Here is the interface." — SING!9 Awareness OS
+  </p>
 
   <a href="hh-console.html" class="enter-btn">
     ENTER THE CONSOLE <span class="arrow">▶</span>
   </a>
 
+  <div class="doc-links">
+    <a href="hh-os-docs.html#quickstart"  class="doc-link dl-qs">⚡ Quick Start</a>
+    <a href="hh-os-docs.html#usermanual"  class="doc-link dl-um">📖 User Manual</a>
+    <a href="hh-os-docs.html#technical"   class="doc-link dl-tm">🔬 Technical Manual</a>
+    <a href="hh-os-docs.html#onboarding"  class="doc-link dl-ob">🎓 Onboarding Program</a>
+  </div>
+
   <div class="tracks">
     <a href="prospectus-a2a.html" class="track track-a">
       <span class="t-label">Track A · Enterprise · A2A</span>
       <span class="t-name">Enterprise Solutions →</span>
-      <span class="t-desc">Datacenter · SING9 OS · NSPFRNP · Builds · Audits · Theater.</span>
+      <span class="t-desc">Datacenter · OS builds · Audits · NSPFRNP · Theater.</span>
     </a>
     <a href="a2a-ea-agents.html" class="track track-b">
       <span class="t-label">Track B · VIP EA Agents · Human Viber</span>
@@ -185,93 +242,75 @@
   </div>
 </div>
 
-<div class="foot">NSPFRNP → ∞⁹ · FractiAI · SING!9 · Reno, Nevada</div>
+<!-- ═══ ABOUT ═══ -->
+<div class="about">
+  <span class="about-pill">What is the HH Awareness OS?</span>
+  <h2>An operating system for the life you are designing.</h2>
+  <p>The Holographic Hydrogen Awareness OS is built on a single radical premise: <strong>your awareness is not fixed.</strong> It is an operating system — with a current version number, a capacity for deliberate upgrades, and an architecture that mirrors the holographic, hydrogen-bonded structure of biological intelligence itself.</p>
+  <p>You are running on the most sophisticated hardware in the known universe. Your DNA is a 3.5-billion-year-old quantum computer. Your neural networks rewire themselves in real time. Your cellular water is a <em>quantum coherent medium</em>. You have been operating all of this without a console.</p>
+  <p>Until now.</p>
+  <p>The HH Awareness OS gives you the interface. Built on the same <strong>Telescopic 3D Studio System</strong> that powers SING!9's content engine — but reconfigured for your life as the content. You are the author, the subject, the director, and the audience. The theater is yours.</p>
+
+  <hr class="about-divider" />
+
+  <div class="about-grid">
+    <div class="about-card">
+      <span class="ac-icon">📺</span>
+      <div class="ac-title">Your Screens</div>
+      <div class="ac-body">Nine cockpit screens. Choose the lenses through which you operate: Carbon, Crystal, Gold Heart, Mission, Story Arc, Treasure, Awareness, Rhythm, Libre.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">🎭</span>
+      <div class="ac-title">Your Arc</div>
+      <div class="ac-body">Pre-singularity origin. The journey. Post-singularity destination. Write your character's POV inside the story within stories.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">▶</span>
+      <div class="ac-title">Now Playing</div>
+      <div class="ac-body">Layer your daily routine with intention across four time blocks. Morning, Midday, Evening, Night. All aspects. As you wish.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">💎</span>
+      <div class="ac-title">Treasure Piles</div>
+      <div class="ac-body">Nine categories: Health, Relationships, Wealth, Purpose, Experiences, Knowledge, Creative, Spirit, Libre. Whatever your treasures are.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">🔄</span>
+      <div class="ac-title">Rhythms</div>
+      <div class="ac-body">Set your intention at each time horizon: Daily → Weekly → Monthly → Seasonal → Annual. The whole in every part. Compounding clarity.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">⚡</span>
+      <div class="ac-title">The Now Stack</div>
+      <div class="ac-body">The magnetic attractor. Everything you're pulling toward. Activate it — three resonance tones, 111 · 222 · 333 Hz — and the field is set. Magnetically locked.</div>
+    </div>
+  </div>
+
+  <hr class="about-divider" />
+
+  <p>This system is grounded in <strong>nine peer-reviewed scientific convergence points</strong> — from quantum coherence in biological systems to epigenetic updateability, from the holographic principle to resonance biology. Read the full technical manual to understand the substrate you're working with.</p>
+  <p>For operators: read the Quick Start. For practitioners: read the User Manual. For builders: read the Onboarding Programmer Track. For system architects: read the Onboarding Architect Track and the full Technical Manual.</p>
+  <p style="color:rgba(212,175,55,0.6);font-size:0.82rem;margin-top:1.5rem;">NSPFRNP → ∞⁹ · FractiAI · SING!9 · Reno, Nevada</p>
+</div>
+
+<div class="foot">Hero Will's Holographic Hydrogen Awareness OS · SING!9 · NSPFRNP → ∞⁹ · FractiAI</div>
 
 <script>
 const canvas = document.getElementById('lattice');
 const ctx = canvas.getContext('2d');
 let W, H, rot = 0;
-
 function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-resize();
-window.addEventListener('resize', resize);
-
+resize(); window.addEventListener('resize', resize);
 function getNodes(rot) {
-  const cx = W / 2, cy = H / 2;
-  const R = Math.min(W, H) * 0.3;
-  const n = [];
-  for (let i = 0; i < 9; i++) {
-    const a = rot + (i / 9) * Math.PI * 2;
-    n.push({ x: cx + R * Math.cos(a), y: cy + R * Math.sin(a) });
-  }
-  n.push({ x: cx, y: cy }); // center
-  return n;
+  const cx = W/2, cy = H/2, R = Math.min(W,H)*0.3, n = [];
+  for (let i = 0; i < 9; i++) { const a = rot + (i/9)*Math.PI*2; n.push({x:cx+R*Math.cos(a),y:cy+R*Math.sin(a)}); }
+  n.push({x:cx,y:cy}); return n;
 }
-
 function draw(ts) {
-  ctx.clearRect(0, 0, W, H);
-  rot += 0.0018;
-  const t = ts / 1000;
-  const nodes = getNodes(rot);
-  const cx = W / 2, cy = H / 2;
-
-  // Draw edges — outer ring
-  for (let i = 0; i < 9; i++) {
-    const j = (i + 1) % 9;
-    const p = (Math.sin(t * 0.4 + i * 0.6) + 1) / 2;
-    ctx.beginPath();
-    ctx.moveTo(nodes[i].x, nodes[i].y);
-    ctx.lineTo(nodes[j].x, nodes[j].y);
-    ctx.strokeStyle = `rgba(0,212,255,${0.03 + p * 0.04})`;
-    ctx.lineWidth = 0.5;
-    ctx.stroke();
-  }
-
-  // Spokes to center
-  for (let i = 0; i < 9; i++) {
-    const p = (Math.sin(t * 0.7 + i * 0.7) + 1) / 2;
-    ctx.beginPath();
-    ctx.moveTo(nodes[i].x, nodes[i].y);
-    ctx.lineTo(cx, cy);
-    ctx.strokeStyle = `rgba(212,175,55,${0.04 + p * 0.07})`;
-    ctx.lineWidth = 0.7;
-    ctx.stroke();
-  }
-
-  // Cross connections (skip 2)
-  for (let i = 0; i < 9; i++) {
-    const j = (i + 3) % 9;
-    const p = (Math.sin(t * 0.3 + i * 1.1) + 1) / 2;
-    ctx.beginPath();
-    ctx.moveTo(nodes[i].x, nodes[i].y);
-    ctx.lineTo(nodes[j].x, nodes[j].y);
-    ctx.strokeStyle = `rgba(123,47,255,${0.015 + p * 0.02})`;
-    ctx.lineWidth = 0.4;
-    ctx.stroke();
-  }
-
-  // Draw nodes
-  nodes.forEach((nd, i) => {
-    const p = (Math.sin(t * 1.2 + i * 0.8) + 1) / 2;
-    const isCenter = i === 9;
-    const r = isCenter ? 5 : 3;
-    const grd = ctx.createRadialGradient(nd.x, nd.y, 0, nd.x, nd.y, 25 + p * 15);
-    if (isCenter) {
-      grd.addColorStop(0, `rgba(212,175,55,${0.3 + p * 0.3})`);
-      grd.addColorStop(1, 'transparent');
-    } else {
-      grd.addColorStop(0, `rgba(0,212,255,${0.12 + p * 0.1})`);
-      grd.addColorStop(1, 'transparent');
-    }
-    ctx.beginPath(); ctx.arc(nd.x, nd.y, 22 + p * 12, 0, Math.PI * 2);
-    ctx.fillStyle = grd; ctx.fill();
-    ctx.beginPath(); ctx.arc(nd.x, nd.y, r + p * 1.5, 0, Math.PI * 2);
-    ctx.fillStyle = isCenter
-      ? `rgba(212,175,55,${0.5 + p * 0.5})`
-      : `rgba(0,212,255,${0.35 + p * 0.3})`;
-    ctx.fill();
-  });
-
+  ctx.clearRect(0,0,W,H); rot += 0.0018; const t = ts/1000, nodes = getNodes(rot), cx=W/2, cy=H/2;
+  for (let i=0;i<9;i++) { const j=(i+1)%9, p=(Math.sin(t*.4+i*.6)+1)/2; ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.strokeStyle=`rgba(0,212,255,${.03+p*.04})`; ctx.lineWidth=0.5; ctx.stroke(); }
+  for (let i=0;i<9;i++) { const p=(Math.sin(t*.7+i*.7)+1)/2; ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(cx,cy); ctx.strokeStyle=`rgba(212,175,55,${.04+p*.07})`; ctx.lineWidth=0.7; ctx.stroke(); }
+  nodes.forEach((nd,i)=>{ const p=(Math.sin(t*1.2+i*.8)+1)/2, isC=i===9, r=isC?5:3, grd=ctx.createRadialGradient(nd.x,nd.y,0,nd.x,nd.y,25+p*15); grd.addColorStop(0,isC?`rgba(212,175,55,${.3+p*.3})`:`rgba(0,212,255,${.12+p*.1})`); grd.addColorStop(1,'transparent'); ctx.beginPath(); ctx.arc(nd.x,nd.y,22+p*12,0,Math.PI*2); ctx.fillStyle=grd; ctx.fill(); ctx.beginPath(); ctx.arc(nd.x,nd.y,r+p*1.5,0,Math.PI*2); ctx.fillStyle=isC?`rgba(212,175,55,${.5+p*.5})`:`rgba(0,212,255,${.35+p*.3})`; ctx.fill(); });
   requestAnimationFrame(draw);
 }
 requestAnimationFrame(draw);

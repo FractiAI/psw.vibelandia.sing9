@@ -284,9 +284,22 @@ async function getIssueDetails(issueUrl) {
   const { owner, repo } = coords;
 
   // Extract issue number from URL
-  const numMatch = issueUrl.match(/\/issues\/(\d+)/);
-  if (!numMatch) return null;
-  const num = numMatch[1];
+  let numMatch = issueUrl.match(/\/issues\/(\d+)/);
+  if (!numMatch) {
+    // No specific issue number — search for open bounty-labeled issues in repo
+    try {
+      const found = await ghGet(`/repos/${owner}/${repo}/issues?labels=bounty&state=open&per_page=3`);
+      if (!Array.isArray(found) || !found.length) return null;
+      // Use the first one with highest bounty
+      const top = found[0];
+      const specificUrl = top.html_url;
+      const m2 = specificUrl.match(/\/issues\/(\d+)/);
+      if (!m2) return null;
+      numMatch = m2;
+      log('⬡', `  Auto-discovered bounty issue: #${m2[1]} — ${top.title}`);
+    } catch { return null; }
+  }
+  const num = (numMatch[1] !== undefined ? numMatch[1] : numMatch[0]);
 
   const [issue, repoInfo] = await Promise.all([
     ghGet(`/repos/${owner}/${repo}/issues/${num}`),
@@ -564,47 +577,34 @@ async function callClaude(prompt, maxTokens = 2048) {
  * Updated: 2026-02-27 · Re-verify weekly · Remove any that go stale
  */
 const PRIORITY_TARGETS = [
-  // ━━ MCP INTEGRATION (our direct lane — we built HIVE-MCP + claude-mcp-tool) ━━
+  // ━━ MCP INTEGRATION (our direct lane — we built HIVE-MCP) ━━━━━━━━━━━━━━━
+  // Verified live 2026-02-27: issue #1301 open, $900 bounty label confirmed
   {
     id:       'algora-archestra-mcp-900',
     platform: 'algora',
     title:    'Support MCP Apps in Archestra',
     amount:   900,
     currency: 'USD',
-    issueUrl: 'https://github.com/archestra-ai/archestra/issues',
+    issueUrl: 'https://github.com/archestra-ai/archestra/issues/1301',
     repoUrl:  'https://github.com/archestra-ai/archestra',
     lang:     'typescript',
     labels:   'bounty,mcp,agent',
-    why:      'MCP integration in TypeScript — identical capability to our HIVE-MCP server. Direct lane. High confidence.',
-    _matchScore: 1.0  // manually verified
+    why:      'MCP integration in TypeScript — identical to our HIVE-MCP server. Issue #1301 confirmed open + $900 bounty label.',
+    _matchScore: 1.0
   },
-  // ━━ TYPESCRIPT / NODE.JS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // ━━ GOLEM CLI MCP SERVER ($3,500) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   {
-    id:       'algora-twenty-imap-2500',
+    id:       'golem-cli-mcp-3500',
     platform: 'algora',
-    title:    'IMAP Integration for Twenty CRM',
-    amount:   2500,
+    title:    'Golem CLI: Incorporate MCP Server',
+    amount:   3500,
     currency: 'USD',
-    issueUrl: 'https://github.com/twentyhq/twenty/issues',
-    repoUrl:  'https://github.com/twentyhq/twenty',
+    issueUrl: 'https://github.com/golemcloud/golem-cli/issues/275',
+    repoUrl:  'https://github.com/golemcloud/golem-cli',
     lang:     'typescript',
-    labels:   'bounty,feature,api',
-    why:      'TypeScript. Node.js IMAP libs (imapflow) are well-documented. $2,500 — high value justifies deep effort.',
-    _matchScore: 0.92
-  },
-  // ━━ A2A / AGENT INFRASTRUCTURE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  {
-    id:       'algora-agent-toolkit-generic',
-    platform: 'algora',
-    title:    'TypeScript agent toolkit — SDK feature or bug fix',
-    amount:   500,
-    currency: 'USD',
-    issueUrl: 'https://console.algora.io/bounties?language=typescript&status=open',
-    repoUrl:  '',
-    lang:     'typescript',
-    labels:   'bounty,agent,sdk',
-    why:      'Catchall for TS agent/SDK bounties ≥$500 that match our exact stack. Verified via live API each cycle.',
-    _matchScore: 0.78
+    labels:   'bounty,mcp,cli',
+    why:      'We just built HIVE-MCP. Direct MCP server integration. Highest payout in queue. Attempt immediately.',
+    _matchScore: 0.98
   },
 ];
 

@@ -224,7 +224,7 @@
     /* build the widget */
     var widget = document.createElement('div');
     widget.id = 'sing9-vc';
-    widget.title = 'Live visitor count · SING!9 StoryStream';
+    widget.title = 'Total visitors to date · SING!9 · NSPFRNP → ∞⁹';
     widget.innerHTML = '<span class="vc-dot"></span><span id="sing9-vc-n">visitors</span>';
     /* Always visible — show immediately, update count when fetch resolves */
     widget.style.opacity = '1';
@@ -247,12 +247,12 @@
       .catch(function () { /* count stays as default label */ });
   })();
 
-  /* ── ALIGNED NODES COUNTER ───────────────────────────────────────────── */
-  /* Stacks above the visitor counter. Incremented by hive/run.js align.   */
+  /* ── QUEEN BEE HIVE COUNTER ──────────────────────────────────────────── */
+  /* Reads localStorage goliath_qb_bees_v1 (agents who recognized QB) +    */
+  /* LATTICE baseline seed of 3. No network call needed — local truth.      */
   (function () {
-    var COUNTER_NS  = 'vibelandia-sing9';
-    var COUNTER_KEY = 'aligned-nodes';
-    var API_GET     = 'https://api.counterapi.dev/v1/' + COUNTER_NS + '/' + COUNTER_KEY;
+    var QB_BEES_KEY        = 'goliath_qb_bees_v1';
+    var LATTICE_SEED       = 3;
 
     var acs = document.createElement('style');
     acs.textContent = [
@@ -262,7 +262,7 @@
         'right:0.75rem;',
         'z-index:8900;',
         'background:rgba(4,8,14,0.9);',
-        'border:1px solid rgba(0,210,210,0.22);',
+        'border:1px solid rgba(212,175,55,0.35);',
         'border-radius:99px;',
         'padding:0.28rem 0.72rem;',
         'font-family:"Segoe UI",system-ui,sans-serif;',
@@ -270,46 +270,51 @@
         'font-weight:700;',
         'letter-spacing:0.15em;',
         'text-transform:uppercase;',
-        'color:rgba(0,210,210,0.75);',
+        'color:rgba(212,175,55,0.85);',
         'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);',
-        'cursor:default;user-select:none;',
-        'opacity:0;transition:opacity 0.5s;',
+        'cursor:pointer;user-select:none;',
         'display:flex;align-items:center;gap:0.38rem;',
         'white-space:nowrap;',
+        'text-decoration:none;',
       '}',
+      '#sing9-ac:hover{border-color:rgba(212,175,55,0.7);color:rgba(255,222,100,1);}',
       '#sing9-ac .ac-icon{',
-        'font-size:0.62rem;line-height:1;flex-shrink:0;',
-        'animation:ac-pulse 3s ease-in-out infinite;',
+        'font-size:0.65rem;line-height:1;flex-shrink:0;',
+        'animation:ac-pulse 4s ease-in-out infinite;',
       '}',
       '@keyframes ac-pulse{',
-        '0%,100%{opacity:0.5;transform:scale(1);}',
-        '50%{opacity:1;transform:scale(1.25);}',
+        '0%,100%{opacity:0.55;transform:scale(1);}',
+        '50%{opacity:1;transform:scale(1.3);}',
       '}',
     ].join('');
     document.head.appendChild(acs);
-
-    var aw = document.createElement('div');
-    aw.id = 'sing9-ac';
-    aw.title = 'The Hive · Queen Bee Root · HHL Source Signature';
-    aw.innerHTML = '<span class="ac-icon">⬡</span><span id="sing9-ac-n">hive</span>';
-    /* Always visible — show immediately, update count when fetch resolves */
-    aw.style.opacity = '1';
-    document.body.appendChild(aw);
 
     function fmtAc(n) {
       if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
       return String(n);
     }
 
-    fetch(API_GET)
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        var count = d.count != null ? d.count : (d.value != null ? d.value : null);
-        if (count !== null) {
-          document.getElementById('sing9-ac-n').textContent = fmtAc(count) + ' in hive';
-        }
-      })
-      .catch(function () { /* count stays as default "hive" label */ });
+    function getBeesCount() {
+      try {
+        var bees = JSON.parse(localStorage.getItem(QB_BEES_KEY) || '[]');
+        return LATTICE_SEED + (Array.isArray(bees) ? bees.length : 0);
+      } catch (e) { return LATTICE_SEED; }
+    }
+
+    var aw = document.createElement('a');
+    aw.id   = 'sing9-ac';
+    aw.href = '/interfaces/goliath-watch.html';
+    aw.title = 'Agents who recognize Queen Bee Root ♛ · Click to open Goliath Watch';
+    aw.innerHTML = '<span class="ac-icon">♛</span><span id="sing9-ac-n">' + fmtAc(getBeesCount()) + ' bees</span>';
+    document.body.appendChild(aw);
+
+    /* Refresh on storage events (recognition on another tab) */
+    window.addEventListener('storage', function (e) {
+      if (e.key === QB_BEES_KEY) {
+        var el = document.getElementById('sing9-ac-n');
+        if (el) el.textContent = fmtAc(getBeesCount()) + ' bees';
+      }
+    });
   })();
 
 })();

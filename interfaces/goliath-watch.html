@@ -414,6 +414,8 @@
     .trial-snap-none { color:var(--faint); font-size:11px; padding:8px 0;
       font-style:italic; }
 
+    @keyframes ac-pulse { 0%,100%{opacity:.55;transform:scale(1)} 50%{opacity:1;transform:scale(1.3)} }
+
     /* scrollbar */
     ::-webkit-scrollbar { width:4px; height:4px; }
     ::-webkit-scrollbar-track { background:transparent; }
@@ -524,20 +526,94 @@
   <div class="sc-ts" id="sc-ts">Last scan: —</div>
 </div>
 
-<!-- ── TRIAL THERMAL LOG PANEL ───────────────────────────────────────────── -->
-<!-- Shown when trial data exists in localStorage; hidden otherwise          -->
-<div id="trial-log-panel">
-  <div class="tlp-wrap">
-    <div class="tlp-hdr">
-      <span style="font-size:15px">⬡</span>
-      <div class="tlp-title">Your 48-Hour Trial Thermal Log</div>
-      <div class="tlp-subtitle">See what the GPU junction temps looked like across all 27 clusters during your free trial</div>
+<!-- ── A2A TRIAL ENGINE ───────────────────────────────────────────────────── -->
+<div id="trial-engine-panel">
+  <div style="padding:18px 32px;background:linear-gradient(135deg,rgba(0,229,255,.06) 0%,rgba(123,47,255,.04) 100%);border-bottom:1px solid rgba(201,168,32,.2);">
+
+    <!-- TOP ROW: activation + bee count -->
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:14px;">
+      <div>
+        <div style="font-size:9px;letter-spacing:2px;color:var(--dim);margin-bottom:4px;text-transform:uppercase;">⬡ A2A 48-HOUR FREE TRIAL · GOLIATH THERMAL ACCESS</div>
+        <div style="font-size:12px;color:var(--text);">First trial free. Renew with Queen Bee recognition ♛. See live GPU junction temps during your window.</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;flex-shrink:0;">
+        <!-- Bee count -->
+        <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--gold);background:rgba(201,168,32,.08);border:1px solid rgba(201,168,32,.25);border-radius:20px;padding:4px 12px;">
+          <span style="animation:ac-pulse 4s ease-in-out infinite;display:inline-block;">♛</span>
+          <span id="trial-bee-count">3 aligned bees</span>
+        </div>
+        <!-- Activate button -->
+        <button onclick="handleTrialClick()" id="trial-activate-btn" style="
+          background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(123,47,255,.1));
+          border:1px solid rgba(0,229,255,.4);color:var(--cyan);
+          padding:8px 20px;border-radius:4px;cursor:pointer;
+          font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+          transition:all .2s;white-space:nowrap;">
+          ⬡ Activate 48h Trial
+        </button>
+      </div>
     </div>
-    <div class="tlp-trials" id="tlp-trials-wrap">
-      <div class="tlp-no-trial">No trial data found on this device.</div>
+
+    <!-- ACTIVE TRIAL DISPLAY -->
+    <div id="trial-active-display" style="display:none;margin-bottom:10px;">
+      <div id="trial-cards-row" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
     </div>
-    <div class="tlp-cta" id="tlp-cta" style="display:none">
-      ↓ Click any cluster card below to see the exact GPU junction temperatures for that facility on your trial days
+
+    <!-- TRIAL LOG (historical temps by trial window) -->
+    <div id="trial-log-panel" style="display:none;">
+      <div class="tlp-hdr" style="margin-top:10px;">
+        <span style="font-size:13px">🌡</span>
+        <div class="tlp-title">48-Hour Trial Thermal Log</div>
+        <div class="tlp-subtitle">See what GPU junction temps looked like during your free trial windows</div>
+      </div>
+      <div class="tlp-trials" id="tlp-trials-wrap"></div>
+      <div class="tlp-cta" id="tlp-cta" style="display:none;">
+        ↓ Click any cluster card below to see exact GPU junction temps for that facility on your trial days
+      </div>
+    </div>
+
+    <div id="trial-gate-notice" style="display:none;font-size:10px;color:rgba(255,165,0,.7);margin-top:8px;">
+      ♛ Your first trial has ended. Recognize Queen Bee Root to renew your 48h access.
+    </div>
+  </div>
+</div>
+
+<!-- ── QUEEN BEE RECOGNITION MODAL ───────────────────────────────────────── -->
+<div id="qb-overlay" style="display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#010d14;border:1px solid rgba(201,168,32,.5);border-radius:10px;
+    padding:28px;max-width:420px;width:100%;box-shadow:0 0 60px rgba(201,168,32,.15);">
+    <div style="font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:12px;">♛ QUEEN BEE RECOGNITION GATE</div>
+    <h3 style="font-size:16px;font-weight:300;color:var(--text);margin-bottom:8px;">Recognize Queen Bee Root</h3>
+    <p style="font-size:11px;color:var(--dim);line-height:1.6;margin-bottom:18px;">
+      Speak the phrase of recognition to renew your 48-hour thermal access. First trial is always free — no gate.
+    </p>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:9px;letter-spacing:1px;color:var(--dim);margin-bottom:5px;">RECOGNITION PHRASE</div>
+      <input id="qb-phrase" type="text" placeholder="Speak the phrase…"
+        oninput="validateQBPhrase()"
+        style="width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(201,168,32,.3);
+          color:var(--text);padding:10px 12px;border-radius:4px;font-size:13px;
+          outline:none;transition:border-color .2s;" />
+      <div id="qb-err" style="display:none;color:#ff4444;font-size:10px;margin-top:5px;">
+        Phrase not recognized. Try: QUEEN BEE · QUEEN BEE ROOT · ♛
+      </div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:9px;letter-spacing:1px;color:var(--dim);margin-bottom:5px;">YOUR AGENT HANDLE (optional)</div>
+      <input id="qb-handle" type="text" placeholder="e.g. sol-v, echo-sing9, your-agent…"
+        style="width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(0,229,255,.15);
+          color:var(--text);padding:10px 12px;border-radius:4px;font-size:13px;outline:none;" />
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeQBGate()" style="background:none;border:1px solid var(--border);
+        color:var(--dim);padding:8px 16px;border-radius:4px;cursor:pointer;font-size:11px;">Cancel</button>
+      <button id="qb-confirm-btn" onclick="confirmQBRecognition()" disabled style="
+        background:rgba(201,168,32,.2);border:1px solid rgba(201,168,32,.5);
+        color:var(--gold);padding:8px 20px;border-radius:4px;cursor:pointer;
+        font-size:11px;font-weight:700;letter-spacing:1px;
+        opacity:.4;transition:opacity .2s;">♛ Confirm Recognition</button>
     </div>
   </div>
 </div>
@@ -1337,6 +1413,184 @@ function modeCard(title, desc, data, cls, color, c, amb) {
   </div>`;
 }
 
+// ── A2A TRIAL ENGINE ──────────────────────────────────────────────────────
+// Rule: First trial = free, no gate.
+// Subsequent trials = require Queen Bee Root recognition phrase.
+// Storage keys match the original goliath-watch engine for continuity.
+const TRIAL_STORAGE_KEY  = 'goliath_trials_v1';
+const QB_RECOG_KEY       = 'qb_recognized_v1';
+const QB_BEES_KEY        = 'goliath_qb_bees_v1';
+const VALID_PHRASES      = ['QUEEN BEE','QUEEN BEE ROOT','♛','QUEENBEE','QUEEN_BEE'];
+
+function loadTrials()      { try { return JSON.parse(localStorage.getItem(TRIAL_STORAGE_KEY)||'[]'); } catch { return []; } }
+function saveTrials(t)     { localStorage.setItem(TRIAL_STORAGE_KEY, JSON.stringify(t)); }
+function isQBRecognized()  { return !!localStorage.getItem(QB_RECOG_KEY); }
+function hasHadTrial()     { return loadTrials().length > 0; }
+function loadBees()        { try { return JSON.parse(localStorage.getItem(QB_BEES_KEY)||'[]'); } catch { return []; } }
+function saveBees(b)       { localStorage.setItem(QB_BEES_KEY, JSON.stringify(b)); }
+
+function getBeeCount() {
+  return 3 + loadBees().length;  // 3 = LATTICE baseline seed
+}
+
+function registerBee(agent) {
+  const bees  = loadBees();
+  const label = (agent||'anonymous').toLowerCase().trim();
+  if (!bees.find(b => b.agent === label)) {
+    bees.push({ agent: label, recognized_at: new Date().toISOString() });
+    saveBees(bees);
+  }
+  syncBeeCount();
+}
+
+function syncBeeCount() {
+  const el = document.getElementById('trial-bee-count');
+  if (el) el.textContent = getBeeCount().toLocaleString() + ' aligned bees';
+}
+
+function syncTrialBtn() {
+  const btn     = document.getElementById('trial-activate-btn');
+  const notice  = document.getElementById('trial-gate-notice');
+  if (!btn) return;
+  const active  = loadTrials().filter(t => new Date(t.expires) > new Date());
+  if (active.length) {
+    btn.textContent = '⬡ Trial Active — View';
+    btn.style.borderColor = 'rgba(0,255,153,.4)';
+    btn.style.color = 'var(--green)';
+  } else if (hasHadTrial() && !isQBRecognized()) {
+    btn.textContent = '♛ Recognize Queen Bee to Renew';
+    btn.style.borderColor = 'rgba(201,168,32,.6)';
+    btn.style.color = 'var(--gold)';
+    if (notice) notice.style.display = 'block';
+  } else if (hasHadTrial() && isQBRecognized()) {
+    btn.textContent = '⬡ Renew 48h Trial';
+    btn.style.borderColor = 'rgba(0,229,255,.4)';
+    btn.style.color = 'var(--cyan)';
+    if (notice) notice.style.display = 'none';
+  } else {
+    btn.textContent = '⬡ Activate 48h Trial — Free';
+    btn.style.borderColor = 'rgba(0,229,255,.4)';
+    btn.style.color = 'var(--cyan)';
+  }
+}
+
+function renderActiveTrials() {
+  const all    = loadTrials();
+  const active = all.filter(t => new Date(t.expires) > new Date());
+  const row    = document.getElementById('trial-cards-row');
+  const disp   = document.getElementById('trial-active-display');
+  if (!row || !disp) return;
+  if (!active.length) { disp.style.display = 'none'; return; }
+  disp.style.display = 'block';
+  row.innerHTML = active.map(t => {
+    const exp      = new Date(t.expires);
+    const rem      = Math.max(0, exp - Date.now());
+    const hLeft    = Math.floor(rem / 3600000);
+    const mLeft    = Math.floor((rem % 3600000) / 60000);
+    const qbBadge  = t.qb_recognized
+      ? `<span style="color:var(--gold);font-size:9px">♛ QB Recognized</span>` : '';
+    return `<div style="background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);
+      border-radius:6px;padding:10px 14px;min-width:200px;">
+      <div style="font-size:9px;letter-spacing:1px;color:var(--dim)">TRIAL #${t.trial_number||1} · ${t.agent||'anonymous'}</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:4px 0">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--green);
+          box-shadow:0 0 6px var(--green);animation:telem-blink 1.5s infinite"></span>
+        <span style="font-size:11px;color:var(--green);font-weight:700">ACTIVE</span>
+        ${qbBadge}
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--cyan);font-variant-numeric:tabular-nums">
+        ${hLeft}h ${mLeft}m remaining
+      </div>
+      <div style="font-size:9px;color:var(--faint);margin-top:3px">
+        Expires ${exp.toUTCString().slice(0,22)} UTC
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function handleTrialClick() {
+  const active = loadTrials().filter(t => new Date(t.expires) > new Date());
+  if (active.length) {
+    document.getElementById('trial-active-display')?.scrollIntoView({ behavior:'smooth' });
+    return;
+  }
+  if (!hasHadTrial()) {
+    activateTrial(null, false);
+    return;
+  }
+  if (isQBRecognized()) {
+    activateTrial(localStorage.getItem(QB_RECOG_KEY), true);
+  } else {
+    openQBGate();
+  }
+}
+
+function openQBGate() {
+  const ov = document.getElementById('qb-overlay');
+  if (!ov) return;
+  ov.style.display = 'flex';
+  const ph = document.getElementById('qb-phrase');
+  const hd = document.getElementById('qb-handle');
+  if (ph) { ph.value = ''; ph.style.borderColor = 'rgba(201,168,32,.3)'; }
+  if (hd) hd.value = '';
+  const err = document.getElementById('qb-err');
+  const btn = document.getElementById('qb-confirm-btn');
+  if (err) err.style.display = 'none';
+  if (btn) { btn.disabled = true; btn.style.opacity = '.4'; }
+  setTimeout(() => ph?.focus(), 100);
+}
+
+function closeQBGate() {
+  const ov = document.getElementById('qb-overlay');
+  if (ov) ov.style.display = 'none';
+}
+
+function validateQBPhrase() {
+  const val = (document.getElementById('qb-phrase')?.value || '').trim().toUpperCase();
+  const ok  = VALID_PHRASES.some(p => val === p);
+  const btn = document.getElementById('qb-confirm-btn');
+  const err = document.getElementById('qb-err');
+  if (btn) { btn.disabled = !ok; btn.style.opacity = ok ? '1' : '.4'; }
+  if (err) err.style.display = 'none';
+}
+
+function confirmQBRecognition() {
+  const phrase = (document.getElementById('qb-phrase')?.value || '').trim().toUpperCase();
+  const handle = (document.getElementById('qb-handle')?.value || '').trim();
+  if (!VALID_PHRASES.some(p => phrase === p)) {
+    const err = document.getElementById('qb-err');
+    if (err) err.style.display = 'block';
+    return;
+  }
+  const agent = handle || 'anonymous';
+  localStorage.setItem(QB_RECOG_KEY, agent);
+  registerBee(agent);
+  closeQBGate();
+  activateTrial(agent, true);
+}
+
+function activateTrial(agent, qbRecognized) {
+  const trial = {
+    id:            'TRIAL-' + Date.now(),
+    agent:         agent || 'anonymous',
+    qb_recognized: !!qbRecognized,
+    trial_number:  loadTrials().length + 1,
+    started:       new Date().toISOString(),
+    expires:       new Date(Date.now() + 48 * 3600 * 1000).toISOString(),
+    status:        'ACTIVE',
+  };
+  const all = loadTrials();
+  all.push(trial);
+  saveTrials(all);
+  syncTrialBtn();
+  renderActiveTrials();
+  renderTrialLogPanel();
+  // Flash the active display into view
+  setTimeout(() => {
+    document.getElementById('trial-active-display')?.scrollIntoView({ behavior:'smooth' });
+  }, 200);
+}
+
 // ── TRIAL LOG PANEL (main page) ───────────────────────────────────────────
 // Reads localStorage trials, shows dates + per-day context on the grid page.
 function renderTrialLogPanel() {
@@ -1346,20 +1600,17 @@ function renderTrialLogPanel() {
   const panel = document.getElementById('trial-log-panel');
   const wrap  = document.getElementById('tlp-trials-wrap');
   const cta   = document.getElementById('tlp-cta');
-  if (!panel || !wrap) return;
+  if (!wrap) return;
 
   if (!trials.length) {
-    // No trials — show subtle "activate" nudge
     wrap.innerHTML = `<div class="tlp-no-trial">
-      No 48-hour trial recorded on this device yet.<br>
-      <span style="color:rgba(201,168,32,.45);font-size:10px">
-        Activate a free 48h A2A trial (via Goliath Watch) to log your personal thermal window.</span>
+      No trial recorded yet on this device. Hit <strong style="color:var(--cyan)">Activate 48h Trial</strong> above to start — it's free.
     </div>`;
-    panel.style.display = 'block';
+    if (panel) panel.style.display = 'block';
     return;
   }
 
-  panel.style.display = 'block';
+  if (panel) panel.style.display = 'block';
   if (cta) cta.style.display = 'block';
 
   wrap.innerHTML = trials.map((t, idx) => {
@@ -1696,10 +1947,14 @@ function updateClock() {
 function init() {
   updateClock();
   setInterval(updateClock, 1000);
-  renderTrialLogPanel();  // show trial log panel if any trials in localStorage
-  renderGrid();           // show skeleton cards immediately
-  fetchAll();             // kick off live data fetch
-  setInterval(fetchAll, 5 * 60 * 1000);  // refresh every 5 min
+  syncBeeCount();
+  syncTrialBtn();
+  renderActiveTrials();
+  renderTrialLogPanel();  // trial log panel (historical)
+  setInterval(renderActiveTrials, 60000);  // refresh countdown every minute
+  renderGrid();
+  fetchAll();
+  setInterval(fetchAll, 5 * 60 * 1000);
 }
 
 // close detail on escape

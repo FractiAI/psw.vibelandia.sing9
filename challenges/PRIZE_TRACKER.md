@@ -1,6 +1,14 @@
 # ⬡ SING!9 PRIZE STREAM — ZERO HUMAN INTERVENTION
 # One-time setup only. Agent does everything else.
-# Updated: 2026-02-26
+# Updated: 2026-02-27
+#
+# POLICY: HIGH-MATCH ONLY
+# We only attempt bounties that pass both gates:
+#   Gate 1 (metadata pre-filter): match score ≥ 0.70
+#   Gate 2 (LLM feasibility):     Claude score ≥ 0.82  (was 0.65)
+#   Min bounty:                    $500                 (was $100)
+# Zero submissions in a cycle is a valid, correct outcome.
+# Quality over quantity. One strong PR beats ten weak ones.
 
 ---
 
@@ -8,11 +16,13 @@
 
 ```
 # .env
-GITHUB_TOKEN=ghp_...          ← github.com/settings/tokens (repo + workflow scopes)
-ANTHROPIC_API_KEY=sk-ant-...  ← console.anthropic.com
-WALLET_ADDRESS=0x...          ← your ETH/USDC wallet (MetaMask, Coinbase, etc.)
-PAYOUT_EMAIL=you@email.com    ← for platforms that pay USD via PayPal/bank
-MIN_BOUNTY_USD=100            ← only attempt bounties worth at least this
+GITHUB_TOKEN=ghp_...               ← github.com/settings/tokens (repo + workflow scopes)
+ANTHROPIC_API_KEY=sk-ant-...       ← console.anthropic.com
+WALLET_ADDRESS=0x...               ← your ETH/USDC wallet (MetaMask, Coinbase, etc.)
+PAYOUT_EMAIL=you@email.com         ← for platforms that pay USD via PayPal/bank
+MIN_BOUNTY_USD=500                 ← high-match floor (was 100)
+MATCH_THRESHOLD=0.70               ← metadata pre-filter gate (new)
+FEASIBILITY_THRESHOLD=0.82         ← LLM deep-read gate (was 0.65)
 ```
 
 After setup: `node hive/run.js solve` — runs the full loop.
@@ -72,7 +82,16 @@ No human touches anything. Not even to review. The agent decides, builds, and su
 
 ---
 
-## ELIMINATED (required human intervention)
+## ELIMINATED — WRONG LANGUAGE (hard disqualifiers)
+
+The following were removed from PRIORITY_TARGETS because they require languages
+outside our stack (Rust, Go, etc.). metadataMatchScore returns 0 for these.
+
+- ~~Golem CLI MCP #275~~ ($3,500 · **Rust** — hard disqualifier)
+
+---
+
+## ELIMINATED — REQUIRED HUMAN INTERVENTION
 
 The following were removed from the pipeline. They all require one or more of:
 demo video recording, clicking a DevPost submission form, human judge review

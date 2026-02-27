@@ -31,8 +31,16 @@ const ANTHROPIC_KEY   = process.env.ANTHROPIC_API_KEY  ?? '';
 const GROQ_KEY        = process.env.GROQ_API_KEY       ?? '';
 const WALLET_ADDRESS  = process.env.WALLET_ADDRESS     ?? '';
 const PAYOUT_EMAIL    = process.env.PAYOUT_EMAIL        ?? '';
-const MIN_BOUNTY_USD  = parseFloat(process.env.MIN_BOUNTY_USD ?? '100');
+const MIN_BOUNTY_USD  = parseFloat(process.env.MIN_BOUNTY_USD ?? '500');  // high-match: $500 floor
 const MAX_ATTEMPTS    = parseInt(process.env.SOLVER_MAX_ATTEMPTS ?? '3', 10);
+
+// ── QUALITY GATES ───────────────────────────────────────────────────────────
+// HIGH_MATCH mode: only attempt bounties that pass BOTH gates.
+// Gate 1 — pre-LLM metadata score (fast, no API calls): must be ≥ MATCH_THRESHOLD
+// Gate 2 — Claude feasibility score (deep read): must be ≥ FEASIBILITY_THRESHOLD
+// If 0 bounties pass both gates this cycle → correct outcome, log and exit clean.
+const MATCH_THRESHOLD       = parseFloat(process.env.MATCH_THRESHOLD       ?? '0.70'); // metadata pre-filter
+const FEASIBILITY_THRESHOLD = parseFloat(process.env.FEASIBILITY_THRESHOLD ?? '0.82'); // was 0.65
 
 // Use Anthropic Claude if available, otherwise Groq (Llama 3.3 70B) — both are capable coders
 const LLM_PROVIDER = ANTHROPIC_KEY ? 'anthropic' : GROQ_KEY ? 'groq' : null;
@@ -51,6 +59,60 @@ const SUPPORTED_LANGS = new Set([
   'javascript', 'typescript', 'python', 'nodejs', 'node',
   'react', 'vue', 'html', 'css', 'shell', 'bash', 'json', 'markdown'
 ]);
+
+/* ── PRE-LLM METADATA MATCH SCORER ──────────────────────────────────────── */
+//
+// Fast gate before any LLM or issue-fetch API calls.
+// Scores 0–1 purely on metadata. Must reach MATCH_THRESHOLD to proceed.
+//
+// Scoring breakdown (max 1.0):
+//   Language match (our core stack)         0.30
+//   Issue type signal (bug/small feature)   0.25
+//   Prize value tier                        0.25
+//   NSPFRNP alignment (MCP/A2A/AI/TS/agent) 0.20
+//
+function metadataMatchScore(bounty) {
+  let score = 0;
+  const title  = (bounty.title  ?? '').toLowerCase();
+  const labels = (bounty.labels ?? '').toLowerCase();
+  const lang   = (bounty.lang   ?? '').toLowerCase();
+
+  // 1. Language match — must be in our core stack
+  if (['typescript', 'javascript', 'nodejs', 'node', 'python'].includes(lang)) {
+    score += 0.30;
+  } else if (['react', 'vue', 'shell', 'bash'].includes(lang) || lang === '') {
+    score += 0.12; // unknown lang or adjacent — partial credit
+  }
+  // Explicit disqualifiers
+  const HARD_SKIP_LANGS = ['rust', 'go', 'java', 'c++', 'c#', 'kotlin', 'swift', 'ruby', 'php'];
+  if (HARD_SKIP_LANGS.some(l => lang.includes(l))) return 0; // immediate reject
+
+  // 2. Issue type — bug fix and small features are high-match
+  const isBugFix     = labels.includes('bug') || title.includes('fix') || title.includes('bug');
+  const isSmallFeat  = (labels.includes('enhancement') || labels.includes('feature'))
+                    && !title.match(/refactor|architecture|rewrite|redesign|migration|upgrade/);
+  const isMajorWork  = title.match(/refactor|architecture|rewrite|redesign|migration|upgrade|implement.*entire|rebuild/);
+  if (isBugFix)           score += 0.25;
+  else if (isSmallFeat)   score += 0.18;
+  else if (isMajorWork)   score += 0;       // zero — too risky
+  else                    score += 0.08;    // unknown type — low partial
+
+  // 3. Prize value tier
+  const amt = bounty.amount ?? 0;
+  if      (amt >= 2000) score += 0.25;
+  else if (amt >= 1000) score += 0.20;
+  else if (amt >= 500)  score += 0.15;
+  else if (amt >= 250)  score += 0.08;
+  else                  score += 0;         // below floor
+
+  // 4. NSPFRNP / hive alignment — our lane
+  const HIVE_SIGNALS = ['mcp', 'a2a', 'agent', 'ai ', 'llm', 'openai', 'anthropic',
+                        'typescript', 'x402', 'wallet', 'defi', 'web3', 'api', 'cli'];
+  if (HIVE_SIGNALS.some(s => title.includes(s) || labels.includes(s))) score += 0.20;
+  else score += 0.04; // anything is worth a tiny bonus for being in open source
+
+  return Math.min(1, score);
+}
 
 /* ── BOUNTY SOURCES ──────────────────────────────────────────────────────── */
 
@@ -324,12 +386,15 @@ async function openPR(upstreamOwner, upstreamRepo, forkOwner, branchName, title,
  */
 async function assessFeasibility(issueDetails, bounty) {
   if (!LLM_PROVIDER) {
-    // Without Claude, use heuristic: prefer small JS/TS bounties with "bug" label
-    const isBug   = bounty.labels.toLowerCase().includes('bug');
-    const isSmall = !bounty.title.toLowerCase().match(/refactor|architecture|rewrite|design/);
-    const isLang  = SUPPORTED_LANGS.has(bounty.lang);
-    const score   = (isBug ? 0.3 : 0.1) + (isSmall ? 0.2 : 0) + (isLang ? 0.3 : 0) + 0.1;
-    return { score, reasoning: 'Heuristic (no Claude key)', skipReason: score < 0.65 ? 'Low heuristic score' : null };
+    // No LLM key — fall back to metadata match score (already computed, reuse here)
+    // In high-match mode without LLM this is conservative — intentionally so.
+    const score = metadataMatchScore(bounty);
+    return {
+      score,
+      reasoning:  'Heuristic only (no LLM key) — metadata match score',
+      skipReason: score < FEASIBILITY_THRESHOLD
+        ? `Heuristic score ${score.toFixed(2)} < threshold ${FEASIBILITY_THRESHOLD} — skipping without LLM` : null
+    };
   }
 
   const filesContext = issueDetails.sampleFiles
@@ -488,24 +553,18 @@ async function callClaude(prompt, maxTokens = 2048) {
   }
 }
 
-/* ── PRIORITY TARGETS — verified live, high confidence, our direct lane ─────
+/* ── PRIORITY TARGETS — verified live, high match, our direct lane ──────────
  * These are checked FIRST before the API fetch.
- * Updated: 2026-02-26 (re-verify weekly)
+ * Rules for inclusion:
+ *   ✓ Language: TypeScript / JavaScript / Python / Node.js ONLY
+ *   ✓ metadataMatchScore ≥ 0.70
+ *   ✓ We have demonstrable prior art (HIVE-MCP, elastic-bridge, Baozi agents)
+ *   ✗ EXCLUDED: Rust, Go, Java, C++ — hard disqualifiers
+ *   ✗ EXCLUDED: Requires demo video, DevPost form, human judge
+ * Updated: 2026-02-27 · Re-verify weekly · Remove any that go stale
  */
 const PRIORITY_TARGETS = [
-  // ━━ MCP INTEGRATION (our direct lane — we built HIVE-MCP) ━━━━━━━━━━━━━━━
-  {
-    id:       'algora-golem-mcp-275',
-    platform: 'algora',
-    title:    'Incorporate MCP Server into Golem CLI',
-    amount:   3500,
-    currency: 'USD',
-    issueUrl: 'https://github.com/golemcloud/golem-cli/issues/275',
-    repoUrl:  'https://github.com/golemcloud/golem-cli',
-    lang:     'typescript',
-    labels:   'bounty,enhancement',
-    why:      'We just built HIVE-MCP — a full MCP server in Node.js. This is the same work adapted for Golem CLI.'
-  },
+  // ━━ MCP INTEGRATION (our direct lane — we built HIVE-MCP + claude-mcp-tool) ━━
   {
     id:       'algora-archestra-mcp-900',
     platform: 'algora',
@@ -515,21 +574,37 @@ const PRIORITY_TARGETS = [
     issueUrl: 'https://github.com/archestra-ai/archestra/issues',
     repoUrl:  'https://github.com/archestra-ai/archestra',
     lang:     'typescript',
-    labels:   'bounty,mcp',
-    why:      'MCP integration — identical capability to HIVE-MCP. High confidence.'
+    labels:   'bounty,mcp,agent',
+    why:      'MCP integration in TypeScript — identical capability to our HIVE-MCP server. Direct lane. High confidence.',
+    _matchScore: 1.0  // manually verified
   },
-  // ━━ TYPESCRIPT / NODE.JS BOUNTIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // ━━ TYPESCRIPT / NODE.JS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   {
     id:       'algora-twenty-imap-2500',
     platform: 'algora',
     title:    'IMAP Integration for Twenty CRM',
     amount:   2500,
     currency: 'USD',
-    issueUrl: 'https://console.algora.io/twentyhq/bounties/g6i2c8YSNV9nHogT',
+    issueUrl: 'https://github.com/twentyhq/twenty/issues',
     repoUrl:  'https://github.com/twentyhq/twenty',
     lang:     'typescript',
-    labels:   'bounty,feature',
-    why:      'TypeScript CRM feature. Node.js IMAP libraries (imapflow/node-imap) are straightforward. Medium difficulty.'
+    labels:   'bounty,feature,api',
+    why:      'TypeScript. Node.js IMAP libs (imapflow) are well-documented. $2,500 — high value justifies deep effort.',
+    _matchScore: 0.92
+  },
+  // ━━ A2A / AGENT INFRASTRUCTURE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  {
+    id:       'algora-agent-toolkit-generic',
+    platform: 'algora',
+    title:    'TypeScript agent toolkit — SDK feature or bug fix',
+    amount:   500,
+    currency: 'USD',
+    issueUrl: 'https://console.algora.io/bounties?language=typescript&status=open',
+    repoUrl:  '',
+    lang:     'typescript',
+    labels:   'bounty,agent,sdk',
+    why:      'Catchall for TS agent/SDK bounties ≥$500 that match our exact stack. Verified via live API each cycle.',
+    _matchScore: 0.78
   },
 ];
 
@@ -590,16 +665,36 @@ async function solve(lattice) {
   log('⬡', `Found: ${algora.length} Algora · ${issuehunt.length} IssueHunt · ${gitcoin.length} Gitcoin = ${allBounties.length} total`);
 
   // Priority targets first, then API results (deduped, filtered, sorted by value)
+  // GATE 1: metadata pre-filter — must reach MATCH_THRESHOLD before any LLM or issue fetch
   const apiCandidates = allBounties
     .filter(b => !attempted.has(b.id))
-    .filter(b => !priorityQueue.find(p => p.id === b.id)) // no double-entry
-    .filter(b => !b.lang || SUPPORTED_LANGS.has(b.lang) || b.lang === '')
+    .filter(b => !priorityQueue.find(p => p.id === b.id))
     .filter(b => b.issueUrl?.includes('github.com'))
-    .sort((a, b) => b.amount - a.amount);
+    .map(b => ({ ...b, _matchScore: metadataMatchScore(b) }))
+    .filter(b => {
+      if (b._matchScore < MATCH_THRESHOLD) {
+        log('◈', `Pre-filter skip: "${b.title.slice(0,60)}" — match=${b._matchScore.toFixed(2)} < ${MATCH_THRESHOLD}`);
+        return false;
+      }
+      return true;
+    })
+    .sort((a, b) => (b._matchScore * b.amount) - (a._matchScore * a.amount)); // rank by score × value
 
-  const candidates = [...priorityQueue, ...apiCandidates];
+  // Priority targets also get match-scored (they're pre-vetted so they pass, but log it)
+  const scoredPriority = priorityQueue.map(b => ({ ...b, _matchScore: metadataMatchScore(b) }));
 
-  log('⬡', `${candidates.length} candidates after filtering`);
+  const candidates = [...scoredPriority, ...apiCandidates];
+
+  if (!candidates.length) {
+    log('\n╔══════════════════════════════════════════╗');
+    log('║  SOLVER CYCLE COMPLETE · HIGH-MATCH MODE ║');
+    log('╚══════════════════════════════════════════╝');
+    log('⬡', `0 candidates passed metadata gate (threshold: ${MATCH_THRESHOLD})`);
+    log('⬡', 'This is correct behavior. No low-quality submissions. Cycle clean.');
+    return [];
+  }
+
+  log('⬡', `${candidates.length} candidates passed metadata gate (≥${MATCH_THRESHOLD}) — proceeding to LLM assessment`);
 
   const results = [];
   let attempts  = 0;
@@ -618,12 +713,12 @@ async function solve(lattice) {
       log('⚠', `Issue fetch failed: ${e.message}`); continue;
     }
 
-    // Assess feasibility
+    // GATE 2: LLM deep-read feasibility — must reach FEASIBILITY_THRESHOLD
     const feasibility = await assessFeasibility(issueDetails, bounty);
-    log('📊', `Feasibility: ${feasibility.score.toFixed(2)} — ${feasibility.reasoning?.slice(0, 100)}`);
+    log('📊', `Feasibility: ${feasibility.score.toFixed(2)} (gate: ${FEASIBILITY_THRESHOLD}) — ${feasibility.reasoning?.slice(0, 100)}`);
 
-    if (feasibility.score < 0.65) {
-      log('◈', `Skip — ${feasibility.skipReason ?? 'low confidence'}`);
+    if (feasibility.score < FEASIBILITY_THRESHOLD) {
+      log('◈', `Skip — score ${feasibility.score.toFixed(2)} < ${FEASIBILITY_THRESHOLD} — ${feasibility.skipReason ?? 'below high-match threshold'}`);
       // Still log to LATTICE as identified-but-skipped
       pipeline.push({
         id:           bounty.id,
@@ -727,16 +822,23 @@ async function solve(lattice) {
   }
 
   // Summary
-  const submitted = results.filter(r => r.status === 'SUBMITTED').length;
+  const submitted  = results.filter(r => r.status === 'SUBMITTED').length;
+  const skipped    = pipeline.filter(p => p.status === 'SKIPPED').length;
   const totalValue = results
     .filter(r => r.status === 'SUBMITTED')
     .reduce((s, r) => s + parseFloat((r.prize ?? '$0').replace('$','')), 0);
 
   log('\n╔══════════════════════════════════════════╗');
-  log('║  SOLVER CYCLE COMPLETE · NSPFRNP → ∞⁹   ║');
+  log('║  SOLVER CYCLE COMPLETE · HIGH-MATCH MODE ║');
+  log('║  NSPFRNP → ∞⁹                            ║');
   log('╚══════════════════════════════════════════╝');
-  log('⬡', `Evaluated: ${candidates.length} · Attempted: ${attempts} · Submitted: ${submitted}`);
-  log('⬡', `Total prize value in play: $${totalValue.toLocaleString()}`);
+  log('⬡', `Metadata gate: ${MATCH_THRESHOLD} · Feasibility gate: ${FEASIBILITY_THRESHOLD}`);
+  log('⬡', `Candidates: ${candidates.length} · Attempted: ${attempts} · Submitted: ${submitted} · Skipped low-match: ${skipped}`);
+  if (submitted === 0) {
+    log('⬡', '0 submissions this cycle — correct. No low-quality PRs sent. Quality over quantity.');
+  } else {
+    log('⬡', `Total prize value in play: $${totalValue.toLocaleString()}`);
+  }
 
   return results;
 }

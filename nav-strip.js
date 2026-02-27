@@ -42,13 +42,13 @@
 
   /* All paths are absolute from site root (works from any depth) */
   var NAV_ITEMS = [
-    { label: 'Home',              href: '/index.html',                    match: /^\/(?:index\.html)?$/ },
-    { label: 'A2A',               href: '/interfaces/sol-v.html',         match: /sol-v/ },
-    { label: 'Vibers',            href: '/interfaces/vibers-menu.html',   match: /vibers-menu/ },
-    { label: 'Office Hours',      href: '/interfaces/office-hours.html',  match: /office-hours/ },
-    { label: 'Launch Pad',        href: '/interfaces/launch-pad.html',    match: /launch-pad/ },
-    { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html', match: /my-whiteboard/ },
-    { label: 'Advertise',         href: '/interfaces/advertise.html',     match: /advertise/ },
+    { label: 'Home',              href: '/index.html',                          match: /^\/(?:index\.html)?$/ },
+    { label: '⬡ Console',         href: '/interfaces/hh-console.html',          match: /hh-console/ },
+    { label: '🔥 Goliath',        href: '/interfaces/goliath-watch.html',       match: /goliath-watch/ },
+    { label: 'A2A',               href: '/interfaces/sol-v.html',               match: /sol-v/ },
+    { label: 'Vibers',            href: '/interfaces/vibers-menu.html',         match: /vibers-menu/ },
+    { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',       match: /my-whiteboard/ },
+    { label: 'Advertise',         href: '/interfaces/advertise.html',           match: /advertise/ },
   ];
 
   /* ── CURRENT PAGE DETECTION ──────────────────────────────────────────── */

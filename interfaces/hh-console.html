@@ -157,6 +157,17 @@
       transition: all 0.18s; font-family: inherit;
     }
     .btn-primary:hover { background: rgba(212,175,55,0.28); box-shadow: 0 0 30px rgba(212,175,55,0.18); }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-7px); }
+      40%     { transform: translateX( 7px); }
+      60%     { transform: translateX(-5px); }
+      80%     { transform: translateX( 5px); }
+    }
+    .field-input.error { border-color: rgba(239,68,68,0.7); box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
+    .field-error { font-size: 0.72rem; color: #f87171; margin-top: -0.9rem; margin-bottom: 1rem; display: none; }
+    .field-error.visible { display: block; }
+    .btn-primary.shaking { animation: shake 0.4s ease; }
 
     /* ═══ SHARED COMPONENTS ═══ */
     .sec-hd { margin-bottom: 1.25rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
@@ -384,8 +395,9 @@
 
     <label class="field-label" for="userName">Your name or handle</label>
     <input class="field-input" id="userName" type="text" placeholder="e.g. Pru · Commander · Sol-V" autocomplete="off" />
+    <div class="field-error" id="nameError">Enter your name or handle to initialize.</div>
 
-    <label class="field-label">Choose 1–3 archetypes (THE SKIN)</label>
+    <label class="field-label">Choose 1–3 archetypes (THE SKIN) — optional</label>
     <div class="archetype-grid" id="archetypeGrid"></div>
 
     <button class="btn-primary" id="setupDone">⬡ INITIALIZE MY CONSOLE</button>
@@ -637,14 +649,35 @@ ARCHETYPES.forEach(a => {
 document.getElementById('userName').value = S.name || '';
 
 document.getElementById('setupDone').onclick = () => {
-  const n = document.getElementById('userName').value.trim();
-  if (!n) { document.getElementById('userName').focus(); return; }
+  const inp = document.getElementById('userName');
+  const errEl = document.getElementById('nameError');
+  const btn = document.getElementById('setupDone');
+  const n = inp.value.trim();
+  if (!n) {
+    inp.classList.add('error');
+    errEl.classList.add('visible');
+    btn.classList.add('shaking');
+    inp.focus();
+    setTimeout(() => btn.classList.remove('shaking'), 450);
+    return;
+  }
+  inp.classList.remove('error');
+  errEl.classList.remove('visible');
   S.name = n;
   S.calibrated = true;
   save();
   overlay.style.display = 'none';
   renderAll();
 };
+
+document.getElementById('userName').addEventListener('input', () => {
+  const inp = document.getElementById('userName');
+  const errEl = document.getElementById('nameError');
+  if (inp.value.trim()) {
+    inp.classList.remove('error');
+    errEl.classList.remove('visible');
+  }
+});
 
 if (S.calibrated) overlay.style.display = 'none';
 

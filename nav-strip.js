@@ -44,7 +44,7 @@
   var NAV_ITEMS = [
     { label: 'Home',              href: '/index.html',                          match: /^\/(?:index\.html)?$/ },
     { label: '⬡ Console',         href: '/interfaces/hh-console.html',          match: /hh-console/ },
-    { label: '🔥 GOLIATH',        href: '/interfaces/goliath-watch.html',       match: /goliath-watch/, hot: true },
+    { label: '🔥 MELTGATE',       href: '/interfaces/goliath-watch.html',       match: /goliath-watch/, hot: true },
     { label: 'A2A',               href: '/interfaces/sol-v.html',               match: /sol-v/ },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',         match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',       match: /my-whiteboard/ },

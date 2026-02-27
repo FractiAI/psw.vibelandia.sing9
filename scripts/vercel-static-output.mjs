@@ -14,7 +14,11 @@ const outDir = path.join(root, '.vercel', 'output');
 const staticDir = path.join(outDir, 'static');
 
 function mkdirp(dir) {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.mkdirSync(dir, { recursive: true });
+}
+
+function rmrf(dir) {
+  if (fs.existsSync(dir)) fs.rmSync(dir, { recursive: true, force: true });
 }
 
 function copyFile(src, dest) {
@@ -91,6 +95,9 @@ if (fs.existsSync(wellKnownSrc)) copyDir(wellKnownSrc, path.join(staticDir, '.we
 const apiSrcDir  = path.join(root, 'api');
 const funcOutDir = path.join(outDir, 'functions', 'api');
 const apiRoutes  = [];
+
+// Always clean functions output dir first — prevents "already exists" on redeploy
+rmrf(path.join(outDir, 'functions'));
 
 if (fs.existsSync(apiSrcDir)) {
   const vcConfig = { runtime: 'nodejs18.x', handler: 'index.js', launcherType: 'Nodejs' };

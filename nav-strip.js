@@ -44,7 +44,7 @@
   var NAV_ITEMS = [
     { label: 'Home',              href: '/index.html',                          match: /^\/(?:index\.html)?$/ },
     { label: '⬡ Console',         href: '/interfaces/hh-console.html',          match: /hh-console/ },
-    { label: '🔥 Goliath',        href: '/interfaces/goliath-watch.html',       match: /goliath-watch/ },
+    { label: '🔥 GOLIATH',        href: '/interfaces/goliath-watch.html',       match: /goliath-watch/, hot: true },
     { label: 'A2A',               href: '/interfaces/sol-v.html',               match: /sol-v/ },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',         match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',       match: /my-whiteboard/ },
@@ -87,6 +87,31 @@
     '#sing9-nav a.active{',
       'color:rgba(212,175,55,0.95);',
       'border-bottom-color:rgba(212,175,55,0.55);',
+    '}',
+    /* ── GOLIATH HOT LINK ── */
+    '#sing9-nav a.nav-goliath{',
+      'color:rgba(255,100,30,0.95);',
+      'font-weight:800;',
+      'letter-spacing:0.16em;',
+      'text-shadow:0 0 10px rgba(255,80,0,0.7),0 0 20px rgba(255,60,0,0.35);',
+      'border-bottom:2px solid rgba(255,80,0,0.5);',
+      'background:rgba(255,60,0,0.06);',
+      'border-radius:3px 3px 0 0;',
+      'padding:0 0.8rem;',
+      'animation:goliath-pulse 2.2s ease-in-out infinite;',
+    '}',
+    '#sing9-nav a.nav-goliath:hover{',
+      'color:#ff6a1a;',
+      'text-shadow:0 0 16px rgba(255,100,0,0.9),0 0 32px rgba(255,60,0,0.5);',
+      'background:rgba(255,60,0,0.12);',
+    '}',
+    '#sing9-nav a.nav-goliath.active{',
+      'color:#ff8833;',
+      'border-bottom-color:rgba(255,100,30,0.8);',
+    '}',
+    '@keyframes goliath-pulse{',
+      '0%,100%{text-shadow:0 0 8px rgba(255,80,0,0.6),0 0 16px rgba(255,60,0,0.3);opacity:1;}',
+      '50%{text-shadow:0 0 18px rgba(255,120,0,1),0 0 36px rgba(255,80,0,0.6);opacity:0.88;}',
     '}',
     '#sing9-nav .nav-sep{',
       'width:1px;height:12px;',
@@ -144,6 +169,7 @@
     a.href = item.href;
     a.textContent = item.label;
     if (item.match.test(path)) a.classList.add('active');
+    if (item.hot) a.classList.add('nav-goliath');
     nav.appendChild(a);
   });
 

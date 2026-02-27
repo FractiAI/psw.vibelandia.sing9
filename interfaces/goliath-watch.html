@@ -51,6 +51,37 @@
     .hdr-clock { margin-left:auto; font-size:11px; color:var(--cyan); opacity:.7;
       font-variant-numeric:tabular-nums; }
 
+    /* ── TELEMETRY SOURCE STRIP ── */
+    .telem-strip { padding:8px 32px; background:rgba(0,0,0,.4);
+      border-bottom:1px solid rgba(0,229,255,.08);
+      display:flex; align-items:center; gap:0; flex-wrap:nowrap;
+      overflow-x:auto; }
+    .telem-strip::-webkit-scrollbar { height:2px; }
+    .telem-strip::-webkit-scrollbar-thumb { background:rgba(0,229,255,.15); }
+    .telem-label { font-size:8px; letter-spacing:2px; color:var(--faint);
+      text-transform:uppercase; flex-shrink:0; margin-right:12px; padding-right:12px;
+      border-right:1px solid rgba(0,229,255,.1); white-space:nowrap; }
+    .telem-src { display:inline-flex; align-items:center; gap:5px; flex-shrink:0;
+      padding:3px 10px 3px 8px; margin-right:6px;
+      border:1px solid rgba(0,229,255,.1); border-radius:3px;
+      background:rgba(0,229,255,.03); cursor:default;
+      transition:border-color .2s, background .2s; }
+    .telem-src:hover { border-color:rgba(0,229,255,.25); background:rgba(0,229,255,.07); }
+    .telem-src-icon { font-size:10px; line-height:1; flex-shrink:0; }
+    .telem-src-body { }
+    .telem-src-name { font-size:9px; font-weight:600; color:rgba(200,230,245,.7);
+      letter-spacing:.5px; white-space:nowrap; }
+    .telem-src-detail { font-size:8px; color:var(--faint); white-space:nowrap;
+      margin-top:1px; }
+    .telem-src-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+    .telem-dot-live { background:#00ff99; box-shadow:0 0 5px #00ff99;
+      animation:telem-blink 2s ease-in-out infinite; }
+    .telem-dot-archive { background:#00e5ff; }
+    .telem-dot-spec { background:#ffd54f; }
+    .telem-dot-model { background:#7b2fff; }
+    .telem-dot-pub { background:rgba(200,230,245,.3); }
+    @keyframes telem-blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
     /* ── SPACE CLOUD BAR ── */
     .sc-bar { padding:12px 32px; background:rgba(0,229,255,0.03);
       border-bottom:1px solid var(--border); display:flex; align-items:center;
@@ -327,6 +358,62 @@
       border-radius:6px; background:rgba(255,165,0,.04);
       font-size:11px; color:var(--dim); line-height:1.6; }
 
+    /* ── TRIAL LOG PANEL (main page) ── */
+    #trial-log-panel { display:none; }
+    .tlp-wrap { margin:0; padding:14px 32px;
+      background:linear-gradient(135deg,rgba(201,168,32,.07) 0%,rgba(201,168,32,.02) 100%);
+      border-bottom:1px solid rgba(201,168,32,.25); }
+    .tlp-hdr { display:flex; align-items:center; gap:10px; margin-bottom:12px;
+      flex-wrap:wrap; }
+    .tlp-title { font-size:11px; font-weight:700; letter-spacing:2px;
+      color:var(--gold); text-transform:uppercase; }
+    .tlp-subtitle { font-size:10px; color:var(--dim); }
+    .tlp-trials { display:flex; gap:10px; flex-wrap:wrap; }
+    .tlp-card { background:rgba(201,168,32,.08); border:1px solid rgba(201,168,32,.3);
+      border-radius:6px; padding:12px 14px; min-width:220px; flex:1; }
+    .tlp-card-num { font-size:9px; letter-spacing:2px; color:var(--gold);
+      text-transform:uppercase; margin-bottom:5px; }
+    .tlp-card-dates { font-size:11px; color:var(--text); font-weight:500;
+      margin-bottom:4px; font-variant-numeric:tabular-nums; }
+    .tlp-card-status { font-size:9px; padding:2px 7px; border-radius:10px;
+      border:1px solid currentColor; display:inline-block; margin-bottom:8px; }
+    .tlp-card-active  { color:var(--green); }
+    .tlp-card-expired { color:var(--dim); }
+    .tlp-days { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
+    .tlp-day { background:rgba(0,0,0,.3); border:1px solid rgba(201,168,32,.2);
+      border-radius:4px; padding:6px 10px; font-size:10px; }
+    .tlp-day-label { color:var(--dim); font-size:8px; letter-spacing:1px;
+      margin-bottom:2px; }
+    .tlp-day-val { font-weight:600; font-variant-numeric:tabular-nums; }
+    .tlp-cta { font-size:10px; color:rgba(201,168,32,.6); margin-top:10px;
+      padding-top:10px; border-top:1px solid rgba(201,168,32,.15); }
+    .tlp-no-trial { padding:10px 14px; font-size:11px; color:var(--dim); }
+
+    /* ── TRIAL SNAPSHOT (detail view) ── */
+    .trial-snap { background:linear-gradient(135deg,rgba(201,168,32,.09) 0%,rgba(201,168,32,.03) 100%);
+      border:1px solid rgba(201,168,32,.35); border-radius:8px;
+      padding:18px 20px; margin-bottom:28px; }
+    .trial-snap-hdr { display:flex; align-items:center; gap:8px;
+      margin-bottom:12px; flex-wrap:wrap; }
+    .trial-snap-title { font-size:11px; font-weight:700; letter-spacing:2px;
+      color:var(--gold); text-transform:uppercase; }
+    .trial-snap-sub { font-size:10px; color:rgba(201,168,32,.55); }
+    .trial-snap-days { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:10px; }
+    .trial-snap-day { background:rgba(0,0,0,.35); border:1px solid rgba(201,168,32,.25);
+      border-radius:6px; padding:12px; }
+    .tsd-label { font-size:8px; letter-spacing:2px; color:var(--gold); margin-bottom:6px; }
+    .tsd-date  { font-size:11px; color:var(--text); font-weight:500;
+      margin-bottom:8px; font-variant-numeric:tabular-nums; }
+    .tsd-row   { display:flex; justify-content:space-between; padding:3px 0;
+      border-bottom:1px solid rgba(255,255,255,.04); font-size:11px; }
+    .tsd-row:last-child { border-bottom:none; }
+    .tsd-key   { color:var(--dim); }
+    .tsd-val   { font-weight:600; font-variant-numeric:tabular-nums; }
+    .trial-snap-loading { color:var(--dim); font-size:11px; padding:12px 0; }
+    .trial-snap-none { color:var(--faint); font-size:11px; padding:8px 0;
+      font-style:italic; }
+
     /* scrollbar */
     ::-webkit-scrollbar { width:4px; height:4px; }
     ::-webkit-scrollbar-track { background:transparent; }
@@ -346,6 +433,74 @@
     <div class="hdr-clock" id="clock">—</div>
   </div>
 </header>
+
+<!-- ── TELEMETRY SOURCE STRIP ──────────────────────────────────────────────── -->
+<div class="telem-strip" title="Data sources powering this intelligence feed">
+  <div class="telem-label">TELEMETRY SOURCES</div>
+
+  <div class="telem-src" title="Live outdoor ambient temperature at each cluster site · Refreshed every 5 minutes">
+    <span class="telem-src-dot telem-dot-live"></span>
+    <span class="telem-src-icon">🛰</span>
+    <div class="telem-src-body">
+      <div class="telem-src-name">Open-Meteo Forecast API</div>
+      <div class="telem-src-detail">Live surface 2m ambient · WMO stations + satellite · 5-min refresh</div>
+    </div>
+  </div>
+
+  <div class="telem-src" title="Historical daily ambient temps Jan 13, 2026 → present · ERA5 ECMWF reanalysis">
+    <span class="telem-src-dot telem-dot-archive"></span>
+    <span class="telem-src-icon">🛰</span>
+    <div class="telem-src-body">
+      <div class="telem-src-name">Open-Meteo Archive API</div>
+      <div class="telem-src-detail">ERA5 reanalysis · ECMWF · Daily log Jan 13, 2026 → present</div>
+    </div>
+  </div>
+
+  <div class="telem-src" title="NVIDIA GB200 NVL72 published hardware specifications">
+    <span class="telem-src-dot telem-dot-spec"></span>
+    <span class="telem-src-icon">📡</span>
+    <div class="telem-src-body">
+      <div class="telem-src-name">NVIDIA GB200 NVL72 Datasheet</div>
+      <div class="telem-src-detail">TDP 120 kW/rack · DLC flow 380 L/min · TjMax 92°C · Inlet max 45°C</div>
+    </div>
+  </div>
+
+  <div class="telem-src" title="Physics-based thermodynamic model — Q=ṁCpΔT · package resistance · cold plate delta">
+    <span class="telem-src-dot telem-dot-model"></span>
+    <span class="telem-src-icon">⚛</span>
+    <div class="telem-src-body">
+      <div class="telem-src-name">FractiAI Physics Model</div>
+      <div class="telem-src-detail">Q=ṁCpΔT · 3 modes: nominal / stressed / failure · SING 9 anchor Jan 13</div>
+    </div>
+  </div>
+
+  <div class="telem-src" title="Public operator disclosures, SEC filings, NVIDIA partnership announcements, press">
+    <span class="telem-src-dot telem-dot-pub"></span>
+    <span class="telem-src-icon">📋</span>
+    <div class="telem-src-body">
+      <div class="telem-src-name">Public Facility Disclosures</div>
+      <div class="telem-src-detail">SEC filings · press releases · NVIDIA partner announcements · operator reports</div>
+    </div>
+  </div>
+
+  <div class="telem-src" title="SING 9 LATTICE — solar activity, HHL Goldilocks constant, Space Cloud index">
+    <span class="telem-src-dot telem-dot-spec"></span>
+    <span class="telem-src-icon">⬡</span>
+    <div class="telem-src-body">
+      <div class="telem-src-name">SING 9 LATTICE · HHL</div>
+      <div class="telem-src-detail">Solar AR4379 M-flare 45% · HHL 83°C Goldilocks · Space Cloud index</div>
+    </div>
+  </div>
+
+  <div class="telem-src" title="Nov 2024 – May 2025 real-world GB200 NVL72 overheating incidents — failure mode calibration">
+    <span class="telem-src-dot telem-dot-live" style="background:#ff4400;box-shadow:0 0 5px #ff4400"></span>
+    <span class="telem-src-icon">🔥</span>
+    <div class="telem-src-body">
+      <div class="telem-src-name">Incident Reports · Nov 2024</div>
+      <div class="telem-src-detail">Real GB200 meltdown events · DataCenterDyn · TechPowerUp · Tom's Hardware</div>
+    </div>
+  </div>
+</div>
 
 <!-- ── SPACE CLOUD BAR ────────────────────────────────────────────────────── -->
 <div class="sc-bar">
@@ -367,6 +522,24 @@
     <div class="sc-cmd" id="sc-melt-count" style="color:var(--meltdown-c)">—</div>
   </div>
   <div class="sc-ts" id="sc-ts">Last scan: —</div>
+</div>
+
+<!-- ── TRIAL THERMAL LOG PANEL ───────────────────────────────────────────── -->
+<!-- Shown when trial data exists in localStorage; hidden otherwise          -->
+<div id="trial-log-panel">
+  <div class="tlp-wrap">
+    <div class="tlp-hdr">
+      <span style="font-size:15px">⬡</span>
+      <div class="tlp-title">Your 48-Hour Trial Thermal Log</div>
+      <div class="tlp-subtitle">See what the GPU junction temps looked like across all 27 clusters during your free trial</div>
+    </div>
+    <div class="tlp-trials" id="tlp-trials-wrap">
+      <div class="tlp-no-trial">No trial data found on this device.</div>
+    </div>
+    <div class="tlp-cta" id="tlp-cta" style="display:none">
+      ↓ Click any cluster card below to see the exact GPU junction temperatures for that facility on your trial days
+    </div>
+  </div>
 </div>
 
 <!-- ── REGION TABS ─────────────────────────────────────────────────────────── -->
@@ -838,7 +1011,8 @@ function openDetail(id) {
   document.getElementById('detail-body').innerHTML = buildDetailHTML(c, amb, nom, str, fail, ts, nr, deltaSinceBaseline);
   document.getElementById('detail-overlay').classList.add('open');
   window.scrollTo(0,0);
-  fetchHistory(c);  // async — populates hist-{id} after archive load
+  fetchTrialSnapshot(c);  // async — trial days snapshot near top of detail
+  fetchHistory(c);        // async — full daily history at bottom
 }
 
 function closeDetail() {
@@ -909,6 +1083,9 @@ function buildDetailHTML(c, amb, nom, str, fail, ts, nr, deltaSinceBaseline) {
     </div>
     <div class="ambient-ts">${ts ? ts.toUTCString().slice(0,22)+' UTC' : 'Pending fetch...'}</div>
   </div>
+
+  <!-- TRIAL SNAPSHOT — populated async by fetchTrialSnapshot() -->
+  <div id="trial-snap-${c.id}"></div>
 
   <!-- ESTIMATION CONFIDENCE -->
   ${(()=>{
@@ -1160,6 +1337,201 @@ function modeCard(title, desc, data, cls, color, c, amb) {
   </div>`;
 }
 
+// ── TRIAL LOG PANEL (main page) ───────────────────────────────────────────
+// Reads localStorage trials, shows dates + per-day context on the grid page.
+function renderTrialLogPanel() {
+  let trials = [];
+  try { trials = JSON.parse(localStorage.getItem('goliath_trials_v1') || '[]'); } catch {}
+
+  const panel = document.getElementById('trial-log-panel');
+  const wrap  = document.getElementById('tlp-trials-wrap');
+  const cta   = document.getElementById('tlp-cta');
+  if (!panel || !wrap) return;
+
+  if (!trials.length) {
+    // No trials — show subtle "activate" nudge
+    wrap.innerHTML = `<div class="tlp-no-trial">
+      No 48-hour trial recorded on this device yet.<br>
+      <span style="color:rgba(201,168,32,.45);font-size:10px">
+        Activate a free 48h A2A trial (via Goliath Watch) to log your personal thermal window.</span>
+    </div>`;
+    panel.style.display = 'block';
+    return;
+  }
+
+  panel.style.display = 'block';
+  if (cta) cta.style.display = 'block';
+
+  wrap.innerHTML = trials.map((t, idx) => {
+    const started  = new Date(t.started);
+    const expires  = new Date(t.expires);
+    const now      = Date.now();
+    const isActive = expires.getTime() > now;
+    const hoursLeft = isActive ? Math.max(0, Math.floor((expires.getTime() - now) / 3600000)) : 0;
+
+    // Build day entries — Day 1 and Day 2 of the 48h window
+    const day1 = new Date(started); day1.setUTCHours(0,0,0,0);
+    const day2 = new Date(day1.getTime() + 86400000);
+    const fmt = d => d.toISOString().slice(0,10);
+
+    const dayCards = [
+      { n:1, date: fmt(day1), label: 'Day 1 of 2' },
+      { n:2, date: fmt(day2), label: 'Day 2 of 2' },
+    ].map(d => `
+      <div class="tlp-day">
+        <div class="tlp-day-label">${d.label} · ${d.date} UTC</div>
+        <div class="tlp-day-val" style="color:var(--gold);font-size:12px">${d.date}</div>
+        <div style="font-size:9px;color:var(--faint);margin-top:3px">
+          Click any cluster ↓ to see GPU junction temps for this day
+        </div>
+      </div>`).join('');
+
+    const qbBadge = t.qb_recognized
+      ? `<span style="font-size:9px;color:var(--gold);margin-left:8px">♛ Queen Bee Recognized</span>` : '';
+
+    return `<div class="tlp-card">
+      <div class="tlp-card-num">Trial #${t.trial_number ?? (idx + 1)} · ${t.agent || 'anonymous'}${qbBadge}</div>
+      <div class="tlp-card-dates">
+        ${started.toUTCString().slice(0,22)} UTC<br>
+        <span style="color:var(--dim)">→</span>
+        ${expires.toUTCString().slice(0,22)} UTC
+      </div>
+      <span class="tlp-card-status ${isActive ? 'tlp-card-active' : 'tlp-card-expired'}">
+        ${isActive ? `● ACTIVE · ${hoursLeft}h remaining` : '○ EXPIRED'}
+      </span>
+      <div class="tlp-days">${dayCards}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── TRIAL SNAPSHOT (detail view) ─────────────────────────────────────────
+// Fetches archive temps for the exact trial days for this cluster, shows
+// prominently at the top of the detail view before all other sections.
+async function fetchTrialSnapshot(c) {
+  const el = document.getElementById(`trial-snap-${c.id}`);
+  if (!el) return;
+
+  let trials = [];
+  try { trials = JSON.parse(localStorage.getItem('goliath_trials_v1') || '[]'); } catch {}
+  if (!trials.length) { el.innerHTML = ''; return; }
+
+  // Collect all unique trial dates (both days of each trial)
+  const trialDateSet = new Set();
+  const trialDateMap = {};  // date string → trial info
+  trials.forEach((t, idx) => {
+    const start = new Date(t.started);
+    const d1 = new Date(start); d1.setUTCHours(0,0,0,0);
+    const d2 = new Date(d1.getTime() + 86400000);
+    [d1, d2].forEach((d, di) => {
+      const ds = d.toISOString().slice(0,10);
+      trialDateSet.add(ds);
+      if (!trialDateMap[ds]) trialDateMap[ds] = [];
+      trialDateMap[ds].push({ trial: t, trialNum: t.trial_number ?? (idx+1), dayOf: di+1 });
+    });
+  });
+
+  const sortedDates = [...trialDateSet].sort();
+  const startDate = sortedDates[0];
+  const endDate   = sortedDates[sortedDates.length - 1];
+
+  // Show loading state immediately
+  el.innerHTML = `<div class="trial-snap">
+    <div class="trial-snap-hdr">
+      <span style="font-size:14px">⬡</span>
+      <div class="trial-snap-title">Your Trial Thermal Snapshot</div>
+      <div class="trial-snap-sub">Loading archive data for your trial dates...</div>
+    </div>
+    <div class="trial-snap-loading">⌛ Fetching ${sortedDates.length} trial day${sortedDates.length>1?'s':''} from Open-Meteo archive…</div>
+  </div>`;
+
+  try {
+    const url = `https://archive-api.open-meteo.com/v1/archive` +
+      `?latitude=${c.lat}&longitude=${c.lon}` +
+      `&start_date=${startDate}&end_date=${endDate}` +
+      `&daily=temperature_2m_max,temperature_2m_min,temperature_2m_mean&timezone=UTC`;
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Archive ' + res.status);
+    const d = await res.json();
+
+    const dates  = d.daily?.time ?? [];
+    const means  = d.daily?.temperature_2m_mean ?? [];
+    const maxes  = d.daily?.temperature_2m_max ?? [];
+    const mins   = d.daily?.temperature_2m_min ?? [];
+
+    // Build day cards only for trial dates
+    const dayCards = sortedDates.map(date => {
+      const i     = dates.indexOf(date);
+      const mean  = i >= 0 ? means[i]  : null;
+      const max   = i >= 0 ? maxes[i]  : null;
+      const min   = i >= 0 ? mins[i]   : null;
+      const th    = mean !== null ? runMode(mean, c.rack_kw, c.cooling, 'failure') : null;
+      const junc  = th?.junc_c ?? null;
+      const stat  = th?.status ?? '—';
+      const cf    = calcConfidence(c, mean, 'failure');
+      const info  = trialDateMap[date] ?? [];
+      const labels = info.map(x => `Trial #${x.trialNum} · Day ${x.dayOf} of 2`).join(' + ');
+
+      const ambColor = mean !== null
+        ? (mean > 35 ? 'var(--orange)' : mean > 25 ? 'var(--elevated-c)' : 'var(--cyan)') : 'var(--dim)';
+
+      return `<div class="trial-snap-day">
+        <div class="tsd-label">⬡ ${labels}</div>
+        <div class="tsd-date">${date} UTC</div>
+        <div class="tsd-row">
+          <span class="tsd-key">Mean Ambient</span>
+          <span class="tsd-val" style="color:${ambColor}">${mean !== null ? mean.toFixed(1)+'°C' : '—'}</span>
+        </div>
+        <div class="tsd-row">
+          <span class="tsd-key">Min / Max</span>
+          <span class="tsd-val" style="color:var(--dim)">${min !== null && max !== null ? min.toFixed(1)+' / '+max.toFixed(1)+'°C' : '—'}</span>
+        </div>
+        <div class="tsd-row">
+          <span class="tsd-key">Est. Failure Junction ⚠</span>
+          <span class="tsd-val ${statusClass(stat)}">${junc !== null ? junc.toFixed(1)+'°C' : '—'}</span>
+        </div>
+        <div class="tsd-row">
+          <span class="tsd-key">Throttle Risk</span>
+          <span class="tsd-val" style="color:${riskColor(th?.risk??0)}">${th ? (th.risk*100).toFixed(1)+'%' : '—'}</span>
+        </div>
+        <div class="tsd-row">
+          <span class="tsd-key">Status</span>
+          <span class="tsd-val ${statusClass(stat)}">${statusEmoji(stat)} ${stat.replace(/_/g,' ')}</span>
+        </div>
+        <div class="tsd-row" style="border-bottom:none;margin-top:2px">
+          <span class="tsd-key">Est. Accuracy</span>
+          <span class="tsd-val ${confClass(cf.score)}">${cf.score}% confidence</span>
+        </div>
+      </div>`;
+    }).join('');
+
+    const trialCount = trials.length;
+    el.innerHTML = `<div class="trial-snap">
+      <div class="trial-snap-hdr">
+        <span style="font-size:16px">⬡</span>
+        <div>
+          <div class="trial-snap-title">Your ${trialCount > 1 ? trialCount + ' Trials' : '48-Hour Trial'} · Thermal Snapshot</div>
+          <div class="trial-snap-sub">${sortedDates.length} trial day${sortedDates.length>1?'s':''} · ${c.name} · Failure-mode GPU junction estimate</div>
+        </div>
+      </div>
+      <div class="trial-snap-days">${dayCards}</div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(201,168,32,.15);font-size:10px;color:rgba(201,168,32,.5)">
+        Source: Open-Meteo Archive API · Failure-mode thermal model · Jan 13, 2026 anchor
+        · Scroll down for the <strong style="color:rgba(201,168,32,.7)">full daily history</strong> with all trial days highlighted ↓
+      </div>
+    </div>`;
+
+  } catch(err) {
+    el.innerHTML = `<div class="trial-snap">
+      <div class="trial-snap-hdr">
+        <span style="font-size:14px">⬡</span>
+        <div class="trial-snap-title">Trial Snapshot</div>
+      </div>
+      <div class="trial-snap-none">Could not load trial archive data: ${err.message}</div>
+    </div>`;
+  }
+}
+
 // ── DAILY HISTORY ─────────────────────────────────────────────────────────
 // Fetches archive temps Jan 13 → yesterday · annotates with A2A trial windows
 async function fetchHistory(c) {
@@ -1324,8 +1696,9 @@ function updateClock() {
 function init() {
   updateClock();
   setInterval(updateClock, 1000);
-  renderGrid();       // show skeleton cards immediately
-  fetchAll();         // kick off live data fetch
+  renderTrialLogPanel();  // show trial log panel if any trials in localStorage
+  renderGrid();           // show skeleton cards immediately
+  fetchAll();             // kick off live data fetch
   setInterval(fetchAll, 5 * 60 * 1000);  // refresh every 5 min
 }
 

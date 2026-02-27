@@ -507,19 +507,25 @@ Respond with JSON only:
   "commitMessage": "fix: <concise description> (closes #${issueDetails.num})"
 }`;
 
-  const resp = await callClaude(prompt, 4096);
-  try {
-    const json = JSON.parse(resp.replace(/```json\n?|\n?```/g, '').trim());
-    return json;
-  } catch {
-    // Try to extract JSON from response
-    const match = resp.match(/\{[\s\S]*\}/);
-    if (match) {
-      try { return JSON.parse(match[0]); } catch { /* fall through */ }
-    }
-    log('⚠', 'Could not parse Claude fix response');
-    return null;
+  // Use higher token limit to avoid truncation of large code responses
+  const resp = await callClaude(prompt, 8192);
+
+  // Attempt 1: strip markdown fence and parse directly
+  const stripped = resp.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
+  try { return JSON.parse(stripped); } catch { /* try harder */ }
+
+  // Attempt 2: find the outermost JSON object using brace counting
+  let depth = 0, start = -1, end = -1;
+  for (let i = 0; i < resp.length; i++) {
+    if (resp[i] === '{') { if (depth === 0) start = i; depth++; }
+    else if (resp[i] === '}') { depth--; if (depth === 0 && start !== -1) { end = i; break; } }
   }
+  if (start !== -1 && end !== -1) {
+    try { return JSON.parse(resp.slice(start, end + 1)); } catch { /* fall through */ }
+  }
+
+  log('⚠', `Could not parse LLM fix response (${resp.slice(0, 120).replace(/\n/g,' ')}...)`);
+  return null;
 }
 
 /* ── LLM API WRAPPER — Anthropic Claude or Groq (Llama 3.3 70B) ─────────── */

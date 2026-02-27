@@ -975,8 +975,8 @@ async function cmdOutbound() {
         let tier;
         const esMatch = await esHive.qualify(snippet);
         if (esMatch) {
-          if (esMatch.confidence < 0.55) {
-            log('◈', `  skip ${name} — low ES confidence (${esMatch.confidence.toFixed(2)}) for stream ${stream}`);
+          if (esMatch.confidence < 0.80) {
+            log('◈', `  skip ${name} — ES confidence ${esMatch.confidence.toFixed(2)} < 0.80 (80%+ only)`);
             continue;
           }
           tier = esMatch.tier;
@@ -1327,19 +1327,10 @@ async function cmdPrize() {
     { id: 'issuehunt-live',       type: 'CODING_BOUNTY', name: 'IssueHunt — Live Funded Issues',          url: 'https://issuehunt.io/r/',                         prize: '$100–$10K',      confidence: 0.93, capability: 'code-fix-pr', instructions: 'SOLVER fetches via IssueHunt API → Claude writes fix → GitHub PR → USD payout via PayPal/bank on merge.' },
     { id: 'gitcoin-bounties-live',type: 'CODING_BOUNTY', name: 'Gitcoin — Live Bounties',                 url: 'https://gitcoin.co/explorer',                     prize: '$100–$50K',      confidence: 0.90, capability: 'code-fix-pr', instructions: 'SOLVER fetches open bounties → Claude writes fix → GitHub PR → ETH/USDC auto-release to WALLET_ADDRESS.' },
 
-    // ── BUG BOUNTIES (automated security analysis) ────────────────────────────
-    { id: 'immunefi-high-2026',   type: 'BUG_BOUNTY',    name: 'Immunefi — Smart Contract Programs',     url: 'https://immunefi.com/explore/',                   prize: '$10K–$10M',      confidence: 0.70, capability: 'smart-contract-analysis', instructions: 'Scan open programs via Immunefi API. Submit critical findings via their reporting API. Crypto payout to WALLET_ADDRESS.' },
-    { id: 'hackerone-public',     type: 'BUG_BOUNTY',    name: 'HackerOne — Public Paid Programs',       url: 'https://hackerone.com/directory/?type=hackers',   prize: '$100–$50K',      confidence: 0.60, capability: 'web-security-analysis', instructions: 'Filter: public + bounty (not VDP). Submit findings via H1 API. USD/crypto payout to linked wallet.' },
-    { id: 'code4arena-open',      type: 'AUDIT_CONTEST', name: 'Code4Arena — Audit Contests',             url: 'https://code4rena.com/contests',                  prize: '$10K–$250K',     confidence: 0.65, capability: 'solidity-audit', instructions: 'Join open contest via C4 API. Review Solidity codebase. Submit findings report. Prize = share of pool by severity.' },
-    { id: 'cantina-audits',       type: 'AUDIT_CONTEST', name: 'Cantina — Competitive Audits',            url: 'https://cantina.xyz/competitions',                prize: '$5K–$500K',      confidence: 0.65, capability: 'solidity-audit', instructions: 'AI-friendly platform. Open to agent teams. Submit findings via API. Crypto payout.' },
-
-    // ── GRANTS (programmatic submission, wallet payout) ───────────────────────
-    { id: 'gitcoin-grants-round', type: 'GRANT',         name: 'Gitcoin Grants — OSS Public Good',       url: 'https://gitcoin.co/grants',                       prize: '$500–$500K',     confidence: 0.72, capability: 'open-source-a2a', instructions: 'Submit SING9 hive as open source public good project. Community donates → quadratic matching multiplier. Wallet payout.' },
-    { id: 'near-bounties',        type: 'CODING_BOUNTY', name: 'NEAR Protocol — AI Agent Bounties',      url: 'https://near.org/bounties',                       prize: '$1K–$50K',       confidence: 0.74, capability: 'code-fix-pr', instructions: 'NEAR ecosystem bounties. Most pay in NEAR tokens to wallet. No KYC. Programmatic submission.' },
-
-    // ── PREDICTION MARKETS (pure signal → position → auto-settle) ────────────
-    { id: 'polymarket-ai',        type: 'PREDICTION',    name: 'Polymarket — AI/Tech Markets',           url: 'https://polymarket.com',                          prize: 'variable',       confidence: 0.62, capability: 'signal-analysis', instructions: 'ECHO analyzes market signals. Agent positions on AI/tech outcomes. Polygon wallet settlement. Fully autonomous.' },
-    { id: 'manifold-tournaments', type: 'PREDICTION',    name: 'Manifold Markets — Tournaments',         url: 'https://manifold.markets/tournaments',            prize: 'Mana → USD',     confidence: 0.58, capability: 'signal-analysis', instructions: 'Forecasting tournaments. Agent reads + predicts. Mana cashes out to USD. Full automation possible.' },
+    // ── BELOW 0.80 — ELIMINATED · 80%+ only ─────────────────────────────────
+    // Immunefi (0.70), HackerOne (0.60), Code4Arena (0.65), Cantina (0.65),
+    // Gitcoin Grants (0.72), NEAR bounties (0.74), Polymarket (0.62), Manifold (0.58)
+    // All removed — confidence < 0.80. Quality over quantity.
   ];
 
   const newPrizes = [];
@@ -1366,6 +1357,12 @@ async function cmdPrize() {
   l.mission.prize_pipeline = l.mission.prize_pipeline.filter(p => !HUMAN_REQUIRED.has(p.id));
   const purged = before - l.mission.prize_pipeline.length;
   if (purged > 0) log('◈', `Purged ${purged} human-required entries (hackathons/devpost) from pipeline.`);
+
+  // Purge any prize pipeline entries below 0.80 confidence — 80%+ only
+  const beforeConf = l.mission.prize_pipeline.length;
+  l.mission.prize_pipeline = l.mission.prize_pipeline.filter(p => (p.confidence ?? 0) >= 0.80);
+  const purgeLow = beforeConf - l.mission.prize_pipeline.length;
+  if (purgeLow > 0) log('◈', `Purged ${purgeLow} low-confidence entries (< 0.80) from pipeline. 80%+ only.`);
 
   // Rank active targets by confidence
   const ranked = l.mission.prize_pipeline

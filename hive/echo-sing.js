@@ -532,7 +532,6 @@ async function postA2ATrial(lattice, apiKey, baseUrl, mock, opts = {}) {
     submolt_name: submolt,
     title:        `ECHO-SING · A2A Trial · ${trialId}`,
     content,
-    agent_id:     lattice?.moltbook?.agents?.ECHO?.agent_id,
   };
 
   let posted = false;

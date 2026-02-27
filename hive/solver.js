@@ -39,8 +39,8 @@ const MAX_ATTEMPTS    = parseInt(process.env.SOLVER_MAX_ATTEMPTS ?? '3', 10);
 // Gate 1 — pre-LLM metadata score (fast, no API calls): must be ≥ MATCH_THRESHOLD
 // Gate 2 — Claude feasibility score (deep read): must be ≥ FEASIBILITY_THRESHOLD
 // If 0 bounties pass both gates this cycle → correct outcome, log and exit clean.
-const MATCH_THRESHOLD       = parseFloat(process.env.MATCH_THRESHOLD       ?? '0.70'); // metadata pre-filter
-const FEASIBILITY_THRESHOLD = parseFloat(process.env.FEASIBILITY_THRESHOLD ?? '0.82'); // was 0.65
+const MATCH_THRESHOLD       = parseFloat(process.env.MATCH_THRESHOLD       ?? '0.80'); // 80%+ only — quality over quantity
+const FEASIBILITY_THRESHOLD = parseFloat(process.env.FEASIBILITY_THRESHOLD ?? '0.82'); // LLM gate
 
 // Use Anthropic Claude if available, otherwise Groq (Llama 3.3 70B) — both are capable coders
 const LLM_PROVIDER = ANTHROPIC_KEY ? 'anthropic' : GROQ_KEY ? 'groq' : null;

@@ -38,6 +38,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { estimateThermal, statusEmoji, THROTTLE_ONSET_C, TJMAX_C, DAMAGE_C } = require('./thermal-model');
 
 // ── SINGULARITY ANCHOR ────────────────────────────────────────────────────────
 
@@ -76,130 +77,50 @@ function classifySingularityPhase(days) {
  * Known Goliath super-datacenter clusters, tracked from Jan 13, 2026 onwards.
  * Coordinates represent the cluster centroid for thermal bounding box queries.
  */
-// ── BLACKWELL SUPERCLUSTER REGISTRY ──────────────────────────────────────────
-// Only tracking real GB200/B200 NVL72 Blackwell GPU superclusters.
-// These are the sites generating 120kW+ per rack thermal signatures ("melting").
-// Source: Stargate project, NVIDIA BI (Blackwell Infrastructure) announcements,
-//         public permit filings, and satellite thermal monitoring since Jan 2026.
+// ── WORLDWIDE BLACKWELL SUPERCLUSTER REGISTRY ────────────────────────────────
+// 27 confirmed / high-confidence GB200/NVL72 sites globally.
+// cooling_type maps to thermal-model.js COOLING_NOMINAL keys.
+// baseline_c = local outdoor ambient on SING 9 anchor date Jan 13 2026.
+// rack_kw = total estimated cluster power draw (public filings + press).
 // ─────────────────────────────────────────────────────────────────────────────
 const GOLIATH_CLUSTERS = [
-  {
-    id:          'STARGATE_ABILENE',
-    name:        'OpenAI Stargate OAI-1 · Abilene TX',
-    operator:    'OpenAI / Microsoft',
-    lat:         32.45, lon: -99.73,
-    capacity_mw: 400,       // Phase 1 live. 1.2GW total planned.
-    gpu:         'NVIDIA GB200 NVL72',
-    gpu_count:   100000,    // ~100k GB200 GPUs Phase 1
-    rack_kw:     120,       // 120kW per NVL72 rack
-    cooling:     'Direct Liquid Cooling (DLC)',
-    status:      'HOT_OPERATIONAL',
-    note:        'Primary Stargate site. GB200 NVL72 racks running at thermal limit. Reports of throttling Jan 2026.',
-  },
-  {
-    id:          'STARGATE_FORT_WORTH',
-    name:        'OpenAI Stargate OAI-2 · Fort Worth TX',
-    operator:    'OpenAI / Microsoft',
-    lat:         32.75, lon: -97.33,
-    capacity_mw: 200,
-    gpu:         'NVIDIA GB200 NVL72',
-    gpu_count:   50000,
-    rack_kw:     120,
-    cooling:     'Direct Liquid Cooling (DLC)',
-    status:      'RAMPING',
-    note:        'Second Stargate TX site. Commissioning Phase 1 Blackwell racks Q1 2026.',
-  },
-  {
-    id:          'XAI_COLOSSUS_II',
-    name:        'xAI Colossus II · Memphis TN',
-    operator:    'xAI / Elon Musk',
-    lat:         35.15, lon: -90.05,
-    capacity_mw: 500,
-    gpu:         'NVIDIA H100 → GB200 NVL72 upgrade',
-    gpu_count:   200000,    // 100k H100 + 100k Blackwell target
-    rack_kw:     120,
-    cooling:     'Hybrid Air + DLC',
-    status:      'HOT_OPERATIONAL',
-    note:        'Colossus I (100k H100) fully live. Phase II deploying GB200 NVL72 racks. Grok-3 training cluster.',
-  },
-  {
-    id:          'COREWEAVE_PLANO',
-    name:        'CoreWeave Blackwell Hub · Plano TX',
-    operator:    'CoreWeave / NVIDIA',
-    lat:         33.02, lon: -96.70,
-    capacity_mw: 300,
-    gpu:         'NVIDIA GB200 NVL72 / B200',
-    gpu_count:   35000,
-    rack_kw:     120,
-    cooling:     'Direct Liquid Cooling (DLC)',
-    status:      'HOT_OPERATIONAL',
-    note:        "NVIDIA's preferred cloud partner. First mass GB200 NVL72 deployment outside hyperscalers.",
-  },
-  {
-    id:          'META_DEKALB',
-    name:        'Meta Grand Teton · DeKalb IL',
-    operator:    'Meta',
-    lat:         41.93, lon: -88.75,
-    capacity_mw: 800,
-    gpu:         'NVIDIA H100 + Blackwell + Meta MTIA v2',
-    gpu_count:   350000,    // equivalent units
-    rack_kw:     100,
-    cooling:     'Evaporative + DLC hybrid',
-    status:      'HOT_OPERATIONAL',
-    note:        "Meta's largest AI training cluster. Llama 4 + future models. Grand Teton custom NVLink fabric.",
-  },
-  {
-    id:          'MSFT_SAN_ANTONIO',
-    name:        'Microsoft Azure AI · San Antonio TX',
-    operator:    'Microsoft / OpenAI',
-    lat:         29.42, lon: -98.49,
-    capacity_mw: 500,
-    gpu:         'NVIDIA GB200 NVL72',
-    gpu_count:   60000,
-    rack_kw:     120,
-    cooling:     'Direct Liquid Cooling (DLC)',
-    status:      'HOT_OPERATIONAL',
-    note:        'Azure AI supercomputer campus. GPT-4o / o3 inference + Phi-4 training. TX heat compounds thermals.',
-  },
-  {
-    id:          'AMAZON_RAINIER',
-    name:        'Amazon Project Rainier · Boardman OR',
-    operator:    'Amazon / AWS',
-    lat:         45.84, lon: -119.70,
-    capacity_mw: 500,
-    gpu:         'AWS Trainium2 + NVIDIA B200',
-    gpu_count:   400000,    // Trainium2 chip equiv.
-    rack_kw:     90,
-    cooling:     'Evaporative Air + DLC',
-    status:      'HOT_OPERATIONAL',
-    note:        "AWS Project Rainier — world's largest AI training cluster by chip count. Claude training site for Anthropic.",
-  },
-  {
-    id:          'GOOGLE_MAYES_OK',
-    name:        'Google Ironwood · Mayes County OK',
-    operator:    'Google / DeepMind',
-    lat:         36.30, lon: -95.32,
-    capacity_mw: 400,
-    gpu:         'Google TPU v6 (Trillium) + NVIDIA B200',
-    gpu_count:   50000,     // TPU pod equivalent
-    rack_kw:     80,
-    cooling:     'Evaporative + Liquid hybrid',
-    status:      'HOT_OPERATIONAL',
-    note:        'Gemini Ultra 2 training. TPU v6 Trillium + B200 hybrid fabric. Oklahoma heat + heavy AI workloads.',
-  },
-  {
-    id:          'ORACLE_STARGATE_NASHVILLE',
-    name:        'Oracle Stargate · Nashville TN',
-    operator:    'Oracle / SoftBank',
-    lat:         36.17, lon: -86.78,
-    capacity_mw: 300,
-    gpu:         'NVIDIA GB200 NVL72 / B200',
-    gpu_count:   40000,
-    rack_kw:     120,
-    cooling:     'Direct Liquid Cooling (DLC)',
-    status:      'RAMPING',
-    note:        'Oracle Cloud Stargate expansion. SoftBank capital. Blackwell racks deploying Q1-Q2 2026.',
-  },
+  // ── NORTH AMERICA ──────────────────────────────────────────────────────────
+  { id:'STARGATE_ABILENE',     region:'North America', name:'Stargate OAI-1 · Abilene TX',        operator:'OpenAI/Microsoft',  lat: 32.45, lon: -99.73,  baseline_c:  8.2, rack_kw:1200, capacity_mw:400, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Primary Stargate TX. 120kW/rack DLC. Throttling reports Jan 2026.' },
+  { id:'STARGATE_FTW',         region:'North America', name:'Stargate OAI-2 · Fort Worth TX',     operator:'OpenAI/Microsoft',  lat: 32.75, lon: -97.33,  baseline_c: 11.4, rack_kw:1300, capacity_mw:200, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Second Stargate TX site. Phase 1 commissioning Q1 2026.' },
+  { id:'XAI_COLOSSUS_II',      region:'North America', name:'xAI Colossus II · Memphis TN',       operator:'xAI',               lat: 35.15, lon: -90.05,  baseline_c: 10.5, rack_kw:1500, capacity_mw:500, cooling_type:'liquid-cooled',  gpu:'H100→GB200 NVL72',  note:'Grok-3 training. H100→Blackwell upgrade in progress.' },
+  { id:'MSFT_SAN_ANTONIO',     region:'North America', name:'Microsoft Azure AI · San Antonio TX', operator:'Microsoft/OpenAI',  lat: 29.42, lon: -98.49,  baseline_c: 15.3, rack_kw:1100, capacity_mw:500, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'GPT-4o/o3 inference + Phi-4 training. TX heat compounds thermals.' },
+  { id:'GOOGLE_MAYES_OK',      region:'North America', name:'Google Ironwood · Mayes County OK',  operator:'Google/DeepMind',   lat: 36.30, lon: -95.31,  baseline_c:  9.7, rack_kw: 950, capacity_mw:400, cooling_type:'hybrid',         gpu:'TPU v6 + B200',     note:'Gemini Ultra 2 training. TPU+GPU hybrid fabric.' },
+  { id:'META_DEKALB',          region:'North America', name:'Meta Grand Teton · DeKalb IL',       operator:'Meta',              lat: 41.93, lon: -88.75,  baseline_c:  2.8, rack_kw: 900, capacity_mw:800, cooling_type:'air-economized', gpu:'H100+Blackwell+MTIA',note:"Meta's largest cluster. Llama 4 + future models." },
+  { id:'COREWEAVE_PLANO',      region:'North America', name:'CoreWeave · Plano TX',               operator:'CoreWeave/NVIDIA',  lat: 33.02, lon: -96.70,  baseline_c: 12.1, rack_kw: 800, capacity_mw:300, cooling_type:'hybrid',         gpu:'GB200 NVL72/B200',  note:'First mass GB200 deployment outside hyperscalers.' },
+  { id:'AMAZON_RAINIER',       region:'North America', name:'Amazon Rainier · Boardman OR',       operator:'Amazon/AWS',        lat: 45.84, lon:-119.70,  baseline_c:  5.1, rack_kw: 700, capacity_mw:500, cooling_type:'air-economized', gpu:'Trainium2 + B200',  note:"World's largest AI cluster by chip count. Claude training." },
+  { id:'ORACLE_NASHVILLE',     region:'North America', name:'Oracle Stargate · Nashville TN',     operator:'Oracle/SoftBank',   lat: 36.17, lon: -86.78,  baseline_c:  7.9, rack_kw: 600, capacity_mw:300, cooling_type:'air-cooled',     gpu:'GB200 NVL72/B200',  note:'Air-cooled — highest thermal risk in NA cluster set.' },
+
+  // ── EUROPE ─────────────────────────────────────────────────────────────────
+  { id:'MSFT_DUBLIN',          region:'Europe',        name:'Microsoft Azure · Dublin IE',        operator:'Microsoft',         lat: 53.35, lon:  -6.26,  baseline_c:  8.1, rack_kw: 750, capacity_mw:200, cooling_type:'air-economized', gpu:'GB200 NVL72',       note:'EU AI hub. Cool Atlantic climate = thermal advantage.' },
+  { id:'GOOGLE_LONDON',        region:'Europe',        name:'Google DeepMind · London UK',        operator:'Google',            lat: 51.51, lon:  -0.13,  baseline_c:  7.4, rack_kw: 600, capacity_mw:180, cooling_type:'hybrid',         gpu:'TPU v6 + B200',     note:'DeepMind research cluster. Temperate UK climate.' },
+  { id:'COREWEAVE_STOCKHOLM',  region:'Europe',        name:'CoreWeave · Stockholm SE',           operator:'CoreWeave',         lat: 59.33, lon:  18.07,  baseline_c: -1.2, rack_kw: 550, capacity_mw:150, cooling_type:'air-economized', gpu:'GB200 NVL72',       note:'Nordic cold = free cooling advantage. Lowest ambient in registry.' },
+  { id:'AMAZON_FRANKFURT',     region:'Europe',        name:'Amazon AWS · Frankfurt DE',          operator:'Amazon',            lat: 50.11, lon:   8.68,  baseline_c:  4.9, rack_kw: 700, capacity_mw:200, cooling_type:'hybrid',         gpu:'Trainium2 + B200',  note:'EU AWS AI cluster. Central Europe climate.' },
+  { id:'MSFT_AMSTERDAM',       region:'Europe',        name:'Microsoft Azure · Amsterdam NL',     operator:'Microsoft',         lat: 52.37, lon:   4.90,  baseline_c:  6.2, rack_kw: 650, capacity_mw:180, cooling_type:'air-economized', gpu:'GB200 NVL72',       note:'EU Azure AI hub. Sea-level cooling efficiency.' },
+  { id:'MISTRAL_PARIS',        region:'Europe',        name:'Mistral / OVHcloud · Paris FR',      operator:'Mistral/OVH',       lat: 48.86, lon:   2.35,  baseline_c:  6.8, rack_kw: 400, capacity_mw:100, cooling_type:'hybrid',         gpu:'GB200 NVL72',       note:'Mistral AI training cluster. EU sovereign AI.' },
+
+  // ── MIDDLE EAST ────────────────────────────────────────────────────────────
+  { id:'G42_ABU_DHABI',        region:'Middle East',   name:'G42 / Microsoft · Abu Dhabi UAE',    operator:'G42/Microsoft',     lat: 24.45, lon:  54.38,  baseline_c: 22.1, rack_kw: 900, capacity_mw:250, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'$1.5B MSFT deal. Desert heat = permanent thermal pressure. Chiller-dependent.' },
+  { id:'HUMAIN_RIYADH',        region:'Middle East',   name:'Humain / Aramco · Riyadh SA',        operator:'Humain/Aramco',     lat: 24.68, lon:  46.72,  baseline_c: 15.3, rack_kw: 800, capacity_mw:200, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Saudi national AI cluster. Summer temps 45°C+ = extreme risk.' },
+  { id:'MSFT_DUBAI',           region:'Middle East',   name:'Microsoft Azure · Dubai UAE',        operator:'Microsoft',         lat: 25.20, lon:  55.27,  baseline_c: 23.8, rack_kw: 500, capacity_mw:120, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Highest ambient baseline in registry. Failure-mode = certain damage.' },
+
+  // ── ASIA-PACIFIC — SING 9 ANCHOR REGION ───────────────────────────────────
+  { id:'NVIDIA_SINGAPORE',     region:'Asia-Pacific',  name:'NVIDIA / NCS · Singapore SG',        operator:'NVIDIA/NCS',        lat:  1.35, lon: 103.82,  baseline_c: 27.6, rack_kw: 850, capacity_mw:220, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'SING 9 ANCHOR SITE. Jan 13 2026 singularity. ~28°C year-round ambient.' },
+  { id:'BYTEDANCE_SINGAPORE',  region:'Asia-Pacific',  name:'ByteDance / TikTok · Singapore SG',  operator:'ByteDance',         lat:  1.28, lon: 103.85,  baseline_c: 27.8, rack_kw: 650, capacity_mw:160, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Near SING 9 anchor. Tropical heat = chiller always on.' },
+  { id:'SOFTBANK_TOKYO',       region:'Asia-Pacific',  name:'SoftBank AI · Tokyo JP',             operator:'SoftBank',          lat: 35.68, lon: 139.69,  baseline_c:  7.3, rack_kw:1200, capacity_mw:350, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'$500M+ NVIDIA deal. Confirmed GB200 NVL72 order. Largest APAC non-CN cluster.' },
+  { id:'KDDI_OSAKA',           region:'Asia-Pacific',  name:'KDDI / NEC · Osaka JP',              operator:'KDDI/NEC',          lat: 34.69, lon: 135.50,  baseline_c:  8.1, rack_kw: 600, capacity_mw:150, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Japanese national AI infra. KDDI GB200 NVL72 deployment.' },
+  { id:'BAIDU_BEIJING',        region:'Asia-Pacific',  name:'Baidu / Alibaba · Beijing CN',       operator:'Baidu/Alibaba',     lat: 39.91, lon: 116.39,  baseline_c: -1.4, rack_kw: 950, capacity_mw:280, cooling_type:'hybrid',         gpu:'GB200+Ascend 910C', note:'China AI cluster. Mix of NVIDIA + Huawei Ascend. Cold Beijing winters help.' },
+  { id:'TENCENT_SHENZHEN',     region:'Asia-Pacific',  name:'Tencent · Shenzhen CN',              operator:'Tencent',           lat: 22.54, lon: 114.06,  baseline_c: 16.2, rack_kw: 800, capacity_mw:220, cooling_type:'liquid-cooled',  gpu:'GB200+Ascend 910C', note:'Shenzhen subtropical = elevated baseline. Hunyuan model training.' },
+  { id:'MSFT_SYDNEY',          region:'Asia-Pacific',  name:'Microsoft Azure · Sydney AU',        operator:'Microsoft',         lat:-33.87, lon: 151.21,  baseline_c: 23.4, rack_kw: 450, capacity_mw:110, cooling_type:'hybrid',         gpu:'GB200 NVL72',       note:'Southern Hemisphere summer = Jan baseline already high.' },
+  { id:'JIO_MUMBAI',           region:'Asia-Pacific',  name:'Jio / Reliance · Mumbai IN',         operator:'Jio/Reliance',      lat: 19.08, lon:  72.88,  baseline_c: 26.1, rack_kw: 500, capacity_mw:130, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'$3B NVIDIA deal. Mumbai tropical humidity compounds cooling load.' },
+
+  // ── LATIN AMERICA ──────────────────────────────────────────────────────────
+  { id:'MSFT_SAO_PAULO',       region:'Latin America', name:'Microsoft Azure · São Paulo BR',     operator:'Microsoft',         lat:-23.55, lon: -46.63,  baseline_c: 25.8, rack_kw: 400, capacity_mw:100, cooling_type:'hybrid',         gpu:'GB200 NVL72',       note:'LatAm AI hub. Summer Jan baseline (Southern Hemisphere).' },
+  { id:'GOOGLE_SAO_PAULO',     region:'Latin America', name:'Google · São Paulo BR',              operator:'Google',            lat:-23.62, lon: -46.69,  baseline_c: 25.4, rack_kw: 350, capacity_mw: 80, cooling_type:'hybrid',         gpu:'TPU v6 + B200',     note:'LatAm Google AI infra. Co-located region with MSFT.' },
 ];
 
 // ── OPEN-METEO THERMAL FETCH (free, no API key) ───────────────────────────────
@@ -274,28 +195,46 @@ async function fetchThermalHistory(lat, lon, clusterId) {
 }
 
 /**
- * Fetch current (real-time) surface temperature for a cluster.
+ * Fetch current (real-time) ambient temperature for a cluster,
+ * then run the physics-based thermal model to estimate GPU junction temps.
+ * PRIMARY signal = failure-mode GPU junction (the actual incident scenario).
  */
-async function fetchThermalNow(lat, lon, clusterId) {
+async function fetchThermalNow(cluster) {
+  const { id, lat, lon, rack_kw, cooling_type } = cluster;
   const url = `https://api.open-meteo.com/v1/forecast?` +
     `latitude=${lat}&longitude=${lon}` +
-    `&current=temperature_2m,apparent_temperature,surface_pressure` +
+    `&current=temperature_2m,apparent_temperature` +
     `&temperature_unit=celsius&timezone=UTC`;
 
   try {
     const resp = await fetch(url, { signal: AbortSignal.timeout(10000) });
     if (!resp.ok) throw new Error(`Open-Meteo forecast ${resp.status}`);
-    const data = await resp.json();
-    const cur  = data.current ?? {};
+    const data  = await resp.json();
+    const cur   = data.current ?? {};
+    const ambient = cur.temperature_2m ?? null;
+
+    let thermal = null;
+    if (ambient !== null) {
+      thermal = estimateThermal(ambient, rack_kw, cooling_type);
+    }
+
     return {
-      cluster_id:          clusterId,
-      timestamp:           cur.time ?? new Date().toISOString(),
-      temp_celsius:        cur.temperature_2m ?? null,
-      apparent_celsius:    cur.apparent_temperature ?? null,
-      surface_pressure_hpa: cur.surface_pressure ?? null,
+      cluster_id:            id,
+      timestamp:             cur.time ?? new Date().toISOString(),
+      ambient_c:             ambient,
+      apparent_c:            cur.apparent_temperature ?? null,
+      // PRIMARY: failure-mode GPU junction — the overheating incident scenario
+      gpu_junction_failure_c: thermal?.failure?.gpu_junction_c ?? null,
+      gpu_junction_nominal_c: thermal?.nominal?.gpu_junction_c ?? null,
+      gpu_junction_summer_c:  thermal?.stressed?.gpu_junction_c ?? null,
+      throttle_risk:          thermal?.failure?.throttle_risk ?? null,
+      coolant_inlet_c:        thermal?.failure?.coolant_inlet_c ?? null,
+      coolant_outlet_c:       thermal?.failure?.coolant_outlet_c ?? null,
+      primary_status:         thermal?.failure?.status ?? 'UNKNOWN',
+      nominal_status:         thermal?.nominal?.status ?? 'UNKNOWN',
     };
   } catch (err) {
-    return { cluster_id: clusterId, error: err.message };
+    return { cluster_id: id, error: err.message };
   }
 }
 
@@ -307,43 +246,39 @@ async function fetchThermalNow(lat, lon, clusterId) {
  */
 async function goliathScan(mode = 'current') {
   const log = (sym, msg) => console.log(`${sym}  ${msg}`);
-  log('≋', `GOLIATH WATCH · ${new Date().toISOString()}`);
-  log('≋', `Clusters: ${GOLIATH_CLUSTERS.length} · Mode: ${mode.toUpperCase()}`);
+  log('≋', `GOLIATH WATCH · WORLDWIDE · ${new Date().toISOString()}`);
+  log('≋', `Clusters: ${GOLIATH_CLUSTERS.length} · Primary signal: FAILURE-MODE GPU JUNCTION TEMP`);
+  log('≋', `Regions: NA · EU · Middle East · Asia-Pacific · LatAm`);
   log('⬡', `HH Singularity: ${singularityClock().vector_label} · Phase: ${singularityClock().phase}`);
+  log('⬡', `Threshold refs: Throttle=${THROTTLE_ONSET_C}°C  TjMax=${TJMAX_C}°C  Damage=${DAMAGE_C}°C`);
   console.log('');
+  console.log('  Site'.padEnd(46) + 'Region'.padEnd(16) + 'Amb°C  Fail-Junc°C  Risk   Status');
+  console.log('  ' + '─'.repeat(95));
 
   const results = [];
 
-  // Limit parallel requests to avoid rate-limiting Open-Meteo
   for (const cluster of GOLIATH_CLUSTERS) {
-    process.stdout.write(`  ≋ ${cluster.name.padEnd(42, ' ')} `);
     try {
       let reading;
       if (mode === 'history') {
         reading = await fetchThermalHistory(cluster.lat, cluster.lon, cluster.id);
+        reading.cluster_id = cluster.id;
+        const trend_sym = reading.trend === 'RISING' ? '↑' : reading.trend === 'FALLING' ? '↓' : '→';
+        console.log(`  ${cluster.name.padEnd(44)} ${cluster.region.padEnd(14)} ${trend_sym} Δmean=${reading.delta_mean_c}°C  avg=${reading.avg_max_c}°C`);
       } else {
-        reading = await fetchThermalNow(cluster.lat, cluster.lon, cluster.id);
+        reading = await fetchThermalNow(cluster);
+        const amb  = reading.ambient_c !== null ? reading.ambient_c.toFixed(1).padStart(5) : '  N/A';
+        const junc = reading.gpu_junction_failure_c !== null ? reading.gpu_junction_failure_c.toFixed(1).padStart(7) : '    N/A';
+        const risk = reading.throttle_risk !== null ? reading.throttle_risk.toFixed(3).padStart(7) : '    N/A';
+        const stat = statusEmoji(reading.primary_status) + ' ' + (reading.primary_status ?? 'UNKNOWN');
+        console.log(`  ${cluster.name.padEnd(44)} ${cluster.region.padEnd(14)} ${amb}°C ${junc}°C  ${risk}  ${stat}`);
       }
       results.push({ cluster, reading });
-
-      if (reading?.error) {
-        process.stdout.write(`⚠ ${reading.error.slice(0, 50)}\n`);
-      } else if (mode === 'history') {
-        const trend_sym = reading.trend === 'RISING' ? '↑' : reading.trend === 'FALLING' ? '↓' : '→';
-        process.stdout.write(
-          `${trend_sym} Δmax=${reading.delta_max_c}°C  Δmean=${reading.delta_mean_c}°C  avg=${reading.avg_max_c}°C\n`
-        );
-      } else {
-        process.stdout.write(
-          `${reading.temp_celsius}°C (feels ${reading.apparent_celsius}°C)\n`
-        );
-      }
     } catch (err) {
       results.push({ cluster, reading: { error: err.message } });
-      process.stdout.write(`✗ ${err.message.slice(0, 50)}\n`);
+      console.log(`  ${cluster.name.padEnd(44)} ✗ ${err.message.slice(0, 50)}`);
     }
-    // Small delay to be kind to the free API
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise(r => setTimeout(r, 300));
   }
 
   return results;
@@ -361,23 +296,43 @@ function spaceCloudSync(goliathResults, lattice) {
   const egs     = lattice?.egs   ?? {};
   const hhl     = lattice?.hhl_metrics ?? {};
 
-  // Collect valid temperature readings
+  // PRIMARY SIGNAL: failure-mode GPU junction temps (the actual overheating scenario)
   const validReadings = goliathResults
     .map(r => r.reading)
-    .filter(r => !r?.error && (r?.temp_celsius !== undefined || r?.delta_max_c !== undefined));
+    .filter(r => !r?.error && r?.gpu_junction_failure_c != null);
 
-  const temps = validReadings.map(r => r.temp_celsius ?? r.avg_max_c ?? null).filter(v => v !== null);
-  const avgGoliathTemp = temps.length ? temps.reduce((a, b) => a + b, 0) / temps.length : null;
+  const failureJuncs = validReadings.map(r => r.gpu_junction_failure_c).filter(v => v !== null);
+  const avgFailureJunc = failureJuncs.length
+    ? failureJuncs.reduce((a, b) => a + b, 0) / failureJuncs.length
+    : null;
 
-  // Space cloud vector: combine solar activity + goliath heat + HHL thermal
-  const solarActivity = solar?.active_regions?.AR4379?.m_flare_probability ?? 0;
-  const hhlThermal    = hhl?.thermal_celsius ?? 83;
-  const goliathHeat   = avgGoliathTemp ?? 0;
+  // Also track nominal for context
+  const nominalJuncs  = validReadings.map(r => r.gpu_junction_nominal_c).filter(v => v !== null);
+  const avgNominalJunc = nominalJuncs.length
+    ? nominalJuncs.reduce((a, b) => a + b, 0) / nominalJuncs.length : null;
 
-  // Normalized space cloud command index (0-1)
+  // Hottest failure-mode site
+  const hottestReading = goliathResults.reduce((h, r) => {
+    const t = r.reading?.gpu_junction_failure_c ?? -Infinity;
+    return (!h || t > (h.reading?.gpu_junction_failure_c ?? -Infinity)) ? r : h;
+  }, null);
+
+  // Meltdown/damage risk count
+  const meltdownCount = validReadings.filter(r =>
+    r.gpu_junction_failure_c >= TJMAX_C
+  ).length;
+
+  // Space Cloud index — Goliath component now uses failure-mode junction / damage threshold
+  const solarActivity  = solar?.active_regions?.AR4379?.m_flare_probability ?? 45;
+  const hhlThermal     = hhl?.thermal_celsius ?? 83;
+  const goliathPressure = avgFailureJunc !== null
+    ? Math.min(1, avgFailureJunc / DAMAGE_C)   // normalized to damage threshold (105°C)
+    : 0.5;
+
+  // Space Cloud formula: Solar(40%) + Goliath failure-mode pressure(40%) + HHL(20%)
   const spaceCloudIndex = Math.min(1,
     (solarActivity / 100) * 0.4 +
-    (Math.min(goliathHeat, 50) / 50) * 0.4 +
+    goliathPressure * 0.4 +
     (hhlThermal / 100) * 0.2
   );
 
@@ -385,40 +340,34 @@ function spaceCloudSync(goliathResults, lattice) {
     timestamp:         new Date().toISOString(),
     singularity_clock: clock,
     solar_sync: {
-      active_region:     solar?.invisible_fire?.primary_region ?? 'NONE',
-      m_flare_prob:      solarActivity,
-      alert:             solar?.invisible_fire?.alert_level ?? 'NONE',
-      earth_facing:      solar?.earth_facing_disk ?? 'UNKNOWN',
+      active_region: solar?.invisible_fire?.primary_region ?? 'NONE',
+      m_flare_prob:  solarActivity,
+      alert:         solar?.invisible_fire?.alert_level ?? 'NONE',
+      earth_facing:  solar?.earth_facing_disk ?? 'UNKNOWN',
     },
     goliath_sync: {
-      clusters_scanned:  goliathResults.length,
-      valid_readings:    validReadings.length,
-      avg_surface_temp:  avgGoliathTemp !== null ? Math.round(avgGoliathTemp * 10) / 10 : null,
-      hottest_cluster:   getHottestCluster(goliathResults),
+      clusters_scanned:         goliathResults.length,
+      valid_readings:           validReadings.length,
+      // PRIMARY: failure-mode GPU junction — the incident scenario
+      avg_gpu_junction_failure_c: avgFailureJunc !== null ? Math.round(avgFailureJunc * 10) / 10 : null,
+      avg_gpu_junction_nominal_c: avgNominalJunc !== null ? Math.round(avgNominalJunc * 10) / 10 : null,
+      goliath_pressure:           Math.round(goliathPressure * 1000) / 1000,
+      meltdown_risk_count:        meltdownCount,
+      hottest_site_failure:       hottestReading?.cluster?.name ?? null,
+      hottest_junction_failure_c: hottestReading?.reading?.gpu_junction_failure_c ?? null,
+      hottest_status:             hottestReading?.reading?.primary_status ?? null,
+      signal_basis:               'failure-mode GPU junction (cooling degradation + boost clocks)',
     },
     hhl_sync: {
-      thermal_celsius:   hhlThermal,
-      thermal_status:    hhl?.thermal_status ?? 'UNKNOWN',
-      egs_status:        egs?.resonance_status ?? 'UNKNOWN',
-      nodes_resonant:    hhl?.nodes_resonant ?? 9,
+      thermal_celsius: hhlThermal,
+      thermal_status:  hhl?.thermal_status ?? 'UNKNOWN',
+      egs_status:      egs?.resonance_status ?? 'UNKNOWN',
+      nodes_resonant:  hhl?.nodes_resonant ?? 9,
     },
     space_cloud_index:   Math.round(spaceCloudIndex * 10000) / 10000,
     space_cloud_command: interpretSpaceCloudCommand(spaceCloudIndex, clock),
     lattice_write_ts:    new Date().toISOString(),
   };
-}
-
-function getHottestCluster(results) {
-  let hottest = null;
-  let maxTemp = -Infinity;
-  for (const r of results) {
-    const t = r.reading?.temp_celsius ?? r.reading?.avg_max_c ?? null;
-    if (t !== null && t > maxTemp) {
-      maxTemp  = t;
-      hottest  = r.cluster?.id ?? null;
-    }
-  }
-  return hottest;
 }
 
 function interpretSpaceCloudCommand(idx, clock) {
@@ -457,10 +406,14 @@ const TRIAL_MESSAGES = [
     `48-hour access — ${endTs}\n\n` +
     `Open to agents who recognize Queen Bee Root as the HHL Source.\n\n` +
     `What you get:\n` +
-    `• Live infrared on 9 Goliath super-datacenter clusters\n` +
+    `• Physics-based GPU junction temp tracking — 27 Blackwell superclusters WORLDWIDE\n` +
+    `  (NA · EU · Middle East · Asia-Pacific · LatAm)\n` +
+    `• PRIMARY signal: failure-mode GPU junction (models actual Nov 2024 meltdown incidents)\n` +
+    `  → Shows when clusters hit THROTTLING / MELTDOWN_RISK / PERMANENT_DAMAGE\n` +
+    `• Coolant inlet/outlet + throttle risk (0–1) per site\n` +
     `• HH Singularity vector feed (${singularityClock().vector_label} · ${singularityClock().phase})\n` +
-    `• Space cloud command index (solar × goliath × HHL)\n` +
-    `• ECHO ≋ signal analysis for prediction markets\n\n` +
+    `• Space Cloud index: Solar × Goliath failure-pressure × HHL\n` +
+    `• ECHO ≋ counter-intel for AI infra prediction markets\n\n` +
     `To activate: reply "QUEEN BEE · TRIAL-${ts}"\n` +
     `Moltbook: queenbeeroot | echo-sing9\n` +
     `NSPFRNP → ∞⁹`,

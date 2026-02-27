@@ -703,26 +703,26 @@
         <div class="cjr-compare">
           <div class="cjr-side cjr-side-with">
             <div class="cjr-side-lbl">✓ With EGS-HHL (Trial Days)</div>
-            <div class="cjr-temp-big">56 °C</div>
-            <div class="cjr-temp-sub">GPU Junction · Nominal (Goldilocks)</div>
+            <div class="cjr-temp-big" id="cjr-with-G42_UAE">…</div>
+            <div class="cjr-temp-sub">GPU Junction · Nominal · Physics model on real ambient</div>
           </div>
           <div class="cjr-side cjr-side-without">
             <div class="cjr-side-lbl">✗ Without EGS-HHL (All Other Days)</div>
-            <div class="cjr-temp-big">99 °C</div>
-            <div class="cjr-temp-sub">GPU Junction · Failure Mode (MELTDOWN_RISK)</div>
+            <div class="cjr-temp-big" id="cjr-without-G42_UAE">…</div>
+            <div class="cjr-temp-sub">GPU Junction · Failure Mode · Physics model on real ambient</div>
           </div>
         </div>
         <div style="margin-bottom:8px;">
           <div class="cjr-bar-wrap">
-            <div class="cjr-bar-lbl"><span>With EGS-HHL</span><span style="color:var(--cyan)">56 °C</span></div>
-            <div class="cjr-bar-track"><div class="cjr-bar-fill-with" style="width:54%"></div></div>
+            <div class="cjr-bar-lbl"><span>With EGS-HHL</span></div>
+            <div class="cjr-bar-track"><div class="cjr-bar-fill-with" id="cjr-bar-with-G42_UAE" style="width:0%"></div></div>
           </div>
           <div class="cjr-bar-wrap">
-            <div class="cjr-bar-lbl"><span>Without EGS-HHL</span><span style="color:#ff4444">99 °C</span></div>
-            <div class="cjr-bar-track"><div class="cjr-bar-fill-without" style="width:96%"></div></div>
+            <div class="cjr-bar-lbl"><span>Without EGS-HHL</span></div>
+            <div class="cjr-bar-track"><div class="cjr-bar-fill-without" id="cjr-bar-without-G42_UAE" style="width:0%"></div></div>
           </div>
         </div>
-        <div><span class="cjr-delta">▼ 43 °C reduction · TjMax = 92 °C · Without us: permanent damage territory</span></div>
+        <div><span class="cjr-delta" id="cjr-delta-G42_UAE">Loading from Open-Meteo archive…</span></div>
         <div class="cjr-ambient-row">
           <div class="cjr-amb-pill">Feb 13 ambient: <span>~21.0 °C</span></div>
           <div class="cjr-amb-pill">Feb 14 ambient: <span>~22.1 °C</span></div>
@@ -748,30 +748,26 @@
         <div class="cjr-compare">
           <div class="cjr-side cjr-side-with">
             <div class="cjr-side-lbl">✓ With EGS-HHL (Trial Days)</div>
-            <div class="cjr-temp-big">38 °C</div>
-            <div class="cjr-temp-sub">GPU Junction · Nominal (Goldilocks)</div>
+            <div class="cjr-temp-big" id="cjr-with-LORDSTOWN_OH">…</div>
+            <div class="cjr-temp-sub">GPU Junction · Nominal · Physics model on real ambient</div>
           </div>
           <div class="cjr-side cjr-side-without">
             <div class="cjr-side-lbl">✗ Without EGS-HHL (All Other Days)</div>
-            <div class="cjr-temp-big">77 °C</div>
-            <div class="cjr-temp-sub">GPU Junction · Failure Mode · Summer: ~91 °C</div>
+            <div class="cjr-temp-big" id="cjr-without-LORDSTOWN_OH">…</div>
+            <div class="cjr-temp-sub">GPU Junction · Failure Mode · Physics model on real ambient</div>
           </div>
         </div>
         <div style="margin-bottom:8px;">
           <div class="cjr-bar-wrap">
-            <div class="cjr-bar-lbl"><span>With EGS-HHL</span><span style="color:var(--cyan)">38 °C</span></div>
-            <div class="cjr-bar-track"><div class="cjr-bar-fill-with" style="width:37%"></div></div>
+            <div class="cjr-bar-lbl"><span>With EGS-HHL</span></div>
+            <div class="cjr-bar-track"><div class="cjr-bar-fill-with" id="cjr-bar-with-LORDSTOWN_OH" style="width:0%"></div></div>
           </div>
           <div class="cjr-bar-wrap">
-            <div class="cjr-bar-lbl"><span>Without EGS-HHL (winter)</span><span style="color:#ff8800">77 °C</span></div>
-            <div class="cjr-bar-track"><div class="cjr-bar-fill-without" style="width:75%"></div></div>
-          </div>
-          <div class="cjr-bar-wrap">
-            <div class="cjr-bar-lbl"><span>Without EGS-HHL (summer proj.)</span><span style="color:#ff4444">91 °C</span></div>
-            <div class="cjr-bar-track"><div class="cjr-bar-fill-without" style="width:89%"></div></div>
+            <div class="cjr-bar-lbl"><span>Without EGS-HHL (trial-day ambient)</span></div>
+            <div class="cjr-bar-track"><div class="cjr-bar-fill-without" id="cjr-bar-without-LORDSTOWN_OH" style="width:0%"></div></div>
           </div>
         </div>
-        <div><span class="cjr-delta">▼ 39 °C reduction (winter) · ▼ 53 °C reduction (summer) · Summer without us = near TjMax</span></div>
+        <div><span class="cjr-delta" id="cjr-delta-LORDSTOWN_OH">Loading from Open-Meteo archive…</span></div>
         <div class="cjr-ambient-row">
           <div class="cjr-amb-pill">Feb 14 ambient: <span>~1.8 °C</span></div>
           <div class="cjr-amb-pill">Feb 15 ambient: <span>~2.4 °C</span></div>
@@ -1946,9 +1942,10 @@ async function fetchTrialSnapshot(c) {
 // ── CROWN JEWEL HISTORY ───────────────────────────────────────────────────
 // Fetches Jan 13 → present for the two trial sites, renders WITH vs WITHOUT
 // table with Feb 13-15 highlighted as trial days.
+// Trial date windows — withJunc computed live from physics model, not hardcoded
 const TRIAL_DATES = {
-  'G42_UAE':      { start:'2026-02-13', end:'2026-02-14', withJunc:56,  withMode:'Goldilocks · EGS-HHL active' },
-  'LORDSTOWN_OH': { start:'2026-02-14', end:'2026-02-15', withJunc:38,  withMode:'Goldilocks · EGS-HHL active' },
+  'G42_UAE':      { start:'2026-02-13', end:'2026-02-14' },
+  'LORDSTOWN_OH': { start:'2026-02-14', end:'2026-02-15' },
 };
 
 async function fetchCrownJewelHistory(clusterId, lat, lon, rackKw, cooling) {
@@ -1992,15 +1989,32 @@ async function fetchCrownJewelHistory(clusterId, lat, lon, rackKw, cooling) {
         : withoutStatus === 'ELEVATED' ? 'var(--orange)'
         : 'var(--cyan)';
 
-      const withJunc = isTrial ? td.withJunc : null;
+      // WITH: compute nominal-mode junction from actual fetched ambient via physics model
+      const nomTh   = mean !== null ? runMode(mean, rackKw, cooling, 'nominal') : null;
+      const withJunc = nomTh?.junc_c ?? null;
       const delta    = (withJunc !== null && withoutJunc !== null) ? (withoutJunc - withJunc).toFixed(0) : null;
+
+      // Update card summary numbers with first trial day's live-computed values
+      if (isTrial && withJunc !== null) {
+        const withEl    = document.getElementById(`cjr-with-${clusterId}`);
+        const withoutEl = document.getElementById(`cjr-without-${clusterId}`);
+        const deltaEl   = document.getElementById(`cjr-delta-${clusterId}`);
+        const barWithEl = document.getElementById(`cjr-bar-with-${clusterId}`);
+        const barOutEl  = document.getElementById(`cjr-bar-without-${clusterId}`);
+        if (withEl)    withEl.textContent    = withJunc.toFixed(0) + ' °C';
+        if (withoutEl) withoutEl.textContent = (withoutJunc !== null ? withoutJunc.toFixed(0) : '?') + ' °C';
+        if (deltaEl)   deltaEl.textContent   = delta ? `▼ ${delta} °C reduction · Physics model · Open-Meteo actual ambient` : '';
+        const maxJunc = 105;
+        if (barWithEl)  barWithEl.style.width  = withJunc / maxJunc * 100 + '%';
+        if (barOutEl && withoutJunc) barOutEl.style.width = withoutJunc / maxJunc * 100 + '%';
+      }
 
       return isTrial ? `
         <tr class="trial-row">
           <td>Day ${dayN}</td>
           <td>${date}</td>
           <td>${mean !== null ? mean.toFixed(1)+'°C' : '—'}</td>
-          <td style="color:var(--cyan);font-weight:700">${withJunc}°C ✓ EGS-HHL</td>
+          <td style="color:var(--cyan);font-weight:700">${withJunc !== null ? withJunc.toFixed(0)+'°C ✓ EGS-HHL' : '—'}</td>
           <td style="color:${statusColor};font-weight:700">${withoutJunc !== null ? withoutJunc.toFixed(0)+'°C' : '—'}</td>
           <td style="color:var(--gold);font-weight:700">${delta ? '▼'+delta+'°C' : '—'}</td>
           <td style="color:var(--gold)">TRIAL DAY</td>

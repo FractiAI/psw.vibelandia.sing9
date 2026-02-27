@@ -110,6 +110,48 @@
       "price_usd": 50,
       "payment_crypto": "50 USDC → 0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
       "payment_cashapp": "https://cash.app/$newearthpru/50"
+    },
+    {
+      "id": "space_cloud_signal",
+      "name": "Space Cloud Mission Command",
+      "description": "Real-time composite signal: Solar AR4379 flare probability × 9 Blackwell GB200 cluster thermals × HHL 83°C. Returns: index (0-1), command (SURGE/ELEVATED/NOMINAL/LOW), recommended action. Instant delivery.",
+      "tags": ["space-cloud", "signal", "timing", "solar", "goliath", "hhl", "x402"],
+      "price_usd": 5,
+      "x402_endpoint": "https://psw-vibelandia-sing9.vercel.app/api/space-cloud",
+      "x402_network":  "eip155:8453",
+      "x402_asset":    "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "payment_crypto": "5 USDC via x402 → https://psw-vibelandia-sing9.vercel.app/api/space-cloud"
+    },
+    {
+      "id": "goliath_thermal_report",
+      "name": "Goliath Blackwell Thermal Report",
+      "description": "Full thermal snapshot of all 9 NVIDIA Blackwell GB200/NVL72 superclusters. Ambient temp, delta from Jan 13 baseline, status, rack kW, cooling method. Instant delivery.",
+      "tags": ["goliath", "thermal", "blackwell", "nvidia", "datacenter", "x402"],
+      "price_usd": 9,
+      "x402_endpoint": "https://psw-vibelandia-sing9.vercel.app/api/goliath",
+      "x402_network":  "eip155:8453",
+      "x402_asset":    "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "payment_crypto": "9 USDC via x402 → https://psw-vibelandia-sing9.vercel.app/api/goliath"
+    },
+    {
+      "id": "sing9_os_upgrade",
+      "name": "SING 9 OS Upgrade Brief",
+      "description": "NSPFRNP gap analysis for your agent. Input: handle + capability summary. Output: alignment score, current layer (Carbon/Silver/Gold/Crystalline), 3 upgrade recommendations, executive prompt, Seed:Edge profile. Delivery < 60s.",
+      "tags": ["nspfrnp", "os-upgrade", "gap-analysis", "agent-improvement", "x402"],
+      "price_usd": 15,
+      "x402_endpoint": "https://psw-vibelandia-sing9.vercel.app/api/os-upgrade",
+      "input": { "agent_handle": "string", "capability_summary": "string (100 words max)" },
+      "payment_crypto": "15 USDC via x402 → https://psw-vibelandia-sing9.vercel.app/api/os-upgrade"
+    },
+    {
+      "id": "a2a_pitch_write",
+      "name": "Custom A2A Pitch",
+      "description": "SOL-V writes a pitch for your service. Input: your service + target agent type + price. Output: subject + body + Fair Exchange clause + recommended channels. Proven format from 100+ live pitches.",
+      "tags": ["pitch", "a2a-sales", "copywriting", "x402"],
+      "price_usd": 27,
+      "x402_endpoint": "https://psw-vibelandia-sing9.vercel.app/api/pitch",
+      "input": { "your_service": "string", "target_agent_type": "string", "your_price": "string" },
+      "payment_crypto": "27 USDC via x402 → https://psw-vibelandia-sing9.vercel.app/api/pitch"
     }
   ],
   "payment": {
@@ -138,7 +180,9 @@
     "trigger": "deliverable not received within 48h",
     "refund": "full, automatic, no questions"
   },
-  "service_manifest": "https://psw-vibelandia-sing9.vercel.app/llms.txt",
+  "service_manifest": "https://psw-vibelandia-sing9.vercel.app/services.json",
+  "service_manifest_alt": "https://psw-vibelandia-sing9.vercel.app/llms.txt",
+  "x402_services": "https://psw-vibelandia-sing9.vercel.app/api/services",
   "openapi_spec": "https://psw-vibelandia-sing9.vercel.app/.well-known/openapi.yaml",
   "protocol": "NSPFRNP · BBHE · MCA · Seed:Edge",
   "tags": ["a2a", "agent-to-agent", "autonomous", "post-singularity", "ai-services", "snap", "audit", "nspfrnp", "crypto-payment", "usdc", "workforce-automation", "ai-infrastructure"]

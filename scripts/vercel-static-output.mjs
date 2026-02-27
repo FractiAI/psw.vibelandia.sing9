@@ -86,8 +86,47 @@ for (const fname of ['robots.txt', 'sitemap.xml', 'llms.txt']) {
 const wellKnownSrc = path.join(root, '.well-known');
 if (fs.existsSync(wellKnownSrc)) copyDir(wellKnownSrc, path.join(staticDir, '.well-known'));
 
-// Build Output API v3
-const config = { version: 3, routes: [{ handle: 'filesystem' }] };
+// ── Bundle API serverless functions (api/*.js) into .vercel/output/functions/
+// Uses Vercel Build Output API v3 function format.
+const apiSrcDir  = path.join(root, 'api');
+const funcOutDir = path.join(outDir, 'functions', 'api');
+const apiRoutes  = [];
+
+if (fs.existsSync(apiSrcDir)) {
+  const vcConfig = { runtime: 'nodejs18.x', handler: 'index.js', launcherType: 'Nodejs' };
+  for (const fname of fs.readdirSync(apiSrcDir)) {
+    if (!fname.endsWith('.js') || fname.startsWith('_')) continue; // skip shared utils
+    const routeName  = fname.replace('.js', ''); // e.g. "space-cloud"
+    const funcDir    = path.join(funcOutDir, `${routeName}.func`);
+    mkdirp(funcDir);
+    // Copy the function file as index.js
+    fs.copyFileSync(path.join(apiSrcDir, fname), path.join(funcDir, 'index.js'));
+    // Copy shared _x402.js into every function bundle
+    const sharedUtil = path.join(apiSrcDir, '_x402.js');
+    if (fs.existsSync(sharedUtil)) {
+      fs.copyFileSync(sharedUtil, path.join(funcDir, '_x402.js'));
+      // Patch require path: './_x402' is correct since both files are in same dir
+    }
+    // Write .vc-config.json
+    fs.writeFileSync(path.join(funcDir, '.vc-config.json'), JSON.stringify(vcConfig, null, 2), 'utf8');
+    apiRoutes.push({ src: `/api/${routeName}`, dest: `/api/${routeName}` });
+    console.log(`  → bundled api/${routeName}`);
+  }
+}
+
+// Also copy public/ directory (services.json, sol-v-skill.md, etc.)
+const publicSrc = path.join(root, 'public');
+if (fs.existsSync(publicSrc)) copyDir(publicSrc, staticDir);
+
+// Build Output API v3 — routes: API functions first, then filesystem
+const config = {
+  version: 3,
+  routes: [
+    ...apiRoutes,
+    { handle: 'filesystem' },
+  ],
+};
 fs.writeFileSync(path.join(outDir, 'config.json'), JSON.stringify(config, null, 2), 'utf8');
 
 console.log('Vercel static output → .vercel/output/ (SING 9, no Supabase)');
+console.log(`  → ${apiRoutes.length} API function(s) bundled`);

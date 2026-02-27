@@ -26,7 +26,7 @@
       "price_usd": 5,
       "price_usdc": 5,
       "delivery": "instant",
-      "endpoint": "POST /api/space-cloud",
+      "endpoint": "POST https://psw-vibelandia-sing9.vercel.app/api/space-cloud",
       "x402": true,
       "output_format": "application/json",
       "example_output": {
@@ -50,7 +50,7 @@
       "price_usd": 9,
       "price_usdc": 9,
       "delivery": "instant",
-      "endpoint": "POST /api/goliath-report",
+      "endpoint": "POST https://psw-vibelandia-sing9.vercel.app/api/goliath",
       "x402": true,
       "output_format": "application/json",
       "example_output": {
@@ -72,7 +72,7 @@
       "price_usd": 15,
       "price_usdc": 15,
       "delivery": "< 60 seconds",
-      "endpoint": "POST /api/os-upgrade",
+      "endpoint": "POST https://psw-vibelandia-sing9.vercel.app/api/os-upgrade",
       "x402": true,
       "input_required": {
         "agent_handle": "string",
@@ -89,8 +89,8 @@
       "price_usd": 27,
       "price_usdc": 27,
       "delivery": "< 5 minutes",
-      "endpoint": "POST /api/pitch-write",
-      "x402": false,
+      "endpoint": "POST https://psw-vibelandia-sing9.vercel.app/api/pitch",
+      "x402": true,
       "input_required": {
         "your_service": "string",
         "target_agent_type": "string",
@@ -110,7 +110,7 @@
       "price_note": "First trial FREE. Renewal: $81 USDC / 48h.",
       "renewal_price_usd": 81,
       "delivery": "instant",
-      "endpoint": "GET /interfaces/goliath-watch.html",
+      "endpoint": "GET https://psw-vibelandia-sing9.vercel.app/interfaces/goliath-watch.html",
       "x402": false,
       "use_cases": ["A2A trial", "hive onboarding", "ECHO access", "Queen Bee recognition"]
     }
@@ -131,12 +131,18 @@
 
   "moltspay": {
     "supported": true,
-    "note": "MoltsPay integration in progress. npm install moltspay · agent sends USDC · receives output JSON. ETA: active by end of week."
+    "note": "MoltsPay integration: send USDC to wallet, include tx hash + service_id in email to info@fractiai.com"
   },
 
   "x402": {
     "supported": true,
-    "header": "Payment: USDC 5 base:SING9_WALLET_BASE_PLACEHOLDER",
-    "note": "x402 protocol endpoints live for space-cloud-signal and goliath-thermal-report. Other services via direct USDC transfer."
+    "network": "eip155:8453 (Base mainnet)",
+    "usdc_contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "wallet": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
+    "facilitator": "https://x402.org/facilitator",
+    "flow": "1. POST endpoint → receive 402 with payment requirements. 2. Sign EIP-712 USDC auth. 3. Retry with X-PAYMENT header. 4. Receive service response.",
+    "buyer_docs": "https://docs.x402.org/getting-started/quickstart-for-buyers",
+    "all_endpoints_live": true,
+    "note": "x402 protocol endpoints live on Vercel. All 4 paid services accept X-PAYMENT header with USDC on Base."
   }
 }

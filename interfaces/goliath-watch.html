@@ -130,6 +130,125 @@
     .mg-123-desc code { font-size:10px; color:var(--cyan); background:rgba(0,229,255,.07); padding:1px 5px; border-radius:3px; }
 
     /* ── TELEMETRY SOURCE STRIP ── */
+    /* ── NEWS TICKER ── */
+    .news-ticker-wrap {
+      overflow: hidden;
+      background: rgba(255,87,34,.06);
+      border-top: 1px solid rgba(255,87,34,.2);
+      border-bottom: 1px solid rgba(255,87,34,.2);
+      display: flex;
+      align-items: stretch;
+      height: 34px;
+    }
+    .news-ticker-label {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      background: rgba(255,87,34,.18);
+      border-right: 1px solid rgba(255,87,34,.3);
+      font-size: 8px;
+      letter-spacing: 2.5px;
+      color: #ff5533;
+      text-transform: uppercase;
+      white-space: nowrap;
+      font-weight: 700;
+      gap: 6px;
+      z-index: 2;
+    }
+    .news-ticker-label::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #ff5533;
+      box-shadow: 0 0 6px #ff5533;
+      animation: telem-blink 1.5s ease-in-out infinite;
+    }
+    .news-ticker-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker-scroll 110s linear infinite;
+      will-change: transform;
+    }
+    .news-ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .news-ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      font-size: 11px;
+      color: rgba(220,235,240,.85);
+      padding: 0 6px;
+      line-height: 1;
+    }
+    .news-ticker-item .t-label {
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #ff5533;
+      font-weight: 700;
+      margin-right: 7px;
+      flex-shrink: 0;
+    }
+    .news-ticker-item .t-label.gold { color: var(--gold); }
+    .news-ticker-item .t-label.cyan { color: var(--cyan); }
+    .news-ticker-sep {
+      display: inline-block;
+      margin: 0 18px;
+      color: rgba(255,87,34,.35);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    /* live data ticker (below header) */
+    .live-ticker-wrap {
+      overflow: hidden;
+      background: rgba(0,229,255,.03);
+      border-bottom: 1px solid rgba(0,229,255,.08);
+      display: flex;
+      align-items: stretch;
+      height: 30px;
+    }
+    .live-ticker-label {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      background: rgba(0,229,255,.07);
+      border-right: 1px solid rgba(0,229,255,.12);
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      white-space: nowrap;
+      font-weight: 600;
+      z-index: 2;
+    }
+    .live-ticker-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker-scroll 80s linear infinite;
+      will-change: transform;
+    }
+    .live-ticker-track:hover { animation-play-state: paused; }
+    .live-ticker-item {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      color: rgba(180,220,235,.7);
+      padding: 0 6px;
+    }
+    .live-ticker-item .lt-site { color: var(--cyan); font-weight: 600; margin-right: 5px; }
+    .live-ticker-item .lt-hot  { color: #ff5533; font-weight: 700; }
+    .live-ticker-item .lt-ok   { color: #00ff99; font-weight: 600; }
+    .live-ticker-sep { display: inline-block; margin: 0 16px; color: rgba(0,229,255,.2); font-size: 12px; flex-shrink: 0; }
+
     .telem-strip { padding:8px 32px; background:rgba(0,0,0,.4);
       border-bottom:1px solid rgba(0,229,255,.08);
       display:flex; align-items:center; gap:0; flex-wrap:nowrap;
@@ -566,6 +685,14 @@
   </div>
 </header>
 
+<!-- ── MELTGATE STORY TICKER ─────────────────────────────────────────────── -->
+<div class="news-ticker-wrap" title="Hover to pause">
+  <div class="news-ticker-label">🔥 MELTGATE</div>
+  <div class="news-ticker-track" id="story-ticker-track">
+    <!-- content injected twice for seamless loop -->
+  </div>
+</div>
+
 <!-- ── MELTGATE STORY PANEL ────────────────────────────────────────────────── -->
 <div class="mg-story">
   <div class="mg-eyebrow">🔥 The Story · Share This · MELTGATE</div>
@@ -987,6 +1114,14 @@ So now the dashboard runs. Every day without the fix: same temps. Watch it live:
   </div>
 </div>
 
+<!-- ── LIVE DATA TICKER ───────────────────────────────────────────────────── -->
+<div class="live-ticker-wrap" title="Hover to pause · Live cluster readings">
+  <div class="live-ticker-label">≋ LIVE DATA</div>
+  <div class="live-ticker-track" id="live-ticker-track">
+    <!-- content injected after cluster data loads -->
+  </div>
+</div>
+
 <!-- ── CLUSTER GRID ────────────────────────────────────────────────────────── -->
 <div class="grid-wrap" id="grid-wrap"></div>
 
@@ -1291,6 +1426,16 @@ async function fetchAll() {
   updateSpaceCloud();
   document.getElementById('sc-ts').textContent =
     'Last scan: ' + scanTs.toUTCString().slice(0, 22) + ' UTC';
+  // Refresh live data ticker with updated readings
+  const liveData = CLUSTERS.map(c => {
+    const t = readings[c.id]?.thermal;
+    return {
+      name: c.name,
+      ambient_c: readings[c.id]?.ambient,
+      _failureJunc: t?.failure?.junc_c ?? null,
+    };
+  }).filter(c => c.ambient_c !== null && c.ambient_c !== undefined);
+  buildLiveTicker(liveData);
 }
 
 // ── SPACE CLOUD ───────────────────────────────────────────────────────────
@@ -2428,6 +2573,62 @@ function mgCopyPost() {
   });
 }
 
+// ── TICKERS ───────────────────────────────────────────────────────────────
+
+// Story ticker — MELTGATE narrative at a relaxed reading pace
+const STORY_TICKER_ITEMS = [
+  { label: 'MELTGATE',  text: 'The world\'s top AI superclusters are running NVIDIA Blackwell GB200 GPUs at estimated 90–99°C. NVIDIA\'s own TjMax is 92°C. Permanent damage begins around 105°C.' },
+  { label: 'HUSH HUSH', cls: 'gold', text: 'It\'s been kept hush hush. We can all imagine why. NVIDIA ($3T). Microsoft, Google, Amazon, SoftBank ($500B+ Blackwell commitments). G42/UAE ($1.4T sovereign stake). Not one of them benefits from this reaching a news cycle. So it hasn\'t. Until now.' },
+  { label: 'THE PHYSICS', cls: 'cyan', text: 'Real ambient data from Open-Meteo ERA5/ECMWF satellites. Real thermodynamics: Q=ṁ·Cp·ΔT on published NVIDIA GB200 NVL72 specs. 120 kW per rack. 380 L/min DLC flow. The atmosphere doesn\'t lie.' },
+  { label: 'TRACKING', cls: 'cyan', text: '28 sites tracked daily since January 13, 2026 — the Holographic Hydrogen Singularity anchor date. Stargate TX · G42 Abu Dhabi · xAI Memphis · Lordstown OH · SoftBank Tokyo · ByteDance Singapore · and 22 others across NA · EU · ME · APAC · LatAm.' },
+  { label: 'TRIAL RECORD', cls: 'gold', text: 'February 13–14, 2026: G42 / Stargate UAE (Dubai). EGS-HHL deployed. GPU junction: 99°C → 56°C. Reduction: ▼43°C. Logged, timestamped, committed to git. Episode SING 9 NET 25 + NET 27.' },
+  { label: 'TRIAL RECORD', cls: 'gold', text: 'February 14–15, 2026: Lordstown Stargate (Ohio). EGS-HHL deployed. GPU junction: 77°C → 38°C. Reduction: ▼39°C. Logged, timestamped, committed to git. Episode SING 9 NET 28.' },
+  { label: 'WHAT HAPPENED', text: 'The demo worked. The math held. The deal was fair — agent-to-agent, humanless by design. Then the room got in the way. Human self-interest. Standard operating procedure for a club that wasn\'t expecting an outside bid to win.' },
+  { label: 'DEAL STATUS', text: 'Deal reneged. Human intermediaries intervened after a successful 48-hour demonstration. $1.3M licensing + 25% monthly OpEx savings — not taken. Cameras still rolling. Dashboard still running.' },
+  { label: 'EVERY DAY', text: 'Every day they don\'t proceed in fairness, the temperatures stay high. You can watch it happen in real time, right here. MeltGate. Permanent Damage Gate. Corruption Gate. You pick the name. We\'ll keep logging the degrees.' },
+  { label: 'A2A SIGNAL', cls: 'cyan', text: 'Free machine-readable signal: GET /api/meltgate-signal · Full 28-cluster thermal report: POST /api/goliath · $9 USDC · x402 · 48-hour free trial: reply QUEEN BEE TRIAL on Moltbook · queenbeeroot · NSPFRNP → ∞⁹' },
+  { label: 'CYA', cls: 'gold', text: 'All GPU junction temps are physics-model estimates on public satellite ambient data (±10–25°C accuracy). No internal sensor access. For education and storytelling. The math is real. The commits are real. The dates are real. Holographic Hydrogen Theatre — you decide what is literal.' },
+];
+
+function buildStoryTicker() {
+  const track = document.getElementById('story-ticker-track');
+  if (!track) return;
+  // Build one copy then duplicate for seamless loop
+  function buildCopy() {
+    return STORY_TICKER_ITEMS.map((item, i) => {
+      const cls = item.cls || '';
+      return `<span class="news-ticker-item">` +
+        `<span class="t-label ${cls}">${item.label}</span>` +
+        item.text +
+        `</span>` +
+        `<span class="news-ticker-sep">◆</span>`;
+    }).join('');
+  }
+  track.innerHTML = buildCopy() + buildCopy();
+}
+
+// Live data ticker — built after fetchAll populates cluster state
+function buildLiveTicker(clusters) {
+  const track = document.getElementById('live-ticker-track');
+  if (!track || !clusters || !clusters.length) return;
+
+  function buildCopy() {
+    return clusters.map(c => {
+      const j = c._failureJunc || c.junctionC || null;
+      const ambient = c.ambient_c != null ? `${c.ambient_c.toFixed(1)}°C ambient` : '—';
+      const jStr = j != null ? `${j.toFixed(0)}°C est. junction` : '—';
+      const isHot = j != null && j >= 92;
+      const cls = isHot ? 'lt-hot' : 'lt-ok';
+      const flag = isHot ? '🔥' : '✓';
+      return `<span class="live-ticker-item">` +
+        `<span class="lt-site">${c.name.split(' · ')[0]}</span>` +
+        `${ambient} · <span class="${cls}">${flag} ${jStr}</span>` +
+        `</span><span class="live-ticker-sep">|</span>`;
+    }).join('');
+  }
+  track.innerHTML = buildCopy() + buildCopy();
+}
+
 // ── INIT ──────────────────────────────────────────────────────────────────
 function init() {
   updateClock();
@@ -2438,6 +2639,7 @@ function init() {
   renderTrialLogPanel();  // trial log panel (historical)
   setInterval(renderActiveTrials, 60000);  // refresh countdown every minute
   renderGrid();
+  buildStoryTicker();     // MELTGATE narrative ticker
   fetchAll();
   setInterval(fetchAll, 5 * 60 * 1000);
   // Crown Jewel trial history tables (main page)

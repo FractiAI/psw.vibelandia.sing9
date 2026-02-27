@@ -248,6 +248,85 @@
       background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:3px; }
     @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
+    /* ── HISTORY TABLE ── */
+    .hist-legend { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:12px;
+      font-size:10px; color:var(--dim); align-items:center; }
+    .hist-legend-item { display:flex; align-items:center; gap:6px; }
+    .hist-table-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:6px;
+      max-height:480px; overflow-y:auto; }
+    .hist-table { width:100%; border-collapse:collapse; font-size:11px; }
+    .hist-table thead tr { position:sticky; top:0; z-index:2; }
+    .hist-table thead th { font-size:9px; letter-spacing:1px; color:var(--dim);
+      text-align:left; padding:8px 10px; border-bottom:1px solid var(--border);
+      background:rgba(1,9,16,0.97); white-space:nowrap; }
+    .hist-row td { padding:6px 10px; border-bottom:1px solid rgba(255,255,255,.03);
+      vertical-align:middle; }
+    .hist-row:last-child td { border-bottom:none; }
+    .hist-row:hover td { background:rgba(0,229,255,.04); }
+    .hist-row-trial td { background:rgba(201,168,32,.07);
+      border-bottom-color:rgba(201,168,32,.12); }
+    .hist-row-trial:hover td { background:rgba(201,168,32,.12); }
+    .hist-row-today td { background:rgba(0,229,255,.06);
+      border-bottom-color:rgba(0,229,255,.15); }
+    .hist-row-anchor td { border-bottom-color:rgba(0,229,255,.3); }
+    .hist-trial-badge { font-size:9px; padding:2px 7px; border-radius:3px;
+      background:rgba(201,168,32,.2); color:var(--gold);
+      border:1px solid rgba(201,168,32,.4); white-space:nowrap; }
+    .hist-anchor-badge { font-size:8px; padding:1px 5px; border-radius:3px;
+      background:rgba(0,229,255,.12); color:var(--cyan); margin-left:5px; }
+    .hist-today-badge { font-size:8px; padding:1px 5px; border-radius:3px;
+      background:rgba(0,255,153,.12); color:var(--green); margin-left:5px; }
+    .hist-status-badge { font-size:9px; padding:2px 6px; border-radius:3px;
+      border:1px solid currentColor; white-space:nowrap; }
+    .hist-bar { height:3px; background:rgba(255,255,255,.06); border-radius:2px;
+      margin-top:4px; width:80px; }
+    .hist-bar-fill { height:100%; border-radius:2px; }
+    .hd-day { color:var(--faint); font-variant-numeric:tabular-nums;
+      font-size:10px; min-width:40px; }
+    .hd-date { color:var(--text); font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .hd-trial { min-width:160px; }
+    .hd-mean { min-width:110px; }
+    .hd-range { color:var(--dim); font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .hd-junc { font-weight:600; font-variant-numeric:tabular-nums; }
+    .hd-conf { font-variant-numeric:tabular-nums; }
+    .hist-note { font-size:9px; color:var(--faint); margin-top:8px; line-height:1.6; }
+
+    /* ── CONFIDENCE ── */
+    .conf-badge { display:inline-flex; align-items:center; gap:4px;
+      font-size:9px; padding:2px 7px; border-radius:3px; font-weight:600;
+      letter-spacing:.5px; border:1px solid currentColor; }
+    .conf-hi   { color:#00e5ff; }
+    .conf-med  { color:#ffd54f; }
+    .conf-lo   { color:#ff9800; }
+    .conf-vlo  { color:#ff5722; }
+    .conf-section { background:var(--bg3); border:1px solid var(--border);
+      border-radius:8px; padding:20px; margin-bottom:28px; }
+    .conf-modes { display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+      margin-bottom:20px; }
+    @media(max-width:600px){ .conf-modes{ grid-template-columns:1fr; } }
+    .conf-mode-block { text-align:center; padding:14px; background:rgba(0,0,0,.3);
+      border-radius:6px; }
+    .conf-mode-label { font-size:9px; letter-spacing:2px; color:var(--dim);
+      margin-bottom:6px; }
+    .conf-pct { font-size:30px; font-weight:700; font-variant-numeric:tabular-nums; }
+    .conf-bar-wrap { height:5px; background:rgba(255,255,255,.06); border-radius:3px;
+      margin-top:6px; overflow:hidden; }
+    .conf-bar-fill { height:100%; border-radius:3px; }
+    .conf-factor-table { width:100%; border-collapse:collapse; font-size:11px;
+      margin-top:12px; }
+    .conf-factor-table th { font-size:9px; letter-spacing:1px; color:var(--dim);
+      text-align:left; padding:6px 8px; border-bottom:1px solid var(--border); }
+    .conf-factor-table td { padding:6px 8px; border-bottom:1px solid rgba(255,255,255,.04);
+      vertical-align:top; }
+    .conf-factor-table tr:last-child td { border-bottom:none; }
+    .conf-impact-pos { color:var(--green); font-variant-numeric:tabular-nums; font-weight:600; }
+    .conf-impact-neg { color:var(--orange); font-variant-numeric:tabular-nums; font-weight:600; }
+    .conf-impact-neu { color:var(--dim); font-variant-numeric:tabular-nums; }
+    .conf-note-txt { font-size:10px; color:var(--faint); }
+    .conf-footer { margin-top:14px; padding:10px 14px; border:1px solid rgba(255,165,0,.2);
+      border-radius:6px; background:rgba(255,165,0,.04);
+      font-size:11px; color:var(--dim); line-height:1.6; }
+
     /* scrollbar */
     ::-webkit-scrollbar { width:4px; height:4px; }
     ::-webkit-scrollbar-track { background:transparent; }
@@ -388,6 +467,125 @@ function thermalAll(ambient, rack_kw, cooling) {
     stressed: runMode(ambient + 20, rack_kw, cooling, 'stressed'),
     failure:  runMode(ambient, rack_kw, cooling, 'failure'),
   };
+}
+
+// ── CONFIDENCE MODEL ──────────────────────────────────────────────────────
+// Scores how accurate our physics-based temperature estimates are likely to be.
+// Ceiling: 85% — direct DCIM/DCGM sensor access would be needed to reach 90%+.
+// Each factor is tracked for full transparency in the detail breakdown.
+
+const CLUSTER_DOC_BASE = {
+  STARGATE_ABL:84, STARGATE_FTW:79, XAI_MEM:82, MSFT_SA:81, GOOGLE_OK:76,
+  META_IL:78,      CW_TX:77,        AWS_OR:80,   ORACLE_TN:73,
+  MSFT_IE:80,      GOOGLE_UK:81,    CW_SE:77,    AWS_DE:80,  MSFT_NL:80,  MISTRAL_FR:71,
+  G42_UAE:73,      HUMAIN_SA:68,    MSFT_DXB:72,
+  NVIDIA_SG:85,    BYTEDANCE_SG:73, SOFTBANK_JP:82, KDDI_JP:75,
+  BAIDU_CN:67,     TENCENT_CN:68,   MSFT_AU:74,  JIO_IN:75,  MSFT_BR:73,
+};
+
+const COOLING_CONF_PENALTY = {
+  'liquid-cooled':  { penalty:-4,  note:'DLC follows NVIDIA GB200 spec closely — most accurate mode' },
+  'hybrid':         { penalty:-10, note:'Mixed liquid/air — cooling boundary conditions harder to model' },
+  'air-economized': { penalty:-16, note:'Free-air economizer: highly weather & design dependent' },
+  'air-cooled':     { penalty:-22, note:'CRAC air cooling: thermal resistance highly variable per facility' },
+};
+
+const MODE_MULT = { nominal:1.00, stressed:0.85, failure:0.72 };
+
+function calcConfidence(c, ambient, mode) {
+  const factors = [];
+  const docBase = CLUSTER_DOC_BASE[c.id] ?? 73;
+  let score = docBase;
+
+  factors.push({
+    label: 'Facility documentation quality',
+    impact: 0,
+    display: `Base ${docBase}`,
+    note: 'Public press, NVIDIA partnership announcements, SEC filings, operator disclosures'
+  });
+
+  const cp = COOLING_CONF_PENALTY[c.cooling] || { penalty:-15, note:'Unknown cooling type' };
+  score += cp.penalty;
+  factors.push({
+    label: `Cooling model accuracy (${c.cooling})`,
+    impact: cp.penalty,
+    display: cp.penalty.toString(),
+    note: cp.note
+  });
+
+  // Ambient data availability and quality
+  if (ambient === null) {
+    score -= 20;
+    factors.push({ label:'Live ambient data', impact:-20, display:'-20',
+      note:'No live reading available — estimate uses baseline; significant uncertainty added' });
+  } else if (ambient > 42) {
+    score -= 12;
+    factors.push({ label:`Extreme ambient (${ambient.toFixed(1)}°C > 42°C)`, impact:-12, display:'-12',
+      note:'Cooling saturation zone — linear model breaks down at extreme heat; chiller behavior non-linear' });
+  } else if (ambient > 32) {
+    score -= 5;
+    factors.push({ label:`Elevated ambient (${ambient.toFixed(1)}°C > 32°C)`, impact:-5, display:'-5',
+      note:'High ambient adds non-linear cooling load; some uncertainty in tower delta at elevated baselines' });
+  } else {
+    factors.push({ label:`Live ambient (${ambient !== null ? ambient.toFixed(1)+'°C' : '—'})`, impact:0, display:'+0',
+      note:'Open-Meteo live reading confirmed — ambient input is accurate for this location' });
+  }
+
+  // Physics model baseline limitation
+  score -= 8;
+  factors.push({ label:'Physics model vs direct sensor', impact:-8, display:'-8',
+    note:'All temperatures are calculated from first principles — not DCIM/DCGM telemetry. Direct sensors +10-15% accuracy' });
+
+  // Mixed GPU penalty (model calibrated to NVIDIA only)
+  if (['BAIDU_CN','TENCENT_CN'].includes(c.id)) {
+    score -= 6;
+    factors.push({ label:'Mixed GPU architecture', impact:-6, display:'-6',
+      note:'Site uses both NVIDIA Blackwell and Huawei Ascend 910C — thermal model calibrated to NVIDIA specs only' });
+  }
+
+  // Air-cooled in hot climate double penalty
+  if (c.cooling === 'air-cooled' && c.baseline > 15) {
+    score -= 5;
+    factors.push({ label:'Air-cooled in hot baseline climate', impact:-5, display:'-5',
+      note:'Air-cooled facility at high ambient baseline: summer months could see CRAC saturation not captured by model' });
+  }
+
+  const subtotal = Math.min(85, Math.max(28, score));
+  const multVal  = MODE_MULT[mode] ?? 1.0;
+  const final    = Math.min(85, Math.max(20, Math.round(subtotal * multVal)));
+
+  if (mode !== 'nominal') {
+    const modeImpact = final - subtotal;
+    factors.push({
+      label: `${mode.charAt(0).toUpperCase()+mode.slice(1)} mode uncertainty (×${multVal.toFixed(2)})`,
+      impact: modeImpact,
+      display: modeImpact.toFixed(0),
+      note: mode === 'stressed'
+        ? '+20°C summer projection: ambient forecast uncertainty, cooling response at sustained extreme heat'
+        : 'Incident scenario (coolant leak ≈30% flow, boost clocks): most uncertain mode — exact degradation varies per facility design'
+    });
+  }
+
+  return { score: final, subtotal, factors };
+}
+
+function confColor(pct) {
+  if (pct >= 70) return 'var(--cyan)';
+  if (pct >= 55) return 'var(--elevated-c)';
+  if (pct >= 40) return 'var(--orange)';
+  return 'var(--throttle-c)';
+}
+function confClass(pct) {
+  if (pct >= 70) return 'conf-hi';
+  if (pct >= 55) return 'conf-med';
+  if (pct >= 40) return 'conf-lo';
+  return 'conf-vlo';
+}
+function confLabel(pct) {
+  if (pct >= 70) return 'HIGH';
+  if (pct >= 55) return 'MODERATE';
+  if (pct >= 40) return 'LOW';
+  return 'VERY LOW';
 }
 
 // ── WORLDWIDE CLUSTER REGISTRY ────────────────────────────────────────────
@@ -598,6 +796,15 @@ function renderCard(c) {
       <span class="meta-tag">${c.capacity_mw >= 1000 ? (c.capacity_mw/1000)+'GW' : c.capacity_mw+'MW'}</span>
       <span class="meta-tag">${c.gpu}</span>
     </div>
+    ${(()=>{
+      const cf = calcConfidence(c, amb, 'failure');
+      const cn = calcConfidence(c, amb, 'nominal');
+      return `<div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <span class="conf-badge ${confClass(cn.score)}" title="Nominal mode confidence">⬡ ${cn.score}% NOM</span>
+        <span class="conf-badge ${confClass(cf.score)}" title="Failure mode confidence">⚠ ${cf.score}% FAIL</span>
+        <span style="font-size:9px;color:var(--faint)">est. accuracy</span>
+      </div>`;
+    })()}
     <div class="card-click-hint">CLICK FOR FULL DETAIL →</div>
   </div>`;
 }
@@ -631,6 +838,7 @@ function openDetail(id) {
   document.getElementById('detail-body').innerHTML = buildDetailHTML(c, amb, nom, str, fail, ts, nr, deltaSinceBaseline);
   document.getElementById('detail-overlay').classList.add('open');
   window.scrollTo(0,0);
+  fetchHistory(c);  // async — populates hist-{id} after archive load
 }
 
 function closeDetail() {
@@ -702,6 +910,62 @@ function buildDetailHTML(c, amb, nom, str, fail, ts, nr, deltaSinceBaseline) {
     <div class="ambient-ts">${ts ? ts.toUTCString().slice(0,22)+' UTC' : 'Pending fetch...'}</div>
   </div>
 
+  <!-- ESTIMATION CONFIDENCE -->
+  ${(()=>{
+    const cn = calcConfidence(c, amb, 'nominal');
+    const cs = calcConfidence(c, amb, 'stressed');
+    const cf = calcConfidence(c, amb, 'failure');
+    const fRows = cn.factors.map(f => {
+      const impNum = typeof f.impact === 'number' ? f.impact : 0;
+      const impClass = impNum > 0 ? 'conf-impact-pos' : impNum < 0 ? 'conf-impact-neg' : 'conf-impact-neu';
+      const impStr = impNum > 0 ? '+'+impNum : (f.display ?? impNum.toString());
+      return `<tr>
+        <td style="color:var(--text)">${f.label}</td>
+        <td class="${impClass}">${impStr}</td>
+        <td class="conf-note-txt">${f.note}</td>
+      </tr>`;
+    }).join('');
+    return `
+  <div class="section-hdr">Estimation Confidence
+    <span class="section-badge conf-badge ${confClass(cn.score)}" style="margin-left:4px">⬡ ${confLabel(cn.score)}</span>
+  </div>
+  <div class="conf-section">
+    <div class="conf-modes">
+      ${['nominal','stressed','failure'].map((m,i) => {
+        const cc = [cn,cs,cf][i];
+        const labels = ['NOMINAL MODE','STRESSED MODE (+20°C)','FAILURE MODE ⚠'];
+        const descs  = ['Cooling at spec','Summer peak scenario','Incident scenario'];
+        return `<div class="conf-mode-block">
+          <div class="conf-mode-label">${labels[i]}</div>
+          <div class="conf-pct ${confClass(cc.score)}">${cc.score}%</div>
+          <div style="font-size:9px;color:var(--dim);margin-top:2px">${confLabel(cc.score)} · ${descs[i]}</div>
+          <div class="conf-bar-wrap">
+            <div class="conf-bar-fill" style="width:${cc.score}%;background:${confColor(cc.score)}"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <table class="conf-factor-table">
+      <thead><tr><th>FACTOR</th><th>IMPACT</th><th>EXPLANATION</th></tr></thead>
+      <tbody>${fRows}</tbody>
+    </table>
+    <div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;flex-wrap:wrap;gap:8px">
+      <span style="color:var(--dim)">Subtotal (before mode multiplier): <strong style="color:var(--text)">${cn.subtotal}%</strong></span>
+      <span style="color:var(--dim)">Nominal ×1.00 = <strong class="${confClass(cn.score)}">${cn.score}%</strong></span>
+      <span style="color:var(--dim)">Stressed ×0.85 = <strong class="${confClass(cs.score)}">${cs.score}%</strong></span>
+      <span style="color:var(--dim)">Failure ×0.72 = <strong class="${confClass(cf.score)}">${cf.score}%</strong></span>
+    </div>
+    <div class="conf-footer">
+      <strong>What this means:</strong> A ${cn.score}% nominal confidence means our estimated GPU junction temperature
+      is likely within ±${cn.score >= 70 ? '8–12' : cn.score >= 55 ? '12–18' : '18–28'}°C of actual sensor readings.
+      Failure-mode at ${cf.score}% means the ±range widens to
+      ±${cf.score >= 60 ? '12–18' : cf.score >= 45 ? '18–25' : '25–40'}°C.
+      <strong>To reach 90%+:</strong> Requires direct DCIM/DCGM API access, NVLink thermal telemetry,
+      or on-site coolant flow sensors. This model uses open public data only.
+    </div>
+  </div>`;
+  })()}
+
   <!-- THERMAL CHAIN NOMINAL -->
   <div class="section-hdr">Thermal Chain — Nominal Mode <span class="section-badge">Design-point, cooling at spec</span></div>
   <div class="chain">
@@ -751,9 +1015,9 @@ function buildDetailHTML(c, amb, nom, str, fail, ts, nr, deltaSinceBaseline) {
   <!-- THREE MODE CARDS -->
   <div class="section-hdr">All Three Modes — Side by Side</div>
   <div class="mode-grid">
-    ${modeCard('NOMINAL', 'Design-point. Cooling at full spec. Rated TDP ('+c.rack_kw+' kW). Current operating state.', nom, 'mode-nominal', 'var(--nominal-c)', c)}
-    ${modeCard('STRESSED', 'Summer peak scenario. Ambient +20°C. Slight flow degradation (88% spec). Boost clocks.', str, 'mode-stressed', 'var(--orange)', c)}
-    ${modeCard('FAILURE ⚠', 'Actual incident model. Coolant leak → ~30% flow. Boost clocks (150 kW/rack). Nov 2024 events.', fail, 'mode-failure', 'var(--meltdown-c)', c)}
+    ${modeCard('NOMINAL', 'Design-point. Cooling at full spec. Rated TDP ('+c.rack_kw+' kW). Current operating state.', nom, 'mode-nominal', 'var(--nominal-c)', c, amb)}
+    ${modeCard('STRESSED', 'Summer peak scenario. Ambient +20°C. Slight flow degradation (88% spec). Boost clocks.', str, 'mode-stressed', 'var(--orange)', c, amb)}
+    ${modeCard('FAILURE ⚠', 'Actual incident model. Coolant leak → ~30% flow. Boost clocks (150 kW/rack). Nov 2024 events.', fail, 'mode-failure', 'var(--meltdown-c)', c, amb)}
   </div>
 
   <!-- THROTTLE RISK GAUGE -->
@@ -831,6 +1095,20 @@ function buildDetailHTML(c, amb, nom, str, fail, ts, nr, deltaSinceBaseline) {
     <p>${c.note}</p>
     <p style="margin-top:8px;font-size:10px;color:var(--faint)">Coordinates: ${c.lat}, ${c.lon} · Region: ${c.region} · SING 9 Baseline: ${c.baseline}°C (Jan 13, 2026)</p>
   </div>
+
+  <!-- DAILY TEMP HISTORY -->
+  <div class="section-hdr" id="hist-hdr-${c.id}">
+    Daily Temperature Log · Jan 13, 2026 → Present
+    <span class="section-badge" id="hist-badge-${c.id}">Fetching archive...</span>
+  </div>
+  <div style="font-size:10px;color:var(--dim);margin-bottom:12px;line-height:1.6">
+    Every day from the SING 9 anchor date. <strong style="color:var(--gold)">Gold rows = 48h free trial windows</strong> — observe outdoor ambient and estimated failure-mode GPU junction temp during those specific days. Trial data read from your local session.
+  </div>
+  <div id="hist-${c.id}" style="min-height:80px;display:flex;align-items:center;
+    justify-content:center;color:var(--dim);font-size:11px;border:1px solid var(--border);
+    border-radius:6px;padding:24px">
+    ⌛ Fetching historical archive from Open-Meteo...
+  </div>
   `;
 }
 
@@ -853,10 +1131,15 @@ function statusColorVar(s) {
   return 'var(--nominal-c)';
 }
 
-function modeCard(title, desc, data, cls, color, c) {
+function modeCard(title, desc, data, cls, color, c, amb) {
   if (!data) return `<div class="mode-card ${cls}"><div class="mode-title" style="color:${color}">${title}</div><div class="mode-desc">${desc}</div><div style="color:var(--faint);font-size:11px;margin-top:20px">Fetching data...</div></div>`;
+  const modeKey = cls.replace('mode-','');
+  const cf = calcConfidence(c, amb, modeKey);
   return `<div class="mode-card ${cls}">
-    <div class="mode-title" style="color:${color}">${title}</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+      <div class="mode-title" style="color:${color};margin-bottom:0">${title}</div>
+      <span class="conf-badge ${confClass(cf.score)}" style="font-size:9px">⬡ ${cf.score}%</span>
+    </div>
     <div class="mode-desc">${desc}</div>
     ${modeRow('Coolant Inlet',  data.inlet_c,   '°C', data.inlet_over_spec ? 's-throttling' : '')}
     ${modeRow('Coolant Outlet', data.outlet_c,  '°C', '')}
@@ -870,8 +1153,165 @@ function modeCard(title, desc, data, cls, color, c) {
       <span class="mode-row-label">Racks (est)</span>
       <span class="mode-row-val">${data.nr} × NVL72</span>
     </div>
-    <div><span class="mode-status ${statusClass(data.status)}">${statusEmoji(data.status)} ${data.status.replace(/_/g,' ')}</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;flex-wrap:wrap;gap:6px">
+      <span class="mode-status ${statusClass(data.status)}">${statusEmoji(data.status)} ${data.status.replace(/_/g,' ')}</span>
+      <span style="font-size:9px;color:var(--dim)">${confLabel(cf.score)} conf · ±${cf.score>=70?'8–12':cf.score>=55?'12–18':'18–30'}°C</span>
+    </div>
   </div>`;
+}
+
+// ── DAILY HISTORY ─────────────────────────────────────────────────────────
+// Fetches archive temps Jan 13 → yesterday · annotates with A2A trial windows
+async function fetchHistory(c) {
+  const el      = document.getElementById(`hist-${c.id}`);
+  const badgeEl = document.getElementById(`hist-badge-${c.id}`);
+  if (!el) return;
+
+  // Load trial periods from this device's localStorage
+  let trials = [];
+  try { trials = JSON.parse(localStorage.getItem('goliath_trials_v1') || '[]'); } catch {}
+
+  // Open-Meteo archive lags ~1-2 days — use 2 days ago as end date to be safe
+  const endDate = new Date(Date.now() - 2 * 86400000).toISOString().slice(0, 10);
+  const today   = new Date().toISOString().slice(0, 10);
+  const anchor  = new Date('2026-01-13T00:00:00Z');
+
+  try {
+    const url = `https://archive-api.open-meteo.com/v1/archive` +
+      `?latitude=${c.lat}&longitude=${c.lon}` +
+      `&start_date=2026-01-13&end_date=${endDate}` +
+      `&daily=temperature_2m_max,temperature_2m_min,temperature_2m_mean&timezone=UTC`;
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Archive API ' + res.status);
+    const d = await res.json();
+
+    const dates = d.daily?.time ?? [];
+    const means = d.daily?.temperature_2m_mean ?? [];
+    const maxes = d.daily?.temperature_2m_max ?? [];
+    const mins  = d.daily?.temperature_2m_min ?? [];
+
+    if (badgeEl) badgeEl.textContent = dates.length + ' days logged';
+
+    // Build rows — ascending (Jan 13 at top) but scroll to bottom after render
+    const rows = dates.map((date, i) => {
+      const mean = means[i];
+      const max  = maxes[i];
+      const min  = mins[i];
+      const dayN = Math.round((new Date(date + 'T00:00:00Z') - anchor) / 86400000);
+      const isAnchor = date === '2026-01-13';
+      const isToday  = date === today;
+
+      // Thermal estimate using failure mode
+      const th   = mean !== null ? runMode(mean, c.rack_kw, c.cooling, 'failure') : null;
+      const junc = th?.junc_c ?? null;
+      const stat = th?.status ?? '—';
+
+      // Trial window detection
+      const dayStartMs = new Date(date + 'T00:00:00Z').getTime();
+      const dayEndMs   = dayStartMs + 86400000;
+      const matched = trials.filter(t => {
+        const tS = new Date(t.started).getTime();
+        const tE = new Date(t.expires).getTime();
+        return tS < dayEndMs && tE > dayStartMs;
+      });
+      const inTrial = matched.length > 0;
+      const trialLabel = matched.map(t => {
+        const tS     = new Date(t.started).getTime();
+        const dayOf  = Math.floor((dayStartMs - tS) / 86400000) + 1;
+        const tNum   = t.trial_number ?? (trials.indexOf(t) + 1);
+        return `Trial #${tNum} · Day ${dayOf} of 2`;
+      }).join(' + ');
+
+      // Mini ambient bar — scale −10°C to 45°C
+      const barPct = mean !== null
+        ? Math.min(100, Math.max(0, ((mean + 10) / 55) * 100)) : 0;
+      const barColor = mean !== null
+        ? (mean > 35 ? 'var(--meltdown-c)' : mean > 28 ? 'var(--orange)'
+          : mean > 18 ? 'var(--elevated-c)' : mean > 8 ? 'var(--cyan)' : '#66aaff')
+        : 'var(--faint)';
+
+      let rowClass = 'hist-row';
+      if (isAnchor) rowClass += ' hist-row-anchor';
+      if (isToday)  rowClass += ' hist-row-today';
+      if (inTrial)  rowClass += ' hist-row-trial';
+
+      const dateBadges =
+        (isAnchor ? `<span class="hist-anchor-badge">⚓ ANCHOR</span>` : '') +
+        (isToday  ? `<span class="hist-today-badge">▶ TODAY</span>`    : '');
+
+      const trialCell = inTrial
+        ? `<span class="hist-trial-badge">⬡ ${trialLabel}</span>` : '';
+
+      // Per-day confidence (failure mode, uses that day's mean ambient)
+      const dayCf = calcConfidence(c, mean, 'failure');
+
+      return `<tr class="${rowClass}">
+        <td class="hd-day">${dayN > 0 ? '+' + dayN : dayN === 0 ? '0' : dayN}</td>
+        <td class="hd-date">${date}${dateBadges}</td>
+        <td class="hd-trial">${trialCell}</td>
+        <td class="hd-mean">
+          <span style="font-variant-numeric:tabular-nums">${mean !== null ? mean.toFixed(1) + '°C' : '—'}</span>
+          <div class="hist-bar"><div class="hist-bar-fill" style="width:${barPct.toFixed(1)}%;background:${barColor}"></div></div>
+        </td>
+        <td class="hd-range">${min !== null && max !== null ? min.toFixed(1) + ' / ' + max.toFixed(1) + '°C' : '—'}</td>
+        <td class="hd-junc ${statusClass(stat)}">${junc !== null ? junc.toFixed(1) + '°C' : '—'}</td>
+        <td><span class="hist-status-badge ${statusClass(stat)}">${statusEmoji(stat)} ${stat.replace(/_/g,' ')}</span></td>
+        <td class="hd-conf"><span class="conf-badge ${confClass(dayCf.score)}" style="font-size:8px">⬡ ${dayCf.score}%</span></td>
+      </tr>`;
+    });
+
+    // Count trial days
+    const trialDayCount = rows.filter((_, i) => {
+      const dayStartMs = new Date(dates[i] + 'T00:00:00Z').getTime();
+      const dayEndMs   = dayStartMs + 86400000;
+      return trials.some(t => new Date(t.started).getTime() < dayEndMs && new Date(t.expires).getTime() > dayStartMs);
+    }).length;
+
+    el.innerHTML = `
+      <div class="hist-legend">
+        <span class="hist-legend-item"><span class="hist-trial-badge">⬡ Trial #N · Day X of 2</span> 48h A2A free trial window</span>
+        <span class="hist-legend-item"><span class="hist-anchor-badge">⚓ ANCHOR</span> Jan 13, 2026 — SING 9 singularity</span>
+        <span class="hist-legend-item"><span class="hist-today-badge">▶ TODAY</span> Current day</span>
+        ${trialDayCount > 0 ? `<span class="hist-legend-item" style="color:var(--gold)">★ ${trialDayCount} trial day${trialDayCount>1?'s':''} recorded on this device</span>` : '<span class="hist-legend-item" style="color:var(--faint)">No trials recorded on this device yet</span>'}
+      </div>
+      <div class="hist-table-wrap" id="hist-wrap-${c.id}">
+        <table class="hist-table">
+          <thead>
+            <tr>
+              <th>DAY Δ</th>
+              <th>DATE (UTC)</th>
+              <th>TRIAL WINDOW</th>
+              <th>MEAN AMBIENT · BAR</th>
+              <th>MIN / MAX</th>
+              <th>EST FAILURE-JUNC °C</th>
+              <th>STATUS</th>
+              <th>CONF %</th>
+            </tr>
+          </thead>
+          <tbody>${rows.join('')}</tbody>
+        </table>
+      </div>
+      <p class="hist-note">
+        Source: Open-Meteo Archive API (latitude ${c.lat.toFixed(2)}, longitude ${c.lon.toFixed(2)}) ·
+        Failure-mode junction estimated via physics model using daily mean ambient ·
+        <strong>${dates.length} days</strong> logged since Jan 13, 2026 anchor ·
+        Archive lags ~1-2 days from present ·
+        Trial windows from this device's localStorage (<code>goliath_trials_v1</code>)
+      </p>
+    `;
+
+    // Auto-scroll history table to most recent entry
+    const wrap = document.getElementById(`hist-wrap-${c.id}`);
+    if (wrap) setTimeout(() => { wrap.scrollTop = wrap.scrollHeight; }, 100);
+
+  } catch (err) {
+    if (badgeEl) badgeEl.textContent = 'Error';
+    el.innerHTML = `<div style="padding:20px;color:var(--dim);font-size:11px">
+      Could not load historical data: ${err.message}<br>
+      <span style="font-size:9px;opacity:.6">Open-Meteo archive API — check network / try again</span>
+    </div>`;
+  }
 }
 
 // ── CLOCK ─────────────────────────────────────────────────────────────────

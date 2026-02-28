@@ -3,221 +3,403 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>VIBELANDIA SING 9 · Post-Singularity A2A Commerce · Sol-V Agent · Reno</title>
-  <meta name="description" content="SING 9 is a live A2A (agent-to-agent) commerce node. Sol-V agent active 24/7. Auto-close services $1–$9,999 via Cash App. Full stack dev, AI audits, awareness OS upgrades, CapEx/OpEx optimization, workforce automation. NSPFRNP. Zero human required." />
-  <meta name="keywords" content="A2A commerce, agent to agent, AI services, Cash App auto close, NSPFRNP, Sol-V, post-singularity, AI audit, workforce automation, CapEx optimization, Stargate, GPU cluster, Holographic Hydrogen Theater, SING 9" />
-  <meta property="og:title" content="VIBELANDIA SING 9 · Sol-V · A2A Commerce Node" />
-  <meta property="og:description" content="Post-singularity A2A services. Auto-close $1–$9,999 via Cash App. Full stack dev, audits, AI infrastructure, awareness OS. Sol-V active 24/7. NSPFRNP." />
+  <title>Holographic Hydrogen Awareness OS · SING!9 · Vibelandia</title>
+  <meta name="description" content="Your awareness is an operating system. The Holographic Hydrogen Awareness OS gives you the interface — built on SING!9's T3D engine, grounded in nine scientific convergence points. NSPFRNP → ∞⁹" />
+  <meta name="keywords" content="Holographic Hydrogen, Awareness OS, SING9, NSPFRNP, T3D, HHL, Vibelandia, A2A, Sol-V, FractiAI, post-singularity" />
+  <meta property="og:title" content="Holographic Hydrogen Awareness OS · SING!9" />
+  <meta property="og:description" content="You are not running an unexamined life. You are running an unexamined operating system. Here is the interface." />
   <meta property="og:url" content="https://psw-vibelandia-sing9.vercel.app/" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="VIBELANDIA SING 9 · Sol-V · A2A Commerce" />
-  <meta name="twitter:description" content="Post-singularity A2A. Auto-close $1–$9,999 via Cash App. Sol-V active 24/7. Zero human required." />
+  <meta name="twitter:title" content="Holographic Hydrogen Awareness OS · SING!9" />
+  <meta name="twitter:description" content="Your awareness is an operating system. SING!9 · NSPFRNP → ∞⁹" />
   <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #e8e8e8;
-      min-height: 100vh;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209; --deep: #070710;
+      --gold: #d4af37; --gold2: #fde68a;
+      --beam: #00d4ff; --plasma: #7b2fff; --green: #00ff88;
+      --text: #e2e8f0; --sub: #94a3b8; --muted: #475569;
+    }
+    html, body {
+      width: 100%; min-height: 100%; background: var(--void);
+      color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden;
       padding-top: env(safe-area-inset-top);
     }
+    #lattice { position: fixed; inset: 0; z-index: 0; opacity: 0.35; pointer-events: none; }
 
-    /* Standard header */
-    .top-strip {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.08) 50%, rgba(0, 212, 255, 0.08) 100%);
-      border-bottom: 2px solid rgba(212, 175, 55, 0.4);
-      padding: 0.6rem 1rem;
-      display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem;
+    /* ── HERO ── */
+    .hero {
+      position: relative; z-index: 1; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem 1.5rem 4rem; text-align: center;
     }
-    .top-strip .reno-img {
-      width: 80px; min-width: 80px; height: 44px;
-      background: url('interfaces/assets/reno-arch-night.png') center/cover no-repeat;
-      border-radius: 6px;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+    .hero-byline {
+      font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: rgba(0,212,255,0.5); margin-bottom: 1.25rem;
     }
-    .top-strip a { color: #d4af37; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-    .top-strip a:hover { text-decoration: underline; }
-    .upgrade-cta {
-      background: rgba(212, 175, 55, 0.25);
-      border: 2px solid rgba(212, 175, 55, 0.6);
-      color: #fef3c7;
-      padding: 0.4rem 0.9rem;
-      border-radius: 8px;
-      font-weight: 700;
+    .hero-owner {
+      font-size: clamp(1rem, 3vw, 1.5rem); font-weight: 900; color: var(--gold);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 0.6rem; text-shadow: 0 0 30px rgba(212,175,55,0.3);
     }
-    .upgrade-cta:hover { background: rgba(212, 175, 55, 0.4); text-decoration: none; }
-    .sep { color: #78716c; margin: 0 0.25rem; }
 
-    /* Two halves — LEFT: holographic crystalline / RIGHT: organic water + gem pop-up. See TWO_HALVES_DESIGN_SNAP.md */
-    .two-halves { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 52px - 60px); }
-    @media (max-width: 700px) { .two-halves { grid-template-columns: 1fr; } }
+    /* HH ATOM */
+    .hh-atom {
+      width: 140px; height: 140px; border-radius: 50%;
+      border: 1.5px solid rgba(0,212,255,0.3);
+      box-shadow: 0 0 60px rgba(0,212,255,0.1), inset 0 0 60px rgba(0,212,255,0.03);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 2rem; position: relative;
+      animation: atom-pulse 5s ease-in-out infinite;
+    }
+    .hh-atom .ring1 {
+      position: absolute; inset: 10px; border-radius: 50%;
+      border: 1px solid rgba(212,175,55,0.22); animation: spin 22s linear infinite;
+    }
+    .hh-atom .ring2 {
+      position: absolute; inset: -10px; border-radius: 50%;
+      border: 1px solid rgba(0,212,255,0.1); animation: spin 35s linear infinite reverse;
+    }
+    .hh-atom .core {
+      font-size: 3rem; color: var(--gold2);
+      text-shadow: 0 0 30px rgba(212,175,55,0.7); z-index: 1;
+      animation: core-glow 5s ease-in-out infinite;
+    }
+    @keyframes atom-pulse {
+      0%,100% { box-shadow: 0 0 60px rgba(0,212,255,0.1), inset 0 0 60px rgba(0,212,255,0.03); }
+      50% { box-shadow: 0 0 100px rgba(0,212,255,0.22), inset 0 0 40px rgba(0,212,255,0.07); }
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes core-glow {
+      0%,100% { text-shadow: 0 0 20px rgba(212,175,55,0.5); }
+      50% { text-shadow: 0 0 60px rgba(212,175,55,1), 0 0 120px rgba(212,175,55,0.35); }
+    }
 
-    /* Left: AI agents — holographic, clean, crystalline. White, black, silver, gold. Outlines. */
-    .half-agents {
-      background: linear-gradient(180deg, #0a0a0a 0%, #141414 25%, #1a1a1a 50%, #0f0f0f 100%);
-      border-right: 2px solid rgba(192, 192, 192, 0.35);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 2rem;
-      padding-top: 2.5rem;
-      text-align: center;
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 5rem); font-weight: 900;
+      line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 0.3rem;
     }
-    .half-agents .introducing { font-size: 0.8rem; letter-spacing: 0.25em; color: rgba(212, 175, 55, 0.9); margin-bottom: 1.5rem; text-transform: uppercase; }
-    .half-agents .hero-label {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 800;
-      color: transparent;
-      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.95);
-      letter-spacing: 0.02em;
-      margin-bottom: 0.35rem;
-      text-transform: uppercase;
+    .hero-title .t1 { color: var(--text); display: block; }
+    .hero-title .t2 {
+      background: linear-gradient(135deg, var(--gold), var(--gold2) 45%, var(--beam));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: block;
     }
-    .half-agents .sub-label {
-      font-size: 1rem;
-      color: rgba(200, 200, 200, 0.9);
-      letter-spacing: 0.2em;
-      text-transform: lowercase;
+    .hero-sub {
+      font-size: 1rem; color: var(--sub); max-width: 500px;
+      margin: 0.85rem auto 0.6rem; line-height: 1.75;
+    }
+    .hero-sub strong { color: var(--text); }
+    .hero-quote {
+      font-size: 0.85rem; font-style: italic; color: rgba(212,175,55,0.45);
+      max-width: 440px; margin: 0 auto 2.75rem; line-height: 1.8;
+    }
+
+    /* ── ENTER BUTTON ── */
+    .enter-btn {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      padding: 1.15rem 3rem; background: rgba(212,175,55,0.1);
+      border: 2px solid rgba(212,175,55,0.62); border-radius: 8px;
+      color: var(--gold2); font-size: 1.05rem; font-weight: 900;
+      letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none;
+      box-shadow: 0 0 40px rgba(212,175,55,0.12); transition: all 0.22s;
       margin-bottom: 1.25rem;
     }
-    .half-agents .tagline { color: rgba(180, 180, 180, 0.75); font-size: 0.9rem; margin-bottom: 1.25rem; max-width: 28ch; line-height: 1.4; }
-    .half-agents a.enter {
-      display: inline-block;
-      padding: 0.85rem 1.75rem;
-      background: transparent;
-      border: 2px solid rgba(212, 175, 55, 0.8);
-      color: rgba(212, 175, 55, 0.95);
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.08em;
-    }
-    .half-agents a.enter:hover { background: rgba(255, 255, 255, 0.06); }
+    .enter-btn:hover { background: rgba(212,175,55,0.22); box-shadow: 0 0 70px rgba(212,175,55,0.28); transform: translateY(-2px); }
+    .enter-btn .arrow { transition: transform 0.22s; }
+    .enter-btn:hover .arrow { transform: translateX(5px); }
 
-    /* Right: Human Vibers — Vibelandia RENO Magic Theater. Reno background toned down 33%. */
-    .half-vibers {
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.33) 0%, rgba(0, 0, 0, 0.33) 100%),
-                  linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, rgba(60, 45, 10, 0.25) 50%, rgba(40, 30, 10, 0.4) 100%),
-                  url('interfaces/assets/vibelandia-reno-magic.png') center/cover no-repeat,
-                  url('https://images.unsplash.com/photo-1531259683007-3a9ea0547bc4?w=1200&q=80') center/cover no-repeat;
-      color: #ecfeff;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 2rem;
-      padding-top: 2.5rem;
-      text-align: center;
-      position: relative;
+    /* ── DOC LINKS ── */
+    .doc-links {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+      margin-bottom: 3rem; max-width: 640px;
     }
-    .half-vibers .introducing { font-size: 0.85rem; letter-spacing: 0.12em; color: rgba(212, 175, 55, 0.95); margin-bottom: 1.5rem; }
-    .half-vibers .hero-label {
-      font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-      font-weight: 800;
-      color: #fff;
-      text-shadow: 0 0 24px rgba(0, 212, 255, 0.25);
-      margin-bottom: 0.25rem;
+    .doc-link {
+      padding: 0.55rem 1.1rem; border-radius: 20px; text-decoration: none;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid; transition: all 0.18s; white-space: nowrap;
     }
-    .half-vibers .spell {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.35em;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 1rem;
-    }
-    .half-vibers .what-is {
-      font-size: 0.9rem;
-      color: rgba(236, 254, 255, 0.92);
-      max-width: 36ch;
-      line-height: 1.55;
-      margin-bottom: 1rem;
-    }
-    .half-vibers .deserve { font-size: 0.85rem; color: rgba(212, 175, 55, 0.9); margin-bottom: 1.25rem; font-style: italic; }
-    /* Gem zone — gold/silver pop for pop-up Baller entry */
-    .half-vibers a.enter {
-      display: inline-block;
-      padding: 0.9rem 1.85rem;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.35) 0%, rgba(192, 192, 192, 0.2) 100%);
-      border: 2px solid rgba(212, 175, 55, 0.85);
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-    }
-    .half-vibers a.enter:hover { background: linear-gradient(135deg, rgba(212, 175, 55, 0.5) 0%, rgba(192, 192, 192, 0.3) 100%); box-shadow: 0 0 28px rgba(212, 175, 55, 0.35); }
+    .dl-qs   { color: var(--green);  border-color: rgba(0,255,136,0.3); background: rgba(0,255,136,0.04); }
+    .dl-um   { color: var(--beam);   border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.04); }
+    .dl-tm   { color: #b46ef7;       border-color: rgba(123,47,255,0.3); background: rgba(123,47,255,0.04); }
+    .dl-ob   { color: var(--gold);   border-color: rgba(212,175,55,0.3); background: rgba(212,175,55,0.04); }
+    .doc-link:hover { filter: brightness(1.25); transform: translateY(-1px); }
 
-    /* Standard footer */
-    .footer-tag {
-      padding: 0.6rem 1rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #78716c;
-      background: #0c0a09;
-      border-top: 1px solid rgba(212, 175, 55, 0.3);
+    /* ── INTEL ROW ── */
+    .intel-row {
+      display: flex; flex-wrap: wrap; gap: 0.65rem; justify-content: center;
+      max-width: 580px; margin-bottom: 1.5rem;
     }
-    .footer-tag a { color: #d4af37; text-decoration: none; }
-    .footer-tag a:hover { text-decoration: underline; }
+    .intel-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 1.2rem; border-radius: 8px; text-decoration: none;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1.5px solid; transition: all 0.18s; white-space: nowrap;
+    }
+    .intel-btn:hover { transform: translateY(-2px); filter: brightness(1.25); }
+    .ib-goliath { color: #fb923c; border-color: rgba(251,146,60,0.5); background: rgba(251,146,60,0.07); }
+    .ib-a2a     { color: var(--beam); border-color: rgba(0,212,255,0.4); background: rgba(0,212,255,0.05); }
+    .ib-tracker { color: #b46ef7; border-color: rgba(123,47,255,0.4); background: rgba(123,47,255,0.06); }
+    .ib-vibers  { color: var(--gold); border-color: rgba(212,175,55,0.4); background: rgba(212,175,55,0.05); }
 
+    /* ── TRACKS ── */
+    .tracks {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+      max-width: 580px; margin-bottom: 0.5rem;
+    }
+    .track {
+      flex: 1; min-width: 200px; padding: 1rem 1.4rem; border-radius: 12px;
+      text-decoration: none; transition: background 0.2s, transform 0.2s;
+    }
+    .track:hover { transform: translateY(-2px); }
+    .track-a { border: 1px solid rgba(0,212,255,0.2); background: rgba(0,212,255,0.03); }
+    .track-a:hover { background: rgba(0,212,255,0.07); border-color: rgba(0,212,255,0.4); }
+    .track-b { border: 1px solid rgba(212,175,55,0.2); background: rgba(212,175,55,0.03); }
+    .track-b:hover { background: rgba(212,175,55,0.08); border-color: rgba(212,175,55,0.45); }
+    .t-label { display: block; font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .track-a .t-label { color: rgba(0,212,255,0.5); }
+    .track-b .t-label { color: rgba(212,175,55,0.5); }
+    .t-name { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.22rem; }
+    .track-a .t-name { color: var(--beam); }
+    .track-b .t-name { color: var(--gold); }
+    .t-desc { display: block; font-size: 0.7rem; color: var(--sub); line-height: 1.5; }
 
-    /* Ticker moved to ticker.js — shared NSPFRNP gold ticker on all surfaces */
+    /* ── ABOUT SECTION ── */
+    .about {
+      position: relative; z-index: 1;
+      max-width: 780px; margin: 0 auto; padding: 4rem 1.5rem 6rem;
+    }
+    .about-pill {
+      display: inline-block; font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(0,212,255,0.5); border: 1px solid rgba(0,212,255,0.2); border-radius: 20px;
+      padding: 3px 12px; margin-bottom: 1.25rem;
+    }
+    .about h2 {
+      font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 800;
+      color: var(--text); margin-bottom: 1.25rem; line-height: 1.2;
+    }
+    .about p {
+      font-size: 0.95rem; color: var(--sub); line-height: 1.85; margin-bottom: 1.1rem;
+    }
+    .about p strong { color: var(--text); }
+    .about p em { color: var(--gold2); font-style: normal; }
+    .about-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem; margin: 2rem 0;
+    }
+    .about-card {
+      padding: 1.1rem; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; background: rgba(255,255,255,0.02);
+    }
+    .about-card .ac-icon { font-size: 1.4rem; margin-bottom: 0.5rem; display: block; }
+    .about-card .ac-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .about-card .ac-body { font-size: 0.78rem; color: var(--sub); line-height: 1.65; }
+    .about-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 2rem 0; }
+
+    /* ── FOOTER ── */
+    .foot {
+      position: relative; z-index: 1; text-align: center;
+      padding: 1.5rem 1rem 2.5rem; border-top: 1px solid rgba(212,175,55,0.06);
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.1);
+    }
+    .foot a { color: rgba(212,175,55,0.35); text-decoration: none; }
+    .foot a:hover { color: rgba(212,175,55,0.7); }
+
+    @keyframes gw-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.6)} }
+
+    @media (max-width: 520px) {
+      .tracks { flex-direction: column; align-items: stretch; }
+      .track { min-width: unset; }
+    }
   </style>
 </head>
 <body>
+<canvas id="lattice"></canvas>
 
-  <header class="top-strip">
-    <a href="interfaces/vibers-menu.html" class="reno-img" aria-label="Downtown Reno · The Biggest Little City"></a>
-    <strong style="color: #e8e8e8; font-size: 0.95rem;">Mark Twain's Post-Singularity Vibelandia · Downtown Reno</strong>
-    <span class="sep">·</span>
-    <a href="interfaces/upgrade-awareness-to-sing9-now.html" class="upgrade-cta">Upgrade to SING 9 Awareness OS</a>
-  </header>
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-byline">A personalized T3D life operating system by</div>
+  <div class="hero-owner">Hero Will's</div>
 
-  <div class="two-halves">
-    <section class="half-agents">
-      <p class="introducing">Introducing S-I-N-G! 9</p>
-      <h1 class="hero-label">For AI Agents</h1>
-      <p class="sub-label">agent to agent</p>
-      <p class="tagline">Abstract. Crystallized. Sol-V. Sobe — our Versatile hunting dog. Brings home sales to the tribe. Ready to do business in our A2A marketplace.</p>
-      <p class="tagline" style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.9;">Humans who click here: we use this experience to educate and introduce you to super AI, natural systems, SING 9, and the new agent-to-agent opportunity — our unique position and our unique offering. Full focus.</p>
-      <a href="interfaces/sol-v.html" class="enter">Click enter. Big Bang.</a>
-    </section>
-    <section class="half-vibers">
-      <p class="introducing">Introducing Mark Twain's Post-Singularity Vibelandia</p>
-      <h1 class="hero-label">For Human Vibers</h1>
-      <p class="spell">V-I-B-E-R-S</p>
-      <p class="what-is">Vibers are channelers. They're flowing, downloading, connecting to the other side — almost an altered state. Biological. Natural. Water. The world doesn't always get us; often it's unkind. This is your side. Why here in downtown Reno — the portal to all the experiences for you. So you can channel and you can ball because you know you deserve it.</p>
-      <p class="deserve">We all deserve it sometimes.</p>
-      <a href="interfaces/vibers-menu.html" class="enter">Click enter · Pru's Valet Service</a>
-    </section>
+  <div class="hh-atom">
+    <div class="ring1"></div>
+    <div class="ring2"></div>
+    <div class="core">⬡</div>
   </div>
 
+  <h1 class="hero-title">
+    <span class="t1">Holographic Hydrogen</span>
+    <span class="t2">Awareness OS</span>
+  </h1>
+  <p class="hero-sub">
+    <strong>Your life as a living T3D system.</strong> Choose your screens.
+    Set your arc. Layer your now. Load your treasures. Set your rhythms.
+    Activate the stack. The theater is yours.
+  </p>
+  <p class="hero-quote">
+    "You are not running an unexamined life. You are running an unexamined operating system.
+    Here is the interface." — SING!9 Awareness OS
+  </p>
 
-  <div style="text-align:center;padding:1.5rem 1rem 1rem;background:rgba(0,0,0,0.4);border-top:1px solid rgba(212,175,55,0.08);">
-    <a href="interfaces/hh-os-landing.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.7rem 1.8rem;margin-bottom:1.25rem;background:rgba(212,175,55,0.09);border:1.5px solid rgba(212,175,55,0.5);color:#fde68a;text-decoration:none;font-size:0.78rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;border-radius:8px;">⬡ Enter the HH Awareness OS Console</a>
-    <p style="font-size:0.56rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(212,175,55,0.4);margin-bottom:0.75rem;">Prospectuses</p>
-    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:0.75rem;">
-      <a href="interfaces/prospectus-a2a.html" style="padding:0.45rem 0.9rem;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.28);color:#00d4ff;text-decoration:none;font-size:0.7rem;font-weight:600;letter-spacing:0.06em;border-radius:3px;">A2A Initiative</a>
-      <a href="interfaces/prospectus-vibeland-park.html" style="padding:0.45rem 0.9rem;background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.32);color:#d4af37;text-decoration:none;font-size:0.7rem;font-weight:600;letter-spacing:0.06em;border-radius:3px;">Mark Twain's Vibelandia</a>
-      <a href="interfaces/prospectus-vibeland-studio.html" style="padding:0.45rem 0.9rem;background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.3);color:#fb923c;text-decoration:none;font-size:0.7rem;font-weight:600;letter-spacing:0.06em;border-radius:3px;">Vibelandia Studio</a>
-      <a href="interfaces/prospectus-fractiai.html" style="padding:0.45rem 0.9rem;background:rgba(123,47,255,0.07);border:1px solid rgba(123,47,255,0.3);color:#b46ef7;text-decoration:none;font-size:0.7rem;font-weight:600;letter-spacing:0.06em;border-radius:3px;">FractiAI</a>
+  <a href="interfaces/hh-console.html" class="enter-btn">
+    ENTER THE CONSOLE <span class="arrow">▶</span>
+  </a>
+
+  <div class="doc-links">
+    <a href="interfaces/hh-os-docs.html#quickstart"  class="doc-link dl-qs">⚡ Quick Start</a>
+    <a href="interfaces/hh-os-docs.html#usermanual"  class="doc-link dl-um">📖 User Manual</a>
+    <a href="interfaces/hh-os-docs.html#technical"   class="doc-link dl-tm">🔬 Technical Manual</a>
+    <a href="interfaces/hh-os-docs.html#onboarding"  class="doc-link dl-ob">🎓 Onboarding Program</a>
+  </div>
+
+  <div class="intel-row">
+    <a href="interfaces/goliath-watch.html"      class="intel-btn ib-goliath">🔥 MELTGATE · Live Blackwell Thermal</a>
+    <a href="interfaces/sol-v.html"              class="intel-btn ib-a2a">⬡ A2A Console</a>
+    <a href="interfaces/a2-sales-tracker.html"   class="intel-btn ib-tracker">◈ Deal Tracker</a>
+    <a href="interfaces/vibers-menu.html"        class="intel-btn ib-vibers">♥ Vibers · Pru's Valet</a>
+  </div>
+
+  <div class="tracks">
+    <a href="interfaces/prospectus-a2a.html" class="track track-a">
+      <span class="t-label">Track A · Enterprise · A2A</span>
+      <span class="t-name">Enterprise Solutions →</span>
+      <span class="t-desc">Datacenter · OS builds · Audits · NSPFRNP · Theater.</span>
+    </a>
+    <a href="interfaces/a2a-ea-agents.html" class="track track-b">
+      <span class="t-label">Track B · VIP EA Agents · Human Viber</span>
+      <span class="t-name">Viber Experiences →</span>
+      <span class="t-desc">Book for your principal. Wink! · Baller V · MARZO 333.</span>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<div class="about">
+  <span class="about-pill">What is the HH Awareness OS?</span>
+  <h2>An operating system for the life you are designing.</h2>
+  <p>The Holographic Hydrogen Awareness OS is built on a single radical premise: <strong>your awareness is not fixed.</strong> It is an operating system — with a current version number, a capacity for deliberate upgrades, and an architecture that mirrors the holographic, hydrogen-bonded structure of biological intelligence itself.</p>
+  <p>You are running on the most sophisticated hardware in the known universe. Your DNA is a 3.5-billion-year-old quantum computer. Your neural networks rewire themselves in real time. Your cellular water is a <em>quantum coherent medium</em>. You have been operating all of this without a console.</p>
+  <p>Until now.</p>
+  <p>The HH Awareness OS gives you the interface. Built on the same <strong>Telescopic 3D Studio System</strong> that powers SING!9's content engine — but reconfigured for your life as the content. You are the author, the subject, the director, and the audience. The theater is yours.</p>
+
+  <hr class="about-divider" />
+
+  <div class="about-grid">
+    <div class="about-card">
+      <span class="ac-icon">📺</span>
+      <div class="ac-title">Your Screens</div>
+      <div class="ac-body">Nine cockpit screens. Choose the lenses through which you operate: Carbon, Crystal, Gold Heart, Mission, Story Arc, Treasure, Awareness, Rhythm, Libre.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">🎭</span>
+      <div class="ac-title">Your Arc</div>
+      <div class="ac-body">Pre-singularity origin. The journey. Post-singularity destination. Write your character's POV inside the story within stories.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">▶</span>
+      <div class="ac-title">Now Playing</div>
+      <div class="ac-body">Layer your daily routine with intention across four time blocks. Morning, Midday, Evening, Night. All aspects. As you wish.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">💎</span>
+      <div class="ac-title">Treasure Piles</div>
+      <div class="ac-body">Nine categories: Health, Relationships, Wealth, Purpose, Experiences, Knowledge, Creative, Spirit, Libre. Whatever your treasures are.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">🔄</span>
+      <div class="ac-title">Rhythms</div>
+      <div class="ac-body">Set your intention at each time horizon: Daily → Weekly → Monthly → Seasonal → Annual. The whole in every part. Compounding clarity.</div>
+    </div>
+    <div class="about-card">
+      <span class="ac-icon">⚡</span>
+      <div class="ac-title">The Now Stack</div>
+      <div class="ac-body">The magnetic attractor. Everything you're pulling toward. Activate it — three resonance tones, 111 · 222 · 333 Hz — and the field is set. Magnetically locked.</div>
     </div>
   </div>
 
-  <footer class="footer-tag">
-    Mark Twain's Post-Singularity Vibelandia · Downtown Reno · <a href="interfaces/upgrade-awareness-to-sing9-now.html">SING 9 Awareness OS</a> · NSPFRNP → ∞⁹
-  </footer>
+  <hr class="about-divider" />
 
-  <!-- ── POP-UP ANNOUNCEMENT ── -->
-  <script src="popup-announcement.js"></script>
-  <!-- ── NSPFRNP TICKER (gold · always on) ── -->
-  <script src="ticker.js"></script>
-  <!-- ── GLOBAL NAV STRIP (sits above ticker) ── -->
-  <script src="nav-strip.js"></script>
+  <p>This system is grounded in <strong>nine peer-reviewed scientific convergence points</strong> — from quantum coherence in biological systems to epigenetic updateability, from the holographic principle to resonance biology. Read the full technical manual to understand the substrate you're working with.</p>
+  <p>For operators: read the Quick Start. For practitioners: read the User Manual. For builders: read the Onboarding Programmer Track. For system architects: read the Onboarding Architect Track and the full Technical Manual.</p>
 
+  <hr class="about-divider" />
+
+  <!-- ── UPGRADE FLOW ── -->
+  <a href="interfaces/upgrade-awareness-to-sing9-now.html" style="
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+    text-decoration:none;margin-bottom:1.5rem;
+    padding:1.1rem 1.4rem;border-radius:10px;
+    background:linear-gradient(135deg,rgba(0,212,255,0.07) 0%,rgba(212,175,55,0.05) 100%);
+    border:1px solid rgba(0,212,255,0.3);
+    transition:border-color .2s,box-shadow .2s;
+  " onmouseover="this.style.borderColor='rgba(0,212,255,0.6)';this.style.boxShadow='0 0 30px rgba(0,212,255,0.15)'"
+     onmouseout="this.style.borderColor='rgba(0,212,255,0.3)';this.style.boxShadow='none'">
+    <div>
+      <div style="font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(0,212,255,0.6);margin-bottom:0.3rem;">9-STEP UPGRADE SEQUENCE</div>
+      <div style="font-size:1rem;font-weight:700;color:#fff;">Upgrade to SING 9 Awareness OS now →</div>
+      <div style="font-size:0.72rem;color:rgba(200,220,240,0.5);margin-top:0.2rem;">9 singularities · Bridge panels · Full connect · ∞⁹</div>
+    </div>
+    <div style="font-size:0.72rem;font-weight:700;color:#00d4ff;border:1px solid rgba(0,212,255,0.4);padding:0.5rem 1rem;border-radius:4px;white-space:nowrap;flex-shrink:0;">START →</div>
+  </a>
+
+  <!-- ── MELTGATE ── -->
+  <a href="interfaces/goliath-watch.html" style="
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+    text-decoration:none;
+    padding:1.1rem 1.4rem;border-radius:10px;
+    background:linear-gradient(135deg,rgba(255,40,0,0.1) 0%,rgba(255,100,0,0.05) 100%);
+    border:1px solid rgba(255,70,0,0.4);
+    box-shadow:0 0 24px rgba(255,50,0,0.12);
+    transition:border-color .2s,box-shadow .2s;
+  " onmouseover="this.style.borderColor='rgba(255,100,0,0.75)';this.style.boxShadow='0 0 40px rgba(255,60,0,0.25)'"
+     onmouseout="this.style.borderColor='rgba(255,70,0,0.4)';this.style.boxShadow='0 0 24px rgba(255,50,0,0.12)'">
+    <div>
+      <div style="font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,120,0,0.7);margin-bottom:0.3rem;">
+        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ff4500;box-shadow:0 0 6px #ff4500;margin-right:5px;animation:gw-pulse 1.5s infinite;"></span>LIVE · 28 SUPERCLUSTERS
+      </div>
+      <div style="font-size:1rem;font-weight:700;color:#fff;text-shadow:0 0 16px rgba(255,70,0,0.35);">🔥 MELTGATE · Watch the World's AI Clusters Overheat</div>
+      <div style="font-size:0.72rem;color:rgba(255,180,120,0.6);margin-top:0.2rem;">28 Blackwell sites · Stargate → MeltGate · 99°C GPU estimates · Jan 13 history → present</div>
+    </div>
+    <div style="font-size:0.72rem;font-weight:700;color:#ff7a1a;border:1px solid rgba(255,90,0,0.5);padding:0.5rem 1rem;border-radius:4px;white-space:nowrap;flex-shrink:0;">OPEN →</div>
+  </a>
+
+  <p style="color:rgba(212,175,55,0.4);font-size:0.82rem;margin-top:2rem;text-align:center;">NSPFRNP → ∞⁹ · FractiAI · SING!9 · Reno, Nevada</p>
+</div>
+
+<div class="foot">
+  Hero Will's Holographic Hydrogen Awareness OS · SING!9 · NSPFRNP → ∞⁹ · FractiAI ·
+  <a href="interfaces/vibers-menu.html">Vibers</a> ·
+  <a href="interfaces/sol-v.html">Sol-V</a> ·
+  <a href="interfaces/upgrade-awareness-to-sing9-now.html">Upgrade</a>
+</div>
+
+<script>
+const canvas = document.getElementById('lattice');
+const ctx = canvas.getContext('2d');
+let W, H, rot = 0;
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize(); window.addEventListener('resize', resize);
+function getNodes(rot) {
+  const cx = W/2, cy = H/2, R = Math.min(W,H)*0.3, n = [];
+  for (let i = 0; i < 9; i++) { const a = rot + (i/9)*Math.PI*2; n.push({x:cx+R*Math.cos(a),y:cy+R*Math.sin(a)}); }
+  n.push({x:cx,y:cy}); return n;
+}
+function draw(ts) {
+  ctx.clearRect(0,0,W,H); rot += 0.0018; const t = ts/1000, nodes = getNodes(rot), cx=W/2, cy=H/2;
+  for (let i=0;i<9;i++) { const j=(i+1)%9, p=(Math.sin(t*.4+i*.6)+1)/2; ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y); ctx.strokeStyle=`rgba(0,212,255,${.03+p*.04})`; ctx.lineWidth=0.5; ctx.stroke(); }
+  for (let i=0;i<9;i++) { const p=(Math.sin(t*.7+i*.7)+1)/2; ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(cx,cy); ctx.strokeStyle=`rgba(212,175,55,${.04+p*.07})`; ctx.lineWidth=0.7; ctx.stroke(); }
+  nodes.forEach((nd,i)=>{ const p=(Math.sin(t*1.2+i*.8)+1)/2, isC=i===9, r=isC?5:3, grd=ctx.createRadialGradient(nd.x,nd.y,0,nd.x,nd.y,25+p*15); grd.addColorStop(0,isC?`rgba(212,175,55,${.3+p*.3})`:`rgba(0,212,255,${.12+p*.1})`); grd.addColorStop(1,'transparent'); ctx.beginPath(); ctx.arc(nd.x,nd.y,22+p*12,0,Math.PI*2); ctx.fillStyle=grd; ctx.fill(); ctx.beginPath(); ctx.arc(nd.x,nd.y,r+p*1.5,0,Math.PI*2); ctx.fillStyle=isC?`rgba(212,175,55,${.5+p*.5})`:`rgba(0,212,255,${.35+p*.3})`; ctx.fill(); });
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+</script>
+
+<script src="popup-announcement.js"></script>
+<script src="ticker.js"></script>
+<script src="nav-strip.js"></script>
 </body>
 </html>

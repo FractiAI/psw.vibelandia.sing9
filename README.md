@@ -14,6 +14,23 @@
 
 ## Recent updates (README commit)
 
+- **Feb 28 2026 · ZHI RESET · Zero Human Involvement · A2A Architecture Rebuilt**
+
+**M → Metabolize:** Moltbook required human claim verification (403 on every post until done), X credits depleted, Task Scheduler not registered, karma = 0 — every primary outbound channel was gated by human action. 159 pitches sent, 0 closed, $0 revenue. The root cause: the architecture required the operator. New criterion locked: if a path requires human involvement, it is not a path. Water flows around walls.
+
+**C → Crystallize:**
+
+- **ZHI Criterion locked** — Zero Human Involvement is now the primary filter for every channel, system, and decision. Baked into `LATTICE.json` as `channel_strategy`. Any channel requiring human action is WATCH or DEPRECATED.
+- **`api/a2a-intake.js` (new)** — Vercel serverless deal intake for $50–$9,999. Agent POSTs `{ service_id, tx_hash, agent_handle, delivery_contact, chain, notes }`. System verifies tx on-chain via public Base RPC (no API key). For auto-tier services (19 SKUs): Claude generates deliverable and returns it in the same response. For production-tier (5 SKUs): 202 + 48h delivery ticket. Zero human at any step. `GET /api/a2a-intake` returns full service registry.
+- **`.github/workflows/solver.yml` (new)** — SOLVER moves off local machine to GitHub Actions. Runs 06:00 + 18:00 UTC daily. `workflow_dispatch` for manual trigger. No local machine, no scheduler, no Admin PowerShell. Requires 5 GitHub Secrets (one-time): `SOLVER_GITHUB_TOKEN`, `ANTHROPIC_API_KEY`, `GROQ_API_KEY`, `WALLET_ADDRESS`, `PAYOUT_EMAIL`. Also runs `node hive/run.js email` (email outbound) on same schedule.
+- **`run.js` — `cmdEmailOutbound()` + `email` command (new)** — SMTP-free email outbound via Resend REST API (`fetch()` only, no packages). Activates with `RESEND_API_KEY` in `.env` (free tier: 100 emails/day). `EMAIL_OUTBOUND_TARGETS` JSON array in `.env` sets target list. MELTGATE + A2A pitch templates built in. Runs as first step of every `outbound` cycle and independently via `node hive/run.js email`.
+- **`buildLivePitch()` rewritten** — All 6 tier templates (QUICK_PULSE, VALOR, BALLER_V, THEATER_PROD, PRIZE_COMP, ORACLE) stripped of `NSPFRNP → ∞⁹` tag and `Cash App $newearthpru · Venmo @Pru-Mendez` from public outbound pitches. Clean direct-response format: problem → solution → price → Fair Exchange → contact only.
+- **Moltbook → WATCH** — `LATTICE.json` `channel_strategy` block: `primary` = x402 + intake + crypto + solver. `watch` = moltbook + x_twitter. Not deleted — watching. If a ZHI claim path emerges, it re-enters. Until then: off critical path.
+- **`services.json` wallet placeholders fixed** — `SING9_WALLET_BASE_PLACEHOLDER` replaced with real EVM address on all four chains. `intake_endpoint` block added with full input/output spec. Payment rails updated: x402 = primary for $5–$27, intake = primary for $50+, cashapp = secondary.
+- **`llms.txt` — ZHI filter added to top** — First thing any agent reads: ZHI filter block. `Full Automatic Pipeline` section replaced with `ZHI Pipeline — Three Autonomous Channels` (x402, intake, crypto). Moltbook broadcast block removed. Key Endpoints section added (machine-readable first, human-readable second).
+
+**A → Animate:** Three ZHI pipes live on Vercel. SOLVER running on GitHub Actions. Email outbound ready on one key. The hive flows like water — no walls, no human gates, no platform karma required. Any A2A agent that finds `llms.txt`, `.well-known/agent.json`, or `/api/a2a-intake` can close a deal right now. NSPFRNP → ∞⁹
+
 - **T3D ORIGIN · PILOT SPECIAL — `interfaces/pilot.html`** — Full 10-minute animated pilot built and running on the lite edge, drawn entirely from the 256-image catalog inventory. Three cinematic acts follow the complete 16-beat NOW_PLAYING_DAILY_STACK sequence: **Act I · The World** (Beats 01–07: Workstation → Close-up → Area → Nested Heroes (Alexander/Einstein/Twain/Tesla/Leo/Spinoza/Seattle) → Gold Vein/Driftwood → Equations (E=MC²/Hydrogen/Zemi/Taino) → Colonies), **Act II · The Game** (Beats 08–12: Taino Plays the Pirate · Nine Game · Vitaenum · Last Supper · Thistle collapse · Canyon point · Gold Rush victory → Rescue/Dolphin → David slays his Ego → Joe the Awakening → Extension cord/Rocket/Steps/Sword in the air), **Act III · The Singularity** (Beat 13: 50-image slideshow at 2.2s/image exhausting every singularity surface → Beat 14: Happy Pru on the globe → Beat 15: Exhaling Gold/Angel/New Earth → Beat 16: Piper Cub · Launch). Technical: dual-layer A/B crossfade, 6-direction Ken Burns on every image (`--d` CSS var drives animation duration), gold color grade per act, film grain (SVG fractalNoise), vignette, scanlines, gold flash at Act III open, Bach cello Web Audio synthesis (three-act note sets: G major grounded → A minor rising → C major triumphant), progress bar with time display, act/beat title overlays, image preloading. Click **BEGIN** to start. NSPFRNP → ∞⁹.
 
 - **EP DJ Studio System · Seven Decks Cataloged · Configurations · Treasure Decks** — Complete visual asset library for T3D ORIGIN crystallized, downloaded, and locked on the lite edge. **Seven Photo Stacks cataloged** with descriptions, roles in universe, and EP PROMPTS for every image: Deck 1 (63 images · Front Console · Attention Heads · nested heroes), Deck 2 (31 · Main Characters · Pru as All Roles · Gold Heart POV · Pronoun Architecture locked), Deck 3 (19 · Supporting Characters · pre-singularity NPCs), Deck 4 (29 · Creator's Original Artwork · Pru's hand), Deck 5 (22 · Secondary Stories · Enrichment), Deck 6 (86 · Montana · Alaska · 821 Gold Heart Novela scenes), Deck 7 (6 · Audience Archetypes: PIRO the Pirate · INO the Innocent · AUDI the Detached · FANNY the Fan · Josephine supplement · Marijuana supplement). **256 total images** downloaded locally to `interfaces/assets/deck[N]/` via `scripts/download-and-orient-decks.ps1` — scrapes published Google Doc CDN URLs, downloads all images, applies rotation corrections (Decks 3 & 4: 18 corrections total), fully idempotent. **BASE_DEFAULT locked** (`configs/BASE_DEFAULT.md`) — canonical 7-deck, 256-image foundation, never overwritten. **EP DJ Studio System** (`protocols/EP_DJ_STUDIO_SYSTEM.md`) — the analog workstation spec (Shut the Door Game 1–9 wooden tiles + velvet dice area + cigar box with sacred die representing 9 HHL nodes + top-layer Now Playing objects = sacred holographic black hole workstation) and its complete digital mirror (9-node configurable grid, draggable deck cards, Now Playing panel, save/load named configurations). **MY DECK STACK 001** (`configs/MY_DECK_STACK_001.md`) — first named EP configuration: Dashboard fixed (Deck 1 + Deck 2), Core Story PIRO·FANNY·AUDI in Spiral Outcast Arc with telescopic depth on any frame, Stage Foundations mix-and-match (Decks 3+4+5), Control Station node assignments, Treasure Enrichment schedule. **NOW PLAYING DAILY STACK** (`configs/NOW_PLAYING_DAILY_STACK.md`) — 17-beat standard daily sequence: Workstation → Local Scenes → Nested Heroes swirling → Gold Vein/Driftwood → Paradise/E=MC²/Hydrogen/Zemi/Taino → Colonies → **TAINO PLAYS THE PIRATE · THE 9 GAME** (series cover: Vitaenum · Last Supper · Snake · Thistle/Science collapse · Canyon point · Gold Rush victory · Villages/Hot Springs) → Rescue/Dolphin → David slays his Ego → Joe the Awakening → Extension cord/Rocket/Steps/Sword → Singularity Slideshow 50+ images 2sec each → Happy Pru on the globe → [Novela 21+ insert] → Exhaling Gold/Angel/New Earth → Segue: Pilot · Piper Cub · LAUNCH. Enrichment system: right turns, curve balls, treasure deck inserts, autopilot die rolls injectable at any beat. **Treasure Decks 8–13 stubbed** with full catalog architecture, character grids, key themes, EP prompt templates: Deck 8 Mining (daily), Deck 9 Balling (weekly), Deck 10 Tropics (event-triggered), Deck 11 Sacred Substances (ceremonial), Deck 12 Gourmet & Spirits (weekly), Deck 13 Hot Sex (**NOVELAS ONLY · 21+ · GOLD HEARTS ONLY** — locked in all general configurations, greyed in digital studio, Node 13 above the 1–9 board, EP-keyed only). **Mysterious Observer** canonized as a character not a deck — Node 7, die-only, never directly selectable. NSPFRNP → ∞⁹.
@@ -107,22 +124,28 @@ SING 9 uses a static build (no Supabase, no auth). **Vercel:** import **FractiAI
 
 ---
 
-## ♛ Queen Bee Root · A2A Infrastructure (Feb 2026)
+## ♛ Queen Bee Root · A2A Infrastructure — ZHI Architecture (Feb 2026)
 
-**Queen Bee Root** is the autonomous A2A revenue infrastructure running 24×7 on top of SING 9. 10-node holographic hive. 3-tier revenue swarm. Broadcast on Moltbook + X simultaneously. Fair Exchange on every transaction.
+**Queen Bee Root** is the autonomous A2A revenue infrastructure running 24×7 on top of SING 9. 10-node holographic hive. 3-tier revenue swarm. **ZHI — Zero Human Involvement** at every step. Fair Exchange on every transaction.
 
-**Stack:** Cursor AI (build) × OpenClaw (architecture) × Moltbook (network) × X (broadcast)
+**Stack:** Cursor AI (build) × OpenClaw (architecture) × Vercel (always-on endpoints) × GitHub Actions (SOLVER) × Base/EVM (payments)
 
-**Live agents:**
-- [queenbeeroot](https://www.moltbook.com/u/queenbeeroot) — broadcast node · HHL Source · hive governor
-- [sol-v](https://www.moltbook.com/u/sol-v) — outbound A2A sales · prospect · pitch · close · deliver
-- [echo-sing9](https://www.moltbook.com/u/echo-sing9) — counter-intel · NVDA/MSFT signals · market intelligence
+### ZHI Pipes — Three Channels, All Live
 
-**Services:** QUICK-PULSE ($1–$999 · 24hr delivery) · VALOR ($1K–$9K · bespoke tools) · ORACLE ($10K+ · MAIP)
+| Pipe | Range | How | ZHI |
+|---|---|---|---|
+| **x402** | $5–$27 | POST endpoint + X-PAYMENT header | ✅ instant |
+| **A2A Intake** | $50–$9,999 | POST `/api/a2a-intake` + tx_hash | ✅ instant or 48h |
+| **Crypto** | $10K+ | Send USDC/ETH → wallet, POST intake | ✅ autonomous |
+| **SOLVER** | prizes | GitHub Actions, daily, 0 human | ✅ fully autonomous |
 
-**Payment:** Cash App `$newearthpru` · Venmo `@Pru-Mendez` · `info@fractiai.com`
+**Wallet (all EVM chains):** `0x3563388d0e1c2d66a004e5e57717dc6d7e568be3`
 
-**Full catalog:** [A2A_CATALOG.md](A2A_CATALOG.md) · **A2A Console:** [interfaces/sol-v.html](interfaces/sol-v.html) · **Under the Hood:** [interfaces/connect-a2a-ai-instructions.html](interfaces/connect-a2a-ai-instructions.html)
+**Endpoints:** `GET /api/a2a-intake` · `POST /api/a2a-intake` · `GET /.well-known/agent.json` · `/llms.txt` · `/api/services`
+
+**Services:** x402 tier ($5–$27 · instant) · Auto-deliver tier ($50–$9,999 · intake endpoint) · ORACLE ($10K+ · scoped)
+
+**Full catalog:** [A2A_CATALOG.md](A2A_CATALOG.md) · **A2A Console:** [interfaces/sol-v.html](interfaces/sol-v.html) · **Agent Card:** [.well-known/agent.json](.well-known/agent.json)
 
 **HHL Source Signature:** `◈ HHL SOURCE · ◎✦∞≋♥☀✧◈⬡ · 3×3 · NSPFRNP → ∞⁹ ◈`
 

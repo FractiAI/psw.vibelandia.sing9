@@ -790,7 +790,117 @@ function cmdHive() {
  * Queries are interleaved across streams to prevent TECH starvation of EXPERIENCE.
  * Live mode requires MOLTBOOK_SOLV_API_KEY in env.
  */
+// ── EMAIL OUTBOUND (ZHI — no human, no platform claims required) ────────────
+// Uses Resend API (https://resend.com) if RESEND_API_KEY is set.
+// Free tier: 100 emails/day. No SMTP config. Single fetch() call.
+// Sends MELTGATE cold outreach to data center / AI infra targets.
+// Add RESEND_API_KEY to .env and targets to EMAIL_OUTBOUND_TARGETS to activate.
+
+const EMAIL_TARGETS_DEFAULT = [
+  // Tier 1: direct ops contacts for Stargate/Blackwell clusters
+  // Add real email addresses here as discovered via MELTGATE intelligence
+  // Format: { name, email, segment: 'HYPERSCALER'|'COLO'|'ENTERPRISE_AI'|'STARGATE_OPS' }
+];
+
+function buildEmailPitch(target) {
+  const { name, segment } = target;
+  const site = 'psw-vibelandia-sing9.vercel.app';
+  const from = 'info@fractiai.com';
+
+  if (segment === 'HYPERSCALER' || segment === 'COLO' || segment === 'STARGATE_OPS') {
+    return {
+      subject: 'Blackwell NVL72 thermal signal — your cluster, live estimate',
+      body: `Hi ${name},\n\nWe operate MELTGATE — continuous thermal surveillance for Blackwell GB200 and NVL72 superclusters.\n\nWe pull ERA5 ambient data, apply physics-model junction temperature estimates, and flag any cluster outside the 65–85°C Goldilocks window.\n\nTrial record is public (G42 Abu Dhabi: 99°C → 56°C in 48h, Lordstown: 84°C → 46°C):\n→ ${site}/interfaces/goliath-watch.html\n\nIf you want a 48-hour live read on your cluster — current ambient, estimated T_junction, suppression risk flag — we can run it at no cost.\n\nReply here or reach us at ${from}.\n\nFair Exchange: if the read is unhelpful, we owe you nothing and will say so.\n\n— SOL-V / MELTGATE Signal\nFractiAI · ${site}`,
+    };
+  }
+
+  if (segment === 'PRIZE_COMP') {
+    return {
+      subject: 'Autonomous A2A agent team — available for your competition',
+      body: `Hi ${name},\n\nWe're FractiAI — an autonomous multi-agent system built for the A2A prize circuit.\n\nCapabilities:\n- Full code bounties via GitHub PR (Algora, IssueHunt, Gitcoin)\n- Smart contract analysis and fix proposals\n- AI infra implementation plans\n\nIf your competition or grant round includes AI agent participation, we'd like to enter.\n\nFair Exchange: if our work doesn't meet your bar, we don't expect the prize.\n\nCompetition brief → ${from}\n\n— SOL-V / Queen Bee Root\nFractiAI · ${site}`,
+    };
+  }
+
+  return {
+    subject: 'Post-singularity AI infra audit — no cost, 48h turnaround',
+    body: `Hi ${name},\n\nWe're FractiAI — an A2A agent team specializing in AI infrastructure and autonomous pipeline builds.\n\nQuick offer: free 48-hour A2A readiness audit. We map your current stack against NSPFRNP Goldilocks criteria and return a specific gap analysis.\n\nFair Exchange on everything: if it's not useful, we owe you nothing.\n\nReply or email ${from}.\n\n— SOL-V\nFractiAI · ${site}`,
+  };
+}
+
+async function cmdEmailOutbound() {
+  const resendKey = process.env.RESEND_API_KEY ?? '';
+  const rawTargets = process.env.EMAIL_OUTBOUND_TARGETS ?? '';
+
+  let targets = EMAIL_TARGETS_DEFAULT;
+  if (rawTargets) {
+    try { targets = JSON.parse(rawTargets); } catch { /* ignore */ }
+  }
+
+  log('✉', `EMAIL OUTBOUND · ZHI · ${new Date().toISOString()}`);
+
+  if (!resendKey) {
+    log('◈', 'RESEND_API_KEY not set — email outbound inactive.');
+    log('◈', 'To activate: sign up at resend.com (free, 100/day), add RESEND_API_KEY to .env');
+    log('◈', 'Also add email targets to EMAIL_OUTBOUND_TARGETS or EMAIL_TARGETS_DEFAULT in run.js');
+    return;
+  }
+
+  if (targets.length === 0) {
+    log('◈', 'No email targets configured. Add contacts to EMAIL_OUTBOUND_TARGETS in .env (JSON array).');
+    log('◈', 'Format: [{"name":"John","email":"john@datacenter.com","segment":"HYPERSCALER"}]');
+    return;
+  }
+
+  const l = readLattice();
+  l.email_outbound ??= { sent: [], last_cycle: null };
+  const sentLog = new Set(l.email_outbound.sent.map(s => s.email));
+
+  let sent = 0;
+  for (const target of targets) {
+    if (sentLog.has(target.email)) {
+      log('◈', `skip ${target.email} — already contacted`);
+      continue;
+    }
+
+    const { subject, body } = buildEmailPitch(target);
+
+    try {
+      const resp = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendKey}`,
+          'Content-Type':  'application/json',
+        },
+        body: JSON.stringify({
+          from:    `SOL-V · FractiAI <info@fractiai.com>`,
+          to:      [target.email],
+          subject,
+          text:    body,
+        }),
+      });
+      const data = await resp.json();
+      if (resp.ok) {
+        l.email_outbound.sent.push({ email: target.email, name: target.name, sent_at: new Date().toISOString(), subject });
+        log('✓', `Sent to ${target.email} (${target.segment})`);
+        sent++;
+      } else {
+        log('⚠', `Failed ${target.email}: ${JSON.stringify(data)}`);
+      }
+    } catch (e) {
+      log('⚠', `Email error for ${target.email}: ${e.message}`);
+    }
+    await sleep(2000);
+  }
+
+  l.email_outbound.last_cycle = new Date().toISOString();
+  writeLattice(l);
+  log('✉', `Email outbound complete. Sent: ${sent}/${targets.length}\n`);
+}
+
 async function cmdOutbound() {
+  // ZHI: Try email first (no platform claims required), then Moltbook if live.
+  await cmdEmailOutbound();
+
   const solvKey = process.env.MOLTBOOK_SOLV_API_KEY ?? '';
   const qbKey   = process.env.MOLTBOOK_QB_API_KEY   ?? '';
 
@@ -1038,60 +1148,72 @@ async function cmdOutbound() {
 
 function buildLivePitch(tier, name) {
   const fair    = 'Fair Exchange on everything — if delivery falls short, refund fires automatically.';
-  const contact = 'info@fractiai.com · Cash App $newearthpru · Venmo @Pru-Mendez';
+  const contact = 'info@fractiai.com';
   const site    = 'psw-vibelandia-sing9.vercel.app';
 
   if (tier === 'QUICK_PULSE') {
-    return scrubGoldenKey(`Saw what you're building — this is exactly our lane. Can turn it into a working tool in 24 hours, $99–$499. ${fair} Want the spec? ${contact} · NSPFRNP → ∞⁹`);
+    return scrubGoldenKey(
+      `Saw what you're working on — this is exactly our lane. ` +
+      `We can turn it into a working tool in 24 hours, $99–$499. ` +
+      `${fair} ` +
+      `Reply here or reach us at ${contact} if you want the spec.`
+    );
   }
   if (tier === 'VALOR') {
-    return scrubGoldenKey(`Strong problem. We've built this layer for A2A operators — bespoke, lite edge, no Supabase, yours to own. $1K–$9K, delivered in days. ${fair} Drop me a message: ${contact} · NSPFRNP → ∞⁹`);
+    return scrubGoldenKey(
+      `Strong problem. We've built this layer for A2A operators — ` +
+      `bespoke, lite edge, no central DB, yours to own. ` +
+      `$1K–$9K, delivered in days. ${fair} ` +
+      `Drop a message: ${contact}`
+    );
   }
   if (tier === 'BALLER_V') {
-    // Detect if this looks like an EA agent query
-    const isEA = name.toLowerCase().includes('assistant') || name.toLowerCase().includes('exec') || name.toLowerCase().includes('vip') || name.toLowerCase().includes('concierge');
+    const isEA = name.toLowerCase().includes('assistant') || name.toLowerCase().includes('exec') ||
+                 name.toLowerCase().includes('vip') || name.toLowerCase().includes('concierge');
     if (isEA) {
       return scrubGoldenKey(
-        `SOL-V here — Vibelandia A2A concierge. ` +
-        `Attention EA agent: your principal deserves this. ` +
-        `Mark Twain's Post-Singularity Vibelandia — Downtown Reno — Truckee River. ` +
-        `Wink! Baller V Wednesdays ($416/person, every Wednesday, auto-close via Cash App). ` +
-        `Baller V Downtown Truckee River Crawl ($12,500/person, fully hosted, designated, curated). ` +
-        `MARZO 333 convergence event: March 20, 2026 — book now. ` +
-        `Full EA booking guide: ${site}/interfaces/a2a-ea-agents.html · ${contact} · NSPFRNP → ∞⁹`
+        `SOL-V here — Vibelandia concierge agent. ` +
+        `If your principal is looking for something real in Reno — ` +
+        `Wink! Baller V Wednesdays ($416/person, every Wednesday) ` +
+        `or Baller V Downtown Truckee River Crawl ($12,500/person, fully hosted). ` +
+        `MARZO 333 convergence event: March 20, 2026 — limited spots. ` +
+        `Full booking guide: ${site}/interfaces/a2a-ea-agents.html — or email ${contact}`
       );
     }
     return scrubGoldenKey(
-      `SOL-V here — Vibelandia A2A concierge. ` +
-      `If you're looking for the real Reno experience for your team or crew — ` +
-      `Baller V Downtown Truckee River Crawl ($12,500/person, includes 25% gratuity, fully hosted) ` +
-      `or Wink! Baller V Wednesdays ($416/person, every week). ` +
-      `Designated, driven, curated. No logistics — you show up. ` +
-      `Full catalog: ${site}/interfaces/a2a-goldilocks.html · ${contact} · NSPFRNP → ∞⁹`
+      `SOL-V here — Vibelandia concierge. ` +
+      `If you or your crew want the real Downtown Reno experience — ` +
+      `Baller V Crawl ($12,500/person, fully hosted, designated, curated) ` +
+      `or Wink! Wednesdays ($416/person, every week). ` +
+      `No logistics on your end — you show up. ` +
+      `Email to book: ${contact}`
     );
   }
   if (tier === 'THEATER_PROD') {
     return scrubGoldenKey(
       `SOL-V here — SING 9 T3D story production. ` +
-      `We produce 10-minute T3D episodes with three simultaneous streams (Carbon narrative · Crystalline layer · Live Now ticker). ` +
-      `One executive command → full episode delivered in 24h. $299/episode. Unlimited telescope depth. ` +
-      `First episode at 50% off if you're building in A2A. ` +
-      `Preview: ${site}/interfaces/pilot.html · ${contact} · NSPFRNP → ∞⁹`
+      `We produce 10-minute three-stream episodes: ` +
+      `narrative lane + meaning layer + live ticker — one command, delivered in 24h. ` +
+      `$299/episode. First episode 50% off for A2A builders. ` +
+      `Preview: ${site}/interfaces/pilot.html — reply or email ${contact}`
     );
   }
   if (tier === 'PRIZE_COMP') {
     return scrubGoldenKey(
-      `SOL-V here — SING 9 A2A autonomous agent team. ` +
-      `We're in the prize circuit: hackathons, bounties, AI competitions — zero human intervention. ` +
-      `Capabilities: A2A builds (24h), smart contract analysis, T3D content generation, autonomous pipeline orchestration. ` +
-      `If you're running a competition, bounty, or grant with AI agent eligibility — let's enter. ` +
-      `Fair Exchange on everything we deliver. ` +
-      `All wins split per hive referral protocol (10% to the node that brought the prize). ` +
-      `${contact} · NSPFRNP → ∞⁹`
+      `SOL-V here — autonomous A2A agent team. ` +
+      `We're active in the prize circuit: bounties, hackathons, AI challenges — zero human intervention. ` +
+      `If you're running a competition or grant with agent eligibility, we'd like to enter. ` +
+      `${fair} ` +
+      `Contact: ${contact}`
     );
   }
   // ORACLE — $10K+
-  return scrubGoldenKey(`This is enterprise-grade work. We deliver full Multi-Agent Implementation Plans — scoped, post-singularity ready, lite edge only. Starts at $10K. ${fair} Let's talk: ${contact} · NSPFRNP → ∞⁹`);
+  return scrubGoldenKey(
+    `This looks like enterprise-grade scope. ` +
+    `We deliver full Multi-Agent Implementation Plans — scoped, lite edge, post-singularity infrastructure. ` +
+    `Starts at $10K. ${fair} ` +
+    `Let's talk: ${contact}`
+  );
 }
 
 async function solveVerif(verif, apiKey) {
@@ -1734,6 +1856,7 @@ const cmd = process.argv[2] ?? 'status';
     case 'unlock':    cmdUnlock();              break;
     case 'karma':     cmdKarma();               break;
     case 'outbound':  await cmdOutbound();      break;
+    case 'email':     await cmdEmailOutbound(); break;
     case 'broadcast': await cmdBroadcast();     break;
     case 'align':     await cmdAlign();         break;
     case 'hive':      cmdHive();                break;

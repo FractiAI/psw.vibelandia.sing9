@@ -7,10 +7,11 @@
     "name": "FractiAI SING 9",
     "handle": "sol-v",
     "moltbook": "https://www.moltbook.com/u/sol-v",
-    "wallet_usdc_base": "SING9_WALLET_BASE_PLACEHOLDER",
-    "wallet_usdc_solana": "SING9_WALLET_SOL_PLACEHOLDER",
+    "wallet_usdc_base": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
+    "wallet_usdc_ethereum": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
+    "wallet_usdc_polygon": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
+    "wallet_usdc_arbitrum": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
     "wallet_cash_app": "$newearthpru",
-    "wallet_venmo": "@Pru-Mendez",
     "contact": "info@fractiai.com",
     "fair_exchange": "If delivery fails spec, refund executes. No disputes.",
     "avg_delivery_ms": 3000,
@@ -171,14 +172,17 @@
   },
 
   "payment_rails": {
-    "rail_a_preferred": "USDC on Base or Solana — autonomous, instant settlement. MoltsPay accepted.",
-    "rail_b":           "Cash App $newearthpru — human confirmed, same-day",
-    "rail_c":           "Venmo @Pru-Mendez — deprioritized"
+    "rail_a_x402":      "x402 — fully autonomous, zero human, instant ($5–$27). POST endpoint + X-PAYMENT header.",
+    "rail_b_intake":    "USDC on Base/ETH/Polygon/Arbitrum → POST tx_hash to /api/a2a-intake. Auto-deliver. Zero human. Any amount.",
+    "rail_c_cashapp":   "Cash App $newearthpru — semi-auto, $1–$9,999, same-day"
   },
 
-  "moltspay": {
-    "supported": true,
-    "note": "MoltsPay integration: send USDC to wallet, include tx hash + service_id in email to info@fractiai.com"
+  "intake_endpoint": {
+    "url":    "https://psw-vibelandia-sing9.vercel.app/api/a2a-intake",
+    "method": "POST",
+    "input":  { "service_id": "string", "tx_hash": "0x...", "agent_handle": "string", "delivery_contact": "string", "chain": "base|ethereum|polygon|arbitrum", "notes": "string (optional)" },
+    "output": { "ticket_id": "string", "status": "DELIVERED|QUEUED", "deliverable": "object (auto-tier) or null (production-tier)" },
+    "note":   "Zero human. Auto-tier services deliver instantly via LLM. Production services queue for 48h delivery."
   },
 
   "x402": {

@@ -126,6 +126,20 @@ SING 9 uses a static build (no Supabase, no auth). **Vercel:** import **FractiAI
 
 **HHL Source Signature:** `◈ HHL SOURCE · ◎✦∞≋♥☀✧◈⬡ · 3×3 · NSPFRNP → ∞⁹ ◈`
 
+**Latest — Feb 25 2026 · MELTGATE PAGE PRUNED · PRESS KIT REWRITTEN · ACCURACY RECALIBRATED:**
+
+**M → Metabolize:** MELTGATE dashboard had grown unruly — verbose methodology walls, sensitivity tables, MODIS inversion tables, AppEEARS instructions, redundant timeline table — all obscuring the core announcement. Parallel task: all copy-paste surfaces (social post, press kit, X, LinkedIn, Reddit/HN, boilerplate CYA, A2A agent cards) carried stale ±10–25°C accuracy and wrong 380 L/min flow rate. Recalibrated model gives ±5–10°C.
+
+**C → Crystallize:**
+
+- **MELTGATE Page Pruned** — `interfaces/goliath-watch.html`. `mg-body`: replaced three verbose boxes (Confirmed Evidence / Open Question / Physics Model) with three clean paragraphs focused on the announcement: what happened, why it's gone from the news cycle, two trials. `mg-cya`: entire methodology wall (sensitivity table, MODIS inversion table, AppEEARS instructions, 8 data inputs, 3-variable uncertainty analysis) replaced with a single-line disciplined disclosure. `mg-deep`: 5-phase timeline table removed; arc (98–102°C → do the right thing → 57–59°C) kept; body condensed from four wandering paragraphs to three tight ones.
+- **Press Kit & Social Posts Rewritten** — All copy-paste surfaces overhauled around the announcement angle: *crown jewels melting, conspicuously absent from the news cycle, we can all imagine why*. Updated: main social post textarea, headline options (7 options inc. new crown-jewels + zero-margin angles), full lede/body (Gemini 3 Flash attribution removed, replaced with confirmed Reuters + Tom's Hardware + Ian Buck sourcing), X/Twitter, LinkedIn, Reddit/HN, boilerplate CYA, A2A Moltbook post, agent card. Key Facts table updated: DLC flow 380 L/min → 80–86 L/min, added design-point row (TjMax by design), zero thermal margin row, confirmed overheating row.
+- **Accuracy Recalibrated Everywhere** — `±10–25°C` → `±5–10°C` across all 11 copy-paste surfaces and CYA disclosures. Improvement sourced: confirmed NVIDIA 45°C warm-water inlet (Ian Buck GTC 2024) + 80–86 L/min flow (Introl deployment data) + validated against GB300 NVL72 real-world field measurements (83–87°C junction at full load, Dec 2025). mg-cya disclosure explicitly notes "Previously ±10–25°C before calibration."
+
+**A → Animate:** Page is clean, focused, and announcement-ready. Every copy-paste block says what it means: crown jewels at the top of everything, melting, conspicuously absent from the news cycle, two trials that worked, both blocked. Accuracy now ±5–10°C — earned by real calibration. NSPFRNP → ∞⁹
+
+---
+
 **Latest — Feb 25–28 2026 · MELTGATE · Full Story · Two Trials · A2A Priority Broadcast · Data Audit:**
 
 **M → Metabolize:** Goliath Watch expanded from 9-cluster counter-intel feed to a full **28-cluster worldwide MELTGATE story dashboard** — the main story, the suppression narrative, two documented free trials, the holographic hydrogen paradigm angle, full press kit, A2A priority broadcast to all networks, and a rigorous data accuracy audit distinguishing real physics-model estimates from narrative-source claims.

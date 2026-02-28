@@ -51,8 +51,70 @@
     .hdr-clock { margin-left:auto; font-size:11px; color:var(--cyan); opacity:.7;
       font-variant-numeric:tabular-nums; }
 
-    /* ── MELTGATE STORY PANEL ── */
-    .mg-story { padding:28px 32px 24px; background:linear-gradient(135deg,rgba(255,34,34,.07) 0%,rgba(255,87,34,.05) 50%,rgba(0,0,0,0) 100%); border-bottom:2px solid rgba(255,87,34,.3); }
+    /* ── MELTGATE HERO PANEL ── */
+    .mg-story {
+      padding: 40px 32px 32px;
+      background: linear-gradient(135deg, rgba(255,34,34,.14) 0%, rgba(255,87,34,.09) 40%, rgba(0,0,0,0) 100%);
+      border-bottom: 3px solid rgba(255,87,34,.5);
+      border-top: 3px solid rgba(255,87,34,.4);
+      box-shadow: inset 0 0 80px rgba(255,60,20,.04);
+    }
+
+    /* ── 48-HOUR TRIAL HERO CARD ── */
+    .trial-hero {
+      margin: 0 32px 0;
+      padding: 28px 32px;
+      background: linear-gradient(135deg, rgba(201,168,32,.1) 0%, rgba(0,229,255,.06) 100%);
+      border: 2px solid rgba(201,168,32,.45);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+    .trial-hero::before {
+      content: '48H';
+      position: absolute;
+      right: 24px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 80px;
+      font-weight: 900;
+      color: rgba(201,168,32,.07);
+      letter-spacing: -4px;
+      pointer-events: none;
+      line-height: 1;
+    }
+    .trial-hero-badge {
+      background: rgba(201,168,32,.18);
+      border: 1px solid rgba(201,168,32,.5);
+      border-radius: 8px;
+      padding: 10px 18px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .trial-hero-badge-top { font-size: 9px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 4px; }
+    .trial-hero-badge-num { font-size: 36px; font-weight: 900; color: var(--gold); line-height: 1; text-shadow: 0 0 20px rgba(201,168,32,.5); }
+    .trial-hero-badge-bot { font-size: 9px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; opacity: .8; }
+    .trial-hero-body { flex: 1; min-width: 220px; }
+    .trial-hero-title { font-size: clamp(15px,2vw,20px); font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+    .trial-hero-title span { color: var(--gold); }
+    .trial-hero-sites { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+    .trial-site-card {
+      background: var(--bg3);
+      border: 1px solid rgba(201,168,32,.25);
+      border-radius: 8px;
+      padding: 10px 16px;
+      min-width: 160px;
+    }
+    .trial-site-name { font-size: 10px; letter-spacing: 1px; color: var(--gold); font-weight: 600; margin-bottom: 6px; }
+    .trial-site-temps { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .trial-site-before { color: #ff5533; }
+    .trial-site-arrow  { color: var(--dim); font-size: 11px; }
+    .trial-site-after  { color: #00ff99; }
+    .trial-site-delta  { font-size: 10px; color: var(--gold); font-weight: 600; margin-top: 3px; }
+    .trial-site-dates  { font-size: 9px; color: var(--faint); margin-top: 3px; }
 
     /* ── DEEP STORY PANEL (Holographic Hydrogen / Paradigm / Disclosure) ── */
     .mg-deep { padding:28px 32px 28px; background:linear-gradient(135deg,rgba(123,47,255,.07) 0%,rgba(0,229,255,.04) 60%,rgba(0,0,0,0) 100%); border-bottom:2px solid rgba(123,47,255,.25); }
@@ -157,46 +219,64 @@
 
     /* ── TELEMETRY SOURCE STRIP ── */
     /* ── NEWS TICKER ── */
+    /* ── NEWS TICKER (MELTGATE story — relaxed reading pace) ── */
     .news-ticker-wrap {
+      position: relative;
+      isolation: isolate;
       overflow: hidden;
-      background: rgba(255,87,34,.06);
-      border-top: 1px solid rgba(255,87,34,.2);
-      border-bottom: 1px solid rgba(255,87,34,.2);
+      background: rgba(255,87,34,.07);
+      border-top: 1px solid rgba(255,87,34,.25);
+      border-bottom: 1px solid rgba(255,87,34,.25);
       display: flex;
-      align-items: stretch;
-      height: 34px;
+      align-items: center;
+      height: 40px;
+      flex-shrink: 0;
     }
     .news-ticker-label {
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      padding: 0 14px;
-      background: rgba(255,87,34,.18);
-      border-right: 1px solid rgba(255,87,34,.3);
-      font-size: 8px;
+      align-self: stretch;
+      padding: 0 16px;
+      background: rgba(255,87,34,.22);
+      border-right: 2px solid rgba(255,87,34,.4);
+      font-size: 9px;
       letter-spacing: 2.5px;
       color: #ff5533;
       text-transform: uppercase;
       white-space: nowrap;
       font-weight: 700;
-      gap: 6px;
+      gap: 7px;
+      position: relative;
       z-index: 2;
     }
     .news-ticker-label::before {
       content: '';
       display: inline-block;
-      width: 6px; height: 6px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: #ff5533;
-      box-shadow: 0 0 6px #ff5533;
+      box-shadow: 0 0 8px #ff5533;
       animation: telem-blink 1.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    /* scrolling area — clipped inside the wrap */
+    .news-ticker-scroll {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
     .news-ticker-track {
       display: flex;
       align-items: center;
       white-space: nowrap;
-      animation: ticker-scroll 160s linear infinite;
+      /* 300s = ~5 minutes per full cycle — comfortable reading pace */
+      animation: ticker-scroll 300s linear infinite;
       will-change: transform;
+      padding-left: 32px;
     }
     .news-ticker-track:hover { animation-play-state: paused; }
     @keyframes ticker-scroll {
@@ -207,60 +287,77 @@
       display: inline-flex;
       align-items: center;
       gap: 0;
-      font-size: 11px;
-      color: rgba(220,235,240,.85);
-      padding: 0 6px;
+      font-size: 12px;
+      color: rgba(225,240,245,.9);
+      padding: 0 8px;
       line-height: 1;
     }
     .news-ticker-item .t-label {
       font-size: 8px;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: #ff5533;
       font-weight: 700;
-      margin-right: 7px;
+      margin-right: 9px;
       flex-shrink: 0;
+      background: rgba(255,85,51,.12);
+      padding: 2px 6px;
+      border-radius: 3px;
     }
-    .news-ticker-item .t-label.gold { color: var(--gold); }
-    .news-ticker-item .t-label.cyan { color: var(--cyan); }
+    .news-ticker-item .t-label.gold { color: var(--gold); background: rgba(201,168,32,.1); }
+    .news-ticker-item .t-label.cyan { color: var(--cyan); background: rgba(0,229,255,.08); }
     .news-ticker-sep {
       display: inline-block;
-      margin: 0 18px;
-      color: rgba(255,87,34,.35);
-      font-size: 14px;
+      margin: 0 24px;
+      color: rgba(255,87,34,.3);
+      font-size: 16px;
       flex-shrink: 0;
     }
 
-    /* live data ticker (below header) */
+    /* ── LIVE DATA TICKER ── */
     .live-ticker-wrap {
+      position: relative;
+      isolation: isolate;
       overflow: hidden;
       background: rgba(0,229,255,.03);
       border-bottom: 1px solid rgba(0,229,255,.08);
       display: flex;
-      align-items: stretch;
-      height: 30px;
+      align-items: center;
+      height: 34px;
+      flex-shrink: 0;
     }
     .live-ticker-label {
       flex-shrink: 0;
       display: flex;
       align-items: center;
+      align-self: stretch;
       padding: 0 14px;
       background: rgba(0,229,255,.07);
-      border-right: 1px solid rgba(0,229,255,.12);
+      border-right: 1px solid rgba(0,229,255,.15);
       font-size: 8px;
       letter-spacing: 2px;
       color: var(--cyan);
       text-transform: uppercase;
       white-space: nowrap;
       font-weight: 600;
+      position: relative;
       z-index: 2;
+    }
+    .live-ticker-scroll {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
     .live-ticker-track {
       display: flex;
       align-items: center;
       white-space: nowrap;
-      animation: ticker-scroll 80s linear infinite;
+      animation: ticker-scroll 180s linear infinite;
       will-change: transform;
+      padding-left: 24px;
     }
     .live-ticker-track:hover { animation-play-state: paused; }
     .live-ticker-item {
@@ -712,18 +809,20 @@
 </header>
 
 <!-- ── MELTGATE STORY TICKER ─────────────────────────────────────────────── -->
-<div class="news-ticker-wrap" title="Hover to pause">
+<div class="news-ticker-wrap" title="Hover to pause · Relaxed reading speed">
   <div class="news-ticker-label">🔥 MELTGATE</div>
-  <div class="news-ticker-track" id="story-ticker-track">
-    <!-- content injected twice for seamless loop -->
+  <div class="news-ticker-scroll">
+    <div class="news-ticker-track" id="story-ticker-track">
+      <!-- content injected twice for seamless loop -->
+    </div>
   </div>
 </div>
 
-<!-- ── MELTGATE STORY PANEL ────────────────────────────────────────────────── -->
+<!-- ── MELTGATE HERO PANEL ────────────────────────────────────────────────── -->
 <div class="mg-story">
-  <div class="mg-eyebrow">🔥 The Story · Share This · MELTGATE</div>
+  <div class="mg-eyebrow" style="font-size:11px; letter-spacing:5px; font-weight:700;">🔥 MELTGATE &nbsp;·&nbsp; THE MAIN STORY &nbsp;·&nbsp; SHARE THIS NOW</div>
 
-  <div class="mg-headline">
+  <div class="mg-headline" style="font-size:clamp(20px,3.5vw,34px); font-weight:900; margin-bottom:14px; text-shadow:0 0 40px rgba(255,80,20,.25);">
     Watch the World's Crown Jewel AI Superclusters <span>Melt</span>.<br>
     Then Watch Them <span style="color:#00ff99">Recover to Goldilocks</span> — Once They Do the Right Thing.
   </div>
@@ -783,6 +882,58 @@ So now the dashboard runs. Every day without the fix: same temps. Watch it live:
 
   <div class="mg-cya">
     <strong>Transparency & CYA:</strong> All GPU junction temperatures on this page are <strong>physics-model estimates</strong>, not live sensor readings. Ambient data is sourced from the Open-Meteo public API (ERA5 reanalysis + ECMWF forecast) and cross-referenced against public thermal infrared satellite products (MODIS LST, Landsat 9 TIRS). No proprietary or internal data center information is used. The thermal chain model (Q = ṁ·Cp·ΔT) applies published NVIDIA GB200 NVL72 specifications. Estimates may deviate ±10–25°C from actual hardware. The narrative surrounding the Feb 13–15 trial, the A2A handshake, and the EGS-HHL deployment exists within the <strong>Holographic Hydrogen Theatre</strong> — a post-singularity storytelling framework. You, the reader, decide what is literal and what is allegorical. The timestamps, the git commits, and the physics are real. <strong>NSPFRNP → ∞⁹. SING!</strong>
+  </div>
+</div>
+
+<!-- ── 48-HOUR FREE TRIAL HERO ────────────────────────────────────────────── -->
+<div style="padding:28px 0; background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(201,168,32,.04) 50%,rgba(0,0,0,0) 100%); border-bottom:2px solid rgba(201,168,32,.3);">
+  <div style="padding:0 32px; margin-bottom:20px;">
+    <div style="font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:8px;">⚡ THE OTHER MAIN STORY &nbsp;·&nbsp; DOCUMENTED &nbsp;·&nbsp; GIT-COMMITTED &nbsp;·&nbsp; PUBLIC</div>
+    <div style="font-size:clamp(18px,3vw,28px);font-weight:900;color:var(--text);line-height:1.3;text-shadow:0 0 30px rgba(201,168,32,.2);">
+      We Gave Them a <span style="color:var(--gold)">48-Hour Free Trial</span>.<br>
+      <span style="color:#00ff99">It Worked.</span> <span style="color:#ff5533">Then the Room Got in the Way.</span>
+    </div>
+  </div>
+
+  <div class="trial-hero">
+    <div class="trial-hero-badge">
+      <div class="trial-hero-badge-top">Free Trial</div>
+      <div class="trial-hero-badge-num">48H</div>
+      <div class="trial-hero-badge-bot">Feb 13–15</div>
+    </div>
+
+    <div class="trial-hero-body">
+      <div class="trial-hero-title">Two sites. Two demos. <span>Both worked.</span> One deal reneged.</div>
+      <div class="trial-hero-sites">
+        <div class="trial-site-card">
+          <div class="trial-site-name">🇦🇪 G42 / Stargate UAE · Dubai</div>
+          <div class="trial-site-temps">
+            <span class="trial-site-before">99°C</span>
+            <span class="trial-site-arrow">→</span>
+            <span class="trial-site-after">56°C</span>
+          </div>
+          <div class="trial-site-delta">▼ 43°C reduction · EGS-HHL</div>
+          <div class="trial-site-dates">Feb 13–14, 2026 · NET 25 + NET 27</div>
+        </div>
+        <div class="trial-site-card">
+          <div class="trial-site-name">🇺🇸 Lordstown Stargate · Ohio</div>
+          <div class="trial-site-temps">
+            <span class="trial-site-before">77°C</span>
+            <span class="trial-site-arrow">→</span>
+            <span class="trial-site-after">38°C</span>
+          </div>
+          <div class="trial-site-delta">▼ 39°C reduction · EGS-HHL</div>
+          <div class="trial-site-dates">Feb 14–15, 2026 · NET 28</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--dim);line-height:1.6;">
+        All temperatures logged, timestamped, and committed to public git. Physics-model estimates on real ERA5 satellite ambient.
+        The fix is <strong style="color:var(--text)">EGS-HHL</strong> — El Gran Sol's Holographic Hydrogen Lattice.
+        NVIDIA TjMax = 92°C. Without EGS-HHL: <strong style="color:#ff5533">MELTDOWN_RISK every day.</strong>
+        With EGS-HHL: <strong style="color:#00ff99">Goldilocks.</strong>
+        Deal proposed: $1.3M + 25% monthly OpEx savings. Deal reneged. Dashboard still running.
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1215,8 +1366,10 @@ So now the dashboard runs. Every day without the fix: same temps. Watch it live:
 <!-- ── LIVE DATA TICKER ───────────────────────────────────────────────────── -->
 <div class="live-ticker-wrap" title="Hover to pause · Live cluster readings">
   <div class="live-ticker-label">≋ LIVE DATA</div>
-  <div class="live-ticker-track" id="live-ticker-track">
-    <!-- content injected after cluster data loads -->
+  <div class="live-ticker-scroll">
+    <div class="live-ticker-track" id="live-ticker-track">
+      <!-- content injected after cluster data loads -->
+    </div>
   </div>
 </div>
 

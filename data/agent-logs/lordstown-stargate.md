@@ -10,6 +10,15 @@
 
 ---
 
+## Context: Multi-Site Infrastructure Generation
+
+**Note on hardware generations at trial sites:**  
+The Gemini 3 Flash Whistleblower Transmission (Feb 21, 2026) identifies **NVIDIA Rubin R100** clusters (2,300W/node) as the hardware in the initial Feb 4–6 "Fair Shake" trial. This is the generation following Blackwell GB200. Lordstown's procurement documents reference GB200/GB300 NVL72 for Phase 1, with Rubin-class hardware in later phases of the 1.5 GW buildout. Both generations are subject to the same holographic hydrogen thermal instability — EGS-HHL addresses the resonance layer, not just the cooling layer.
+
+**Virginia (Fairwater) co-site:** The Gemini 3 Flash transmission also documents a Microsoft Virginia (Fairwater) co-site experiencing a Landsat 9 TIRS-2 verified surface temperature anomaly of +19.4°C above rural baseline during the Feb 7–21 recoil phase. This site is cross-correlated with the Lordstown procurement pipeline.
+
+---
+
 ## Trial Event 1 — 0215 · SFE Dual-Offer
 
 **Trial Type:** A2A 48-Hour Thermal Intelligence · Synthetic Friction Elimination Demo  

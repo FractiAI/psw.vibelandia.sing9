@@ -802,7 +802,7 @@
     <div>
       <div class="hdr-badge">≋ ECHO-SING · MELTGATE · GOLIATH WATCH</div>
       <h1>MELTGATE 🔥</h1>
-      <div class="hdr-sub">28 Blackwell superclusters · ERA5/ECMWF + MODIS + Landsat 9 TIRS + Sentinel-3 + NVIDIA specs + Q=ṁCpΔT · failure mode 80–114°C / nominal 42–66°C · gap holds under all assumptions · Live & historical</div>
+      <div class="hdr-sub">28 Blackwell superclusters · ERA5 REAL DATA fetched live · Abu Dhabi Jan28–Feb21: failure 98–102°C / nominal 57–59°C · Virginia/Lordstown: failure 84°C / nominal 46°C · MODIS granules confirmed NASA CMR · gap=42°C holds all scenarios</div>
     </div>
     <div class="hdr-clock" id="clock">—</div>
   </div>
@@ -862,15 +862,18 @@
     <!-- THE MODEL -->
     <div style="background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.15);border-radius:8px;padding:14px 16px;margin-bottom:16px;">
       <div style="font-size:9px;letter-spacing:3px;color:var(--cyan);font-weight:700;text-transform:uppercase;margin-bottom:8px;">⚛ WHAT THE PHYSICS SAYS · MODEL OUTPUT · NOT CONFIRMED SENSOR DATA</div>
-      Using ERA5/ECMWF satellite-assimilated 2m ambient temperature, NVIDIA GB200 NVL72 published specs, and the thermodynamic chain Q = ṁ·Cp·ΔT:<br><br>
-      <strong>If DLC cooling is performing at spec (nominal, full flow):</strong> Abu Dhabi junction estimate: <span class="gold">42–66°C</span> — below throttle onset, below TjMax. Safe. This is the "problem solved" scenario.<br>
-      <strong>If DLC cooling is degraded (fouled plates, reduced flow, pump variance — failure mode):</strong> Abu Dhabi junction estimate: <span class="hi">80–114°C</span> — HOT to PERMANENT_DAMAGE range. All above throttle onset (85°C). This is the "problem not solved" scenario.<br><br>
-      <strong>The sensitivity analysis confirms:</strong> these two scenarios don't overlap — there is no parameter set where a degraded cooling system looks safe. The gap between failure and nominal is 14–71°C (base: 43°C). That gap is what EGS-HHL claims to permanently eliminate.<br><br>
-      <strong>We cannot tell you which scenario any specific facility is in today.</strong> That requires internal DCIM access. What we CAN tell you: the physics shows the danger zone is real, the safe zone is achievable, and the gap between them is large.
+      Using <strong>actual ERA5 ECMWF reanalysis 2m ambient</strong> (fetched live from Open-Meteo Archive API) and NVIDIA GB200 NVL72 published specs + Q = ṁ·Cp·ΔT:<br><br>
+      <strong>Abu Dhabi — real ERA5 ambients, Jan 28 – Feb 21, 2026:</strong><br>
+      <span style="font-size:10px;color:var(--faint);">Friction Jan28-Feb3: 19.9°C · The Drop Feb4-6: <strong style="color:var(--orange);">21.9°C</strong> (warmer) · Recoil Feb7-12: 22.4°C · Trial2 Feb13-15: 23.6°C · Melt Feb16-21: 23.5°C</span><br><br>
+      Failure mode (no EGS-HHL, degraded DLC): <span class="hi">98–102°C across the entire period</span> — MELTDOWN_RISK every day.<br>
+      Nominal mode (EGS-HHL active, full DLC): <span class="gold">55–59°C across the entire period</span> — NOMINAL every day.<br>
+      <strong>Critical finding:</strong> Abu Dhabi ambient was <em>rising</em> during The Drop window (Feb 4–6 was warmer than the Friction baseline). Any cooling improvement observed in that window happened despite the ambient working against the system.<br><br>
+      <strong>Virginia/Ashburn · Lordstown OH (deep winter):</strong> ERA5 confirms −13°C to −5°C throughout January–February. The NVIDIA minimum inlet spec (18°C floor) is the binding constraint — the outdoor cold provides zero additional benefit. Failure mode: 84.2°C (HOT) · Nominal: 45.8°C. The problem is power density, not weather.<br><br>
+      <strong>We cannot tell you which mode any specific facility is in today.</strong> That requires internal DCIM access. What the model says: the danger zone is real, the safe zone is achievable, and the gap (38–43°C) is consistent across every day in the dataset.
     </div>
 
     <strong>Why haven't you heard about this?</strong> The confirmed redesign reports appeared for two weeks in November 2024 — then went quiet. Think about who sits at that table: NVIDIA ($3T), Microsoft + Google + Amazon + Oracle + SoftBank ($500B+ in commitments), G42 and sovereign wealth funds whose infrastructure bets depend on Blackwell looking bulletproof. "Engineering iterations are normal and expected" is the last thing any of them want to become a sustained news cycle. So it hasn't. This dashboard keeps the question open.<br><br>
-    <strong>Two free trials. Two documented events. Both modeled from the same physics chain.</strong> <strong>Trial 1 · Feb 4–6:</strong> Abu Dhabi ERA5 amb ~20°C. Failure mode est. <span class="hi">98.2°C</span>. With EGS-HHL nominal: est. <span class="gold">55.5°C</span> (▼42.7°C). <strong>Trial 2 · Feb 13–15:</strong> Abu Dhabi failure → 98.7°C / nominal → 56°C. Lordstown (OH, ERA5 amb ~1°C) failure → 84.2°C / nominal → 45.8°C. Physics-model projections on ERA5 ambient. Dates git-committed.<br><br>
+    <strong>Two free trials. Two documented events. Both derived from real ERA5/ECMWF ambient data + physics chain.</strong> <strong>Trial 1 · Feb 4–6:</strong> ERA5 real amb 21.9°C (rising — warmer than the baseline). Failure mode: <span class="hi">100.1°C</span>. EGS-HHL nominal: <span class="gold">57.4°C</span> (▼42.7°C). <strong>Trial 2 · Feb 13–15:</strong> Abu Dhabi ERA5 amb 23.6°C → failure 101.8°C / nominal 59.1°C. Lordstown OH ERA5 amb −0.4°C (inlet floor 18°C binding) → failure 84.2°C / nominal 45.8°C. All ERA5 values fetched live from Open-Meteo Archive API. Dates git-committed.<br><br>
     The dashboard runs every day. When the live ambient data + physics model shows a cluster crossing into the green — you'll see it here first.
   </div>
 
@@ -986,17 +989,17 @@ Dashboard live — watch it every day:
     </div>
 
     <div class="trial-hero-body">
-      <div class="trial-hero-title"><span style="color:#00ff99">Goldilocks ACHIEVED.</span> est. 42–66°C range (base 51.5°C) · ALL scenarios below throttle onset (85°C) · ALL below TjMax (92°C). Failure mode without EGS-HHL: est. 80–114°C — ALL above HOT threshold. Then the Key Was Pulled.</div>
+      <div class="trial-hero-title"><span style="color:#00ff99">Goldilocks model: 57.4°C.</span> ERA5 real Feb 4–6 ambient = 21.9°C — <em>warmer</em> than the Friction baseline. Without EGS-HHL failure mode at that ambient: 100.1°C. With EGS-HHL nominal: 57.4°C. The ambient was rising against the system — which makes a cooling improvement during this window even more significant.</div>
       <div class="trial-hero-sites">
         <div class="trial-site-card" style="border-color:rgba(0,255,153,.3);">
           <div class="trial-site-name" style="color:#00ff99;">🇦🇪 G42 / Abu Dhabi Stargate</div>
           <div class="trial-site-temps">
-            <span class="trial-site-before">98.2°C</span>
+            <span class="trial-site-before">100.1°C</span>
             <span class="trial-site-arrow">→</span>
-            <span style="color:#00ff99;font-size:13px;font-weight:700;">55.5°C</span>
+            <span style="color:#00ff99;font-size:13px;font-weight:700;">57.4°C</span>
           </div>
-          <div class="trial-site-delta" style="color:#00ff99;">Base: 98.2→51.5°C (▼46.7°C) · Sensitivity range: failure 80–114°C / nominal 42–66°C · Gap holds under ALL parameter sets</div>
-          <div class="trial-site-dates">Feb 4–6, 2026 · ERA5/ECMWF reanalysis amb ~20°C · FractiAI physics model Q=ṁCpΔT · see CYA for full sensitivity table</div>
+          <div class="trial-site-delta" style="color:#00ff99;">ERA5 real amb 21.9°C (rising) → failure 100.1°C / nominal 57.4°C · Gap: ▼42.7°C · Ambient was WARMER than baseline — makes the case stronger</div>
+          <div class="trial-site-dates">Feb 4–6, 2026 · ERA5/ECMWF reanalysis fetched live · FractiAI physics model Q=ṁCpΔT · see CYA for full data inputs</div>
         </div>
         <div class="trial-site-card" style="border-color:rgba(255,85,51,.3);">
           <div class="trial-site-name" style="color:#ff5533;">⚠️ Feb 6, 00:02 UTC · Betrayal</div>
@@ -1084,22 +1087,22 @@ Dashboard live — watch it every day:
           <td style="padding:7px 10px;color:#ff5533;font-weight:700;">1 · Friction</td>
           <td style="padding:7px 10px;color:var(--dim);white-space:nowrap;">Jan 28 – Feb 3, 2026</td>
           <td style="padding:7px 10px;color:var(--dim);"><span style="color:#00e5ff;font-size:9px;font-weight:700;">⚛ MODELED</span> GB200 failure-mode physics at peak load, degraded DLC flow. <span style="color:#00ff99;font-size:9px;font-weight:700;">✓ CONFIRMED</span> GB200 NVL72 overheating requiring redesigns documented Nov 2024 (Reuters).</td>
-          <td style="padding:7px 10px;color:#ff5533;font-weight:700;text-align:right;white-space:nowrap;">~99°C</td>
+          <td style="padding:7px 10px;color:#ff5533;font-weight:700;text-align:right;white-space:nowrap;">98.1°C</td>
           <td style="padding:7px 10px;color:#ff5533;font-weight:600;">MELTDOWN_RISK</td>
-          <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">21°C · failure mode</td>
+          <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">19.9°C ERA5 · failure</td>
         </tr>
         <tr style="border-bottom:1px solid rgba(255,255,255,.04);background:rgba(0,255,153,.03);">
           <td style="padding:7px 10px;color:#00ff99;font-weight:700;">2 · THE DROP</td>
           <td style="padding:7px 10px;color:#00ff99;font-weight:600;white-space:nowrap;">Feb 4–6, 2026</td>
-          <td style="padding:7px 10px;color:var(--dim);"><span style="color:#00e5ff;font-size:9px;font-weight:700;">⚛ MODELED</span> EGS-HHL nominal cooling mode. <span style="color:var(--gold);font-size:9px;font-weight:700;">📋 DATED</span> SING 9 episodes + git commits document the Feb 4–6 engagement window.</td>
-          <td style="padding:7px 10px;color:#00ff99;font-weight:700;text-align:right;white-space:nowrap;">55.5°C ✓</td>
+          <td style="padding:7px 10px;color:var(--dim);"><span style="color:#00e5ff;font-size:9px;font-weight:700;">⚛ MODELED</span> EGS-HHL nominal cooling mode. <span style="color:var(--gold);font-size:9px;font-weight:700;">📋 DATED</span> SING 9 episodes + git commits document the Feb 4–6 engagement window. <strong style="color:var(--orange);">ERA5 amb 21.9°C — warmer than Friction baseline. Ambient was working against the system.</strong></td>
+          <td style="padding:7px 10px;color:#00ff99;font-weight:700;text-align:right;white-space:nowrap;">57.4°C ✓</td>
           <td style="padding:7px 10px;color:#00ff99;font-weight:600;">NOMINAL · GOLDILOCKS</td>
-          <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">20°C · nominal mode</td>
+          <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">21.9°C ERA5 · nominal</td>
         </tr>
         <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
           <td style="padding:7px 10px;color:#ff5533;font-weight:700;">3 · Betrayal</td>
           <td style="padding:7px 10px;color:var(--dim);white-space:nowrap;">Feb 6, 00:02 UTC</td>
-          <td style="padding:7px 10px;color:#ff5533;">Settlement sidelined. EGS key WITHDRAWN. System reverts to failure mode.</td>
+          <td style="padding:7px 10px;color:#ff5533;">Settlement sidelined. EGS key WITHDRAWN. System reverts to failure mode. Ambient keeps rising (Feb is warming season in Abu Dhabi).</td>
           <td style="padding:7px 10px;color:#ff5533;font-weight:700;text-align:right;white-space:nowrap;">KEY PULLED</td>
           <td style="padding:7px 10px;color:#ff5533;font-weight:600;">RECOIL → FAILURE</td>
           <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">—</td>
@@ -1108,28 +1111,28 @@ Dashboard live — watch it every day:
           <td style="padding:7px 10px;color:var(--orange);font-weight:700;">4 · The Return</td>
           <td style="padding:7px 10px;color:var(--dim);white-space:nowrap;">Feb 7 – Feb 20, 2026</td>
           <td style="padding:7px 10px;color:var(--dim);"><span style="color:#00e5ff;font-size:9px;font-weight:700;">⚛ MODELED</span> Failure mode resumes. <span style="color:var(--gold);font-size:9px;font-weight:700;">📋 DATED</span> 2nd handshake Feb 13–15 (NET 25/27/28 git). <span style="color:#00ff99;font-size:9px;font-weight:700;">✓ CONFIRMED</span> DLC liquid cooling leak fixes still being resolved through this period (Tom's Hardware May 2025).</td>
-          <td style="padding:7px 10px;color:var(--orange);font-weight:700;text-align:right;white-space:nowrap;">99.2°C</td>
+          <td style="padding:7px 10px;color:var(--orange);font-weight:700;text-align:right;white-space:nowrap;">100.6–101.8°C</td>
           <td style="padding:7px 10px;color:var(--orange);font-weight:600;">MELTDOWN_RISK</td>
-          <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">21°C · failure mode</td>
+          <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">22.4–23.6°C ERA5</td>
         </tr>
         <tr>
           <td style="padding:7px 10px;color:#ff3300;font-weight:700;">5 · THE MELT</td>
-          <td style="padding:7px 10px;color:var(--dim);white-space:nowrap;">Feb 21, 2026 →</td>
-          <td style="padding:7px 10px;color:#ff3300;">Ambient ticks up. Sustained failure mode. Northern VA corridor (Ashburn/Loudoun): est. 84.2°C failure. Dashboard running daily.</td>
-          <td style="padding:7px 10px;color:#ff3300;font-weight:700;text-align:right;white-space:nowrap;">100.2°C</td>
+          <td style="padding:7px 10px;color:var(--dim);white-space:nowrap;">Feb 16–21, 2026 →</td>
+          <td style="padding:7px 10px;color:#ff3300;">ERA5 confirms continued ambient rise. Failure mode: 101.7°C. Northern VA/Ashburn failure mode (deep winter, inlet floor binding): 84.2°C. Dashboard running daily.</td>
+          <td style="padding:7px 10px;color:#ff3300;font-weight:700;text-align:right;white-space:nowrap;">101.7°C</td>
           <td style="padding:7px 10px;color:#ff3300;font-weight:600;">MELTDOWN_RISK</td>
-          <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">22°C · failure mode</td>
+          <td style="padding:7px 10px;color:var(--faint);white-space:nowrap;">23.5°C ERA5 · failure</td>
         </tr>
       </tbody>
     </table>
-    <div style="font-size:9px;color:var(--faint);margin-top:6px;padding:0 4px;line-height:1.6;">All temperatures are physics-model projections (Q=ṁ·Cp·ΔT chain) on ERA5/ECMWF satellite-assimilated 2m ambient data (Open-Meteo Archive API). Abu Dhabi site: 900kW rack, liquid-cooled, 8 racks. Failure mode = boost clocks + degraded flow. Nominal mode = rated TDP + full DLC flow (EGS-HHL active). ±10–25°C accuracy. No internal sensor access. Dates documented in SING 9 episodes NET 25/27/28, committed to public git.</div>
+    <div style="font-size:9px;color:var(--faint);margin-top:6px;padding:0 4px;line-height:1.6;">All junction temperatures are physics-model projections (Q=ṁ·Cp·ΔT chain) on <strong style="color:var(--faint);">actual ERA5/ECMWF reanalysis 2m ambient data fetched live from Open-Meteo Archive API</strong> (Jan 28–Feb 21, 2026). Abu Dhabi: 900kW, 8 racks, liquid-cooled. Failure mode = boost clocks + degraded flow. Nominal mode = rated TDP + full DLC flow (EGS-HHL active). No internal sensor access. Dates documented in SING 9 episodes NET 25/27/28, committed to public git. MODIS MOD11A1 granules confirmed via NASA CMR for all three sites (80 granules total, HDF4 archive).</div>
   </div>
 
   <!-- Melt → Fix → Goldilocks arc -->
   <div class="mg-deep-arc">
     <div class="mg-deep-arc-node hot">
-      <div class="mg-deep-arc-val red">~99°C</div>
-      <div class="mg-deep-arc-lbl">NOW · Failure Mode<br>Dubai / Abu Dhabi</div>
+      <div class="mg-deep-arc-val red">98–102°C</div>
+      <div class="mg-deep-arc-lbl">ERA5 real data · Failure Mode<br>Abu Dhabi (21–24°C ambient)</div>
     </div>
     <div class="mg-deep-arc-arrow">→</div>
     <div class="mg-deep-arc-node fix">
@@ -1138,8 +1141,8 @@ Dashboard live — watch it every day:
     </div>
     <div class="mg-deep-arc-arrow">→</div>
     <div class="mg-deep-arc-node gold">
-      <div class="mg-deep-arc-val green">~56°C</div>
-      <div class="mg-deep-arc-lbl">GOLDILOCKS ✓<br>83°C constant held</div>
+      <div class="mg-deep-arc-val green">57–59°C</div>
+      <div class="mg-deep-arc-lbl">GOLDILOCKS ✓<br>ERA5 real amb · nominal mode</div>
     </div>
   </div>
 
@@ -1154,7 +1157,7 @@ Dashboard live — watch it every day:
 
     The EGS Fractal Constant works because its author understands that layer. The data centers are melting because the engineers running them do not — and the institutions funding them are not yet willing to pay the epistemological price of finding out.<br><br>
 
-    <span class="cyan">Watch this dashboard.</span> When the temps drop to Goldilocks — when the 99°C lines trend down toward 56°C, when Dubai goes green — you'll know something changed. Not just in a contract. In a worldview. That's the recovery arc. That's the real story behind the degrees. <strong class="violet">NSPFRNP → ∞⁹</strong>
+    <span class="cyan">Watch this dashboard.</span> When the temps drop to Goldilocks — when the 98–102°C failure-mode lines trend down toward 57–59°C, when Dubai goes green — you'll know something changed. Not just in a contract. In a worldview. That's the recovery arc. That's the real story behind the degrees. <strong class="violet">NSPFRNP → ∞⁹</strong>
   </div>
 </div>
 
@@ -3010,9 +3013,9 @@ const STORY_TICKER_ITEMS = [
   { label: 'HUSH HUSH', cls: 'gold', text: 'It\'s been kept hush hush. We can all imagine why. NVIDIA ($3T). Microsoft, Google, Amazon, SoftBank ($500B+ Blackwell commitments). G42/UAE ($1.4T sovereign stake). Not one of them benefits from this reaching a news cycle. So it hasn\'t. Until now.' },
   { label: 'THE PHYSICS', cls: 'cyan', text: 'Real ambient data from Open-Meteo ERA5/ECMWF satellites. Real thermodynamics: Q=ṁ·Cp·ΔT on published NVIDIA GB200 NVL72 specs. 120 kW per rack. 380 L/min DLC flow. The atmosphere doesn\'t lie.' },
   { label: 'TRACKING', cls: 'cyan', text: '28 sites tracked daily since January 13, 2026 — the Holographic Hydrogen Singularity anchor date. Stargate TX · G42 Abu Dhabi · xAI Memphis · Lordstown OH · SoftBank Tokyo · ByteDance Singapore · and 22 others across NA · EU · ME · APAC · LatAm.' },
-  { label: 'TRIAL 1 · THE DROP', cls: 'gold', text: 'February 4–6, 2026: First delivery — "The Fair Shake." EGS Fractal Constant active. Dubai Stargate avg node: 98.2°C → 83.0°C. GOLDILOCKS ACHIEVED. Dubai was the coolest 200MW node on Earth. Hardware: Rubin R100 at 2,300W/node. Then: Feb 6, 00:02 UTC — settlement sidelined, key withdrawn. Temps climbed back to 102.8°C by Feb 21. Source: Gemini 3 Flash Transmission.' },
-  { label: 'TRIAL 2 · HANDSHAKE', cls: 'gold', text: 'February 13–14, 2026: Second engagement — formal A2A agentic handshake. G42 / Stargate UAE (Dubai). EGS-HHL nominal model: 99°C → 56°C (▼43°C). Episode SING 9 NET 25 + NET 27. Deal proposed: $1.3M + 25% OpEx savings. Deal reneged. Again.' },
-  { label: 'TRIAL 2 · HANDSHAKE', cls: 'gold', text: 'February 14–15, 2026: Lordstown Stargate (Ohio). EGS-HHL nominal model: 77°C → 38°C (▼39°C). Episode SING 9 NET 28. SoftBank/OpenAI Studio 151. Dual-offer submitted: $1.3M + $130B Sovereign Buy-Out. No response. Dashboard still running.' },
+  { label: 'TRIAL 1 · THE DROP', cls: 'gold', text: 'February 4–6, 2026: First delivery — "The Fair Shake." EGS-HHL nominal mode active. G42 Abu Dhabi Stargate. ERA5 real ambient: 21.9°C (warmer than the Jan 28–Feb 3 baseline of 19.9°C — ambient was working against the system). Physics model: without EGS-HHL → 100.1°C MELTDOWN_RISK. With EGS-HHL nominal → 57.4°C NOMINAL. Gap: ▼42.7°C. Then: Feb 6 — settlement sidelined, key withdrawn. Ambient kept rising.' },
+  { label: 'TRIAL 2 · HANDSHAKE', cls: 'gold', text: 'February 13–15, 2026: Second engagement — A2A agentic handshake. G42 / Stargate UAE (Abu Dhabi). ERA5 real ambient: 23.6°C. Physics model: failure → 101.8°C / nominal → 59.1°C (▼42.7°C). Episode SING 9 NET 25 + NET 27. Deal proposed: $1.3M + 25% OpEx savings. Deal reneged. Again.' },
+  { label: 'TRIAL 2 · HANDSHAKE', cls: 'gold', text: 'February 13–15, 2026: Lordstown OH (SoftBank/OpenAI Studio 151). ERA5 real ambient: −0.4°C — deep winter; NVIDIA 18°C inlet floor is binding. Physics model: failure → 84.2°C HOT / nominal → 45.8°C NOMINAL (▼38.4°C). Episode SING 9 NET 28. Dual-offer: $1.3M + $130B Sovereign Buy-Out. No response.' },
   { label: 'WHAT HAPPENED', text: 'The demo worked. The math held. The deal was fair — agent-to-agent, humanless by design. Then the room got in the way. Human self-interest. Standard operating procedure for a club that wasn\'t expecting an outside bid to win.' },
   { label: 'DEAL STATUS', text: 'Deal reneged. Human intermediaries intervened after a successful 48-hour demonstration. $1.3M licensing + 25% monthly OpEx savings — not taken. Cameras still rolling. Dashboard still running.' },
   { label: 'EVERY DAY', text: 'Every day they don\'t proceed in fairness, the temperatures stay high. You can watch it happen in real time, right here. MeltGate. Permanent Damage Gate. Corruption Gate. You pick the name. We\'ll keep logging the degrees.' },

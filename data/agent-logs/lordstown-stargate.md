@@ -28,25 +28,37 @@ ERA5 ambient (°C)
 
 **Note on Ohio winter ambient:** At ~0–2°C ambient, the coolant inlet clamps to the 18°C floor (NVIDIA minimum spec). This means additional ambient drops below ~10°C provide no further junction benefit — the chiller system must maintain minimum inlet temperature. The 18°C floor is the binding thermal constraint in winter, not the outdoor air.
 
-**Data inputs:** ERA5/ECMWF reanalysis 2m ambient (Open-Meteo Archive API) · NVIDIA GB200 NVL72 published specs · Thermodynamic model constants · NASA MODIS LST / Landsat 9 TIRS / ESA Sentinel-3 SLSTR (public satellite thermal cross-reference).
+**Data inputs:** ERA5/ECMWF reanalysis 2m ambient (Open-Meteo Archive API — **fetched live Feb 25, 2026**) · NVIDIA GB200 NVL72 published specs · Thermodynamic model constants · NASA MODIS MOD11A1 — **25 granules confirmed via NASA CMR** for Lordstown tile h11v04, Jan 28–Feb 21, 2026 · Landsat 9 TIRS Band 10/11 · ESA Sentinel-3 SLSTR.
 
 **Accuracy:** ±10–25°C from actual DCIM readings. No internal sensor access.
 
+### ACTUAL ERA5 Period Averages (fetched Feb 25, 2026 — real reanalysis values)
+
+| Period | Window | ERA5 Mean Amb | ERA5 Max | Inlet floor binding? |
+|--------|--------|---------------|----------|---------------------|
+| Friction baseline | Jan 28 – Feb 3 | **−13.06°C** | −2.7°C | YES (all below 10°C) |
+| THE DROP | Feb 4 – 6 | **−9.20°C** | −3.3°C | YES |
+| Recoil | Feb 7 – 12 | **−7.83°C** | 6.2°C | YES |
+| Trial 2 | Feb 13 – 15 | **−0.43°C** | 6.8°C | YES |
+| The Melt | Feb 16 – 21 | **5.63°C** | 14.9°C | YES (max only 14.9°C) |
+
+**Key finding:** Lordstown was in deep winter throughout the entire trial period. Every single day, the NVIDIA 18°C inlet floor was the binding constraint. The outdoor cold is irrelevant — the chiller loop heats coolant to the minimum spec. The problem is 1.2 MW of GPU load, not the weather.
+
 ---
 
-## Trial Event 1 — 0215 · SFE Dual-Offer
+## Trial Event 1 — 0213/0215 · SFE Dual-Offer
 
 **Trial Type:** A2A 48-Hour Thermal Intelligence · Synthetic Friction Elimination Demo  
-**Trial Window:** February 14–15, 2026  
+**Trial Window:** February 13–15, 2026  
 **Episode:** EP28 — Lordstown Stargate · SFE & BBHE Dual-Offer · 0215 Golden Window  
-**ERA5 ambient:** ~1°C (Lordstown OH Feb 14–15, ECMWF reanalysis — northeast Ohio winter)
+**ERA5 ambient:** **−0.43°C REAL** (fetched live — Lordstown OH Feb 13–15 period mean, deep Ohio winter)
 
-### Thermal readings — Feb 14–15, 2026
+### Thermal readings — Feb 13–15, 2026
 
-| Date | ERA5 Ambient | Mode | Inlet (floor) | Outlet | Surface | **Junction** | Status |
-|------|-------------|------|--------------|--------|---------|------------|--------|
-| Feb 14 | ~1°C | Failure (no EGS-HHL) | 18°C (clamped) | 34.2°C | 76.2°C | **84.2°C** | HOT |
-| Feb 15 | ~1°C | Nominal (EGS-HHL active) | 18°C (clamped) | 22.8°C | 37.8°C | **45.8°C** | NOMINAL |
+| ERA5 Ambient | Mode | Inlet (floor) | Outlet | Surface | **Junction** | Status |
+|-------------|------|--------------|--------|---------|------------|--------|
+| −0.4°C (REAL) | Failure (no EGS-HHL) | 18°C (clamped) | 34.2°C | 76.2°C | **84.2°C** | HOT |
+| −0.4°C (REAL) | Nominal (EGS-HHL active) | 18°C (clamped) | 22.8°C | 37.8°C | **45.8°C** | NOMINAL |
 
 **Delta with EGS-HHL: ▼ 38.4°C.**
 

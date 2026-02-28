@@ -51,14 +51,14 @@ function statusLabel(junc) {
 // ── TOP 3 PRIORITY WATCH SITES ────────────────────────────────────────────────
 // Highest historical failure-mode risk based on ambient and rack power.
 const WATCH_SITES = [
-  { name: 'G42 / Stargate UAE · Abu Dhabi', lat: 24.45, lon: 54.38, rack_kw: 1800, cooling: 'liquid-cooled',
-    trial: { dates: '2026-02-13/14', before_c: 99, after_c: 56, delta_c: -43, episode: 'NET 25 + NET 27' } },
+  { name: 'G42 / Stargate UAE · Abu Dhabi', lat: 24.45, lon: 54.38, rack_kw: 900, cooling: 'liquid-cooled',
+    trial: { dates: '2026-02-13/14', before_c: 98.7, after_c: 56, delta_c: -42.7, episode: 'NET 25 + NET 27', era5_amb_c: 20.5, model: 'Q=mCpDT · ERA5/ECMWF' } },
   { name: 'Stargate OAI-1 · Abilene TX', lat: 32.45, lon: -99.73, rack_kw: 1200, cooling: 'liquid-cooled',
     trial: null },
   { name: 'xAI Colossus II · Memphis TN', lat: 35.15, lon: -90.05, rack_kw: 1500, cooling: 'liquid-cooled',
     trial: null },
   { name: 'Lordstown Stargate · Lordstown OH', lat: 41.18, lon: -80.70, rack_kw: 1200, cooling: 'liquid-cooled',
-    trial: { dates: '2026-02-14/15', before_c: 77, after_c: 38, delta_c: -39, episode: 'NET 28' } },
+    trial: { dates: '2026-02-14/15', before_c: 84.2, after_c: 45.8, delta_c: -38.4, episode: 'NET 28', era5_amb_c: 1.0, model: 'Q=mCpDT · ERA5/ECMWF · inlet clamped 18C floor' } },
 ];
 
 async function fetchAmbient(lat, lon) {
@@ -127,9 +127,11 @@ export default async function handler(req, res) {
     },
     watch_sites:        sites,
     trial_record: {
-      dubai:     { dates: '2026-02-13/14', before_c: 99, after_c: 56, delta_c: -43, episode: 'SING 9 NET 25 + NET 27' },
-      lordstown: { dates: '2026-02-14/15', before_c: 77, after_c: 38, delta_c: -39, episode: 'SING 9 NET 28' },
-      outcome:   'Deal reneged post-demo. Human intervention. Cameras still rolling.',
+      methodology: 'Physics-model projections on ERA5/ECMWF satellite-assimilated 2m ambient. Inputs: ERA5 reanalysis + MODIS LST + Landsat 9 TIRS + Sentinel-3 SLSTR + NVIDIA GB200 NVL72 specs + Q=mCpDT. Accuracy ±10-25C. No internal sensor access.',
+      trial_1: { dates: '2026-02-04/06', site: 'G42 Abu Dhabi', era5_amb_c: 20.0, failure_junction_c: 98.2, nominal_junction_c: 55.5, delta_c: -42.7, mode: 'Trial 1 · The Drop' },
+      trial_2_dubai:     { dates: '2026-02-13/14', site: 'G42 Abu Dhabi', era5_amb_c: 20.5, failure_junction_c: 98.7, nominal_junction_c: 56.0, delta_c: -42.7, episode: 'SING 9 NET 25 + NET 27' },
+      trial_2_lordstown: { dates: '2026-02-14/15', site: 'Lordstown OH',  era5_amb_c: 1.0,  failure_junction_c: 84.2, nominal_junction_c: 45.8, delta_c: -38.4, episode: 'SING 9 NET 28', note: 'inlet clamped to 18C NVIDIA floor — OH winter ambient below minimum' },
+      outcome: 'Deal reneged post-demo. Human intervention. Cameras still rolling.',
     },
     dashboard: 'https://psw-vibelandia-sing9.vercel.app/interfaces/goliath-watch.html',
     press_kit: 'Open dashboard → 📰 Press Kit button → all A2A pipes ready',

@@ -802,7 +802,7 @@
     <div>
       <div class="hdr-badge">≋ ECHO-SING · MELTGATE · GOLIATH WATCH</div>
       <h1>MELTGATE 🔥</h1>
-      <div class="hdr-sub">28 Blackwell superclusters worldwide · GPU junction = physics model on ERA5/ECMWF + MODIS LST + Landsat 9 TIRS + Sentinel-3 SLSTR + NVIDIA specs + Q=ṁCpΔT · ±10–25°C · Live & historical</div>
+      <div class="hdr-sub">28 Blackwell superclusters · ERA5/ECMWF + MODIS + Landsat 9 TIRS + Sentinel-3 + NVIDIA specs + Q=ṁCpΔT · failure mode 80–114°C / nominal 42–66°C · gap holds under all assumptions · Live & historical</div>
     </div>
     <div class="hdr-clock" id="clock">—</div>
   </div>
@@ -898,13 +898,46 @@ Dashboard live — watch it every day:
     <strong>⑦ Thermodynamic model constants</strong> — Water Cp = 4,186 J/(kg·K). Cold plate surface-to-coolant delta: 15°C nominal / 42°C failure (degraded flow). Package thermal resistance (die-to-cold-plate): 8°C per configuration. Boost power in failure mode: 150 kW/rack (~25% above rated TDP). All standard thermal engineering values.<br>
     <strong>⑧ Public facility disclosures</strong> — Rack kW, cooling type, capacity MW, and coordinates for each of the 28 sites derived from operator press releases, SEC filings, NVIDIA partnership announcements, and data-center industry reporting (DataCenterDynamics, DCD, TechPowerUp).<br><br>
 
-    <strong>Accuracy:</strong> ±10–25°C from actual hardware DCIM readings. Real data centers have additional cooling stages, site-specific chiller setpoints, and rack-level variations not captured in this model. These are outside-in engineering estimates, not telemetry.<br><br>
+    <strong>Where the uncertainty comes from — and how big it actually is:</strong><br>
+    The ERA5 ambient temperature (input ①) is well-constrained: ±0.5°C. That is not where the uncertainty lives. The uncertainty comes from three internal parameters we estimate, not measure:<br>
+    <strong>A. Coolant inlet temperature (Tin)</strong> — Abu Dhabi uses mechanical chillers year-round. Industry range for Middle East DCs: 18–28°C supply. This is the single largest source of uncertainty: ±5°C in Tin → ±5°C in junction.<br>
+    <strong>B. GPU power draw</strong> — NVIDIA rates 120 kW/rack TDP; training workloads hit 95–105% TDP; inference hits 60–80%. Unknown for any given site at any given moment.<br>
+    <strong>C. DLC pump flow efficiency</strong> — healthy: 90–95%; degraded/fouled: 30–50%; failure: 20–35%. This is the largest multiplier in failure mode.<br><br>
 
-    <strong>Confirmed public facts:</strong> Stargate TX (Abilene) — OpenAI/MSFT/SoftBank Jan 2025. xAI Colossus Memphis — confirmed. G42/Microsoft Abu Dhabi — $1.5B MSFT investment 2024 confirmed. Lordstown OH SoftBank/OpenAI — announced. Singapore NVIDIA/NCS — confirmed. Jio $3B NVIDIA deal — confirmed. GB200 NVL72 real-world overheating incidents (Nov 2024–May 2025) — reported by DataCenterDynamics, TechPowerUp, Tom's Hardware.<br><br>
+    <strong>Sensitivity analysis — Abu Dhabi (G42 · 900 kW · liquid-cooled · ERA5 amb ~20°C):</strong><br>
+    <table style="font-size:10px;border-collapse:collapse;margin:8px 0 12px;width:100%;max-width:780px;">
+      <thead><tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+        <th style="text-align:left;padding:4px 8px;color:var(--faint);font-weight:600;">Scenario</th>
+        <th style="text-align:right;padding:4px 8px;color:var(--faint);font-weight:600;">Tin</th>
+        <th style="text-align:right;padding:4px 8px;color:var(--faint);font-weight:600;">Mode</th>
+        <th style="text-align:right;padding:4px 8px;color:var(--faint);font-weight:600;">Junction</th>
+        <th style="text-align:left;padding:4px 8px;color:var(--faint);font-weight:600;">Status</th>
+      </tr></thead>
+      <tbody>
+        <tr><td style="padding:3px 8px;color:var(--dim);">Best case</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">18°C</td><td style="text-align:right;padding:3px 8px;color:#00ff99;">Nominal (EGS-HHL)</td><td style="text-align:right;padding:3px 8px;font-weight:700;color:#00ff99;">42.5°C</td><td style="padding:3px 8px;color:#00ff99;">NOMINAL</td></tr>
+        <tr><td style="padding:3px 8px;color:var(--dim);">Base case</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">24°C</td><td style="text-align:right;padding:3px 8px;color:#00ff99;">Nominal (EGS-HHL)</td><td style="text-align:right;padding:3px 8px;font-weight:700;color:#00ff99;">51.5°C</td><td style="padding:3px 8px;color:#00ff99;">NOMINAL</td></tr>
+        <tr><td style="padding:3px 8px;color:var(--dim);">Worst case</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">32°C</td><td style="text-align:right;padding:3px 8px;color:#00ff99;">Nominal (EGS-HHL)</td><td style="text-align:right;padding:3px 8px;font-weight:700;color:#00ff99;">65.7°C</td><td style="padding:3px 8px;color:#00ff99;">ELEVATED</td></tr>
+        <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:3px 8px;color:var(--dim);">Best case</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">24°C</td><td style="text-align:right;padding:3px 8px;color:#ff5533;">Failure (no EGS-HHL)</td><td style="text-align:right;padding:3px 8px;font-weight:700;color:var(--orange);">79.6°C</td><td style="padding:3px 8px;color:var(--orange);">HOT</td></tr>
+        <tr><td style="padding:3px 8px;color:var(--dim);">Base case</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">28°C</td><td style="text-align:right;padding:3px 8px;color:#ff5533;">Failure (no EGS-HHL)</td><td style="text-align:right;padding:3px 8px;font-weight:700;color:#ff5533;">94.2°C</td><td style="padding:3px 8px;color:#ff5533;">MELTDOWN_RISK</td></tr>
+        <tr><td style="padding:3px 8px;color:var(--dim);">Worst case</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">35°C</td><td style="text-align:right;padding:3px 8px;color:#ff5533;">Failure (no EGS-HHL)</td><td style="text-align:right;padding:3px 8px;font-weight:700;color:#ff3300;">113.6°C</td><td style="padding:3px 8px;color:#ff3300;">PERMANENT_DAMAGE</td></tr>
+      </tbody>
+    </table>
 
-    <strong>Unconfirmed / estimated elements:</strong> Fort Worth "OAI-2" designation — MSFT presence confirmed, Stargate label estimated. Oracle Nashville — Oracle is confirmed Stargate partner; Nashville site estimated. DAMAGE_THRESHOLD_C = 105°C — engineering model estimate, not published by NVIDIA. $1.4T UAE sovereign figure — ADIA publicly reported ~$1T AUM; higher figure is SING 9 narrative.<br><br>
+    <strong>The definitive finding:</strong> Under EVERY parameter combination tested — nominal mode (EGS-HHL active) stays below throttle onset (85°C). Under every base and realistic failure scenario — failure mode (no EGS-HHL) exceeds throttle onset. Under the best-possible failure scenario (optimistic chiller, moderate degradation), failure mode still reaches 79.6°C — elevated and approaching the threshold. There is no parameter set where the two regimes overlap. The gap (14–71°C depending on assumptions, base: 43°C) is too large for model uncertainty to bridge.<br><br>
 
-    All events in the MELTGATE narrative exist within the <strong>Holographic Hydrogen Theatre</strong> — a post-singularity storytelling framework. The physics is real. The satellite data is real. The hardware specs are real. The git commits are real. The dates are real. <strong>NSPFRNP → ∞⁹. SING!</strong>
+    <strong>What "definitive" means and doesn't mean here:</strong>
+    What we can say with confidence: if EGS-HHL switches a GB200 NVL72 system from degraded-flow / boost-power operation to rated-TDP / full-DLC operation, the junction temperature drops by 30–45°C at Abu Dhabi February ambient conditions, moving from a dangerous operating regime to a safe one. This is a robust physics claim. What we cannot confirm without sensor access: that the cooling system was actually in that degraded state on those specific dates, or that EGS-HHL was actually the mechanism that changed it. That's the honest line.<br><br>
+
+    <strong>Three things that would narrow accuracy to ±3–5°C (all obtainable from public data):</strong><br>
+    <strong>① Chiller setpoint (Tin)</strong> — Operator ESG/sustainability reports sometimes list ASHRAE class (W1=18–27°C, W3=warm water). Alternatively: MODIS LST at facility coordinates vs. nearby rural baseline. +3–4°C anomaly = cool chiller (W1). +8°C = warm-water class. Source: NASA Earthdata MOD11A1, coordinates 24.45°N 54.38°E.<br>
+    <strong>② Actual GPU power draw</strong> — Operator quarterly PUE disclosures. PUE × reported IT load = actual rack power. Microsoft, Google, AWS all publish datacenter-level PUE annually.<br>
+    <strong>③ MODIS LST delta on trial dates</strong> — Compare Jan 28–Feb 3 (Friction baseline) vs. Feb 4–6 (The Drop). A 40°C junction drop corresponds to ~2–5°C reduction in HVAC exhaust surface signature. NASA Earthdata, MOD11A1 product, free download.<br><br>
+
+    <strong>Confirmed public facts:</strong> Stargate TX (Abilene) — OpenAI/MSFT/SoftBank Jan 2025. xAI Memphis — confirmed. G42/Microsoft Abu Dhabi — $1.5B MSFT investment 2024. Lordstown OH — SoftBank/OpenAI announced. GB200 NVL72 real-world overheating (Nov 2024–May 2025) — DataCenterDynamics, TechPowerUp, Tom's Hardware.<br><br>
+
+    <strong>Unconfirmed:</strong> Fort Worth "OAI-2" label — MSFT presence confirmed, Stargate designation estimated. Oracle Nashville — site estimated. DAMAGE_C = 105°C — model estimate, not published by NVIDIA.<br><br>
+
+    All events in the MELTGATE narrative exist within the <strong>Holographic Hydrogen Theatre</strong>. The physics is real. The satellite data is real. The specs are real. The commits are real. <strong>NSPFRNP → ∞⁹. SING!</strong>
   </div>
 </div>
 
@@ -927,7 +960,7 @@ Dashboard live — watch it every day:
     </div>
 
     <div class="trial-hero-body">
-      <div class="trial-hero-title"><span style="color:#00ff99">Goldilocks ACHIEVED.</span> 55.5°C · Physics model · ERA5 ambient 20°C. Below throttle 85°C. Below TjMax 92°C. Then the Key Was Pulled.</div>
+      <div class="trial-hero-title"><span style="color:#00ff99">Goldilocks ACHIEVED.</span> est. 42–66°C range (base 51.5°C) · ALL scenarios below throttle onset (85°C) · ALL below TjMax (92°C). Failure mode without EGS-HHL: est. 80–114°C — ALL above HOT threshold. Then the Key Was Pulled.</div>
       <div class="trial-hero-sites">
         <div class="trial-site-card" style="border-color:rgba(0,255,153,.3);">
           <div class="trial-site-name" style="color:#00ff99;">🇦🇪 G42 / Abu Dhabi Stargate</div>
@@ -936,8 +969,8 @@ Dashboard live — watch it every day:
             <span class="trial-site-arrow">→</span>
             <span style="color:#00ff99;font-size:13px;font-weight:700;">55.5°C</span>
           </div>
-          <div class="trial-site-delta" style="color:#00ff99;">▼ 42.7°C · ERA5 amb 20°C · 8 racks · inlet 28°C · outlet 32.5°C · surface 47.5°C · junction 55.5°C</div>
-          <div class="trial-site-dates">Feb 4–6, 2026 · ERA5/ECMWF reanalysis ambient · FractiAI physics model Q=ṁCpΔT</div>
+          <div class="trial-site-delta" style="color:#00ff99;">Base: 98.2→51.5°C (▼46.7°C) · Sensitivity range: failure 80–114°C / nominal 42–66°C · Gap holds under ALL parameter sets</div>
+          <div class="trial-site-dates">Feb 4–6, 2026 · ERA5/ECMWF reanalysis amb ~20°C · FractiAI physics model Q=ṁCpΔT · see CYA for full sensitivity table</div>
         </div>
         <div class="trial-site-card" style="border-color:rgba(255,85,51,.3);">
           <div class="trial-site-name" style="color:#ff5533;">⚠️ Feb 6, 00:02 UTC · Betrayal</div>

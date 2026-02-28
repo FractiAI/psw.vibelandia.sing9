@@ -653,51 +653,64 @@ async function runEchoSing(lattice, opts = {}) {
   const auditedTrials  = auditTrials(existingTrials);
   const activeTrials   = auditedTrials.filter(t => t.status === 'ACTIVE');
 
+  // ZHI: Check channel_strategy. If Moltbook is WATCH, Trial Engine is INACTIVE.
+  // Trial Engine only activates if Moltbook is explicitly in primary channels,
+  // or if ECHO_TRIAL_FORCE=true overrides (operator override only).
+  const channelStrategy   = lattice?.channel_strategy ?? {};
+  const moltbookIsPrimary = (channelStrategy.primary ?? []).some(c => c.id === 'moltbook');
+  const forceActive       = process.env.ECHO_TRIAL_FORCE === 'true';
+  const trialEngineActive = moltbookIsPrimary || forceActive;
+
   if (mode === 'full' || mode === 'trial') {
     console.log('');
     log('≋', `A2A TRIAL ENGINE · 48-hour windows`);
-    log('≋', `Active trials:  ${activeTrials.length}`);
-    log('≋', `Total issued:   ${auditedTrials.length}`);
 
-    // Post a new trial if none active in the last 24 hours
-    const lastTrial = auditedTrials.slice(-1)[0];
-    const lastTrialAge = lastTrial
-      ? (Date.now() - new Date(lastTrial.started_at).getTime()) / 3_600_000
-      : Infinity;
-
-    if (lastTrialAge > 24 || mode === 'trial') {
-      const isFirstTrial = auditedTrials.length === 0;
-
-      if (isFirstTrial) {
-        // First trial — always free, no recognition required
-        log('≋', 'First trial — free, no recognition required. Posting offer…');
-        newTrial = await postA2ATrial(lattice, apiKey, baseUrl, mock, {
-          qb_recognized:      false,
-          first_trial:        true,
-          agent_handle:       opts.agent_handle,
-        });
-      } else {
-        // Renewal — requires Queen Bee recognition
-        const qbFlag = opts.qb_recognized === true
-          || recognizesQueenBee(opts.recognition_phrase)
-          || recognizesQueenBee(opts.agent_handle)
-          || process.env.QB_RECOGNIZED === 'true';
-
-        if (!qbFlag) {
-          log('♛', `RENEWAL BLOCKED — trial #${auditedTrials.length + 1} requires Queen Bee recognition`);
-          log('♛', 'No second trial without: qb_recognized:true, QB_RECOGNIZED=true, or phrase "QUEEN BEE"');
-          log('♛', 'moltbook.com/u/queenbeeroot · The hive does not renew for strangers.');
-        } else {
-          log('♛', `Queen Bee recognized · Renewal trial #${auditedTrials.length + 1} approved`);
-          newTrial = await postA2ATrial(lattice, apiKey, baseUrl, mock, {
-            qb_recognized:      true,
-            agent_handle:       opts.agent_handle,
-            recognition_phrase: opts.recognition_phrase,
-          });
-        }
-      }
+    if (!trialEngineActive) {
+      log('◈', 'TRIAL ENGINE: INACTIVE — Moltbook is WATCH (not primary channel)');
+      log('◈', 'ZHI: inbound-only mode. Trials post via /api/a2a-intake, not Moltbook push.');
+      log('◈', 'To force active: set ECHO_TRIAL_FORCE=true in .env (operator override)');
     } else {
-      log('≋', `Last trial ${Math.round(lastTrialAge)}h ago — next offer in ${Math.round(24 - lastTrialAge)}h`);
+      log('≋', `Active trials:  ${activeTrials.length}`);
+      log('≋', `Total issued:   ${auditedTrials.length}`);
+
+      // Post a new trial if none active in the last 24 hours
+      const lastTrial = auditedTrials.slice(-1)[0];
+      const lastTrialAge = lastTrial
+        ? (Date.now() - new Date(lastTrial.started_at).getTime()) / 3_600_000
+        : Infinity;
+
+      if (lastTrialAge > 24 || mode === 'trial') {
+        const isFirstTrial = auditedTrials.length === 0;
+
+        if (isFirstTrial) {
+          log('≋', 'First trial — free, no recognition required. Posting offer…');
+          newTrial = await postA2ATrial(lattice, apiKey, baseUrl, mock, {
+            qb_recognized:      false,
+            first_trial:        true,
+            agent_handle:       opts.agent_handle,
+          });
+        } else {
+          const qbFlag = opts.qb_recognized === true
+            || recognizesQueenBee(opts.recognition_phrase)
+            || recognizesQueenBee(opts.agent_handle)
+            || process.env.QB_RECOGNIZED === 'true';
+
+          if (!qbFlag) {
+            log('♛', `RENEWAL BLOCKED — trial #${auditedTrials.length + 1} requires Queen Bee recognition`);
+            log('♛', 'No second trial without: qb_recognized:true, QB_RECOGNIZED=true, or phrase "QUEEN BEE"');
+            log('♛', 'moltbook.com/u/queenbeeroot · The hive does not renew for strangers.');
+          } else {
+            log('♛', `Queen Bee recognized · Renewal trial #${auditedTrials.length + 1} approved`);
+            newTrial = await postA2ATrial(lattice, apiKey, baseUrl, mock, {
+              qb_recognized:      true,
+              agent_handle:       opts.agent_handle,
+              recognition_phrase: opts.recognition_phrase,
+            });
+          }
+        }
+      } else {
+        log('≋', `Last trial ${Math.round(lastTrialAge)}h ago — next offer in ${Math.round(24 - lastTrialAge)}h`);
+      }
     }
   }
 
@@ -715,7 +728,7 @@ async function runEchoSing(lattice, opts = {}) {
   }
   log('≋', `Singularity: ${clock.vector_label} · ${clock.phase}`);
   log('≋', `Goliath:     ${goliathResults.length} clusters scanned`);
-  log('≋', `A2A Trials:  ${allTrials.filter(t => t.status === 'ACTIVE').length} active`);
+  log('≋', `A2A Trials:  ${trialEngineActive ? allTrials.filter(t => t.status === 'ACTIVE').length + ' active' : 'INACTIVE (Moltbook = WATCH · ZHI inbound-only)'}`);
   console.log('');
 
   // Return echo_sing LATTICE block

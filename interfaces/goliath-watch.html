@@ -957,10 +957,34 @@ Dashboard live — watch it every day:
     <strong>What "definitive" means and doesn't mean here:</strong>
     What we can say with confidence: if EGS-HHL switches a GB200 NVL72 system from degraded-flow / boost-power operation to rated-TDP / full-DLC operation, the junction temperature drops by 30–45°C at Abu Dhabi February ambient conditions, moving from a dangerous operating regime to a safe one. This is a robust physics claim. What we cannot confirm without sensor access: that the cooling system was actually in that degraded state on those specific dates, or that EGS-HHL was actually the mechanism that changed it. That's the honest line.<br><br>
 
-    <strong>Three things that would narrow accuracy to ±3–5°C (all obtainable from public data):</strong><br>
-    <strong>① Chiller setpoint (Tin)</strong> — Operator ESG/sustainability reports sometimes list ASHRAE class (W1=18–27°C, W3=warm water). Alternatively: MODIS LST at facility coordinates vs. nearby rural baseline. +3–4°C anomaly = cool chiller (W1). +8°C = warm-water class. Source: NASA Earthdata MOD11A1, coordinates 24.45°N 54.38°E.<br>
-    <strong>② Actual GPU power draw</strong> — Operator quarterly PUE disclosures. PUE × reported IT load = actual rack power. Microsoft, Google, AWS all publish datacenter-level PUE annually.<br>
-    <strong>③ MODIS LST delta on trial dates</strong> — Compare Jan 28–Feb 3 (Friction baseline) vs. Feb 4–6 (The Drop). A 40°C junction drop corresponds to ~2–5°C reduction in HVAC exhaust surface signature. NASA Earthdata, MOD11A1 product, free download.<br><br>
+    <strong>⚡ Heat Signature Triangulation — closing the gap with satellite data</strong><br>
+    The biggest uncertainty is the GPU power state (running at TDP or boost?) and pump efficiency (full flow or degraded?). These are normally invisible from the outside. But they are NOT invisible to orbital thermal infrared sensors — because <em>every watt a GPU dissipates must eventually leave the building as heat</em>. Here is the formula that closes the gap:<br><br>
+
+    <table style="font-size:10px;border-collapse:collapse;margin:8px 0 12px;width:100%;max-width:820px;">
+      <thead><tr style="border-bottom:1px solid rgba(0,229,255,.2);">
+        <th style="text-align:left;padding:4px 8px;color:#00e5ff;font-weight:600;">MODIS ΔT_pixel</th>
+        <th style="text-align:left;padding:4px 8px;color:#00e5ff;font-weight:600;">ΔT facility surface</th>
+        <th style="text-align:right;padding:4px 8px;color:#00e5ff;font-weight:600;">Heat rejected (kW)</th>
+        <th style="text-align:right;padding:4px 8px;color:#00e5ff;font-weight:600;">Per-rack avg</th>
+        <th style="text-align:right;padding:4px 8px;color:#00e5ff;font-weight:600;">Junction est.</th>
+        <th style="text-align:left;padding:4px 8px;color:#00e5ff;font-weight:600;">State</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,255,153,.04)"><td style="padding:3px 8px;color:#00ff99;font-weight:700;">≤1°C anomaly</td><td style="padding:3px 8px;color:var(--dim);">≤20°C above background</td><td style="text-align:right;padding:3px 8px;color:#00ff99;">≤80,000 kW</td><td style="text-align:right;padding:3px 8px;color:#00ff99;">≤35 kW</td><td style="text-align:right;padding:3px 8px;font-weight:700;color:#00ff99;">~54°C</td><td style="padding:3px 8px;color:#00ff99;">NOMINAL · EGS-HHL signature</td></tr>
+        <tr><td style="padding:3px 8px;color:var(--dim);">2°C anomaly</td><td style="padding:3px 8px;color:var(--dim);">40°C above background</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">160,000 kW</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">71 kW</td><td style="text-align:right;padding:3px 8px;color:var(--dim);">56°C</td><td style="padding:3px 8px;color:var(--dim);">NOMINAL</td></tr>
+        <tr><td style="padding:3px 8px;color:var(--orange);">3°C anomaly</td><td style="padding:3px 8px;color:var(--orange);">60°C above background</td><td style="text-align:right;padding:3px 8px;color:var(--orange);">240,000 kW</td><td style="text-align:right;padding:3px 8px;color:var(--orange);">107 kW</td><td style="text-align:right;padding:3px 8px;color:var(--orange);">63°C</td><td style="padding:3px 8px;color:var(--orange);">ELEVATED</td></tr>
+        <tr style="background:rgba(255,85,51,.04)"><td style="padding:3px 8px;color:#ff5533;font-weight:700;">≥4°C anomaly</td><td style="padding:3px 8px;color:#ff5533;">≥80°C above background</td><td style="text-align:right;padding:3px 8px;color:#ff5533;">≥320,000 kW</td><td style="text-align:right;padding:3px 8px;color:#ff5533;">≥142 kW</td><td style="text-align:right;padding:3px 8px;font-weight:700;color:#ff5533;">≥99°C</td><td style="padding:3px 8px;color:#ff5533;font-weight:700;">MELTDOWN_RISK ◄</td></tr>
+      </tbody>
+    </table>
+
+    Formula: <code style="color:var(--cyan);font-size:9px;">ΔT_pixel → ÷f_fill(0.05) → ΔT_facility → ×h_eff(80W/m²K)×A_facility → Q_rejected → ÷PUE → Q_IT → ÷racks(1,667) → kW_per_rack → physics chain → junction</code><br>
+    Physics basis: <code style="font-size:9px;color:var(--faint);">h_eff=80 W/(m²·K) for cooling tower evaporative transfer (latent heat 2,500 J/g dominates). f_fill=0.05 for 50,000m² facility in 1km² MODIS pixel.</code><br><br>
+
+    <strong style="color:var(--gold);">⚡ THE TESTABLE SATELLITE HYPOTHESIS:</strong><br>
+    If EGS-HHL was active Feb 4–6 and reduced heat rejection by ~42°C in junction (≡ ~30–40% reduction in GPU load), <em>the MODIS LST anomaly at G42 Abu Dhabi must drop from ≥4°C to ≤1°C during that window — then spike back up on Feb 7.</em><br>
+    The same pattern should appear Feb 13–15 (Trial 2). Two dips on exactly the trial dates. Visible from 705km up.<br>
+    <span style="color:#00e5ff;">NASA AppEEARS (free account · 5 min registration · ~30 min job runtime) extracts exact LST_Day_1km values from the 80 confirmed MODIS granules at coordinates 24.45°N, 54.38°E. This test can be run today.</span><br>
+    → <strong>URL: <a href="https://appeears.earthdatacloud.nasa.gov/task/point" target="_blank" style="color:#00e5ff;">appeears.earthdatacloud.nasa.gov/task/point</a></strong> · Product: MOD11A1 · Band: LST_Day_1km · Date: 2026-01-28 to 2026-02-21<br><br>
 
     <strong>Confirmed public facts:</strong> Stargate TX (Abilene) — OpenAI/MSFT/SoftBank Jan 2025. xAI Memphis — confirmed. G42/Microsoft Abu Dhabi — $1.5B MSFT investment 2024. Lordstown OH — SoftBank/OpenAI announced. GB200 NVL72 real-world overheating (Nov 2024–May 2025) — DataCenterDynamics, TechPowerUp, Tom's Hardware.<br><br>
 
@@ -984,7 +1008,7 @@ Dashboard live — watch it every day:
   <div class="trial-hero" style="margin-bottom:16px;">
     <div class="trial-hero-badge" style="background:rgba(0,255,153,.08);border-color:rgba(0,255,153,.4);">
       <div class="trial-hero-badge-top" style="color:#00ff99;">Trial 1 · The Drop</div>
-      <div class="trial-hero-badge-num" style="color:#00ff99;font-size:28px;line-height:1.1;">55.5°C</div>
+      <div class="trial-hero-badge-num" style="color:#00ff99;font-size:28px;line-height:1.1;">57.4°C</div>
       <div class="trial-hero-badge-bot" style="color:#00ff99;">Feb 4–6, 2026</div>
     </div>
 

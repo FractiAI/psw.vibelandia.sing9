@@ -77,6 +77,11 @@ const THROTTLE_ONSET_C     = 85;    // °C GPU junction throttle onset (NVIDIA s
 const TJMAX_C              = 92;    // °C absolute TjMax — above this = damage/shutdown
 const NVIDIA_INLET_MAX_C   = 45;    // °C max coolant inlet per NVIDIA spec
 const DAMAGE_THRESHOLD_C   = 105;   // °C estimated permanent damage threshold (post-TjMax runaway)
+                                    // NOTE: 105°C is a model estimate — NVIDIA does not publish a
+                                    // formal "permanent damage" temperature. TjMax 92°C is the
+                                    // published absolute max. Post-TjMax behavior depends on
+                                    // workload, cooling, and duration. 105°C is used for risk
+                                    // scaling only and should not be cited as an NVIDIA specification.
 
 // Cooling type parameters for NOMINAL (design-point) operation
 // facility_delta_c: °C cooling tower adds over outdoor ambient
@@ -105,7 +110,7 @@ const FAILURE_PARAMS = {
 const SITES = [
   // ── NORTH AMERICA ────────────────────────────────────────────────────────
   { name: 'Stargate OAI-1 · Abilene TX',         lat:  32.45, lon: -99.73,  baseline_c:  8.2, rack_kw: 1200, cooling: 'liquid-cooled', region: 'North America' },
-  { name: 'Stargate OAI-2 · Fort Worth TX',       lat:  32.75, lon: -97.33,  baseline_c: 11.4, rack_kw: 1300, cooling: 'liquid-cooled', region: 'North America' },
+  { name: 'Microsoft Azure AI · Fort Worth TX (est.)', lat: 32.75, lon: -97.33, baseline_c: 11.4, rack_kw: 1300, cooling: 'liquid-cooled', region: 'North America' },
   { name: 'xAI Colossus II · Memphis TN',         lat:  35.15, lon: -90.05,  baseline_c: 10.5, rack_kw: 1500, cooling: 'liquid-cooled', region: 'North America' },
   { name: 'Microsoft Azure AI · San Antonio TX',  lat:  29.42, lon: -98.49,  baseline_c: 15.3, rack_kw: 1100, cooling: 'liquid-cooled', region: 'North America' },
   { name: 'Google Ironwood · Mayes County OK',    lat:  36.30, lon: -95.31,  baseline_c:  9.7, rack_kw:  950, cooling: 'hybrid',         region: 'North America' },
@@ -133,7 +138,7 @@ const SITES = [
   { name: 'ByteDance / TikTok · Singapore SG',    lat:   1.28, lon: 103.85,  baseline_c: 27.8, rack_kw:  650, cooling: 'liquid-cooled', region: 'Asia-Pacific'  },
   { name: 'SoftBank AI · Tokyo JP',               lat:  35.68, lon: 139.69,  baseline_c:  7.3, rack_kw: 1200, cooling: 'liquid-cooled', region: 'Asia-Pacific'  },
   { name: 'KDDI / NEC · Osaka JP',                lat:  34.69, lon: 135.50,  baseline_c:  8.1, rack_kw:  600, cooling: 'liquid-cooled', region: 'Asia-Pacific'  },
-  { name: 'Baidu / Alibaba · Beijing CN',         lat:  39.91, lon: 116.39,  baseline_c: -1.4, rack_kw:  950, cooling: 'hybrid',         region: 'Asia-Pacific'  },
+  { name: 'Baidu AI Cloud · Beijing CN',          lat:  39.91, lon: 116.39,  baseline_c: -1.4, rack_kw:  950, cooling: 'hybrid',         region: 'Asia-Pacific'  },
   { name: 'Tencent · Shenzhen CN',                lat:  22.54, lon: 114.06,  baseline_c: 16.2, rack_kw:  800, cooling: 'liquid-cooled', region: 'Asia-Pacific'  },
   { name: 'Microsoft Azure · Sydney AU',          lat: -33.87, lon: 151.21,  baseline_c: 23.4, rack_kw:  450, cooling: 'hybrid',         region: 'Asia-Pacific'  },
   { name: 'Jio / Reliance · Mumbai IN',           lat:  19.08, lon:  72.88,  baseline_c: 26.1, rack_kw:  500, cooling: 'liquid-cooled', region: 'Asia-Pacific'  },

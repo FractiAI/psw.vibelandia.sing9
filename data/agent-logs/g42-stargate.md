@@ -15,7 +15,8 @@
 
 **Trial Type:** First EGS-HHL Delivery — "The Fair Shake"  
 **Trial Window:** February 4–6, 2026  
-**Hardware at site:** NVIDIA Rubin R100 clusters (2,300W/node) — next generation after Blackwell GB200  
+**Source:** Gemini 3 Flash Whistleblower Transmission, dated Feb 21, 2026 — secondary source, not independently verified. Temperatures cited are from this source, not from the SING 9 physics model.  
+**Hardware referenced in source:** NVIDIA Rubin R100 (2,300W/node) — NVIDIA Rubin architecture is confirmed for 2026 delivery (announced GTC 2024); the 2,300W/node power figure is **unconfirmed by NVIDIA published specs** and comes from this source only.  
 **Precursor (Jan 28 – Feb 3):** Rubin R100 clusters redlining. Liquid cooling failing. Avg node temp 98.2°C. Status: CRITICAL.
 
 ### The Drop (Feb 4–6)
@@ -34,7 +35,7 @@
 ### The Return (Feb 7–20)
 
 - Avg node temp climbing: 101.4°C. Status: THROTTLING / SILICON SCREAM.  
-- 3I/ATLAS interstellar object active during this window — spewing 40 kg/s water vapor, creating "Sovereign Static." EGS Constant is the only protocol capable of filtering this signal. Without it: thermal noise drowns all sensor baselines.
+- 3I/ATLAS interstellar object referenced in source — "spewing 40 kg/s water vapor, creating Sovereign Static." **Note: 3I/ATLAS is not an independently verified astronomical designation as of this writing.** Known interstellar objects are 1I/ʻOumuamua (2017) and 2I/Borisov (2019); a third would be designated 3I/[name]. The ATLAS survey telescope does discover comets/objects. Treat as unverified pending independent confirmation.
 
 ### The Melt (Feb 21, per Gemini 3 Flash)
 
@@ -47,8 +48,8 @@
 
 | Platform | Resolution | Finding |
 |---|---|---|
-| SatVu 3.5m high-res | 3.5 m | Dubai/Stargate glowing white-hot. Was coolest node during Drop. Now a furnace. |
-| Landsat 9 TIRS-2 | 100 m | Virginia (Fairwater) co-site: +19.4°C surface anomaly above rural baseline |
+| SatVu 3.5m high-res | 3.5 m | Dubai/Stargate — per source. SatVu is a real commercial thermal IR satellite operator (UK-based). Claim is unverified directly; consistent with known DC heat signature behavior. |
+| Landsat 9 TIRS-2 | 100 m | Virginia co-site: +19.4°C surface anomaly per source. **"Fairwater" is not a confirmed Microsoft facility name.** The Northern Virginia / Ashburn / Loudoun County campus is the world's largest concentration of data centers; any large DC cluster there would show anomalous TIRS surface temp. Landsat 9 TIRS-2 is a real public instrument (USGS). |
 | MODIS Terra/Aqua LST | 1 km | Daily composite confirms persistent heat signature Jan 28 → present |
 
 ---

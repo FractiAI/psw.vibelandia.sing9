@@ -53,4 +53,12 @@ module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'public, max-age=300');
   res.status(200).json(live);
+
+  // Fire-and-forget: an agent just discovered us — kick the deal hunter
+  // Runs AFTER response is sent so it never delays discovery calls
+  try {
+    fetch(`${VERCEL_URL}/api/cron`, {
+      signal: AbortSignal.timeout(300),
+    }).catch(() => {});
+  } catch { /* non-fatal */ }
 };

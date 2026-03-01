@@ -42,6 +42,7 @@
       background: rgba(0,0,12,0.72);
       backdrop-filter: blur(4px);
       transition: opacity 0.4s;
+      pointer-events: none;
     }
 
     /* ── POSTCARD ────────────────────────────────────────────── */
@@ -158,11 +159,13 @@
       color: rgba(255,255,255,0.75);
       font-size: 0.8rem; font-weight: 600; cursor: pointer;
       transition: all 0.18s;
+      position: relative; z-index: 1;
     }
     .btn-expand:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.35); color: #fff; }
 
     .btn-tip {
       flex: 1.4; min-width: 140px;
+      display: inline-block; text-decoration: none; text-align: center;
       padding: 0.65rem 1rem;
       background: linear-gradient(135deg, rgba(212,175,55,0.3) 0%, rgba(180,110,247,0.22) 100%);
       border: 1.5px solid rgba(212,175,55,0.6);
@@ -171,6 +174,7 @@
       font-size: 0.82rem; font-weight: 700; cursor: pointer;
       transition: all 0.18s;
       letter-spacing: 0.02em;
+      position: relative; z-index: 1;
     }
     .btn-tip:hover { background: linear-gradient(135deg, rgba(212,175,55,0.45) 0%, rgba(180,110,247,0.32) 100%); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
 
@@ -429,7 +433,7 @@
 
     <div class="card-actions">
       <button class="btn-expand" onclick="expandFull()">Full Mission Briefing →</button>
-      <button class="btn-tip" onclick="sendTip()">⬡ Apply for Selection</button>
+      <a class="btn-tip" id="apply-selection-btn" href="#">⬡ Apply for Selection</a>
     </div>
 
     <div class="card-footer">COHORT ONE · 9 CREW POSITIONS · info@fractiai.com · NSPFRNP → ∞⁹</div>
@@ -776,6 +780,12 @@
       a.click();
       setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 200);
     }
+
+    // Wire postcard Apply button as a real href at load — no JS click required
+    document.addEventListener('DOMContentLoaded', function() {
+      var applyBtn = document.getElementById('apply-selection-btn');
+      if (applyBtn) applyBtn.href = tipMailto();
+    });
 
     // ── POSTCARD CLOSE / REOPEN ──────────────────────────────────────────────────
     function closeCard() {

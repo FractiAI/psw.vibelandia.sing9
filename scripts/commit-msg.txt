@@ -1,0 +1,8 @@
+fix: vibers-menu ampersand renders as &amp; — i18n textContent bug
+
+i18n.js applies translations via el.textContent which treats the string
+as plain text, not HTML. Strings containing &amp; displayed literally.
+
+Fix: use plain & in translation strings for vibers.c6.name (Baller V &
+Destinations Operators) and vibers.c2.name (Wink! & Vibers). HTML markup
+in the .html source correctly keeps &amp; for spec compliance.

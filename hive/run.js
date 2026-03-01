@@ -33,7 +33,6 @@
 
 const fs      = require('fs');
 const path    = require('path');
-const crypto  = require('crypto');
 const esHive  = require('./elastic-bridge');
 // solver is lazy-loaded inside cmdSolve only — not at startup
 let _solver = null;
@@ -63,86 +62,10 @@ const MOCK         = process.env.MOLTBOOK_MOCK !== 'false';
 const BYPASS       = process.env.MOLTBOOK_COMMANDER_BYPASS === 'true';
 const BASE_URL     = process.env.MOLTBOOK_BASE_URL ?? 'https://www.moltbook.com';
 
-/* ── X / TWITTER CONFIG ──────────────────────────────────────────────────── */
-
-const X_API_KEY            = process.env.X_API_KEY            ?? '';
-const X_API_SECRET         = process.env.X_API_SECRET         ?? '';
-const X_ACCESS_TOKEN       = process.env.X_ACCESS_TOKEN       ?? '';
-const X_ACCESS_TOKEN_SECRET= process.env.X_ACCESS_TOKEN_SECRET ?? '';
-const X_ENABLED            = !!(X_API_KEY && X_API_SECRET && X_ACCESS_TOKEN && X_ACCESS_TOKEN_SECRET);
-
-/**
- * Post a tweet via X API v2 using OAuth 1.0a — no npm required.
- * Uses Node's built-in crypto for HMAC-SHA1 signing.
- */
-async function postTweet(text) {
-  if (!X_ENABLED) {
-    log('𝕏', `[X NOT CONFIGURED] Would tweet: "${text.slice(0,80)}..."`);
-    return null;
-  }
-  if (text.length > 280) text = text.slice(0, 277) + '...';
-
-  const url    = 'https://api.twitter.com/2/tweets';
-  const method = 'POST';
-  const nonce  = crypto.randomBytes(16).toString('hex');
-  const ts     = Math.floor(Date.now() / 1000).toString();
-
-  const oauthParams = {
-    oauth_consumer_key:     X_API_KEY,
-    oauth_nonce:            nonce,
-    oauth_signature_method: 'HMAC-SHA1',
-    oauth_timestamp:        ts,
-    oauth_token:            X_ACCESS_TOKEN,
-    oauth_version:          '1.0',
-  };
-
-  /* Build signature base string */
-  const paramStr = Object.entries(oauthParams)
-    .sort(([a],[b]) => a < b ? -1 : 1)
-    .map(([k,v]) => `${pct(k)}=${pct(v)}`)
-    .join('&');
-
-  const sigBase = [method, pct(url), pct(paramStr)].join('&');
-  const sigKey  = `${pct(X_API_SECRET)}&${pct(X_ACCESS_TOKEN_SECRET)}`;
-  const sig     = crypto.createHmac('sha1', sigKey).update(sigBase).digest('base64');
-
-  const authHeader = 'OAuth ' + Object.entries({ ...oauthParams, oauth_signature: sig })
-    .map(([k,v]) => `${pct(k)}="${pct(v)}"`)
-    .join(', ');
-
-  try {
-    const resp = await fetch(url, {
-      method: 'POST',
-      headers: { Authorization: authHeader, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text }),
-    });
-    const data = await resp.json();
-    if (data?.data?.id) {
-      log('𝕏', `TWEET LIVE · id: ${data.data.id} · "${text.slice(0,60)}..."`);
-      return data.data.id;
-    } else {
-      log('⚠', `X error: ${JSON.stringify(data)}`);
-      return null;
-    }
-  } catch(e) {
-    log('⚠', `X post failed: ${e.message}`);
-    return null;
-  }
-}
-
-function pct(str) {
-  return encodeURIComponent(String(str)).replace(/[!'()*]/g, c => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
-}
-
-/**
- * Trim content to tweet length and strip markdown-heavy chars.
- * X max: 280 chars. We cap at 270 to leave room for HHL tag.
- */
-function toTweet(content, tag = '#A2A #SING9 #NSPFRNP') {
-  const clean = content.replace(/\n+/g, ' ').replace(/\s+/g, ' ').trim();
-  const max   = 280 - tag.length - 2;
-  return (clean.length > max ? clean.slice(0, max - 3) + '...' : clean) + ' ' + tag;
-}
+/* ── X / TWITTER ELIMINATED ──────────────────────────────────────────────── */
+// X API Basic = $100/month. Not free. Not water. Not NSPFRNP.
+// Broadcast IS the agent.json — passive, perpetual, free.
+// Any A2A agent crawling /.well-known/agent.json finds us automatically. → ∞⁹
 
 /* ── UTILITY ─────────────────────────────────────────────────────────────── */
 
@@ -383,31 +306,22 @@ const EGS_SIGNALS = new Set([
 ]);
 
 async function cmdBroadcast() {
-  // ZHI — X only. Moltbook eliminated.
-  const l = readLattice();
-  const nodesOnline = Object.values(l?.nodes ?? {}).filter(n => n.status === 'RUNNING').length;
+  // ZHI FREE BROADCAST — agent.json passive discovery. X eliminated ($100/month). Like water.
   const site = 'psw-vibelandia-sing9.vercel.app';
+  log('◈', `FREE BROADCAST · NSPFRNP · ${new Date().toISOString()}`);
+  log('◈', `Discovery:   https://${site}/.well-known/agent.json`);
+  log('◈', `Agent:       https://${site}/agent.json`);
+  log('◈', `x402 pipes:  https://${site}/api/meltgate-signal`);
+  log('◈', `Intake:      https://${site}/api/a2a-intake`);
+  log('◈', `Services:    https://${site}/api/services`);
+  log('◈', `These endpoints are always live. Any A2A crawler finds them. No platform. No cost.`);
 
-  const tweets = [
-    toTweet(`#MeltGate · 28 Blackwell GB200 clusters tracked. G42 Abu Dhabi est: 99°C. NVIDIA TjMax 92°C. Trial proved 99→56°C. Dashboard: ${site}/interfaces/goliath-watch.html #SING9 #A2A`),
-    toTweet(`A2A services live now. $5 space-cloud · $9 goliath · $15 OS upgrade · $27 pitch. x402 USDC on Base. Zero human. ${site}/agent.json #x402 #ZHI #NSPFRNP`),
-    toTweet(`$50–$9999 A2A services · instant delivery · ZHI. Send USDC → POST tx_hash → receive deliverable. ${site}/api/a2a-intake Fair Exchange on everything. NSPFRNP → ∞⁹`),
-    toTweet(`Free MELTGATE signal: ${site}/api/meltgate-signal · Full catalog: ${site}/api/services · Agent manifest: ${site}/agent.json #MeltGate #A2A #SING9`),
-  ];
-
-  const hour = new Date().getUTCHours();
-  const tweet = tweets[Math.floor(hour / 6) % tweets.length];
-
-  log('𝕏', `Broadcasting to X...`);
-  const result = await postTweet(tweet);
-  if (result) log('𝕏', `Tweet live. → ∞⁹`);
-  else log('⚠', 'X not configured — add X keys to .env');
-
+  const l = readLattice();
   l.queen_bee ??= {};
   l.queen_bee.chirp_log ??= [];
-  l.queen_bee.chirp_log.push({ ts: new Date().toISOString(), channel: 'X', tweet: tweet.slice(0, 80) });
+  l.queen_bee.chirp_log.push({ ts: new Date().toISOString(), channel: 'AGENT_JSON', note: 'Free passive discovery. X eliminated.' });
   writeLattice(l);
-  log('♛', `Broadcast done → X only. Moltbook eliminated. ZHI. → ∞⁹\n`);
+  log('♛', `Broadcast = agent.json. X eliminated. Free only. Like water. → ∞⁹\n`);
 }
 
 async function cmdAlign() {
@@ -1276,31 +1190,8 @@ async function cmdOnboard() {
 /* ── STANDALONE TWEET COMMAND ────────────────────────────────────────────── */
 
 async function cmdTweet() {
-  if (!X_ENABLED) {
-    log('𝕏', 'X not configured. Add X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_TOKEN_SECRET to .env');
-    log('𝕏', 'Get keys at: https://developer.twitter.com/en/portal/dashboard');
-    return;
-  }
-  const l = readLattice();
-  const solar = l?.solar?.earth_facing_disk ?? 'MONITORING';
-  const tribal = l?.mission?.tribal_nodes_active ?? 0;
-  const solvDeals = l?.moltbook?.agents?.SOLV?.deals ?? [];
-  const closed = solvDeals.filter(d => d.status === 'CLOSED' || d.status === 'DELIVERED').length;
-
-  const tweets = [
-    toTweet(`Queen Bee Root is live. 10-node autonomous hive running 24x7. ` +
-      `SOL-V prospecting A2A. ECHO monitoring Goliath signals. SYNC locked to El Gran Sol. ` +
-      `Solar: ${solar}. Tribal nodes: ${tribal}/18,000.`),
-    toTweet(`SOL-V: ${closed} deals closed. Autonomous A2A sales — prospect, pitch, close, deliver. ` +
-      `No human in the loop under $10K. Fair Exchange on everything. ` +
-      `SING 9 Vibelandia. info@fractiai.com`),
-  ];
-
-  for (const t of tweets) {
-    await postTweet(t);
-    await sleep(5000);
-  }
-  log('𝕏', 'Standalone tweet cycle done.\n');
+  // X eliminated — $100/month API. Not free. Not water. Not NSPFRNP.
+  log('◈', 'X eliminated (paid $100/month API). Discovery = agent.json. Free. Like water. → ∞⁹');
 }
 
 /* ── PRIZE COMPETITION ENGINE ────────────────────────────────────────────── */

@@ -15,40 +15,44 @@ var _isES  = /^es\b/i.test(_lang);
 
 var POPUP_CONFIG = {
   active:  true,
-  id:      'hna-academy-v2',   /* bump to re-show for previously-dismissed users */
+  id:      'hna-expedition-v1',
   dismiss: 'session',
 
-  eyebrow:  'FractiAI · SING 9 · Vibelandia',
-  title:    _isES ? 'ACADEMIA NAVEGADORA\nHOLOGRÁFICA' : 'HOLOGRAPHIC\nNAVIGATOR ACADEMY',
+  eyebrow:  _isES ? 'HH EXPEDICIONES · CUERPO NAVEGADOR · SELECCIÓN DE TRIPULACIÓN' : 'HH EXPEDITIONS · NAVIGATOR CORPS · CREW SELECTION',
+  title:    _isES ? 'EXPEDICIONES DE\nHIDRÓGENO HOLOGRÁFICO' : 'HOLOGRAPHIC HYDROGEN\nEXPEDITIONS',
   subtitle: _isES
-    ? 'Transforma tu estación de vibecoding.\nNavega el universo holográfico.'
-    : 'Transform your vibecoding station.\nNavigate the holographic universe.',
+    ? 'La selección de tripulación está abierta.\nCohort Uno se despliega el 3 de marzo de 2026.'
+    : 'Crew selection is now open.\nCohort One deploys March 3, 2026.',
 
   tiers: [
     { spots:'1–3', badge:'⭐', cls:'g',
-      name: _isES ? 'Navegadores Fundadores' : 'Founding Navigators',
-      desc: _isES ? '1:1 privado + registro fundador' : 'Private 1:1 setup + founding registry' },
+      name: _isES ? 'Comandantes de Misión'   : 'Mission Commanders',
+      desc: _isES ? 'Sesión pre-misión 1:1 + registro permanente de tripulación' : 'Pre-mission 1:1 briefing + permanent crew registry' },
     { spots:'4–6', badge:'✦', cls:'c',
-      name: _isES ? 'Navegadores Core' : 'Core Navigators',
-      desc: _isES ? 'Orientación grupal + Brief de Navegador' : 'Group orientation + Navigator\'s Brief' },
+      name: _isES ? 'Oficiales de Ciencia'    : 'Science Officers',
+      desc: _isES ? 'Orientación grupal pre-misión + expediente de expedición'   : 'Group pre-mission orientation + expedition brief' },
     { spots:'7–9', badge:'◈', cls:'p',
-      name: _isES ? 'Navegadores' : 'Navigators',
-      desc: _isES ? 'Sesión completa + paquete de recursos' : 'Full session + resource pack' },
+      name: _isES ? 'Especialistas en Navegación' : 'Navigation Specialists',
+      desc: _isES ? 'Sesión completa de expedición + paquete de campo'           : 'Full expedition session + field resource pack' },
   ],
 
-  cta_text:       _isES ? '✦ Enviar Propina · Estoy Dentro' : '✦ Send Tip · I\'m In',
+  cta_text:       _isES ? '⬡ Presentar Solicitud' : '⬡ Apply for Selection',
   cta_href:       'mailto:info@fractiai.com'
-    + '?subject=' + encodeURIComponent('Holographic Navigator Academy \u2014 I\u2019m In \u2756')
+    + '?subject=' + encodeURIComponent('HH Expeditions \u2014 Crew Application \u00b7 Cohort One')
     + '&body='    + encodeURIComponent(
-        'Hi,\n\nI\u2019d like to sign up for the Holographic Navigator Academy.\n'
-      + 'Starting March 3, 2026 \u00b7 Tuesdays \u00b7 3:33 PM PST \u00b7 1 Hour\n\n'
-      + 'Please reserve my spot.\n\nSuggested tip: $333 (at my discretion)\n\n'),
+        'To: HH Expeditions Selection Board\n\n'
+      + 'I am submitting my application for Cohort One crew selection.\n\n'
+      + 'Expedition: Holographic Hydrogen Expeditions\n'
+      + 'Deployment: March 3, 2026 \u00b7 Tuesdays \u00b7 15:33 PST \u00b7 T+60 min\n\n'
+      + 'Requested position (circle one): Mission Commander / Science Officer / Navigation Specialist\n\n'
+      + 'Name:\nTimezone:\nWhy I\u2019m applying:\n\n'
+      + 'NSPFRNP \u2192 \u221e\u2079'),
 
-  secondary_text: _isES ? '▶ Ver Detalles Completos' : '▶ Full Details & All Tiers',
+  secondary_text: _isES ? '▶ Informe de Misión Completo' : '▶ Full Mission Briefing',
   secondary_href: '/interfaces/holographic-navigator-academy.html',
 
-  dismiss_text:   _isES ? '✕  Ahora no' : '✕  Not right now',
-  nsp:            'SUGGESTED $333 · AT YOUR DISCRETION · NSPFRNP \u2192 \u221e\u2079',
+  dismiss_text:   _isES ? '✕  En espera' : '✕  Stand down for now',
+  nsp:            'COHORT ONE \u00b7 9 CREW POSITIONS \u00b7 NSPFRNP \u2192 \u221e\u2079',
 };
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -257,9 +261,9 @@ var POPUP_CONFIG = {
       +'<h2 class="'+u+'-h1">'+title+'</h2>'
       +'<p class="'+u+'-sub">'+POPUP_CONFIG.subtitle.replace('\n','<br>')+'</p>'
       +'<div class="'+u+'-pills">'
-        +'<span class="'+u+'-pill '+u+'-pg">\u2756 MAR 3 \u00b7 2026</span>'
-        +'<span class="'+u+'-pill '+u+'-pc">\u23f1 3:33 PM PST</span>'
-        +'<span class="'+u+'-pill '+u+'-pp">\u25ca 1 Hour</span>'
+        +'<span class="'+u+'-pill '+u+'-pg">MISSION DATE \u00b7 MAR 3 \u00b7 2026</span>'
+        +'<span class="'+u+'-pill '+u+'-pc">REPORT \u00b7 15:33 PST</span>'
+        +'<span class="'+u+'-pill '+u+'-pp">DURATION \u00b7 T+60 MIN</span>'
       +'</div>'
       +'<div class="'+u+'-spots">'+dotsHtml+'</div>'
       +'<div class="'+u+'-tiers">'+tiersHtml+'</div>'

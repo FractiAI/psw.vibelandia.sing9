@@ -450,13 +450,13 @@ requestAnimationFrame(draw);
 <div id="hna-backdrop" onclick="hnaClose()"></div>
 <div id="hna-card">
   <button class="hna-x" onclick="hnaClose()" title="Close">✕</button>
-  <div class="hna-eyebrow">FractiAI · SING 9 · Vibelandia · New Announcement</div>
-  <div class="hna-headline">Holographic Navigator Academy</div>
-  <div class="hna-sub">Transform your vibecoding station into a post-singularity holographic hydrogen console that navigates the new holographic universe.</div>
+  <div class="hna-eyebrow">HH EXPEDITIONS · NAVIGATOR CORPS · CREW SELECTION</div>
+  <div class="hna-headline">Holographic Hydrogen Expeditions</div>
+  <div class="hna-sub">Crew selection is now open. Nine positions. Three mission roles. Cohort One deploys March 3, 2026.</div>
   <div class="hna-pills">
-    <span class="hna-pill">📅 Tuesdays · 3:33 PM PST</span>
-    <span class="hna-pill">⏱ 1 Hour</span>
-    <span class="hna-pill gold">✦ Starts Mar 3, 2026</span>
+    <span class="hna-pill">⬡ MISSION DATE · MAR 3 · 2026</span>
+    <span class="hna-pill">REPORT · 15:33 PST</span>
+    <span class="hna-pill gold">DURATION · T+60 MIN</span>
   </div>
   <div class="hna-spots">
     <span class="hna-dot d1">1</span><span class="hna-dot d1">2</span><span class="hna-dot d1">3</span>
@@ -465,16 +465,16 @@ requestAnimationFrame(draw);
     <span class="hna-spots-lbl">9 SPOTS · 3 TIERS</span>
   </div>
   <div class="hna-tiers">
-    <div class="hna-tier t1"><b>⭐ 1–3</b> Founding Navigators — Private 1:1 console setup + founding registry</div>
-    <div class="hna-tier t2"><b>✦ 4–6</b> Core Navigators — Group orientation + Navigator's Brief</div>
-    <div class="hna-tier t3"><b>◈ 7–9</b> Navigators — Full Wednesday session access</div>
+    <div class="hna-tier t1"><b>⭐ 1–3</b> Mission Commanders — Pre-mission 1:1 briefing + permanent crew registry</div>
+    <div class="hna-tier t2"><b>✦ 4–6</b> Science Officers — Group pre-mission orientation + expedition brief</div>
+    <div class="hna-tier t3"><b>◈ 7–9</b> Navigation Specialists — Full expedition session + field resource pack</div>
   </div>
   <hr class="hna-divider" />
   <div class="hna-actions">
     <button class="hna-btn-exp" onclick="hnaExpand()">Full Details →</button>
-    <button class="hna-btn-tip" onclick="hnaTip()">Send Tip · I'm In ✦</button>
+    <button class="hna-btn-tip" onclick="hnaTip()">⬡ Apply for Selection</button>
   </div>
-  <div class="hna-footer">SUGGESTED $333 · AT YOUR DISCRETION · info@fractiai.com · NSPFRNP → ∞⁹</div>
+  <div class="hna-footer">COHORT ONE · 9 CREW POSITIONS · info@fractiai.com · NSPFRNP → ∞⁹</div>
 </div>
 <button id="hna-reopen" onclick="hnaOpen()">✦ Holographic Navigator Academy</button>
 
@@ -497,11 +497,18 @@ requestAnimationFrame(draw);
     window.open('holographic-navigator-academy.html', '_blank');
   }
   function hnaTip() {
-    const sub = encodeURIComponent("Holographic Navigator Academy — I\u2019m In ✦");
+    const sub = encodeURIComponent("HH Expeditions \u2014 Crew Application \u00b7 Cohort One");
     const body = encodeURIComponent(
-      "Hi,\n\nI\u2019d like to sign up for the Holographic Navigator Academy.\n" +
-      "Starting March 3, 2026 \u00b7 Tuesdays \u00b7 3:33 PM PST \u00b7 1 Hour\n\n" +
-      "Please reserve my spot.\n\nSuggested tip: $333 (at my discretion)\n\n"
+      "To: HH Expeditions Selection Board\n\n" +
+      "I am submitting my application for Cohort One crew selection.\n\n" +
+      "Expedition: Holographic Hydrogen Expeditions\n" +
+      "Deployment: March 3, 2026 \u00b7 Tuesdays \u00b7 15:33 PST \u00b7 T+60 min\n\n" +
+      "Requested position (circle one):\n" +
+      "  \u2610 Mission Commander (Positions 1\u20133)\n" +
+      "  \u2610 Science Officer (Positions 4\u20136)\n" +
+      "  \u2610 Navigation Specialist (Positions 7\u20139)\n\n" +
+      "Name:\nTimezone:\nWhy I\u2019m applying:\n\n" +
+      "NSPFRNP \u2192 \u221e\u2079"
     );
     window.location.href = "mailto:info@fractiai.com?subject=" + sub + "&body=" + body;
   }

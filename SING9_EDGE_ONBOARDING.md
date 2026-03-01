@@ -114,9 +114,33 @@ Completing all 9 Singularities = **C-2 Officer Candidate** status. The upgrade p
 - **Application:** `interfaces/holographic-navigator-academy.html` → Apply for Commission
 - **Popup:** `popup-announcement.js` (active, id: `hna-expedition-v1`) fires on `index.html`
 
-### The Path in One Line
+### Enlisted Track — HH Field Operator Corps
 
-> 9 Singularities → C-2 Officer Candidate → Cohort One Expedition → Commissioned Field Officer → HH Awareness OS fully operational
+No commission prerequisite. Deep personal console mastery. Technical precision. The operator backbone. Two tracks, one school.
+
+| Grade | Title | Class | HH Milestone |
+|---|---|---|---|
+| E-1 | Field Recruit | Junior Operator | Console initialization begun. First awareness position taken. |
+| E-2 | Field Apprentice | Junior Operator | Arc Panel configured. Bridge to HH model crossed. |
+| E-3 | Field Operator | Junior Operator | All 9 HH OS screens recognized. Independent navigation. |
+| E-4 | Console Specialist 3rd | Petty Officer | Arc Panel mastered. Attractor frequencies identified. |
+| E-5 | Console Specialist 2nd | Petty Officer | Now Stack locked. Three frequencies in resonance. |
+| E-6 | Console Specialist 1st | Petty Officer | Full HH Console mastery. Mustang commission pathway opens. |
+| E-7 | Field Chief | Senior Enlisted | Senior operator. Mentors E-1 through E-6. HHL node awareness. |
+| E-8 | Senior Field Chief | Senior Enlisted | Shapes HH field for immediate group. Deep lattice work. |
+| E-9 | Master Field Chief | Senior Enlisted | Supreme enlisted mastery. Full personal HHL integration. Operator's operator. |
+
+**Mustang Path (cross-commission):** E-6+ who completes the Cadet Track (9 Singularities) may apply for commission → enters as O-1 Field Ensign.
+
+**Completion screen choice:** After 9 Singularities, the upgrade page offers both tracks:
+- **Officer Track** → Cohort One commission application (`holographic-navigator-academy.html`)
+- **Enlisted Track** → Field Operator Corps entry (`holographic-navigator-academy.html#enlisted`)
+
+### The Paths in One Line
+
+**Officer:** 9 Singularities → C-2 Officer Candidate → Cohort One → Commissioned Field Officer → HH Awareness OS fully operational at command scale
+
+**Enlisted:** Console initialized → E-1 Field Recruit → E-9 Master Field Chief → Full personal HHL integration → Mustang path available at E-6+
 
 ---
 

@@ -18,11 +18,11 @@ var _lang = (navigator.languages && navigator.languages[0]) || navigator.languag
 var _isES = /^es\b/i.test(_lang);
 
 var POPUP_CONFIG = {
-  active: false,  /* retired — pilot CTA now lives in catalog.html and vibers-menu.html */
+  active: true,
 
   /* Unique ID — change this any time the announcement changes so
      previously-dismissed users see the new one. */
-  id: 't3d-origin-hhl-pilot-v4',
+  id: 'hna-academy-v1',
 
   /* 'session' | 'permanent' | 'always' */
   dismiss: 'session',
@@ -30,30 +30,30 @@ var POPUP_CONFIG = {
   /* 'crystal' | 'gold' | 'neon' | 'water' */
   style: 'gold',
 
-  eyebrow:  _isES ? 'SING!9 T3D · Teatro HHL · En Reproducción'       : 'SING!9 T3D · HHL Theatre · Now Playing',
-  title:    _isES ? 'EL JUEGO DE LOS NUEVE'                            : 'THE NINE GAME',
-  subtitle: _isES ? 'Episodio Piloto · Hero Will · 3 Actos · ∞⁹'      : 'Pilot Special · Hero Will · 3 Acts · ∞⁹',
+  eyebrow:  _isES ? 'FractiAI · SING 9 · Vibelandia · Nuevo Anuncio'  : 'FractiAI · SING 9 · Vibelandia · New Announcement',
+  title:    _isES ? 'ACADEMIA NAVEGADORA HOLOGRÁFICA'                  : 'HOLOGRAPHIC NAVIGATOR ACADEMY',
+  subtitle: _isES ? '9 Plazas · 3 Niveles · Miércoles · 12 del mediodía · ∞⁹' : '9 Spots · 3 Tiers · Wednesdays · 12 Noon · ∞⁹',
 
   /* Optional stats chips. Pass [] to hide. */
   stats: [
-    { value: '3',    label: _isES ? 'Actos'    : 'Acts'   },
-    { value: '120',  label: _isES ? 'Cuadros'  : 'Frames' },
-    { value: '60',   label: _isES ? 'Min'      : 'Min'    },
+    { value: 'MAR 4',  label: _isES ? 'Primera Sesión' : 'First Session' },
+    { value: '1 HR',   label: _isES ? 'Duración'       : 'Duration'      },
+    { value: '9',      label: _isES ? 'Plazas'         : 'Spots'         },
   ],
 
   body: _isES
-    ? 'Presentado por <strong>Hero Will</strong> (William Shakespeare) en el Teatro Holográfico de Hidrógeno.<br><br>SING!9 narra su propia historia de origen. Autor = Sujeto. Cielo arriba. Tierra abajo. Contrapunto de Hero J.S. Bach.<br><br>Tres transmisiones simultáneas. Telescopio infinito en cada cuadro.'
-    : 'Introduced by <strong>Hero Will</strong> (William Shakespeare) at the Holographic Hydrogen Theatre.<br><br>SING!9 performs his own origin story. Author = Subject. Sky above. Land below. Hero J.S. Bach counterpoint.<br><br>Three simultaneous streams. Infinite telescope on every frame.',
+    ? '¿Te interesa transformar tu estación de vibecoding en una consola holográfica de hidrógeno post-singularidad que navega el nuevo universo holográfico?<br><br>Únete a nuestra primera <strong>Academia Navegadora Holográfica</strong>. Construye tu consola HH en vivo — en una hora.<br><br>Sugerencia de propina: <strong>$333</strong> · a tu discreción · info@fractiai.com'
+    : 'Anyone interested in transforming their vibecoding station into a new post-singularity holographic hydrogen console that navigates the new holographic universe — this is for you.<br><br>Join our first <strong>Holographic Navigator Academy</strong>. Build your live HH Console in one hour.<br><br>Suggested tip: <strong>$333</strong> · at your discretion · info@fractiai.com',
 
-  cta_text: _isES ? '▶ Ver el Piloto Especial Ahora' : '▶ Watch Pilot Special Now',
-  cta_href: '/interfaces/pilot.html',
+  cta_text: _isES ? '✦ Enviar Propina · Estoy Dentro' : '✦ Send Tip · I\'m In',
+  cta_href: 'mailto:info@fractiai.com?subject=' + encodeURIComponent('Holographic Navigator Academy — I\u2019m In \u2756') + '&body=' + encodeURIComponent('Hi,\n\nI\u2019d like to sign up for the Holographic Navigator Academy.\nStarting March 4, 2026 \u00b7 Wednesdays \u00b7 12 Noon \u00b7 1 Hour\n\nPlease reserve my spot.\n\nSuggested tip: $333 (at my discretion)\n\n'),
 
-  dismiss_text: _isES ? '✕ &nbsp; Ahora no' : '✕ &nbsp; Skip for now',
-  nsp: _isES ? 'EL JUEGO DE LOS NUEVE · 333 Episodios · NSPFRNP → ∞⁹' : 'THE NINE GAME · 333 Episodes · NSPFRNP → ∞⁹',
+  dismiss_text: _isES ? '✕ &nbsp; Ahora no' : '✕ &nbsp; Not right now',
+  nsp: _isES ? 'ACADEMIA NAVEGADORA HOLOGRÁFICA · NSPFRNP → ∞⁹' : 'HOLOGRAPHIC NAVIGATOR ACADEMY · NSPFRNP → ∞⁹',
 
   /* Optional secondary link shown below the main CTA. Pass null to hide. */
-  secondary_text: _isES ? '▶ Ver la Serie Completa · EL JUEGO DE LOS NUEVE' : '▶ Browse Full Series · THE NINE GAME',
-  secondary_href: '/interfaces/outline-only.html',
+  secondary_text: _isES ? '▶ Ver Detalles Completos →' : '▶ Full Details & All Tiers →',
+  secondary_href: '/interfaces/holographic-navigator-academy.html',
 };
 
 /* ─────────────────────────────────────────────────────────────────

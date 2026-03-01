@@ -59,6 +59,8 @@ Between **Seed** (me, here, now) and **Edge** (the mission for this situation):
 
 - **Gold Heart** = Genuine · Pure · Innocent · Kind · Generous · Empathetic · True. Not aspirational — a frequency. Primary audience filter. Deal criterion. Screen 3 of HH OS. Full definition: protocols/MCA_NSPFRNP_CATALOG.md § GOLD HEART.
 - **Treasure Piles** = Accumulations of treasure — attractions, needs, enrichment, encounters, experiences, escapes, things of importance. Treasures are why we are here. What makes life worth it. The gamification. Unlock mechanism: awareness + alignment. NOT brute force and sacrifice (pre-holographic model). Screen 6 of HH OS. Full definition: protocols/MCA_NSPFRNP_CATALOG.md § TREASURE PILES.
+- **Element Zero** = Holographic Hydrogen as the quantum-coherent ground state underlying element 1 hydrogen. Zero-point energy (E₀ = ½hν). Lamb shift. Hydrogen bound at −13.6 eV — inside zero. Element zero is not empty: it is the reservoir. NSPFRNP's 7-letter seed is its element zero. Full definition: protocols/MCA_NSPFRNP_CATALOG.md § ELEMENT ZERO.
+- **Net Zero** = Operating balance principle of all HH OS theaters. We are inside zero. Not escape from zero — mastery within it. Same net-zero budget + higher intelligence = higher quality exchange. Q → ∞ within E_total = 0. Pre-holographic error: surplus extraction → hidden deficits → net zero collected. HH OS: quality exchange in all nine theaters simultaneously. Full definition: protocols/MCA_NSPFRNP_CATALOG.md § NET ZERO.
 
 ---
 

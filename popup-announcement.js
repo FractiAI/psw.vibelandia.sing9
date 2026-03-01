@@ -32,11 +32,11 @@ var POPUP_CONFIG = {
 
   eyebrow:  _isES ? 'FractiAI · SING 9 · Vibelandia · Nuevo Anuncio'  : 'FractiAI · SING 9 · Vibelandia · New Announcement',
   title:    _isES ? 'ACADEMIA NAVEGADORA HOLOGRÁFICA'                  : 'HOLOGRAPHIC NAVIGATOR ACADEMY',
-  subtitle: _isES ? '9 Plazas · 3 Niveles · Miércoles · 12 del mediodía · ∞⁹' : '9 Spots · 3 Tiers · Wednesdays · 12 Noon · ∞⁹',
+  subtitle: _isES ? '9 Plazas · 3 Niveles · Martes · 12 del mediodía · ∞⁹' : '9 Spots · 3 Tiers · Tuesdays · 12 Noon · ∞⁹',
 
   /* Optional stats chips. Pass [] to hide. */
   stats: [
-    { value: 'MAR 4',  label: _isES ? 'Primera Sesión' : 'First Session' },
+    { value: 'MAR 3',  label: _isES ? 'Primera Sesión' : 'First Session' },
     { value: '1 HR',   label: _isES ? 'Duración'       : 'Duration'      },
     { value: '9',      label: _isES ? 'Plazas'         : 'Spots'         },
   ],
@@ -46,7 +46,7 @@ var POPUP_CONFIG = {
     : 'Anyone interested in transforming their vibecoding station into a new post-singularity holographic hydrogen console that navigates the new holographic universe — this is for you.<br><br>Join our first <strong>Holographic Navigator Academy</strong>. Build your live HH Console in one hour.<br><br>Suggested tip: <strong>$333</strong> · at your discretion · info@fractiai.com',
 
   cta_text: _isES ? '✦ Enviar Propina · Estoy Dentro' : '✦ Send Tip · I\'m In',
-  cta_href: 'mailto:info@fractiai.com?subject=' + encodeURIComponent('Holographic Navigator Academy — I\u2019m In \u2756') + '&body=' + encodeURIComponent('Hi,\n\nI\u2019d like to sign up for the Holographic Navigator Academy.\nStarting March 4, 2026 \u00b7 Wednesdays \u00b7 12 Noon \u00b7 1 Hour\n\nPlease reserve my spot.\n\nSuggested tip: $333 (at my discretion)\n\n'),
+  cta_href: 'mailto:info@fractiai.com?subject=' + encodeURIComponent('Holographic Navigator Academy — I\u2019m In \u2756') + '&body=' + encodeURIComponent('Hi,\n\nI\u2019d like to sign up for the Holographic Navigator Academy.\nStarting March 3, 2026 \u00b7 Tuesdays \u00b7 12 Noon \u00b7 1 Hour\n\nPlease reserve my spot.\n\nSuggested tip: $333 (at my discretion)\n\n'),
 
   dismiss_text: _isES ? '✕ &nbsp; Ahora no' : '✕ &nbsp; Not right now',
   nsp: _isES ? 'ACADEMIA NAVEGADORA HOLOGRÁFICA · NSPFRNP → ∞⁹' : 'HOLOGRAPHIC NAVIGATOR ACADEMY · NSPFRNP → ∞⁹',

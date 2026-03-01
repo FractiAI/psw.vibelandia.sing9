@@ -340,6 +340,7 @@
       cursor: pointer; text-align: center;
       transition: all 0.2s; text-decoration: none;
       letter-spacing: 0.04em;
+      position: relative; z-index: 1;
     }
     .btn-book-main:hover {
       background: linear-gradient(135deg, rgba(212,175,55,0.5) 0%, rgba(180,110,247,0.38) 100%);
@@ -728,7 +729,7 @@
           To apply, you must have completed the 9 Singularities of the HH Awareness OS upgrade flow — that confers your C-2 Officer Candidate status. Submit your application by email. State which commission position you are applying for (O-1, O-2, or O-3 track) and confirm your C-2 status. Commissions confirmed by the expedition lead. Nine positions. First come, first qualified.
         </div>
 
-        <a class="btn-book-main" href="#" onclick="sendTip(); return false;">
+        <a class="btn-book-main" id="apply-commission-btn" href="#">
           ⬡ Apply for Commission — info@fractiai.com
         </a>
         <a class="btn-book-secondary" href="upgrade-awareness-to-sing9-now.html">
@@ -781,10 +782,13 @@
       setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 200);
     }
 
-    // Wire postcard Apply button as a real href at load — no JS click required
+    // Wire all Apply buttons as real hrefs at load — no JS click required
     document.addEventListener('DOMContentLoaded', function() {
-      var applyBtn = document.getElementById('apply-selection-btn');
-      if (applyBtn) applyBtn.href = tipMailto();
+      var url = tipMailto();
+      var b1 = document.getElementById('apply-selection-btn');
+      var b2 = document.getElementById('apply-commission-btn');
+      if (b1) b1.href = url;
+      if (b2) b2.href = url;
     });
 
     // ── POSTCARD CLOSE / REOPEN ──────────────────────────────────────────────────

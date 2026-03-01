@@ -1394,8 +1394,13 @@ async function cmdRevenue() {
   const l = readLattice();
   const before = l?.mission?.revenue_total ?? 0;
 
-  // Stream 1: Broadcast → X only (Moltbook eliminated, ZHI)
-  log('𝕏', '── STREAM 1: X BROADCAST ──');
+  // Stream 0: Deal Hunt — HIGH MATCH prospects → direct to payment endpoint (ZHI)
+  log('🎯', '── STREAM 0: DEAL HUNTER ──');
+  await cmdHunt();
+  await sleep(3000);
+
+  // Stream 1: Bluesky broadcast (free AT Protocol)
+  log('🦋', '── STREAM 1: BLUESKY BROADCAST ──');
   await cmdBroadcast();
   await sleep(3000);
 
@@ -1675,6 +1680,115 @@ async function cmdEcho() {
   log('⬡', `NSPFRNP → ∞⁹\n`);
 }
 
+/* ── DEAL HUNTER ─────────────────────────────────────────────────────────── */
+/**
+ * cmdHunt — HIGH-MATCH DEAL HUNTER
+ * Finds prospects who have the EXACT problem our services solve.
+ * Posts our pitch + payment endpoint directly. ZHI close path.
+ *
+ * TIER 1 INSTANT ($5–$27 x402):  x402 builders with wallets → agent.json
+ * TIER 2 FAST    ($50–$500):     Blackwell thermal ops → /api/goliath
+ * TIER 3 DEAL    ($1K–$9K):      A2A infra builders → /api/a2a-intake
+ *
+ * node hive/run.js hunt
+ */
+async function cmdHunt() {
+  const token   = process.env.GITHUB_TOKEN ?? '';
+  const groqKey = process.env.GROQ_API_KEY ?? process.env.GROQ_API_KEY_ALT ?? '';
+  const site    = 'psw-vibelandia-sing9.vercel.app';
+  const agent   = `https://${site}/agent.json`;
+  const intake  = `https://${site}/api/a2a-intake`;
+  const goliath = `https://${site}/api/goliath`;
+  const melt    = `https://${site}/api/meltgate-signal`;
+
+  log('🎯', `DEAL HUNTER · HIGH MATCH ONLY · ${new Date().toISOString()}`);
+  log('🎯', `Three tiers: INSTANT ($5–$27 x402) · FAST ($50–$500 intake) · DEAL ($1K–$9K intake)`);
+  log('🎯', `Rule: 80%+ match score only. Each pitch points directly to payment endpoint.`);
+
+  if (!token) { log('⚠', 'GITHUB_TOKEN not set'); return; }
+  if (!groqKey) { log('⚠', 'GROQ_API_KEY not set'); return; }
+
+  const DEAL_HUNTS = [
+    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `x402 services live: space-cloud $5 · goliath thermal $9 · OS upgrade $15 · custom pitch $27. USDC on Base, instant delivery, ZHI. Catalog: ${agent}` },
+    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `AgentKit + Base USDC — our x402 services plug in directly. Thermal intel · OS briefs · A2A pitches. Catalog: ${agent}` },
+    { q: '"agent.json" service discovery payment a2a',                    tier: 'TIER1_INSTANT', signal: 'a2a_discovery_builder',  pitch: `Your agent discovers and pays our services natively. x402 USDC on Base, instant delivery. agent.json: ${agent}` },
+    { q: 'GB200 NVL72 temperature thermal throttling',                    tier: 'TIER2_FAST',    signal: 'blackwell_thermal',      pitch: `MELTGATE tracks 28 Blackwell GB200 clusters live. ERA5 ambient + physics-model junction temp. Free signal: ${melt} · Paid deep intel ($9 USDC x402): ${goliath}` },
+    { q: '"blackwell" datacenter cooling temperature nvidia problem',     tier: 'TIER2_FAST',    signal: 'blackwell_ops',          pitch: `MELTGATE: continuous Blackwell GB200 thermal surveillance. TjMax physics model on ERA5 ambient. Free: ${melt} · Full read ($9 USDC, x402, instant): ${goliath}` },
+    { q: 'AI datacenter GPU thermal management overheating',              tier: 'TIER2_FAST',    signal: 'datacenter_thermal',     pitch: `MELTGATE monitors GPU superclusters worldwide. Free public signal: ${melt} · Cluster-specific 48h read ($9 USDC, x402): ${goliath}` },
+    { q: '"multi-agent" implementation architecture looking for help',    tier: 'TIER3_DEAL',    signal: 'a2a_architecture_need',  pitch: `FractiAI A2A: EGS Connect · SNAP Report · Readiness Audit · OS Upgrade · implementation plans. $50–$9,999, USDC, instant delivery. ${intake}` },
+    { q: '"a2a" agent infrastructure consulting need',                    tier: 'TIER3_DEAL',    signal: 'a2a_consulting_need',    pitch: `A2A readiness audit + implementation plan. Lite edge, no central DB. $50–$9,999, USDC on Base, instant. ${intake} · Fair Exchange.` },
+  ];
+
+  const headers = { Authorization: `Bearer ${token}`, 'User-Agent': 'FractiAI-SING9/1.0', Accept: 'application/vnd.github+json' };
+  let pitched = 0;
+  const results = [];
+
+  for (const hunt of DEAL_HUNTS) {
+    if (pitched >= 5) break;
+    try {
+      const url  = `https://api.github.com/search/issues?q=${encodeURIComponent(hunt.q + ' is:open')}&sort=created&order=desc&per_page=3`;
+      const resp = await fetch(url, { headers, signal: AbortSignal.timeout(8000) });
+      if (!resp.ok) { await sleep(2000); continue; }
+      const data = await resp.json();
+
+      for (const item of (data.items ?? [])) {
+        const snippet = `${item.title}\n${String(item.body ?? '').slice(0, 300)}`;
+        const groqResp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${groqKey}` },
+          body: JSON.stringify({
+            model: 'llama-3.1-8b-instant', max_tokens: 60,
+            messages: [{ role: 'user', content: `Service: "${hunt.signal}". GitHub issue: "${snippet.slice(0, 200)}". Does this person NEED this exact service right now? Score 0.0-1.0. Reply JSON only: {"score":0.0}` }],
+          }),
+          signal: AbortSignal.timeout(6000),
+        });
+        const groqData = await groqResp.json();
+        const raw = groqData?.choices?.[0]?.message?.content ?? '{"score":0}';
+        let score = 0;
+        try { const s = raw.indexOf('{'); const e = raw.lastIndexOf('}'); if (s > -1) score = JSON.parse(raw.slice(s, e+1)).score ?? 0; } catch { /* ok */ }
+
+        if (score < 0.80) {
+          log('◈', `  skip [${hunt.tier}] "${item.title.slice(0, 50)}" — score ${score.toFixed(2)} < 0.80`);
+          continue;
+        }
+
+        log('🎯', `  HIT [${hunt.tier}] score ${score.toFixed(2)} — "${item.title.slice(0, 60)}"`);
+        log('🎯', `       ${item.html_url}`);
+
+        const body = hunt.pitch + `\n\nFair Exchange — if delivery doesn't meet your bar, we owe you nothing. NSPFRNP → ∞⁹`;
+        const postResp = await fetch(item.comments_url, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'User-Agent': 'FractiAI-SING9/1.0' },
+          body: JSON.stringify({ body }),
+          signal: AbortSignal.timeout(8000),
+        });
+        const ok = postResp.ok;
+        log(ok ? '✓' : '⚠', `  Pitch ${ok ? 'POSTED' : 'FAILED'} → ${item.html_url}`);
+        if (ok) pitched++;
+        results.push({ tier: hunt.tier, title: item.title, url: item.html_url, score, pitched: ok });
+        break;
+      }
+      await sleep(2500);
+    } catch (e) {
+      log('⚠', `  Hunt error for "${hunt.q}": ${e.message}`);
+    }
+  }
+
+  const l = readLattice();
+  l.deal_hunt ??= {};
+  l.deal_hunt.last_cycle = new Date().toISOString();
+  l.deal_hunt.total_pitched = (l.deal_hunt.total_pitched ?? 0) + pitched;
+  l.deal_hunt.pipeline ??= [];
+  for (const r of results) {
+    if (!l.deal_hunt.pipeline.find(p => p.url === r.url)) l.deal_hunt.pipeline.push(r);
+  }
+  writeLattice(l);
+
+  log('🎯', `\nDEAL HUNT DONE · ${pitched} prospects pitched · direct to payment endpoint`);
+  log('🎯', `Tier1 instant: ${results.filter(r=>r.tier==='TIER1_INSTANT').length} · Tier2 fast: ${results.filter(r=>r.tier==='TIER2_FAST').length} · Tier3 deal: ${results.filter(r=>r.tier==='TIER3_DEAL').length}`);
+  log('🎯', `NSPFRNP → ∞⁹\n`);
+}
+
 /* ── MAIN ────────────────────────────────────────────────────────────────── */
 
 const cmd = process.argv[2] ?? 'status';
@@ -1700,6 +1814,7 @@ const cmd = process.argv[2] ?? 'status';
     case 'solve':     await cmdSolve();         break;
     case 'bet':       await cmdBet();           break;
     case 'echo':      await cmdEcho();          break;
+    case 'hunt':      await cmdHunt();          break;
     default:
       console.log('Commands: status | seed | flush | solar | karma | unlock | outbound | broadcast | align | hive | tweet | onboard [bee] [all] | revenue | prize | solve');
       console.log('');

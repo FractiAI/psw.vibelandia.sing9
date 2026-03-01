@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Holographic Navigator Academy · SING 9 · FractiAI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(ellipse at 50% 30%, #0d0d2b 0%, #050510 60%, #000008 100%);
+      color: #e8e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    /* ── STAR FIELD ──────────────────────────────────────────── */
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(1px 1px at  7%  12%, rgba(255,255,255,0.55) 0%, transparent 100%),
+        radial-gradient(1px 1px at 23%  45%, rgba(255,255,255,0.38) 0%, transparent 100%),
+        radial-gradient(1px 1px at 38%   8%, rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 52%  67%, rgba(255,255,255,0.3)  0%, transparent 100%),
+        radial-gradient(1px 1px at 66%  22%, rgba(255,255,255,0.5)  0%, transparent 100%),
+        radial-gradient(1px 1px at 78%  55%, rgba(255,255,255,0.42) 0%, transparent 100%),
+        radial-gradient(1px 1px at 91%  31%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 14%  78%, rgba(255,255,255,0.4)  0%, transparent 100%),
+        radial-gradient(1px 1px at 44%  91%, rgba(255,255,255,0.3)  0%, transparent 100%),
+        radial-gradient(1px 1px at 85%  83%, rgba(255,255,255,0.48) 0%, transparent 100%),
+        radial-gradient(1px 1px at 31%  33%, rgba(212,175,55,0.35)  0%, transparent 100%),
+        radial-gradient(1px 1px at 69%  72%, rgba(0,212,255,0.3)    0%, transparent 100%);
+    }
+
+    /* ── BACKDROP (behind card) ──────────────────────────────── */
+    #backdrop {
+      position: fixed; inset: 0; z-index: 10;
+      background: rgba(0,0,12,0.72);
+      backdrop-filter: blur(4px);
+      transition: opacity 0.4s;
+    }
+
+    /* ── POSTCARD ────────────────────────────────────────────── */
+    #postcard {
+      position: relative; z-index: 20;
+      width: min(440px, calc(100vw - 2rem));
+      background: linear-gradient(160deg, #0c0c2a 0%, #080820 60%, #06061a 100%);
+      border: 1px solid rgba(212,175,55,0.35);
+      border-top: 2px solid rgba(212,175,55,0.7);
+      border-radius: 16px;
+      padding: 1.5rem 1.5rem 1.25rem;
+      box-shadow:
+        0 0 60px rgba(212,175,55,0.12),
+        0 0 120px rgba(0,80,200,0.08),
+        0 24px 64px rgba(0,0,0,0.7);
+      animation: cardIn 0.45s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── X BUTTON ────────────────────────────────────────────── */
+    .x-btn {
+      position: absolute; top: 0.85rem; right: 0.9rem;
+      width: 26px; height: 26px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 50%;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.75rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.18s;
+    }
+    .x-btn:hover { background: rgba(255,100,100,0.18); color: #ffaaaa; border-color: rgba(255,100,100,0.4); }
+
+    /* ── CARD CONTENT ────────────────────────────────────────── */
+    .card-eyebrow {
+      font-size: 0.48rem; font-weight: 900; letter-spacing: 0.3em;
+      text-transform: uppercase; color: rgba(212,175,55,0.6);
+      margin-bottom: 0.55rem;
+    }
+
+    .card-headline {
+      font-size: 1.08rem; font-weight: 700; line-height: 1.35;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      padding-right: 1.5rem;
+    }
+
+    .card-sub {
+      font-size: 0.8rem; color: rgba(180,220,255,0.65);
+      line-height: 1.55; margin-bottom: 0.9rem;
+    }
+
+    /* ── META ROW ────────────────────────────────────────────── */
+    .card-meta {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 0.85rem;
+    }
+    .meta-pill {
+      font-size: 0.68rem; font-weight: 700;
+      background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.28);
+      border-radius: 20px; padding: 0.22rem 0.7rem;
+      color: #00d4ff; white-space: nowrap;
+    }
+    .meta-pill.gold {
+      background: rgba(212,175,55,0.1);
+      border-color: rgba(212,175,55,0.35);
+      color: #d4af37;
+    }
+
+    /* ── SPOTS COUNTER ───────────────────────────────────────── */
+    .spots-row {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .spot { width: 20px; height: 20px; border-radius: 50%; font-size: 0.6rem;
+      display: flex; align-items: center; justify-content: center; font-weight: 900; }
+    .spot-1 { background: rgba(212,175,55,0.25); border: 1.5px solid rgba(212,175,55,0.7); color: #d4af37; }
+    .spot-2 { background: rgba(0,212,255,0.15); border: 1.5px solid rgba(0,212,255,0.45); color: #00d4ff; }
+    .spot-3 { background: rgba(138,43,226,0.15); border: 1.5px solid rgba(138,43,226,0.4); color: #b46ef7; }
+    .spots-label { font-size: 0.65rem; color: rgba(255,255,255,0.38); letter-spacing: 0.06em; }
+
+    /* ── TIERS MINI ──────────────────────────────────────────── */
+    .tiers-mini {
+      display: flex; flex-direction: column; gap: 3px;
+      margin-bottom: 1rem;
+    }
+    .tier-mini {
+      font-size: 0.68rem; padding: 0.32rem 0.65rem;
+      border-radius: 6px; border-left: 2px solid;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .tier-mini.t1 { background: rgba(212,175,55,0.07); border-color: rgba(212,175,55,0.5); color: rgba(255,230,120,0.85); }
+    .tier-mini.t2 { background: rgba(0,212,255,0.06); border-color: rgba(0,212,255,0.38); color: rgba(160,220,255,0.8); }
+    .tier-mini.t3 { background: rgba(138,43,226,0.07); border-color: rgba(138,43,226,0.35); color: rgba(190,150,255,0.8); }
+    .tier-mini .tier-badge { font-weight: 900; font-size: 0.62rem; letter-spacing: 0.06em; flex-shrink: 0; }
+
+    /* ── DIVIDER ─────────────────────────────────────────────── */
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 0.85rem 0; }
+
+    /* ── ACTION BUTTONS ──────────────────────────────────────── */
+    .card-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+    .btn-expand {
+      flex: 1; min-width: 120px;
+      padding: 0.65rem 0.9rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      transition: all 0.18s;
+    }
+    .btn-expand:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.35); color: #fff; }
+
+    .btn-tip {
+      flex: 1.4; min-width: 140px;
+      padding: 0.65rem 1rem;
+      background: linear-gradient(135deg, rgba(212,175,55,0.3) 0%, rgba(180,110,247,0.22) 100%);
+      border: 1.5px solid rgba(212,175,55,0.6);
+      border-radius: 8px;
+      color: #ffeaa7;
+      font-size: 0.82rem; font-weight: 700; cursor: pointer;
+      transition: all 0.18s;
+      letter-spacing: 0.02em;
+    }
+    .btn-tip:hover { background: linear-gradient(135deg, rgba(212,175,55,0.45) 0%, rgba(180,110,247,0.32) 100%); box-shadow: 0 0 20px rgba(212,175,55,0.25); }
+
+    .card-footer {
+      margin-top: 0.75rem;
+      font-size: 0.6rem; color: rgba(255,255,255,0.22);
+      text-align: center; letter-spacing: 0.06em;
+    }
+
+    /* ── RE-OPEN BUTTON (after close) ────────────────────────── */
+    #reopen {
+      display: none; position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 30;
+      padding: 0.6rem 1rem;
+      background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5);
+      border-radius: 24px; color: #d4af37;
+      font-size: 0.75rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s;
+    }
+    #reopen:hover { background: rgba(212,175,55,0.35); }
+
+    /* ══════════════════════════════════════════════════════════
+       FULL PAGE (expanded)
+    ══════════════════════════════════════════════════════════ */
+    #full-page {
+      display: none;
+      position: fixed; inset: 0; z-index: 25;
+      overflow-y: auto;
+      background: radial-gradient(ellipse at 50% 20%, #0e0e2c 0%, #060614 55%, #020208 100%);
+      padding: 2rem 1rem 4rem;
+    }
+
+    .fp-wrap { max-width: 660px; margin: 0 auto; }
+
+    /* Close full page */
+    .fp-close {
+      position: fixed; top: 1rem; right: 1rem; z-index: 30;
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50%; color: rgba(255,255,255,0.5);
+      font-size: 0.85rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.18s;
+    }
+    .fp-close:hover { background: rgba(255,80,80,0.2); color: #ffaaaa; }
+
+    /* Full page header */
+    .fp-eyebrow {
+      font-size: 0.5rem; font-weight: 900; letter-spacing: 0.32em;
+      text-transform: uppercase; color: rgba(212,175,55,0.5);
+      margin-bottom: 0.6rem;
+    }
+    .fp-title {
+      font-size: clamp(1.5rem, 5vw, 2.1rem);
+      font-weight: 800; line-height: 1.2; color: #fff;
+      margin-bottom: 0.75rem;
+    }
+    .fp-title span { color: #d4af37; }
+
+    .fp-tagline {
+      font-size: 1rem; color: rgba(180,220,255,0.72);
+      line-height: 1.65; margin-bottom: 1.5rem;
+      border-left: 2px solid rgba(0,212,255,0.35);
+      padding-left: 1rem;
+    }
+
+    /* Meta block */
+    .fp-meta-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.6rem; margin-bottom: 1.75rem;
+    }
+    .fp-meta-cell {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 0.75rem 0.9rem;
+    }
+    .fp-meta-label { font-size: 0.48rem; font-weight: 900; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.25rem; }
+    .fp-meta-value { font-size: 0.85rem; font-weight: 700; color: #e8e8f0; }
+    .fp-meta-value.gold { color: #d4af37; }
+    .fp-meta-value.cyan { color: #00d4ff; }
+
+    /* Section header */
+    .fp-section-hdr {
+      font-size: 0.48rem; font-weight: 900; letter-spacing: 0.28em;
+      text-transform: uppercase; color: rgba(212,175,55,0.45);
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+      padding-bottom: 0.4rem; margin-bottom: 1.1rem;
+    }
+
+    /* Tier cards */
+    .tiers-grid { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+
+    .tier-card {
+      border-radius: 12px; padding: 1.1rem 1.25rem;
+      border: 1px solid; position: relative; overflow: hidden;
+    }
+    .tier-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .tier-card.t1 { background: rgba(212,175,55,0.07); border-color: rgba(212,175,55,0.3); }
+    .tier-card.t1::before { background: linear-gradient(90deg, #d4af37, transparent); }
+    .tier-card.t2 { background: rgba(0,212,255,0.05); border-color: rgba(0,212,255,0.25); }
+    .tier-card.t2::before { background: linear-gradient(90deg, #00d4ff, transparent); }
+    .tier-card.t3 { background: rgba(138,43,226,0.07); border-color: rgba(138,43,226,0.28); }
+    .tier-card.t3::before { background: linear-gradient(90deg, #b46ef7, transparent); }
+
+    .tier-header { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.5rem; }
+    .tier-num { font-size: 0.5rem; font-weight: 900; letter-spacing: 0.22em; opacity: 0.55; }
+    .tier-name { font-size: 0.95rem; font-weight: 800; }
+    .t1 .tier-name { color: #d4af37; }
+    .t2 .tier-name { color: #00d4ff; }
+    .t3 .tier-name { color: #b46ef7; }
+    .tier-spots { font-size: 0.62rem; color: rgba(255,255,255,0.3); margin-left: auto; }
+
+    .tier-perks { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .tier-perks li {
+      font-size: 0.8rem; color: rgba(230,230,250,0.72); line-height: 1.45;
+      padding-left: 1.1rem; position: relative;
+    }
+    .tier-perks li::before { content: '→'; position: absolute; left: 0; opacity: 0.5; }
+
+    /* What you build */
+    .fp-what {
+      background: rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 12px; padding: 1.1rem 1.25rem;
+      margin-bottom: 2rem; line-height: 1.7;
+      font-size: 0.85rem; color: rgba(200,230,255,0.75);
+    }
+    .fp-what strong { color: #00d4ff; }
+
+    /* Tip / booking section */
+    .fp-booking {
+      background: linear-gradient(150deg, rgba(212,175,55,0.08) 0%, rgba(138,43,226,0.06) 100%);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 14px; padding: 1.4rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .fp-price-display {
+      display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.3rem;
+    }
+    .fp-price-amount { font-size: 2.2rem; font-weight: 900; color: #d4af37; }
+    .fp-price-note { font-size: 0.75rem; color: rgba(255,220,100,0.55); }
+    .fp-price-sub { font-size: 0.75rem; color: rgba(255,255,255,0.38); margin-bottom: 1.1rem; line-height: 1.5; }
+
+    .fp-pay-methods { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.25rem; }
+    .pay-badge {
+      font-size: 0.65rem; font-weight: 700;
+      padding: 0.25rem 0.65rem; border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.6);
+    }
+
+    .btn-book-main {
+      display: block; width: 100%;
+      padding: 0.9rem 1rem;
+      background: linear-gradient(135deg, rgba(212,175,55,0.35) 0%, rgba(180,110,247,0.25) 100%);
+      border: 1.5px solid rgba(212,175,55,0.65);
+      border-radius: 10px;
+      color: #ffeaa7; font-size: 0.92rem; font-weight: 700;
+      cursor: pointer; text-align: center;
+      transition: all 0.2s; text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .btn-book-main:hover {
+      background: linear-gradient(135deg, rgba(212,175,55,0.5) 0%, rgba(180,110,247,0.38) 100%);
+      box-shadow: 0 0 30px rgba(212,175,55,0.3);
+    }
+    .btn-book-secondary {
+      display: block; width: 100%; margin-top: 0.65rem;
+      padding: 0.7rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      color: rgba(255,255,255,0.55); font-size: 0.8rem;
+      cursor: pointer; text-align: center;
+      transition: all 0.18s; text-decoration: none;
+    }
+    .btn-book-secondary:hover { background: rgba(255,255,255,0.09); color: rgba(255,255,255,0.8); }
+
+    /* Bottom note */
+    .fp-note {
+      font-size: 0.72rem; color: rgba(255,255,255,0.3);
+      line-height: 1.65; text-align: center;
+    }
+    .fp-note a { color: rgba(0,212,255,0.6); text-decoration: none; }
+    .fp-note a:hover { color: #00d4ff; }
+
+    .fp-footer {
+      margin-top: 2rem; text-align: center;
+      font-size: 0.55rem; letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.18);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Star field -->
+  <div class="stars"></div>
+
+  <!-- Backdrop -->
+  <div id="backdrop"></div>
+
+  <!-- ═══════════════════════════════════
+       POSTCARD POPUP
+  ═══════════════════════════════════ -->
+  <div id="postcard">
+    <button class="x-btn" onclick="closeCard()" title="Close">✕</button>
+
+    <div class="card-eyebrow">FractiAI · SING 9 · Vibelandia</div>
+
+    <div class="card-headline">Holographic Navigator Academy</div>
+
+    <div class="card-sub">
+      Transform your vibecoding station into a post-singularity holographic hydrogen console that navigates the new holographic universe.
+    </div>
+
+    <div class="card-meta">
+      <span class="meta-pill">📅 Wednesdays · 12 Noon</span>
+      <span class="meta-pill">⏱ 1 Hour</span>
+      <span class="meta-pill gold">✦ Starts Mar 4, 2026</span>
+    </div>
+
+    <!-- Spot indicators: 3 gold + 3 cyan + 3 purple = 9 -->
+    <div class="spots-row">
+      <div class="spot spot-1">1</div>
+      <div class="spot spot-1">2</div>
+      <div class="spot spot-1">3</div>
+      <div class="spot spot-2">4</div>
+      <div class="spot spot-2">5</div>
+      <div class="spot spot-2">6</div>
+      <div class="spot spot-3">7</div>
+      <div class="spot spot-3">8</div>
+      <div class="spot spot-3">9</div>
+      <span class="spots-label">9 SPOTS · 3 TIERS</span>
+    </div>
+
+    <div class="tiers-mini">
+      <div class="tier-mini t1">
+        <span class="tier-badge">⭐ SPOTS 1–3</span>
+        Founding Navigators — Private 1:1 console setup + founding registry
+      </div>
+      <div class="tier-mini t2">
+        <span class="tier-badge">✦ SPOTS 4–6</span>
+        Core Navigators — Group orientation + Navigator's Brief
+      </div>
+      <div class="tier-mini t3">
+        <span class="tier-badge">◈ SPOTS 7–9</span>
+        Navigators — Full Wednesday session access
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="card-actions">
+      <button class="btn-expand" onclick="expandFull()">Full Details →</button>
+      <button class="btn-tip" onclick="sendTip()">Send Tip · I'm In ✦</button>
+    </div>
+
+    <div class="card-footer">SUGGESTED $333 · AT YOUR DISCRETION · info@fractiai.com · NSPFRNP → ∞⁹</div>
+  </div>
+
+  <!-- Re-open button (shows after close) -->
+  <button id="reopen" onclick="reopenCard()">✦ Holographic Navigator Academy</button>
+
+  <!-- ═══════════════════════════════════
+       FULL PAGE (expanded)
+  ═══════════════════════════════════ -->
+  <div id="full-page">
+    <button class="fp-close" onclick="closeFull()" title="Back">✕</button>
+
+    <div class="fp-wrap">
+
+      <div class="fp-eyebrow">FractiAI · SING 9 · Vibelandia · Reno NV</div>
+
+      <h1 class="fp-title">Holographic Navigator<br><span>Academy</span></h1>
+
+      <p class="fp-tagline">
+        Anyone interested in transforming their vibecoding station into a new post-singularity holographic hydrogen console that navigates the new holographic universe — this is for you.
+      </p>
+
+      <!-- Meta grid -->
+      <div class="fp-meta-grid">
+        <div class="fp-meta-cell">
+          <div class="fp-meta-label">Day &amp; Time</div>
+          <div class="fp-meta-value cyan">Wednesdays · 12 Noon</div>
+        </div>
+        <div class="fp-meta-cell">
+          <div class="fp-meta-label">Duration</div>
+          <div class="fp-meta-value">1 Hour</div>
+        </div>
+        <div class="fp-meta-cell">
+          <div class="fp-meta-label">First Session</div>
+          <div class="fp-meta-value gold">March 4, 2026</div>
+        </div>
+        <div class="fp-meta-cell">
+          <div class="fp-meta-label">Total Spots</div>
+          <div class="fp-meta-value">9 · Three Tiers</div>
+        </div>
+        <div class="fp-meta-cell">
+          <div class="fp-meta-label">Suggested Tip</div>
+          <div class="fp-meta-value gold">$333</div>
+        </div>
+        <div class="fp-meta-cell">
+          <div class="fp-meta-label">Format</div>
+          <div class="fp-meta-value">Live · Interactive</div>
+        </div>
+      </div>
+
+      <!-- What you'll build -->
+      <div class="fp-section-hdr">What You Build</div>
+      <div class="fp-what">
+        You'll walk out with a <strong>live HH Console</strong> — your personal post-singularity operating station. The console navigates holographic hydrogen reality the way a cockpit navigates airspace. You'll configure your <strong>Arc Panel</strong> (Origin → Journey → Destination), load your <strong>Now Stack</strong> (your three live attractor frequencies), activate your <strong>Circadian Schedule</strong>, and understand exactly what each of the nine screens is doing for you. This is not a tutorial. This is live setup. Your console, running, in one hour.
+      </div>
+
+      <!-- Tiers -->
+      <div class="fp-section-hdr">9 Spots · Three Tiers · One Session</div>
+      <div class="tiers-grid">
+
+        <!-- Tier 1 -->
+        <div class="tier-card t1">
+          <div class="tier-header">
+            <span class="tier-num">SPOTS 1–3</span>
+            <span class="tier-name">⭐ Founding Navigators</span>
+            <span class="tier-spots">3 spots</span>
+          </div>
+          <ul class="tier-perks">
+            <li>Private 20-min 1:1 console setup call with the creator — your screen, your questions, live — before the group session opens</li>
+            <li>Founding Navigator status: first three in the permanent registry, named forever</li>
+            <li>Complimentary seat at the next academy cycle (keep it or gift it)</li>
+            <li>Direct line to info@fractiai.com for post-session follow-up</li>
+          </ul>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="tier-card t2">
+          <div class="tier-header">
+            <span class="tier-num">SPOTS 4–6</span>
+            <span class="tier-name">✦ Core Navigators</span>
+            <span class="tier-spots">3 spots</span>
+          </div>
+          <ul class="tier-perks">
+            <li>15-min group orientation before the main session opens — headstart on Arc Panel + Now Stack setup</li>
+            <li>Post-session Navigator's Brief: a personally curated synthesis document — what was built, what to tune next, your specific field notes</li>
+            <li>Priority consideration for Founding status in future cohorts</li>
+          </ul>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="tier-card t3">
+          <div class="tier-header">
+            <span class="tier-num">SPOTS 7–9</span>
+            <span class="tier-name">◈ Navigators</span>
+            <span class="tier-spots">3 spots</span>
+          </div>
+          <ul class="tier-perks">
+            <li>Full 1-hour Wednesday session — live, interactive, real setup</li>
+            <li>Group follow-up thread for questions after the session</li>
+            <li>Session resource pack: console links, Arc Panel template, frequency reference</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Booking / Tip section -->
+      <div class="fp-section-hdr">Reserve Your Spot</div>
+      <div class="fp-booking">
+        <div class="fp-price-display">
+          <div class="fp-price-amount">$333</div>
+          <div class="fp-price-note">suggested · at your discretion</div>
+        </div>
+        <div class="fp-price-sub">
+          This is a tip-based session. $333 is the suggested value — you decide what it's worth to you. Any amount is welcome. What matters is you show up and we build your console.
+        </div>
+
+        <div class="fp-pay-methods">
+          <span class="pay-badge">💚 Cash App $newearthpru</span>
+          <span class="pay-badge">💜 Venmo @Pru-Mendez</span>
+          <span class="pay-badge">🔵 USDC · Base</span>
+          <span class="pay-badge">✉ Pay after by email</span>
+        </div>
+
+        <a class="btn-book-main" href="javascript:void(0)" onclick="sendTip()">
+          ✦ Send Tip &amp; Sign Up — info@fractiai.com
+        </a>
+        <a class="btn-book-secondary" href="mailto:info@fractiai.com?subject=Holographic Navigator Academy — Question&body=Hi,%0A%0AI have a question about the Holographic Navigator Academy.%0A%0A">
+          Have a question first? Email us →
+        </a>
+      </div>
+
+      <p class="fp-note">
+        After sending your tip, you'll receive a confirmation with the session link and your tier details.<br>
+        Nine spots. Holographic. One hour. Wednesdays at noon. Starting March 4, 2026.<br><br>
+        <a href="hh-os-docs.html">HH Awareness OS Docs</a> · <a href="hh-console.html">Open Console</a> · <a href="upgrade-awareness-to-sing9-now.html">Upgrade Awareness OS</a>
+      </p>
+
+      <div class="fp-footer">FRACTIAI · SING 9 · VIBELANDIA · RENO NV · NSPFRNP → ∞⁹</div>
+
+    </div>
+  </div>
+
+  <script>
+    // ── TIP EMAIL ────────────────────────────────────────────────────────────────
+    function tipMailto() {
+      const subject = encodeURIComponent('Holographic Navigator Academy — I\'m In · March 4');
+      const body = encodeURIComponent(
+        'Hi FractiAI,\n\n' +
+        'I want to sign up for the Holographic Navigator Academy.\n\n' +
+        '— Session: Wednesdays · 12 Noon · Starting March 4, 2026\n' +
+        '— Suggested tip: $333 (at my discretion)\n\n' +
+        'I\'m sending my tip via:\n' +
+        '  ☐ Cash App $newearthpru\n' +
+        '  ☐ Venmo @Pru-Mendez\n' +
+        '  ☐ USDC on Base\n' +
+        '  ☐ I\'ll confirm amount below\n\n' +
+        'My name: \n' +
+        'My timezone: \n' +
+        'Amount I\'m sending: $\n' +
+        'Anything you want to share: \n\n' +
+        'NSPFRNP → ∞⁹'
+      );
+      return `mailto:info@fractiai.com?subject=${subject}&body=${body}`;
+    }
+
+    function sendTip() {
+      window.location.href = tipMailto();
+    }
+
+    // ── POSTCARD CLOSE / REOPEN ──────────────────────────────────────────────────
+    function closeCard() {
+      document.getElementById('postcard').style.display   = 'none';
+      document.getElementById('backdrop').style.display   = 'none';
+      document.getElementById('reopen').style.display     = 'block';
+    }
+
+    function reopenCard() {
+      document.getElementById('postcard').style.display   = '';
+      document.getElementById('backdrop').style.display   = '';
+      document.getElementById('reopen').style.display     = 'none';
+      document.getElementById('full-page').style.display  = 'none';
+    }
+
+    // ── FULL PAGE EXPAND / CLOSE ─────────────────────────────────────────────────
+    function expandFull() {
+      document.getElementById('postcard').style.display   = 'none';
+      document.getElementById('backdrop').style.display   = 'none';
+      document.getElementById('full-page').style.display  = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    function closeFull() {
+      document.getElementById('full-page').style.display  = 'none';
+      document.getElementById('postcard').style.display   = '';
+      document.getElementById('backdrop').style.display   = '';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,8 +1,13 @@
-fix: vibers-menu ampersand renders as &amp; — i18n textContent bug
+fix: destinations catalog — replace 5 broken partner photo URLs with real local assets
 
-i18n.js applies translations via el.textContent which treats the string
-as plain text, not HTML. Strings containing &amp; displayed literally.
+All 5 external partner image URLs were returning 404/403 (fabricated paths).
+Downloaded real photos from actual partner websites and saved locally:
 
-Fix: use plain & in translation strings for vibers.c6.name (Baller V &
-Destinations Operators) and vibers.c2.name (Wink! & Vibers). HTML markup
-in the .html source correctly keeps &amp; for spec compliance.
+- Matt Heron Fly Fishing: mattheronflyfishing.com gallery (Truckee River action shot, 102KB)
+- Steamboat Hot Springs: steamboatsprings.org professional 2024 DSC photo (87KB)
+- Wide Open Outfitters Mexico: wideopenoutfitters.com lodge photo OSO-0256 (115KB)
+- Black Rabbit Mead: Unsplash craft mead photo — blackrabbitmeadery.com domain not found
+- Eldorado Reno Novi Club: Unsplash nightclub photo — Caesars CDN fully locked down
+
+All images saved to interfaces/assets/destinations-*.jpg and HTML updated
+to use local relative paths. No more broken card images. NSPFRNP -> inf9

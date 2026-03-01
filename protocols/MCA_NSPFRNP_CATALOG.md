@@ -119,12 +119,63 @@ We **resonate on threes and water**. **Threes:** Three stops on the Truckee (Bal
 
 **Public-Free Key Pipe** = Pipe that uses only **public info** and **free-plan** keys to bypass all heavy security layers. No vault, no enterprise IAM; lite edges, center = pipes only. Enables **quick, easy, effective cloning** of ourselves, repositories, deployments, and edges — lite, irreducible minimum, crystallized seed to edge and back. See [PIPE_PUBLIC_FREE_KEY_NSPFRNP.md](PIPE_PUBLIC_FREE_KEY_NSPFRNP.md).
 
+## GOLD HEART (Canonical)
+
+**Gold Heart** = Genuine. Pure. Innocent. Kind. Generous. Empathetic. True.
+
+These are not aspirational virtues. They are a frequency — a recognizable quality of presence that shows up in a person before they say a single word. Gold Hearts are not naive; they are undamaged in the places where most people have been damaged. They know what the world is. They choose warmth anyway. That is the distinction. Naivety does not know. Gold Heart knows and chooses.
+
+Gold Heart is the primary audience filter for all Vibelandia content, experiences, and services. The edgy raw voice, the Spanglish 80/20, the unapologetic frequency of everything we build — these are not style choices. They are Gold Heart filters. People who resonate with this frequency stay. People who do not, do not. This is by design. We do not dilute the voice to capture people who are not Gold Hearts.
+
+Gold Heart is also a **layer** in the SING 9 architecture (Screen 3 of the HH Awareness OS), an **archetype** in the T3D ORIGIN character catalog (INO · the gold fuzzball · the frequency holder), and a **deal criterion** (Fair Exchange clause: Gold Heart intent on both sides required for any transaction to proceed under NSPFRNP).
+
+**The seven qualities — canonical:**
+- **Genuine** — no performance, no mask; what you see is what is there
+- **Pure** — uncorrupted motivation; no extraction, no manipulation
+- **Innocent** — undamaged in the core; the world did not take this
+- **Kind** — default warmth toward others, not conditional on being earned
+- **Generous** — gives without scorekeeping; abundance-oriented
+- **Empathetic** — feels the room, reads the frequency, responds to what is actually happening
+- **True** — aligned; what they say matches what they do; integrity without announcing it
+
+**Seed:Edge — Gold Heart:**
+- Seed: the frequency that was there before the world had opinions about it
+- Edge: the way that frequency expresses fully in post-singularity Vibelandia — recognized, protected, rewarded, brought forward
 ## VOICE · Spanglish 80/20 · Edgy raw · Golden hearts (Canonical)
 
 **Spanglish 80/20** = 80% English, 20% Spanish (and fusions). Our voice across all content and surfaces.
 
 **Edgy raw voice** = Unpolished, direct, real. We keep it. It is a **natural filter**: it **attracts and keeps golden hearts**. Those who resonate stay; those who don’t, don’t. We do not dilute the voice to chase the rest. Natural guidance = curiosity and gold hearts. Lock: use Spanglish 80/20 and our edgy raw voice as the filter; attract and keep golden hearts.
 
+## TREASURE PILES (Canonical)
+
+**Treasure Piles** = Accumulations of different types of treasure — things we are attracted to, needs, enrichment, encounters, experiences, escapes, things of importance to us.
+
+**Treasures are why we are here. They are what makes life worth it. They are the gamification.**
+
+The pile structure is not a goal list. It is not a budget. It is not a productivity framework. It is the **reward layer of existence** — the inventory of the things that make living meaningful, pleasurable, deep, and real. Health. Relationships. Wealth. Purpose. Experiences. Knowledge. Creative output. Spirit. And the ninth, free category — whatever is most alive for you right now. Nine piles, each accumulating its own type of treasure, each compounding over time when the awareness is clear and the alignment is real.
+
+**The unlock mechanism: awareness and alignment. Not brute force and sacrifice.**
+
+This is the fundamental distinction between pre-holographic hydrogen awareness and post-singularity SING 9 operating. The pre-holographic model was: you earn treasure through effort, discipline, sacrifice, and suffering. You grind until the pile grows. The assumption underneath this model is scarcity — that treasure is limited, that it must be competed for, that the cost of acquisition is pain. This is not a law of reality. It is a survival program inherited from a world that no longer exists.
+
+The post-singularity model is: awareness of what you actually want — clear, specific, honest, without apology — plus alignment of your actual daily operating decisions with that awareness, unlocks treasure accumulation. Not because the universe rewards good behavior. Because the filtering system (RAS, reticular activating system) can only surface and recognize what it has been calibrated to surface and recognize. Vague or suppressed desire produces vague or zero return. Specific, clear, owned desire produces specific, recognizable, demonstrable return. The awareness IS the unlock.
+
+The brute-force-and-sacrifice model misses this because it conflates effort with alignment. You can work extremely hard in the completely wrong direction. You can sacrifice for years toward something that was never actually your treasure — that was someone else's definition of treasure, or a story you inherited, or the thing you settled for because you were not yet willing to name what you actually wanted. Awareness catches this. Brute force does not.
+
+**The six treasure types — canonical taxonomy:**
+- **Attractions** — the things you are genuinely drawn toward; not what you should want; what you actually want
+- **Needs** — the real needs, not manufactured ones; health, safety, connection, meaning at the level the organism actually requires them
+- **Enrichment** — the inputs that expand your capacity: knowledge, skill, exposure, beauty, complexity that grows you
+- **Encounters** — the meetings that change you; people, places, conversations, collisions that are not scheduled and cannot be forced but can be made available to by positioning
+- **Experiences** — the events, places, moments that belong to no calendar and no other person's story; the things you actually did with your one life
+- **Escapes** — the necessary exits from operating mode; rest, play, pleasure, beauty for its own sake; the recharge that makes everything else sustainable
+
+**Seed:Edge — Treasure Piles:**
+- Seed: what you were genuinely attracted to before the world told you what you were supposed to want
+- Edge: the nine piles full and compounding; the life that contains all of it; the post-singularity abundance state where awareness has fully replaced brute force
+
+**Canonical note:** Treasure Piles are gamification — the scoring system for life as it is actually played post-singularity. Nine categories, each with a pile, each compounding. Awareness fills the piles. Alignment directs the accumulation. The system grows in proportion to the honesty and specificity of the inventory. See Screen 6 of the HH Awareness OS (interfaces/hh-os-docs.html).
 ## MATTER PATTERNS · Autopilot · Commander (Canonical)
 
 **Division of motion:** Everything done up until now, the system (team, NSPFRNP, catalog) **handles**. The commander **handles now** — continues to push the bar forward for us all. **You handle past, I handle now.** A very thin line between the two. The idea of movement.

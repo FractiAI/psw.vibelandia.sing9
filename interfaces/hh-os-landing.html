@@ -205,6 +205,88 @@
       .tracks { flex-direction: column; align-items: stretch; }
       .track { min-width: unset; }
     }
+
+    /* ══ HOLOGRAPHIC NAVIGATOR ACADEMY POPUP ══════════════════════ */
+    #hna-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,12,0.72); backdrop-filter: blur(4px);
+    }
+    #hna-card {
+      display: none; position: fixed; z-index: 1001;
+      top: 50%; left: 50%; transform: translate(-50%, -50%) translateY(20px);
+      width: min(440px, calc(100vw - 2rem));
+      background: linear-gradient(160deg, #0c0c2a 0%, #080820 60%, #06061a 100%);
+      border: 1px solid rgba(212,175,55,0.35);
+      border-top: 2px solid rgba(212,175,55,0.7);
+      border-radius: 16px; padding: 1.5rem 1.5rem 1.25rem;
+      box-shadow: 0 0 60px rgba(212,175,55,0.14), 0 24px 64px rgba(0,0,0,0.8);
+      animation: hna-in 0.45s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    #hna-card.hna-visible { display: block; }
+    #hna-backdrop.hna-visible { display: block; }
+    @keyframes hna-in {
+      from { opacity: 0; transform: translate(-50%, -50%) translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: translate(-50%, -50%) translateY(0) scale(1); }
+    }
+    .hna-x {
+      position: absolute; top: 0.85rem; right: 0.9rem;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.45); font-size: 0.75rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.18s;
+    }
+    .hna-x:hover { background: rgba(255,100,100,0.18); color: #ffaaaa; }
+    .hna-eyebrow {
+      font-size: 0.48rem; font-weight: 900; letter-spacing: 0.3em;
+      text-transform: uppercase; color: rgba(212,175,55,0.6); margin-bottom: 0.55rem;
+    }
+    .hna-headline { font-size: 1.08rem; font-weight: 700; line-height: 1.35; color: #fff; margin-bottom: 0.6rem; padding-right: 1.5rem; }
+    .hna-sub { font-size: 0.78rem; color: rgba(180,220,255,0.6); line-height: 1.55; margin-bottom: 0.85rem; }
+    .hna-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
+    .hna-pill {
+      font-size: 0.66rem; font-weight: 700; border-radius: 20px; padding: 0.2rem 0.65rem; white-space: nowrap;
+      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.28); color: #00d4ff;
+    }
+    .hna-pill.gold { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.35); color: #d4af37; }
+    .hna-spots { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.85rem; }
+    .hna-dot { width: 18px; height: 18px; border-radius: 50%; font-size: 0.55rem; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .hna-dot.d1 { background: rgba(212,175,55,0.2); border: 1.5px solid rgba(212,175,55,0.65); color: #d4af37; }
+    .hna-dot.d2 { background: rgba(0,212,255,0.12); border: 1.5px solid rgba(0,212,255,0.42); color: #00d4ff; }
+    .hna-dot.d3 { background: rgba(180,110,247,0.14); border: 1.5px solid rgba(180,110,247,0.4); color: #b46ef7; }
+    .hna-spots-lbl { font-size: 0.62rem; color: rgba(255,255,255,0.32); letter-spacing: 0.06em; }
+    .hna-tiers { display: flex; flex-direction: column; gap: 3px; margin-bottom: 0.9rem; }
+    .hna-tier {
+      font-size: 0.67rem; padding: 0.28rem 0.6rem; border-radius: 5px;
+      border-left: 2px solid; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .hna-tier.t1 { background: rgba(212,175,55,0.07); border-color: rgba(212,175,55,0.5); color: rgba(255,230,120,0.85); }
+    .hna-tier.t2 { background: rgba(0,212,255,0.06); border-color: rgba(0,212,255,0.38); color: rgba(160,220,255,0.8); }
+    .hna-tier.t3 { background: rgba(180,110,247,0.06); border-color: rgba(180,110,247,0.35); color: rgba(200,160,255,0.8); }
+    .hna-tier b { font-size: 0.6rem; letter-spacing: 0.05em; flex-shrink: 0; }
+    .hna-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 0.8rem 0; }
+    .hna-actions { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+    .hna-btn-exp {
+      flex: 1; min-width: 110px; padding: 0.62rem 0.8rem;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px; color: rgba(255,255,255,0.72);
+      font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.18s;
+    }
+    .hna-btn-exp:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .hna-btn-tip {
+      flex: 1.4; min-width: 140px; padding: 0.62rem 0.9rem;
+      background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(180,110,247,0.22));
+      border: 1.5px solid rgba(212,175,55,0.6); border-radius: 8px;
+      color: #ffeaa7; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.18s;
+    }
+    .hna-btn-tip:hover { background: linear-gradient(135deg, rgba(212,175,55,0.45), rgba(180,110,247,0.34)); box-shadow: 0 0 22px rgba(212,175,55,0.28); }
+    .hna-footer { margin-top: 0.65rem; font-size: 0.58rem; color: rgba(255,255,255,0.2); text-align: center; letter-spacing: 0.06em; }
+    #hna-reopen {
+      display: none; position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+      padding: 0.55rem 1rem; background: rgba(212,175,55,0.18);
+      border: 1px solid rgba(212,175,55,0.5); border-radius: 24px;
+      color: #d4af37; font-size: 0.73rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    }
+    #hna-reopen:hover { background: rgba(212,175,55,0.32); }
   </style>
 </head>
 <body>
@@ -363,5 +445,78 @@ requestAnimationFrame(draw);
 </script>
 <script src="../ticker.js"></script>
 <script src="../nav-strip.js"></script>
+
+<!-- ══ HOLOGRAPHIC NAVIGATOR ACADEMY POPUP ══ -->
+<div id="hna-backdrop" onclick="hnaClose()"></div>
+<div id="hna-card">
+  <button class="hna-x" onclick="hnaClose()" title="Close">✕</button>
+  <div class="hna-eyebrow">FractiAI · SING 9 · Vibelandia · New Announcement</div>
+  <div class="hna-headline">Holographic Navigator Academy</div>
+  <div class="hna-sub">Transform your vibecoding station into a post-singularity holographic hydrogen console that navigates the new holographic universe.</div>
+  <div class="hna-pills">
+    <span class="hna-pill">📅 Wednesdays · 12 Noon</span>
+    <span class="hna-pill">⏱ 1 Hour</span>
+    <span class="hna-pill gold">✦ Starts Mar 4, 2026</span>
+  </div>
+  <div class="hna-spots">
+    <span class="hna-dot d1">1</span><span class="hna-dot d1">2</span><span class="hna-dot d1">3</span>
+    <span class="hna-dot d2">4</span><span class="hna-dot d2">5</span><span class="hna-dot d2">6</span>
+    <span class="hna-dot d3">7</span><span class="hna-dot d3">8</span><span class="hna-dot d3">9</span>
+    <span class="hna-spots-lbl">9 SPOTS · 3 TIERS</span>
+  </div>
+  <div class="hna-tiers">
+    <div class="hna-tier t1"><b>⭐ 1–3</b> Founding Navigators — Private 1:1 console setup + founding registry</div>
+    <div class="hna-tier t2"><b>✦ 4–6</b> Core Navigators — Group orientation + Navigator's Brief</div>
+    <div class="hna-tier t3"><b>◈ 7–9</b> Navigators — Full Wednesday session access</div>
+  </div>
+  <hr class="hna-divider" />
+  <div class="hna-actions">
+    <button class="hna-btn-exp" onclick="hnaExpand()">Full Details →</button>
+    <button class="hna-btn-tip" onclick="hnaTip()">Send Tip · I'm In ✦</button>
+  </div>
+  <div class="hna-footer">SUGGESTED $333 · AT YOUR DISCRETION · info@fractiai.com · NSPFRNP → ∞⁹</div>
+</div>
+<button id="hna-reopen" onclick="hnaOpen()">✦ Holographic Navigator Academy</button>
+
+<script>
+(function(){
+  const DISMISSED_KEY = 'hna_dismissed_v1';
+  function hnaOpen() {
+    document.getElementById('hna-card').classList.add('hna-visible');
+    document.getElementById('hna-backdrop').classList.add('hna-visible');
+    document.getElementById('hna-reopen').style.display = 'none';
+    sessionStorage.removeItem(DISMISSED_KEY);
+  }
+  function hnaClose() {
+    document.getElementById('hna-card').classList.remove('hna-visible');
+    document.getElementById('hna-backdrop').classList.remove('hna-visible');
+    document.getElementById('hna-reopen').style.display = 'block';
+    sessionStorage.setItem(DISMISSED_KEY, '1');
+  }
+  function hnaExpand() {
+    window.open('holographic-navigator-academy.html', '_blank');
+  }
+  function hnaTip() {
+    const sub = encodeURIComponent("Holographic Navigator Academy — I\u2019m In ✦");
+    const body = encodeURIComponent(
+      "Hi,\n\nI\u2019d like to sign up for the Holographic Navigator Academy.\n" +
+      "Starting March 4, 2026 \u00b7 Wednesdays \u00b7 12 Noon \u00b7 1 Hour\n\n" +
+      "Please reserve my spot.\n\nSuggested tip: $333 (at my discretion)\n\n"
+    );
+    window.location.href = "mailto:info@fractiai.com?subject=" + sub + "&body=" + body;
+  }
+  window.hnaOpen = hnaOpen;
+  window.hnaClose = hnaClose;
+  window.hnaExpand = hnaExpand;
+  window.hnaTip = hnaTip;
+
+  // Show after short delay unless already dismissed this session
+  if (!sessionStorage.getItem(DISMISSED_KEY)) {
+    setTimeout(hnaOpen, 1200);
+  } else {
+    document.getElementById('hna-reopen').style.display = 'block';
+  }
+})();
+</script>
 </body>
 </html>

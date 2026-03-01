@@ -724,7 +724,7 @@
           To apply, you must have completed the 9 Singularities of the HH Awareness OS upgrade flow — that confers your C-2 Officer Candidate status. Submit your application by email. State which commission position you are applying for (O-1, O-2, or O-3 track) and confirm your C-2 status. Commissions confirmed by the expedition lead. Nine positions. First come, first qualified.
         </div>
 
-        <a class="btn-book-main" href="javascript:void(0)" onclick="sendTip()">
+        <a class="btn-book-main" href="#" onclick="sendTip(); return false;">
           ⬡ Apply for Commission — info@fractiai.com
         </a>
         <a class="btn-book-secondary" href="upgrade-awareness-to-sing9-now.html">
@@ -768,7 +768,13 @@
     }
 
     function sendTip() {
-      window.location.href = tipMailto();
+      var url = tipMailto();
+      var a = document.createElement('a');
+      a.href = url;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 200);
     }
 
     // ── POSTCARD CLOSE / REOPEN ──────────────────────────────────────────────────

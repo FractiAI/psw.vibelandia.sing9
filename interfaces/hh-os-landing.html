@@ -510,7 +510,12 @@ requestAnimationFrame(draw);
       "Name:\nTimezone:\nWhy I\u2019m applying:\n\n" +
       "NSPFRNP \u2192 \u221e\u2079"
     );
-    window.location.href = "mailto:info@fractiai.com?subject=" + sub + "&body=" + body;
+    var a = document.createElement('a');
+    a.href = "mailto:info@fractiai.com?subject=" + sub + "&body=" + body;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 200);
   }
   window.hnaOpen = hnaOpen;
   window.hnaClose = hnaClose;

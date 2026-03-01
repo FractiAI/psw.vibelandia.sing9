@@ -828,14 +828,14 @@
       setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 200);
     }
 
-    // Wire all Apply buttons as real hrefs at load — no JS click required
-    document.addEventListener('DOMContentLoaded', function() {
+    // Wire all Hit Me Up buttons immediately — script is at bottom of body so DOM is ready
+    (function() {
       var url = tipMailto();
       var b1 = document.getElementById('apply-selection-btn');
       var b2 = document.getElementById('apply-commission-btn');
       if (b1) b1.href = url;
       if (b2) b2.href = url;
-    });
+    })();
 
     // ── POSTCARD CLOSE / REOPEN ──────────────────────────────────────────────────
     function closeCard() {

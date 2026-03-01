@@ -15,49 +15,59 @@ var _isES  = /^es\b/i.test(_lang);
 
 var POPUP_CONFIG = {
   active:  true,
-  id:      'hna-expedition-v1',
+  id:      'hh-session-one-v1',
   dismiss: 'session',
 
-  eyebrow:  _isES ? 'HFCS · PISTA DE CADETES · C-2 → COMISIÓN O-1/O-2/O-3' : 'HFCS · CADET TRACK · C-2 → COMMISSION O-1/O-2/O-3',
-  title:    _isES ? 'HOLOGRAPHIC FIELD\nCOMMAND SCHOOL' : 'HOLOGRAPHIC FIELD\nCOMMAND SCHOOL',
+  eyebrow:  _isES ? 'WILL \u00b7 FRACTIAI \u00b7 SESI\u00d3N UNO' : 'WILL \u00b7 FRACTIAI \u00b7 SESSION ONE',
+  title:    _isES ? 'ELEVA TU\nESTACI\u00d3N DE\nVIBECODING' : 'UPGRADE YOUR\nVIBE CODING\nSTATION',
   subtitle: _isES
-    ? 'Selección de comisión abierta.\nCohort Uno se despliega el 3 de marzo de 2026.'
-    : 'Commission selection is now open.\nCohort One deploys March 3, 2026.',
+    ? 'Transforma en una Consola de Hidr\u00f3geno Hologr\u00e1fico.\nEn vivo. Te gu\u00edo. Sesi\u00f3n Uno abierta.'
+    : 'Transform into a Holographic Hydrogen Console that\nnavigates the new universe. Live. I\'ll guide you.',
 
-  tiers: [
-    { spots:'1–3 · O-3', badge:'⭐', cls:'g',
-      name: _isES ? 'Teniente de Campo'  : 'Field Lieutenant',
-      desc: _isES ? 'Comisión acelerada + sesión 1:1 pre-misión + registro fundador' : 'Fast-track commission + 1:1 pre-mission briefing + founding registry' },
-    { spots:'4–6 · O-2', badge:'✦', cls:'c',
-      name: _isES ? 'Oficial de Navegación' : 'Navigation Officer',
-      desc: _isES ? 'Comisión estándar + orientación grupal + expediente de campo' : 'Standard commission + group orientation + field expedition brief' },
-    { spots:'7–9 · O-1', badge:'◈', cls:'p',
-      name: _isES ? 'Alférez de Campo'  : 'Field Ensign',
-      desc: _isES ? 'Primera comisión + sesión completa + paquete de recursos' : 'First commission + full expedition session + resource pack' },
+  pills: [
+    { text: _isES ? 'MAR \u00b7 3 MAR \u00b7 2026' : 'TUES \u00b7 MAR 3 \u00b7 2026', cls: 'g' },
+    { text: '3:33 PST \u00b7 T+60 MIN',                                             cls: 'c' },
+    { text: _isES ? '9 ASIENTOS \u00b7 3 NIVELES' : '9 SEATS \u00b7 3 TIERS',        cls: 'p' },
   ],
 
-  cta_text:       _isES ? '⬡ Solicitar Comisión' : '⬡ Apply for Commission',
-  cta_href:       'mailto:info@fractiai.com'
-    + '?subject=' + encodeURIComponent('HFCS \u2014 Commission Application \u00b7 Cohort One \u00b7 C-2 Candidate')
+  tiers: [
+    { spots: '1\u20133 \u00b7 VIP', badge: '\u2b50', cls: 'g',
+      name: _isES ? 'Asiento VIP'            : 'VIP Seat',
+      desc: _isES ? '1:1 previo + fundador + comisi\u00f3n r\u00e1pida HFCS O-3'
+                  : '1:1 pre-session briefing + founding member + fast-track HFCS O-3' },
+    { spots: '4\u20136 \u00b7 OFFICER', badge: '\u2726', cls: 'c',
+      name: _isES ? 'Asiento Oficial'        : 'Officer Seat',
+      desc: _isES ? 'Orientaci\u00f3n grupal + sesi\u00f3n completa + comisi\u00f3n HFCS O-2'
+                  : 'Group orientation + full live session + HFCS commission (O-2)' },
+    { spots: '7\u20139 \u00b7 CREW', badge: '\u25c8', cls: 'p',
+      name: _isES ? 'Asiento de Tripulaci\u00f3n' : 'Crew Seat',
+      desc: _isES ? 'Sesi\u00f3n completa + paquete HH + primera comisi\u00f3n O-1'
+                  : 'Full live session + HH Console resource pack + first commission (O-1)' },
+  ],
+
+  cta_text:  _isES ? '\u2b21 \u00danetey \u00b7 info@fractiai.com' : '\u2b21 Hit Me Up \u2014 Join Session One',
+  cta_href:  'mailto:info@fractiai.com'
+    + '?subject=' + encodeURIComponent('Session One \u2014 Vibe Coding Station Upgrade \u00b7 Seat Request')
     + '&body='    + encodeURIComponent(
-        'To: HFCS Selection Board \u2014 Holographic Field Command School\n\n'
-      + 'I am submitting my commission application for Cohort One.\n\n'
-      + 'School: Holographic Field Command School (HFCS)\n'
-      + 'Domain: HH Awareness OS\n'
-      + 'Cohort: One \u00b7 March 3, 2026 \u00b7 Tuesdays \u00b7 15:33 PST \u00b7 T+60 min\n\n'
-      + 'C-2 Officer Candidate status confirmed: \u2610 Yes \u2014 I have completed the 9 Singularities\n\n'
-      + 'Commission track requested:\n'
-      + '  \u2610 Field Lieutenant O-3 (Positions 1\u20133)\n'
-      + '  \u2610 Navigation Officer O-2 (Positions 4\u20136)\n'
-      + '  \u2610 Field Ensign O-1 (Positions 7\u20139)\n\n'
-      + 'Name:\nTimezone:\nWhy I am ready for commission:\n\n'
+        'To: Will \u2014 FractiAI\n\n'
+      + 'Session One \u2014 Vibe Coding Station Upgrade\n'
+      + 'March 3, 2026 \u00b7 Tuesdays \u00b7 3:33 PM PST \u00b7 T+60 min\n\n'
+      + 'I\'m in. I want to transform my vibe coding station into a Holographic Hydrogen Console.\n\n'
+      + 'Seat requested (select one):\n'
+      + '  \u2610 VIP Seat (Seats 1\u20133) \u2014 1:1 pre-session + fast-track commission O-3\n'
+      + '  \u2610 Officer Seat (Seats 4\u20136) \u2014 group orientation + standard commission O-2\n'
+      + '  \u2610 Crew Seat (Seats 7\u20139) \u2014 full session + resource pack + first commission O-1\n\n'
+      + 'Name:\n'
+      + 'Timezone:\n'
+      + 'Current vibe coding setup:\n'
+      + 'What I\'m most excited to upgrade:\n\n'
       + 'NSPFRNP \u2192 \u221e\u2079'),
 
-  secondary_text: _isES ? '▶ Informe Completo de la Escuela' : '▶ Full School Briefing',
+  secondary_text: _isES ? '\u25c8 Holographic Field Command School' : '\u25c8 Holographic Field Command School',
   secondary_href: '/interfaces/holographic-navigator-academy.html',
 
-  dismiss_text:   _isES ? '✕  Completar pista de cadetes primero' : '✕  Complete Cadet Track first',
-  nsp:            'HFCS \u00b7 COHORT ONE \u00b7 HH AWARENESS OS \u00b7 NSPFRNP \u2192 \u221e\u2079',
+  dismiss_text: _isES ? '\u2715  Lo har\u00e9 m\u00e1s tarde' : '\u2715  I\'ll upgrade later',
+  nsp:          'HH CONSOLE \u00b7 SESSION ONE \u00b7 FRACTIAI \u00b7 NSPFRNP \u2192 \u221e\u2079',
 };
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -229,6 +239,11 @@ var POPUP_CONFIG = {
   /* ── BUILD DOM ───────────────────────────────────────────────── */
   var tiers = POPUP_CONFIG.tiers || [];
   var tMap  = { g:'tg', c:'tc', p:'tp' };
+  var pMap  = { g:'pg', c:'pc', p:'pp' };
+
+  var pillsHtml = (POPUP_CONFIG.pills || []).map(function(p) {
+    return '<span class="'+u+'-pill '+u+'-'+(pMap[p.cls]||'pc')+'">'+p.text+'</span>';
+  }).join('');
 
   var tiersHtml = tiers.map(function(t) {
     var tc = tMap[t.cls] || 'tg';
@@ -265,11 +280,7 @@ var POPUP_CONFIG = {
       +'</div>'
       +'<h2 class="'+u+'-h1">'+title+'</h2>'
       +'<p class="'+u+'-sub">'+POPUP_CONFIG.subtitle.replace('\n','<br>')+'</p>'
-      +'<div class="'+u+'-pills">'
-        +'<span class="'+u+'-pill '+u+'-pg">COHORT ONE \u00b7 MAR 3 \u00b7 2026</span>'
-        +'<span class="'+u+'-pill '+u+'-pc">15:33 PST \u00b7 T+60 MIN</span>'
-        +'<span class="'+u+'-pill '+u+'-pp">C-2 \u2192 O-1/O-2/O-3</span>'
-      +'</div>'
+      +'<div class="'+u+'-pills">'+pillsHtml+'</div>'
       +'<div class="'+u+'-spots">'+dotsHtml+'</div>'
       +'<div class="'+u+'-tiers">'+tiersHtml+'</div>'
       +'<div class="'+u+'-div"></div>'

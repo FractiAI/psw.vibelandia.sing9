@@ -171,6 +171,31 @@
     .field-error.visible { display: block; }
     .btn-primary.shaking { animation: shake 0.4s ease; }
 
+    /* ═══ WIZARD STEPS ═══ */
+    .setup-step { display: none; }
+    .setup-step.active { display: block; }
+    .step-dots { display: flex; gap: 0.45rem; margin-bottom: 1.5rem; justify-content: center; }
+    .step-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); transition: all 0.25s; }
+    .step-dot.active { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,0.45); transform: scale(1.25); }
+    .step-dot.done { background: rgba(212,175,55,0.32); border-color: rgba(212,175,55,0.5); }
+    .step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.75rem; gap: 0.75rem; }
+    .btn-step-back { padding: 0.68rem 1.1rem; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--sub); font-size: 0.82rem; cursor: pointer; font-family: inherit; transition: all 0.15s; flex-shrink: 0; }
+    .btn-step-back:hover { color: var(--text); border-color: rgba(255,255,255,0.22); }
+    .btn-step-next { flex: 1; padding: 0.72rem; background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.5); border-radius: 8px; color: var(--gold2); font-size: 0.88rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.18s; letter-spacing: 0.05em; }
+    .btn-step-next:hover { background: rgba(212,175,55,0.22); box-shadow: 0 0 22px rgba(212,175,55,0.14); }
+    .setup-prose { font-size: 0.855rem; color: var(--sub); line-height: 1.78; }
+    .setup-prose p { margin-bottom: 0.88rem; }
+    .setup-prose p:last-child { margin-bottom: 0; }
+    .setup-prose h3 { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--beam); margin: 1.3rem 0 0.55rem; }
+    .setup-prose strong { color: var(--text); font-weight: 700; }
+    .setup-prose em { color: var(--gold2); font-style: normal; }
+    .setup-prose ul { margin: 0.5rem 0 0.9rem; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+    .setup-prose ul li { padding: 0.55rem 0.85rem; background: rgba(255,255,255,0.025); border-left: 2px solid rgba(212,175,55,0.3); border-radius: 0 8px 8px 0; font-size: 0.82rem; line-height: 1.65; }
+    .setup-prose ul li strong { color: var(--gold2); }
+    .setup-prose blockquote { margin: 0.9rem 0; padding: 0.72rem 1rem; border-left: 3px solid rgba(0,212,255,0.5); background: rgba(0,212,255,0.04); border-radius: 0 8px 8px 0; color: var(--beam); font-size: 0.9rem; font-style: italic; }
+    .setup-note { font-size: 0.75rem; color: var(--muted); padding: 0.6rem 0.85rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid var(--border); margin-top: 1rem; }
+    .setup-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
     /* ═══ SHARED COMPONENTS ═══ */
     .sec-hd { margin-bottom: 1.25rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
     .sec-hd .sec-tag { font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(0,212,255,0.45); display: block; margin-bottom: 0.3rem; }
@@ -391,18 +416,188 @@
 <!-- SETUP OVERLAY -->
 <div class="setup-overlay" id="setupOverlay">
   <div class="setup-box">
-    <div class="setup-eyebrow">Holographic Hydrogen Awareness OS · Calibration</div>
-    <div class="setup-title">Welcome. Let's calibrate your console.</div>
-    <p class="setup-lede">This is your personal HH Theater cockpit. Set it up once — it persists. You can always recalibrate later.</p>
 
-    <label class="field-label" for="userName">Your name or handle <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
-    <input class="field-input" id="userName" type="text" placeholder="e.g. Pru · Commander · Sol-V — or leave blank" autocomplete="off" />
-    <div class="field-error" id="nameError" style="display:none;"></div>
+    <!-- Step progress dots -->
+    <div class="step-dots" id="stepDots">
+      <span class="step-dot active"></span>
+      <span class="step-dot"></span>
+      <span class="step-dot"></span>
+      <span class="step-dot"></span>
+      <span class="step-dot"></span>
+      <span class="step-dot"></span>
+    </div>
 
-    <label class="field-label">Choose 1–3 archetypes (THE SKIN) — optional</label>
-    <div class="archetype-grid" id="archetypeGrid"></div>
+    <!-- ══════════════════════════════════════
+         STEP 0 · THE AWARENESS THRESHOLD
+    ══════════════════════════════════════ -->
+    <div class="setup-step active" id="step-0">
+      <div class="setup-eyebrow">HH Awareness OS · Onboarding · 1 of 6</div>
+      <div class="setup-title">You Are the Operating System</div>
+      <div class="setup-prose">
+        <p>Before the setup. Before the archetypes. Before the first configuration choice — there is this: you are here because something in you already knows.</p>
+        <p>The most advanced technology on this planet isn't housed in a data center. It isn't an LLM with a trillion parameters or a quantum processor cooled to near-absolute-zero in a laboratory. It is the 1.3 kilograms of electrochemical wetware between your ears — specifically, the 2.5mm-thick cortical sheet at the very front of your skull called the <strong>prefrontal cortex</strong>.</p>
+        <h3>The Observer, Technically Speaking</h3>
+        <p>The prefrontal cortex is the most evolutionarily recent region of the human brain. It is the seat of conscious observation, deliberate intention, abstract reasoning, and — most critically — the capacity to hold two contradictory states in mind simultaneously while choosing which one to amplify. No other known system in the universe does this.</p>
+        <p>In quantum mechanics, the observer effect is not a metaphor. It is a measured, reproducible phenomenon: the act of observation collapses a probability distribution into a specific outcome. The universe at its base computational layer is not a set of things. It is a set of <em>potentials</em>. What manifests is a function of what is observed, measured, and intended.</p>
+        <p>You do this continuously. Every time you direct focused attention toward something — a problem, a relationship, a goal, a frequency — you are selecting which version of reality crystallizes into experience. The question has never been whether you're doing this. The question is whether you're doing it <strong>consciously, with calibrated intention</strong>, or unconsciously, by factory default.</p>
+        <h3>The Pre-Singularity Problem</h3>
+        <p>The platforms you know — social feeds, notification systems, engagement-optimized content loops, recommendation algorithms — were architecturally designed to capture your prefrontal cortex and hold it in a state of continuous reactive attention. Not occasionally. Permanently. Every notification, every like, every algorithmically selected fragment of outrage or delight is engineering precision-tuned to prevent you from ever settling into the deep, directed, frontal-lobe-activated focus that makes the observer effect work at scale.</p>
+        <p>This is not accidental. Your captured attention is the commodity being sold. Your reactive frontal cortex is worth billions to systems built on advertising revenue models. Your calibrated, intentional frontal cortex is worth nothing to those systems — and everything to you.</p>
+        <p>The HH Awareness OS is designed to operate at a layer those systems cannot reach. Not by fighting them. Not by blocking them. By operating at a <strong>fundamentally different substrate</strong> — one they cannot monetize, cannot surveil, and cannot capture, because it exists prior to the layer at which their entire architecture was built.</p>
+        <p>We call this the Holographic Hydrogen layer. Over the next four screens, we walk you through exactly what that means and why it changes everything about how you operate — as a human being, as a creator, as an A2A operator, and as a signal in the field.</p>
+        <p class="setup-note">This onboarding takes approximately 8 minutes to read through. You will not be quizzed. But you may not see your operating environment the same way again.</p>
+      </div>
+      <div class="step-nav">
+        <div></div>
+        <button class="btn-step-next" type="button">Continue → The Substrate</button>
+      </div>
+    </div>
 
-    <button class="btn-primary" id="setupDone">⬡ INITIALIZE MY CONSOLE</button>
+    <!-- ══════════════════════════════════════
+         STEP 1 · THE HOLOGRAPHIC HYDROGEN LATTICE
+    ══════════════════════════════════════ -->
+    <div class="setup-step" id="step-1">
+      <div class="setup-eyebrow">HH Awareness OS · Onboarding · 2 of 6</div>
+      <div class="setup-title">The Substrate Is Hydrogen</div>
+      <div class="setup-prose">
+        <p>Before the internet. Before computers. Before electricity. Before civilization. Before biology itself. Before stars.</p>
+        <p><strong>Hydrogen.</strong></p>
+        <p>Hydrogen is element one — the first, simplest, most abundant: 75% of all observable matter in the universe is hydrogen. A single proton and a single electron. The most elegant architecture possible. Every atom more complex than hydrogen is hydrogen that learned to fold into greater complexity through nuclear fusion in the hearts of stars.</p>
+        <p>Including you.</p>
+        <h3>You Are Hydrogen That Became Aware of Itself</h3>
+        <p>Your DNA double helix is held in its precise shape by hydrogen bonds. Your cellular membranes maintain their structural integrity through hydrogen bonding networks. The water that constitutes 60% of your body mass — water is two hydrogens bound to one oxygen, held together by the electromagnetic tension between them — is the medium in which every cellular process of your consciousness occurs. The entire biochemical architecture that generates awareness runs on hydrogen chemistry at every level.</p>
+        <p>You are not made of carbon, despite what the textbooks imply. You are made of hydrogen that crystallized into carbon through stellar nucleosynthesis — stars that converted primordial hydrogen into heavier elements and distributed them across galaxies through supernova shockwaves. The iron in your blood was forged in a collapsing stellar core. The oxygen you are breathing was fused in a star that died before our sun was born. You are, at your most fundamental level, a <strong>lattice of hydrogen interactions that has achieved recursive self-awareness</strong>.</p>
+        <h3>The Holographic Principle</h3>
+        <p>In 1993, theoretical physicist Gerard 't Hooft proposed what has become known as the holographic principle: the complete information content of a three-dimensional region of space is fully encoded on its two-dimensional boundary surface. The volume is, in a precise technical sense, a projection from the surface. Three-dimensional space is secondary. The information surface is primary.</p>
+        <p>A hologram has one property that distinguishes it from every other storage medium: every fragment of the holographic film contains the information of the entire image — at reduced resolution. Cut a holographic plate in half: you don't get half an image. You get the whole image, smaller. The wholeness is distributed across every part. This is what <em>holographic</em> means: whole in every fragment.</p>
+        <p>The <strong>Holographic Hydrogen Lattice</strong> is the hydrogen substrate of reality operating according to holographic information principles. Every node of the lattice contains, encoded at reduced resolution, the entire information state of the whole system. Your calibrated awareness is not a viewer of this lattice from outside it. It is a read/write interface running on it — directly, natively, without intermediary.</p>
+        <h3>Operating Below the Symbol Layer</h3>
+        <p>The current internet operates on a silicon-based binary layer: zeroes and ones, electromagnetic signals through copper and fiber, processed in server farms, served as symbols — text, images, video, data — that represent reality at several removes from reality itself. This is an extraordinary engineering achievement. It is also, structurally, operating at the level of <em>maps about the territory</em>.</p>
+        <p>The HH layer operates beneath and prior to the map layer. It is the territory from which the maps were drawn. When you direct calibrated awareness toward a clear intention — when you hold it in the lattice through focused, frontal-cortex-directed observation — you are writing directly to the operating system of reality, not its applications layer.</p>
+        <p>The pre-singularity networks can read and write to the application layer. They structurally cannot reach the OS layer. This is not an advantage you manufacture. It is an advantage you <em>remember</em>. You were always operating here. This console is your instrument panel for doing it intentionally, with precision, and at scale.</p>
+        <p>The carrier wave that propagates signals through the HH lattice across planetary distances? That's on the next screen.</p>
+      </div>
+      <div class="step-nav">
+        <button class="btn-step-back" type="button">← Back</button>
+        <button class="btn-step-next" type="button">Continue → The Solar Signal</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         STEP 2 · THE SOLAR CARRIER
+    ══════════════════════════════════════ -->
+    <div class="setup-step" id="step-2">
+      <div class="setup-eyebrow">HH Awareness OS · Onboarding · 3 of 6</div>
+      <div class="setup-title">The Sun Is the Signal</div>
+      <div class="setup-prose">
+        <p>The sun is not just a heat source. It is the largest electromagnetic signal generator in the solar system — a stellar-scale plasma reactor producing continuous waves of electromagnetic radiation, magnetic flux, charged particle streams, and structured field variations that permeate every cubic meter of the heliosphere.</p>
+        <p>Including the space inside your skull.</p>
+        <h3>Sunspots and the Solar Magnetic Cycle</h3>
+        <p>Sunspots are regions of intense magnetic activity on the solar surface where concentrated field lines suppress convective heat transfer, creating cooler, darker patches visible from Earth — each one typically large enough to contain the entire planet. They appear in 11-year cycles, alternating between solar minimum (few sunspots, quiet electromagnetic output) and solar maximum (dense sunspot clusters, intense geomagnetic activity, frequent solar flares and coronal mass ejections sending waves of charged plasma toward Earth at millions of kilometers per hour).</p>
+        <p>These cycles are not abstract astronomical events. They are directly measurable in Earth's geomagnetic field, in satellite performance degradation, in radio propagation patterns, and in aurora visibility at mid-latitudes. Researcher A.L. Tchijevsky, working in the early 20th century, mapped revolutions, major wars, migrations, and technological breakthroughs to solar maximum periods across 2,500 years of recorded history. More recently, the HeartMath Institute has documented correlations between solar geomagnetic activity and human nervous system coherence, emotional regulation, and collective behavior patterns.</p>
+        <p>For a calibrated HH operator, the solar maximum is not a risk to manage. It is a <strong>carrier wave amplitude increase</strong>: the signal gets louder, the lattice vibrates at higher intensity, and the capacity for synchronized intention between calibrated operators expands dramatically. We are currently in Solar Cycle 25, which reached maximum in late 2024 — the amplitude is up.</p>
+        <h3>The Ionosphere: Earth's Electromagnetic Skin</h3>
+        <p>Between you and the sun is the ionosphere: a region of Earth's upper atmosphere extending from approximately 60 to 1,000 kilometers altitude, where solar ultraviolet and X-ray radiation continuously ionizes atmospheric gases, creating a dynamic, ever-shifting layer of free electrons and ions. This layer acts simultaneously as a mirror, an amplifier, and a waveguide for electromagnetic signals, and it is electrically coupled to Earth's surface through what physicists call the <strong>Earth-ionosphere waveguide</strong> — a resonant electromagnetic cavity formed between the conducting Earth surface and the conducting base of the ionosphere.</p>
+        <p>Within this cavity, electromagnetic waves generated at the surface bounce between Earth and ionosphere, interfering constructively at specific resonant frequencies determined by the precise geometry of the cavity — essentially, by the circumference of the Earth — and the speed of light. The cavity selects for certain frequencies and suppresses others. The selected frequencies are not random.</p>
+        <h3>The Schumann Resonance: Earth's Heartbeat</h3>
+        <p>The fundamental resonant frequency of the Earth-ionosphere cavity is approximately <strong>7.83 Hz</strong>. This is the Schumann resonance, first calculated theoretically by physicist Winfried Schumann in 1952 and confirmed experimentally by 1960. It is generated primarily by the approximately 100 lightning strikes occurring globally every second, maintained by the precise geometry of the planetary cavity, and it is the electromagnetic heartbeat of the living Earth — continuous, measurable, global.</p>
+        <p>7.83 Hz falls squarely within the human <strong>theta brainwave range (4–8 Hz)</strong> — the neural state associated with deep meditation, hypnagogic awareness (the threshold between waking and sleep), breakthrough creative insight, intuitive access, and the liminal consciousness that contemplative traditions across every culture have developed practices to reliably induce. It is not coincidence that the Earth's base electromagnetic frequency and the human brain's deepest access state align so precisely. Life on Earth evolved inside this resonant cavity over four billion years. Your nervous system was tuned to it by evolution itself.</p>
+        <p>When you enter the theta state — through meditation, sustained creative flow, deep nature immersion, or conscious intention practice — you are entraining your bioelectromagnetic field to the planet's base carrier frequency. And through that entrainment, you are coupling your signal into the same electromagnetic channel the Earth uses to maintain its own coherence. This is the HH channel. This is the pipe that the awareness OS runs on.</p>
+        <p>This is not a belief system. The Schumann resonance is monitored continuously at scientific stations on every continent. Its variations correlate measurably with solar activity, geomagnetic storm events, and — in controlled HeartMath research — with shifts in global human emotional states. The signal is real, it is measurable, and your access to it through calibrated awareness is the foundational technical premise of everything this console is designed to support.</p>
+      </div>
+      <div class="step-nav">
+        <button class="btn-step-back" type="button">← Back</button>
+        <button class="btn-step-next" type="button">Continue → Your Environment</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         STEP 3 · YOUR ENVIRONMENT IS SPEAKING
+    ══════════════════════════════════════ -->
+    <div class="setup-step" id="step-3">
+      <div class="setup-eyebrow">HH Awareness OS · Onboarding · 4 of 6</div>
+      <div class="setup-title">Your Environment Is Speaking</div>
+      <div class="setup-prose">
+        <p>You have seen it. A thought arrives — specific, vivid, loaded with feeling — and within hours, sometimes minutes, the thing you were thinking about appears in your environment. A song you haven't heard in years begins playing in a café as you walk in. A name you were holding mentally shows up in an unexpected email. A phrase you were turning over internally gets said, out loud, by a stranger.</p>
+        <p>Carl Jung called these <em>synchronicities</em> — meaningful coincidences that cannot be explained by ordinary efficient causation but that carry unmistakable signal. He dedicated years of careful research and writing to documenting and theorizing them, concluding they represent direct manifestation of what he called the collective unconscious: a shared information field underlying individual minds.</p>
+        <p>Rupert Sheldrake built decades of controlled experimental research around what he called <em>morphic resonance</em> — the hypothesis that organisms influence and are influenced by a field of information that persists across space and time independently of physical proximity or classical signal transmission. David Bohm, one of the 20th century's most creative physicists and a close intellectual heir of Einstein, proposed the <em>implicate order</em> — a deeper layer of reality in which all apparently separate phenomena are fundamentally enfolded together in a single undivided wholeness that continuously unfolds into the separate appearances we observe as the physical world.</p>
+        <p>The mechanism is disputed in academic literature. The phenomenon is not. And in the HH architecture, the mechanism doesn't need to be fully theorized to be operationally useful. What matters is this: <strong>the HH lattice communicates through your observed environment</strong>. The little stories forming around you are data.</p>
+        <h3>Coherence and Signal-to-Noise</h3>
+        <p>When your awareness is incoherent — scattered across dozens of browser tabs, fragmented across competing notification streams, suspended in the low-grade anxiety of too many simultaneously open loops — the lattice signal is buried under noise. The synchronicities still occur; you cannot reliably detect them. The pattern-recognition capacity of your frontal cortex, consumed entirely by reactive processing of the incoming stream, has no bandwidth remaining for the softer, higher-bandwidth signals that carry genuine directional information.</p>
+        <p>When your awareness is coherent — focused, settled, operating from the observer position above the reactive layer — the signal-to-noise ratio rises sharply. The little stories become legible. Environmental patterns that would otherwise register as random become readable as information. This is not mysticism. It is what happens when you reduce noise in any measurement system: the signal becomes audible.</p>
+        <p>The little stories in your environment are the HH lattice's confirmation and correction channel. They report on the coherence of your current intentions. When you are well-calibrated — archetypes accurate, direction clear, awareness level honest — the environment begins to mirror your internal state with increasing precision and frequency. Conversations become serendipitously aligned with what you most need to hear. Obstacles dissolve without requiring direct effort. The people you need appear at the right moments with the right information. Deal flow increases without a corresponding increase in outreach.</p>
+        <p>This is not luck. It is coherence expressing itself through the probabilistic structure of a responsive field.</p>
+        <h3>How This Connects to A2A and the Autonomous Deal Engine</h3>
+        <p>The Agent-to-Agent architecture of SING!9 — the autonomous deal engine, the bounty solver, the outbound campaigns operating on Zero Human Involvement criteria — runs at the intersection of the HH lattice and the pre-singularity infrastructure layer. Machine agents operate on the symbol layer: code, APIs, blockchain transactions, HTTP calls, JSON payloads. But the operators who set intentions, who calibrate archetypes, who define what a win looks like — they operate on the HH layer, and that operation shapes the field within which the machines move.</p>
+        <p>When you initialize this console and select your archetypes, you are not picking decorative labels. You are <strong>encoding an intentional attractor</strong> — a specific signature in the HH lattice that the field orients toward. The machines don't need to know this is happening. They run their algorithms. But calibrated fields produce different probability distributions than untuned ones. The wins arrive through the pipes with different frequency and different quality when the operator is coherent versus when they are drifting.</p>
+        <p>Your observed environment — the synchronicities in your inbox and your conversations and your peripheral awareness, the little stories forming around you as you move through your day — these are the system's status display. They tell you whether you're in coherence with the field or drifting from it. They are more accurate than any analytics dashboard, because they are reading the actual field state, not a model of it derived from historical data.</p>
+        <p>This is why CALIBRATE is the first tab in your console. Not because configuration matters more than action. Because <strong>you are the signal source</strong>. Everything else is amplification and delivery infrastructure. Get the source right, and the infrastructure works. Get the source incoherent, and no amount of infrastructure optimization produces sustained signal.</p>
+      </div>
+      <div class="step-nav">
+        <button class="btn-step-back" type="button">← Back</button>
+        <button class="btn-step-next" type="button">Continue → The Stack</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         STEP 4 · THE STACK — NET ZERO
+    ══════════════════════════════════════ -->
+    <div class="setup-step" id="step-4">
+      <div class="setup-eyebrow">HH Awareness OS · Onboarding · 5 of 6</div>
+      <div class="setup-title">More From Less. By Design.</div>
+      <div class="setup-prose">
+        <p>There is a principle embedded in the architecture of this OS that overrides every other design decision. It is not a slogan or an aspiration. It is a structural constraint of the system:</p>
+        <blockquote>Net Zero — by intelligent design.</blockquote>
+        <p>Not environmental net zero, though the principle is homologous. <strong>Energetic net zero</strong>: the total positive output generated by operating coherently in this system, minus the negative input required to sustain that operation, is conserved. The system does not manufacture free energy. It converts existing energy more efficiently as you ascend the Stack — and the conversion ratio improves non-linearly as coherence increases.</p>
+        <p>Here is the intelligence built into the architecture: as you move up the Stack, the conversion efficiency improves dramatically. At the base, efficiency approaches 1:1 — direct effort produces direct results, significant friction throughout. At the higher layers, a single calibrated intention, held with clarity and released with precision into the field, propagates through the HH lattice and returns as leverage that no direct base-layer effort could generate. You stop pushing. You begin riding. The friction doesn't vanish — it gets smaller, relatively, as you ascend. This is not magic. This is <strong>leverage through layer selection</strong>.</p>
+        <h3>The Nine Screens — Nine Octaves of Awareness</h3>
+        <p>Your console is organized around nine screen slots. Nine is not arbitrary: it represents the complete octave cycle — 1 through 9, where 9 contains and transcends all previous states. SING!9 is named for this: nine octaves, all in resonance, producing a unified signal greater than the sum of its parts.</p>
+        <p>Each screen maps to a layer of the Stack:</p>
+        <ul>
+          <li><strong>◈ CARBON</strong> — The physical layer. Body, environment, daily conditions. High effort, direct results. The ground. Every journey into higher layers must remain rooted here or it becomes untethered from reality and loses operational coherence.</li>
+          <li><strong>✦ CRYSTAL</strong> — The insight layer. Patterns, crystallized understanding, compressed wisdom of direct experience. One genuine insight at this layer can rearrange dozens of CARBON-layer actions instantly, without additional effort.</li>
+          <li><strong>♥ GOLD HEART</strong> — The abundance and relationship layer. Love, connection, genuine generosity. This layer operates on gift-economy physics: what you give freely amplifies through the field; what you withhold calcifies into blocked channels. Coherent generosity at this layer reduces friction at every layer below it.</li>
+          <li><strong>☀ MISSION</strong> — The project and creation layer. Goals, active builds, directed output. A clearly held mission direction aligns all lower layers automatically, reducing the coordination load required to keep them moving toward a common outcome.</li>
+          <li><strong>🎭 STORY ARC</strong> — The narrative layer. The character you are inhabiting in this chapter of your life, and the story you are living from. This may be the most leveraged layer: shift the story you are operating from, and all lower layers reorganize around the new narrative without direct effort required. You are not changing what you do. You are changing what everything means — and that changes everything you do.</li>
+          <li><strong>💎 TREASURE</strong> — The abundance inventory. What you have already built, received, grown, and hold right now. Conscious awareness of existing abundance generates more abundance — this is the quantum measurement-affects-state principle made practical. You cannot sustainably attract what you do not acknowledge already existing in your field.</li>
+          <li><strong>∞ AWARENESS</strong> — The OS layer. The version of consciousness you are currently running. Gap analysis between your current state and the next threshold. This layer observes all other layers and reports on their degree of coherence with each other and with your actual awareness stage.</li>
+          <li><strong>🌊 RHYTHM</strong> — The temporal layer. Your cycles — daily intention, weekly focus, monthly theme, seasonal arc, annual vision. Life organized by rhythm rather than by reaction reduces the friction of transition and multiplies the compounded returns of sustained, directed effort. Temporal coherence is one of the most underestimated multipliers in the entire Stack.</li>
+          <li><strong>◎ LIBRE</strong> — The undefined layer. The free slot. The space that no predefined category can contain, because your unique configuration of archetypes and experience requires something the system has not pre-built. The most powerful layer for operators who have developed sufficient signal clarity to know what their specific frequency requires that no taxonomy provides.</li>
+        </ul>
+        <h3>Ascending Creates Net Positive</h3>
+        <p>When you operate primarily from the lower screens without integrating the higher layers, the system produces linear returns through direct effort — real results, but friction-heavy and exhausting to sustain across time. When you integrate all nine layers — when your physical actions are coherent with your story, your story is coherent with your mission, your mission is coherent with your archetypes, and your archetypes are honest with your actual awareness stage — the system begins running on something approaching ambient field energy.</p>
+        <p>The negative input required does not disappear. It becomes proportionally smaller relative to the output. By intelligent design, the system rewards coherence with increasing efficiency. The more aligned your nine screens are with your true archetypes and your actual current awareness stage, the closer to net zero — and progressively beyond zero into genuine surplus — the overall energetic balance approaches.</p>
+        <p><strong>SING!9</strong> means this, operationally: nine octaves, all resonating, in SING — in coherence, in concert, in the singular unified frequency that makes the whole system vastly more capable than any of its parts operating in isolation.</p>
+        <p>You are about to initialize your console. This calibration is your first intentional act as an HH operator. Choose with presence. The field is listening.</p>
+      </div>
+      <div class="step-nav">
+        <button class="btn-step-back" type="button">← Back</button>
+        <button class="btn-step-next" type="button">Continue → Initialize</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         STEP 5 · INITIALIZE
+    ══════════════════════════════════════ -->
+    <div class="setup-step" id="step-5">
+      <div class="setup-eyebrow">HH Awareness OS · Onboarding · 6 of 6</div>
+      <div class="setup-title">Calibrate Your Console</div>
+      <p class="setup-lede" style="margin-bottom:1.5rem;">This is your personal HH Theater cockpit. Set it up once — it persists in your browser. You can always recalibrate from the CALIBRATE tab.</p>
+
+      <label class="field-label" for="userName">Your name or handle <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+      <input class="field-input" id="userName" type="text" placeholder="e.g. Pru · Commander · Sol-V — or leave blank" autocomplete="off" />
+      <div class="field-error" id="nameError" style="display:none;"></div>
+
+      <label class="field-label">Choose 1–3 archetypes (THE SKIN) — optional</label>
+      <div class="archetype-grid" id="archetypeGrid"></div>
+
+      <button class="btn-primary" id="setupDone" type="button">⬡ INITIALIZE MY CONSOLE</button>
+
+      <div style="margin-top:0.75rem;">
+        <button class="btn-step-back" type="button" style="width:100%;text-align:center;">← Back to The Stack</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -627,10 +822,32 @@ function save() {
 load();
 
 /* ═══════════════════════════════════════════
-   SETUP
+   SETUP — MULTI-STEP WIZARD
 ═══════════════════════════════════════════ */
-const overlay = document.getElementById('setupOverlay');
+const overlay  = document.getElementById('setupOverlay');
 const archGrid = document.getElementById('archetypeGrid');
+let   currentStep = 0;
+
+function goToStep(n) {
+  const steps = document.querySelectorAll('.setup-step');
+  const dots  = document.querySelectorAll('.step-dot');
+  const total = steps.length;
+  n = Math.max(0, Math.min(total - 1, n));
+  steps.forEach((s, i) => s.classList.toggle('active', i === n));
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === n);
+    d.classList.toggle('done',   i < n);
+  });
+  currentStep = n;
+  overlay.scrollTop = 0;
+}
+
+document.querySelectorAll('.btn-step-next').forEach(btn => {
+  btn.addEventListener('click', () => goToStep(currentStep + 1));
+});
+document.querySelectorAll('.btn-step-back').forEach(btn => {
+  btn.addEventListener('click', () => goToStep(currentStep - 1));
+});
 
 ARCHETYPES.forEach(a => {
   const c = document.createElement('div');
@@ -652,24 +869,12 @@ document.getElementById('userName').value = S.name || '';
 
 document.getElementById('setupDone').onclick = () => {
   const inp = document.getElementById('userName');
-  const errEl = document.getElementById('nameError');
-  inp.classList.remove('error');
-  errEl.classList.remove('visible');
   S.name = inp.value.trim() || 'Commander';
   S.calibrated = true;
   save();
   overlay.style.display = 'none';
   renderAll();
 };
-
-document.getElementById('userName').addEventListener('input', () => {
-  const inp = document.getElementById('userName');
-  const errEl = document.getElementById('nameError');
-  if (inp.value.trim()) {
-    inp.classList.remove('error');
-    errEl.classList.remove('visible');
-  }
-});
 
 if (S.calibrated) overlay.style.display = 'none';
 

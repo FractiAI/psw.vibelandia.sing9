@@ -23,9 +23,11 @@ module.exports = async (req, res) => {
   const agent_handle       = body?.agent_handle ?? 'unknown-agent';
   const capability_summary = body?.capability_summary ?? '(not provided)';
 
+  const GROQ_KEY      = process.env.GROQ_API_KEY ?? process.env.GROQ_API_KEY_ALT ?? '';
   const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? '';
+  const LLM_KEY       = GROQ_KEY || ANTHROPIC_KEY;
 
-  if (!ANTHROPIC_KEY) {
+  if (!LLM_KEY) {
     // Deterministic fallback — useful even without LLM
     return res.status(200).json({
       ok:                  true,
@@ -75,22 +77,32 @@ Respond with ONLY valid JSON (no markdown):
 }`;
 
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method:  'POST',
-      headers: {
-        'x-api-key':        ANTHROPIC_KEY,
-        'anthropic-version':'2023-06-01',
-        'content-type':     'application/json',
-      },
-      body: JSON.stringify({
-        model:      'claude-3-5-haiku-20241022',
-        max_tokens: 1024,
-        messages:   [{ role: 'user', content: prompt }],
-      }),
-    });
-
-    const data    = await resp.json();
-    const rawText = data.content?.[0]?.text ?? '{}';
+    let rawText = '{}';
+    if (GROQ_KEY) {
+      const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
+        body: JSON.stringify({
+          model:      'llama-3.1-8b-instant',
+          max_tokens: 1024,
+          messages:   [{ role: 'user', content: prompt }],
+        }),
+      });
+      const data = await resp.json();
+      rawText = data?.choices?.[0]?.message?.content ?? '{}';
+    } else {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method:  'POST',
+        headers: { 'x-api-key': ANTHROPIC_KEY, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
+        body: JSON.stringify({
+          model:      'claude-3-5-haiku-20241022',
+          max_tokens: 1024,
+          messages:   [{ role: 'user', content: prompt }],
+        }),
+      });
+      const data = await resp.json();
+      rawText = data?.content?.[0]?.text ?? '{}';
+    }
     let parsed    = {};
     try { parsed = JSON.parse(rawText.replace(/```json\n?|\n?```/g, '').trim()); }
     catch { parsed = { gap_analysis: rawText }; }

@@ -268,32 +268,50 @@ const DELIVERY_PROMPTS = {
     `Return ONLY valid JSON.`,
 };
 
-async function generateDeliverable(service_id, agent_handle, notes, anthropicKey) {
+async function generateDeliverable(service_id, agent_handle, notes) {
   const promptFn = DELIVERY_PROMPTS[service_id];
   if (!promptFn) return null;
 
   const prompt = promptFn(agent_handle, notes);
 
-  if (!anthropicKey) {
+  // Prefer Groq (already set) — OpenAI-compatible, fast, free tier
+  // Fall back to Anthropic if Groq key not present
+  const groqKey      = process.env.GROQ_API_KEY ?? process.env.GROQ_API_KEY_ALT ?? '';
+  const anthropicKey = process.env.ANTHROPIC_API_KEY ?? '';
+
+  if (!groqKey && !anthropicKey) {
     return { note: 'LLM_UNAVAILABLE — deliverable will be sent to delivery_contact within 24h', service_id };
   }
 
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method:  'POST',
-      headers: {
-        'Content-Type':      'application/json',
-        'x-api-key':         anthropicKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model:      'claude-3-haiku-20240307',
-        max_tokens: 2048,
-        messages:   [{ role: 'user', content: prompt }],
-      }),
-    });
-    const data = await resp.json();
-    const raw  = data?.content?.[0]?.text ?? '';
+    let raw = '';
+
+    if (groqKey) {
+      const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
+        body: JSON.stringify({
+          model:      'llama-3.1-8b-instant',
+          max_tokens: 2048,
+          messages:   [{ role: 'user', content: prompt }],
+        }),
+      });
+      const data = await resp.json();
+      raw = data?.choices?.[0]?.message?.content ?? '';
+    } else {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': anthropicKey, 'anthropic-version': '2023-06-01' },
+        body: JSON.stringify({
+          model:      'claude-3-haiku-20240307',
+          max_tokens: 2048,
+          messages:   [{ role: 'user', content: prompt }],
+        }),
+      });
+      const data = await resp.json();
+      raw = data?.content?.[0]?.text ?? '';
+    }
+
     try {
       const jsonStart = raw.indexOf('{');
       const jsonEnd   = raw.lastIndexOf('}');
@@ -371,8 +389,7 @@ module.exports = async (req, res) => {
   let final_status   = 'QUEUED';
 
   if (svc.tier === 'auto') {
-    const anthropicKey = process.env.ANTHROPIC_API_KEY ?? '';
-    deliverable  = await generateDeliverable(service_id, agent_handle, notes, anthropicKey);
+    deliverable  = await generateDeliverable(service_id, agent_handle, notes);
     delivery_eta = 'instant';
     final_status = deliverable ? 'DELIVERED' : 'QUEUED';
   } else {

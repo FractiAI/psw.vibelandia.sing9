@@ -42,13 +42,14 @@
 
   /* All paths are absolute from site root (works from any depth) */
   var NAV_ITEMS = [
-    { label: 'Home',              href: '/index.html',                          match: /^\/(?:index\.html)?$/ },
-    { label: '⬡ Console',         href: '/interfaces/hh-console.html',          match: /hh-console/ },
-    { label: '🔥 MELTGATE',       href: '/interfaces/goliath-watch.html',       match: /goliath-watch/, hot: true },
-    { label: 'A2A',               href: '/interfaces/sol-v.html',               match: /sol-v/ },
-    { label: 'Vibers',            href: '/interfaces/vibers-menu.html',         match: /vibers-menu/ },
-    { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',       match: /my-whiteboard/ },
-    { label: 'Advertise',         href: '/interfaces/advertise.html',           match: /advertise/ },
+    { label: 'Home',              href: '/index.html',                                        match: /^\/(?:index\.html)?$/ },
+    { label: '⬡ Console',         href: '/interfaces/hh-console.html',                        match: /hh-console/ },
+    { label: '◈ HFCS',            href: '/interfaces/holographic-navigator-academy.html',     match: /holographic-navigator-academy/, hfcs: true },
+    { label: '🔥 MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
+    { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
+    { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
+    { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
+    { label: 'Advertise',         href: '/interfaces/advertise.html',                         match: /advertise/ },
   ];
 
   /* ── CURRENT PAGE DETECTION ──────────────────────────────────────────── */
@@ -144,6 +145,23 @@
       'max-width:100%;',
       'transition:opacity 0.6s;',
     '}',
+    /* ── HFCS COMMISSION LINK ── */
+    '#sing9-nav a.nav-hfcs{',
+      'color:rgba(0,212,255,0.7);',
+      'font-weight:700;',
+      'letter-spacing:0.14em;',
+      'border-bottom:2px solid rgba(0,212,255,0.25);',
+    '}',
+    '#sing9-nav a.nav-hfcs:hover{',
+      'color:rgba(0,212,255,1);',
+      'text-shadow:0 0 10px rgba(0,212,255,0.5);',
+      'border-bottom-color:rgba(0,212,255,0.6);',
+    '}',
+    '#sing9-nav a.nav-hfcs.active{',
+      'color:rgba(0,212,255,1);',
+      'border-bottom-color:rgba(0,212,255,0.7);',
+      'text-shadow:0 0 8px rgba(0,212,255,0.45);',
+    '}',
     /* Body padding so content isn't hidden behind both strips */
     'body{padding-bottom:calc(36px + 18px + var(--ticker-h,0px) + env(safe-area-inset-bottom)) !important;}',
     /* Responsive: shrink font on very narrow screens */
@@ -169,7 +187,8 @@
     a.href = item.href;
     a.textContent = item.label;
     if (item.match.test(path)) a.classList.add('active');
-    if (item.hot) a.classList.add('nav-goliath');
+    if (item.hot)  a.classList.add('nav-goliath');
+    if (item.hfcs) a.classList.add('nav-hfcs');
     nav.appendChild(a);
   });
 

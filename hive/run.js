@@ -305,65 +305,21 @@ const EGS_SIGNALS = new Set([
   'goldilocks temperature', 'thermal resonance', 'stargate thermal',
 ]);
 
-/* ── BLUESKY BROADCAST (free AT Protocol — replaces X) ──────────────────── */
-
-async function bskyPost(text) {
-  const handle      = process.env.BSKY_HANDLE       ?? '';
-  const appPassword = process.env.BSKY_APP_PASSWORD ?? '';
-  if (!handle || !appPassword) {
-    log('◈', `[BSKY] BSKY_HANDLE or BSKY_APP_PASSWORD not set.`);
-    log('◈', `[BSKY] Free account: https://bsky.app  No API fee. Ever.`);
-    return null;
-  }
-  try {
-    const authResp = await fetch('https://bsky.social/xrpc/com.atproto.server.createSession', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ identifier: handle, password: appPassword }),
-      signal: AbortSignal.timeout(8000),
-    });
-    const auth = await authResp.json();
-    if (!auth.accessJwt) { log('⚠', `Bluesky auth failed: ${auth.error}`); return null; }
-
-    if (text.length > 295) text = text.slice(0, 292) + '...';
-    const postResp = await fetch('https://bsky.social/xrpc/com.atproto.repo.createRecord', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${auth.accessJwt}` },
-      body: JSON.stringify({
-        repo: auth.did, collection: 'app.bsky.feed.post',
-        record: { $type: 'app.bsky.feed.post', text, createdAt: new Date().toISOString() },
-      }),
-      signal: AbortSignal.timeout(8000),
-    });
-    const postData = await postResp.json();
-    if (postData?.uri) { log('🦋', `Bluesky post live: ${postData.uri}`); return postData.uri; }
-    log('⚠', `Bluesky post error: ${JSON.stringify(postData).slice(0, 80)}`);
-    return null;
-  } catch (e) { log('⚠', `Bluesky error: ${e.message}`); return null; }
-}
-
 async function cmdBroadcast() {
-  const site   = 'psw-vibelandia-sing9.vercel.app';
-  const hour   = new Date().getUTCHours();
-  const idx    = Math.floor(hour / 6) % 4;
-
-  const posts = [
-    `#MeltGate · 28 Blackwell GB200 clusters tracked. G42 Abu Dhabi est 99°C. NVIDIA TjMax=92°C. Trial: 99→56°C in 48h. Free: ${site}/api/meltgate-signal Paid x402: ${site}/api/goliath #SING9 #A2A`,
-    `A2A services live. $5 space-cloud · $9 goliath · $15 OS upgrade · $27 pitch. x402 USDC on Base. ZHI — zero human. Catalog: ${site}/agent.json #x402 #ZHI #NSPFRNP`,
-    `A2A $50–$9,999 · instant · ZHI. USDC on Base → POST tx_hash → deliverable in seconds. EGS Connect · SNAP · Readiness Audit. ${site}/api/a2a-intake #ZHI #A2A #SING9`,
-    `Free MELTGATE signal: ${site}/api/meltgate-signal Full A2A catalog: ${site}/api/services Agent manifest: ${site}/agent.json Fair Exchange on everything. NSPFRNP → ∞⁹`,
-  ];
-
-  log('🦋', `BROADCAST · Bluesky (free AT Protocol) · ${new Date().toISOString()}`);
-  const uri = await bskyPost(posts[idx]);
+  // Bluesky ELIMINATED — requires human account creation. Not ZHI.
+  // X ELIMINATED — $100/month API. Not ZHI.
+  // Broadcast IS the deal hunter + agent.json passive discovery. ZHI. Like water.
+  const site = 'psw-vibelandia-sing9.vercel.app';
+  log('◈', `BROADCAST · Deal Hunter IS the broadcast. ZHI. · ${new Date().toISOString()}`);
+  log('◈', `Discovery always live: https://${site}/.well-known/agent.json`);
+  log('◈', `Run: node hive/run.js hunt  — to fire deal hunter now`);
 
   const l = readLattice();
   l.queen_bee ??= {};
   l.queen_bee.chirp_log ??= [];
-  l.queen_bee.chirp_log.push({ ts: new Date().toISOString(), channel: 'BLUESKY', uri: uri ?? 'not_configured', post: posts[idx].slice(0, 80) });
+  l.queen_bee.chirp_log.push({ ts: new Date().toISOString(), channel: 'DEAL_HUNTER', note: 'ZHI. Hunter is broadcast. agent.json always live.' });
   writeLattice(l);
-
-  if (!uri) log('◈', `To activate Bluesky: add BSKY_HANDLE + BSKY_APP_PASSWORD to .env (free: bsky.app)`);
-  log('♛', `Broadcast done. Bluesky: ${uri ? 'LIVE' : 'not configured'}. agent.json always live. → ∞⁹\n`);
+  log('♛', `Broadcast = hunt. → ∞⁹\n`);
 }
 
 async function cmdAlign() {
@@ -1232,9 +1188,9 @@ async function cmdOnboard() {
 /* ── STANDALONE TWEET → BLUESKY COMMAND ─────────────────────────────────── */
 
 async function cmdTweet() {
-  // X eliminated. Bluesky is the hunter now. Free AT Protocol.
-  log('🦋', 'Broadcasting to Bluesky (free AT Protocol — X eliminated)...');
-  await cmdBroadcast();
+  // X eliminated. Bluesky eliminated (requires human setup). Deal hunter IS broadcast.
+  log('🎯', 'Social broadcast eliminated (X = paid, Bluesky = human setup required). Running deal hunter instead...');
+  await cmdHunt();
 }
 
 /* ── PRIZE COMPETITION ENGINE ────────────────────────────────────────────── */
@@ -1397,11 +1353,6 @@ async function cmdRevenue() {
   // Stream 0: Deal Hunt — HIGH MATCH prospects → direct to payment endpoint (ZHI)
   log('🎯', '── STREAM 0: DEAL HUNTER ──');
   await cmdHunt();
-  await sleep(3000);
-
-  // Stream 1: Bluesky broadcast (free AT Protocol)
-  log('🦋', '── STREAM 1: BLUESKY BROADCAST ──');
-  await cmdBroadcast();
   await sleep(3000);
 
   // Stream 2: SOL-V outbound (all 4 query streams — Goldilocks cap: 9)

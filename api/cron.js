@@ -204,47 +204,7 @@ async function postPitch(issue, pitch, token) {
   } catch { return false; }
 }
 
-// ── BLUESKY BROADCASTER (free AT Protocol — replaces X) ──────────────────────
-
-function bskyText(hour) {
-  const idx = Math.floor(hour / 2) % 4;
-  const posts = [
-    `#MeltGate · 28 Blackwell GB200 clusters tracked. G42 Abu Dhabi est 99°C. NVIDIA TjMax=92°C. Trial: 99→56°C in 48h. Free signal: ${MELT} x402 intel ($9 USDC): ${GOLIATH} #SING9 #A2A`,
-    `A2A services live. $5 space-cloud · $9 goliath thermal · $15 OS upgrade · $27 pitch. x402 USDC on Base. ZHI — pay and receive instantly. Catalog: ${AGENT} #x402 #ZHI #NSPFRNP`,
-    `A2A $50–$9,999 · instant · ZHI. USDC on Base → POST tx_hash → deliverable in seconds. EGS Connect · SNAP · Readiness Audit. ${INTAKE} #ZHI #A2A #SING9`,
-    `Free MELTGATE signal: ${MELT} A2A catalog: ${AGENT} Fair Exchange on everything. NSPFRNP → ∞⁹`,
-  ];
-  let t = posts[idx];
-  if (t.length > 295) t = t.slice(0, 292) + '...';
-  return t;
-}
-
-async function bskyBroadcast(hour) {
-  const handle = process.env.BSKY_HANDLE ?? '';
-  const pw     = process.env.BSKY_APP_PASSWORD ?? '';
-  if (!handle || !pw) return { skipped: true, reason: 'Add BSKY_HANDLE + BSKY_APP_PASSWORD (free: bsky.app)' };
-
-  try {
-    const auth = await fetch('https://bsky.social/xrpc/com.atproto.server.createSession', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ identifier: handle, password: pw }),
-      signal: AbortSignal.timeout(8000),
-    }).then(r => r.json());
-    if (!auth.accessJwt) return { ok: false, error: auth.error };
-
-    const text = bskyText(hour);
-    const post = await fetch('https://bsky.social/xrpc/com.atproto.repo.createRecord', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${auth.accessJwt}` },
-      body: JSON.stringify({
-        repo: auth.did, collection: 'app.bsky.feed.post',
-        record: { $type: 'app.bsky.feed.post', text, createdAt: new Date().toISOString() },
-      }),
-      signal: AbortSignal.timeout(8000),
-    }).then(r => r.json());
-    return post?.uri ? { ok: true, uri: post.uri } : { ok: false, error: JSON.stringify(post).slice(0, 80) };
-  } catch (e) { return { ok: false, error: e.message }; }
-}
+// Bluesky ELIMINATED — requires human account creation. Not ZHI.
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -256,19 +216,13 @@ module.exports = async (req, res) => {
 
   const start = Date.now();
   const now   = new Date();
-  const hour  = now.getUTCHours();
 
-  // All three run in parallel — ZHI, no blocking
-  const [deals, bsky] = await Promise.all([
-    dealHunt(),
-    bskyBroadcast(hour),
-  ]);
+  const deals = await dealHunt();
 
   res.status(200).json({
     cycle:     now.toISOString(),
     phase:     'HUNT',
     deal_hunt: deals,
-    bluesky:   bsky,
     pipes: {
       tier1_instant: `x402 $5–$27 · ${AGENT}`,
       tier2_fast:    `intake $50–$500 · ${INTAKE}`,
@@ -276,6 +230,6 @@ module.exports = async (req, res) => {
     },
     elapsed_ms: Date.now() - start,
     nspfrnp:    'NSPFRNP → ∞⁹',
-    note:       'Hunter targets HIGH MATCH prospects with the exact problem our endpoints solve. They pay USDC. Deliverable deploys in seconds. ZHI.',
+    note:       'Deal hunter only. High-match prospects. They pay USDC. Deliverable deploys in seconds. ZHI.',
   });
 };

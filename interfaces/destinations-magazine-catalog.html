@@ -124,9 +124,22 @@
     .partner-card .img-wrap { width: 100%; height: 140px; background: rgba(212,175,55,0.06); overflow: hidden; }
     .partner-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .partner-card .body { padding: 1rem 1.25rem; }
-    .partner-card .name { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; color: rgba(253,248,235,0.9); }
-    .partner-card:hover .name { color: #d4af37; }
-    .partner-card .activity { font-size: 0.83rem; color: rgba(253,248,235,0.45); }
+    .partner-card .headline {
+      font-size: 1rem; font-weight: 700; line-height: 1.35;
+      margin-bottom: 0.5rem; color: rgba(253,248,235,0.95);
+    }
+    .partner-card:hover .headline { color: #d4af37; }
+    .partner-card .trailer {
+      font-size: 0.8rem; color: rgba(253,248,235,0.55);
+      line-height: 1.6; margin-bottom: 0.65rem;
+    }
+    .partner-card .partner-byline {
+      font-size: 0.7rem; color: rgba(212,175,55,0.55);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border-top: 1px solid rgba(212,175,55,0.12);
+      padding-top: 0.5rem; margin-top: 0.1rem;
+    }
+    .partner-card:hover .partner-byline { color: rgba(212,175,55,0.85); }
     .partner-card .link-row { margin-top: 0.5rem; font-size: 0.78rem; color: rgba(212,175,55,0.6); }
     .partner-card:hover .link-row { color: #d4af37; }
 
@@ -269,24 +282,136 @@
   <script>
 (function () {
   var partners = [
-    { id: "turner-ranch-montana",    name: "Turner Ranch Outfitting · Flying D Ranch", activity: "Elk and bison · Montana · Big Sky Country", region: "Far away", imageUrl: "assets/destinations-bison-lodge.png" },
-    { id: "debernardis-argentina",   name: "De Bernardis Hunting · Entre Ríos", activity: "Perdiz, duck, dove · Argentina", region: "Far away", imageUrl: "https://debernardishunting.com/wp-content/uploads/2023/07/Best-Wing-shooting-Argentina-cover.webp" },
-    { id: "vanwormer-baja",          name: "Van Wormer Resorts · Hotel Palmas de Cortez", activity: "Rooster fishing · Baja · Sea of Cortez", region: "Far away", imageUrl: "https://static1.squarespace.com/static/65ccdcdf6ac1725d8d27821f/t/65cfd71639fd0c4a7a606667/1708119830302/Van+Wormer+Resorts+Hotel+Palmas+De+Cortez+Los+Barriles+East+Cape+Baja+California+Sur-21.jpg?format=1500w" },
-    { id: "abaco-bahamas",           name: "Abaco Lodge · Bonefishing", activity: "Bonefishing · Bahamas · Flats", region: "Far away", imageUrl: "https://www.nervouswaters.com/wp-content/uploads/2022/09/The-Fishing-I-Bonefish.jpg" },
-    { id: "wideopen-mexico",         name: "Wide Open Outfitters · Mexico", activity: "Bobwhite quail, duck and dove · Mexico", region: "Far away", imageUrl: "assets/destinations-wideopen-lodge.jpg" },
-    { id: "fishtheamazon",           name: "Fish the Amazon", activity: "Amazon peacock bass · Brazil", region: "Far away", imageUrl: "https://static.wixstatic.com/media/db8d44_f3a50ad7881e4642a368973eedc7f6c4~mv2.png/v1/fill/w_1536,h_1024,al_c/db8d44_f3a50ad7881e4642a368973eedc7f6c4~mv2.png" },
-    { id: "marco-tarpon",            name: "Marco Island Tarpon Fishing", activity: "Snook and tarpon · Naples, Florida", region: "Far away", imageUrl: "https://marcoislandtarponfishing.com/wp-content/uploads/2023/03/charter-fishing-marco-island-florida-best-tarpon-fish-2.jpg" },
-    { id: "argentina-bariloche-ski", name: "Cerro Catedral · Bariloche Ski", activity: "Skiing · Patagonia · Argentina", region: "Far away", imageUrl: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=500&h=350&fit=crop" },
-    { id: "argentina-mendoza-wine",  name: "Mendoza Wine Country · Casa de Uco", activity: "Wine · Uco Valley · 5-star · Argentina", region: "Far away", imageUrl: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=500&h=350&fit=crop" },
-    { id: "argentina-golden-dorado", name: "Pirá Lodge · Golden Dorado", activity: "Golden Dorado fishing · Iberá Wetlands · Argentina", region: "Far away", imageUrl: "https://www.nervouswaters.com/wp-content/uploads/2021/01/The-Fishing-1.jpg" },
-    { id: "argentina-entre-rios-hunt", name: "De Bernardis · Entre Ríos Hunt", activity: "Wing shooting · Entre Ríos · Argentina", region: "Far away", imageUrl: "https://debernardishunting.com/wp-content/uploads/2023/07/Best-Wing-shooting-Argentina-cover.webp" },
-    { id: "matt-heron-truckee",      name: "Matt Heron Fly Fishing", activity: "Fly fishing · Truckee River · Reno", region: "Local", imageUrl: "assets/destinations-matt-heron-fly-fishing.jpg" },
-    { id: "steamboat-hot-springs",   name: "Steamboat Hot Springs", activity: "Mineral hot springs · healing · Reno", region: "Local", imageUrl: "assets/destinations-steamboat-hot-springs-2.jpg" },
-    { id: "mt-rose-ski",             name: "Mt. Rose Ski Tahoe", activity: "Skiing · Reno–Tahoe", region: "Local", imageUrl: "assets/truckee-winter-ski.png" },
-    { id: "renomensclub",            name: "Men's Club Reno", activity: "Men's club · Reno VIP · Josie's Saloon Adjacent", region: "Local", imageUrl: "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=500&h=350&fit=crop" },
-    { id: "black-rabbit-mead",       name: "Black Rabbit Mead", activity: "Craft mead · downtown Reno · Truckee River Crawl", region: "Local", imageUrl: "assets/destinations-black-rabbit-mead.jpg" },
-    { id: "silver-legacy",           name: "Silver Legacy Casino", activity: "Casino · breakfast buffet · Reno", region: "Local", imageUrl: "assets/vendors-silver-legacy.png" },
-    { id: "eldorado-novi",           name: "Eldorado Reno · Novi Club", activity: "Casino · Novi nightclub · Reno VIP", region: "Local", imageUrl: "assets/destinations-eldorado-novi.jpg" }
+
+    // ── LOCAL ─────────────────────────────────────────────────────────────────
+
+    { id: "matt-heron-truckee", region: "Local",
+      imageUrl: "assets/destinations-matt-heron-fly-fishing.jpg",
+      name: "Matt Heron Fly Fishing",
+      headline: "The Truckee at its purest. You, the river, and a guide who knows every bend.",
+      trailer: "Waist-deep in cold, clean water while Downtown Reno glints downstream. Matt Heron has been guiding this river since 2006 — over 15,000 satisfied anglers. Catch-and-release rainbow trout on the sacred waters of Lake Tahoe flowing right through the canyon. This is the one that changes you.",
+      partner: "Matt Heron Fly Fishing · Truckee River, Reno" },
+
+    { id: "steamboat-hot-springs", region: "Local",
+      imageUrl: "assets/destinations-steamboat-hot-springs-2.jpg",
+      name: "Steamboat Hot Springs",
+      headline: "Nineteen mineral springs. No agenda. The Earth's heat doing exactly what it's supposed to.",
+      trailer: "Six miles south of Downtown Reno, the ground opens up. Lithium, sulfur, calcium — ancient geology running straight into your body. Soaking pools carved from rock, therapeutic treatments, the kind of silence money can't buy in a city. You arrive tight. You leave different.",
+      partner: "Steamboat Hot Springs · South Reno, Nevada" },
+
+    { id: "mt-rose-ski", region: "Local",
+      imageUrl: "assets/truckee-winter-ski.png",
+      name: "Mt. Rose Ski Tahoe",
+      headline: "Highest base elevation in Tahoe. Powder that feels like it was made for you.",
+      trailer: "9,700 feet. Six lifts. You wake up in Reno, you're on the mountain in 45 minutes, you're back for dinner at the club. The Baller V version of a ski day: car waiting, après ski handled, zero wasted motion. The mountain doesn't care who you are. It gives everyone the same run.",
+      partner: "Mt. Rose Ski Tahoe · Lake Tahoe–Reno" },
+
+    { id: "black-rabbit-mead", region: "Local",
+      imageUrl: "assets/destinations-black-rabbit-mead.jpg",
+      name: "Black Rabbit Mead",
+      headline: "Ancient craft. Local obsession. The Truckee River Crawl's secret third act.",
+      trailer: "Honey wine made with intention, poured by people who know what they're doing. On the Baller V Downtown Truckee River Crawl, Black Rabbit Mead is the turn where the night goes somewhere unexpected. The kind of stop that people talk about after everything else has faded.",
+      partner: "Black Rabbit Mead · Downtown Reno" },
+
+    { id: "eldorado-novi", region: "Local",
+      imageUrl: "assets/destinations-eldorado-novi.jpg",
+      name: "Eldorado Reno · Novi Club",
+      headline: "The room that makes Reno feel like it means it. Novi Club at Eldorado.",
+      trailer: "Eldorado's nightlife comes alive after dark — Novi Club is where Downtown Reno dresses up and shows up. VIP access, bottle service, the right energy every time. Caesars-level operation in the World's Largest Little City. We walk you in right.",
+      partner: "Eldorado Reno · Novi Club · Downtown Reno" },
+
+    { id: "renomensclub", region: "Local",
+      imageUrl: "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=500&h=350&fit=crop",
+      name: "Men's Club Reno",
+      headline: "Josie's Saloon-adjacent. The room where Reno's night actually begins.",
+      trailer: "Dark, intentional, and exactly what it says. The closest thing Downtown Reno has to a private club — and we know how to walk you in properly. Baller V treatment from the door to the last round. The full night doesn't start until you've been here.",
+      partner: "Men's Club Reno · Downtown Reno" },
+
+    { id: "silver-legacy", region: "Local",
+      imageUrl: "assets/vendors-silver-legacy.png",
+      name: "Silver Legacy Casino",
+      headline: "The morning after the night before. Breakfast buffet. No questions asked.",
+      trailer: "Silver Legacy is the anchor of Downtown Reno — and the breakfast buffet at sunrise is a Baller V institution. Prime rib, eggs, fresh-squeezed, the full spread. A proper reset before the next move. The casino that never makes you feel like you have to explain yourself.",
+      partner: "Silver Legacy Casino · Downtown Reno" },
+
+    // ── FAR AWAY ──────────────────────────────────────────────────────────────
+
+    { id: "turner-ranch-montana", region: "Far away",
+      imageUrl: "assets/destinations-bison-lodge.png",
+      name: "Turner Ranch Outfitting · Flying D Ranch",
+      headline: "Bison. Elk. 55,000 acres. Ted Turner's Flying D Ranch — one of the last wild places in America.",
+      trailer: "Big Sky Country at its most primal. Guided elk and bison hunts on one of the largest private ranches in the United States. You go in an executive. You come out something older and simpler. Montana doesn't negotiate. This is land acknowledgment through your boots.",
+      partner: "Turner Ranch Outfitting · Flying D Ranch · Montana" },
+
+    { id: "debernardis-argentina", region: "Far away",
+      imageUrl: "https://debernardishunting.com/wp-content/uploads/2023/07/Best-Wing-shooting-Argentina-cover.webp",
+      name: "De Bernardis Hunting · Entre Ríos",
+      headline: "Argentina's fields. Endless sky. 800 birds a day if you want them.",
+      trailer: "Entre Ríos is the wing shooting capital of the world — perdiz, duck, dove, and the flat Southern Hemisphere light making everything feel cinematic. De Bernardis knows every estancia, every field marshal who keeps the shots coming. The South American hunt that resets your entire baseline. Bring extra shells.",
+      partner: "De Bernardis Hunting · Entre Ríos, Argentina" },
+
+    { id: "vanwormer-baja", region: "Far away",
+      imageUrl: "https://static1.squarespace.com/static/65ccdcdf6ac1725d8d27821f/t/65cfd71639fd0c4a7a606667/1708119830302/Van+Wormer+Resorts+Hotel+Palmas+De+Cortez+Los+Barriles+East+Cape+Baja+California+Sur-21.jpg?format=1500w",
+      name: "Van Wormer Resorts · Hotel Palmas de Cortez",
+      headline: "Baja roosterfish. Sea of Cortez. A palapa at noon and a cold one in your hand.",
+      trailer: "Hotel Palmas de Cortez sits on the East Cape — warm water, world-record roosterfish, sunsets that make people move there. Van Wormer has been running this coast for decades. Book the boat for sunrise. Be back at the pool by noon. The Baja that the brochures never quite capture.",
+      partner: "Van Wormer Resorts · Hotel Palmas de Cortez · East Cape Baja" },
+
+    { id: "abaco-bahamas", region: "Far away",
+      imageUrl: "https://www.nervouswaters.com/wp-content/uploads/2022/09/The-Fishing-I-Bonefish.jpg",
+      name: "Abaco Lodge · Bonefishing",
+      headline: "The Bahamas flats at dawn. Ghost fish. Nothing between you and the horizon.",
+      trailer: "Bonefish are the grey ghost — they appear and disappear on the flats like silver smoke. Abaco Lodge puts you on them at first light, with guides who have stalked these flats their entire lives. It's not about how many you catch. It's about how the light hits the water at 7am and the silence that follows.",
+      partner: "Abaco Lodge · Abaco, Bahamas" },
+
+    { id: "wideopen-mexico", region: "Far away",
+      imageUrl: "assets/destinations-wideopen-lodge.jpg",
+      name: "Wide Open Outfitters · Mexico",
+      headline: "Bobwhite quail at dawn. Two hunts a day. Old Mexico hospitality. La Finca Lodge.",
+      trailer: "Steve and his crew run La Finca like a five-star hunting lodge from another era. Two hunts a day, meals between, drinks by the pool, guides who make every field count. Bobwhite quail, duck, dove — the wingshooting is the point, but the experience is the memory. Spots fill fast every season.",
+      partner: "Wide Open Outfitters · La Finca Lodge · Mexico" },
+
+    { id: "fishtheamazon", region: "Far away",
+      imageUrl: "https://static.wixstatic.com/media/db8d44_f3a50ad7881e4642a368973eedc7f6c4~mv2.png/v1/fill/w_1536,h_1024,al_c/db8d44_f3a50ad7881e4642a368973eedc7f6c4~mv2.png",
+      name: "Fish the Amazon",
+      headline: "Peacock bass. The Amazon River. The most surreal fishing on Earth.",
+      trailer: "The Amazon peacock bass is pound-for-pound the most aggressive freshwater game fish alive — and the backdrop is one of the last truly wild places remaining. You float jungle tributaries in a houseboat. You cast to fish that have never seen fear. You come back with stories no one fully believes.",
+      partner: "Fish the Amazon · Amazon Basin, Brazil" },
+
+    { id: "marco-tarpon", region: "Far away",
+      imageUrl: "https://marcoislandtarponfishing.com/wp-content/uploads/2023/03/charter-fishing-marco-island-florida-best-tarpon-fish-2.jpg",
+      name: "Marco Island Tarpon Fishing",
+      headline: "Silver kings. Naples, Florida. The fly rod bend that keeps people coming back for decades.",
+      trailer: "Tarpon can run 150 pounds on 20-pound tippet — and the Marco Island guides have been chasing them through mangrove passes their entire careers. Snook, tarpon, the crystal water of the Ten Thousand Islands at first light. Pack light. Bring your best game. The fish will know the difference.",
+      partner: "Marco Island Tarpon Fishing · Naples, Florida" },
+
+    { id: "argentina-bariloche-ski", region: "Far away",
+      imageUrl: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=500&h=350&fit=crop",
+      name: "Cerro Catedral · Bariloche Ski",
+      headline: "Patagonian powder. South American season. Skiing when nobody else is skiing.",
+      trailer: "Cerro Catedral is South America's largest ski resort — and the season runs when Northern Hemisphere mountains are dry. Bariloche is a Swiss-Argentine alpine village with chocolate shops and fondue and runs so clean they barely make a sound. The Baller V ski trip: exclusive timing, no crowds, the Andes all yours.",
+      partner: "Cerro Catedral · Bariloche, Argentina" },
+
+    { id: "argentina-mendoza-wine", region: "Far away",
+      imageUrl: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=500&h=350&fit=crop",
+      name: "Mendoza Wine Country · Casa de Uco",
+      headline: "Malbec under the Andes. Five-star vineyards. The civilized version of the outdoors.",
+      trailer: "Mendoza is where Argentina keeps its finest wine and its best views. Casa de Uco sits in the Uco Valley with snow-capped peaks as a backdrop — private cellar tastings, horseback at altitude, dinner under the stars on the estancia. Not a tour. A three-day recalibration.",
+      partner: "Casa de Uco · Mendoza Wine Country, Argentina" },
+
+    { id: "argentina-golden-dorado", region: "Far away",
+      imageUrl: "https://www.nervouswaters.com/wp-content/uploads/2021/01/The-Fishing-1.jpg",
+      name: "Pirá Lodge · Golden Dorado",
+      headline: "The golden dorado. The Iberá Wetlands. The most spectacular freshwater fishing in the Southern Hemisphere.",
+      trailer: "Pirá Lodge sits at the edge of the Iberá — 1.3 million hectares of floating islands and mirror-clear jungle channels. The golden dorado hits like a freight train and runs like it has somewhere to be. One of the finest fishing lodges in the world. That is not an exaggeration.",
+      partner: "Pirá Lodge · Iberá Wetlands, Argentina" },
+
+    { id: "argentina-entre-rios-hunt", region: "Far away",
+      imageUrl: "https://debernardishunting.com/wp-content/uploads/2023/07/Best-Wing-shooting-Argentina-cover.webp",
+      name: "De Bernardis · Entre Ríos Hunt",
+      headline: "The shotgun smoking. Doves falling. No end to the fields of Entre Ríos.",
+      trailer: "High-volume Argentine dove hunting at its absolute finest — hundreds of birds a day, fields that stretch to the horizon, and an asado waiting back at the lodge that makes you forget how many shells you went through. De Bernardis runs the full operation. The wing shooting of a lifetime. Return annually.",
+      partner: "De Bernardis · Entre Ríos, Argentina" },
   ];
 
   var local = partners.filter(function (p) { return p.region === 'Local'; });
@@ -294,9 +419,13 @@
 
   function card(p) {
     var detailUrl = 'destination.html?id=' + encodeURIComponent(p.id || '');
-    var img = p.imageUrl ? '<div class="img-wrap"><img src="' + p.imageUrl + '" alt="" loading="lazy" onerror="this.style.opacity=\'0.2\'" /></div>' : '';
+    var img = p.imageUrl ? '<div class="img-wrap"><img src="' + p.imageUrl + '" alt="' + (p.name || '') + '" loading="lazy" onerror="this.style.opacity=\'0.2\'" /></div>' : '';
     return '<a href="' + detailUrl + '" class="partner-card">' + img +
-      '<div class="body"><div class="name">' + (p.name || '') + '</div><div class="activity">' + (p.activity || '') + '</div><div class="link-row">Full experience →</div></div></a>';
+      '<div class="body">' +
+        '<div class="headline">' + (p.headline || p.name || '') + '</div>' +
+        '<div class="trailer">' + (p.trailer || '') + '</div>' +
+        '<div class="partner-byline">' + (p.partner || p.name || '') + '</div>' +
+      '</div></a>';
   }
 
   var localEl = document.getElementById('partner-grid-local');

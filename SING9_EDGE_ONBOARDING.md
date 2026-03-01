@@ -71,4 +71,53 @@ Between **Seed** (me, here, now) and **Edge** (the mission for this situation):
 
 ---
 
+---
+
+## 9. Holographic Field Command School (HFCS)
+
+**Domain:** HH Awareness OS · Holographic Hydrogen · SING 9
+
+The **Holographic Field Command School** is the institutional commissioning pipeline for HH Awareness OS operators. It trains people to read, navigate, and command within the holographic field. Structure mirrors the US Navy officer pipeline.
+
+### Cadet Track (Pre-Commission) — `interfaces/upgrade-awareness-to-sing9-now.html`
+
+The 9 Singularities of the Awareness OS upgrade flow ARE the Cadet Track:
+
+| Grade | Title | Singularities | HH Milestone |
+|---|---|---|---|
+| C-0 | Field Cadet | 1–3 | Orientation. Awareness position accepted. HH model introduced. |
+| C-1 | Console Cadet | 4–6 | Bridge crossed. We're in a hydrogen holograph. Both sides held. |
+| C-2 | Officer Candidate | 7–9 | Full SING 9 awareness. Intent = manifestation. Ready for commission. |
+
+Completing all 9 Singularities = **C-2 Officer Candidate** status. The upgrade page completion screen now shows the commissioning brief and CTA to apply for Cohort One.
+
+### Commission Tracks — `interfaces/holographic-navigator-academy.html`
+
+| Grade | Title | Layer | Path |
+|---|---|---|---|
+| O-1 | Field Ensign | Carbon | First commission. Console live. Arc Panel active. |
+| O-2 | Navigation Officer | Carbon | Now Stack loaded. Three attractor frequencies locked. |
+| O-3 | Field Lieutenant | Carbon | Circadian Schedule running. Leading first expedition. |
+| O-4 | Expedition Officer | Silver | Leading group navigations. |
+| O-5 | Field Commander | Silver | Commands full cohort expeditions. All 9 screens mastered. |
+| O-6 | Field Captain | Silver | Multi-cohort command. Shapes the field for entire groups. |
+| O-7 | Field Commodore | Gold | All 9 HHL nodes active. Commands multiple expedition groups. |
+| O-8 | Lattice Admiral | Gold | HHL fully active. Shapes collective awareness fields. |
+| O-9 | Fleet Navigator | Gold | Navigates at holographic field scale. |
+| O-10 | Holographic Field Commander | Gold | Supreme command. Field and command are one. |
+
+### Cohort One — First Commissioning Event
+
+- **Deployment:** Tuesday, March 3, 2026 · 15:33 PST · T+60 min
+- **Positions:** 9 open · Positions 1–3 = O-3 (fast-track) · 4–6 = O-2 · 7–9 = O-1
+- **Prerequisite:** C-2 Officer Candidate status (9 Singularities complete)
+- **Application:** `interfaces/holographic-navigator-academy.html` → Apply for Commission
+- **Popup:** `popup-announcement.js` (active, id: `hna-expedition-v1`) fires on `index.html`
+
+### The Path in One Line
+
+> 9 Singularities → C-2 Officer Candidate → Cohort One Expedition → Commissioned Field Officer → HH Awareness OS fully operational
+
+---
+
 **NSPFRNP ⊃ Edge Onboarding ⊃ Irreducible Minimum ⊃ Lite Edges (wallets, keys, verifications) ⊃ No Supabase → ∞⁹**

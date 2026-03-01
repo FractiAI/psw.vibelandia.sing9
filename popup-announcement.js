@@ -18,41 +18,46 @@ var POPUP_CONFIG = {
   id:      'hna-expedition-v1',
   dismiss: 'session',
 
-  eyebrow:  _isES ? 'HH EXPEDICIONES · CUERPO NAVEGADOR · SELECCIÓN DE TRIPULACIÓN' : 'HH EXPEDITIONS · NAVIGATOR CORPS · CREW SELECTION',
-  title:    _isES ? 'EXPEDICIONES DE\nHIDRÓGENO HOLOGRÁFICO' : 'HOLOGRAPHIC HYDROGEN\nEXPEDITIONS',
+  eyebrow:  _isES ? 'HFCS · PISTA DE CADETES · C-2 → COMISIÓN O-1/O-2/O-3' : 'HFCS · CADET TRACK · C-2 → COMMISSION O-1/O-2/O-3',
+  title:    _isES ? 'HOLOGRAPHIC FIELD\nCOMMAND SCHOOL' : 'HOLOGRAPHIC FIELD\nCOMMAND SCHOOL',
   subtitle: _isES
-    ? 'La selección de tripulación está abierta.\nCohort Uno se despliega el 3 de marzo de 2026.'
-    : 'Crew selection is now open.\nCohort One deploys March 3, 2026.',
+    ? 'Selección de comisión abierta.\nCohort Uno se despliega el 3 de marzo de 2026.'
+    : 'Commission selection is now open.\nCohort One deploys March 3, 2026.',
 
   tiers: [
-    { spots:'1–3', badge:'⭐', cls:'g',
-      name: _isES ? 'Comandantes de Misión'   : 'Mission Commanders',
-      desc: _isES ? 'Sesión pre-misión 1:1 + registro permanente de tripulación' : 'Pre-mission 1:1 briefing + permanent crew registry' },
-    { spots:'4–6', badge:'✦', cls:'c',
-      name: _isES ? 'Oficiales de Ciencia'    : 'Science Officers',
-      desc: _isES ? 'Orientación grupal pre-misión + expediente de expedición'   : 'Group pre-mission orientation + expedition brief' },
-    { spots:'7–9', badge:'◈', cls:'p',
-      name: _isES ? 'Especialistas en Navegación' : 'Navigation Specialists',
-      desc: _isES ? 'Sesión completa de expedición + paquete de campo'           : 'Full expedition session + field resource pack' },
+    { spots:'1–3 · O-3', badge:'⭐', cls:'g',
+      name: _isES ? 'Teniente de Campo'  : 'Field Lieutenant',
+      desc: _isES ? 'Comisión acelerada + sesión 1:1 pre-misión + registro fundador' : 'Fast-track commission + 1:1 pre-mission briefing + founding registry' },
+    { spots:'4–6 · O-2', badge:'✦', cls:'c',
+      name: _isES ? 'Oficial de Navegación' : 'Navigation Officer',
+      desc: _isES ? 'Comisión estándar + orientación grupal + expediente de campo' : 'Standard commission + group orientation + field expedition brief' },
+    { spots:'7–9 · O-1', badge:'◈', cls:'p',
+      name: _isES ? 'Alférez de Campo'  : 'Field Ensign',
+      desc: _isES ? 'Primera comisión + sesión completa + paquete de recursos' : 'First commission + full expedition session + resource pack' },
   ],
 
-  cta_text:       _isES ? '⬡ Presentar Solicitud' : '⬡ Apply for Selection',
+  cta_text:       _isES ? '⬡ Solicitar Comisión' : '⬡ Apply for Commission',
   cta_href:       'mailto:info@fractiai.com'
-    + '?subject=' + encodeURIComponent('HH Expeditions \u2014 Crew Application \u00b7 Cohort One')
+    + '?subject=' + encodeURIComponent('HFCS \u2014 Commission Application \u00b7 Cohort One \u00b7 C-2 Candidate')
     + '&body='    + encodeURIComponent(
-        'To: HH Expeditions Selection Board\n\n'
-      + 'I am submitting my application for Cohort One crew selection.\n\n'
-      + 'Expedition: Holographic Hydrogen Expeditions\n'
-      + 'Deployment: March 3, 2026 \u00b7 Tuesdays \u00b7 15:33 PST \u00b7 T+60 min\n\n'
-      + 'Requested position (circle one): Mission Commander / Science Officer / Navigation Specialist\n\n'
-      + 'Name:\nTimezone:\nWhy I\u2019m applying:\n\n'
+        'To: HFCS Selection Board \u2014 Holographic Field Command School\n\n'
+      + 'I am submitting my commission application for Cohort One.\n\n'
+      + 'School: Holographic Field Command School (HFCS)\n'
+      + 'Domain: HH Awareness OS\n'
+      + 'Cohort: One \u00b7 March 3, 2026 \u00b7 Tuesdays \u00b7 15:33 PST \u00b7 T+60 min\n\n'
+      + 'C-2 Officer Candidate status confirmed: \u2610 Yes \u2014 I have completed the 9 Singularities\n\n'
+      + 'Commission track requested:\n'
+      + '  \u2610 Field Lieutenant O-3 (Positions 1\u20133)\n'
+      + '  \u2610 Navigation Officer O-2 (Positions 4\u20136)\n'
+      + '  \u2610 Field Ensign O-1 (Positions 7\u20139)\n\n'
+      + 'Name:\nTimezone:\nWhy I am ready for commission:\n\n'
       + 'NSPFRNP \u2192 \u221e\u2079'),
 
-  secondary_text: _isES ? '▶ Informe de Misión Completo' : '▶ Full Mission Briefing',
+  secondary_text: _isES ? '▶ Informe Completo de la Escuela' : '▶ Full School Briefing',
   secondary_href: '/interfaces/holographic-navigator-academy.html',
 
-  dismiss_text:   _isES ? '✕  En espera' : '✕  Stand down for now',
-  nsp:            'COHORT ONE \u00b7 9 CREW POSITIONS \u00b7 NSPFRNP \u2192 \u221e\u2079',
+  dismiss_text:   _isES ? '✕  Completar pista de cadetes primero' : '✕  Complete Cadet Track first',
+  nsp:            'HFCS \u00b7 COHORT ONE \u00b7 HH AWARENESS OS \u00b7 NSPFRNP \u2192 \u221e\u2079',
 };
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -261,9 +266,9 @@ var POPUP_CONFIG = {
       +'<h2 class="'+u+'-h1">'+title+'</h2>'
       +'<p class="'+u+'-sub">'+POPUP_CONFIG.subtitle.replace('\n','<br>')+'</p>'
       +'<div class="'+u+'-pills">'
-        +'<span class="'+u+'-pill '+u+'-pg">MISSION DATE \u00b7 MAR 3 \u00b7 2026</span>'
-        +'<span class="'+u+'-pill '+u+'-pc">REPORT \u00b7 15:33 PST</span>'
-        +'<span class="'+u+'-pill '+u+'-pp">DURATION \u00b7 T+60 MIN</span>'
+        +'<span class="'+u+'-pill '+u+'-pg">COHORT ONE \u00b7 MAR 3 \u00b7 2026</span>'
+        +'<span class="'+u+'-pill '+u+'-pc">15:33 PST \u00b7 T+60 MIN</span>'
+        +'<span class="'+u+'-pill '+u+'-pp">C-2 \u2192 O-1/O-2/O-3</span>'
       +'</div>'
       +'<div class="'+u+'-spots">'+dotsHtml+'</div>'
       +'<div class="'+u+'-tiers">'+tiersHtml+'</div>'

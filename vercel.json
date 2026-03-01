@@ -4,6 +4,9 @@
   "framework": null,
   "buildCommand": "node scripts/vercel-static-output.mjs",
   "outputDirectory": "dist",
+  "crons": [
+    { "path": "/api/cron", "schedule": "0 */2 * * *" }
+  ],
   "rewrites": [
     { "source": "/.well-known/agent.json", "destination": "/api/agent" },
     { "source": "/.well-known/ai-plugin.json", "destination": "/api/agent" }

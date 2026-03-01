@@ -376,14 +376,16 @@ async function commitFile(owner, repo, branch, filePath, newContent, message) {
 }
 
 /**
- * openPR(upstreamOwner, upstreamRepo, forkOwner, branchName, title, body)
+ * openPR(upstreamOwner, upstreamRepo, forkOwner, branchName, title, body, defaultBranch)
+ * defaultBranch: use repoInfo.default_branch — many repos use 'master', 'dev', 'trunk'.
+ * Hardcoding 'main' causes a 422 "base branch doesn't exist" on every non-main repo.
  */
-async function openPR(upstreamOwner, upstreamRepo, forkOwner, branchName, title, body) {
+async function openPR(upstreamOwner, upstreamRepo, forkOwner, branchName, title, body, defaultBranch = 'main') {
   return ghPost(`/repos/${upstreamOwner}/${upstreamRepo}/pulls`, {
     title,
     body,
     head:  `${forkOwner}:${branchName}`,
-    base:  'main',
+    base:  defaultBranch,
     maintainer_can_modify: true
   });
 }
@@ -697,9 +699,9 @@ async function solve(lattice) {
   const candidates = [...scoredPriority, ...apiCandidates];
 
   if (!candidates.length) {
-    log('\n╔══════════════════════════════════════════╗');
-    log('║  SOLVER CYCLE COMPLETE · HIGH-MATCH MODE ║');
-    log('╚══════════════════════════════════════════╝');
+    console.log('\n╔══════════════════════════════════════════╗');
+    console.log('║  SOLVER CYCLE COMPLETE · HIGH-MATCH MODE ║');
+    console.log('╚══════════════════════════════════════════╝');
     log('⬡', `0 candidates passed metadata gate (threshold: ${MATCH_THRESHOLD})`);
     log('⬡', 'This is correct behavior. No low-quality submissions. Cycle clean.');
     return [];
@@ -799,7 +801,8 @@ async function solve(lattice) {
         issueDetails.owner, issueDetails.repo,
         fork.owner.login, branchName,
         fix.prTitle ?? `fix: closes #${issueDetails.num}`,
-        (fix.prBody ?? '') + pocketInfo
+        (fix.prBody ?? '') + pocketInfo,
+        issueDetails.repoInfo?.default_branch ?? 'main'
       );
       prUrl = pr.html_url;
       log('✓', `PR opened: ${prUrl}`);
@@ -839,10 +842,10 @@ async function solve(lattice) {
     .filter(r => r.status === 'SUBMITTED')
     .reduce((s, r) => s + parseFloat((r.prize ?? '$0').replace('$','')), 0);
 
-  log('\n╔══════════════════════════════════════════╗');
-  log('║  SOLVER CYCLE COMPLETE · HIGH-MATCH MODE ║');
-  log('║  NSPFRNP → ∞⁹                            ║');
-  log('╚══════════════════════════════════════════╝');
+  console.log('\n╔══════════════════════════════════════════╗');
+  console.log('║  SOLVER CYCLE COMPLETE · HIGH-MATCH MODE ║');
+  console.log('║  NSPFRNP → ∞⁹                            ║');
+  console.log('╚══════════════════════════════════════════╝');
   log('⬡', `Metadata gate: ${MATCH_THRESHOLD} · Feasibility gate: ${FEASIBILITY_THRESHOLD}`);
   log('⬡', `Candidates: ${candidates.length} · Attempted: ${attempts} · Submitted: ${submitted} · Skipped low-match: ${skipped}`);
   if (submitted === 0) {

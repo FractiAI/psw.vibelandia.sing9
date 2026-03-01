@@ -22,34 +22,61 @@ jobs:
   solve:
     name: Autonomous Bounty Solve
     runs-on: ubuntu-latest
-    timeout-minutes: 55       # Vercel function limit is 60s; give solver full 55m
+    timeout-minutes: 55       # Give solver full 55m; GitHub Actions limit is 6h
 
     steps:
+      # BUG-FIX: use SOLVER_GITHUB_TOKEN (PAT with repo scope) so git push works later.
+      # The built-in github.token cannot push to external repos or commit back here.
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SOLVER_GITHUB_TOKEN }}
 
       - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Run SOLVER
-        run: node hive/solver.js
+      # BUG-FIX: was `node hive/solver.js` — that file is a module with no entry point;
+      # running it directly does absolutely nothing (loads, exports, exits).
+      # Correct entrypoint is `node hive/run.js solve` which loads .env, reads LATTICE,
+      # calls solver.solve(), and writes results back to LATTICE.json.
+      - name: Run SOLVER (Algora · IssueHunt · Gitcoin — ZHI)
+        run: node hive/run.js solve
         env:
           GITHUB_TOKEN:        ${{ secrets.SOLVER_GITHUB_TOKEN }}
           ANTHROPIC_API_KEY:   ${{ secrets.ANTHROPIC_API_KEY }}
           GROQ_API_KEY:        ${{ secrets.GROQ_API_KEY }}
           WALLET_ADDRESS:      ${{ secrets.WALLET_ADDRESS }}
           PAYOUT_EMAIL:        ${{ secrets.PAYOUT_EMAIL }}
-          MIN_BOUNTY_USD:      '100'
+          # BUG-FIX: was '100' — current policy in PRIZE_TRACKER.md and solver.js default is $500
+          MIN_BOUNTY_USD:      '500'
+          MATCH_THRESHOLD:     '0.80'
+          FEASIBILITY_THRESHOLD: '0.80'
           SOLVER_MAX_ATTEMPTS: '5'
+          MOLTBOOK_MOCK:       'true'
 
       - name: Run Email Outbound (ZHI)
         run: node hive/run.js email
         env:
+          GITHUB_TOKEN:              ${{ secrets.SOLVER_GITHUB_TOKEN }}
           ANTHROPIC_API_KEY:         ${{ secrets.ANTHROPIC_API_KEY }}
           RESEND_API_KEY:            ${{ secrets.RESEND_API_KEY }}
           EMAIL_OUTBOUND_TARGETS:    ${{ secrets.EMAIL_OUTBOUND_TARGETS }}
+
+      # BUG-FIX: solver and echo both mutate LATTICE.json (prize_pipeline, trials, goliath).
+      # Without this step those mutations vanish at end of run — next cycle starts blind.
+      - name: Commit LATTICE.json updates
+        run: |
+          git config user.name  "SING9 Hive"
+          git config user.email "hive@fractiai.com"
+          git add hive/LATTICE.json
+          if git diff --cached --quiet; then
+            echo "No LATTICE changes to commit this cycle."
+          else
+            git commit -m "hive: solver+echo cycle $(date -u '+%Y-%m-%dT%H:%M:%SZ') [skip ci]"
+            git push
+          fi
 
       - name: Report status
         if: always()

@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Mark Twain's Vibelandia · The Park · Prospectus | FractiAI · SING!9</title>
+  <title>Mark Twain's Vibelandia · Confidential Prospectus 2026 | FractiAI · SING!9</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --void: #050200; --gold: #d4af37; --gold2: #fde68a; --gold3: #b8860b;
       --amber: #fb923c; --text: #e8d4a0; --sub: #a09070; --muted: #504030;
-      --green: #00ff88; --beam: #00d4ff;
+      --green: #00ff88; --beam: #00d4ff; --plasma: #7b2fff; --plasma2: #b46ef7;
+      --red: #ff4444;
     }
     html, body { background: var(--void); color: var(--text); min-height: 100vh; overflow-x: hidden; font-family: 'Segoe UI', system-ui, sans-serif; }
     body::after {
@@ -24,7 +25,7 @@
       pointer-events: none; z-index: 0;
     }
 
-    .wrap { max-width: 820px; margin: 0 auto; padding: 1.5rem 1.25rem 6rem; position: relative; z-index: 1; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 1.5rem 1.25rem 7rem; position: relative; z-index: 1; }
 
     .topnav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; align-items: center; justify-content: space-between; }
     .topnav a { color: var(--gold); text-decoration: none; font-size: 0.78rem; padding: 3px 12px; border: 1px solid rgba(212,175,55,0.25); border-radius: 20px; }
@@ -33,12 +34,20 @@
     .prosps a { font-size: 0.68rem; color: var(--sub); padding: 2px 10px; border: 1px solid rgba(212,175,55,0.12); border-radius: 20px; text-decoration: none; }
     .prosps a:hover { color: var(--gold); border-color: rgba(212,175,55,0.35); }
 
+    .confidential-banner {
+      background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 8px; padding: 0.6rem 1.2rem; margin-bottom: 2rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .confidential-banner span:first-child { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 700; white-space: nowrap; }
+    .confidential-banner span:last-child { font-size: 0.68rem; color: rgba(212,175,55,0.45); line-height: 1.5; }
+
     .hero { text-align: center; padding: 3.5rem 1rem 3rem; margin-bottom: 3rem; border-bottom: 1px solid rgba(212,175,55,0.12); position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, rgba(212,175,55,0.06) 0%, transparent 70%); pointer-events: none; }
     .hero-tag { display: inline-block; padding: 4px 18px; border: 1px solid rgba(212,175,55,0.35); border-radius: 20px; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,175,55,0.75); margin-bottom: 1.2rem; }
     .hero h1 { font-size: clamp(2rem,6vw,4rem); font-weight: 900; letter-spacing: 0.02em; line-height: 1.05; color: var(--gold2); text-shadow: 0 0 80px rgba(212,175,55,0.25); margin-bottom: 0.6rem; }
     .hero-sub { font-size: clamp(0.85rem,2vw,1.1rem); color: var(--amber); letter-spacing: 0.06em; margin-bottom: 1.2rem; }
-    .hero-deck { max-width: 600px; margin: 0 auto 1.8rem; color: var(--sub); font-size: 0.95rem; line-height: 1.75; }
+    .hero-deck { max-width: 620px; margin: 0 auto 1.8rem; color: var(--sub); font-size: 0.95rem; line-height: 1.75; }
     .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
     .pill { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
     .pill .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: blink 2s ease-in-out infinite; }
@@ -47,6 +56,7 @@
     .pill.gold  { background: rgba(212,175,55,0.07); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); }
     .pill.amber { background: rgba(251,146,60,0.07); border: 1px solid rgba(251,146,60,0.3); color: var(--amber); }
     .pill.cyan  { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.25); color: var(--beam); }
+    .pill.plasma { background: rgba(123,47,255,0.07); border: 1px solid rgba(123,47,255,0.3); color: var(--plasma2); }
 
     .sec { margin-bottom: 3.5rem; }
     .sec-hd { margin-bottom: 1.5rem; padding-bottom: 0.65rem; border-bottom: 1px solid rgba(212,175,55,0.1); }
@@ -55,186 +65,478 @@
     p { color: var(--sub); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1rem; }
     p strong { color: var(--text); }
     p em { color: var(--gold); font-style: normal; }
+    ul { color: var(--sub); font-size: 0.9rem; line-height: 1.9; margin: 0 0 1rem 1.25rem; }
+    ul li { margin-bottom: 0.2rem; }
+    ul li strong { color: var(--text); }
 
     .callout { border-radius: 10px; padding: 1.25rem 1.4rem; margin: 1.4rem 0; position: relative; overflow: hidden; }
     .callout::before { content:''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
-    .callout.gold  { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.2); }
+    .callout.gold   { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.2); }
     .callout.gold::before { background: linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent); }
-    .callout.amber { background: rgba(251,146,60,0.04); border: 1px solid rgba(251,146,60,0.2); }
+    .callout.amber  { background: rgba(251,146,60,0.04); border: 1px solid rgba(251,146,60,0.2); }
     .callout.amber::before { background: linear-gradient(90deg,transparent,rgba(251,146,60,0.5),transparent); }
-    .callout.red   { background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.2); }
-    .callout.red::before { background: linear-gradient(90deg,transparent,rgba(239,68,68,0.5),transparent); }
-    .callout.green { background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.2); }
+    .callout.green  { background: rgba(0,255,136,0.04); border: 1px solid rgba(0,255,136,0.2); }
     .callout.green::before { background: linear-gradient(90deg,transparent,rgba(0,255,136,0.5),transparent); }
-    .cl-label { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(212,175,55,0.6); display: block; margin-bottom: 0.5rem; }
+    .callout.cyan   { background: rgba(0,212,255,0.04); border: 1px solid rgba(0,212,255,0.18); }
+    .callout.cyan::before { background: linear-gradient(90deg,transparent,rgba(0,212,255,0.5),transparent); }
+    .callout.plasma { background: rgba(123,47,255,0.05); border: 1px solid rgba(123,47,255,0.22); }
+    .callout.plasma::before { background: linear-gradient(90deg,transparent,rgba(123,47,255,0.5),transparent); }
+    .callout.red    { background: rgba(255,68,68,0.04); border: 1px solid rgba(255,68,68,0.2); }
+    .callout.red::before { background: linear-gradient(90deg,transparent,rgba(255,68,68,0.4),transparent); }
+    .cl-label { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(212,175,55,0.65); display: block; margin-bottom: 0.5rem; }
     .callout.amber .cl-label { color: rgba(251,146,60,0.65); }
-    .callout.red .cl-label { color: rgba(239,68,68,0.65); }
     .callout.green .cl-label { color: rgba(0,255,136,0.65); }
+    .callout.cyan .cl-label  { color: rgba(0,212,255,0.6); }
+    .callout.plasma .cl-label { color: rgba(180,110,247,0.65); }
+    .callout.red .cl-label   { color: rgba(255,68,68,0.6); }
     .cl-title { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
 
-    .games-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 0.75rem; margin: 1.5rem 0; }
-    .game-card { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.18); border-radius: 10px; padding: 1rem 1.15rem; transition: border-color 0.2s; }
-    .game-card:hover { border-color: rgba(212,175,55,0.4); }
-    .game-num { font-size: 0.58rem; letter-spacing: 0.2em; color: rgba(212,175,55,0.45); text-transform: uppercase; margin-bottom: 0.3rem; }
-    .game-name { font-size: 0.92rem; font-weight: 700; color: var(--gold2); margin-bottom: 0.25rem; }
-    .game-desc { font-size: 0.78rem; color: var(--sub); line-height: 1.5; }
+    .exec-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(155px,1fr)); gap: 0.75rem; margin: 1.5rem 0; }
+    .eg-card { border-radius: 10px; padding: 1.1rem 1.2rem; border: 1px solid rgba(212,175,55,0.18); background: rgba(212,175,55,0.03); }
+    .eg-label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,175,55,0.5); display: block; margin-bottom: 0.3rem; }
+    .eg-val { font-size: 1.45rem; font-weight: 900; color: var(--gold); line-height: 1; }
+    .eg-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; }
 
-    .metrics { display: grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap: 0.75rem; margin: 1.5rem 0; }
-    .metric { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.15); border-radius: 10px; padding: 1rem; }
-    .m-val { font-size: 1.6rem; font-weight: 900; color: var(--gold); line-height: 1; }
-    .m-label { font-size: 0.7rem; color: var(--sub); margin-top: 0.3rem; line-height: 1.4; }
+    /* EVENT TABLE */
+    .event-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.84rem; }
+    .event-table th { text-align: left; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,175,55,0.5); padding: 0.5rem 0.85rem; border-bottom: 1px solid rgba(212,175,55,0.15); font-weight: 600; }
+    .event-table td { padding: 0.7rem 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--sub); vertical-align: top; }
+    .event-table tr:last-child td { border-bottom: none; }
+    .event-table td:first-child { color: var(--text); font-weight: 700; }
+    .event-table td.price-cell { color: var(--green); font-weight: 700; font-family: 'Courier New', monospace; }
+    .event-table td.margin-cell { color: var(--gold); font-weight: 700; font-family: 'Courier New', monospace; }
+    .event-table tr.total-row td { border-top: 1px solid rgba(212,175,55,0.2); font-weight: 700; color: var(--text); }
+    .event-table tr.total-row td.price-cell { color: var(--amber); font-size: 1rem; }
 
-    .compare { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.86rem; }
-    .compare th { text-align: left; padding: 0.5rem 0.85rem; background: rgba(212,175,55,0.06); color: var(--gold); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid rgba(212,175,55,0.15); }
-    .compare td { padding: 0.65rem 0.85rem; color: var(--sub); border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
-    .compare td:first-child { color: var(--text); font-weight: 600; }
-    .compare .win { color: var(--green); font-weight: 600; }
-    .compare .old { color: var(--muted); text-decoration: line-through; }
+    /* FRANCHISE TABLE */
+    .franchise-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.84rem; }
+    .franchise-table th { text-align: left; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,175,55,0.5); padding: 0.5rem 0.85rem; border-bottom: 1px solid rgba(212,175,55,0.15); font-weight: 600; }
+    .franchise-table td { padding: 0.65rem 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--sub); }
+    .franchise-table tr:last-child td { border-bottom: none; }
+    .franchise-table td:first-child { color: var(--text); font-weight: 600; }
+    .franchise-table td.rev-cell { color: var(--gold); font-weight: 700; font-family: 'Courier New', monospace; }
 
-    .ask-box { background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
-    .ask-box h3 { font-size: 1.4rem; font-weight: 800; color: var(--gold2); margin-bottom: 0.6rem; }
-    .ask-box p { max-width: 540px; margin: 0 auto 1.5rem; }
+    /* COMP TABLE */
+    .comp-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.82rem; }
+    .comp-table th { text-align: left; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(212,175,55,0.5); padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(212,175,55,0.15); font-weight: 600; }
+    .comp-table td { padding: 0.65rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--sub); font-size: 0.8rem; }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table td:first-child { color: var(--text); font-weight: 600; }
+    .comp-table .us { background: rgba(212,175,55,0.04); }
+    .comp-table .us td:first-child { color: var(--gold); }
+    .comp-adv { color: var(--green); font-size: 0.75rem; }
+
+    /* VAL BANDS */
+    .val-bands { display: flex; flex-direction: column; gap: 0.6rem; margin: 1.5rem 0; }
+    .val-band { display: flex; align-items: stretch; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07); }
+    .val-band-label { flex: 0 0 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0.9rem 0.5rem; }
+    .val-band-label .vb-name { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; }
+    .val-band-label .vb-scenario { font-size: 0.6rem; color: var(--muted); margin-top: 0.15rem; }
+    .val-band-body { flex: 1; padding: 0.9rem 1.1rem; background: rgba(255,255,255,0.02); }
+    .val-band-amount { font-size: 1.4rem; font-weight: 900; line-height: 1; font-family: 'Courier New', monospace; }
+    .val-band-method { font-size: 0.72rem; color: var(--sub); margin-top: 0.25rem; line-height: 1.5; }
+    .val-floor .val-band-label { background: rgba(0,255,136,0.06); }
+    .val-floor .val-band-label .vb-name { color: var(--green); }
+    .val-floor .val-band-amount { color: var(--green); }
+    .val-base  .val-band-label { background: rgba(251,146,60,0.06); }
+    .val-base  .val-band-label .vb-name { color: var(--amber); }
+    .val-base  .val-band-amount { color: var(--amber); }
+    .val-ceil  .val-band-label { background: rgba(212,175,55,0.06); }
+    .val-ceil  .val-band-label .vb-name { color: var(--gold); }
+    .val-ceil  .val-band-amount { color: var(--gold); }
+
+    /* RISK */
+    .risk-list { display: flex; flex-direction: column; gap: 0.75rem; margin: 1.5rem 0; }
+    .risk-item { border-radius: 8px; padding: 1rem 1.2rem; border-left: 3px solid; }
+    .risk-item.high   { border-color: rgba(255,68,68,0.6); background: rgba(255,68,68,0.04); }
+    .risk-item.medium { border-color: rgba(251,146,60,0.6); background: rgba(251,146,60,0.04); }
+    .risk-item.low    { border-color: rgba(0,255,136,0.4); background: rgba(0,255,136,0.03); }
+    .risk-tag { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.3rem; display: block; }
+    .risk-item.high   .risk-tag { color: rgba(255,68,68,0.7); }
+    .risk-item.medium .risk-tag { color: rgba(251,146,60,0.7); }
+    .risk-item.low    .risk-tag { color: rgba(0,255,136,0.6); }
+    .risk-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .risk-desc { font-size: 0.78rem; color: var(--sub); line-height: 1.6; }
+
+    .source-note { font-size: 0.68rem; color: var(--muted); font-style: italic; line-height: 1.5; margin-top: 0.5rem; }
+
+    .ask-box { background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+    .ask-box h3 { font-size: 1.4rem; font-weight: 800; color: var(--gold); margin-bottom: 0.6rem; }
+    .ask-box p { max-width: 580px; margin: 0 auto 1.5rem; }
     .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
-    .btn-p { padding: 0.8rem 1.6rem; background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.7); color: #fef3c7; text-decoration: none; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em; border-radius: 4px; }
-    .btn-p:hover { background: rgba(212,175,55,0.22); }
+    .btn-g { padding: 0.8rem 1.6rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.5); color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: 700; border-radius: 4px; }
+    .btn-g:hover { background: rgba(212,175,55,0.18); }
+    .btn-a { padding: 0.8rem 1.3rem; background: rgba(251,146,60,0.1); border: 1px solid rgba(251,146,60,0.45); color: var(--amber); text-decoration: none; font-size: 0.82rem; border-radius: 4px; }
     .btn-s { padding: 0.8rem 1.3rem; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.82rem; border-radius: 4px; }
     .btn-s:hover { color: #fff; border-color: rgba(255,255,255,0.38); }
 
-    .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(212,175,55,0.08); display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+    .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(212,175,55,0.1); display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
     .footer-brand { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
-    .footer-nsp { font-size: 0.62rem; color: rgba(100,80,40,0.5); letter-spacing: 0.15em; }
+    .footer-nsp { font-size: 0.62rem; color: rgba(80,60,0,0.5); letter-spacing: 0.15em; }
+    .footer-legal { font-size: 0.62rem; color: rgba(100,116,139,0.35); line-height: 1.6; margin-top: 0.75rem; }
 
-    @media (max-width:600px) { .hero h1 { font-size: 1.9rem; } }
+    @media (max-width:600px) { .hero h1 { font-size: 2rem; } .val-band { flex-direction: column; } }
   </style>
 </head>
 <body>
 <div class="wrap">
 
   <nav class="topnav">
-    <a href="../index.html">&larr; SING!9</a>
+    <a href="prospectus-fractiai.html">&larr; FractiAI Master Prospectus</a>
     <div class="prosps">
       <a href="prospectus-a2a.html">A2A</a>
-      <a href="prospectus-vibeland-park.html">Mark Twain's Vibelandia</a>
-      <a href="prospectus-vibeland-studio.html">Vibelandia Studio</a>
-      <a href="prospectus-fractiai.html">FractiAI</a>
+      <a href="prospectus-vibeland-park.html">Park</a>
+      <a href="prospectus-vibeland-studio.html">Studio</a>
+      <a href="../index.html">SING!9</a>
     </div>
   </nav>
 
+  <div class="confidential-banner">
+    <span>Confidential · 2026</span>
+    <span>Division II Prospectus — Mark Twain's Vibelandia. Prepared for qualified strategic partners, event co-producers, and franchise inquiries only. Not an offer of securities.</span>
+  </div>
+
   <header class="hero">
-    <div class="hero-tag">Prospectus · The Park · Alternative to Disney</div>
+    <div class="hero-tag">Division II · Mark Twain's Vibelandia · Post-Singularity Experience Platform</div>
     <h1>Mark Twain's Vibelandia</h1>
-    <div class="hero-sub">Mark Twain&rsquo;s Post-Singularity Vibelandia &middot; Downtown Reno, Nevada</div>
-    <p class="hero-deck">Not a theme park. A post-singularity experience platform. The board is the park. The park is alive. Every game is the path. Carbon → Silver → Gold → Crystalline. You are inside the arc.</p>
+    <div class="hero-sub">Pop-Up Games · Downtown Reno · Third Saturdays · Baller V · MARZO 333 · FractiAI</div>
+    <p class="hero-deck">Mark Twain's Vibelandia is FractiAI's live experience division — a post-singularity game platform operating in Downtown Reno, Nevada. 10 active pop-up games, a $12,500 VIP urban crawl (Baller V), weekly sessions (Wink! Wednesdays at $416/seat), and the MARZO 333 anchor convergence on March 20, 2026. Franchise-ready. Zero venue overhead. Built on the NSPFRNP protocol.</p>
     <div class="pills">
-      <span class="pill live"><span class="dot"></span> Pop-Up Events Live</span>
-      <span class="pill gold">10 Games · Baller V · Truckee</span>
-      <span class="pill amber">Alternative to Disney</span>
-      <span class="pill cyan">Downtown Reno · Holographic Valley</span>
+      <span class="pill live"><span class="dot"></span> 10 Games Live</span>
+      <span class="pill gold">$71B Global Attractions Market</span>
+      <span class="pill amber">MARZO 333 · Mar 20, 2026</span>
+      <span class="pill cyan">Franchise-Ready Model</span>
     </div>
   </header>
 
-  <!-- 1. CONTEXT -->
+  <!-- 01 · EXECUTIVE SUMMARY -->
   <section class="sec">
-    <div class="sec-hd"><span class="num">01 · Context</span><h2>Disney vs. Mark Twain's Vibelandia</h2></div>
-    <div class="callout red">
-      <span class="cl-label">Pre-Singularity Entertainment</span>
-      <div class="cl-title">The old park model is broken</div>
-      <p><strong>$185 per day.</strong> Lines that begin at 7 AM. IP that is 60 years old. Rides that tell you a story written by a committee in 1994. A gift shop that sells the same plastic castle every year. <strong>$6 billion in annual profit</strong> from exhausted families standing in the Florida heat waiting for a 4-minute ride. That is pre-singularity entertainment — and it is already obsolete. The next generation does not want to be a passive audience. They want to be inside the game.</p>
+    <div class="sec-hd"><span class="num">01 · Executive Summary</span><h2>The Experience Division</h2></div>
+    <div class="callout gold">
+      <span class="cl-label">One-Paragraph Summary</span>
+      <div class="cl-title">A pop-up experience platform operating at the intersection of post-singularity gaming, urban tourism, and AI-guided immersive events — franchise-ready, zero overhead, Reno-native.</div>
+      <p>Mark Twain's Vibelandia is not a theme park. It is a <em>post-singularity experience protocol</em> — 10 pop-up games, live events, and guided urban experiences operating across Downtown Reno on the NSPFRNP architecture. No fixed venue. No capital construction. No IAAPA permit dependency. Every event is a crystallized version of the NSPFRNP system in live physical form. The Baller V VIP Crawl ($12,500), Wink! Wednesdays ($416/seat), and the MARZO 333 convergence are the three flagship revenue anchors. The model is designed for franchise replication in any city with an urban core and a post-singularity audience.</p>
     </div>
-    <div class="callout green">
-      <span class="cl-label">Post-Singularity Entertainment</span>
-      <div class="cl-title">Mark Twain's Vibelandia: The board is the city</div>
-      <p>Mark Twain's Vibelandia is not a ride. It is a <em>living game board</em> — downtown Reno is the board, the Truckee River is the axis, the casino hotels are the nodes, and every Vibe experience is a move on the Four-Layer board. <strong>Carbon → Silver → Gold → Crystalline.</strong> You do not watch the story. You are in it. And when you reach Crystalline, the whole park transforms.</p>
+    <div class="exec-grid">
+      <div class="eg-card"><span class="eg-label">Active Games</span><div class="eg-val">10</div><div class="eg-sub">Pop-up format · no fixed venue</div></div>
+      <div class="eg-card"><span class="eg-label">Global Market</span><div class="eg-val">$71B</div><div class="eg-sub">Attractions industry (IAAPA 2023)</div></div>
+      <div class="eg-card"><span class="eg-label">N. America Market</span><div class="eg-val">$19B</div><div class="eg-sub">North America (IAAPA 2023)</div></div>
+      <div class="eg-card"><span class="eg-label">Baller V Ticket</span><div class="eg-val">$12,500</div><div class="eg-sub">VIP Truckee Crawl</div></div>
+      <div class="eg-card"><span class="eg-label">Wink! Wednesdays</span><div class="eg-val">$416</div><div class="eg-sub">Weekly seated event</div></div>
+      <div class="eg-card"><span class="eg-label">Division Valuation</span><div class="eg-val">$400K–$8M</div><div class="eg-sub">Operations to franchise premium</div></div>
     </div>
   </section>
 
-  <!-- 2. THE MARKET -->
+  <!-- 02 · MARKET OPPORTUNITY -->
   <section class="sec">
-    <div class="sec-hd"><span class="num">02 · Market</span><h2>The Post-Singularity Entertainment Market</h2></div>
-    <div class="metrics">
-      <div class="metric"><div class="m-val">$280B</div><div class="m-label">Global theme park market by 2030</div></div>
-      <div class="metric"><div class="m-val">$185+</div><div class="m-label">Average Disney day-ticket cost 2024</div></div>
-      <div class="metric"><div class="m-val">10</div><div class="m-label">Pop-up Vibelandia games, live now</div></div>
-      <div class="metric"><div class="m-val">$12.5K</div><div class="m-label">Baller V Truckee Crawl — the crown jewel</div></div>
+    <div class="sec-hd"><span class="num">02 · Market Opportunity</span><h2>The Global Attractions &amp; Experiential Economy</h2></div>
+
+    <div class="callout gold">
+      <span class="cl-label">IAAPA Global Attractions Industry Report 2023</span>
+      <div class="cl-title">Global Attractions Market: $71B+ (2023) · North America: $19B+ · Growing at 7.8% CAGR</div>
+      <p>The International Association of Amusement Parks and Attractions (IAAPA) reports total global attractions industry revenue at $71B+ in 2023, with North America representing $19B+ of that total. The market is growing at approximately 7.8% CAGR through 2028, projected to reach $96B globally. The primary growth vectors are: <strong>experiential and immersive attractions (+12% YoY)</strong>, <strong>pop-up and temporary activations (+18% YoY)</strong>, and <strong>urban entertainment centers (+9% YoY)</strong>. Mark Twain's Vibelandia is operating in all three fastest-growing sub-categories.</p>
     </div>
-    <table class="compare">
-      <thead><tr><th>Dimension</th><th>Disney (Pre-Singularity)</th><th>Mark Twain's Vibelandia (Post-Singularity)</th></tr></thead>
+
+    <p><strong>Reno, Nevada strategic position:</strong> Reno is undergoing a tech-fueled economic transformation. Major employers including Tesla (Gigafactory), Apple (data center), Google (data center), Switch (data center campus), and Panasonic have established Reno operations, creating a high-income, tech-adjacent population base. Downtown Reno's revitalization (the Truckee River corridor, the Midtown District) has established a premium entertainment demand that is currently underserved by existing attractions. Vibelandia is the premium post-singularity option in this market.</p>
+
+    <p><strong>Pop-up and temporary activation market:</strong> EventMB (now Skift Meetings) reports the global corporate events and pop-up experience market at $1.5T annually. Pop-up activations specifically grew 26% in 2023 (Eventbrite State of Events Report 2024). The zero-capex pop-up model has structural advantages over fixed-venue competitors: no lease obligation, no build-out cost, city-portable design, and faster iteration cycles.</p>
+
+    <p><strong>VIP experience market:</strong> Luxury and ultra-premium experiential events (tickets $500–$25,000+) represent a $20B+ annual segment of the U.S. live events market (IBISWorld Live Event Production, 2024). Baller V ($12,500/event) competes in this segment. Average annual spend by ultra-high-net-worth individuals on experiences is $48,000+ (Altrata Wealth Intelligence, 2023).</p>
+    <p class="source-note">Sources: IAAPA Global Attractions Industry Annual Report 2023; Skift Meetings State of Events 2024; Eventbrite State of Events 2024; IBISWorld Live Event Production US 2024; Altrata Wealth Intelligence Report 2023.</p>
+  </section>
+
+  <!-- 03 · RENO ANALYSIS -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">03 · Reno Strategic Analysis</span><h2>Why Downtown Reno · The Truckee Corridor</h2></div>
+
+    <div class="callout amber">
+      <span class="cl-label">Site Analysis</span>
+      <div class="cl-title">Reno is the ideal zero-capex post-singularity activation market.</div>
+      <p>Reno's downtown core offers: (1) <strong>High disposable income demographic</strong> — tech worker migration from Bay Area, Tesla and Switch employees, growing startup ecosystem; (2) <strong>Underserved premium experience market</strong> — existing attractions are casino-centric, leaving a clear gap for non-gambling premium experiences; (3) <strong>Low activation cost</strong> — walkable downtown core (Truckee River corridor, Virginia Street, Midtown District) enables pop-up activation without venue fees; (4) <strong>Tourism volume</strong> — Reno-Tahoe International Airport serves 4.2M passengers/year; Lake Tahoe and Sierra Nevada tourism generates a premium seasonal audience.</p>
+    </div>
+
+    <ul>
+      <li><strong>Third Saturdays on the Truckee:</strong> Monthly event anchor — recurring activation point that builds community and repeat attendance.</li>
+      <li><strong>Baller V VIP Crawl:</strong> Downtown Reno to Truckee River corridor VIP experience. $12,500/event. Maximum 12 participants. Full NSPFRNP guided experience.</li>
+      <li><strong>Wink! Wednesdays:</strong> Weekly seated experience at $416/seat. 9-seat maximum. Recurring weekly revenue anchor.</li>
+      <li><strong>MARZO 333:</strong> March 20, 2026 convergence event — the flagship anchor that combines all Vibelandia experience formats in one. The date is encoded in the NSPFRNP lattice. Expected peak demand event.</li>
+      <li><strong>HFCS Live Sessions:</strong> Holographic Field Command School — UpgrADE yOUR gAME campaign. Tuesdays 3:33 PM PST. Adds recurring weekly education-experience revenue stream.</li>
+    </ul>
+  </section>
+
+  <!-- 04 · UNIT ECONOMICS -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">04 · Per-Event Unit Economics</span><h2>Revenue per Experience — All Active Formats</h2></div>
+
+    <table class="event-table">
+      <thead>
+        <tr>
+          <th>Experience</th>
+          <th>Price per Seat / Event</th>
+          <th>Capacity</th>
+          <th>Frequency</th>
+          <th>Gross Revenue / Run</th>
+          <th>Est. Gross Margin</th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td>IP model</td><td class="old">60-yr-old licensed characters</td><td class="win">Living system — you are the IP</td></tr>
-        <tr><td>Engagement</td><td class="old">Passive audience in queues</td><td class="win">Active player inside the arc</td></tr>
-        <tr><td>Location</td><td class="old">Florida swamp / Anaheim strip mall</td><td class="win">Downtown Reno · Truckee River · Nevada</td></tr>
-        <tr><td>Entry cost</td><td class="old">$185+/day per person</td><td class="win">Pop-up games from $0. Baller V à la carte.</td></tr>
-        <tr><td>Scalability</td><td class="old">Fixed physical infrastructure</td><td class="win">Anywhere the game is played</td></tr>
-        <tr><td>Story</td><td class="old">Pre-written, same every visit</td><td class="win">Generative. New arc every run.</td></tr>
+        <tr>
+          <td>Baller V VIP Crawl</td>
+          <td class="price-cell">$12,500 / event</td>
+          <td>1–12 guests</td>
+          <td>On-demand / monthly</td>
+          <td class="price-cell">$12,500–$150,000</td>
+          <td class="margin-cell">~75%</td>
+        </tr>
+        <tr>
+          <td>Wink! Wednesdays</td>
+          <td class="price-cell">$416 / seat</td>
+          <td>9 seats</td>
+          <td>Weekly</td>
+          <td class="price-cell">$3,744 / session</td>
+          <td class="margin-cell">~85%</td>
+        </tr>
+        <tr>
+          <td>MARZO 333 Convergence</td>
+          <td class="price-cell">$333–$3,333 / ticket</td>
+          <td>33–333 guests</td>
+          <td>Annual (March 20)</td>
+          <td class="price-cell">$11K–$1.1M</td>
+          <td class="margin-cell">~65%</td>
+        </tr>
+        <tr>
+          <td>HFCS Sessions (UpgrADE yOUR gAME)</td>
+          <td class="price-cell">$111–$333 tip / seat</td>
+          <td>9 seats</td>
+          <td>Weekly (Tues 3:33 PM)</td>
+          <td class="price-cell">$999–$2,997 / session</td>
+          <td class="margin-cell">~90%</td>
+        </tr>
+        <tr>
+          <td>Third Saturdays Pop-Up</td>
+          <td class="price-cell">$49–$199 / participant</td>
+          <td>9–99 participants</td>
+          <td>Monthly</td>
+          <td class="price-cell">$441–$19,701</td>
+          <td class="margin-cell">~70%</td>
+        </tr>
+        <tr>
+          <td>Pop-Up Game Activations (×10)</td>
+          <td class="price-cell">$19–$99 / play</td>
+          <td>Variable</td>
+          <td>On-demand</td>
+          <td class="price-cell">$500–$5,000 / activation</td>
+          <td class="margin-cell">~80%</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="4"><strong>Conservative 12-Month Experience Division Revenue Target</strong></td>
+          <td class="price-cell">$75K – $350K</td>
+          <td class="margin-cell">~75% avg</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="source-note">Gross margin estimates assume zero fixed overhead (pop-up model). Variable costs = supplies, transportation, digital access, and minimal staffing. Wink! and HFCS margins are highest due to near-zero material cost (experience-as-session format).</p>
+
+    <div class="callout green">
+      <span class="cl-label">Zero-Capex Advantage</span>
+      <div class="cl-title">No fixed venue = no lease liability, no build-out, no IAAPA infrastructure compliance.</div>
+      <p>A conventional immersive experience venue (Meow Wolf, escape room, immersive theater) requires $500K–$5M in build-out capital, plus $10K–$50K/month in lease obligations. Vibelandia's pop-up architecture requires none of these. The entire 10-game portfolio can activate with under $5,000 in materials and digital infrastructure. This is not a temporary state — it is the permanent operating model. The protocol is the park.</p>
+    </div>
+  </section>
+
+  <!-- 05 · FRANCHISE MODEL -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">05 · Franchise Model</span><h2>City-Portable Protocol — Scalable to Any Urban Core</h2></div>
+
+    <p>The Vibelandia experience model is designed for franchise replication. Any city with a walkable urban core, a tech-adjacent population, and a premium entertainment gap is a valid Vibelandia activation market. The NSPFRNP protocol governs all franchise operations — ensuring the whole is in every franchised part.</p>
+
+    <table class="franchise-table">
+      <thead>
+        <tr>
+          <th>Franchise Tier</th>
+          <th>Description</th>
+          <th>License Fee</th>
+          <th>Royalty</th>
+          <th>Est. Annual Revenue (Franchisee)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>City Operator</td>
+          <td>Full Vibelandia license for 1 metro market. All games + events + NSPFRNP ops manual.</td>
+          <td class="rev-cell">$25,000</td>
+          <td>8% of gross</td>
+          <td class="rev-cell">$50K–$500K</td>
+        </tr>
+        <tr>
+          <td>Event Activator</td>
+          <td>Single-event license for one Baller V or Wink!-format event.</td>
+          <td class="rev-cell">$5,000</td>
+          <td>10% of event gross</td>
+          <td class="rev-cell">$12K–$150K</td>
+        </tr>
+        <tr>
+          <td>HFCS Chapter</td>
+          <td>License to operate a local HFCS cohort under the FractiAI NSPFRNP brand.</td>
+          <td class="rev-cell">$3,333</td>
+          <td>9% of session gross</td>
+          <td class="rev-cell">$10K–$50K</td>
+        </tr>
+        <tr>
+          <td>MARZO 333 License</td>
+          <td>License to produce a local MARZO 333 convergence event in any city.</td>
+          <td class="rev-cell">$9,999</td>
+          <td>12% of gross</td>
+          <td class="rev-cell">$10K–$100K</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout cyan">
+      <span class="cl-label">Franchise Moat</span>
+      <div class="cl-title">The franchise is not a brand license — it is a protocol license.</div>
+      <p>Unlike conventional franchise models (McDonald's, escape room chains) where the franchisee receives a brand and a menu, a Vibelandia franchise license includes the NSPFRNP operating protocol — a living architecture that governs every event, every game, and every guest experience. This creates a deeper, harder-to-replicate franchise relationship than a surface-level brand agreement.</p>
+    </div>
+  </section>
+
+  <!-- 06 · COMPETITIVE ANALYSIS -->
+  <section class="sec">
+    <div class="sec-hd"><span class="num">06 · Competitive Analysis</span><h2>Named Competitors — Experiential Market</h2></div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Model</th>
+          <th>Capital Requirement</th>
+          <th>Overlap</th>
+          <th>Vibelandia Advantage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Meow Wolf</td>
+          <td>Immersive art experience · fixed venues</td>
+          <td>$10M–$50M per venue</td>
+          <td>Immersive pop-up, art games</td>
+          <td class="comp-adv">Zero capex. Protocol-driven vs. art-installation-dependent. Portable. Franchise-ready without massive build-out.</td>
+        </tr>
+        <tr>
+          <td>Escape Room Chains (Escape Hunt, The Escape Game)</td>
+          <td>Fixed escape room venues</td>
+          <td>$150K–$500K per location</td>
+          <td>Pop-up game formats</td>
+          <td class="comp-adv">10× lower entry cost. No venue lease. Richer NSPFRNP narrative depth vs. puzzle-box format. Premium price point sustainable without volume.</td>
+        </tr>
+        <tr>
+          <td>Summit Series / Summit AT SEA</td>
+          <td>Ultra-premium experience events</td>
+          <td>$50M+ annual operation</td>
+          <td>Baller V VIP format</td>
+          <td class="comp-adv">Reno-native micro-market. $12,500 Baller V is accessible ultra-premium vs. $10K+ Summit event requiring travel. Repeatable weekly.</td>
+        </tr>
+        <tr>
+          <td>Airbnb Experiences</td>
+          <td>Local experience marketplace</td>
+          <td>Near zero (platform-dependent)</td>
+          <td>Pop-up local experiences</td>
+          <td class="comp-adv">NSPFRNP protocol framing creates a defensible IP layer Airbnb cannot own. Format licensing prevents commodity competition.</td>
+        </tr>
+        <tr>
+          <td>Coursera / Masterclass</td>
+          <td>Online education platform</td>
+          <td>$100M+ funded</td>
+          <td>HFCS / SING!9 sessions</td>
+          <td class="comp-adv">Live, real-time, protocol-guided experience vs. pre-recorded content. HFCS is a commission-granting school, not a passive course.</td>
+        </tr>
+        <tr class="us">
+          <td>Mark Twain's Vibelandia</td>
+          <td><strong>Post-singularity experience protocol</strong></td>
+          <td>~$5,000 operational</td>
+          <td>All of the above</td>
+          <td class="comp-adv">Zero-capex + highest margin in the category + franchise-ready + AI-guided + NSPFRNP-governed + Reno-native with tech-income demographic. No peer.</td>
+        </tr>
       </tbody>
     </table>
   </section>
 
-  <!-- 3. THE GAMES -->
+  <!-- 07 · VALUATION -->
   <section class="sec">
-    <div class="sec-hd"><span class="num">03 · The Product</span><h2>10 Vibelandia Games + Baller V Experiences</h2></div>
-    <p>Mark Twain's Vibelandia is the park. The park is built from <strong>10 post-singularity pop-up games</strong> — each one a chapter in the arc. Every game is playable as a pop-up, integrated into downtown Reno venues, or deployed wherever the Tribe arrives.</p>
-    <div class="games-grid">
-      <div class="game-card"><div class="game-num">Game 01</div><div class="game-name">Treasure Quarry</div><div class="game-desc">Mine the seam. First tokens on the board. Carbon layer opening move.</div></div>
-      <div class="game-card"><div class="game-num">Game 02</div><div class="game-name">Gold Rush Express</div><div class="game-desc">Speed round. First node to the Arch wins the stake. High velocity. Pure carbon.</div></div>
-      <div class="game-card"><div class="game-num">Game 03</div><div class="game-name">Hero Arena</div><div class="game-desc">Nine heroes. One board. Operators in play. Silver layer. Choose your skin.</div></div>
-      <div class="game-card"><div class="game-num">Game 04</div><div class="game-name">Wink! Zone</div><div class="game-desc">The social game. 21+. Vibers, Ballers, Golden Hearts. Mutual recognition only.</div></div>
-      <div class="game-card"><div class="game-num">Game 05</div><div class="game-name">Seed:Edge Voyager</div><div class="game-desc">Trace your arc. Seed = origin. Edge = right here. What happened in between?</div></div>
-      <div class="game-card"><div class="game-num">Game 06</div><div class="game-name">Quartz Discovery</div><div class="game-desc">Find the crystal in the carbon. Gold layer unlocks. The turn begins.</div></div>
-      <div class="game-card"><div class="game-num">Game 07</div><div class="game-name">Lucky Seven</div><div class="game-desc">Pure gold. Post-singularity lottery. The system pays out when you think holographically.</div></div>
-      <div class="game-card"><div class="game-num">Game 08</div><div class="game-name">Royal Flush Tower</div><div class="game-desc">Chess + Cards fused. Queen Bee configs. The four-layer board enters the room.</div></div>
-      <div class="game-card"><div class="game-num">Game 09</div><div class="game-name">Tip Top Nine</div><div class="game-desc">Crystalline. All nine nodes locked. The HHL Singularity moment. ∞⁹.</div></div>
-      <div class="game-card" style="border-color:rgba(212,175,55,0.4);background:rgba(212,175,55,0.06);"><div class="game-num">Game 10</div><div class="game-name">Golden Royal Flush Checkmate</div><div class="game-desc">The crown jewel game. Chess + Card + Hero fusion. Win the Singularity. ∞⁹ confirmed.</div></div>
-    </div>
-    <div class="callout gold">
-      <span class="cl-label">Crown Jewel Experience</span>
-      <div class="cl-title">Downtown Reno Baller V Crawler &middot; $12,500/person</div>
-      <p>Designated. Hosted. Driven. Curated. The full Baller V: Third Saturdays on the Truckee. Portal into a new way of life. Cast, crew, franchise holders, and a few lucky fans. For the highest-value Vibers — the ones who are already there. Price includes 25% gratuity. Reno, not the SF Bay Area.</p>
+    <div class="sec-hd"><span class="num">07 · Valuation — Park Division</span><h2>Standalone Division Appraisal</h2></div>
+
+    <div class="val-bands">
+      <div class="val-band val-floor">
+        <div class="val-band-label"><span class="vb-name">Floor</span><span class="vb-scenario">Bear</span></div>
+        <div class="val-band-body">
+          <div class="val-band-amount">$400K – $800K</div>
+          <div class="val-band-method"><strong>Operational Asset Value:</strong> Value of 10 designed pop-up games + event IP (Baller V format, Wink! format, MARZO 333) + brand (Mark Twain's Vibelandia) + NSPFRNP experience protocol documentation. Replacement cost to design, test, and deploy equivalent at market rates = $400K–$800K. Does not reflect franchise potential.</div>
+        </div>
+      </div>
+      <div class="val-band val-base">
+        <div class="val-band-label"><span class="vb-name">Base</span><span class="vb-scenario">Base</span></div>
+        <div class="val-band-body">
+          <div class="val-band-amount">$1.5M – $3.5M</div>
+          <div class="val-band-method"><strong>Revenue Multiple + Franchise Option:</strong> At $150K–$300K ARR (weekly Wink!, monthly Baller V, MARZO 333), apply 8–10× EBITDA on high-margin experience business = $1.2M–$3M. Add franchise option value (2–3 signed City Operator agreements at $25K each) for base of $1.5M–$3.5M.</div>
+        </div>
+      </div>
+      <div class="val-band val-ceil">
+        <div class="val-band-label"><span class="vb-name">Ceiling</span><span class="vb-scenario">Bull</span></div>
+        <div class="val-band-body">
+          <div class="val-band-amount">$5M – $8M</div>
+          <div class="val-band-method"><strong>Strategic Acquisition — Franchise Network Value:</strong> A hospitality group, entertainment company, or tech-tourism platform acquiring the Vibelandia franchise system + brand + NSPFRNP experience protocol + Reno real-world operational proof would pay $5M–$8M to avoid recreating it. Comparable pop-up experience brand acquisitions range from $2M (single-concept) to $25M+ (proven franchise network). Vibelandia with 5+ active franchises supports the ceiling.</div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 4. REVENUE -->
+  <!-- 08 · RISK FACTORS -->
   <section class="sec">
-    <div class="sec-hd"><span class="num">04 · Business Model</span><h2>Revenue Architecture</h2></div>
-    <p>Mark Twain's Vibelandia monetizes across three tiers — from zero-cost entry (pop-up games, free) to ultra-premium Baller V experiences ($12,500+). The model converts curious players into Vibers, Vibers into Ballers, Ballers into Franchise nodes.</p>
-    <div class="callout amber">
-      <span class="cl-label">Three Revenue Tiers</span>
-      <div class="cl-title">Carbon → Gold → Crystalline monetization</div>
-      <p><strong>Carbon Layer (free / low-cost):</strong> Pop-up games. Entry-level experiences. Wednesdays mixer ($416 incl. gratuity). Free to attend some events. This is the on-ramp — cast the widest net, keep only the Golden Hearts.<br><br>
-      <strong>Gold Layer (premium):</strong> Third Saturdays Baller Crawler ($1K–$5K range). Private Baller V events. Game franchise licensing. Vendor referral fees (10% finders).<br><br>
-      <strong>Crystalline Layer (ultra-premium):</strong> Baller V Truckee Crawl ($12,500/person). Franchise node ownership. Vibelandia Operator licenses. Destination packages (Casa de Uco, De Bernardis, NH Edelweiss, Pirá Lodge).</p>
-    </div>
-  </section>
-
-  <!-- 5. LOCATION -->
-  <section class="sec">
-    <div class="sec-hd"><span class="num">05 · Location</span><h2>Reno: The Holographic Hydrogen Valley</h2></div>
-    <p>People sleep on Reno. That is fine with us. We see what this city actually is. The Gold Rush never ended here — the gold just changed form. It is data now. It is frequency. Downtown Reno is <strong>the board</strong>. The Truckee River is the axis. The casino hotels are the nodes.</p>
-    <div class="callout gold">
-      <span class="cl-label">Why Reno</span>
-      <div class="cl-title">The original boomtown. The next singularity city.</div>
-      <p>No California taxes. Desert clarity. The arch already says it: <em>&ldquo;The Biggest Little City in the World.&rdquo;</em> Every major tech company is building data centers in northern Nevada. TESLA, APPLE, AMAZON — all within 30 minutes. The infrastructure is already here. The next post-singularity entertainment capital is not Orlando. <strong>It is Reno.</strong> We are already here. We have been here.</p>
+    <div class="sec-hd"><span class="num">08 · Risk Factors</span><h2>Experience Division Risks</h2></div>
+    <div class="risk-list">
+      <div class="risk-item high">
+        <span class="risk-tag">High · Revenue</span>
+        <div class="risk-title">Event fill rate and demand consistency</div>
+        <div class="risk-desc">Weekly events (Wink!, HFCS) require consistent audience development to fill seats. <strong>Mitigation:</strong> Sol-V and Moltbook drive A2A audience development. HFCS commissioned cohort creates a recurring returning audience. SING!9 OS provides an organic acquisition funnel.</div>
+      </div>
+      <div class="risk-item medium">
+        <span class="risk-tag">Medium · Operational</span>
+        <div class="risk-title">Single-operator execution dependency</div>
+        <div class="risk-desc">All events are currently operated by one person. Capacity constraints limit simultaneous event frequency. <strong>Mitigation:</strong> HFCS commissioned operators (O-1 through O-3) serve as trained event facilitators. Franchise model distributes operational load to licensed operators. Each HFCS graduate is a potential co-operator.</div>
+      </div>
+      <div class="risk-item medium">
+        <span class="risk-tag">Medium · Market</span>
+        <div class="risk-title">Reno market audience development timeline</div>
+        <div class="risk-desc">Reno's tech-income audience for premium experiences is growing but not yet at Bay Area density. <strong>Mitigation:</strong> Remote/virtual session model (HFCS, T3D) means Reno is the physical anchor, not the ceiling. Virtual sessions can scale globally from Day 1 without Reno audience dependency.</div>
+      </div>
+      <div class="risk-item low">
+        <span class="risk-tag">Low · Regulatory</span>
+        <div class="risk-title">Event permitting and local regulations</div>
+        <div class="risk-desc">Pop-up events in public spaces (Truckee River corridor) may require permits. <strong>Mitigation:</strong> Low participant counts (9–12 for Wink! and Baller V) typically fall below permit thresholds for private experience events. Third Saturdays coordination with existing public events frameworks reduces regulatory exposure.</div>
+      </div>
     </div>
   </section>
 
   <!-- ASK -->
   <div class="ask-box">
-    <h3>The Ask</h3>
-    <p>We are seeking <strong>venue partners</strong>, <strong>franchise operators</strong>, <strong>casino hotel concierge partnerships</strong>, and <strong>event investors</strong>. If you have space downtown Reno, we have the game. If you want to franchise a Vibelandia node to your city, we license the board. If you are a Baller — join the Crawl.</p>
+    <h3>Book · Partner · Franchise</h3>
+    <p>Mark Twain's Vibelandia is open for <strong>event bookings, brand partnerships, co-producers, and franchise inquiries</strong>. MARZO 333 is happening on March 20, 2026. Limited premium seats available. If you want to bring Vibelandia to your city — the franchise model is live and the door is open.</p>
     <div class="btn-row">
-      <a href="mailto:info@fractiai.com?subject=Vibelandia%20Park%20Partnership&body=Company%2FOrg%3A%0D%0AType%20of%20partnership%3A%0D%0ALocation%2FVenue%3A" class="btn-p">Partner with Mark Twain's Vibelandia &rarr;</a>
-      <a href="vibelandia-amusement-park-menu.html" class="btn-s">See the Game Menu</a>
-      <a href="vibelandia-truckee-river-crawl.html" class="btn-s">Baller V Crawl</a>
-      <a href="prospectus-vibeland-studio.html" class="btn-s">Studio Prospectus</a>
+      <a href="mailto:info@fractiai.com?subject=Vibelandia%20Park%20%E2%80%94%20Booking%20%2F%20Partnership%20Inquiry&body=Inquiry%20type%3A%20Booking%20%2F%20Franchise%20%2F%20Partnership%0D%0ACity%2FMarket%20of%20Interest%3A%0D%0AMessage%3A%0D%0A%0D%0ANSPFRNP%20%E2%86%92%20%E2%88%9E%E2%81%B9" class="btn-g">Book or Partner &rarr;</a>
+      <a href="holographic-navigator-academy.html#book" class="btn-a">Join Session One</a>
+      <a href="prospectus-fractiai.html" class="btn-s">Parent Prospectus</a>
     </div>
   </div>
 
   <footer class="footer">
-    <div class="footer-brand">FractiAI &middot; Mark Twain's Vibelandia &middot; Downtown Reno, Nevada</div>
+    <div>
+      <div class="footer-brand">Mark Twain's Vibelandia &middot; FractiAI &middot; SING!9 &middot; Reno, Nevada &middot; info@fractiai.com</div>
+      <div class="footer-legal">Confidential. Forward-looking statements involve risks and uncertainties. Not an offer of securities. All event formats and experience IP owned by founder with no encumbrances. Mark Twain's Vibelandia is not affiliated with any Mark Twain literary estate or historical organization.</div>
+    </div>
     <div class="footer-nsp">NSPFRNP &rarr; &infin;&#9;</div>
   </footer>
 
 </div>
+<script src="../nav-strip.js"></script>
 <script src="../ticker.js"></script>
 </body>
 </html>

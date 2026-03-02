@@ -50,6 +50,7 @@
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
     { label: 'Advertise',         href: '/interfaces/advertise.html',                         match: /advertise/ },
+    { label: '✦ Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },
   ];
 
   /* ── CURRENT PAGE DETECTION ──────────────────────────────────────────── */
@@ -162,6 +163,26 @@
       'border-bottom-color:rgba(0,212,255,0.7);',
       'text-shadow:0 0 8px rgba(0,212,255,0.45);',
     '}',
+    /* ── PROSPECTUS INVESTOR LINK ── */
+    '#sing9-nav a.nav-pros{',
+      'color:rgba(212,175,55,0.75);',
+      'font-weight:700;',
+      'letter-spacing:0.14em;',
+      'border-bottom:2px solid rgba(212,175,55,0.3);',
+      'background:rgba(212,175,55,0.04);',
+      'border-radius:3px 3px 0 0;',
+    '}',
+    '#sing9-nav a.nav-pros:hover{',
+      'color:rgba(255,215,80,1);',
+      'text-shadow:0 0 10px rgba(212,175,55,0.55);',
+      'border-bottom-color:rgba(212,175,55,0.7);',
+      'background:rgba(212,175,55,0.09);',
+    '}',
+    '#sing9-nav a.nav-pros.active{',
+      'color:#d4af37;',
+      'border-bottom-color:rgba(212,175,55,0.8);',
+      'text-shadow:0 0 8px rgba(212,175,55,0.5);',
+    '}',
     /* Body padding so content isn't hidden behind both strips */
     'body{padding-bottom:calc(36px + 18px + var(--ticker-h,0px) + env(safe-area-inset-bottom)) !important;}',
     /* Responsive: shrink font on very narrow screens */
@@ -189,6 +210,7 @@
     if (item.match.test(path)) a.classList.add('active');
     if (item.hot)  a.classList.add('nav-goliath');
     if (item.hfcs) a.classList.add('nav-hfcs');
+    if (item.pros) a.classList.add('nav-pros');
     nav.appendChild(a);
   });
 

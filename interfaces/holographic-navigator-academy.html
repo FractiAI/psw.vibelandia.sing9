@@ -860,8 +860,14 @@
       window.scrollTo(0, 0);
     }
 
-    // Auto-expand when arriving via #full link
-    if (window.location.hash === '#full') expandFull();
+    // Auto-expand when arriving via #full link — wrapped in load to guarantee DOM ready
+    if (window.location.hash === '#full') {
+      expandFull();
+    } else {
+      window.addEventListener('load', function() {
+        if (window.location.hash === '#full') expandFull();
+      });
+    }
 
     function closeFull() {
       document.getElementById('full-page').style.display  = 'none';

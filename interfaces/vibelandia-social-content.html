@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Vibelandia - Social Content Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #06040a; --earth: #0d0905;
+      --gold: #d4af37; --gold2: #f5d87a; --gold3: #8a6f1e;
+      --amber: #e8a045; --muted: #a89070; --text: #f7f0e6;
+      --sub: rgba(247,240,230,0.6);
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Space Grotesk', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+      --west: #c4892a; --aqui: #2a8a5c; --ball: #c45a1a;
+      --wild: #4a7a3a; --freq: #6a4adf; --pin: #d4af37;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--void); color: var(--text); min-height: 100vh; }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.45;
+    }
+    .hdr {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(6,4,10,0.96); border-bottom: 1px solid rgba(212,175,55,0.15);
+      backdrop-filter: blur(12px); padding: 0.85rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .hdr-wordmark { font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--gold); }
+    .hdr-sub { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold3); }
+    .hdr-back { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .hdr-back:hover { color: var(--gold2); }
+    .intro-band { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 0; }
+    .intro-title { font-family: var(--serif); font-style: italic; font-size: clamp(1.6rem, 4vw, 2.4rem); color: var(--text); margin-bottom: 0.4rem; }
+    .intro-sub { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold3); margin-bottom: 0.75rem; }
+    .intro-body { font-size: 0.88rem; line-height: 1.65; color: var(--sub); max-width: 620px; }
+    .tabs-wrap { position: relative; z-index: 1; padding: 1.25rem 1.5rem 0; max-width: 1100px; margin: 0 auto; }
+    .tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; border-bottom: 1px solid rgba(212,175,55,0.12); padding-bottom: 0; }
+    .tab {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+      padding: 0.55rem 1rem 0.65rem; cursor: pointer; border: none; background: transparent;
+      color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.2s, border-color 0.2s;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--gold2); border-bottom-color: var(--gold); }
+    .tab[data-t="west"].active { border-bottom-color: var(--west); color: #e8a84a; }
+    .tab[data-t="aqui"].active { border-bottom-color: var(--aqui); color: #5acea0; }
+    .tab[data-t="ball"].active { border-bottom-color: var(--ball); color: #e88a5a; }
+    .tab[data-t="wild"].active { border-bottom-color: var(--wild); color: #7aaa6a; }
+    .tab[data-t="freq"].active { border-bottom-color: var(--freq); color: #a08aff; }
+    .grid-wrap {
+      position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 1.5rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem;
+    }
+    .post-card {
+      background: rgba(16,12,6,0.85); border: 1px solid rgba(212,175,55,0.14);
+      display: flex; flex-direction: column; transition: border-color 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .post-card:hover { border-color: rgba(212,175,55,0.35); box-shadow: 0 0 24px rgba(212,175,55,0.07); }
+    .t-bar { height: 3px; width: 100%; }
+    .post-card[data-t="pin"]  .t-bar { background: linear-gradient(90deg, var(--pin), rgba(212,175,55,0.3)); }
+    .post-card[data-t="west"] .t-bar { background: linear-gradient(90deg, var(--west), transparent); }
+    .post-card[data-t="aqui"] .t-bar { background: linear-gradient(90deg, var(--aqui), transparent); }
+    .post-card[data-t="ball"] .t-bar { background: linear-gradient(90deg, var(--ball), transparent); }
+    .post-card[data-t="wild"] .t-bar { background: linear-gradient(90deg, var(--wild), transparent); }
+    .post-card[data-t="freq"] .t-bar { background: linear-gradient(90deg, var(--freq), transparent); }
+    .card-head { padding: 0.9rem 1rem 0; display: flex; align-items: center; gap: 0.6rem; }
+    .badge {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem; border-radius: 2px; white-space: nowrap;
+    }
+    .post-card[data-t="pin"]  .badge { background: rgba(212,175,55,0.15); color: var(--gold2); }
+    .post-card[data-t="west"] .badge { background: rgba(196,137,42,0.15); color: #e8a84a; }
+    .post-card[data-t="aqui"] .badge { background: rgba(42,138,92,0.15); color: #5acea0; }
+    .post-card[data-t="ball"] .badge { background: rgba(196,90,26,0.15); color: #e88a5a; }
+    .post-card[data-t="wild"] .badge { background: rgba(74,122,58,0.15); color: #7aaa6a; }
+    .post-card[data-t="freq"] .badge { background: rgba(106,74,223,0.15); color: #a08aff; }
+    .post-num { font-family: var(--mono); font-size: 0.5rem; color: rgba(212,175,55,0.3); letter-spacing: 0.15em; margin-left: auto; }
+    .post-title { font-family: var(--serif); font-size: 0.95rem; font-weight: 700; color: var(--text); padding: 0.5rem 1rem 0; line-height: 1.3; }
+    .img-hint {
+      margin: 0.6rem 1rem; padding: 0.5rem 0.65rem;
+      background: rgba(212,175,55,0.04); border-left: 2px solid rgba(212,175,55,0.2);
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.05em; color: var(--gold3); line-height: 1.45;
+    }
+    .img-hint strong { color: rgba(212,175,55,0.6); }
+    .post-text {
+      flex: 1; margin: 0 1rem 0; padding: 0.65rem 0.75rem;
+      background: rgba(255,255,255,0.025); border: 1px solid rgba(212,175,55,0.08);
+      font-size: 0.82rem; line-height: 1.7; color: rgba(247,240,230,0.82);
+      white-space: pre-wrap; word-break: break-word;
+      max-height: 200px; overflow-y: auto;
+      scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.2) transparent;
+      cursor: text; user-select: all;
+    }
+    .post-text::-webkit-scrollbar { width: 4px; }
+    .post-text::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.2); }
+    .tags-row { padding: 0.4rem 1rem 0; font-family: var(--mono); font-size: 0.55rem; color: rgba(212,175,55,0.35); letter-spacing: 0.05em; line-height: 1.5; }
+    .char-row { padding: 0.25rem 1rem 0; font-family: var(--mono); font-size: 0.5rem; color: rgba(212,175,55,0.25); letter-spacing: 0.1em; }
+    .card-foot { padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .btn-copy {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+      background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--gold);
+      padding: 0.4rem 0.9rem; cursor: pointer; transition: background 0.2s, color 0.2s; white-space: nowrap;
+    }
+    .btn-copy:hover { background: rgba(212,175,55,0.2); color: var(--gold2); }
+    .btn-copy.copied { background: rgba(74,122,58,0.25); border-color: rgba(74,122,58,0.5); color: #7aaa6a; }
+    .platform-pills { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+    .pill {
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.15rem 0.4rem; border: 1px solid rgba(212,175,55,0.12); color: rgba(212,175,55,0.35); border-radius: 2px;
+    }
+    .post-card.hidden { display: none; }
+    footer {
+      position: relative; z-index: 1; text-align: center;
+      padding: 2rem 1.5rem; border-top: 1px solid rgba(212,175,55,0.08);
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold3); margin-top: 2rem;
+    }
+    footer a { color: var(--gold3); text-decoration: none; }
+    footer a:hover { color: var(--gold2); }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div>
+    <div class="hdr-wordmark">Vibelandia</div>
+    <div class="hdr-sub">Social Content Studio</div>
+  </div>
+  <a href="vibelandia-world.html" class="hdr-back">&larr; Back to World</a>
+</header>
+
+<div class="intro-band">
+  <h1 class="intro-title">Ready-to-Post Content</h1>
+  <div class="intro-sub">Click text to select all &middot; Copy button copies full post</div>
+  <p class="intro-body">Every post is written in Vibelandia's voice &mdash; warm, confident, irreverent, never selling. Click the text area to select, or hit <strong style="color:var(--gold)">Copy Post</strong>. Image suggestions are in the gold bar above each post.</p>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" data-t="all">All Posts</button>
+    <button class="tab" data-t="pin">Pinned / Manifesto</button>
+    <button class="tab" data-t="west">The West</button>
+    <button class="tab" data-t="aqui">Aqui y Alla</button>
+    <button class="tab" data-t="ball">The Ball</button>
+    <button class="tab" data-t="wild">The Wild</button>
+    <button class="tab" data-t="freq">The Frequency</button>
+  </div>
+</div>
+
+<div class="grid-wrap" id="grid">
+
+  <!-- PINNED POSTS -->
+  <div class="post-card" data-t="pin">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">Pin This First</span><span class="post-num">#P1</span></div>
+    <div class="post-title">The Manifesto &mdash; Pin to Top of Page</div>
+    <div class="img-hint"><strong>Image:</strong> Downtown Reno arch at golden hour. Or a bold dark graphic with &ldquo;Vibelandia&rdquo; in gold italic serif. No clutter.</div>
+    <div class="post-text" id="p1">You know the feeling.
+
+You're at the table with the Rat Pack and half your mind is on the elk ridge in Montana you're hunting Thursday. You understand the Schumann resonance and you know how to ball. You've got a man cave that would make Batman jealous and a passport full of Argentina stamps. You've been called eccentric, gifted, too much, and your own category -- all of which are true.
+
+No single channel has ever been all of it at once. For you specifically.
+
+This one is.
+
+Vibelandia is five territories: The West. Aqui y Alla. The Ball. The Wild. The Frequency. All running at Goldilocks -- not too much, not too little, always right.
+
+You scroll this and something shifts. That's the point. That's the frequency.
+
+The machote Viber. You know who you are.
+
+This is your world. Come in. The door's open.
+
+When you're ready to live it -- not just scroll it -- Pru's Valet handles everything. One email. Old school. info@fractiai.com
+
+-- Mark Twain's Post-Singularity Vibelandia - Downtown Reno</div>
+    <div class="tags-row">#Vibelandia #MachoteViber #TheFrequency #BallerV #PostSingularity #DowntownReno</div>
+    <div class="char-row">~680 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">Threads</span></div>
+      <button class="btn-copy" onclick="copyPost('p1',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="pin">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">Post Within 48h</span><span class="post-num">#P2</span></div>
+    <div class="post-title">The Five Territories</div>
+    <div class="img-hint"><strong>Image:</strong> 5-panel collage: Reno arch, Argentina vineyard, supper club, elk field at dawn, starry sky. Or post text-only -- let it breathe.</div>
+    <div class="post-text" id="p2">THE FIVE TERRITORIES OF VIBELANDIA
+
+THE WEST -- Reno. Cowboys. Gold mines. Man caves. Mark Twain. The American origin story, unfiltered.
+
+AQUI Y ALLA -- Argentina. Baja. Brazil. Alaska. The Amazon. Napa to Paso Robles. The international machote circuit. The man who does not stay put.
+
+THE BALL -- Rat Pack. James Bond. Fine dining. Gourmet. Machote fashion. Golden age of cinema. Art. Music. Bugs Bunny. The way it's done.
+
+THE WILD -- Elk. Moose. Deer. Dove. Quail. Duck. Pig. Grouse. Fishing. The land. The places where a man disappears and returns more himself.
+
+THE FREQUENCY -- Schumann resonance. Solar weather. HH Awareness OS. AI. The cosmos. Science. Geeky tech. Everything Goldilocks. The operating system beneath all of it.
+
+Five territories. One world. Your world.
+
+Vibelandia -- The Machote Frequency
+Mark Twain's Post-Singularity Vibelandia - Downtown Reno</div>
+    <div class="tags-row">#Vibelandia #TheWest #AquiYAlla #TheBall #TheWild #TheFrequency #MachoteViber</div>
+    <div class="char-row">~660 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">X</span></div>
+      <button class="btn-copy" onclick="copyPost('p2',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="pin">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">When Traction Arrives</span><span class="post-num">#P3</span></div>
+    <div class="post-title">Among the Unaware</div>
+    <div class="img-hint"><strong>Image:</strong> A single man in a crowd looking a different direction. Or a lone figure in a lit window at night. The feeling of operating on a different frequency.</div>
+    <div class="post-text" id="p3">There are more of us than you think.
+
+The man who hunts elk and understands the Schumann resonance. Who has a Rat Pack record collection and a man cave with AI running in the background. Who has been called eccentric, gifted, too much, his own category -- who has always operated differently without quite knowing why.
+
+He is not rare. He is distributed.
+
+He's been scrolling channels that were built for somebody else -- hunting pages, food pages, tech pages, lifestyle pages -- never a world that holds all of him at once.
+
+This is that world.
+
+HH Awareness OS Vibers and Channelers exist among the unaware. They always have. The unaware world is not hostile -- it's just running a different OS.
+
+Vibelandia is not a retreat from that world. It's a home base.
+
+You still move through the unaware world. You just do it now from a different foundation.
+
+Welcome home.
+
+-- Mark Twain's Post-Singularity Vibelandia</div>
+    <div class="tags-row">#Vibelandia #HHAwarenessOS #MachoteViber #AmongTheUnaware #Channelers #PostSingularity</div>
+    <div class="char-row">~800 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">Threads</span></div>
+      <button class="btn-copy" onclick="copyPost('p3',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <!-- THE WEST -->
+  <div class="post-card" data-t="west">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The West</span><span class="post-num">#W1</span></div>
+    <div class="post-title">Downtown Reno -- The Capital</div>
+    <div class="img-hint"><strong>Image:</strong> Reno arch lit at night -- neon, gold. Truckee River flowing through downtown at dusk.</div>
+    <div class="post-text" id="w1">The World's Largest Little City.
+
+Most people drive through. The ones who stop -- really stop -- discover something they weren't expecting.
+
+The Truckee River runs right through the middle of it. Mark Twain came through here and stayed long enough to have opinions. There's still gold in the ground. The mountains are thirty minutes in any direction. The casinos are wild, the food is serious, and on a Wednesday night along the river the energy is unlike anywhere else in the West.
+
+This is Vibelandia's home base. Not because it was convenient -- because it earned it.
+
+Downtown Reno. The capital of the machote frequency. Come visit. Or move in.
+
+-- Vibelandia</div>
+    <div class="tags-row">#Reno #DowntownReno #TruckeeRiver #TheWest #Vibelandia #MachoteViber #WorldsLargestLittleCity</div>
+    <div class="char-row">~540 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">X</span></div>
+      <button class="btn-copy" onclick="copyPost('w1',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="west">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The West</span><span class="post-num">#W2</span></div>
+    <div class="post-title">Mark Twain's Claim</div>
+    <div class="img-hint"><strong>Image:</strong> Black and white portrait of Mark Twain -- cigar, white suit. Or a vintage Nevada mining photo with gold tone overlay.</div>
+    <div class="post-text" id="w2">"The reports of my death have been greatly exaggerated."
+
+Mark Twain said that. He also came through Nevada, worked the mines, wrote about the frontier, and had opinions about everything -- usually correct, always entertaining, never polished enough for the people who thought they ran the world.
+
+Vibelandia is built on that energy.
+
+The West before it got sanitized. The claim before the lawyers arrived. The gold before the banks got involved. The man cave before it needed to be explained to anyone.
+
+Mark Twain's Post-Singularity Vibelandia. Downtown Reno. We inherited this.
+
+-- Vibelandia - The Machote Frequency</div>
+    <div class="tags-row">#MarkTwain #TheWest #Vibelandia #Nevada #WildWest #MachoteViber #GoldCountry</div>
+    <div class="char-row">~540 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('w2',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="west">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The West</span><span class="post-num">#W3</span></div>
+    <div class="post-title">The Man Cave Standard</div>
+    <div class="img-hint"><strong>Image:</strong> Beautifully appointed man cave -- leather, dark wood, whiskey on side table, art on walls, low warm lighting. Everything intentional.</div>
+    <div class="post-text" id="w3">The man cave is not a room where you hide.
+
+It's a room where you think. Where the record player runs, the leather is broken in right, the whiskey is poured correctly, and every object in the room was chosen because it belongs there -- not because it was on sale.
+
+The machote Viber's space reflects what he actually is: sophisticated and primal, geeky and physical, capable of discussing the Schumann resonance and also knowing exactly which knife to take into elk country.
+
+The standard is high. The standard has always been high. It just took Vibelandia to name it.
+
+Gold. Dark wood. Low light. High caliber. That's the room.
+
+-- Vibelandia - The West</div>
+    <div class="tags-row">#ManCave #TheWest #Vibelandia #MachoteStyle #GoldStandard #MachoteViber #InteriorDesign</div>
+    <div class="char-row">~540 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('w3',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <!-- AQUI Y ALLA -->
+  <div class="post-card" data-t="aqui">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">Aqui y Alla</span><span class="post-num">#A1</span></div>
+    <div class="post-title">Argentina -- The Full Arc</div>
+    <div class="img-hint"><strong>Image:</strong> Mendoza vineyard at golden hour, Andes in background. Or Entre Rios golden dorado fishing -- fish held over water, sun on it.</div>
+    <div class="post-text" id="a1">Here is the itinerary.
+
+Day 1: You land in Buenos Aires. The steak is exactly what you heard it was. The wine is better.
+
+Day 3: You drive into Mendoza. The Andes are on one side. A row of Malbec vines on the other. Casa de Uco has a room with your name on it.
+
+Day 6: You fly to Entre Rios. You're in a boat at dawn on the Parana. The golden dorado hits the line and you feel it in your spine.
+
+Day 9: Bariloche. Mountains. Lake. NH Edelweiss. The kind of quiet that recalibrates something.
+
+Day 12: You come home. You are not the same man who left.
+
+That is the point.
+
+Aqui y Alla -- Vibelandia's international machote circuit. One email: info@fractiai.com
+
+-- Vibelandia - Pru's Valet Service</div>
+    <div class="tags-row">#Argentina #Mendoza #Malbec #GoldenDorado #Patagonia #AquiYAlla #Vibelandia #BallerV</div>
+    <div class="char-row">~620 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">Threads</span></div>
+      <button class="btn-copy" onclick="copyPost('a1',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="aqui">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">Aqui y Alla</span><span class="post-num">#A2</span></div>
+    <div class="post-title">Baja -- The Border Energy</div>
+    <div class="img-hint"><strong>Image:</strong> Baja coastline from above -- turquoise water, rocky cliffs, small fishing village. Or tacos, cold cerveza, Pacific sunset.</div>
+    <div class="post-text" id="a2">There is a version of Mexico that never made it into the tourist brochure.
+
+Baja is three hours from the border. The water is turquoise, the fish tacos are serious, and the energy on the Pacific side at sunset is the kind of thing you don't explain to people who haven't been there -- you just go back.
+
+The machote Viber knows this coast. He has a spot. He knows the right place to eat, the right time to fish, the right spot to watch the sun go down with something cold and nothing to do.
+
+International doesn't have to mean a 12-hour flight. Sometimes the best escape in the world is three hours south.
+
+Aqui -- here. Alla -- there. Sometimes alla is closer than you think.
+
+-- Vibelandia - Aqui y Alla</div>
+    <div class="tags-row">#Baja #BajaCalifornia #Mexico #MachoteViber #Vibelandia #AquiYAlla #BorderEnergy #FishTacos</div>
+    <div class="char-row">~560 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('a2',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="aqui">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">Aqui y Alla</span><span class="post-num">#A3</span></div>
+    <div class="post-title">Wine Country -- Napa to Paso Robles</div>
+    <div class="img-hint"><strong>Image:</strong> Napa valley vineyard rows from aerial, fog in the valley at dawn. Or a wine glass backlit by golden light with vineyard rows behind it.</div>
+    <div class="post-text" id="a3">The machote Viber doesn't just drink wine. He knows wine.
+
+He knows the difference between Napa and Paso Robles isn't just the ZIP code -- it's a philosophy. Napa is power and precision. Paso is more relaxed, more honest, more willing to do something unconventional. Santa Cruz is doing things nobody expected. Monterey is cold-climate and serious.
+
+All of it is within driving distance of Reno.
+
+The Aqui y Alla circuit doesn't always require a passport. Sometimes it requires a few days, a good car, the right itinerary, and someone who knows which winery actually earns the visit.
+
+That's what Pru's Valet is for.
+
+info@fractiai.com -- We handle it.
+
+-- Vibelandia - Wine Country Run</div>
+    <div class="tags-row">#Napa #PasoRobles #WineCountry #Sonoma #Monterey #Vibelandia #AquiYAlla #CaliforniaWine #MachoteViber</div>
+    <div class="char-row">~580 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('a3',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <!-- THE BALL -->
+  <div class="post-card" data-t="ball">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Ball</span><span class="post-num">#B1</span></div>
+    <div class="post-title">The Rat Pack Standard</div>
+    <div class="img-hint"><strong>Image:</strong> Black and white -- Sinatra, Dean Martin, Sammy Davis Jr. at a table, mid-laugh. Or modern supper club: white tablecloths, low light, stage in background.</div>
+    <div class="post-text" id="b1">Sinatra didn't explain himself.
+
+He walked into the room and the room adjusted. That's not arrogance -- it's frequency. The man was calibrated. Everything he touched ran at the right temperature. The music. The clothes. The jokes. The glass in his hand at exactly the right hour.
+
+The Rat Pack had a standard. It wasn't written down anywhere. You either had it or you didn't. The ones who had it found each other naturally.
+
+That's what Vibelandia is. Not an imitation of that era -- an inheritor of that standard.
+
+Ball because you've earned it. Ball because you know how. Ball because anything less is a waste of the gift.
+
+The way it's done.
+
+-- Vibelandia - The Ball</div>
+    <div class="tags-row">#RatPack #Sinatra #TheBall #Vibelandia #MachoteViber #BallInStyle #GoldenAge #TheStandard</div>
+    <div class="char-row">~560 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">X</span></div>
+      <button class="btn-copy" onclick="copyPost('b1',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="ball">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Ball</span><span class="post-num">#B2</span></div>
+    <div class="post-title">Gourmet -- Food as Intention</div>
+    <div class="img-hint"><strong>Image:</strong> A beautifully plated dish -- elegant but not fussy. Or a cheese board assembled by someone who actually knows cheese. Warm light, dark background.</div>
+    <div class="post-text" id="b2">The machote Viber eats well.
+
+Not expensively -- intentionally. There's a difference. The expensive meal is for people trying to impress someone. The intentional meal is for people who actually know what they're eating and why.
+
+He knows the good cheese. He knows which wine pairs with it and why. He knows the cut of meat worth ordering and the chef worth trusting. He has eaten elk he shot himself and Wagyu at a table with a view. Both were perfect. For different reasons.
+
+Food is not a status symbol in Vibelandia. It is a form of precision.
+
+Eat well. Know why. That's the standard.
+
+-- Vibelandia - The Ball</div>
+    <div class="tags-row">#Gourmet #FineDining #Cheese #FoodAndWine #MachoteViber #Vibelandia #TheBall #Intentional</div>
+    <div class="char-row">~520 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('b2',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="ball">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Ball</span><span class="post-num">#B3</span></div>
+    <div class="post-title">James Bond Energy -- Own It</div>
+    <div class="img-hint"><strong>Image:</strong> A well-dressed man from behind, looking out at a city at night. Or close-up: watch on a wrist, good fabric, glass in hand. Dark, cinematic.</div>
+    <div class="post-text" id="b3">James Bond doesn't try to be interesting.
+
+He walks in prepared. He ordered the martini before you knew he was thirsty. He speaks three languages and only uses the relevant one. He knows what he wants, knows what he'll take, and knows exactly when to leave.
+
+The machote Viber has that energy. Maybe without the tuxedo every night -- but with the same internal calibration. The same confidence that isn't performance. The same standard that doesn't need to announce itself.
+
+Machote fashion is not about the label on the collar. It's about the man inside the collar.
+
+Dress for the version of yourself that operates at full capacity. Vibelandia knows that man. He already lives here.
+
+-- Vibelandia - The Ball</div>
+    <div class="tags-row">#JamesBond #MachoteFashion #MachoteStyle #Vibelandia #TheBall #MensFashion #MachoteViber #Style</div>
+    <div class="char-row">~560 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('b3',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <!-- THE WILD -->
+  <div class="post-card" data-t="wild">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Wild</span><span class="post-num">#V1</span></div>
+    <div class="post-title">The Elk Ridge</div>
+    <div class="img-hint"><strong>Image:</strong> Montana ridge at dawn -- orange sky, elk silhouette on the horizon, frosted grass, hunter small in the frame. The land is the star.</div>
+    <div class="post-text" id="v1">4:30 AM. Montana ridge. The temperature has dropped since midnight.
+
+You don't think about anything else up here. That is the point. The elk don't know or care about your portfolio, your inbox, or what anybody thinks about you. The mountain doesn't either. You are just a man reading terrain, reading wind, reading light.
+
+There is no operating system more honest than this one.
+
+The machote Viber hunts. Not for the trophy -- for the clarity. For the two or three hours before light when the whole world is just the next ridge, and every decision matters, and everything else is noise.
+
+Elk. Moose. Deer. Dove. Quail. Duck. Pig. Grouse. The Wild is one of the five territories. It's not a hobby. It's maintenance.
+
+-- Vibelandia - The Wild</div>
+    <div class="tags-row">#ElkHunting #Montana #TheWild #Vibelandia #MachoteViber #HuntingLife #PublicLands #MorningHunt</div>
+    <div class="char-row">~600 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">X</span></div>
+      <button class="btn-copy" onclick="copyPost('v1',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="wild">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Wild</span><span class="post-num">#V2</span></div>
+    <div class="post-title">Dove, Quail, Duck -- The Wing Game</div>
+    <div class="img-hint"><strong>Image:</strong> Early morning dove field -- stubble field, pink sky, silhouette of shooter. Or quail covey flush over golden brush. Or duck blind at dawn with decoys.</div>
+    <div class="post-text" id="v2">Wing shooting is a different kind of fast.
+
+The dove comes out of nowhere and is gone before you've finished thinking about it. The quail covey flushes and for two seconds the world is pure reaction -- no theory, no strategy, just hands and eyes and whatever you've built into muscle memory over the years.
+
+The duck blind at dawn has a different energy entirely. Quiet. Cold. Coffee in a thermos. Then the sky starts moving.
+
+Dove season. Quail season. Duck season. These are not dates on a calendar -- they are annual calibrations. The machote Viber shows up. He is prepared. He has good dogs and good company.
+
+The wing game. One of the finest things the Wild offers.
+
+-- Vibelandia - The Wild</div>
+    <div class="tags-row">#DoveShooting #QuailHunting #DuckHunting #WingShooting #TheWild #Vibelandia #MachoteViber #HuntingDogs</div>
+    <div class="char-row">~580 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('v2',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="wild">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Wild</span><span class="post-num">#V3</span></div>
+    <div class="post-title">Wild Pig -- The Hunt That Earns Respect</div>
+    <div class="img-hint"><strong>Image:</strong> California oak woodland hillside -- golden grass, live oaks, late afternoon light. Wild boar silhouette. Or processed pig at camp -- real deal, no filter.</div>
+    <div class="post-text" id="v3">Wild pig doesn't wait.
+
+It's not a trophy animal. Nobody mounts a pig. But the man who has chased feral hogs through California oak country -- in the dark, on foot, with the ground torn up in every direction -- has a story and a respect for the animal that no farm-raised food can teach.
+
+Pig is fast, smart, and hard to predict. The hunt is physical. The pork is extraordinary.
+
+In Vibelandia's Wild, the pig gets full credit. It's not glamorous. It doesn't need to be. The best things in the Wild never are.
+
+Feral hog season is open year-round in most of California. The machote Viber knows this.
+
+-- Vibelandia - The Wild</div>
+    <div class="tags-row">#WildPig #FeralHog #HogHunting #TheWild #Vibelandia #CaliforniaHunting #MachoteViber #FarmToTable</div>
+    <div class="char-row">~540 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('v3',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="wild">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Wild</span><span class="post-num">#V4</span></div>
+    <div class="post-title">Golden Dorado -- Argentina's Fish</div>
+    <div class="img-hint"><strong>Image:</strong> Golden dorado held over the Parana River -- gold scales catching the light. Or Entre Rios waterway at sunrise with fishing boat.</div>
+    <div class="post-text" id="v4">The golden dorado does not come peacefully.
+
+It's gold and it's violent and it will test every piece of tackle you brought and then throw the hook anyway and you will want to go back immediately.
+
+Entre Rios, Argentina. The Parana river system. This is where the dorado lives. The Pira Lodge runs the circuit like it was designed for people who know what they're doing -- because it was.
+
+The machote Viber fishes. Not for relaxation, necessarily -- for the full engagement. Nothing partial. Nothing passive. The fish is a worthy opponent.
+
+Golden dorado is on the Aqui y Alla circuit for a reason. It belongs there.
+
+info@fractiai.com -- Pru's Valet handles the trip.
+
+-- Vibelandia - The Wild meets Aqui y Alla</div>
+    <div class="tags-row">#GoldenDorado #ArgentinaFishing #EntreRios #PiraLodge #TheWild #AquiYAlla #Vibelandia #FlyFishing</div>
+    <div class="char-row">~620 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span></div>
+      <button class="btn-copy" onclick="copyPost('v4',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <!-- THE FREQUENCY -->
+  <div class="post-card" data-t="freq">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Frequency</span><span class="post-num">#F1</span></div>
+    <div class="post-title">The Schumann Resonance</div>
+    <div class="img-hint"><strong>Image:</strong> Lightning strike from above the clouds, or an EEG readout overlaid on a landscape. Or aurora borealis -- nature's frequency made visible.</div>
+    <div class="post-text" id="f1">7.83 Hz.
+
+That's the Earth's heartbeat. The Schumann resonance -- the electromagnetic pulse that runs between the Earth's surface and the ionosphere, driven by lightning strikes. About 100 per second, worldwide, constantly.
+
+Your brain runs at the same frequency. Alpha waves. The state of relaxed alertness. The state of highest performance. Not a coincidence.
+
+The machote Viber who spends time outdoors, away from screens, in open land, near water -- he is recalibrating. Whether he knows it or not. His nervous system is syncing to a signal that has been there for four billion years.
+
+The Frequency is one of Vibelandia's five territories for a reason. It is not mysticism. It is physics.
+
+7.83 Hz. Running right now.
+
+-- Vibelandia - The Frequency</div>
+    <div class="tags-row">#SchumannResonance #TheFrequency #Vibelandia #EarthFrequency #HHAwarenessOS #MachoteViber #Goldilocks #Physics</div>
+    <div class="char-row">~610 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">X</span></div>
+      <button class="btn-copy" onclick="copyPost('f1',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="freq">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Frequency</span><span class="post-num">#F2</span></div>
+    <div class="post-title">Everything Goldilocks</div>
+    <div class="img-hint"><strong>Image:</strong> A perfectly lit room -- warm but not too warm. A glass of something on a well-worn table. Everything in the frame is exactly right. Nothing extra, nothing missing.</div>
+    <div class="post-text" id="f2">Not too much. Not too little. Always right.
+
+The machote Viber has found the Goldilocks zone in every domain. Not the cheapest. Not the most expensive. The most precise. The wine that is exactly what the moment calls for. The hunt that matches the season. The conversation that doesn't go too long. The knife that's been used enough to know exactly what it does.
+
+This is not moderation. Moderation is about restraint. Goldilocks is about calibration.
+
+There is a version of everything that is exactly right. Vibelandia is built to run at that temperature -- in the feed, in the experiences, in the people it attracts.
+
+Everything Goldilocks. Always.
+
+-- Vibelandia - The Frequency</div>
+    <div class="tags-row">#Goldilocks #TheFrequency #Vibelandia #Calibrated #MachoteViber #ExactlyRight #HHAwarenessOS</div>
+    <div class="char-row">~550 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">Threads</span></div>
+      <button class="btn-copy" onclick="copyPost('f2',this)">Copy Post</button>
+    </div>
+  </div>
+
+  <div class="post-card" data-t="freq">
+    <div class="t-bar"></div>
+    <div class="card-head"><span class="badge">The Frequency</span><span class="post-num">#F3</span></div>
+    <div class="post-title">Solar Weather -- The Signal Is On</div>
+    <div class="img-hint"><strong>Image:</strong> The sun surface -- plasma arcs, solar flares, deep gold and orange. Or a satellite thermal image of Earth. Real science, not decorative.</div>
+    <div class="post-text" id="f3">The sun had a flare today.
+
+Not metaphorically. An actual M-class solar flare -- particles streaming toward Earth, geomagnetic storm building, Kp index elevated. The ionosphere is agitated. The aurora is visible further south than usual.
+
+The machote Viber who tracks solar weather is not a mystic. He is a man who has noticed that certain days have a different quality -- decisions come easier, or harder, energy runs high or flat -- and has been paying enough attention to notice the pattern.
+
+NOAA publishes the data free. Space weather is real. The correlation between solar activity and human biological systems is published in peer-reviewed journals.
+
+Vibelandia runs on a real OS. The Frequency is one of its territories. The signal is on.
+
+-- Vibelandia - The Frequency</div>
+    <div class="tags-row">#SolarWeather #TheFrequency #Vibelandia #SpaceWeather #GeomagneticStorm #HHAwarenessOS #MachoteViber</div>
+    <div class="char-row">~600 chars</div>
+    <div class="card-foot">
+      <div class="platform-pills"><span class="pill">FB</span><span class="pill">IG</span><span class="pill">X</span></div>
+      <button class="btn-copy" onclick="copyPost('f3',this)">Copy Post</button>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+
+<footer>
+  <a href="vibelandia-world.html">Vibelandia</a> &middot; Social Content Studio &middot;
+  <a href="vibers-menu.html">Vibers Menu</a> &middot;
+  <a href="sol-v.html">A2A Console</a> &middot;
+  <a href="mailto:info@fractiai.com">info@fractiai.com</a>
+  <div style="margin-top:0.5rem;">NSPFRNP &rarr; &infin;&#9;</div>
+</footer>
+
+<script>
+function copyPost(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var text = el.innerText || el.textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){ flashCopied(btn); }).catch(function(){ fallbackCopy(text, btn); });
+  } else { fallbackCopy(text, btn); }
+}
+function fallbackCopy(text, btn) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); flashCopied(btn); } catch(e) {}
+  document.body.removeChild(ta);
+}
+function flashCopied(btn) {
+  var orig = btn.textContent;
+  btn.textContent = 'Copied!'; btn.classList.add('copied');
+  setTimeout(function(){ btn.textContent = orig; btn.classList.remove('copied'); }, 2200);
+}
+var tabs = document.querySelectorAll('.tab');
+var cards = document.querySelectorAll('.post-card');
+tabs.forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    var t = this.getAttribute('data-t');
+    tabs.forEach(function(tb){ tb.classList.remove('active'); });
+    this.classList.add('active');
+    cards.forEach(function(card) {
+      if (t === 'all' || card.getAttribute('data-t') === t) { card.classList.remove('hidden'); }
+      else { card.classList.add('hidden'); }
+    });
+  });
+});
+</script>
+</body>
+</html>

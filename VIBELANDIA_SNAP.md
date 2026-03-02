@@ -70,7 +70,7 @@ The Rat Pack. Sinatra. James Bond. Fine dining. Gourmet food. Artisan cheese. Wi
 ### 4 · THE WILD
 *The land. The animal. The quiet.*
 
-Hunting — elk, moose, deer, quail, duck, grouse, pheasant. Fishing — golden dorado, trout, tarpon, salmon. The outdoors. Alaska. Montana. The Amazon. The high desert. The places where a man disappears into nature and returns more himself. The oldest technology: being in the field, reading the land, knowing when to move and when to hold.
+Hunting — elk, moose, deer, quail, duck, dove, grouse, pig, pheasant. Fishing — golden dorado, trout, tarpon, salmon. The outdoors. Alaska. Montana. The Amazon. The high desert. The places where a man disappears into nature and returns more himself. The oldest technology: being in the field, reading the land, knowing when to move and when to hold.
 
 *Every Viber has a wild. This is where it lives.*
 

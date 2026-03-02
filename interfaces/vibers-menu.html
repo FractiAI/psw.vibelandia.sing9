@@ -4,70 +4,220 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Mark Twain's Post-Singularity Vibelandia · Pru's Valet Service | Human Vibers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     // Set lang attribute early so browsers/screen readers get the right language
     (function(){var l=(navigator.languages&&navigator.languages[0])||navigator.language||'en';if(/^es\b/i.test(l)){document.documentElement.lang='es';}})();
   </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── GRAIN OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 9000;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    /* ── VIGNETTE ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 8999;
+      pointer-events: none;
+      background: radial-gradient(ellipse 110% 110% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%);
+    }
+
+    /* ── AMBIENT PARTICLE CANVAS ── */
+    #vibe-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
       min-height: 100vh;
       padding: 1.5rem;
       padding-top: calc(1rem + env(safe-area-inset-top));
       color: #f5f5f5;
-      background: linear-gradient(180deg, #0f0c08 0%, #0a0806 50%, #0d0a06 100%);
+      background:
+        radial-gradient(ellipse 70% 40% at 50% 90%, rgba(212,175,55,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 90% 50% at 20% 20%, rgba(180,100,20,0.06) 0%, transparent 50%),
+        linear-gradient(180deg, #0f0c08 0%, #0a0806 50%, #0d0a06 100%);
+      position: relative;
+      z-index: 1;
     }
-    .wrap { max-width: 640px; margin: 0 auto; }
+    /* ── ENTRY CINEMATIC ── */
+    #entry-vibe {
+      position: fixed; inset: 0; z-index: 9998;
+      background: #000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem;
+      transition: opacity 1s ease;
+    }
+    #entry-vibe.out { opacity: 0; pointer-events: none; }
+
+    #gold-sweep {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.15) 50%, transparent 100%);
+      transform: translateX(-100%);
+      animation: sweep 1.4s ease 0.3s forwards;
+    }
+    @keyframes sweep { to { transform: translateX(100%); } }
+
+    .ev-line {
+      font-family: 'Space Grotesk', system-ui;
+      font-size: clamp(0.55rem, 1.6vw, 0.7rem);
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.6);
+      opacity: 0;
+      position: relative; z-index: 1;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(6px);
+    }
+    .ev-line.show { opacity: 1; transform: translateY(0); }
+    .ev-wordmark {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(3rem, 9vw, 6rem);
+      font-style: italic;
+      font-weight: 400;
+      color: #fff;
+      opacity: 0; position: relative; z-index: 1;
+      transform: scale(0.93);
+      transition: opacity 1s ease, transform 1s ease;
+      text-shadow: 0 0 80px rgba(212,175,55,0.35);
+      letter-spacing: 0.02em;
+    }
+    .ev-wordmark.show { opacity: 1; transform: scale(1); }
+    .ev-tag {
+      font-family: 'Space Grotesk', system-ui;
+      font-size: clamp(0.55rem, 1.4vw, 0.68rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.45);
+      opacity: 0; position: relative; z-index: 1;
+      transition: opacity 0.7s ease 0.15s;
+    }
+    .ev-tag.show { opacity: 1; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal-card {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal-card.revealed { opacity: 1; transform: translateY(0); }
+
+    .wrap { max-width: 640px; margin: 0 auto; position: relative; z-index: 1; }
+
     .letterhead {
       text-align: center;
       margin-bottom: 1.5rem;
-      padding: 1.25rem 1rem;
-      border: 2px solid rgba(232, 121, 249, 0.5);
-      background: rgba(10, 6, 8, 0.9);
-      border-radius: 6px;
-      box-shadow: 0 0 30px rgba(232, 121, 249, 0.15);
+      padding: 1.75rem 1.25rem 1.5rem;
+      border: 1px solid rgba(212,175,55,0.35);
+      background: rgba(10, 6, 4, 0.92);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(212,175,55,0.08), inset 0 0 40px rgba(212,175,55,0.03);
     }
-    .letterhead .spell { font-size: 0.6rem; letter-spacing: 0.35em; color: #22d3ee; margin-bottom: 0.25rem; text-transform: uppercase; text-shadow: 0 0 12px rgba(34, 211, 238, 0.5); }
-    .letterhead h1 { font-size: clamp(1.5rem, 4.2vw, 1.9rem); font-weight: 800; color: #fff; letter-spacing: 0.02em; line-height: 1.2; text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
-    .letterhead .service { font-size: 0.9rem; color: #d4af37; margin-top: 0.4rem; font-weight: 600; text-shadow: 0 0 14px rgba(212, 175, 55, 0.4); }
-    .letterhead .who { font-size: 0.8rem; color: #a3a3a3; margin-top: 0.25rem; }
+    .letterhead::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #d4af37, rgba(212,175,55,0.4), #d4af37, transparent);
+    }
+    .letterhead::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+    }
+    .letterhead .spell {
+      font-size: 0.55rem; letter-spacing: 0.45em; color: rgba(212,175,55,0.6);
+      margin-bottom: 0.6rem; text-transform: uppercase;
+      font-family: 'Space Grotesk', system-ui;
+    }
+    .letterhead h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-style: italic; font-weight: 700;
+      color: #fff; letter-spacing: 0.01em; line-height: 1.15;
+      text-shadow: 0 0 40px rgba(212,175,55,0.25);
+    }
+    .letterhead .service {
+      font-family: 'Space Grotesk', system-ui;
+      font-size: 0.85rem; color: #d4af37; margin-top: 0.55rem;
+      font-weight: 600; letter-spacing: 0.08em;
+      text-shadow: 0 0 20px rgba(212,175,55,0.4);
+    }
+    .letterhead .who {
+      font-size: 0.72rem; color: rgba(212,175,55,0.5);
+      margin-top: 0.3rem; letter-spacing: 0.06em;
+      font-family: 'Space Grotesk', system-ui;
+    }
     .story {
+      font-family: 'Space Grotesk', system-ui;
       font-size: 0.9rem;
-      line-height: 1.55;
-      color: rgba(253, 248, 235, 0.95);
+      line-height: 1.65;
+      color: rgba(253, 248, 235, 0.88);
       margin-bottom: 1.5rem;
-      padding: 1.25rem;
-      background: rgba(30, 22, 8, 0.5);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 8px;
+      padding: 1.5rem;
+      background: rgba(20, 14, 6, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.18);
+      border-radius: 2px;
+      border-left: 3px solid rgba(212,175,55,0.5);
     }
-    .story p { margin-bottom: 0.55rem; }
+    .story p { margin-bottom: 0.65rem; }
     .story p:last-child { margin-bottom: 0; }
-    .story strong { color: #fff; }
-    .menu-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: #d4af37; margin-bottom: 0.75rem; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+    .story strong { color: #f5d87a; }
+    .menu-label {
+      font-family: 'Space Grotesk', system-ui;
+      font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(212,175,55,0.7); margin-bottom: 0.85rem;
+      display: block;
+    }
     .card {
       display: block;
       text-decoration: none;
       color: inherit;
       margin-bottom: 1rem;
-      border-radius: 12px;
+      border-radius: 4px;
       overflow: hidden;
-      border: 2px solid transparent;
-      transition: border-color 0.25s, box-shadow 0.25s;
+      border: 1px solid rgba(212,175,55,0.2);
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+      position: relative;
     }
-    .card:hover { border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 0 35px rgba(212, 175, 55, 0.2); }
+    .card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .card:hover { border-color: rgba(212, 175, 55, 0.55); box-shadow: 0 0 40px rgba(212, 175, 55, 0.15), 0 8px 32px rgba(0,0,0,0.4); transform: translateY(-2px); }
+    .card:hover::after { opacity: 1; }
     .card-bg {
-      padding: 1.5rem 1.5rem;
+      padding: 1.75rem 1.5rem;
       background-size: cover;
       background-position: center;
       position: relative;
-      min-height: 140px;
+      min-height: 150px;
     }
-    .card-bg::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(212, 175, 55, 0.15) 0%, rgba(60, 45, 10, 0.4) 50%, rgba(30, 22, 5, 0.55) 100%); }
+    .card-bg::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, rgba(40, 28, 8, 0.5) 50%, rgba(15, 10, 3, 0.7) 100%); }
     .card .inner { position: relative; z-index: 1; }
-    .card .name { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem; text-shadow: 0 0 12px rgba(0,0,0,0.8); }
-    .card .price { font-size: 1.25rem; font-weight: 800; color: #d4af37; margin-bottom: 0.5rem; text-shadow: 0 0 16px rgba(212, 175, 55, 0.5); }
+    .card .name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.15rem; font-weight: 700; font-style: italic;
+      color: #fff; margin-bottom: 0.35rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+    }
+    .card .price { font-size: 1.3rem; font-weight: 700; color: #d4af37; margin-bottom: 0.5rem; text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); font-family: 'Space Grotesk', system-ui; }
     .card .sell { font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.92); }
     .card-truckee { border-color: rgba(34, 211, 238, 0.4); box-shadow: 0 0 20px rgba(34, 211, 238, 0.1); }
     .card-truckee:hover { border-color: rgba(34, 211, 238, 0.7); box-shadow: 0 0 30px rgba(34, 211, 238, 0.25); }
@@ -217,6 +367,18 @@
   </style>
 </head>
 <body>
+
+  <!-- ── ENTRY CINEMATIC ── -->
+  <div id="entry-vibe">
+    <div id="gold-sweep"></div>
+    <div class="ev-line" id="ev1">Human Vibers · Channelers · Downtown Reno</div>
+    <div class="ev-wordmark" id="ev2">Vibelandia</div>
+    <div class="ev-tag" id="ev3">Pru's Valet Service · The Machote Frequency</div>
+  </div>
+
+  <!-- ── PARTICLE CANVAS ── -->
+  <canvas id="vibe-canvas"></canvas>
+
   <div class="wrap">
     <div class="letterhead">
       <p class="spell" data-i18n="vibers.spell">Human Vibers · Channelers</p>
@@ -315,7 +477,7 @@
     </a>
     <style>@keyframes np-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}</style>
 
-    <a href="vibelandia-truckee-river-crawl.html" class="card card-truckee">
+    <a href="vibelandia-truckee-river-crawl.html" class="card card-truckee reveal-card">
       <div class="card-bg" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(20,10,5,0.55) 100%), url('assets/vibelandia-reno-magic.png'); background-size: cover; background-position: center top;">
         <div class="inner">
           <p class="name" data-i18n="vibers.c1.name">Downtown Truckee River Baller V Crawler</p>
@@ -325,7 +487,7 @@
       </div>
     </a>
 
-    <a href="baller-v-wednesdays.html" class="card card-neon">
+    <a href="baller-v-wednesdays.html" class="card card-neon reveal-card">
       <div class="card-bg" style="background-image: linear-gradient(180deg, rgba(212, 175, 55, 0.08) 0%, rgba(30, 15, 5, 0.65) 100%), url('https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=800&h=600&fit=crop'); background-size: cover; background-position: center;">
         <div class="inner">
           <p class="name" data-i18n="vibers.c2.name">Wink! &amp; Vibers · Baller V Mixer Wednesdays</p>
@@ -336,7 +498,7 @@
       </div>
     </a>
 
-    <a href="destinations-magazine-catalog.html" class="card card-dest">
+    <a href="destinations-magazine-catalog.html" class="card card-dest reveal-card">
       <div class="card-bg" style="background-image: linear-gradient(180deg, rgba(212, 175, 55, 0.12) 0%, rgba(60, 45, 10, 0.4) 100%), url('assets/destinations-bison-lodge.png'), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80'); background-size: cover; background-position: center; border: 1px solid rgba(212, 175, 55, 0.3);">
         <div class="inner">
           <p class="name" data-i18n="vibers.c3.name">Aquí y Allá · Destinations Magazine Catalog</p>
@@ -346,7 +508,7 @@
       </div>
     </a>
 
-    <a href="catalog.html" class="card card-content">
+    <a href="catalog.html" class="card card-content reveal-card">
       <div class="card-bg" style="background-image: linear-gradient(180deg, rgba(212, 175, 55, 0.12) 0%, rgba(60, 45, 10, 0.4) 100%), url('assets/content-catalog-super-singularity.png'), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80'); background-size: cover; background-position: center; border: 1px solid rgba(192, 132, 252, 0.4);">
         <div class="inner">
           <p class="name" data-i18n="vibers.c4.name">Our content catalog</p>
@@ -356,7 +518,7 @@
       </div>
     </a>
 
-    <a href="nine-game-nexus.html" class="card card-ss9">
+    <a href="nine-game-nexus.html" class="card card-ss9 reveal-card">
       <div class="card-bg" style="background-image: linear-gradient(180deg, rgba(4,3,8,0.45) 0%, rgba(8,5,20,0.78) 100%), url('assets/stack1/s1-001.jpg'); background-size: cover; background-position: center top; border: 1px solid rgba(212,175,55,0.35);">
         <div class="play-btn" aria-label="Enter Nexus">&#x2B21;</div>
         <div class="inner">
@@ -367,7 +529,7 @@
       </div>
     </a>
 
-    <a href="vendors.html" class="card card-vendor">
+    <a href="vendors.html" class="card card-vendor reveal-card">
       <div class="card-bg" style="background-image: linear-gradient(180deg, rgba(212, 175, 55, 0.12) 0%, rgba(60, 45, 10, 0.4) 100%), url('assets/vendors-silver-legacy.png'), url('https://images.unsplash.com/photo-1531259683007-3a9ea0547bc4?w=800&q=80'); background-size: cover; background-position: center; border: 1px solid rgba(180, 140, 90, 0.4);">
         <div class="inner">
           <p class="name" data-i18n="vibers.c6.name">Baller V &amp; Destinations Operators</p>
@@ -405,5 +567,101 @@
   <script src="../nav-strip.js"></script>
   <!-- ── CINEMA BANNER ── -->
   <script src="../cinema-banner.js"></script>
+
+  <script>
+  // ── ENTRY CINEMATIC ──────────────────────────────────────────────
+  (function() {
+    var ev = document.getElementById('entry-vibe');
+    var ev1 = document.getElementById('ev1');
+    var ev2 = document.getElementById('ev2');
+    var ev3 = document.getElementById('ev3');
+    if (!ev) return;
+    setTimeout(function(){ ev1.classList.add('show'); }, 350);
+    setTimeout(function(){ ev2.classList.add('show'); }, 800);
+    setTimeout(function(){ ev3.classList.add('show'); }, 1450);
+    setTimeout(function(){ ev.classList.add('out'); }, 2800);
+    setTimeout(function(){ ev.style.display = 'none'; }, 3900);
+  })();
+
+  // ── WARM PARTICLE CANVAS ─────────────────────────────────────────
+  (function() {
+    var canvas = document.getElementById('vibe-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W, H, particles = [];
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // warm ember / dust particle colors
+    var colors = [
+      'rgba(212,175,55,',
+      'rgba(232,160,69,',
+      'rgba(255,200,100,',
+      'rgba(180,120,40,',
+      'rgba(240,200,120,'
+    ];
+
+    function Particle() {
+      this.reset = function() {
+        this.x = Math.random() * W;
+        this.y = H + Math.random() * 60;
+        this.r = 0.5 + Math.random() * 1.8;
+        this.vy = -(0.15 + Math.random() * 0.45);
+        this.vx = (Math.random() - 0.5) * 0.25;
+        this.a  = 0.05 + Math.random() * 0.35;
+        this.c  = colors[Math.floor(Math.random() * colors.length)];
+        this.life = 0;
+        this.maxLife = 160 + Math.random() * 220;
+      };
+      this.reset();
+      this.y = Math.random() * H; // scatter on load
+    }
+
+    for (var i = 0; i < 55; i++) particles.push(new Particle());
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(function(p) {
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.life++;
+        var fade = p.life < 30 ? p.life / 30 : p.life > p.maxLife - 40 ? (p.maxLife - p.life) / 40 : 1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.c + (p.a * fade) + ')';
+        ctx.fill();
+        if (p.life >= p.maxLife || p.y < -20) p.reset();
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ── SCROLL REVEAL ────────────────────────────────────────────────
+  (function() {
+    var cards = document.querySelectorAll('.reveal-card');
+    if (!('IntersectionObserver' in window)) {
+      cards.forEach(function(c){ c.classList.add('revealed'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e, idx) {
+        if (e.isIntersecting) {
+          var el = e.target;
+          var siblings = Array.from(el.parentElement.querySelectorAll('.reveal-card:not(.revealed)'));
+          var i = siblings.indexOf(el);
+          setTimeout(function(){ el.classList.add('revealed'); }, i * 90);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.08 });
+    cards.forEach(function(c){ io.observe(c); });
+  })();
+  </script>
 </body>
 </html>

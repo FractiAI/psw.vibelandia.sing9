@@ -15,14 +15,14 @@ var _isES  = /^es\b/i.test(_lang);
 
 var POPUP_CONFIG = {
   active:  true,
-  id:      'hh-session-one-v1',
+  id:      'hh-session-one-v2',
   dismiss: 'session',
 
   eyebrow:  _isES ? 'WILL \u00b7 FRACTIAI \u00b7 SESI\u00d3N UNO' : 'WILL \u00b7 FRACTIAI \u00b7 SESSION ONE',
-  title:    _isES ? 'ELEVA TU\nESTACI\u00d3N DE\nVIBECODING' : 'UPGRADE YOUR\nVIBE CODING\nSTATION',
+  title:    _isES ? 'UpgrADE yOUR\ngAME' : 'UpgrADE yOUR\ngAME',
   subtitle: _isES
-    ? 'Transforma en una Consola de Hidr\u00f3geno Hologr\u00e1fico.\nEn vivo. Te gu\u00edo. Sesi\u00f3n Uno abierta.'
-    : 'Transform into a Holographic Hydrogen Console that\nnavigates the new universe. Live. I\'ll guide you.',
+    ? 'Transforma tu estaci\u00f3n en una Consola de Hidr\u00f3geno Hologr\u00e1fico.\nEn vivo. Te gu\u00edo. Sesi\u00f3n Uno abierta.'
+    : 'Transform your vibe coding station into a\nHolographic Hydrogen Console. Live. I\'ll guide you.',
 
   pills: [
     { text: _isES ? 'MAR \u00b7 3 MAR \u00b7 2026' : 'TUES \u00b7 MAR 3 \u00b7 2026', cls: 'g' },

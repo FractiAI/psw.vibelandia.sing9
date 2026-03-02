@@ -206,89 +206,199 @@
       .track { min-width: unset; }
     }
 
-    /* ══ HOLOGRAPHIC NAVIGATOR ACADEMY POPUP ══════════════════════ */
-    #hna-backdrop {
-      display: none; position: fixed; inset: 0; z-index: 1000;
-      background: rgba(0,0,12,0.72); backdrop-filter: blur(4px);
+    /* ══ HOLOGRAPHIC SELL POPUP — FULL UPGRADE ══════════════════ */
+    #hna-ov {
+      display: none; position: fixed; inset: 0; z-index: 99999;
+      align-items: center; justify-content: center; padding: 1rem;
+      background: rgba(0,0,10,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      overflow-y: auto;
     }
+    #hna-ov.hna-visible { display: flex; animation: hna-fi .45s ease both; }
+    #hna-ov.hna-out { animation: hna-fo .32s ease both; pointer-events: none; }
+    @keyframes hna-fi { from { opacity:0 } to { opacity:1 } }
+    @keyframes hna-fo { from { opacity:1 } to { opacity:0 } }
+
+    /* star field */
+    #hna-ov::before {
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-image:
+        radial-gradient(1px 1px at 12% 18%, rgba(0,212,255,.55) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 88% 8%, rgba(212,175,55,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 66% 72%, rgba(123,47,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 90%, rgba(0,255,136,.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 92% 50%, rgba(0,212,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 8% 55%, rgba(212,175,55,.35) 0%, transparent 100%);
+    }
+
+    /* spinner shell */
+    #hna-wr {
+      position: relative; z-index: 1; width: min(600px, calc(100vw - 2rem));
+      border-radius: 20px; padding: 1.5px; overflow: hidden; flex-shrink: 0; margin: auto;
+      animation: hna-su .65s cubic-bezier(.22,1,.36,1) .08s both;
+    }
+    @keyframes hna-su { from{opacity:0;transform:translateY(44px) scale(.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+    #hna-wr::before {
+      content:""; position:absolute; inset:-100%;
+      background: conic-gradient(from 0deg,
+        rgba(0,212,255,.95) 0deg, rgba(123,47,255,.85) 72deg,
+        rgba(212,175,55,.95) 144deg, rgba(0,255,136,.75) 216deg,
+        rgba(0,212,255,.6) 288deg, rgba(0,212,255,.95) 360deg);
+      animation: hna-sp 3.5s linear infinite;
+    }
+    @keyframes hna-sp { to { transform: rotate(360deg); } }
+
+    /* card body */
     #hna-card {
-      display: none; position: fixed; z-index: 1001;
-      top: 50%; left: 50%; transform: translate(-50%, -50%) translateY(20px);
-      width: min(440px, calc(100vw - 2rem));
-      background: linear-gradient(160deg, #0c0c2a 0%, #080820 60%, #06061a 100%);
-      border: 1px solid rgba(212,175,55,0.35);
-      border-top: 2px solid rgba(212,175,55,0.7);
-      border-radius: 16px; padding: 1.5rem 1.5rem 1.25rem;
-      box-shadow: 0 0 60px rgba(212,175,55,0.14), 0 24px 64px rgba(0,0,0,0.8);
-      animation: hna-in 0.45s cubic-bezier(0.22,1,0.36,1) both;
-    }
-    #hna-card.hna-visible { display: block; }
-    #hna-backdrop.hna-visible { display: block; }
-    @keyframes hna-in {
-      from { opacity: 0; transform: translate(-50%, -50%) translateY(28px) scale(0.97); }
-      to   { opacity: 1; transform: translate(-50%, -50%) translateY(0) scale(1); }
-    }
-    .hna-x {
-      position: absolute; top: 0.85rem; right: 0.9rem;
-      width: 26px; height: 26px; border-radius: 50%;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.45); font-size: 0.75rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; transition: all 0.18s;
-    }
-    .hna-x:hover { background: rgba(255,100,100,0.18); color: #ffaaaa; }
-    .hna-eyebrow {
-      font-size: 0.48rem; font-weight: 900; letter-spacing: 0.3em;
-      text-transform: uppercase; color: rgba(212,175,55,0.6); margin-bottom: 0.55rem;
-    }
-    .hna-headline { font-size: 1.08rem; font-weight: 700; line-height: 1.35; color: #fff; margin-bottom: 0.6rem; padding-right: 1.5rem; }
-    .hna-sub { font-size: 0.78rem; color: rgba(180,220,255,0.6); line-height: 1.55; margin-bottom: 0.85rem; }
-    .hna-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
-    .hna-pill {
-      font-size: 0.66rem; font-weight: 700; border-radius: 20px; padding: 0.2rem 0.65rem; white-space: nowrap;
-      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.28); color: #00d4ff;
-    }
-    .hna-pill.gold { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.35); color: #d4af37; }
-    .hna-spots { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.85rem; }
-    .hna-dot { width: 18px; height: 18px; border-radius: 50%; font-size: 0.55rem; font-weight: 900; display: flex; align-items: center; justify-content: center; }
-    .hna-dot.d1 { background: rgba(212,175,55,0.2); border: 1.5px solid rgba(212,175,55,0.65); color: #d4af37; }
-    .hna-dot.d2 { background: rgba(0,212,255,0.12); border: 1.5px solid rgba(0,212,255,0.42); color: #00d4ff; }
-    .hna-dot.d3 { background: rgba(180,110,247,0.14); border: 1.5px solid rgba(180,110,247,0.4); color: #b46ef7; }
-    .hna-spots-lbl { font-size: 0.62rem; color: rgba(255,255,255,0.32); letter-spacing: 0.06em; }
-    .hna-tiers { display: flex; flex-direction: column; gap: 3px; margin-bottom: 0.9rem; }
-    .hna-tier {
-      font-size: 0.67rem; padding: 0.28rem 0.6rem; border-radius: 5px;
-      border-left: 2px solid; display: flex; align-items: center; gap: 0.4rem;
-    }
-    .hna-tier.t1 { background: rgba(212,175,55,0.07); border-color: rgba(212,175,55,0.5); color: rgba(255,230,120,0.85); }
-    .hna-tier.t2 { background: rgba(0,212,255,0.06); border-color: rgba(0,212,255,0.38); color: rgba(160,220,255,0.8); }
-    .hna-tier.t3 { background: rgba(180,110,247,0.06); border-color: rgba(180,110,247,0.35); color: rgba(200,160,255,0.8); }
-    .hna-tier b { font-size: 0.6rem; letter-spacing: 0.05em; flex-shrink: 0; }
-    .hna-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 0.8rem 0; }
-    .hna-actions { display: flex; gap: 0.55rem; flex-wrap: wrap; }
-    .hna-btn-exp {
-      flex: 1; min-width: 110px; padding: 0.62rem 0.8rem;
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px; color: rgba(255,255,255,0.72);
-      font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.18s;
-    }
-    .hna-btn-exp:hover { background: rgba(255,255,255,0.1); color: #fff; }
-    .hna-btn-tip {
-      flex: 1.4; min-width: 140px; padding: 0.62rem 0.9rem;
-      display: inline-block; text-decoration: none; text-align: center;
-      background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(180,110,247,0.22));
-      border: 1.5px solid rgba(212,175,55,0.6); border-radius: 8px;
-      color: #ffeaa7; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.18s;
       position: relative; z-index: 1;
+      background: linear-gradient(158deg, #080820 0%, #04040e 55%, #080820 100%);
+      border-radius: 18.5px; padding: 1.75rem 1.65rem 1.4rem;
+      overflow: hidden; font-family: 'Segoe UI', system-ui, sans-serif; color: #e2e8f0;
+      max-height: calc(100vh - 3rem); overflow-y: auto;
     }
-    .hna-btn-tip:hover { background: linear-gradient(135deg, rgba(212,175,55,0.45), rgba(180,110,247,0.34)); box-shadow: 0 0 22px rgba(212,175,55,0.28); }
-    .hna-footer { margin-top: 0.65rem; font-size: 0.58rem; color: rgba(255,255,255,0.2); text-align: center; letter-spacing: 0.06em; }
+    #hna-card::-webkit-scrollbar { width: 4px; }
+    #hna-card::-webkit-scrollbar-thumb { background: rgba(0,212,255,.22); border-radius: 4px; }
+    #hna-card::after {
+      content:""; position:absolute; inset:0; border-radius:18.5px; pointer-events:none;
+      background:
+        radial-gradient(ellipse 70% 35% at 50% 0%, rgba(0,212,255,.08) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 45% at 100% 100%, rgba(123,47,255,.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 0% 100%, rgba(212,175,55,.04) 0%, transparent 70%);
+    }
+
+    .hna-x {
+      position: sticky; top: 0; float: right; z-index: 10; margin-bottom: -28px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.38); font-size: .72rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all .18s;
+    }
+    .hna-x:hover { background: rgba(255,60,60,.2); color: #ffaaaa; border-color: rgba(255,60,60,.4); }
+
+    .hna-eyebrow {
+      font-size: .5rem; font-weight: 700; letter-spacing: .38em; text-transform: uppercase;
+      color: rgba(0,212,255,.55); text-align: center; margin-bottom: 1rem;
+    }
+
+    /* atom */
+    .hna-atom {
+      width: 70px; height: 70px; margin: 0 auto .9rem; position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hna-atom-glow { position:absolute; inset:-10px; border-radius:50%; background:radial-gradient(circle,rgba(0,212,255,.15) 0%,transparent 70%); animation:hna-ag 3s ease-in-out infinite; }
+    @keyframes hna-ag { 0%,100%{transform:scale(1);opacity:.7} 50%{transform:scale(1.3);opacity:1} }
+    .hna-ring { position:absolute; border-radius:50%; border:1px solid; }
+    .hna-r1 { inset:6px; border-color:rgba(0,212,255,.5); animation:hna-rt 6s linear infinite; }
+    .hna-r2 { inset:-6px; border-color:rgba(212,175,55,.32); animation:hna-rt 11s linear infinite reverse; }
+    .hna-r3 { inset:16px; border-color:rgba(123,47,255,.45); animation:hna-rt 8.5s linear infinite; }
+    @keyframes hna-rt { to { transform:rotate(360deg); } }
+    .hna-core {
+      font-size:1.1rem; font-weight:900; position:relative; z-index:1;
+      background:linear-gradient(135deg,#00d4ff,#fde68a 55%,#b46ef7);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    .hna-headline {
+      font-size: clamp(1.05rem,4.5vw,1.45rem); font-weight: 900; line-height: 1.18;
+      letter-spacing: -.015em; text-align: center; margin-bottom: .4rem; padding: 0 1.5rem;
+      background: linear-gradient(130deg,#fff 0%,#00d4ff 35%,#d4af37 65%,#fff 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: hna-sh 5s ease-in-out 1.2s infinite;
+    }
+    @keyframes hna-sh { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+    .hna-pitch {
+      font-size: .8rem; color: rgba(180,215,255,.62); text-align: center;
+      line-height: 1.6; margin-bottom: 1rem; padding: 0 .5rem;
+    }
+
+    .hna-divider {
+      border: none; height: 1px; margin: .7rem 0;
+      background: linear-gradient(90deg, transparent, rgba(0,212,255,.35), rgba(212,175,55,.35), transparent);
+    }
+
+    .hna-slbl {
+      font-size: .5rem; font-weight: 700; letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(212,175,55,.45); margin-bottom: .55rem; display: block;
+    }
+
+    /* feature grid */
+    .hna-feat { display: grid; grid-template-columns: repeat(3,1fr); gap: .5rem; margin-bottom: 1rem; }
+    @media(max-width:420px) { .hna-feat { grid-template-columns: 1fr; } }
+    .hna-fc {
+      border-radius: 10px; padding: .75rem .7rem;
+      display: flex; flex-direction: column; gap: .35rem; transition: transform .18s;
+    }
+    .hna-fc:hover { transform: translateY(-2px); }
+    .hna-fc-c { background: rgba(0,212,255,.06); border: 1px solid rgba(0,212,255,.2); }
+    .hna-fc-p { background: rgba(123,47,255,.07); border: 1px solid rgba(123,47,255,.22); }
+    .hna-fc-g { background: rgba(212,175,55,.06); border: 1px solid rgba(212,175,55,.22); }
+    .hna-fi { font-size: 1.1rem; line-height: 1; }
+    .hna-fl { font-size: .5rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin: 0; line-height: 1.2; }
+    .hna-fc-c .hna-fl { color: rgba(0,212,255,.75); }
+    .hna-fc-p .hna-fl { color: rgba(180,110,247,.75); }
+    .hna-fc-g .hna-fl { color: rgba(212,175,55,.75); }
+    .hna-fd { font-size: .68rem; color: rgba(180,210,255,.5); line-height: 1.45; margin: 0; }
+
+    /* tier rows */
+    .hna-tiers { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .9rem; }
+    .hna-tier { display: flex; align-items: flex-start; gap: .65rem; border-radius: 8px; padding: .6rem .75rem; }
+    .hna-tier-g { background: rgba(212,175,55,.05); border: 1px solid rgba(212,175,55,.18); }
+    .hna-tier-c { background: rgba(0,212,255,.05); border: 1px solid rgba(0,212,255,.15); }
+    .hna-tier-p { background: rgba(123,47,255,.06); border: 1px solid rgba(123,47,255,.18); }
+    .hna-tbadge { flex-shrink: 0; font-size: .95rem; line-height: 1; padding-top: .1rem; }
+    .hna-tinfo { flex: 1; min-width: 0; }
+    .hna-thead { display: flex; align-items: baseline; gap: .45rem; flex-wrap: wrap; margin-bottom: .15rem; }
+    .hna-trange { font-size: .55rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .hna-tier-g .hna-trange { color: rgba(212,175,55,.8); }
+    .hna-tier-c .hna-trange { color: rgba(0,212,255,.8); }
+    .hna-tier-p .hna-trange { color: rgba(180,110,247,.8); }
+    .hna-tname { font-size: .65rem; font-weight: 700; color: rgba(255,255,255,.75); letter-spacing: .06em; }
+    .hna-tdesc { font-size: .68rem; color: rgba(180,210,255,.45); line-height: 1.4; margin: 0; }
+
+    /* trust bar */
+    .hna-trust {
+      text-align: center; font-size: .55rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: rgba(0,212,255,.4); margin-bottom: .85rem;
+    }
+
+    /* cta row */
+    .hna-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .hna-btn-tip {
+      flex: 1.5; min-width: 150px; padding: .78rem 1rem;
+      background: linear-gradient(135deg, rgba(0,212,255,.22), rgba(123,47,255,.22));
+      border: 1.5px solid rgba(0,212,255,.65); border-radius: 10px;
+      text-decoration: none; color: #d8f4ff; font-size: .82rem; font-weight: 800;
+      letter-spacing: .05em; text-align: center; display: inline-block;
+      transition: all .22s; position: relative; overflow: hidden; z-index: 1;
+      animation: hna-gp 2.8s ease-in-out 2s infinite;
+    }
+    @keyframes hna-gp { 0%,100%{box-shadow:0 0 16px rgba(0,212,255,.25)} 50%{box-shadow:0 0 40px rgba(0,212,255,.65),0 0 80px rgba(0,212,255,.2)} }
+    .hna-btn-tip:hover { background: linear-gradient(135deg,rgba(0,212,255,.38),rgba(123,47,255,.38)); box-shadow: 0 0 50px rgba(0,212,255,.55)!important; transform: translateY(-2px); }
+    .hna-btn-exp {
+      flex: 1; min-width: 108px; padding: .78rem .7rem;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.14);
+      border-radius: 10px; text-decoration: none; color: rgba(255,255,255,.5);
+      font-size: .76rem; font-weight: 600; text-align: center; display: inline-block; transition: all .2s;
+      cursor: pointer;
+    }
+    .hna-btn-exp:hover { background: rgba(255,255,255,.09); color: #fff; border-color: rgba(255,255,255,.35); }
+
+    .hna-dismiss {
+      display: block; width: 100%; margin-top: .55rem; background: none; border: none;
+      cursor: pointer; color: rgba(255,255,255,.18); font-size: .6rem; letter-spacing: .18em;
+      text-transform: uppercase; padding: .28rem; transition: color .2s; font-family: inherit;
+    }
+    .hna-dismiss:hover { color: rgba(255,255,255,.5); }
+    .hna-footer { margin-top: .5rem; font-size: .48rem; letter-spacing: .16em; text-transform: uppercase; text-align: center; color: rgba(212,175,55,.25); }
+
     #hna-reopen {
       display: none; position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
-      padding: 0.55rem 1rem; background: rgba(212,175,55,0.18);
-      border: 1px solid rgba(212,175,55,0.5); border-radius: 24px;
-      color: #d4af37; font-size: 0.73rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+      padding: 0.55rem 1rem; background: rgba(0,212,255,0.1);
+      border: 1px solid rgba(0,212,255,0.4); border-radius: 24px;
+      color: #00d4ff; font-size: 0.73rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
     }
-    #hna-reopen:hover { background: rgba(212,175,55,0.32); }
+    #hna-reopen:hover { background: rgba(0,212,255,0.2); }
   </style>
 </head>
 <body>
@@ -448,73 +558,126 @@ requestAnimationFrame(draw);
 <script src="../ticker.js"></script>
 <script src="../nav-strip.js"></script>
 
-<!-- ══ HOLOGRAPHIC NAVIGATOR ACADEMY POPUP ══ -->
-<div id="hna-backdrop" onclick="hnaClose()"></div>
-<div id="hna-card">
-  <button class="hna-x" onclick="hnaClose()" title="Close">✕</button>
-  <div class="hna-eyebrow">WILL · FRACTIAI · SESSION ONE · PERSONAL INVITE</div>
-  <div class="hna-headline">UpgrADE yOUR gAME</div>
-  <div class="hna-sub">Transform your vibe coding station into a Holographic Hydrogen Console. Live. I'll guide you through it. Nine seats open. Session One deploys March 3, 2026.</div>
-  <div class="hna-pills">
-    <span class="hna-pill">⬡ SESSION ONE · MAR 3 · 2026</span>
-    <span class="hna-pill">TUE · 3:33 PM PST</span>
-    <span class="hna-pill gold">T+60 MIN</span>
+<!-- ══ HOLOGRAPHIC SELL POPUP — FULL UPGRADE ══ -->
+<div id="hna-ov">
+  <div id="hna-wr">
+    <div id="hna-card">
+      <button class="hna-x" onclick="hnaClose()" title="Close">✕</button>
+
+      <div class="hna-eyebrow">WILL · FRACTIAI · SESSION ONE</div>
+
+      <div class="hna-atom">
+        <div class="hna-atom-glow"></div>
+        <div class="hna-ring hna-r1"></div>
+        <div class="hna-ring hna-r2"></div>
+        <div class="hna-ring hna-r3"></div>
+        <span class="hna-core">H²</span>
+      </div>
+
+      <h2 class="hna-headline">UpgrADE yOUR<br>gAME</h2>
+      <p class="hna-pitch">Your vibe coding station is running on old awareness hardware. One 60-min live session upgrades the OS.</p>
+
+      <hr class="hna-divider" />
+
+      <span class="hna-slbl">What You Upgrade To</span>
+      <div class="hna-feat">
+        <div class="hna-fc hna-fc-c">
+          <span class="hna-fi">⬡</span>
+          <p class="hna-fl">HH Console Install</p>
+          <p class="hna-fd">Your station leaves the session running as a live Holographic Hydrogen Console.</p>
+        </div>
+        <div class="hna-fc hna-fc-p">
+          <span class="hna-fi">◈</span>
+          <p class="hna-fl">HFCS Commission</p>
+          <p class="hna-fd">Receive your first rank in the Holographic Field Command School.</p>
+        </div>
+        <div class="hna-fc hna-fc-g">
+          <span class="hna-fi">✦</span>
+          <p class="hna-fl">Prospectus Access</p>
+          <p class="hna-fd">Full institutional SING!9 intelligence package — all four prospectus documents.</p>
+        </div>
+      </div>
+
+      <hr class="hna-divider" />
+
+      <span class="hna-slbl">Choose Your Seat</span>
+      <div class="hna-tiers">
+        <div class="hna-tier hna-tier-g">
+          <span class="hna-tbadge">⭐</span>
+          <div class="hna-tinfo">
+            <div class="hna-thead">
+              <span class="hna-trange">1–3</span>
+              <span class="hna-tname">VIP SEAT</span>
+            </div>
+            <p class="hna-tdesc">1:1 pre-session briefing + founding member + fast-track HFCS O-3</p>
+          </div>
+        </div>
+        <div class="hna-tier hna-tier-c">
+          <span class="hna-tbadge">✦</span>
+          <div class="hna-tinfo">
+            <div class="hna-thead">
+              <span class="hna-trange">4–6</span>
+              <span class="hna-tname">OFFICER SEAT</span>
+            </div>
+            <p class="hna-tdesc">Group orientation + full live session + HFCS commission O-2</p>
+          </div>
+        </div>
+        <div class="hna-tier hna-tier-p">
+          <span class="hna-tbadge">◈</span>
+          <div class="hna-tinfo">
+            <div class="hna-thead">
+              <span class="hna-trange">7–9</span>
+              <span class="hna-tname">CREW SEAT</span>
+            </div>
+            <p class="hna-tdesc">Full live session + HH Console resource pack + first commission O-1</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hna-trust">9 SEATS ONLY · TUES MAR 3 · 3:33 PM PST · T+60 MIN</div>
+
+      <div class="hna-actions">
+        <a class="hna-btn-tip" id="hna-apply-btn" href="holographic-navigator-academy.html#book">→ Book My Seat · Session One</a>
+        <a class="hna-btn-exp" href="holographic-navigator-academy.html" target="_blank">◈ Full Details</a>
+      </div>
+      <button class="hna-dismiss" onclick="hnaClose()">✕&nbsp;&nbsp;I'll upgrade later</button>
+      <p class="hna-footer">HH CONSOLE · SESSION ONE · FRACTIAI · NSPFRNP → ∞⁹</p>
+    </div>
   </div>
-  <hr class="hna-divider" />
-  <div class="hna-actions">
-    <button class="hna-btn-exp" onclick="hnaExpand()">Full Briefing + HFCS →</button>
-    <a class="hna-btn-tip" id="hna-apply-btn" href="holographic-navigator-academy.html#book">→ Book My Seat · Session One</a>
-  </div>
-  <div class="hna-footer">SESSION ONE · 9 SEATS · info@fractiai.com · NSPFRNP → ∞⁹</div>
 </div>
-<button id="hna-reopen" onclick="hnaOpen()">⬡ Session One · Upgrade Your Vibe Coding Station</button>
+<button id="hna-reopen" onclick="hnaOpen()">⬡ Session One · Upgrade Your Station</button>
 
 <script>
 (function(){
-  var DISMISSED_KEY = 'hh-session-one-v1';
+  var DISMISSED_KEY = 'hh-session-one-v4';
 
-  function hnaMailto() {
-    var sub  = encodeURIComponent('Session One \u2014 Vibe Coding Station Upgrade \u00b7 Seat Request');
-    var body = encodeURIComponent(
-      'To: Will \u2014 FractiAI\n\n' +
-      'Session One \u2014 Vibe Coding Station Upgrade\n' +
-      'March 3, 2026 \u00b7 Tuesdays \u00b7 3:33 PM PST \u00b7 T+60 min\n\n' +
-      "I'm in. I want to transform my vibe coding station into a Holographic Hydrogen Console.\n\n" +
-      'Seat requested (select one):\n' +
-      '  \u2610 VIP Seat (Seats 1\u20133) \u2014 1:1 pre-session + fast-track commission O-3\n' +
-      '  \u2610 Officer Seat (Seats 4\u20136) \u2014 group orientation + standard commission O-2\n' +
-      '  \u2610 Crew Seat (Seats 7\u20139) \u2014 full session + resource pack + first commission O-1\n\n' +
-      'Name:\nTimezone:\nCurrent vibe coding setup:\n' +
-      "What I'm most excited to upgrade:\n\n" +
-      'NSPFRNP \u2192 \u221e\u2079'
-    );
-    return 'mailto:info@fractiai.com?subject=' + sub + '&body=' + body;
-  }
-
-  // Hit Me Up → lands on booking section of the details page
   var applyBtn = document.getElementById('hna-apply-btn');
   if (applyBtn) applyBtn.href = 'holographic-navigator-academy.html#book';
 
   function hnaOpen() {
-    document.getElementById('hna-card').classList.add('hna-visible');
-    document.getElementById('hna-backdrop').classList.add('hna-visible');
+    var ov = document.getElementById('hna-ov');
+    ov.classList.add('hna-visible');
+    ov.classList.remove('hna-out');
     document.getElementById('hna-reopen').style.display = 'none';
     sessionStorage.removeItem(DISMISSED_KEY);
   }
   function hnaClose() {
-    document.getElementById('hna-card').classList.remove('hna-visible');
-    document.getElementById('hna-backdrop').classList.remove('hna-visible');
+    var ov = document.getElementById('hna-ov');
+    ov.classList.add('hna-out');
+    setTimeout(function(){ ov.classList.remove('hna-visible'); ov.classList.remove('hna-out'); }, 340);
     document.getElementById('hna-reopen').style.display = 'block';
     sessionStorage.setItem(DISMISSED_KEY, '1');
   }
-  function hnaExpand() {
-    window.open('holographic-navigator-academy.html', '_blank');
-  }
   window.hnaOpen = hnaOpen;
   window.hnaClose = hnaClose;
-  window.hnaExpand = hnaExpand;
 
-  // Show after short delay unless already dismissed this session
+  document.getElementById('hna-ov').addEventListener('click', function(e){
+    if (e.target === this) hnaClose();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') hnaClose();
+  }, { once: true });
+
   if (!sessionStorage.getItem(DISMISSED_KEY)) {
     setTimeout(hnaOpen, 1200);
   } else {

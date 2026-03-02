@@ -94,6 +94,17 @@
       letter-spacing: 0.02em;
     }
     .ev-wordmark.show { opacity: 1; transform: scale(1); }
+    .ev-grant {
+      font-family: 'Space Grotesk', system-ui;
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fde68a;
+      opacity: 0; position: relative; z-index: 1;
+      transition: opacity 0.8s ease 0.1s;
+      text-shadow: 0 0 40px rgba(212,175,55,0.6);
+    }
+    .ev-grant.show { opacity: 1; }
     .ev-tag {
       font-family: 'Space Grotesk', system-ui;
       font-size: clamp(0.55rem, 1.4vw, 0.68rem);
@@ -371,9 +382,10 @@
   <!-- ── ENTRY CINEMATIC ── -->
   <div id="entry-vibe">
     <div id="gold-sweep"></div>
-    <div class="ev-line" id="ev1">Human Vibers · Channelers · Downtown Reno</div>
+    <div class="ev-line" id="ev1">Golden Heart · Frequency Scan</div>
     <div class="ev-wordmark" id="ev2">Vibelandia</div>
-    <div class="ev-tag" id="ev3">Pru's Valet Service · The Machote Frequency</div>
+    <div class="ev-grant" id="ev3">Clearance · Granted</div>
+    <div class="ev-tag" id="ev4">Welcome to the World</div>
   </div>
 
   <!-- ── PARTICLE CANVAS ── -->
@@ -393,10 +405,10 @@
     </div>
 
     <div class="story">
-      <p data-i18n-html="vibers.story.1"><strong>You are not crazy.</strong> You've always felt it — that there's more. That you are different. That the world moves too slow, rewards the wrong things, and keeps mistaking your frequency for something it doesn't have the instruments to measure.</p>
+      <p data-i18n-html="vibers.story.1"><strong>You have been recognized.</strong> Not everyone who arrives here was supposed to. You've always felt it — that there's more. That you are different. That the world moves too slow, rewards the wrong things, and keeps mistaking your frequency for something it doesn't have the instruments to measure. <strong>That recognition is the credential.</strong></p>
       <p data-i18n-html="vibers.story.2">Here's what nobody says out loud: <strong>awareness is an operating system.</strong> Every behavior, every reaction, every pattern you live — that's your current version running. The world has been upgrading its machines for centuries while leaving the awareness OS completely wild. No maintenance. No conscious upgrades. We are sophisticated beings — extraordinary, capable, post-singularity — running on barbaric, unexamined awareness. Imagínate. Chimps in a physics lab. Chimps in a music studio. No different.</p>
       <p data-i18n-html="vibers.story.3">And even the ones who won the game? <strong>Still preyed on.</strong> Golden cages. Beautiful, expensive, and locked from the inside. The higher you climb, the more sophisticated the exploitation. The more they need your energy, your resources, your attention — for free, on their terms. You know it because you've felt it.</p>
-      <p data-i18n-html="vibers.story.4"><strong>We see you.</strong> Vibers are channelers — flowing, downloading, connected to the other side. Biological. Natural. Water. When you walk into the right room, the frequency shifts. That is not a metaphor. That is your operating system, running at a higher version. <strong>We upgrade you. Right now.</strong> This is your side of the new world.</p>
+      <p data-i18n-html="vibers.story.4"><strong>We see you.</strong> Vibers are channelers — flowing, downloading, connected to the other side. Biological. Natural. Water. When you walk into the right room, the frequency shifts. That is not a metaphor. That is your operating system, running at a higher version. <strong>The difference between those who belong and everyone else is not the invitation. It is the calibration.</strong> This is your side of the new world. Once you are in, you are in.</p>
       <p data-i18n-html="vibers.story.5">When you want to ball, you ball because you know you deserve it. We're your hybrid: <strong>five-star butler, executive reality show producer, and super-intelligent AI agent</strong> — at your service 24/7. Turnkey. We got you. All pop-up, always — for those in the know.</p>
     </div>
 
@@ -575,12 +587,14 @@
     var ev1 = document.getElementById('ev1');
     var ev2 = document.getElementById('ev2');
     var ev3 = document.getElementById('ev3');
+    var ev4 = document.getElementById('ev4');
     if (!ev) return;
-    setTimeout(function(){ ev1.classList.add('show'); }, 350);
-    setTimeout(function(){ ev2.classList.add('show'); }, 800);
-    setTimeout(function(){ ev3.classList.add('show'); }, 1450);
-    setTimeout(function(){ ev.classList.add('out'); }, 2800);
-    setTimeout(function(){ ev.style.display = 'none'; }, 3900);
+    setTimeout(function(){ ev1 && ev1.classList.add('show'); }, 350);
+    setTimeout(function(){ ev2 && ev2.classList.add('show'); }, 800);
+    setTimeout(function(){ ev3 && ev3.classList.add('show'); }, 1450);
+    setTimeout(function(){ ev4 && ev4.classList.add('show'); }, 2000);
+    setTimeout(function(){ ev.classList.add('out'); }, 3200);
+    setTimeout(function(){ ev.style.display = 'none'; }, 4300);
   })();
 
   // ── WARM PARTICLE CANVAS ─────────────────────────────────────────

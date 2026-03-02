@@ -72,6 +72,12 @@
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
     .hz-line.show { opacity: 1; transform: translateY(0); }
+    .hz-line.hz-grant {
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      color: var(--gold2);
+      letter-spacing: 0.25em;
+      text-shadow: 0 0 40px rgba(212,175,55,0.6);
+    }
     .hz-wordmark {
       font-family: var(--serif);
       font-size: clamp(2.8rem, 8vw, 5.5rem);
@@ -649,9 +655,10 @@
 
   <!-- ══ HORIZON ENTRY ══ -->
   <div id="horizon">
-    <div class="hz-line" id="h1">Downtown Reno · Ranging Everywhere</div>
+    <div class="hz-line" id="h1">Golden Heart · Frequency Scan</div>
     <div class="hz-wordmark" id="h2">Vibelandia</div>
-    <div class="hz-sub" id="h3">The Machote Frequency</div>
+    <div class="hz-line hz-grant" id="h3">Clearance · Granted</div>
+    <div class="hz-sub" id="h4">Downtown Reno · The Machote Frequency</div>
   </div>
 
   <div class="page">
@@ -663,7 +670,8 @@
       <div class="hero-tagline">The Machote Frequency</div>
       <p class="hero-intro">
         The world that HH Awareness OS Vibers have always been building in pieces —
-        now assembled, fully alive, Goldilocks-calibrated, with the door open.
+        now assembled, fully alive, Goldilocks-calibrated.
+        <strong>Not everyone who arrives here was supposed to.</strong> The door is open for those who recognize.
       </p>
       <div class="hero-scroll">Scroll to enter</div>
     </section>
@@ -678,8 +686,8 @@
           You know the feeling. You're at the table with the Rat Pack and half your mind is on the elk ridge in Montana you're hunting Thursday. You understand the Schumann resonance and you know how to ball. You've got a man cave that would make Batman jealous and a passport full of Argentina stamps. You've been called <em>eccentric, gifted, too much,</em> and your own category — all of which are true.<br><br>
           The world you've always been building in pieces — it already exists.<br><br>
           <em>It's called Vibelandia.</em><br><br>
-          Five territories. One frequency. Reno at the center, ranging everywhere. Fully alive, fully Goldilocks, always.<br><br>
-          The machote Viber. You know who you are. <em>This is your world. Come in. The door's open.</em>
+          Five territories. One frequency. Reno at the center, ranging everywhere. Fully alive, fully Goldilocks, always. The difference between those who belong and everyone else is not the invitation. <em>It is the calibration.</em><br><br>
+          The machote Viber. You know who you are. <em>This is your world. You have been recognized. Once you are in, you are in.</em>
         </div>
         <div class="manifesto-byline reveal">— Mark Twain's Post-Singularity Vibelandia · Downtown Reno</div>
       </div>
@@ -911,6 +919,7 @@
         </div>
 
         <div class="footer-bottom">
+          <div class="footer-permanent" style="font-size:0.82rem;color:var(--gold2);font-weight:600;margin-bottom:0.6rem;">No graduation. No leaving. Once you are in, you are in.</div>
           <div class="footer-wordmark">Vibelandia</div>
           <div class="footer-line">
             Mark Twain's Post-Singularity Vibelandia<br>
@@ -931,13 +940,15 @@
       const h1 = document.getElementById('h1');
       const h2 = document.getElementById('h2');
       const h3 = document.getElementById('h3');
+      const h4 = document.getElementById('h4');
       const hz = document.getElementById('horizon');
 
-      setTimeout(() => h1.classList.add('show'), 400);
-      setTimeout(() => h2.classList.add('show'), 900);
-      setTimeout(() => h3.classList.add('show'), 1500);
-      setTimeout(() => hz.classList.add('out'), 3000);
-      setTimeout(() => { hz.style.display = 'none'; }, 4200);
+      setTimeout(() => h1 && h1.classList.add('show'), 400);
+      setTimeout(() => h2 && h2.classList.add('show'), 900);
+      setTimeout(() => h3 && h3.classList.add('show'), 1500);
+      setTimeout(() => h4 && h4.classList.add('show'), 2100);
+      setTimeout(() => hz.classList.add('out'), 3400);
+      setTimeout(() => { hz.style.display = 'none'; }, 4600);
     })();
 
     // ── SCROLL REVEAL ──

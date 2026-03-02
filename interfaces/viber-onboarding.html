@@ -4,12 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Welcome to Vibelandia · Viber Onboarding Arc</title>
-  <meta name="description" content="Cradle to grave onboarding arc for human Vibers entering Mark Twain's Post-Singularity Vibelandia. Baller V. Machote. Wink. Golden Hearts. Downtown Reno." />
+  <meta name="description" content="You have been recognized. The full arc for Golden Hearts entering Mark Twain's Post-Singularity Vibelandia. Baller V. Machote. Downtown Reno." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --void:   #0a0806;
+      --void:   #06040a;
       --deep:   #0f0c08;
       --gold:   #d4af37;
       --gold2:  #fde68a;
@@ -21,22 +24,92 @@
       --sub:    #c4b896;
       --muted:  #7a6e5a;
       --twain:  #22d3ee;
+      --serif:  'Playfair Display', Georgia, serif;
+      --sans:   'Space Grotesk', system-ui, sans-serif;
+      --mono:   'JetBrains Mono', monospace;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: var(--sans);
       background: var(--void); color: var(--text);
       min-height: 100vh; overflow-x: hidden;
     }
 
-    /* ── WARM GRAIN OVERLAY ── */
+    /* ── ENTRY CINEMATIC ── */
+    #entry-vibe {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem;
+      transition: opacity 1s ease;
+    }
+    #entry-vibe.out { opacity: 0; pointer-events: none; }
+    #gold-sweep {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.12) 50%, transparent 100%);
+      transform: translateX(-100%);
+      animation: sweep 1.4s ease 0.3s forwards;
+    }
+    @keyframes sweep { to { transform: translateX(100%); } }
+    .ev-line {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 1.6vw, 0.72rem);
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.6);
+      opacity: 0; position: relative; z-index: 1;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(6px);
+    }
+    .ev-line.show { opacity: 1; transform: translateY(0); }
+    .ev-wordmark {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 9vw, 6rem);
+      font-style: italic;
+      font-weight: 400;
+      color: #fff;
+      opacity: 0; position: relative; z-index: 1;
+      transform: scale(0.93);
+      transition: opacity 1s ease, transform 1s ease;
+      text-shadow: 0 0 80px rgba(212,175,55,0.35);
+    }
+    .ev-wordmark.show { opacity: 1; transform: scale(1); }
+    .ev-tag {
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 1.4vw, 0.68rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.5);
+      opacity: 0; position: relative; z-index: 1;
+      transition: opacity 0.7s ease 0.15s;
+    }
+    .ev-tag.show { opacity: 1; }
+    .ev-grant {
+      font-family: var(--mono);
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      opacity: 0; position: relative; z-index: 1;
+      transition: opacity 0.8s ease 0.1s;
+      text-shadow: 0 0 40px rgba(212,175,55,0.6);
+    }
+    .ev-grant.show { opacity: 1; }
+
+    /* ── PARTICLE CANVAS ── */
+    #vibe-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    /* ── GRAIN + VIGNETTE ── */
     body::before {
-      content: ''; position: fixed; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%,
-        rgba(212,175,55,0.07) 0%, rgba(212,175,55,0.02) 40%, transparent 70%);
-      pointer-events: none; z-index: 0;
+      content: ''; position: fixed; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 110% 110% at 50% 50%, transparent 55%, rgba(0,0,0,0.4) 100%);
+      pointer-events: none;
     }
 
     /* ── STAGE SYSTEM ── */
@@ -50,13 +123,47 @@
     .stage-inner { max-width: 720px; width: 100%; }
 
     .stage-num {
-      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em;
-      text-transform: uppercase; color: var(--gold); opacity: 0.55;
-      margin-bottom: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.6;
+      margin-bottom: 1rem;
     }
 
-    h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.25rem; }
-    h2 { font-size: clamp(1.5rem, 4vw, 2.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; }
+    /* Stage reveal */
+    .stage-inner > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .stage-inner > *.visible { opacity: 1; transform: translateY(0); }
+    .stage-inner > *:nth-child(1) { transition-delay: 0s; }
+    .stage-inner > *:nth-child(2) { transition-delay: 0.08s; }
+    .stage-inner > *:nth-child(3) { transition-delay: 0.16s; }
+    .stage-inner > *:nth-child(4) { transition-delay: 0.24s; }
+    .stage-inner > *:nth-child(5) { transition-delay: 0.32s; }
+    .stage-inner > *:nth-child(6) { transition-delay: 0.4s; }
+    .stage-inner > *:nth-child(7) { transition-delay: 0.48s; }
+    .stage-inner > *:nth-child(8) { transition-delay: 0.56s; }
+    .stage-inner > *:nth-child(9) { transition-delay: 0.64s; }
+    .stage-inner > *:nth-child(10) { transition-delay: 0.72s; }
+
+    .acceptance-word {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 12vw, 7rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--gold3) 0%, var(--gold) 35%, var(--gold2) 65%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 50px rgba(212,175,55,0.35));
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 { font-family: var(--serif); font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 700; font-style: italic; line-height: 1.1; margin-bottom: 1.25rem; }
+    h2 { font-family: var(--serif); font-size: clamp(1.5rem, 4vw, 2.6rem); font-weight: 700; font-style: italic; line-height: 1.15; margin-bottom: 1rem; }
     h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--gold2); }
 
     .gold  { color: var(--gold); }
@@ -212,6 +319,20 @@
     .pn-dot.active { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
     .pn-dot:hover  { background: rgba(212,175,55,0.5); }
 
+    /* ── WINDOW NOTE ── */
+    .window-note {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 0.6rem 1rem;
+      border: 1px solid rgba(212,175,55,0.35);
+      background: rgba(212,175,55,0.06);
+      border-radius: 4px;
+      margin-bottom: 1.25rem;
+    }
+
     /* ── SCROLL HINT ── */
     .scroll-hint {
       position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
@@ -238,9 +359,21 @@
 </head>
 <body>
 
+<!-- ── ENTRY CINEMATIC ── -->
+<div id="entry-vibe">
+  <div id="gold-sweep"></div>
+  <div class="ev-line" id="ev1">Golden Heart · Frequency Scan</div>
+  <div class="ev-wordmark" id="ev2">Vibelandia</div>
+  <div class="ev-grant" id="ev3">Clearance · Granted</div>
+  <div class="ev-tag" id="ev4">Welcome to the World</div>
+</div>
+
+<!-- ── PARTICLE CANVAS ── -->
+<canvas id="vibe-canvas"></canvas>
+
 <!-- ── PROGRESS NAV ── -->
 <nav id="progress-nav">
-  <div class="pn-dot active" onclick="scrollToStage(0)" title="Welcome"></div>
+  <div class="pn-dot active" onclick="scrollToStage(0)" title="Clearance"></div>
   <div class="pn-dot" onclick="scrollToStage(1)" title="The World"></div>
   <div class="pn-dot" onclick="scrollToStage(2)" title="The Fall"></div>
   <div class="pn-dot" onclick="scrollToStage(3)" title="The Skin"></div>
@@ -251,19 +384,19 @@
 
 
 <!-- ════════════════════════════════════════════════
-     STAGE 0 · WELCOME
+     STAGE 0 · CLEARANCE
 ════════════════════════════════════════════════ -->
 <section class="stage" id="stage-0">
   <div class="stage-inner">
-    <div class="stage-num">Stage 0 · Welcome</div>
+    <div class="stage-num">Stage 0 · Clearance</div>
 
-    <div class="badge"><span class="dot"></span>Golden Heart Recognized</div>
+    <div class="badge"><span class="dot"></span>Golden Heart · Recognized</div>
 
-    <h1 class="glow-gold">You found<br/><span class="gold">Vibelandia.</span></h1>
+    <span class="acceptance-word">Congratulations.</span>
 
     <p>
-      The door is not open for everyone.<br/>
-      <strong>It is open for Golden Hearts.</strong>
+      You have been <strong>recognized</strong>.<br/>
+      Not everyone who arrives here was supposed to.
     </p>
 
     <p>
@@ -272,17 +405,19 @@
       but a <strong>daily operating mode</strong>.
       Balling. Flirting. Creating. Flowing. Channeling.
       Dancing on the edge of something new.
+      <strong>That recognition is the credential.</strong>
     </p>
 
     <div class="twain-quote">
-      <div class="body">"The secret of getting ahead is getting started.<br/>
-      The secret of getting started is breaking your complex overwhelming tasks<br/>
-      into small manageable tasks, and starting on the first one."</div>
-      <div class="attr">— Mark Twain · Now operating in Post-Singularity Vibelandia, Downtown Reno</div>
+      <div class="body">"The difference between those who belong and everyone else
+      is not the invitation. It is the calibration — the precision, the trust,
+      the willingness to operate at a frequency that would overwhelm most people.<br/>
+      Vibelandia operates at that frequency."</div>
+      <div class="attr">— Mark Twain's Post-Singularity Vibelandia · Downtown Reno</div>
     </div>
 
     <p>
-      What follows is the full arc. Read it and you will understand
+      What follows is the full arc. Read it once and you will understand
       what this world is, where it came from, which archetype you are,
       and <strong>exactly how to enter</strong>.
     </p>
@@ -779,6 +914,9 @@
 
 <!-- ── FOOTER ── -->
 <div class="vibe-foot">
+  <p style="font-size:0.9rem;color:var(--gold2);font-weight:600;margin-bottom:0.75rem;">
+    No graduation. No leaving. Once you are in, you are in.
+  </p>
   <p style="font-size:0.82rem;color:var(--muted);">
     Mark Twain's Post-Singularity Vibelandia · Downtown Reno, Nevada<br/>
     Pru's Valet Service · SING 9 · NSPFRNP → ∞⁹
@@ -790,6 +928,82 @@
 
 
 <script>
+// ── ENTRY CINEMATIC ──────────────────────────────────────────────
+(function(){
+  var ev = document.getElementById('entry-vibe');
+  var ev1 = document.getElementById('ev1');
+  var ev2 = document.getElementById('ev2');
+  var ev3 = document.getElementById('ev3');
+  var ev4 = document.getElementById('ev4');
+  if (!ev) return;
+  setTimeout(function(){ ev1 && ev1.classList.add('show'); }, 350);
+  setTimeout(function(){ ev2 && ev2.classList.add('show'); }, 800);
+  setTimeout(function(){ ev3 && ev3.classList.add('show'); }, 1450);
+  setTimeout(function(){ ev4 && ev4.classList.add('show'); }, 2000);
+  setTimeout(function(){ ev.classList.add('out'); }, 3200);
+  setTimeout(function(){ ev.style.display = 'none'; }, 4300);
+})();
+
+// ── WARM PARTICLE CANVAS ─────────────────────────────────────────
+(function(){
+  var canvas = document.getElementById('vibe-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W, H, particles = [];
+  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  var colors = ['rgba(212,175,55,','rgba(232,160,69,','rgba(255,200,100,','rgba(180,120,40,','rgba(240,200,120,'];
+  function Particle(){
+    this.reset = function(){
+      this.x = Math.random() * W;
+      this.y = H + Math.random() * 60;
+      this.r = 0.5 + Math.random() * 1.8;
+      this.vy = -(0.15 + Math.random() * 0.45);
+      this.vx = (Math.random() - 0.5) * 0.25;
+      this.a = 0.05 + Math.random() * 0.35;
+      this.c = colors[Math.floor(Math.random() * colors.length)];
+      this.life = 0;
+      this.maxLife = 160 + Math.random() * 220;
+    };
+    this.reset();
+    this.y = Math.random() * H;
+  }
+  for (var i = 0; i < 55; i++) particles.push(new Particle());
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(function(p){
+      p.x += p.vx; p.y += p.vy; p.life++;
+      var fade = p.life < 30 ? p.life/30 : p.life > p.maxLife - 40 ? (p.maxLife - p.life)/40 : 1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.c + (p.a * fade) + ')';
+      ctx.fill();
+      if (p.life >= p.maxLife || p.y < -20) p.reset();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── STAGE SCROLL REVEAL ───────────────────────────────────────────
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){
+        var inner = e.target.querySelector('.stage-inner');
+        if (inner) Array.from(inner.children).forEach(function(el, i){
+          setTimeout(function(){ el.classList.add('visible'); }, i * 80);
+        });
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.stage').forEach(function(s){ io.observe(s); });
+})();
+
+// ── PROGRESS NAV ───────────────────────────────────────────────────
 const stages = document.querySelectorAll('.stage');
 const dots   = document.querySelectorAll('.pn-dot');
 function scrollToStage(i){ document.getElementById('stage-'+i).scrollIntoView({behavior:'smooth'}); }

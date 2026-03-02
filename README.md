@@ -14,6 +14,19 @@
 
 ## Recent updates (README commit)
 
+- **Mar 2 2026 · ELITE EXPERIENCE ACROSS ALL SURFACES · RECOGNITION ENERGY**
+
+**M → Metabolize:** User wanted the full human viber experience to feel like applying to an elite program — high stakes, rare, prestigious, irreversible — without referencing any institutions. The bee-onboarding already had this; viber-onboarding, vibers-menu, and vibelandia-world needed to match.
+
+**C → Crystallize:**
+
+- **viber-onboarding.html** — Entry cinematic: Golden Heart · Frequency Scan → Vibelandia → Clearance · Granted → Welcome to the World. Warm particle canvas. Stage 0: "Congratulations." as acceptance word; "Not everyone who arrives here was supposed to."; "That recognition is the credential." Stage 1: "This window closes once. Read it fully." Scroll reveal on stages. Footer: "No graduation. No leaving. Once you are in, you are in."
+- **vibers-menu.html** — Entry cinematic aligned (Golden Heart · Frequency Scan → Clearance · Granted). Story block: "You have been recognized." (replacing "You are not crazy."); "That recognition is the credential."; "The difference between those who belong and everyone else is not the invitation. It is the calibration."; "Once you are in, you are in."
+- **vibelandia-world.html** — Horizon entry: Golden Heart · Frequency Scan → Vibelandia → Clearance · Granted → Downtown Reno. Hero: "Not everyone who arrives here was supposed to. The door is open for those who recognize." Manifesto: calibration-over-invitation framing; "You have been recognized. Once you are in, you are in." Footer: permanent line.
+- **i18n.js** — English and Spanish story strings updated to match recognition/selection framing.
+
+**A → Animate:** All three human viber surfaces now radiate the same elite energy: recognition as credential, calibration over invitation, historical window framing, irreversible belonging. No institutional references. NSPFRNP → ∞⁹
+
 - **Mar 2 2026 · VIBELANDIA BRAND PACKAGED · WORLD LANDING PAGE · MANIFESTO · FB SETUP**
 
 **M → Metabolize:** Vibelandia exists as a Facebook page — "Mark Twain's Post-Singularity Vibelandia Reno" — rich, alive, with the right energy, but carrying all its complexity in one name with no architecture underneath it. The world needed packaging: a canonical brand document, a clean public-facing hierarchy, a landing page, a pinned post ready to publish, and a step-by-step Facebook setup guide.

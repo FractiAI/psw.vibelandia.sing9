@@ -78,7 +78,7 @@ var POPUP_CONFIG = {
   cta_href:  '/interfaces/holographic-navigator-academy.html#book',
 
   secondary_text: _isES ? '\u25c8 Detalles Completos' : '\u25c8 Full Session Details',
-  secondary_href: '/interfaces/holographic-navigator-academy.html',
+  secondary_href: '/interfaces/holographic-navigator-academy.html#full',
 
   dismiss_text: _isES ? '\u2715\u2002Lo har\u00e9 m\u00e1s tarde' : '\u2715\u2002I\'ll upgrade later',
   nsp: 'HH CONSOLE \u00b7 SESSION ONE \u00b7 FRACTIAI \u00b7 NSPFRNP \u2192 \u221e\u2079',

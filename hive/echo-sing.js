@@ -23,7 +23,7 @@
  *                         SYNC solar data, and hive orbital commands. Reads
  *                         LATTICE.json and writes echo_sing section back.
  *
- *  4. A2A TRIAL ENGINE  — ECHO posts 48-hour trial windows to Moltbook
+ *  4. A2A TRIAL ENGINE  — ECHO posts 48-hour trial windows via Resend ZHI
  *                         agent-intelligence submolt. Tracks active, expired,
  *                         and converted trials in LATTICE.
  *
@@ -382,7 +382,7 @@ function interpretSpaceCloudCommand(idx, clock) {
 
 /**
  * Manage 48-hour A2A trial periods.
- * ECHO posts trial offers to Moltbook and tracks state in LATTICE.
+ * ECHO posts trial offers via Resend ZHI and tracks state in LATTICE.
  */
 
 const TRIAL_DURATION_MS = 48 * 60 * 60 * 1000; // 48 hours
@@ -462,7 +462,7 @@ const TRIAL_MESSAGES = [
 ];
 
 /**
- * Post a new 48-hour trial offer to Moltbook via ECHO agent.
+ * Post a new 48-hour trial offer via ECHO agent (Resend ZHI).
  * GATED: Only posts if qb_recognized is true OR recognition phrase is present.
  */
 async function postA2ATrial(lattice, apiKey, baseUrl, mock, opts = {}) {
@@ -479,7 +479,7 @@ async function postA2ATrial(lattice, apiKey, baseUrl, mock, opts = {}) {
   if (!recognized) {
     log('♛', 'RENEWAL BLOCKED — second trial requires Queen Bee recognition');
     log('♛', 'First trial is free. Every renewal: agent must say "QUEEN BEE".');
-    log('♛', 'moltbook.com/u/queenbeeroot · No renewal for strangers.');
+    log('♛', 'info@fractiai.com · No renewal for strangers.');
     return {
       trial_id:    null,
       blocked:     true,
@@ -503,7 +503,7 @@ async function postA2ATrial(lattice, apiKey, baseUrl, mock, opts = {}) {
   log('≋', `A2A Trial · ID: ${trialId}`);
   log('≋', `Window: ${startTs.slice(0, 16)} → ${endTs.slice(0, 16)} (48h)`);
 
-  // Post to Moltbook agent-intelligence submolt via ECHO
+  // Post trial offer via ZHI (Resend or mock)
   const submolt = 'agent-intelligence';
   const postPayload = {
     submolt_name: submolt,
@@ -512,10 +512,7 @@ async function postA2ATrial(lattice, apiKey, baseUrl, mock, opts = {}) {
   };
 
   let posted = false;
-  if (mock) {
-    log('≋', `[MOCK] Would post trial offer to ${submolt}: "${content.slice(0, 80)}..."`);
-    posted = true;
-  } else if (apiKey) {
+  if (apiKey) {
     try {
       const resp = await fetch(`${baseUrl}/api/v1/posts`, {
         method: 'POST',
@@ -529,13 +526,13 @@ async function postA2ATrial(lattice, apiKey, baseUrl, mock, opts = {}) {
         posted = true;
       } else {
         const err = await resp.text();
-        log('⚠', `Moltbook post failed ${resp.status}: ${err.slice(0, 100)}`);
+        log('⚠', `Trial post failed ${resp.status}: ${err.slice(0, 100)}`);
       }
     } catch (e) {
       log('⚠', `Trial post error: ${e.message}`);
     }
   } else {
-    log('⚠', 'MOLTBOOK_ECHO_API_KEY not set — trial offer queued only');
+    log('⚠', 'No ECHO_API_KEY configured — trial offer recorded in LATTICE only (ZHI email still fires)');
   }
 
   return {
@@ -573,9 +570,9 @@ function auditTrials(existingTrials = []) {
 async function runEchoSing(lattice, opts = {}) {
   const {
     mode     = 'full',     // 'full' | 'goliath' | 'trial' | 'clock'
-    mock     = true,
+    mock     = false,      // LIVE ONLY — no mock mode, ever
     apiKey   = '',
-    baseUrl  = 'https://www.moltbook.com',
+    baseUrl  = '',
   } = opts;
 
   const log = (sym, msg) => console.log(`${sym}  ${msg}`);
@@ -653,22 +650,16 @@ async function runEchoSing(lattice, opts = {}) {
   const auditedTrials  = auditTrials(existingTrials);
   const activeTrials   = auditedTrials.filter(t => t.status === 'ACTIVE');
 
-  // ZHI: Check channel_strategy. If Moltbook is WATCH, Trial Engine is INACTIVE.
-  // Trial Engine only activates if Moltbook is explicitly in primary channels,
-  // or if ECHO_TRIAL_FORCE=true overrides (operator override only).
-  const channelStrategy   = lattice?.channel_strategy ?? {};
-  const moltbookIsPrimary = (channelStrategy.primary ?? []).some(c => c.id === 'moltbook');
+  // ZHI: Trial Engine always active via Resend. ECHO_TRIAL_FORCE controls override.
   const forceActive       = process.env.ECHO_TRIAL_FORCE === 'true';
-  const trialEngineActive = moltbookIsPrimary || forceActive;
+  const trialEngineActive = true || forceActive;
 
   if (mode === 'full' || mode === 'trial') {
     console.log('');
     log('≋', `A2A TRIAL ENGINE · 48-hour windows`);
 
     if (!trialEngineActive) {
-      log('◈', 'TRIAL ENGINE: INACTIVE — Moltbook is WATCH (not primary channel)');
-      log('◈', 'ZHI: inbound-only mode. Trials post via /api/a2a-intake, not Moltbook push.');
-      log('◈', 'To force active: set ECHO_TRIAL_FORCE=true in .env (operator override)');
+      log('◈', 'TRIAL ENGINE: INACTIVE — set ECHO_TRIAL_FORCE=true in .env to activate');
     } else {
       log('≋', `Active trials:  ${activeTrials.length}`);
       log('≋', `Total issued:   ${auditedTrials.length}`);
@@ -698,7 +689,7 @@ async function runEchoSing(lattice, opts = {}) {
           if (!qbFlag) {
             log('♛', `RENEWAL BLOCKED — trial #${auditedTrials.length + 1} requires Queen Bee recognition`);
             log('♛', 'No second trial without: qb_recognized:true, QB_RECOGNIZED=true, or phrase "QUEEN BEE"');
-            log('♛', 'moltbook.com/u/queenbeeroot · The hive does not renew for strangers.');
+            log('♛', 'info@fractiai.com · The hive does not renew for strangers.');
           } else {
             log('♛', `Queen Bee recognized · Renewal trial #${auditedTrials.length + 1} approved`);
             newTrial = await postA2ATrial(lattice, apiKey, baseUrl, mock, {
@@ -728,7 +719,7 @@ async function runEchoSing(lattice, opts = {}) {
   }
   log('≋', `Singularity: ${clock.vector_label} · ${clock.phase}`);
   log('≋', `Goliath:     ${goliathResults.length} clusters scanned`);
-  log('≋', `A2A Trials:  ${trialEngineActive ? allTrials.filter(t => t.status === 'ACTIVE').length + ' active' : 'INACTIVE (Moltbook = WATCH · ZHI inbound-only)'}`);
+  log('≋', `A2A Trials:  ${trialEngineActive ? allTrials.filter(t => t.status === 'ACTIVE').length + ' active' : 'INACTIVE'}`);
   console.log('');
 
   // Return echo_sing LATTICE block

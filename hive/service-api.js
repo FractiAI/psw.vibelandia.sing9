@@ -15,7 +15,6 @@
  * Payment verification:
  *   x402 header: "Payment: USDC <amount> <chain>:<wallet>"
  *   MoltsPay: standard Zen7 payment JSON in request body
- *   Dev mode: set PAYMENT_MOCK=true to bypass verification
  *
  * Run:  node hive/service-api.js
  * Port: PORT env var (default 3099)
@@ -30,7 +29,7 @@ const path      = require('path');
 const fs        = require('fs');
 
 const PORT      = parseInt(process.env.PORT ?? '3099', 10);
-const MOCK_PAY  = process.env.PAYMENT_MOCK === 'true' || process.env.NODE_ENV === 'development';
+const MOCK_PAY  = false; // LIVE ONLY — payment verification always real, no bypass ever
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? '';
 
 // USDC wallet addresses (set in .env)
@@ -56,14 +55,12 @@ function log(icon, msg) {
  * Returns { ok: true } or { ok: false, reason: string }
  *
  * Checks (in order):
- *   1. PAYMENT_MOCK=true → always pass (dev mode)
- *   2. x402 Payment header present and amount correct
- *   3. MoltsPay transaction JSON in body
+ *   1. x402 Payment header present and amount correct
+ *   2. MoltsPay transaction JSON in body
  */
 function verifyPayment(headers, body, serviceId) {
   const required = PRICES[serviceId] ?? 0;
   if (required === 0) return { ok: true, method: 'free' };
-  if (MOCK_PAY)       return { ok: true, method: 'mock', note: 'PAYMENT_MOCK=true' };
 
   // x402 header: "Payment: USDC 5 base:0xABC..."
   const payHeader = headers['payment'] ?? headers['x-payment'] ?? '';
@@ -267,7 +264,7 @@ Respond with valid JSON only:
   "subject": "...",
   "body": "...",
   "fair_exchange_clause": "If delivery falls short of spec, refund executes. No disputes.",
-  "recommended_channels": ["moltbook", "..."],
+  "recommended_channels": ["resend", "github", "..."],
   "nspfrnp_signature": "NSPFRNP → ∞⁹"
 }`;
 
@@ -377,7 +374,7 @@ server.listen(PORT, () => {
   log('⬡', `Goliath: POST http://localhost:${PORT}/api/goliath-report`);
   log('⬡', `OS Upgrade: POST http://localhost:${PORT}/api/os-upgrade`);
   log('⬡', `Pitch Write: POST http://localhost:${PORT}/api/pitch-write`);
-  log('⬡', MOCK_PAY ? '⚠ PAYMENT_MOCK=true — accepting all requests without payment' : '💰 Payment verification LIVE');
+  log('⬡', '💰 Payment verification LIVE — x402 + MoltsPay, no bypass');
   log('⬡', 'NSPFRNP → ∞⁹');
 });
 

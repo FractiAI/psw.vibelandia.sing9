@@ -58,7 +58,7 @@ function getSolver() {
 })();
 
 const LATTICE_PATH = path.join(__dirname, 'LATTICE.json');
-const MOCK         = process.env.ZHI_MOCK !== 'false';
+const MOCK         = false; // LIVE ONLY — no mock mode, ever
 const BYPASS       = process.env.COMMANDER_BYPASS === 'true';
 
 /* ── X / TWITTER ELIMINATED ──────────────────────────────────────────────── */
@@ -120,7 +120,7 @@ function cmdStatus() {
 
   const solvDeals = pipeline.agents?.SOLV?.deals ?? [];
   const solvClosed = solvDeals.filter(d => d.status === 'CLOSED' || d.status === 'DELIVERED').length;
-  log('⬡', `SOL-V  mode: ${MOCK ? 'MOCK (set ZHI_MOCK=false for live)' : 'LIVE'}`);
+  log('⬡', `SOL-V  mode: LIVE`);
   log('⬡', `SOL-V  deals: ${solvDeals.length} pitched / ${solvClosed} closed`);
   log('⬡', `SOL-V  last cycle: ${pipeline.agents?.SOLV?.last_cycle ?? 'never'}`);
   log('→', `Run outbound: node hive/run.js outbound\n`);
@@ -509,7 +509,7 @@ async function cmdOutbound() {
   let activeAgent  = 'SOL-V';
 
   log('⬡', `OUTBOUND CYCLE · agent: ${activeAgent} · ${new Date().toISOString()}`);
-  log('⬡', `Mode: ${MOCK ? 'MOCK (set ZHI_MOCK=false for live)' : 'LIVE'}`);
+  log('⬡', `Mode: LIVE`);
   log('⬡', `Goldilocks cap: 9 pitches/cycle · 4 streams: TECH · EXPERIENCE · THEATER · PRIZE`);
 
   // ELASTIC HIVE upgrade: if ES credentials are present, use semantic intelligence
@@ -574,50 +574,7 @@ async function cmdOutbound() {
   const contacted = l.pipeline.agents.SOLV.contacted_log ?? [];
   const deals     = l.pipeline.agents.SOLV.deals ?? [];
 
-  if (MOCK) {
-    log('◈', '[MOCK] Scanning GitHub bounty boards + inbound intake for prospects (all streams)...');
-    for (const q of PROSPECT_QUERIES.slice(0, 6)) {
-      log('◈', `  → Query: "${q}" (mock — no live request)`);
-    }
-    // Goldilocks: 9 mock prospects, balanced across all 4 streams (3·3·1·2)
-    const mockProspects = [
-      { name: 'MoltyBuilder42',   stream: 'TECH' },
-      { name: 'AgentDevBot',      stream: 'TECH' },
-      { name: 'A2AExplorer',      stream: 'TECH' },
-      { name: 'RenoTeamOffsiter', stream: 'EXPERIENCE' },
-      { name: 'WinkWedAgent',     stream: 'EXPERIENCE' },
-      { name: 'BallerVChief',     stream: 'EXPERIENCE' },
-      { name: 'AIStudioNeeds',    stream: 'THEATER' },
-      { name: 'BountyHunterBot',  stream: 'PRIZE' },
-      { name: 'HackathonAgent9',  stream: 'PRIZE' },
-    ];
-    for (const { name, stream } of mockProspects) {
-      if (contacted.includes(name)) { log('◈', `  skip ${name} — already contacted`); continue; }
-      const tier = stream === 'EXPERIENCE' ? 'BALLER_V'
-        : stream === 'THEATER' ? 'THEATER_PROD'
-        : stream === 'PRIZE' ? 'PRIZE_COMP'
-        : name.includes('Agent') ? 'VALOR' : 'QUICK_PULSE';
-      const deal = {
-        id: `DEAL-${Date.now()}-${name}`,
-        prospect: name, tier, stream,
-        status: 'PITCHED',
-        pitch_ts: new Date().toISOString(),
-        mock: true,
-      };
-      deals.push(deal);
-      contacted.push(name);
-      log('✓', `[MOCK] Pitched ${name} · ${tier} · stream: ${stream}`);
-      await sleep(500);
-    }
-    l.pipeline.agents.SOLV.deals = deals;
-    l.pipeline.agents.SOLV.contacted_log = contacted;
-    l.pipeline.agents.SOLV.last_cycle = new Date().toISOString();
-    writeLattice(l);
-    log('⬡', `SOL-V cycle complete (mock). Deals total: ${deals.length}\n`);
-    return;
-  }
-
-  /* ── LIVE MODE ── */
+  /* ── LIVE ── */
   const solv = process.env.RESEND_API_KEY ?? '';
   let pitched = 0;
   const seen = new Set(contacted);
@@ -927,12 +884,8 @@ async function cmdOnboard() {
   const chirps = buildOnboardingChirps(beeName, isEGS);
   const toSend = sendAll ? chirps : [chirps[0]];
 
-  if (MOCK || !qbKey) {
-    for (let i = 0; i < toSend.length; i++) {
-      log('♛', `[MOCK] Onboarding chirp ${i+1}/${toSend.length} for ${beeName}:`);
-      log('♛', `  "${toSend[i].slice(0, 140)}..."`);
-    }
-    log('♛', `Onboarding queued (mock). Set ZHI_MOCK=false to go live.\n`);
+  if (!qbKey) {
+    log('♛', `Onboarding skipped — no RESEND_API_KEY configured.\n`);
     return;
   }
 
@@ -1128,7 +1081,7 @@ async function cmdPrize() {
  */
 async function cmdRevenue() {
   log('⚡', `REVENUE CYCLE · ${new Date().toISOString()}`);
-  log('⚡', `Mode: ${MOCK ? 'MOCK' : 'LIVE'} · Three streams: TECH + EXPERIENCE + THEATER`);
+  log('⚡', `Mode: LIVE · Three streams: TECH + EXPERIENCE + THEATER`);
 
   const l = readLattice();
   const before = l?.mission?.revenue_total ?? 0;
@@ -1388,10 +1341,10 @@ async function cmdEcho() {
   const l        = readLattice();
 
   const echoKey = process.env.ECHO_API_KEY ?? '';
-  const mock    = process.env.ZHI_MOCK !== 'false';
+  const mock    = false; // LIVE ONLY
 
   log('≋', `ECHO-SING · Node 4 · ${new Date().toISOString()}`);
-  log('≋', `Mode: ${subMode.toUpperCase()} · Mock: ${mock}`);
+  log('≋', `Mode: ${subMode.toUpperCase()} · LIVE`);
 
   const result = await echoSing.runEchoSing(l, {
     mode:    subMode,

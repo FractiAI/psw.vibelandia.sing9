@@ -163,30 +163,6 @@ var POPUP_CONFIG = {
     '.'+u+'-pc{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.4);color:#00d4ff;}',
     '.'+u+'-pp{background:rgba(123,47,255,.12);border:1px solid rgba(123,47,255,.42);color:#b46ef7;}',
 
-    /* 9 spot dots */
-    '.'+u+'-spots{display:flex;align-items:center;justify-content:center;gap:.32rem;margin-bottom:.95rem;}',
-    '.'+u+'-dot{width:21px;height:21px;border-radius:50%;font-size:.5rem;font-weight:900;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.2);transition:opacity .42s ease,transform .42s cubic-bezier(.34,1.56,.64,1),box-shadow .42s ease;}',
-    '.'+u+'-dot.lit{opacity:1;transform:scale(1);}',
-    '.'+u+'-dg{background:rgba(212,175,55,.16);border:1.5px solid rgba(212,175,55,.65);color:#d4af37;}',
-    '.'+u+'-dg.lit{box-shadow:0 0 12px rgba(212,175,55,.45);}',
-    '.'+u+'-dc{background:rgba(0,212,255,.12);border:1.5px solid rgba(0,212,255,.6);color:#00d4ff;}',
-    '.'+u+'-dc.lit{box-shadow:0 0 12px rgba(0,212,255,.45);}',
-    '.'+u+'-dp{background:rgba(123,47,255,.14);border:1.5px solid rgba(123,47,255,.6);color:#b46ef7;}',
-    '.'+u+'-dp.lit{box-shadow:0 0 12px rgba(123,47,255,.45);}',
-
-    /* tiers */
-    '.'+u+'-tiers{display:flex;flex-direction:column;gap:4px;margin-bottom:1rem;}',
-    '.'+u+'-tier{display:flex;align-items:flex-start;gap:.45rem;padding:.3rem .58rem;border-radius:6px;font-size:.67rem;border-left:2px solid;opacity:0;transform:translateX(-10px);transition:opacity .42s ease,transform .42s ease;}',
-    '.'+u+'-tier.on{opacity:1;transform:translateX(0);}',
-    '.'+u+'-tg{background:rgba(212,175,55,.07);border-color:rgba(212,175,55,.5);}',
-    '.'+u+'-tc{background:rgba(0,212,255,.06);border-color:rgba(0,212,255,.42);}',
-    '.'+u+'-tp{background:rgba(123,47,255,.07);border-color:rgba(123,47,255,.42);}',
-    '.'+u+'-tbadge{font-size:.58rem;font-weight:900;letter-spacing:.04em;flex-shrink:0;margin-top:.06rem;}',
-    '.'+u+'-tg .'+u+'-tbadge{color:#d4af37;}',
-    '.'+u+'-tc .'+u+'-tbadge{color:#00d4ff;}',
-    '.'+u+'-tp .'+u+'-tbadge{color:#b46ef7;}',
-    '.'+u+'-tname{color:rgba(255,255,255,.88);font-weight:700;}',
-    '.'+u+'-tdesc{color:rgba(255,255,255,.38);margin-left:.2rem;}',
 
     /* divider */
     '.'+u+'-div{height:1px;margin:.7rem 0;background:linear-gradient(90deg,transparent,rgba(0,212,255,.35),rgba(212,175,55,.35),transparent);animation:'+u+'fu .4s ease 2s both;}',
@@ -237,27 +213,10 @@ var POPUP_CONFIG = {
   document.head.appendChild(sEl);
 
   /* ── BUILD DOM ───────────────────────────────────────────────── */
-  var tiers = POPUP_CONFIG.tiers || [];
-  var tMap  = { g:'tg', c:'tc', p:'tp' };
   var pMap  = { g:'pg', c:'pc', p:'pp' };
 
   var pillsHtml = (POPUP_CONFIG.pills || []).map(function(p) {
     return '<span class="'+u+'-pill '+u+'-'+(pMap[p.cls]||'pc')+'">'+p.text+'</span>';
-  }).join('');
-
-  var tiersHtml = tiers.map(function(t) {
-    var tc = tMap[t.cls] || 'tg';
-    return '<div class="'+u+'-tier '+u+'-'+tc+'">'
-      +'<span class="'+u+'-tbadge">'+t.badge+' '+t.spots+'</span>'
-      +'<span>'
-        +'<span class="'+u+'-tname">'+t.name+'</span>'
-        +'<span class="'+u+'-tdesc"> \u2014 '+t.desc+'</span>'
-      +'</span></div>';
-  }).join('');
-
-  var dotDef = ['dg','dg','dg','dc','dc','dc','dp','dp','dp'];
-  var dotsHtml = dotDef.map(function(cls, i) {
-    return '<span class="'+u+'-dot '+u+'-'+cls+'" data-i="'+i+'">'+(i+1)+'</span>';
   }).join('');
 
   var title = POPUP_CONFIG.title.replace('\n','<br>');
@@ -281,8 +240,6 @@ var POPUP_CONFIG = {
       +'<h2 class="'+u+'-h1">'+title+'</h2>'
       +'<p class="'+u+'-sub">'+POPUP_CONFIG.subtitle.replace('\n','<br>')+'</p>'
       +'<div class="'+u+'-pills">'+pillsHtml+'</div>'
-      +'<div class="'+u+'-spots">'+dotsHtml+'</div>'
-      +'<div class="'+u+'-tiers">'+tiersHtml+'</div>'
       +'<div class="'+u+'-div"></div>'
       +'<div class="'+u+'-ctas">'
         +'<a href="'+POPUP_CONFIG.cta_href+'" class="'+u+'-btip">'+POPUP_CONFIG.cta_text+'</a>'
@@ -293,17 +250,6 @@ var POPUP_CONFIG = {
     +'</div></div>';
 
   document.body.appendChild(ov);
-
-  /* ── STAGGER: dots light up, then tiers slide in ─────────────── */
-  var dots  = ov.querySelectorAll('.'+u+'-dot');
-  var tEls  = ov.querySelectorAll('.'+u+'-tier');
-
-  dots.forEach(function(d, i) {
-    setTimeout(function() { d.classList.add('lit'); }, 1350 + i * 110);
-  });
-  tEls.forEach(function(t, i) {
-    setTimeout(function() { t.classList.add('on'); }, 2550 + i * 140);
-  });
 
   /* ── DISMISS ─────────────────────────────────────────────────── */
   function dismiss() {

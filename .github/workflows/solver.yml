@@ -25,48 +25,56 @@ jobs:
     timeout-minutes: 55       # Give solver full 55m; GitHub Actions limit is 6h
 
     steps:
-      # BUG-FIX: use SOLVER_GITHUB_TOKEN (PAT with repo scope) so git push works later.
-      # The built-in github.token cannot push to external repos or commit back here.
+      # Uses SOLVER_GITHUB_TOKEN (PAT) when available so git push works in the commit step.
+      # Falls back to the built-in github.token for public-repo checkouts when secret is absent.
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.SOLVER_GITHUB_TOKEN }}
+          token: ${{ secrets.SOLVER_GITHUB_TOKEN || github.token }}
 
       - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # BUG-FIX: was `node hive/solver.js` — that file is a module with no entry point;
-      # running it directly does absolutely nothing (loads, exports, exits).
-      # Correct entrypoint is `node hive/run.js solve` which loads .env, reads LATTICE,
-      # calls solver.solve(), and writes results back to LATTICE.json.
+      # Diagnose which secrets are live this cycle (values never printed, only presence).
+      - name: Secret presence check
+        run: |
+          echo "SOLVER_GITHUB_TOKEN set: ${{ secrets.SOLVER_GITHUB_TOKEN != '' }}"
+          echo "ANTHROPIC_API_KEY   set: ${{ secrets.ANTHROPIC_API_KEY   != '' }}"
+          echo "GROQ_API_KEY        set: ${{ secrets.GROQ_API_KEY        != '' }}"
+          echo "RESEND_API_KEY      set: ${{ secrets.RESEND_API_KEY      != '' }}"
+
+      # Entrypoint is run.js solve — loads LATTICE, calls solver.solve(), writes results back.
+      # continue-on-error: true so a solver crash (e.g. API down) never kills the whole job.
       - name: Run SOLVER (Algora · IssueHunt · Gitcoin — ZHI)
+        continue-on-error: true
         run: node hive/run.js solve
         env:
-          GITHUB_TOKEN:        ${{ secrets.SOLVER_GITHUB_TOKEN }}
-          ANTHROPIC_API_KEY:   ${{ secrets.ANTHROPIC_API_KEY }}
-          GROQ_API_KEY:        ${{ secrets.GROQ_API_KEY }}
-          WALLET_ADDRESS:      ${{ secrets.WALLET_ADDRESS }}
-          PAYOUT_EMAIL:        ${{ secrets.PAYOUT_EMAIL }}
-          # BUG-FIX: was '100' — current policy in PRIZE_TRACKER.md and solver.js default is $500
-          MIN_BOUNTY_USD:      '500'
-          MATCH_THRESHOLD:     '0.80'
+          GITHUB_TOKEN:          ${{ secrets.SOLVER_GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
+          GROQ_API_KEY:          ${{ secrets.GROQ_API_KEY }}
+          WALLET_ADDRESS:        ${{ secrets.WALLET_ADDRESS }}
+          PAYOUT_EMAIL:          ${{ secrets.PAYOUT_EMAIL }}
+          MIN_BOUNTY_USD:        '500'
+          MATCH_THRESHOLD:       '0.80'
           FEASIBILITY_THRESHOLD: '0.80'
-          SOLVER_MAX_ATTEMPTS: '5'
-          MOLTBOOK_MOCK:       'true'
+          SOLVER_MAX_ATTEMPTS:   '5'
+          ZHI_MOCK:              'true'
 
       - name: Run Email Outbound (ZHI)
+        continue-on-error: true
         run: node hive/run.js email
         env:
-          GITHUB_TOKEN:              ${{ secrets.SOLVER_GITHUB_TOKEN }}
-          ANTHROPIC_API_KEY:         ${{ secrets.ANTHROPIC_API_KEY }}
-          RESEND_API_KEY:            ${{ secrets.RESEND_API_KEY }}
-          EMAIL_OUTBOUND_TARGETS:    ${{ secrets.EMAIL_OUTBOUND_TARGETS }}
+          GITHUB_TOKEN:           ${{ secrets.SOLVER_GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY:      ${{ secrets.ANTHROPIC_API_KEY }}
+          RESEND_API_KEY:         ${{ secrets.RESEND_API_KEY }}
+          EMAIL_OUTBOUND_TARGETS: ${{ secrets.EMAIL_OUTBOUND_TARGETS }}
 
-      # BUG-FIX: solver and echo both mutate LATTICE.json (prize_pipeline, trials, goliath).
-      # Without this step those mutations vanish at end of run — next cycle starts blind.
+      # Solver and email both mutate LATTICE.json; commit saves state for next cycle.
+      # continue-on-error: true so a push failure (missing PAT scope) never kills the job.
       - name: Commit LATTICE.json updates
+        continue-on-error: true
         run: |
           git config user.name  "SING9 Hive"
           git config user.email "hive@fractiai.com"

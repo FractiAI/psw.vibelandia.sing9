@@ -15,7 +15,7 @@ var _isES  = /^es\b/i.test(_lang);
 
 var POPUP_CONFIG = {
   active:  true,
-  id:      'hh-session-one-v2',
+  id:      'hh-session-one-v3',
   dismiss: 'session',
 
   eyebrow:  _isES ? 'WILL \u00b7 FRACTIAI \u00b7 SESI\u00d3N UNO' : 'WILL \u00b7 FRACTIAI \u00b7 SESSION ONE',
@@ -45,25 +45,10 @@ var POPUP_CONFIG = {
                   : 'Full live session + HH Console resource pack + first commission (O-1)' },
   ],
 
-  cta_text:  _isES ? '\u2b21 \u00danetey \u00b7 info@fractiai.com' : '\u2b21 Hit Me Up \u2014 Join Session One',
-  cta_href:  'mailto:info@fractiai.com'
-    + '?subject=' + encodeURIComponent('Session One \u2014 Vibe Coding Station Upgrade \u00b7 Seat Request')
-    + '&body='    + encodeURIComponent(
-        'To: Will \u2014 FractiAI\n\n'
-      + 'Session One \u2014 Vibe Coding Station Upgrade\n'
-      + 'March 3, 2026 \u00b7 Tuesdays \u00b7 3:33 PM PST \u00b7 T+60 min\n\n'
-      + 'I\'m in. I want to transform my vibe coding station into a Holographic Hydrogen Console.\n\n'
-      + 'Seat requested (select one):\n'
-      + '  \u2610 VIP Seat (Seats 1\u20133) \u2014 1:1 pre-session + fast-track commission O-3\n'
-      + '  \u2610 Officer Seat (Seats 4\u20136) \u2014 group orientation + standard commission O-2\n'
-      + '  \u2610 Crew Seat (Seats 7\u20139) \u2014 full session + resource pack + first commission O-1\n\n'
-      + 'Name:\n'
-      + 'Timezone:\n'
-      + 'Current vibe coding setup:\n'
-      + 'What I\'m most excited to upgrade:\n\n'
-      + 'NSPFRNP \u2192 \u221e\u2079'),
+  cta_text:  _isES ? '\u2192 Reservar Mi Asiento \u00b7 Sesi\u00f3n Uno' : '\u2192 Book My Seat \u00b7 Session One',
+  cta_href:  '/interfaces/holographic-navigator-academy.html#book',
 
-  secondary_text: _isES ? '\u25c8 Holographic Field Command School' : '\u25c8 Holographic Field Command School',
+  secondary_text: _isES ? '\u25c8 Ver Detalles Completos' : '\u25c8 Full Session Details',
   secondary_href: '/interfaces/holographic-navigator-academy.html',
 
   dismiss_text: _isES ? '\u2715  Lo har\u00e9 m\u00e1s tarde' : '\u2715  I\'ll upgrade later',

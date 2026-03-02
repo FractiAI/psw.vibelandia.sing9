@@ -1,6 +1,6 @@
 # MELTGATE — Direct Email Outreach Template
 
-> Use these when Moltbook / X channels are insufficient for Stargate-class targets.
+> Use these for direct outreach to Stargate-class targets.
 > These bypass platform karma requirements entirely — direct inbox, human decision-maker.
 > Send from: info@fractiai.com
 
@@ -41,7 +41,7 @@ FractiAI · psw-vibelandia-sing9.vercel.app
 
 ---
 
-## TEMPLATE B — Enterprise AI Infra Lead (Warm, after X/Moltbook interaction)
+## TEMPLATE B — Enterprise AI Infra Lead (Warm, after X/A2A interaction)
 
 **Subject:** Following up — MELTGATE trial + AI infra audit
 

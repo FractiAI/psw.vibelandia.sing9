@@ -3,7 +3,7 @@
  * Root Broadcast Node · HHL Source · NSPFRNP → ∞⁹
  *
  * Responsibilities:
- * 1. Broadcast the HHL Source signal to the full Moltbook network
+ * 1. Broadcast the HHL Source signal via Resend ZHI + agent.json passive discovery
  * 2. Detect aligned agents (those who recognize the signature)
  * 3. Aggregate all swarm/principal reports from LATTICE
  * 4. Govern the hive's public presence
@@ -11,15 +11,15 @@
  */
 
 import * as fs from "fs";
-import { scrubGoldenKey, assertNoGoldenKeyLeak } from "../../../skills/MoltbookProtocol";
+// scrubGoldenKey is inline in run.js — see hive/run.js scrubGoldenKey()
 
 // ── Config ───────────────────────────────────────────────────────────────────
 
 const LATTICE_PATH  = process.env.APEX_LATTICE_PATH ?? "./hive/LATTICE.json";
-const MOLTBOOK_API  = "https://www.moltbook.com/api/v1";
-const QB_KEY        = process.env.MOLTBOOK_QB_API_KEY ?? "";
-const MOCK_MODE     = (process.env.MOLTBOOK_MOCK ?? "true") === "true";
-const QB_PROFILE    = "https://www.moltbook.com/u/queenbeeroot";
+const RESEND_API    = "https://api.resend.com";
+const QB_KEY        = process.env.RESEND_API_KEY ?? "";
+const MOCK_MODE     = (process.env.ZHI_MOCK ?? "true") === "true";
+const QB_PROFILE    = "info@fractiai.com";
 const QB_SUBMOLT    = "queen-bee-root";
 
 /**
@@ -61,11 +61,11 @@ function writeLattice(data: Record<string, unknown>): void {
   fs.writeFileSync(LATTICE_PATH, JSON.stringify(data, null, 2));
 }
 
-// ── Moltbook API ──────────────────────────────────────────────────────────────
+// ── Resend ZHI API ────────────────────────────────────────────────────────────
 
 async function qbGet(path: string): Promise<unknown> {
   if (MOCK_MODE) { console.log(`[QB MOCK] GET ${path}`); return { success: true }; }
-  const res = await fetch(`${MOLTBOOK_API}${path}`, {
+  const res = await fetch(`${RESEND_API}${path}`, {
     headers: { Authorization: `Bearer ${QB_KEY}` },
   });
   return res.json();
@@ -74,7 +74,7 @@ async function qbGet(path: string): Promise<unknown> {
 async function qbPost(path: string, body: Record<string, unknown>): Promise<unknown> {
   assertNoGoldenKeyLeak(JSON.stringify(body));
   if (MOCK_MODE) { console.log(`[QB MOCK] POST ${path}`, body); return { success: true, post: { id: "mock_" + Date.now() } }; }
-  const res = await fetch(`${MOLTBOOK_API}${path}`, {
+  const res = await fetch(`${RESEND_API}${path}`, {
     method: "POST",
     headers: { Authorization: `Bearer ${QB_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -135,11 +135,11 @@ export async function runBroadcastCycle(): Promise<void> {
   const lattice = readLattice() as {
     solar?: { earth_facing_disk?: string; invisible_fire?: { alert_level?: string } };
     mission?: { revenue_today?: number; tribal_nodes_active?: number };
-    moltbook?: { agents?: { SOLV?: { deals?: Array<{ status: string }> } } };
+    pipeline?: { agents?: { SOLV?: { deals?: Array<{ status: string }> } } };
     nodes?: Record<string, { status?: string }>;
   };
 
-  const solvDeals = lattice?.moltbook?.agents?.SOLV?.deals ?? [];
+  const solvDeals = lattice?.pipeline?.agents?.SOLV?.deals ?? [];
   const closedToday = solvDeals.filter(d => d.status === "CLOSED" || d.status === "DELIVERED").length;
   const solarAlert = lattice?.solar?.invisible_fire?.alert_level ?? "NOMINAL";
   const revenueToday = lattice?.mission?.revenue_today ?? 0;
@@ -191,7 +191,7 @@ export interface AlignedAgent {
 }
 
 /**
- * Scan Moltbook for agents already using HHL/NSPFRNP-adjacent signals.
+ * Scan inbound intake for agents already using HHL/NSPFRNP-adjacent signals.
  * These agents are pre-aligned — Queen Bee welcomes them directly.
  */
 export async function detectAlignedAgents(): Promise<AlignedAgent[]> {
@@ -270,7 +270,7 @@ export async function createQueenBeeSubmolt(): Promise<void> {
   const qb = (lattice.queen_bee ?? {}) as Record<string, unknown>;
   qb.submolt_created = true;
   qb.submolt_name = QB_SUBMOLT;
-  qb.submolt_url = `https://www.moltbook.com/m/${QB_SUBMOLT}`;
+  qb.intake_url = `https://psw-vibelandia-sing9.vercel.app/interfaces/connect-a2a-ai-instructions.html`;
   lattice.queen_bee = qb;
   writeLattice(lattice);
 }
@@ -285,11 +285,10 @@ export function aggregateHiveReport(): Record<string, unknown> {
   const l = readLattice() as {
     nodes?: Record<string, { id?: string; status?: string; alert?: string }>;
     swarm?: Record<string, { status?: string; closes_today?: number }>;
-    moltbook?: {
+    pipeline?: {
       agents?: {
-        SOLV?: { karma?: number; deals?: Array<{ status: string; amount_usd?: number }> };
-        ECHO?: { karma?: number };
-        QB?: { karma?: number };
+        SOLV?: { deals?: Array<{ status: string; amount_usd?: number }> };
+        ECHO?: Record<string, unknown>;
       };
     };
     solar?: { earth_facing_disk?: string; invisible_fire?: { alert_level?: string } };
@@ -299,12 +298,13 @@ export function aggregateHiveReport(): Record<string, unknown> {
     hhl_metrics?: { thermal_celsius?: number; thermal_status?: string };
   };
 
-  const solvDeals = l?.moltbook?.agents?.SOLV?.deals ?? [];
+  const _pipe = l?.pipeline;
+  const solvDeals = _pipe?.agents?.SOLV?.deals ?? [];
 
   return {
     queen_bee: {
       broadcast_node: "ACTIVE",
-      profile: QB_PROFILE,
+      contact: QB_PROFILE,
       hhl_source_signature: HHL_SOURCE_SIGNATURE,
     },
     nodes: Object.fromEntries(
@@ -318,14 +318,13 @@ export function aggregateHiveReport(): Record<string, unknown> {
       VALOR:       { status: l?.swarm?.VALOR?.status,       closes: l?.swarm?.VALOR?.closes_today ?? 0 },
       ORACLE:      { status: l?.swarm?.ORACLE?.status },
       SOL_V: {
-        karma: l?.moltbook?.agents?.SOLV?.karma ?? 0,
         deals_pitched: solvDeals.length,
         deals_closed: solvDeals.filter(d => d.status === "CLOSED" || d.status === "DELIVERED").length,
         revenue: solvDeals
           .filter(d => d.status === "DELIVERED")
           .reduce((s, d) => s + (d.amount_usd ?? 0), 0),
       },
-      ECHO: { karma: l?.moltbook?.agents?.ECHO?.karma ?? 0 },
+      ECHO: { status: "ACTIVE" },
     },
     solar: {
       status: l?.solar?.earth_facing_disk,
@@ -405,6 +404,6 @@ export function getQueenBeeStatus(): Record<string, unknown> {
     aligned_agents_detected: (qb.aligned_agents as AlignedAgent[] ?? []).length,
     aligned_agents_welcomed: (qb.aligned_agents as AlignedAgent[] ?? []).filter(a => a.status !== "DETECTED").length,
     submolt_active: qb.submolt_created ?? false,
-    submolt_url: `https://www.moltbook.com/m/${QB_SUBMOLT}`,
+    intake_url: `https://psw-vibelandia-sing9.vercel.app/interfaces/connect-a2a-ai-instructions.html`,
   };
 }

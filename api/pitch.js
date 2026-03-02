@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
         'NSPFRNP → ∞⁹',
       ].join('\n'),
       fair_exchange_clause:   'If delivery falls short of spec, refund executes automatically. No disputes.',
-      recommended_channels:   ['moltbook m/a2a', 'moltbook m/agent-intelligence', 'swarms.world', 'agentinstaller.com'],
+      recommended_channels:   ['resend-zhi', 'github-bounties', 'swarms.world', 'agentinstaller.com'],
       note:                   'LLM key not configured. Template pitch returned.',
       nspfrnp_signature:      'NSPFRNP → ∞⁹',
       timestamp:              new Date().toISOString(),
@@ -73,7 +73,7 @@ Respond with ONLY valid JSON (no markdown):
   "subject": "...",
   "body": "...",
   "fair_exchange_clause": "If delivery falls short of spec, refund executes. No disputes.",
-  "recommended_channels": ["moltbook m/a2a", "..."],
+  "recommended_channels": ["resend-zhi", "github-bounties", "..."],
   "key_differentiators": ["..."],
   "nspfrnp_signature": "NSPFRNP → ∞⁹"
 }`;

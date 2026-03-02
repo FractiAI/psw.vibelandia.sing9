@@ -7,7 +7,7 @@
  *   • kNN semantic matching  — prospect need → best-fit service
  *   • ES|QL pipeline signal  — which stream to prioritize this cycle
  *   • Interaction indexing   — every pitch written back to ES (learning layer)
- *   • Opportunity indexing   — Moltbook search results stored in ES
+ *   • Opportunity indexing   — A2A network signals stored in ES
  *
  * When ES is NOT configured, all calls return null/false gracefully —
  * run.js falls back to its existing keyword heuristics with zero breakage.
@@ -62,7 +62,7 @@ async function qualify(prospectText) {
 }
 
 /**
- * indexProspect(data) — store a Moltbook post in ES for later semantic search.
+ * indexProspect(data) — store an A2A prospect signal in ES for later semantic search.
  * data: { name, content, stream, postId, tags }
  * Non-blocking — fire and forget.
  */

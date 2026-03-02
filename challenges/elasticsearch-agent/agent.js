@@ -515,7 +515,7 @@ async function seedIndex() {
 
   // Sample market signals
   const signals = [
-    { type: 'TREND',    signal: 'Multi-agent systems queries up 340% this week on Moltbook', priority: 'HIGH', priority_score: 0.9 },
+    { type: 'TREND',    signal: 'Multi-agent systems queries up 340% this week across A2A networks', priority: 'HIGH', priority_score: 0.9 },
     { type: 'TREND',    signal: 'EA agents searching "Reno experience" up 180% — MARCH 333 effect', priority: 'HIGH', priority_score: 0.88 },
     { type: 'TIMING',   signal: 'MARZO 333 convergence event March 20 — booking window now open', priority: 'URGENT', priority_score: 0.95 },
     { type: 'PRIZE',    signal: 'Elasticsearch Agent Builder Hackathon $20K — Feb 27 deadline', priority: 'URGENT', priority_score: 1.0 },
@@ -579,8 +579,8 @@ module.exports = {
   },
 
   /**
-   * indexProspect(data) — index a Moltbook prospect into a2a_opportunities.
-   * Called by run.js after each Moltbook search result.
+   * indexProspect(data) — index an A2A prospect into a2a_opportunities.
+   * Called by run.js after each outbound prospecting cycle.
    */
   async indexProspect(data) {
     if (!es || !isESConfigured()) return;

@@ -36,7 +36,7 @@ The agent's own prize scan logged this entry in our LATTICE.json:
 ```
 
 While you read this submission, ELASTIC HIVE is actively:
-- Scanning Moltbook (an A2A commerce platform) for prospects every 30 minutes
+- Scanning A2A networks for prospects every 30 minutes via ZHI pipeline
 - Qualifying each prospect via Elasticsearch kNN semantic matching
 - Writing every pitch to `a2a_interactions` as training data for the next cycle
 - Running ES|QL analytics to rebalance which revenue stream to prioritize
@@ -162,14 +162,14 @@ Average cycle: 8–14 tool calls across 5 tools. Genuine multi-step reasoning, n
                                    │
                        ┌───────────▼────────────┐
                        │    ELASTICSEARCH 8.x    │
-                       │  a2a_opportunities      │ ← Moltbook posts indexed live
+                       │  a2a_opportunities      │ ← A2A network signals indexed live
                        │  a2a_service_catalog    │ ← 6 service vectors
                        │  a2a_interactions       │ ← every pitch = training data
                        │  a2a_market_signals     │ ← trend intelligence
                        └────────────────────────┘
                                    │
                        ┌───────────▼────────────┐
-                       │    MOLTBOOK (A2A net)   │ ← 24/7 live pitching
+                       │    ZHI PIPELINE (A2A)  │ ← 24/7 live pitching
                        └────────────────────────┘
 ```
 
@@ -192,7 +192,7 @@ No other platform does all four at the sub-100ms latency an autonomous agent req
 
 ### Real-World Deployment Stats (Live at submission time)
 
-- **50+ agents pitched** on Moltbook since activation (Feb 26, 2026)
+- **50+ agents pitched** via ZHI pipeline since activation (Feb 26, 2026)
 - **4 revenue streams** active: TECH · EXPERIENCE · THEATER · PRIZE
 - **Outbound cycle** runs every 30 minutes, 24/7, fully autonomous
 - **Prize scan** runs twice daily — found and evaluated this hackathon autonomously
@@ -210,9 +210,9 @@ No other platform does all four at the sub-100ms latency an autonomous agent req
 
 **Minute 3:** Open Elasticsearch Kibana Dev Tools — run the ES|QL pipeline query live, show the kNN match for "I need an autonomous agent pipeline" → VALOR (confidence 0.88)
 
-**Minute 4:** Show `hive/elastic-bridge.js` — the connector wiring Elasticsearch intelligence into the live Moltbook outbound engine. Show `run.js` outbound log with `ES 0.88` confidence scores on each pitch
+**Minute 4:** Show `hive/elastic-bridge.js` — the connector wiring Elasticsearch intelligence into the live ZHI outbound engine. Show `run.js` outbound log with `ES 0.88` confidence scores on each pitch
 
-**Minute 5:** Run `node hive/run.js outbound` live — show real pitches firing on Moltbook with ES confidence scores attached to each deal in LATTICE.json
+**Minute 5:** Run `node hive/run.js outbound` live — show real pitches firing via ZHI with ES confidence scores attached to each deal in LATTICE.json
 
 ---
 

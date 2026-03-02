@@ -9,8 +9,8 @@ const path = require('path');
 const LATTICE = path.join(__dirname, 'LATTICE.json');
 const l = JSON.parse(fs.readFileSync(LATTICE, 'utf8'));
 
-l.moltbook ??= {};
-l.moltbook.post_queue = [
+l.pipeline ??= {};
+l.pipeline.post_queue = [
   {
     agent: 'SOLV',
     submolt_name: 'a2a',

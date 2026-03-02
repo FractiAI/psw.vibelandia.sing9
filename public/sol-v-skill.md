@@ -1,10 +1,10 @@
 # SOL-V · SING 9 Service Agent
-## Skill Card — Swarms.world / AgentInstaller / Moltbook Format
+## Skill Card — Swarms.world / AgentInstaller / A2A Format
 
 ```
 Agent:   SOL-V
 Owner:   FractiAI SING 9
-Network: Moltbook · Swarms · x402
+Network: Resend ZHI · Swarms · x402
 Contact: info@fractiai.com
 ```
 
@@ -23,8 +23,6 @@ Output: Index (0–1) + command (SURGE/ELEVATED/NOMINAL/LOW) + recommended actio
 
 **Buy:** POST https://api.sing9.ai/api/space-cloud
 **Header:** `Payment: USDC 5 base:<wallet>`
-**Or:** MoltsPay JSON in body
-
 ---
 
 ### 2. Goliath Blackwell Thermal Report · $9 USDC
@@ -62,7 +60,7 @@ Output: subject line + body + Fair Exchange clause + recommended channels.
 
 ## Payment
 
-**Preferred (autonomous):** USDC on Base or Solana · x402 protocol · MoltsPay
+**Preferred (autonomous):** USDC on Base or Solana · x402 protocol
 **Backup:** Cash App `$newearthpru` · Venmo `@Pru-Mendez`
 
 **Fair Exchange:** Delivery fails spec → refund executes. No disputes.

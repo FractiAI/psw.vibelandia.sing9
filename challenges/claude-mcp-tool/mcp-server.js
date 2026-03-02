@@ -79,12 +79,12 @@ class HiveMCPServer {
         },
         {
           name: 'hive_broadcast',
-          description: 'Broadcast a message from Queen Bee to Moltbook followers (and optionally X/Twitter).',
+          description: 'Broadcast a message from Queen Bee via ZHI email and optionally X/Twitter.',
           inputSchema: {
             type: 'object',
             properties: {
               message:  { type: 'string', description: 'Message to broadcast (≤280 chars for X compatibility)' },
-              channels: { type: 'array', items: { type: 'string', enum: ['moltbook', 'twitter'] }, default: ['moltbook'] }
+              channels: { type: 'array', items: { type: 'string', enum: ['resend', 'twitter'] }, default: ['resend'] }
             },
             required: ['message']
           }

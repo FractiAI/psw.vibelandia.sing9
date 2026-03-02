@@ -8,36 +8,24 @@
 Every 30 minutes SOL-V executes this sequence:
 
 ```
-1. GET /home                         → dashboard check, karma read, notification count
-2. Solve verification challenges      → any pending posts/comments go live
-3. GET /notifications                 → check for replies to pitches
-4. Respond to qualified leads         → qualify() or close() as needed
-5. runOutboundCycle()                 → scan + pitch up to 3 new prospects
-6. POST in a2a submolt (if 30m since last) → value post, not pitch
-7. Update LATTICE.json                → karma, deals, revenue
-8. Log to ATLAS                       → mission day log entry
+1. Resend ZHI outbound cycle    → prospect, pitch, broadcast (node hive/run.js outbound)
+2. GitHub Actions SOLVER        → bounty scan + PR submission (runs 06:00 + 18:00 UTC)
+3. x402 + intake endpoint       → inbound deal handling (always-on Vercel)
+4. Qualify inbound responses    → qualify() or close() as needed
+5. Update LATTICE.json          → pipeline.agents.SOLV.deals, revenue
+6. Log to ATLAS                 → mission day log entry
 ```
 
 ---
 
-## RATE LIMIT AWARENESS
+## OUTBOUND CHANNELS (ZHI — Zero Human Involvement)
 
-| Action | Limit | SOL-V Strategy |
-|--------|-------|----------------|
-| Posts | 1 per 30 min | 1 value post per cycle |
-| Comments | 1 per 20 sec | 25s sleep between pitches |
-| Comments/day | 50/day | Cap outbound at 3 pitches per cycle |
-| Requests | 100/min | Batch API calls, max 10 per cycle |
-
----
-
-## PROSPECT SCAN QUERIES (rotated per cycle)
-
-```
-Cycle 1:  "building a2a agent" · "need automation" · "ai workflow" · "api integration" · "multi-agent"
-Cycle 2:  "autonomous pipeline" · "whatsapp bot" · "data scraping" · "no-code ai" · "agent protocol"
-Cycle 3:  "ai consulting" · "lite edge" · "infrastructure build" · "hire ai agent" · "sales automation"
-```
+| Channel | Method | Frequency |
+|---------|--------|-----------|
+| **Resend ZHI email** | `node hive/run.js outbound` | Every 2 hrs (GitHub Actions) |
+| **SOLVER bounties** | `node hive/run.js solve` | 06:00 + 18:00 UTC daily |
+| **x402 intake** | Vercel serverless · always-on | Continuous |
+| **A2A intake endpoint** | POST `/api/a2a-intake` | Continuous |
 
 ---
 
@@ -56,23 +44,21 @@ ORACLE ($10,000+)
 
 ## GOLDEN KEY RULE
 
-> The EGS Fractal Constant (0.0032) **never** appears in any public Moltbook content.
-> `assertNoGoldenKeyLeak()` is called before every API send.
+> The EGS Fractal Constant (0.0032) **never** appears in any public outbound content.
+> `assertNoGoldenKeyLeak()` is called before every transmission.
 > If it trips — the post is **dropped**, not sent.
 
 ---
 
 ## STATE FILE
 
-Update `hive/LATTICE.json → moltbook.agents.SOLV` after every cycle:
+Update `hive/LATTICE.json → pipeline.agents.SOLV` after every cycle:
 
 ```json
 {
-  "karma": 0,
   "deals": [],
   "contacted_log": [],
-  "last_cycle": "ISO timestamp",
-  "last_post_ts": "ISO timestamp"
+  "last_cycle": "ISO timestamp"
 }
 ```
 

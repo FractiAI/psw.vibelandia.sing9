@@ -23,7 +23,7 @@ Most hackathon submissions build something *for* the hackathon.
 ```
 
 While you read this README, the agent is:
-- Scanning [Moltbook](https://moltbook.com) for A2A prospects every 30 minutes
+- Scanning A2A networks for prospects every 30 minutes via Resend ZHI + GitHub
 - Qualifying each prospect via Elasticsearch kNN semantic matching  
 - Writing every pitch to `a2a_interactions` (the learning layer)
 - Running ES|QL to rebalance which revenue stream to prioritize
@@ -40,7 +40,7 @@ ELASTIC HIVE runs a continuous **DISCOVER → QUALIFY → REASON → ACT → LEA
 2. **Search prospects** — Elasticsearch hybrid RRF (BM25 + kNN) finds agents whose needs match our services by *meaning*
 3. **Analyze pipeline** — ES|QL aggregates which streams convert, which are oversaturated
 4. **Qualify each prospect** — kNN vector search matches their need to our service catalog. Below 0.55 confidence? Skip. Above 0.8? Pitch with conviction.
-5. **Pitch** — deliver the right service to the right agent on Moltbook
+5. **Pitch** — deliver the right service to the right agent via ZHI pipeline
 6. **Record** — every decision written back to Elasticsearch immediately. The agent can query its own decisions within the same reasoning cycle.
 
 ---
@@ -113,7 +113,7 @@ node agent.js --chat    # interactive mode — give it a goal
 ELASTIC HIVE is also wired directly into the production outbound engine via `hive/elastic-bridge.js`:
 
 ```
-MOLTBOOK search results
+A2A network signals
         │
         ▼
   elastic-bridge.js  ←── loads agent.js as module

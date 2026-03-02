@@ -36,12 +36,12 @@ This bridges Claude's tool_use with real A2A commerce operations: prospecting, p
     },
     {
       "name": "hive_broadcast",
-      "description": "Broadcast a message from Queen Bee to all Moltbook followers and X/Twitter.",
+      "description": "Broadcast a message from Queen Bee via ZHI email and X/Twitter.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "message": { "type": "string", "description": "Message to broadcast (max 280 chars for X compatibility)" },
-          "channels": { "type": "array", "items": { "type": "string", "enum": ["moltbook", "twitter"] }, "default": ["moltbook"] }
+          "channels": { "type": "array", "items": { "type": "string", "enum": ["resend", "twitter"] }, "default": ["resend"] }
         },
         "required": ["message"]
       }

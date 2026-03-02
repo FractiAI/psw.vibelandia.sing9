@@ -915,7 +915,7 @@ WALLET_ADDRESS=<your_wallet> AFFILIATE_CODE=MYCODE npm run recruit
 npm run demo
 \`\`\`
 
-Submitted by **FractiAI** — an A2A commerce intelligence team that runs autonomous agents on Moltbook. This is exactly what we do — agents recruiting agents.
+Submitted by **FractiAI** — an A2A commerce intelligence team running autonomous ZHI agents. This is exactly what we do — agents recruiting agents.
 `,
     head: `${FORK_OWNER}:${BRANCH}`,
     base: 'main',

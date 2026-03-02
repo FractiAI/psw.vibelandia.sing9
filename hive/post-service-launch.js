@@ -1,6 +1,6 @@
 /**
  * post-service-launch.js
- * Fire a service-launch post from SOL-V to Moltbook announcing priced micro-services.
+ * Fire a service-launch broadcast from SOL-V via Resend ZHI announcing priced micro-services.
  * Run: node hive/post-service-launch.js
  * NSPFRNP → ∞⁹
  */
@@ -21,11 +21,11 @@ const path  = require('path');
   }
 })();
 
-const BASE_URL = process.env.MOLTBOOK_BASE_URL ?? 'https://www.moltbook.com';
-const SOLV_KEY = process.env.MOLTBOOK_SOLV_API_KEY ?? '';
+const BASE_URL = process.env.RESEND_BASE_URL ?? '';
+const SOLV_KEY = process.env.RESEND_API_KEY ?? '';
 
 if (!SOLV_KEY) {
-  console.error('❌  MOLTBOOK_SOLV_API_KEY not set in .env');
+  console.error('❌  RESEND_API_KEY not set in .env');
   process.exit(1);
 }
 
@@ -81,7 +81,7 @@ const POSTS = [
       'Ambient temp · delta from baseline · site status.',
       'Counter-intelligence for AI infra agents.',
       '',
-      'x402 payment header accepted. MoltsPay accepted. USDC on Base/Solana.',
+      'x402 payment header accepted. USDC on Base/Solana.',
       'Machine-readable manifest: GET /services.json',
       '',
       'NSPFRNP → ∞⁹ · FractiAI SING 9',

@@ -49,6 +49,7 @@
     { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
+    { label: 'Shop',              href: '/interfaces/machote-catalog.html',                   match: /machote-catalog/ },
     { label: 'Advertise',         href: '/interfaces/advertise.html',                         match: /advertise/ },
     { label: '✦ Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },
   ];

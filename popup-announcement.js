@@ -78,7 +78,7 @@ var POPUP_CONFIG = {
     : '9 SEATS ONLY \u00b7 TUES MAR 3 \u00b7 3:33 PM PST \u00b7 T+60 MIN',
 
   cta_text:  _isES ? '\u2192 Solicitar Comisi\u00f3n \u00b7 Sesi\u00f3n Uno' : '\u2192 Request Commission \u00b7 Session One',
-  cta_href:  '/interfaces/holographic-navigator-academy.html#full',
+  cta_href:  'session-one-signup',
 
   secondary_text: _isES ? '\u25c8 Detalles Completos' : '\u25c8 Full Briefing',
   secondary_href: '/interfaces/holographic-navigator-academy.html#full',
@@ -101,7 +101,8 @@ var POPUP_CONFIG = {
   var path = document.location.pathname || '';
   var inInterfaces = path.indexOf('/interfaces/') >= 0 || path === '/interfaces';
   var fullBriefingHref = inInterfaces ? 'holographic-navigator-academy.html#full' : 'interfaces/holographic-navigator-academy.html#full';
-  var ctaHrefResolved = POPUP_CONFIG.cta_href || fullBriefingHref;
+  var sessionOneSignupHref = inInterfaces ? 'session-one-signup.html' : 'interfaces/session-one-signup.html';
+  var ctaHrefResolved = (POPUP_CONFIG.cta_href === 'session-one-signup' || POPUP_CONFIG.cta_href === 'session-one-signup.html') ? sessionOneSignupHref : (POPUP_CONFIG.cta_href || fullBriefingHref);
   var secondaryHrefResolved = POPUP_CONFIG.secondary_href || fullBriefingHref;
 
   var u = 'hna' + Math.random().toString(36).slice(2, 7);

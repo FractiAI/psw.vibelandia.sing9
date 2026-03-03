@@ -801,27 +801,9 @@
       return 'mailto:info@fractiai.com?subject=' + subject + '&body=' + body;
     }
 
-    function openCommissionEmail(e) {
-      if (e) e.preventDefault();
-      var url = getCommissionMailto();
-      var a = document.createElement('a');
-      a.href = url;
-      a.setAttribute('target', '_blank');
-      a.setAttribute('rel', 'noopener');
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 300);
-    }
-
     (function() {
       var btn = document.getElementById('apply-commission-btn');
-      if (btn) {
-        btn.href = getCommissionMailto();
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          openCommissionEmail();
-        });
-      }
+      if (btn) btn.href = getCommissionMailto();
     })();
 
     // ── POSTCARD CLOSE / REOPEN ──────────────────────────────────────────────────

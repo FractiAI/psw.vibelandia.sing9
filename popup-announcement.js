@@ -22,8 +22,8 @@ var POPUP_CONFIG = {
   title:    'You Have Been\nIdentified',
 
   pitch: _isES
-    ? 'No todos los que llegan aqu\u00ed deb\u00edan llegar. Tu estaci\u00f3n de vibe coding ha sido marcada para actualizaci\u00f3n. Una sesi\u00f3n en vivo \u2014 tu primera comisi\u00f3n.'
-    : 'Not everyone who arrives here was supposed to. Your vibe coding station has been flagged for upgrade. One 60-min live session \u2014 your first commission.',
+    ? 'No todos los que llegan aqu\u00ed deb\u00edan llegar. Una sesi\u00f3n en vivo de 60 min \u2014 tu primera comisi\u00f3n.'
+    : 'Not everyone who arrives here was supposed to. One 60-min live session \u2014 your first commission.',
 
   features: [
     {

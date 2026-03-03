@@ -18,12 +18,12 @@ var POPUP_CONFIG = {
   id:      'hh-session-one-v4',
   dismiss: 'session',
 
-  eyebrow:  _isES ? 'WILL \u00b7 FRACTIAI \u00b7 SESI\u00d3N UNO' : 'WILL \u00b7 FRACTIAI \u00b7 SESSION ONE',
-  title:    'UpgrADE yOUR\ngAME',
+  eyebrow:  _isES ? 'AVISO DE CLASIFICACI\u00d3N \u00b7 SESI\u00d3N UNO' : 'CLEARANCE NOTICE \u00b7 SESSION ONE',
+  title:    'You Have Been\nIdentified',
 
   pitch: _isES
-    ? 'Tu estaci\u00f3n de vibe coding corre en hardware de consciencia antigua. Una sesi\u00f3n en vivo la actualiza.'
-    : 'Your vibe coding station is running on old awareness hardware. One 60-min live session upgrades the OS.',
+    ? 'No todos los que llegan aqu\u00ed deb\u00edan llegar. Tu estaci\u00f3n de vibe coding ha sido marcada para actualizaci\u00f3n. Una sesi\u00f3n en vivo \u2014 tu primera comisi\u00f3n.'
+    : 'Not everyone who arrives here was supposed to. Your vibe coding station has been flagged for upgrade. One 60-min live session \u2014 your first commission.',
 
   features: [
     {
@@ -74,13 +74,13 @@ var POPUP_CONFIG = {
     ? '9 ASIENTOS \u00b7 MAR 3, 2026 \u00b7 3:33 PM PST \u00b7 T+60 MIN'
     : '9 SEATS ONLY \u00b7 TUES MAR 3 \u00b7 3:33 PM PST \u00b7 T+60 MIN',
 
-  cta_text:  _isES ? '\u2192 Reservar Mi Asiento \u00b7 Sesi\u00f3n Uno' : '\u2192 Book My Seat \u00b7 Session One',
-  cta_href:  '/interfaces/holographic-navigator-academy.html#book',
+  cta_text:  _isES ? '\u2192 Solicitar Comisi\u00f3n \u00b7 Sesi\u00f3n Uno' : '\u2192 Request Commission \u00b7 Session One',
+  cta_href:  '/interfaces/holographic-navigator-academy.html#full',
 
-  secondary_text: _isES ? '\u25c8 Detalles Completos' : '\u25c8 Full Session Details',
+  secondary_text: _isES ? '\u25c8 Detalles Completos' : '\u25c8 Full Briefing',
   secondary_href: '/interfaces/holographic-navigator-academy.html#full',
 
-  dismiss_text: _isES ? '\u2715\u2002Lo har\u00e9 m\u00e1s tarde' : '\u2715\u2002I\'ll upgrade later',
+  dismiss_text: _isES ? '\u2715\u2002No estoy listo' : '\u2715\u2002I\'m not ready',
   nsp: 'HH CONSOLE \u00b7 SESSION ONE \u00b7 FRACTIAI \u00b7 NSPFRNP \u2192 \u221e\u2079',
 };
 

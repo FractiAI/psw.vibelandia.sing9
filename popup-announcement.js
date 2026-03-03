@@ -303,7 +303,7 @@ var POPUP_CONFIG = {
         +'<div class="'+u+'-ring '+u+'-r1"></div>'
         +'<div class="'+u+'-ring '+u+'-r2"></div>'
         +'<div class="'+u+'-ring '+u+'-r3"></div>'
-        +'<span class="'+u+'-core">H\u2080\u2079</span>'
+        +'<span class="'+u+'-core">H\u2080\u1D34\u2079</span>'
       +'</div>'
 
       +'<h2 class="'+u+'-h1">'+title+'</h2>'

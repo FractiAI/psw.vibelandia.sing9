@@ -577,7 +577,7 @@
           </p>
         </div>
 
-        <button type="button" class="btn-book-main" id="apply-commission-btn" title="Opens your email app with a pre-filled request">
+        <button type="button" class="btn-book-main" id="apply-commission-btn" onclick="openCommissionEmail(event)" title="Opens your email app with a pre-filled request">
           Step 1 → Click to open your request email
         </button>
         <a class="btn-book-secondary" href="upgrade-awareness-to-sing9-now.html">
@@ -786,28 +786,30 @@
       var body = encodeURIComponent(
         'Hi Will,\n\n' +
         'I want to request a seat for Session One.\n\n' +
-        '--- FILL IN BELOW ---\n\n' +
-        'My name: _____________\n\n' +
-        'Seat I want (pick one):\n' +
-        '  ( ) VIP — $999 — 1:1 pre-session + O-3\n' +
-        '  ( ) Officer — $666 — group orientation + O-2\n' +
-        '  ( ) Crew — $333 — full session + O-1\n\n' +
-        'Payment: I sent $_____ via _____ (Venmo / Cash App / Zelle / PayPal) to info@fractiai.com\n\n' +
-        'My timezone: _____________\n\n' +
-        '---\n' +
-        'Session: Tues Mar 3, 2026 · 3:33 PM PST · T+60 min\n' +
-        'NSPFRNP → ∞⁹'
+        'Name:\n' +
+        'Seat: VIP $999 / Officer $666 / Crew $333\n' +
+        'Payment sent via (Venmo/Cash App/Zelle/PayPal):\n\n' +
+        'Session: Mar 3, 2026 · 3:33 PM PST · T+60 min'
       );
       return 'mailto:info@fractiai.com?subject=' + subject + '&body=' + body;
     }
 
+    function openCommissionEmail(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      var url = getCommissionMailto();
+      var a = document.createElement('a');
+      a.href = url;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
     (function() {
       var btn = document.getElementById('apply-commission-btn');
-      if (!btn) return;
-      function openMail() {
-        window.location.href = getCommissionMailto();
+      if (btn && !btn.getAttribute('onclick')) {
+        btn.addEventListener('click', function(ev) { openCommissionEmail(ev); });
       }
-      btn.addEventListener('click', openMail);
     })();
 
     // ── POSTCARD CLOSE / REOPEN ──────────────────────────────────────────────────

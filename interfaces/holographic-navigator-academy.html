@@ -793,13 +793,9 @@
       window.scrollTo(0, 0);
     }
 
-    // Auto-expand when arriving via #full link — scroll to commission request
+    // Auto-expand when arriving via #full link — show full briefing at top (do not scroll to commission form)
     function onFullArrival() {
       expandFull();
-      setTimeout(function() {
-        var el = document.getElementById('book');
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
     }
     if (window.location.hash === '#full') {
       onFullArrival();

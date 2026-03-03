@@ -7,3 +7,4 @@ then clone the repository.  sing 9 version is free of supabase permanent storage
 ---
 
 **Done:** BBHE Repository Standard created (BBHE_REPOSITORY_STANDARD.md). Minimal clone in place: README.md, SING9_EDGE_ONBOARDING.md, .cursor/rules/team-nspfrnp-mode.mdc, protocols/MCA_NSPFRNP_CATALOG.md, protocols/SEED_EDGE_EPISODE_FORMAT_ACTION_LIVE_NSPFRNP.md, .cursorrules, .gitignore. Operate as team in NSPFRNP mode always. → ∞⁹
+1`

@@ -53,18 +53,21 @@ var POPUP_CONFIG = {
     {
       range: '1\u20133', badge: '\u2b50', cls: 'g',
       name:  _isES ? 'ASIENTO VIP'     : 'VIP SEAT',
+      price: '$999',
       desc:  _isES ? '1:1 briefing previo + miembro fundador + comisi\u00f3n r\u00e1pida HFCS O-3'
                    : '1:1 pre-session briefing + founding member + fast-track HFCS O-3',
     },
     {
       range: '4\u20136', badge: '\u2726', cls: 'c',
       name:  _isES ? 'ASIENTO OFICIAL' : 'OFFICER SEAT',
+      price: '$666',
       desc:  _isES ? 'Orientaci\u00f3n grupal + sesi\u00f3n completa + comisi\u00f3n HFCS O-2'
                    : 'Group orientation + full live session + HFCS commission O-2',
     },
     {
       range: '7\u20139', badge: '\u25c8', cls: 'p',
       name:  _isES ? 'ASIENTO TRIPULACI\u00d3N' : 'CREW SEAT',
+      price: '$333',
       desc:  _isES ? 'Sesi\u00f3n completa + pack de recursos HH + primera comisi\u00f3n O-1'
                    : 'Full live session + HH Console resource pack + first commission O-1',
     },
@@ -211,6 +214,7 @@ var POPUP_CONFIG = {
     '.'+u+'-tier-c .'+u+'-trange{color:rgba(0,212,255,.8);}',
     '.'+u+'-tier-p .'+u+'-trange{color:rgba(180,110,247,.8);}',
     '.'+u+'-tname{font-size:.65rem;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:.06em;}',
+    '.'+u+'-tprice{font-size:.7rem;font-weight:800;color:rgba(212,175,55,.9);margin-left:auto;}',
     '.'+u+'-tdesc{font-size:.68rem;color:rgba(180,210,255,.45);line-height:1.4;margin:0;}',
 
     /* trust bar */
@@ -273,12 +277,14 @@ var POPUP_CONFIG = {
 
   /* ── BUILD TIERS HTML ────────────────────────────────────────── */
   var tiersHtml = (POPUP_CONFIG.tiers || []).map(function(t) {
+    var priceHtml = t.price ? '<span class="'+u+'-tprice">'+t.price+'</span>' : '';
     return '<div class="'+u+'-tier '+u+'-tier-'+t.cls+'">'
       +'<span class="'+u+'-tbadge">'+t.badge+'</span>'
       +'<div class="'+u+'-tinfo">'
         +'<div class="'+u+'-thead">'
           +'<span class="'+u+'-trange">'+t.range+'</span>'
           +'<span class="'+u+'-tname">'+t.name+'</span>'
+          +priceHtml
         +'</div>'
         +'<p class="'+u+'-tdesc">'+t.desc+'</p>'
       +'</div>'

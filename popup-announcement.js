@@ -97,6 +97,13 @@ var POPUP_CONFIG = {
   if (POPUP_CONFIG.dismiss === 'session'   && sessionStorage.getItem(KEY)) return;
   if (POPUP_CONFIG.dismiss === 'permanent' && localStorage.getItem(KEY))   return;
 
+  /* Resolve full-briefing URL so it works from any page (root or interfaces/) */
+  var path = document.location.pathname || '';
+  var inInterfaces = path.indexOf('/interfaces/') >= 0 || path === '/interfaces';
+  var fullBriefingHref = inInterfaces ? 'holographic-navigator-academy.html#full' : 'interfaces/holographic-navigator-academy.html#full';
+  var ctaHrefResolved = POPUP_CONFIG.cta_href || fullBriefingHref;
+  var secondaryHrefResolved = POPUP_CONFIG.secondary_href || fullBriefingHref;
+
   var u = 'hna' + Math.random().toString(36).slice(2, 7);
   var clsMap = { g: 'pg', c: 'pc', p: 'pp' };
 
@@ -328,8 +335,8 @@ var POPUP_CONFIG = {
       +'<div class="'+u+'-trust">'+POPUP_CONFIG.trust+'</div>'
 
       +'<div class="'+u+'-ctas">'
-        +'<a href="'+POPUP_CONFIG.cta_href+'" class="'+u+'-btip">'+POPUP_CONFIG.cta_text+'</a>'
-        +'<a href="'+POPUP_CONFIG.secondary_href+'" class="'+u+'-bdet" target="_blank">'+POPUP_CONFIG.secondary_text+'</a>'
+        +'<a href="'+ctaHrefResolved+'" class="'+u+'-btip">'+POPUP_CONFIG.cta_text+'</a>'
+        +'<a href="'+secondaryHrefResolved+'" class="'+u+'-bdet">'+POPUP_CONFIG.secondary_text+'</a>'
       +'</div>'
       +'<button class="'+u+'-dis" id="'+u+'-dis">'+POPUP_CONFIG.dismiss_text+'</button>'
       +'<p class="'+u+'-foot">'+POPUP_CONFIG.nsp+'</p>'

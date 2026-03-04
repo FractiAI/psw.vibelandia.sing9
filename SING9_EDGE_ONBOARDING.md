@@ -108,7 +108,7 @@ Completing all 9 Singularities = **C-2 Officer Candidate** status. The upgrade p
 
 ### Cohort One — First Commissioning Event
 
-- **Deployment:** Tuesday, March 3, 2026 · 15:33 PST · T+60 min
+- **Deployment:** Request your seat. When 9 seats fill we set the date and send confirmation email with the link for the live one-hour Upgrade session with Commander, Creator, Architect, Pru.
 - **Positions:** 9 open · Positions 1–3 = O-3 (fast-track) · 4–6 = O-2 · 7–9 = O-1
 - **Prerequisite:** C-2 Officer Candidate status (9 Singularities complete)
 - **Application:** `interfaces/holographic-navigator-academy.html` → Apply for Commission

@@ -51,33 +51,19 @@ var POPUP_CONFIG = {
 
   tiers: [
     {
-      range: '1\u20133', badge: '\u2b50', cls: 'g',
-      name:  _isES ? 'VIP'     : 'VIP SEAT',
-      price: '$999',
-      desc:  _isES ? '1:1 previo + fundador + O-3'
-                   : '1:1 pre-session + founding member + O-3',
-    },
-    {
-      range: '4\u20136', badge: '\u2726', cls: 'c',
-      name:  _isES ? 'OFICIAL' : 'OFFICER',
-      price: '$666',
-      desc:  _isES ? 'Orientación grupal + sesión + O-2'
-                   : 'Group orientation + full session + O-2',
-    },
-    {
-      range: '7\u20139', badge: '\u25c8', cls: 'p',
-      name:  _isES ? 'TRIPULACIÓN' : 'CREW',
-      price: '$333',
-      desc:  _isES ? 'Sesión completa + recursos HH + O-1'
-                   : 'Full session + HH resources + O-1',
+      range: 'SESSION ONE', badge: '\u2b21', cls: 'c',
+      name:  _isES ? 'VERSIÓN UI' : 'UI VERSION',
+      price: '$99',
+      desc:  _isES ? 'Configuramos tu UI · Becas y ayudas cuando haga falta'
+                   : 'We help you configure your UI · Grants and scholarships for relief when and where needed',
     },
   ],
 
   trust: _isES
-    ? '9 ASIENTOS \u00b7 SESIÓN DE 1 HORA \u00b7 CONSOLA HH + VIBE STATION'
-    : '9 SEATS \u00b7 ONE-HOUR SESSION \u00b7 HH CONSOLE + VIBE STATION',
+    ? '9 ASIENTOS · $99 · BECAS Y AYUDAS CUANDO HAGA FALTA'
+    : 'REQUEST YOUR SEAT · $99 · GRANTS AND SCHOLARSHIPS FOR RELIEF WHEN AND WHERE NEEDED',
 
-  cta_text:  _isES ? '\u2192 Reservar mi lugar' : '\u2192 Upgrade My Game',
+  cta_text:  _isES ? '\u2192 Pedir mi lugar' : '\u2192 Request your seat',
   cta_href:  'session-one-signup',
 
   secondary_text: _isES ? '\u25c8 Ver flujo completo' : '\u25c8 Full Upgrade Flow',
@@ -330,7 +316,7 @@ var POPUP_CONFIG = {
 
       +'<div class="'+u+'-div"></div>'
 
-      +'<p class="'+u+'-slbl">Choose Your Seat</p>'
+      +'<p class="'+u+'-slbl">Session One</p>'
       +'<div class="'+u+'-tiers">'+tiersHtml+'</div>'
 
       +'<div class="'+u+'-trust">'+POPUP_CONFIG.trust+'</div>'

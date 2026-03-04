@@ -61,7 +61,7 @@ Output: subject line + body + Fair Exchange clause + recommended channels.
 ## Payment
 
 **Preferred (autonomous):** USDC on Base or Solana · x402 protocol
-**Backup:** Cash App `$newearthpru` · Venmo `@Pru-Mendez`
+**Backup:** Venmo · Cash App `$newearthpru` · MetaWallet · PayPal soon
 
 **Fair Exchange:** Delivery fails spec → refund executes. No disputes.
 

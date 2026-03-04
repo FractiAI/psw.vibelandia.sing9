@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Session One · Sign Up · HH Console · FractiAI · SING 9</title>
+  <title>Session One · Request Your Seat · UI Version · FractiAI · SING 9</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -126,23 +126,22 @@
       <a href="upgrade-awareness-to-sing9-now.html">Cadet Track</a>
     </div>
 
-    <h1>Session One · Sign Up</h1>
-    <p class="sub">Holographic Navigator Academy · HH Console · First commission. All requests captured here — no human intervention required.</p>
+    <h1>Session One · Request Your Seat</h1>
+    <p class="sub">Session One is the <strong>UI version</strong> — we help you configure your UI. We touch on vibe coding station too. Session Two is for those who want to upgrade their vibe coding station: a deep dive on transforming to holographic hydrogen coding stations and repositories. Request your seat; when we fill 9 we set the date and send the confirmation email with the link for your live one-hour session with Commander, Creator, Architect, Pru.</p>
 
-    <div class="meta-pills">
-      <span>Tues Mar 3, 2026</span>
-      <span>3:33 PM PST</span>
+    <div class="meta-pills" id="session-one-meta">
+      <span id="seats-left-msg">— seats left before next class</span>
       <span>T+60 min</span>
-      <span>9 seats</span>
+      <span>Live · Commander, Creator, Architect, Pru</span>
     </div>
 
     <div class="tiers-summary">
-      <strong style="color:rgba(212,175,55,.8);">Seats:</strong> VIP $999 (O-3) · Officer $666 (O-2) · Crew $333 (O-1). Payment: Venmo, Cash App, Zelle, or PayPal. After you submit we send payment details; once payment is received your session link is sent automatically.
+      <strong style="color:rgba(212,175,55,.8);">Session One</strong> — $99. 9 seats. Grants and scholarships for relief when and where needed. Payment via our Pipes: Venmo, Cash App, MetaWallet. PayPal soon.
     </div>
 
-    <!-- All requests captured by Formspree — no human intervention. Create form at formspree.io, set recipient to info@gmail.com (or use dashboard only), replace YOUR_FORMSPREE_FORM_ID below. -->
-    <form class="form-box" action="https://formspree.io/f/YOUR_FORMSPREE_FORM_ID" method="POST">
-      <input type="hidden" name="_subject" value="Session One — Sign up">
+    <!-- Seat request: $99 · grants/scholarships for relief -->
+    <form class="form-box" id="seat-form" action="https://formspree.io/f/YOUR_FORMSPREE_FORM_ID" method="POST">
+      <input type="hidden" name="_subject" value="Session One — Seat request">
       <h2>Request your seat</h2>
       <div class="form-row">
         <label for="name">Name</label>
@@ -153,32 +152,72 @@
         <input type="email" id="email" name="email" placeholder="you@example.com" required>
       </div>
       <div class="form-row">
-        <label for="seat">Seat</label>
-        <select id="seat" name="seat" required>
-          <option value="">Choose seat</option>
-          <option value="VIP $999">VIP $999 · O-3 Field Lieutenant</option>
-          <option value="Officer $666">Officer $666 · O-2 Navigation Officer</option>
-          <option value="Crew $333">Crew $333 · O-1 Field Ensign</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label for="payment_method">Payment method</label>
+        <label for="payment_method">How you'll pay</label>
         <select id="payment_method" name="payment_method" required>
-          <option value="">How you'll pay</option>
+          <option value="">Choose pipe</option>
           <option value="Venmo">Venmo</option>
           <option value="Cash App">Cash App</option>
-          <option value="Zelle">Zelle</option>
-          <option value="PayPal">PayPal</option>
+          <option value="MetaWallet">MetaWallet</option>
+          <option value="PayPal (soon)">PayPal (soon)</option>
         </select>
       </div>
-      <button type="submit" class="form-submit">Submit — request captured automatically</button>
-      <p class="form-note">Submissions are stored and can trigger automatic confirmation/payment instructions. No human handoff required.</p>
+      <p class="form-note" style="margin-bottom:0.5rem;">$99 per session. We'll send payment details after you submit.</p>
+      <button type="submit" class="form-submit">Request my seat</button>
+      <p class="form-note" style="margin-top:0.85rem;">When we fill 9 seats we choose the date and send your confirmation email with the link for the live one-hour session with Commander, Creator, Architect, Pru.</p>
+    </form>
+
+    <p style="text-align:center;margin:0.5rem 0;font-size:0.75rem;color:rgba(255,255,255,.4);">Need relief? Grants and scholarships available.</p>
+    <button type="button" id="grant-btn" class="form-submit" style="background:rgba(0,212,255,.15);border-color:rgba(0,212,255,.5);color:#7dd3fc;">Request a grant or scholarship</button>
+
+    <!-- Grant form (hidden until button click) -->
+    <form class="form-box" id="grant-form" action="https://formspree.io/f/YOUR_FORMSPREE_FORM_ID" method="POST" style="display:none;">
+      <input type="hidden" name="_subject" value="Session One — Grant / scholarship request">
+      <h2>Request grant or scholarship</h2>
+      <p class="form-note" style="margin-bottom:0.75rem;">Grants and scholarships for relief when and where needed. We'll review and get back to you.</p>
+      <div class="form-row">
+        <label for="grant_name">Name</label>
+        <input type="text" id="grant_name" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-row">
+        <label for="grant_email">Email</label>
+        <input type="email" id="grant_email" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-row">
+        <label for="grant_why">Why are you requesting relief?</label>
+        <textarea id="grant_why" name="why" placeholder="A few sentences — helps us respond. Grants and scholarships for relief when and where needed." rows="4" style="width:100%;padding:0.65rem 0.8rem;font-size:0.9rem;color:#e8e8f0;background:rgba(8,6,20,.9);border:1px solid rgba(212,175,55,.45);border-radius:8px;resize:vertical;" required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Submit grant or scholarship request</button>
     </form>
 
     <p class="foot">
       <a href="my-whiteboard.html">Whiteboard</a> · <a href="holographic-navigator-academy.html#full">Full Briefing</a> · NSPFRNP → ∞⁹
     </p>
   </div>
+  <script>
+  (function() {
+    var grantBtn = document.getElementById('grant-btn');
+    var grantForm = document.getElementById('grant-form');
+    if (grantBtn && grantForm) {
+      grantBtn.addEventListener('click', function() {
+        grantForm.style.display = grantForm.style.display === 'none' ? 'block' : 'none';
+        grantBtn.textContent = grantForm.style.display === 'none' ? 'Request a grant or scholarship' : 'Hide form';
+      });
+    }
+  })();
+  (function() {
+    var dataPath = document.location.pathname.indexOf('/interfaces/') >= 0 ? '../data/session-one-seats.json' : 'data/session-one-seats.json';
+    fetch(dataPath).then(function(r) { return r.ok ? r.json() : {}; }).then(function(d) {
+      var filled = (d && typeof d.filled === 'number') ? d.filled : 0;
+      var total = (d && typeof d.total === 'number') ? d.total : 9;
+      var left = Math.max(0, total - filled);
+      var el = document.getElementById('seats-left-msg');
+      if (el) {
+        el.textContent = left + ' seat' + (left !== 1 ? 's' : '') + ' left before next class';
+        if (left === 0) el.innerHTML += ' <span style="color:rgba(212,175,55,.85);">· Class full — we\'ll email your link when the date is set.</span>';
+      }
+    }).catch(function() {});
+  })();
+  </script>
   <script src="../nav-strip.js"></script>
 </body>
 </html>

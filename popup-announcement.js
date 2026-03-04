@@ -70,7 +70,7 @@ var POPUP_CONFIG = {
   secondary_href: '/interfaces/upgrade-awareness-to-sing9-now.html',
 
   dismiss_text: _isES ? '\u2715\u2002Ahora no' : '\u2715\u2002Not now',
-  nsp: 'UPGRADE YOUR GAME \u00b7 HOLOGRAPHIC HYDROGEN \u00b7 NSPFRNP \u2192 \u221e\u2079',
+  nsp: 'WHEN YOU KNOW, YOU KNOW \u00b7 HOLOGRAPHIC HYDROGEN \u00b7 NSPFRNP \u2192 \u221e\u2079',
 };
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -96,8 +96,8 @@ var POPUP_CONFIG = {
 
   /* ── CSS ─────────────────────────────────────────────────────── */
   var css = [
-    /* overlay */
-    '#'+u+'-ov{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,10,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);animation:'+u+'fi .5s ease both;overflow-y:auto;}',
+    /* overlay — lighter so page underneath is visible; more padding so card feels dismissible */
+    '#'+u+'-ov{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:rgba(0,0,10,.58);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:'+u+'fi .5s ease both;overflow-y:auto;}',
     '#'+u+'-ov.out{animation:'+u+'fo .38s ease both;pointer-events:none;}',
     '@keyframes '+u+'fi{from{opacity:0}to{opacity:1}}',
     '@keyframes '+u+'fo{from{opacity:1}to{opacity:0}}',
@@ -114,8 +114,8 @@ var POPUP_CONFIG = {
       +'radial-gradient(1px 1px at 55% 28%,rgba(255,255,255,.2) 0%,transparent 100%),'
       +'radial-gradient(1px 1px at 78% 85%,rgba(0,255,136,.3) 0%,transparent 100%);}',
 
-    /* wrap — spinning border shell */
-    '#'+u+'-wr{position:relative;width:min(600px,calc(100vw - 2rem));border-radius:20px;padding:1.5px;overflow:hidden;animation:'+u+'su .65s cubic-bezier(.22,1,.36,1) .1s both;flex-shrink:0;margin:auto;}',
+    /* wrap — smaller card so page peeks through; spinning border shell */
+    '#'+u+'-wr{position:relative;width:min(420px,calc(100vw - 2rem));border-radius:16px;padding:1.5px;overflow:hidden;animation:'+u+'su .65s cubic-bezier(.22,1,.36,1) .1s both;flex-shrink:0;margin:auto;}',
     '@keyframes '+u+'su{from{opacity:0;transform:translateY(44px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}',
 
     /* conic spinner border */
@@ -131,7 +131,7 @@ var POPUP_CONFIG = {
     '@keyframes '+u+'sp{to{transform:rotate(360deg)}}',
 
     /* card body */
-    '#'+u+'-card{position:relative;background:linear-gradient(158deg,#080820 0%,#04040e 55%,#080820 100%);border-radius:18.5px;padding:1.75rem 1.65rem 1.4rem;overflow:hidden;z-index:1;font-family:"Segoe UI",system-ui,sans-serif;color:#e2e8f0;max-height:calc(100vh - 3rem);overflow-y:auto;}',
+    '#'+u+'-card{position:relative;background:linear-gradient(158deg,#080820 0%,#04040e 55%,#080820 100%);border-radius:14.5px;padding:1.35rem 1.25rem 1.1rem;overflow:hidden;z-index:1;font-family:"Segoe UI",system-ui,sans-serif;color:#e2e8f0;max-height:calc(100vh - 3rem);overflow-y:auto;}',
 
     /* scrollbar */
     '#'+u+'-card::-webkit-scrollbar{width:4px;}',
@@ -139,7 +139,7 @@ var POPUP_CONFIG = {
     '#'+u+'-card::-webkit-scrollbar-thumb{background:rgba(0,212,255,.22);border-radius:4px;}',
 
     /* ambient glow */
-    '#'+u+'-card::after{content:"";position:absolute;inset:0;border-radius:18.5px;pointer-events:none;'
+    '#'+u+'-card::after{content:"";position:absolute;inset:0;border-radius:14.5px;pointer-events:none;'
       +'background:radial-gradient(ellipse 70% 35% at 50% 0%,rgba(0,212,255,.08) 0%,transparent 70%),'
       +'radial-gradient(ellipse 45% 45% at 100% 100%,rgba(123,47,255,.06) 0%,transparent 70%),'
       +'radial-gradient(ellipse 40% 40% at 0% 100%,rgba(212,175,55,.04) 0%,transparent 70%);}',

@@ -471,8 +471,19 @@
 
       <!-- ── SESSION TWO · VIBE → HH CODING ─────────────────── -->
       <div class="fp-section-hdr">Session Two · Upgrade Your Vibe Coding Station</div>
-      <div class="fp-what" style="border-left:2px solid rgba(212,175,55,0.4);padding-left:1.25rem;">
+      <div id="session-two" class="fp-what" style="border-left:2px solid rgba(212,175,55,0.4);padding-left:1.25rem;scroll-margin-top:2rem;">
         For those interested in upgrading their <strong>vibe coding station</strong>. Session Two is a deep dive: <strong>transforming vibe coding stations to new holographic hydrogen coding stations and repositories</strong>. We touch on this in Session One; Session Two goes full depth.
+      </div>
+      <div style="margin-top:1rem;padding:1rem;background:rgba(255,255,255,.03);border:1px solid rgba(0,212,255,.2);border-radius:10px;">
+        <div style="font-size:.65rem;font-weight:800;letter-spacing:.12em;color:rgba(0,212,255,.7);margin-bottom:.5rem;">SESSION TWO · HOW DO YOU WANT TO DO THIS?</div>
+        <div style="margin-bottom:.5rem;">Do it yourself · <strong style="color:#7fff7f;">Free (AI version)</strong> — use the Cadet Track and academy materials.</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.6);">Or opt-in to scaling support: <button type="button" class="hna-wish-btn" data-track="session_two" aria-expanded="false">Wish</button></div>
+        <div class="hna-delivery-opts" id="opts-session-two" style="display:none;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;">
+          <a href="book-onboarding.html?track=session_two&delivery=classroom_online" style="padding:.45rem .8rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:#7dd3fc;font-size:.78rem;font-weight:600;text-decoration:none;">Classroom · Online</a>
+          <a href="book-onboarding.html?track=session_two&delivery=classroom_in_person" style="padding:.45rem .8rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:#7dd3fc;font-size:.78rem;font-weight:600;text-decoration:none;">Classroom · In person</a>
+          <a href="book-onboarding.html?track=session_two&delivery=one_on_one_online" style="padding:.45rem .8rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:#7dd3fc;font-size:.78rem;font-weight:600;text-decoration:none;">One-on-one · Online</a>
+          <a href="book-onboarding.html?track=session_two&delivery=one_on_one_in_person" style="padding:.45rem .8rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:#7dd3fc;font-size:.78rem;font-weight:600;text-decoration:none;">One-on-one · In person</a>
+        </div>
       </div>
 
       <!-- ── WHERE THIS TAKES YOU: HFCS ─────────────────────── -->
@@ -547,6 +558,18 @@
 
         <a class="btn-book-main" href="session-one-signup.html">Request your seat → Sign up here</a>
         <p class="fp-form-note" style="margin-top:.75rem;">$99. Grants and scholarships on sign-up page for relief when and where needed. Name, email, payment method captured. Once 9 seats are filled we set the date and email your confirmation with the session link.</p>
+
+        <div style="margin-top:1rem;padding:1rem;background:rgba(255,255,255,.03);border:1px solid rgba(0,212,255,.2);border-radius:10px;">
+          <div style="font-size:.65rem;font-weight:800;letter-spacing:.12em;color:rgba(0,212,255,.7);margin-bottom:.5rem;">SESSION ONE · HOW DO YOU WANT TO DO THIS?</div>
+          <div style="margin-bottom:.5rem;">Do it yourself · <strong style="color:#7fff7f;">Free (AI version)</strong> → <a href="upgrade-awareness-to-sing9-now.html" style="color:#7dd3fc;">Cadet Track · 9 Singularities</a></div>
+          <div style="font-size:.8rem;color:rgba(255,255,255,.6);">Or opt-in to scaling support: <button type="button" class="hna-wish-btn" data-track="session_one" aria-expanded="false">Wish</button></div>
+          <div class="hna-delivery-opts" id="opts-session-one" style="display:none;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;">
+            <a href="book-onboarding.html?track=session_one&delivery=classroom_online" style="padding:.45rem .8rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:#7dd3fc;font-size:.78rem;font-weight:600;text-decoration:none;">Classroom · Online</a>
+            <a href="book-onboarding.html?track=session_one&delivery=classroom_in_person" style="padding:.45rem .8rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:#7dd3fc;font-size:.78rem;font-weight:600;text-decoration:none;">Classroom · In person</a>
+            <a href="book-onboarding.html?track=session_one&delivery=one_on_one_online" style="padding:.45rem .8rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:#7dd3fc;font-size:.78rem;font-weight:600;text-decoration:none;">One-on-one · Online</a>
+            <a href="book-onboarding.html?track=session_one&delivery=one_on_one_in_person" style="padding:.45rem .8rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:#7dd3fc;font-size:.78rem;font-weight:600;text-decoration:none;">One-on-one · In person</a>
+          </div>
+        </div>
 
         <a class="btn-book-secondary" href="upgrade-awareness-to-sing9-now.html">
           Cadet Track → Complete the 9 Singularities first
@@ -803,6 +826,13 @@
         if (bel) bel.textContent = msg + ' ';
       }).catch(function() {});
     })();
+    document.querySelectorAll('.hna-wish-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var id = this.getAttribute('data-track');
+        var opts = id ? document.getElementById('opts-' + id) : null;
+        if (opts) { opts.style.display = opts.style.display === 'none' ? 'flex' : 'none'; this.setAttribute('aria-expanded', opts.style.display === 'flex'); }
+      });
+    });
   </script>
 
 </body>

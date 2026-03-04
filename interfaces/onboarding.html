@@ -21,20 +21,29 @@
     h1 { font-size: 1.5rem; color: #00d4ff; margin-bottom: 0.5rem; }
     .sub { font-size: 0.9rem; color: rgba(200,200,200,0.8); margin-bottom: 1.5rem; line-height: 1.5; }
     .track-grid { display: flex; flex-direction: column; gap: 0.75rem; }
-    .track-card {
-      display: block;
+    .track-card-wrap {
       padding: 1.1rem 1.25rem;
       background: rgba(0,212,255,0.06);
       border: 1px solid rgba(0,212,255,0.25);
       border-radius: 12px;
-      text-decoration: none;
-      color: inherit;
       transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
-    .track-card:hover { background: rgba(0,212,255,0.1); border-color: rgba(0,212,255,0.45); box-shadow: 0 0 24px rgba(0,212,255,0.15); }
+    .track-card-wrap:hover { background: rgba(0,212,255,0.1); border-color: rgba(0,212,255,0.45); box-shadow: 0 0 24px rgba(0,212,255,0.15); }
+    .track-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
     .track-name { font-size: 1rem; font-weight: 700; color: #d4af37; margin-bottom: 0.25rem; }
     .track-desc { font-size: 0.8rem; color: rgba(200,200,200,0.75); line-height: 1.45; }
     .track-arrow { font-size: 0.7rem; color: rgba(0,212,255,0.7); margin-top: 0.5rem; }
+    .track-book { margin-top: 0.65rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .track-book a {
+      font-size: 0.7rem; padding: 0.35rem 0.6rem; background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.4); border-radius: 6px;
+      color: rgba(253,234,167,0.9); text-decoration: none; font-weight: 600;
+    }
+    .track-book a:hover { background: rgba(212,175,55,0.22); border-color: rgba(212,175,55,0.6); }
     .foot { margin-top: 2rem; font-size: 0.78rem; color: rgba(255,255,255,0.4); }
     .foot a { color: #d4af37; text-decoration: none; }
   </style>
@@ -48,31 +57,76 @@
     <p style="font-size:0.85rem;color:rgba(212,175,55,0.7);font-style:italic;margin-bottom:1.25rem;">When you know, you know.</p>
 
     <div class="track-grid" id="track-list">
-      <a class="track-card" href="upgrade-awareness-to-sing9-now.html">
-        <span class="track-name">Cadet Track</span>
-        <span class="track-desc">9 Singularities · Console upgrade · First step</span>
-        <span class="track-arrow">→ Go to Cadet Track</span>
-      </a>
-      <a class="track-card" href="holographic-navigator-academy.html#book">
-        <span class="track-name">Session One</span>
-        <span class="track-desc">UI version · Configure your UI · Touch on vibe coding</span>
-        <span class="track-arrow">→ Go to Session One</span>
-      </a>
-      <a class="track-card" href="holographic-navigator-academy.html#session-two">
-        <span class="track-name">Session Two</span>
-        <span class="track-desc">Vibe coding → HH coding stations and repositories</span>
-        <span class="track-arrow">→ Go to Session Two</span>
-      </a>
-      <a class="track-card" href="holographic-navigator-academy.html#full">
-        <span class="track-name">Officer Track</span>
-        <span class="track-desc">Commission · Expeditions · Command cohorts</span>
-        <span class="track-arrow">→ Go to Officer Track</span>
-      </a>
-      <a class="track-card" href="holographic-navigator-academy.html#full">
-        <span class="track-name">Enlisted Track</span>
-        <span class="track-desc">Console mastery · Technical precision · E-1 → E-9</span>
-        <span class="track-arrow">→ Go to Enlisted Track</span>
-      </a>
+      <div class="track-card-wrap">
+        <a class="track-card" href="upgrade-awareness-to-sing9-now.html" style="display:block;text-decoration:none;color:inherit;">
+          <span class="track-name">Cadet Track</span>
+          <span class="track-desc">9 Singularities · Console upgrade · First step</span>
+          <span class="track-arrow">→ Go to Cadet Track</span>
+        </a>
+        <div class="track-book">
+          <span style="font-size:0.65rem;color:rgba(212,175,55,0.7);margin-right:0.25rem;">Book:</span>
+          <a href="book-onboarding.html?track=cadet&delivery=classroom_online">Classroom · Online</a>
+          <a href="book-onboarding.html?track=cadet&delivery=classroom_in_person">Classroom · In person</a>
+          <a href="book-onboarding.html?track=cadet&delivery=one_on_one_online">One-on-one · Online</a>
+          <a href="book-onboarding.html?track=cadet&delivery=one_on_one_in_person">One-on-one · In person</a>
+        </div>
+      </div>
+      <div class="track-card-wrap">
+        <a class="track-card" href="holographic-navigator-academy.html#book" style="display:block;text-decoration:none;color:inherit;">
+          <span class="track-name">Session One</span>
+          <span class="track-desc">UI version · Configure your UI · Touch on vibe coding</span>
+          <span class="track-arrow">→ Go to Session One</span>
+        </a>
+        <div class="track-book">
+          <span style="font-size:0.65rem;color:rgba(212,175,55,0.7);margin-right:0.25rem;">Book:</span>
+          <a href="book-onboarding.html?track=session_one&delivery=classroom_online">Classroom · Online</a>
+          <a href="book-onboarding.html?track=session_one&delivery=classroom_in_person">Classroom · In person</a>
+          <a href="book-onboarding.html?track=session_one&delivery=one_on_one_online">One-on-one · Online</a>
+          <a href="book-onboarding.html?track=session_one&delivery=one_on_one_in_person">One-on-one · In person</a>
+        </div>
+      </div>
+      <div class="track-card-wrap">
+        <a class="track-card" href="holographic-navigator-academy.html#session-two" style="display:block;text-decoration:none;color:inherit;">
+          <span class="track-name">Session Two</span>
+          <span class="track-desc">Vibe coding → HH coding stations and repositories</span>
+          <span class="track-arrow">→ Go to Session Two</span>
+        </a>
+        <div class="track-book">
+          <span style="font-size:0.65rem;color:rgba(212,175,55,0.7);margin-right:0.25rem;">Book:</span>
+          <a href="book-onboarding.html?track=session_two&delivery=classroom_online">Classroom · Online</a>
+          <a href="book-onboarding.html?track=session_two&delivery=classroom_in_person">Classroom · In person</a>
+          <a href="book-onboarding.html?track=session_two&delivery=one_on_one_online">One-on-one · Online</a>
+          <a href="book-onboarding.html?track=session_two&delivery=one_on_one_in_person">One-on-one · In person</a>
+        </div>
+      </div>
+      <div class="track-card-wrap">
+        <a class="track-card" href="holographic-navigator-academy.html#full" style="display:block;text-decoration:none;color:inherit;">
+          <span class="track-name">Officer Track</span>
+          <span class="track-desc">Commission · Expeditions · Command cohorts</span>
+          <span class="track-arrow">→ Go to Officer Track</span>
+        </a>
+        <div class="track-book">
+          <span style="font-size:0.65rem;color:rgba(212,175,55,0.7);margin-right:0.25rem;">Book:</span>
+          <a href="book-onboarding.html?track=officer&delivery=classroom_online">Classroom · Online</a>
+          <a href="book-onboarding.html?track=officer&delivery=classroom_in_person">Classroom · In person</a>
+          <a href="book-onboarding.html?track=officer&delivery=one_on_one_online">One-on-one · Online</a>
+          <a href="book-onboarding.html?track=officer&delivery=one_on_one_in_person">One-on-one · In person</a>
+        </div>
+      </div>
+      <div class="track-card-wrap">
+        <a class="track-card" href="holographic-navigator-academy.html#full" style="display:block;text-decoration:none;color:inherit;">
+          <span class="track-name">Enlisted Track</span>
+          <span class="track-desc">Console mastery · Technical precision · E-1 → E-9</span>
+          <span class="track-arrow">→ Go to Enlisted Track</span>
+        </a>
+        <div class="track-book">
+          <span style="font-size:0.65rem;color:rgba(212,175,55,0.7);margin-right:0.25rem;">Book:</span>
+          <a href="book-onboarding.html?track=enlisted&delivery=classroom_online">Classroom · Online</a>
+          <a href="book-onboarding.html?track=enlisted&delivery=classroom_in_person">Classroom · In person</a>
+          <a href="book-onboarding.html?track=enlisted&delivery=one_on_one_online">One-on-one · Online</a>
+          <a href="book-onboarding.html?track=enlisted&delivery=one_on_one_in_person">One-on-one · In person</a>
+        </div>
+      </div>
     </div>
 
     <p class="foot"><a href="../index.html">Home</a> · NSPFRNP → ∞⁹</p>

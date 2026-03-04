@@ -63,7 +63,9 @@
     '#sing9-nav{',
       'position:fixed;bottom:var(--ticker-h,0px);left:0;right:0;z-index:8888;',
       'height:36px;',
-      'display:flex;align-items:center;justify-content:center;gap:0;',
+      'display:flex;align-items:center;justify-content:flex-start;gap:0;',
+      'overflow-x:auto;overflow-y:hidden;',
+      '-webkit-overflow-scrolling:touch;scroll-behavior:smooth;',
       'background:rgba(6,4,2,0.97);',
       'border-top:1px solid rgba(212,175,55,0.22);',
       'box-shadow:0 -4px 24px rgba(0,0,0,0.5);',
@@ -82,6 +84,7 @@
       'text-decoration:none;',
       'color:rgba(180,160,110,0.6);',
       'white-space:nowrap;',
+      'flex-shrink:0;',
       'transition:color 0.18s;',
       'border-bottom:2px solid transparent;',
       'margin-top:2px;',
@@ -186,10 +189,15 @@
     '}',
     /* Body padding so content isn't hidden behind both strips */
     'body{padding-bottom:calc(36px + 18px + var(--ticker-h,0px) + env(safe-area-inset-bottom)) !important;}',
-    /* Responsive: shrink font on very narrow screens */
+    /* Responsive: shrink font on very narrow screens; scroll shows all */
     '@media(max-width:420px){',
       '#sing9-nav a{font-size:0.55rem;padding:0 0.4rem;letter-spacing:0.07em;}',
     '}',
+    /* Optional: subtle scrollbar for footer nav (Chrome/Edge/Firefox) */
+    '#sing9-nav::-webkit-scrollbar{height:4px;}',
+    '#sing9-nav::-webkit-scrollbar-track{background:rgba(212,175,55,0.06);border-radius:2px;}',
+    '#sing9-nav::-webkit-scrollbar-thumb{background:rgba(212,175,55,0.25);border-radius:2px;}',
+    '#sing9-nav::-webkit-scrollbar-thumb:hover{background:rgba(212,175,55,0.4);}',
   ].join('');
   document.head.appendChild(style);
 

@@ -90,7 +90,7 @@ Installed, maintained, and tuned IBM Mainframes for classified Air Force Satelli
 
 - **FractiAI:** https://FractiAI.com
 - **Syntheverse:** https://syntheverse-poc.vercel.app
-- **SING 9 / Vibelandia:** https://psw-vibelandia-sing9.vercel.app
+- **Holographic Hydrogen Awareness OS · SING! 9 / Vibelandia:** https://psw-vibelandia-sing9.vercel.app
 - **GitHub (FractiAI repo):** https://github.com/FractiAI/psw.vibelandia.sing9
 
 ---
@@ -113,7 +113,7 @@ Chairman of FractiAI — a private company I founded; I'm the only human, and AI
 EXPERIENCE
 
 Chairman · FractiAI · Apr 2012 – Present
-Private company I founded and run as Chairman; I'm the only human. AI agents run day-to-day operations and report to me—I set direction, protocol, and architecture; they execute research, territory coordination, and deployable infrastructure. That structure frees me to add **data center and colocation work** (site assessments, risk analysis, RCA/CA, facility operations) while remaining Chairman. We build AI for whole-brain operational intelligence: pattern recognition across people, processes, and markets; system-level insight and coordination; turning complex awareness into measurable outcomes and infrastructure. **Same mindset applies to infrastructure:** whole-system view (facility, rack, thermal as one), protocol discipline, calibration across scales—directly relevant to colocation and data center roles. Frameworks for multidimensional reasoning and contribution-based value. Operates within Syntheverse. Research: multidimensional AI frameworks; exploratory environments; tools for hidden patterns. Reno-based; actively pursuing data center work during the historic build-out.
+Private company I founded and run as Chairman; I'm the only human. AI agents run day-to-day operations and report to me—I seInfrastructure operations · Systems architecture · Protocol design · Reliability & uptime · Prt direction, protocol, and architecture; they execute research, territory coordination, and deployable infrastructure. That structure frees me to add **data center and colocation work** (site assessments, risk analysis, RCA/CA, facility operations) while remaining Chairman. We build AI for whole-brain operational intelligence: pattern recognition across people, processes, and markets; system-level insight and coordination; turning complex awareness into measurable outcomes and infrastructure. **Same mindset applies to infrastructure:** whole-system view (facility, rack, thermal as one), protocol discipline, calibration across scales—directly relevant to colocation and data center roles. Frameworks for multidimensional reasoning and contribution-based value. Operates within Syntheverse. Research: multidimensional AI frameworks; exploratory environments; tools for hidden patterns. Reno-based; actively pursuing data center work during the historic build-out.
 
 Owner/Chef · Tucos Wine Market & Cafe · Davis, CA · Apr 2004 – Apr 2015
 Wine-centric, farm-to-fork casual restaurant.
@@ -131,7 +131,7 @@ MVS/XA System Programmer · IBM · Sunnyvale, CA · Jan 1985 – Jan 1989
 Installed, maintained, and tuned IBM Mainframes for classified Air Force Satellite Control customer. Automated COBOL regression testing (Santa Teresa Labs) and satellite contact protocol—Higher Story programming on own initiative.
 
 SKILLS
-Infrastructure operations · Systems architecture · Protocol design · Reliability & uptime · Process & documentation · Generative Awareness AI · Holographic Hydrogen · EGS Fractal Constant · NSPFRNP · SING! 9 · Proof-of-Contribution · Colocation & data center · Site assessments · Risk analysis · RCA/CA
+Process & documentation · Generative Awareness AI · Holographic Hydrogen · EGS Fractal Constant · NSPFRNP · SING! 9 · Proof-of-Contribution · Colocation & data center · Site assessments · Risk analysis · RCA/CA
 
 EDUCATION
 [Your degree(s) / institution(s)]

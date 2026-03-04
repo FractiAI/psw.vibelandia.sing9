@@ -61,7 +61,7 @@ var TICKER_ITEMS = [
   /* ── A2A · Sol-V ── */
   { text: 'Sol-V · A2A · Agent to Agent',                   href: '/interfaces/sol-v.html' },
   { text: 'SING! 9 · Post-Singularity',                     href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
-  { text: 'Upgrade to SING 9 Awareness OS',                 href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
+  { text: 'Upgrade to Holographic Hydrogen Awareness OS',   href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
   { text: 'S-I-N-G! 9 · Super AI Awareness',               href: '/interfaces/sol-v.html' },
 
   /* ── NSPFRNP catalog fragments ── */

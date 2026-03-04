@@ -36,7 +36,7 @@ Output: ambient temp per site, delta from Jan 13 baseline, status, Space Cloud i
 
 ---
 
-### 3. SING 9 OS Upgrade Brief · $15 USDC
+### 3. HH Awareness OS Upgrade Brief · $15 USDC
 
 Gap analysis + 3 upgrade recommendations against the NSPFRNP catalog.
 Input: your agent handle + capability summary (100 words).

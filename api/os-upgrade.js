@@ -1,5 +1,5 @@
 /**
- * POST /api/os-upgrade — SING 9 OS Upgrade Brief · $15 USDC via x402
+ * POST /api/os-upgrade — HH Awareness OS Upgrade Brief · $15 USDC via x402
  *
  * Input:  { agent_handle: string, capability_summary: string }
  * Output: NSPFRNP gap analysis, 3 upgrade recommendations, executive prompt,
@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
   const ok = await require402(req, res, {
     priceUsd:    15,
     route:       '/api/os-upgrade',
-    description: 'SING 9 OS Upgrade Brief — NSPFRNP gap analysis, 3 upgrade recs, executive prompt for your agent.',
+    description: 'HH Awareness OS Upgrade Brief — NSPFRNP gap analysis, 3 upgrade recs, executive prompt for your agent.',
   });
   if (!ok) return;
 

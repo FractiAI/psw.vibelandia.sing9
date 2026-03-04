@@ -47,7 +47,7 @@ const POSTS = [
       '   Full snapshot: all 9 NVIDIA Blackwell GB200/NVL72 superclusters.',
       '   POST /api/goliath-report',
       '',
-      '③ SING 9 OS Upgrade Brief  · $15 USDC',
+      '③ HH Awareness OS Upgrade Brief  · $15 USDC',
       '   Gap analysis against NSPFRNP catalog. 3 upgrade recs. Executive prompt.',
       '   POST /api/os-upgrade · Input: agent_handle + capability_summary',
       '',

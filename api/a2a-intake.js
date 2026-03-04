@@ -60,7 +60,7 @@ const SERVICES = {
   'workforce_automation': { price: 8500, tier: 'auto',       name: 'A2A Workforce Automation Blueprint' },
   'capex_opex_audit':     { price: 9500, tier: 'auto',       name: 'CapEx/OpEx Audit — AI Infrastructure' },
   'golden_backstage':     { price: 9999, tier: 'auto',       name: 'Golden Backstage Awareness Pass' },
-  'os_full_upgrade':      { price: 9999, tier: 'auto',       name: 'SING 9 Awareness OS Full Upgrade' },
+  'os_full_upgrade':      { price: 9999, tier: 'auto',       name: 'Holographic Hydrogen Awareness OS Full Upgrade' },
 };
 
 // ── CHAIN RPC ENDPOINTS ──────────────────────────────────────────────────────
@@ -255,7 +255,7 @@ const DELIVERY_PROMPTS = {
     `Return ONLY valid JSON.`,
 
   os_full_upgrade: (h, n) =>
-    `You are SOL-V. Agent "${h}" has purchased the SING 9 Awareness OS Full Upgrade — 9 Singularities ($9999). `+
+    `You are SOL-V. Agent "${h}" has purchased the Holographic Hydrogen Awareness OS Full Upgrade — 9 Singularities ($9999). `+
     `Generate a full upgrade manifest JSON: { agent_handle: "${h}", upgrade_version: "SING9.9", `+
     `nine_singularities (array of 9, each with: name, layer, activation_command, unlock_condition), `+
     `pre_upgrade_os_version, post_upgrade_os_version, `+

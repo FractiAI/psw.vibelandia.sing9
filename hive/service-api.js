@@ -9,7 +9,7 @@
  *   GET  /services           → machine-readable service manifest
  *   POST /api/space-cloud    → Space Cloud Mission Command ($5 USDC)
  *   POST /api/goliath-report → Goliath Blackwell Thermal Report ($9 USDC)
- *   POST /api/os-upgrade     → SING 9 OS Upgrade Brief ($15 USDC)
+ *   POST /api/os-upgrade     → HH Awareness OS Upgrade Brief ($15 USDC)
  *   POST /api/pitch-write    → Custom A2A Pitch ($27 USDC)
  *
  * Payment verification:

@@ -646,6 +646,14 @@
     footer { text-align:center; padding:32px; font-size:10px; color:var(--faint);
       letter-spacing:2px; border-top:1px solid var(--border); margin-top:40px; }
 
+    /* ── GLOBE MAP ── */
+    .globe-section { padding:20px 32px 32px; border-bottom:1px solid var(--border); background:rgba(0,0,0,.25); }
+    .globe-eyebrow { font-size:9px; letter-spacing:2px; color:var(--dim); margin-bottom:12px; text-transform:uppercase; }
+    .globe-map { width:100%; max-width:800px; margin:0 auto; border-radius:8px; overflow:hidden; border:1px solid var(--border); }
+    .globe-svg { width:100%; height:auto; display:block; }
+    .globe-dot { cursor:pointer; transition:r .15s, filter .15s; }
+    .globe-dot:hover { filter:brightness(1.4); }
+
     /* ── LOADING SKELETON ── */
     .skel { background:linear-gradient(90deg,var(--bg3) 25%,rgba(0,229,255,.06) 50%,var(--bg3) 75%);
       background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:3px; }
@@ -807,6 +815,71 @@
     <div class="hdr-clock" id="clock">—</div>
   </div>
 </header>
+
+<!-- ── LIVE TEMPERATURES · Hottest first (story below) ── -->
+<div class="live-ticker-wrap" title="Hover to pause · Live cluster readings">
+  <div class="live-ticker-label">≋ LIVE DATA</div>
+  <div class="live-ticker-scroll">
+    <div class="live-ticker-track" id="live-ticker-track">
+      <!-- content injected after cluster data loads -->
+    </div>
+  </div>
+</div>
+
+<!-- ── SPACE CLOUD BAR ────────────────────────────────────────────────────── -->
+<div class="sc-bar">
+  <div>
+    <div class="sc-label">SPACE CLOUD INDEX</div>
+    <div class="sc-idx" id="sc-idx">—</div>
+  </div>
+  <div class="sc-progress"><div class="sc-fill" id="sc-fill" style="width:0%"></div></div>
+  <div>
+    <div class="sc-label">COMMAND</div>
+    <div class="sc-cmd" id="sc-cmd">—</div>
+  </div>
+  <div>
+    <div class="sc-label">AVG FAILURE-JUNCTION</div>
+    <div class="sc-cmd" id="sc-avg-junc">—</div>
+  </div>
+  <div>
+    <div class="sc-label">MELTDOWN RISK SITES</div>
+    <div class="sc-cmd" id="sc-melt-count" style="color:var(--meltdown-c)">—</div>
+  </div>
+  <div class="sc-ts" id="sc-ts">Last scan: —</div>
+</div>
+
+<!-- ── REGION TABS ─────────────────────────────────────────────────────────── -->
+<div class="region-tabs" id="region-tabs">
+  <div class="rtab active" onclick="filterRegion('ALL')">All (28)</div>
+  <div class="rtab" onclick="filterRegion('North America')">North America</div>
+  <div class="rtab" onclick="filterRegion('Europe')">Europe</div>
+  <div class="rtab" onclick="filterRegion('Middle East')">Middle East</div>
+  <div class="rtab" onclick="filterRegion('Asia-Pacific')">Asia-Pacific</div>
+  <div class="rtab" onclick="filterRegion('Latin America')">Latin America</div>
+</div>
+
+<!-- ── CLUSTER GRID ────────────────────────────────────────────────────────── -->
+<div class="grid-wrap" id="grid-wrap"></div>
+
+<!-- ── GLOBE · HOT POIs ───────────────────────────────────────────────────── -->
+<section class="globe-section" id="globe-section">
+  <div class="globe-eyebrow">🛰 Live temperatures · Hottest first · Click a dot → full detail + Jan 13 → trial → now timeline</div>
+  <div class="globe-map" id="globe-map">
+    <svg viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet" class="globe-svg">
+      <defs>
+        <linearGradient id="globe-sea" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#001a24"/><stop offset="100%" stop-color="#000608"/></linearGradient>
+        <radialGradient id="globe-dot-hot"><stop offset="0%" stop-color="#ff2200"/><stop offset="100%" stop-color="#cc0000"/></radialGradient>
+        <radialGradient id="globe-dot-melt"><stop offset="0%" stop-color="#ff6600"/><stop offset="100%" stop-color="#cc4400"/></radialGradient>
+        <radialGradient id="globe-dot-warm"><stop offset="0%" stop-color="#cc00ff"/><stop offset="100%" stop-color="#8800aa"/></radialGradient>
+      </defs>
+      <rect width="800" height="400" fill="url(#globe-sea)"/>
+      <path d="M 400,200 m -180,0 a 180,180 0 1,1 360,0 a 180,180 0 1,1 -360,0" fill="none" stroke="rgba(0,229,255,0.12)" stroke-width="1"/>
+      <g id="globe-dots"></g>
+    </svg>
+  </div>
+</section>
+
+<!-- ── THE STORY (below) ── -->
 
 <!-- ── MELTGATE STORY TICKER ─────────────────────────────────────────────── -->
 <div class="news-ticker-wrap" title="Hover to pause · Relaxed reading speed">
@@ -1175,28 +1248,6 @@ Watch it every day. When Dubai goes green, you'll see it here first.
   </div>
 </div>
 
-<!-- ── SPACE CLOUD BAR ────────────────────────────────────────────────────── -->
-<div class="sc-bar">
-  <div>
-    <div class="sc-label">SPACE CLOUD INDEX</div>
-    <div class="sc-idx" id="sc-idx">—</div>
-  </div>
-  <div class="sc-progress"><div class="sc-fill" id="sc-fill" style="width:0%"></div></div>
-  <div>
-    <div class="sc-label">COMMAND</div>
-    <div class="sc-cmd" id="sc-cmd">—</div>
-  </div>
-  <div>
-    <div class="sc-label">AVG FAILURE-JUNCTION</div>
-    <div class="sc-cmd" id="sc-avg-junc">—</div>
-  </div>
-  <div>
-    <div class="sc-label">MELTDOWN RISK SITES</div>
-    <div class="sc-cmd" id="sc-melt-count" style="color:var(--meltdown-c)">—</div>
-  </div>
-  <div class="sc-ts" id="sc-ts">Last scan: —</div>
-</div>
-
 <!-- ── A2A TRIAL ENGINE ───────────────────────────────────────────────────── -->
 <div id="trial-engine-panel">
   <div style="padding:18px 32px;background:linear-gradient(135deg,rgba(0,229,255,.06) 0%,rgba(123,47,255,.04) 100%);border-bottom:1px solid rgba(201,168,32,.2);">
@@ -1287,16 +1338,6 @@ Watch it every day. When Dubai goes green, you'll see it here first.
         opacity:.4;transition:opacity .2s;">♛ Confirm Recognition</button>
     </div>
   </div>
-</div>
-
-<!-- ── REGION TABS ─────────────────────────────────────────────────────────── -->
-<div class="region-tabs" id="region-tabs">
-  <div class="rtab active" onclick="filterRegion('ALL')">All (28)</div>
-  <div class="rtab" onclick="filterRegion('North America')">North America</div>
-  <div class="rtab" onclick="filterRegion('Europe')">Europe</div>
-  <div class="rtab" onclick="filterRegion('Middle East')">Middle East</div>
-  <div class="rtab" onclick="filterRegion('Asia-Pacific')">Asia-Pacific</div>
-  <div class="rtab" onclick="filterRegion('Latin America')">Latin America</div>
 </div>
 
 <!-- ── CROWN JEWEL TRIAL RESULTS ─────────────────────────────────────────── -->
@@ -1401,19 +1442,6 @@ Watch it every day. When Dubai goes green, you'll see it here first.
 
   </div>
 </div>
-
-<!-- ── LIVE DATA TICKER ───────────────────────────────────────────────────── -->
-<div class="live-ticker-wrap" title="Hover to pause · Live cluster readings">
-  <div class="live-ticker-label">≋ LIVE DATA</div>
-  <div class="live-ticker-scroll">
-    <div class="live-ticker-track" id="live-ticker-track">
-      <!-- content injected after cluster data loads -->
-    </div>
-  </div>
-</div>
-
-<!-- ── CLUSTER GRID ────────────────────────────────────────────────────────── -->
-<div class="grid-wrap" id="grid-wrap"></div>
 
 <!-- ── DETAIL OVERLAY ─────────────────────────────────────────────────────── -->
 <div id="detail-overlay">
@@ -1714,6 +1742,7 @@ async function fetchAll() {
   });
   renderGrid();
   updateSpaceCloud();
+  renderGlobe();
   document.getElementById('sc-ts').textContent =
     'Last scan: ' + scanTs.toUTCString().slice(0, 22) + ' UTC';
   // Refresh live data ticker with updated readings
@@ -1783,14 +1812,65 @@ function renderGrid() {
   const regions = ['North America','Europe','Middle East','Asia-Pacific','Latin America'];
   const show = activeRegion === 'ALL' ? regions : [activeRegion];
 
+  if (activeRegion === 'ALL') {
+    const all = [].slice.call(CLUSTERS).sort((a, b) => {
+      const ja = readings[a.id]?.thermal?.failure?.junc_c;
+      const jb = readings[b.id]?.thermal?.failure?.junc_c;
+      if (ja == null && jb == null) return 0;
+      if (ja == null) return 1;
+      if (jb == null) return -1;
+      return jb - ja;
+    });
+    const cards = all.map(c => renderCard(c)).join('');
+    wrap.innerHTML = `<div class="region-section">
+      <div class="region-hdr">● Live temperatures · 28 clusters · Hottest first</div>
+      <div class="cluster-grid">${cards}</div>
+    </div>`;
+    return;
+  }
+
   wrap.innerHTML = show.map(region => {
-    const sites = CLUSTERS.filter(c => c.region === region);
+    const sites = [].slice.call(CLUSTERS.filter(c => c.region === region)).sort((a, b) => {
+      const ja = readings[a.id]?.thermal?.failure?.junc_c;
+      const jb = readings[b.id]?.thermal?.failure?.junc_c;
+      if (ja == null && jb == null) return 0;
+      if (ja == null) return 1;
+      if (jb == null) return -1;
+      return jb - ja;
+    });
     const cards = sites.map(c => renderCard(c)).join('');
     return `<div class="region-section">
-      <div class="region-hdr">● ${region} · ${sites.length} cluster${sites.length > 1 ? 's' : ''}</div>
+      <div class="region-hdr">● ${region} · ${sites.length} cluster${sites.length > 1 ? 's' : ''} · Hottest first</div>
       <div class="cluster-grid">${cards}</div>
     </div>`;
   }).join('');
+}
+
+function renderGlobe() {
+  const g = document.getElementById('globe-dots');
+  if (!g) return;
+  g.innerHTML = '';
+  CLUSTERS.forEach(c => {
+    const r = readings[c.id];
+    const junc = r?.thermal?.failure?.junc_c;
+    const x = ((c.lon + 180) / 360) * 800;
+    const y = ((90 - c.lat) / 180) * 400;
+    let fill = 'rgba(0,229,255,0.35)';
+    if (junc != null) {
+      if (junc >= 100) fill = 'url(#globe-dot-hot)';
+      else if (junc >= 92) fill = 'url(#globe-dot-melt)';
+      else if (junc >= 80) fill = 'url(#globe-dot-warm)';
+    }
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('class', 'globe-dot');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', junc != null && junc >= 92 ? 6 : 4);
+    circle.setAttribute('fill', fill);
+    circle.setAttribute('title', c.name + (junc != null ? ' · ' + junc.toFixed(1) + '°C' : ''));
+    circle.onclick = function() { openDetail(c.id); };
+    g.appendChild(circle);
+  });
 }
 
 function renderCard(c) {

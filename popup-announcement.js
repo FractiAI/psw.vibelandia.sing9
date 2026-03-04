@@ -15,36 +15,36 @@ var _isES  = /^es\b/i.test(_lang);
 
 var POPUP_CONFIG = {
   active:  true,
-  id:      'hh-session-one-v4',
+  id:      'upgrade-your-game-v1',
   dismiss: 'session',
 
-  eyebrow:  _isES ? 'AVISO DE CLASIFICACI\u00d3N \u00b7 SESI\u00d3N UNO' : 'CLEARANCE NOTICE \u00b7 SESSION ONE',
-  title:    'You Have Been\nIdentified',
+  eyebrow:  _isES ? 'UPGRADE YOUR GAME' : 'UPGRADE YOUR GAME',
+  title:    'Your Invitation\nTo Upgrade',
 
   pitch: _isES
-    ? 'No todos los que llegan aqu\u00ed deb\u00edan llegar. Una sesi\u00f3n en vivo de 60 min \u2014 tu primera comisi\u00f3n.'
-    : 'Not everyone who arrives here was supposed to. One 60-min live session \u2014 your first commission.',
+    ? 'Una hora. Tu consola HH y tu estación de vibes. El primer paso como nodo consciente en la red de hidrógeno holográfico — inmensa, eterna, Goldilocks.'
+    : 'One hour. Your Holographic Hydrogen Console and your Vibe Station. The first step in a new life and career as a holographic hydrogen–aware node on the net. Immense. Eternal. Goldilocks.',
 
   features: [
     {
       icon: '\u2b21',
-      label: _isES ? 'INSTALACI\u00d3N HH CONSOLE' : 'HH CONSOLE INSTALL',
-      desc:  _isES ? 'Tu estaci\u00f3n sale de la sesi\u00f3n como una consola de Hidr\u00f3geno Hologr\u00e1fico en vivo.'
-                   : 'Your station leaves the session running as a live Holographic Hydrogen Console.',
+      label: _isES ? 'CONSOLA HH' : 'HH CONSOLE',
+      desc:  _isES ? 'Tu estación sale de la sesión como consola de Hidrógeno Holográfico en vivo.'
+                   : 'Your station leaves the session as a live Holographic Hydrogen Console.',
       cls: 'c'
     },
     {
       icon: '\u25c8',
-      label: _isES ? 'COMISI\u00d3N HFCS' : 'HFCS COMMISSION',
-      desc:  _isES ? 'Recibe tu primer rango en la Escuela de Comando de Campo Hologr\u00e1fico.'
-                   : 'Receive your first rank in the Holographic Field Command School.',
+      label: _isES ? 'ESTACIÓN VIBE' : 'VIBE STATION',
+      desc:  _isES ? 'Tu UI y tu puesto en la red — listos para seguir desarrollando.'
+                   : 'Your UI and your station on the net — ready to keep developing.',
       cls: 'p'
     },
     {
       icon: '\u2726',
-      label: _isES ? 'ACCESO AL PROSPECTUS' : 'FULL PROSPECTUS ACCESS',
-      desc:  _isES ? 'Paquete completo de inteligencia institucional SING\u20199 \u2014 los cuatro documentos.'
-                   : 'Institutional-grade SING\u20199 intelligence package \u2014 all four prospectus documents.',
+      label: _isES ? 'RED HH' : 'THE HH NET',
+      desc:  _isES ? 'Inmensa. Eterna. En expansión. Goldilocks.'
+                   : 'Immense. Eternal. Ever-expanding. Ever-improving. Goldilocks.',
       cls: 'g'
     },
   ],
@@ -52,39 +52,39 @@ var POPUP_CONFIG = {
   tiers: [
     {
       range: '1\u20133', badge: '\u2b50', cls: 'g',
-      name:  _isES ? 'ASIENTO VIP'     : 'VIP SEAT',
+      name:  _isES ? 'VIP'     : 'VIP SEAT',
       price: '$999',
-      desc:  _isES ? '1:1 briefing previo + miembro fundador + comisi\u00f3n r\u00e1pida HFCS O-3'
-                   : '1:1 pre-session briefing + founding member + fast-track HFCS O-3',
+      desc:  _isES ? '1:1 previo + fundador + O-3'
+                   : '1:1 pre-session + founding member + O-3',
     },
     {
       range: '4\u20136', badge: '\u2726', cls: 'c',
-      name:  _isES ? 'ASIENTO OFICIAL' : 'OFFICER SEAT',
+      name:  _isES ? 'OFICIAL' : 'OFFICER',
       price: '$666',
-      desc:  _isES ? 'Orientaci\u00f3n grupal + sesi\u00f3n completa + comisi\u00f3n HFCS O-2'
-                   : 'Group orientation + full live session + HFCS commission O-2',
+      desc:  _isES ? 'Orientación grupal + sesión + O-2'
+                   : 'Group orientation + full session + O-2',
     },
     {
       range: '7\u20139', badge: '\u25c8', cls: 'p',
-      name:  _isES ? 'ASIENTO TRIPULACI\u00d3N' : 'CREW SEAT',
+      name:  _isES ? 'TRIPULACIÓN' : 'CREW',
       price: '$333',
-      desc:  _isES ? 'Sesi\u00f3n completa + pack de recursos HH + primera comisi\u00f3n O-1'
-                   : 'Full live session + HH Console resource pack + first commission O-1',
+      desc:  _isES ? 'Sesión completa + recursos HH + O-1'
+                   : 'Full session + HH resources + O-1',
     },
   ],
 
   trust: _isES
-    ? '9 ASIENTOS \u00b7 MAR 3, 2026 \u00b7 3:33 PM PST \u00b7 T+60 MIN'
-    : '9 SEATS ONLY \u00b7 TUES MAR 3 \u00b7 3:33 PM PST \u00b7 T+60 MIN',
+    ? '9 ASIENTOS \u00b7 SESIÓN DE 1 HORA \u00b7 CONSOLA HH + VIBE STATION'
+    : '9 SEATS \u00b7 ONE-HOUR SESSION \u00b7 HH CONSOLE + VIBE STATION',
 
-  cta_text:  _isES ? '\u2192 Solicitar Comisi\u00f3n \u00b7 Sesi\u00f3n Uno' : '\u2192 Request Commission \u00b7 Session One',
+  cta_text:  _isES ? '\u2192 Reservar mi lugar' : '\u2192 Upgrade My Game',
   cta_href:  'session-one-signup',
 
-  secondary_text: _isES ? '\u25c8 Detalles Completos' : '\u25c8 Full Briefing',
-  secondary_href: '/interfaces/holographic-navigator-academy.html#full',
+  secondary_text: _isES ? '\u25c8 Ver flujo completo' : '\u25c8 Full Upgrade Flow',
+  secondary_href: '/interfaces/upgrade-awareness-to-sing9-now.html',
 
-  dismiss_text: _isES ? '\u2715\u2002No estoy listo' : '\u2715\u2002I\'m not ready',
-  nsp: 'HH CONSOLE \u00b7 SESSION ONE \u00b7 FRACTIAI \u00b7 NSPFRNP \u2192 \u221e\u2079',
+  dismiss_text: _isES ? '\u2715\u2002Ahora no' : '\u2715\u2002Not now',
+  nsp: 'UPGRADE YOUR GAME \u00b7 HOLOGRAPHIC HYDROGEN \u00b7 NSPFRNP \u2192 \u221e\u2079',
 };
 
 /* ═══════════════════════════════════════════════════════════════════

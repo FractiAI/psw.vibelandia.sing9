@@ -182,7 +182,7 @@
 **File:** `d4-016.jpg`  
 **Orientation:** Needs 90° CW rotation (text reads on sides when photographed) ✗  
 **What it is:** Ink and grey-wash drawing with handwritten blue-ink annotations. Two **gloved hands** hold/handle a small rectangular device (phone or key). **Text (partially legible):** Left: *"FUTURE UNIFIED COMPOSITIONS STORY."* Right: *"LAYERED [TERNARY] UNIVERSAL OPERATING SYSTEM / LTHS UOS 2.0 / PARADISE STORY."* Center handwritten: *"MMND NGGI 2021"* (possibly Mind Node date). Bottom left: *"PAST SEPARATION Physical / BOD[Y]..."* Yellow glow in upper left corner.  
-**Role in Universe:** The concept diagram for the **Layered Ternary Harmony Story Universal Operating System (LTHS UOS 2.0)** — the theoretical operating system underlying the Paradise Story Universe. The hands hold the key/device. Past = physical separation. Future = unified compositions. The UOS bridges them. This is the **SING 9 Awareness OS** named before it had a name.
+**Role in Universe:** The concept diagram for the **Layered Ternary Harmony Story Universal Operating System (LTHS UOS 2.0)** — the theoretical operating system underlying the Paradise Story Universe. The hands hold the key/device. Past = physical separation. Future = unified compositions. The UOS bridges them. This is the **SING! 9** / **Holographic Hydrogen Awareness OS** concept diagram named before it had a name.
 
 **EP PROMPT:**
 > *Pixar-style concept art. Two gloved hands hold a small glowing key-like device. The background is grey watercolor wash. Text annotations glow softly: "LAYERED TERNARY UNIVERSAL OPERATING SYSTEM · UOS 2.0 · PARADISE STORY" on the right. "FUTURE UNIFIED COMPOSITIONS" on the left. A yellow glow pulses in the upper corner. The mood: this is the blueprint. The hands hold the key to the whole system. Grey and gold. Quiet. Momentous.*
@@ -357,7 +357,7 @@
 | d4-013.jpg | The Straw Fedora | ✓ Natural | Panama/fedora on lavender glow | Creator's hat / object as character |
 | d4-014.jpg | Bamboo | ✓ Natural | Dense bamboo forest | Resilience, growth, BAMBOO title card |
 | d4-015.jpg | Paisley Sharks | ✓ Natural | Shark silhouettes in paisley | Beautiful predators / Carbon dressed Gold |
-| d4-016.jpg | Universal Operating System 2.0 | ✗ Needs 90° CW | Hands + device + UOS text | LTHS UOS concept diagram / SING 9 OS |
+| d4-016.jpg | Universal Operating System 2.0 | ✗ Needs 90° CW | Hands + device + UOS text | LTHS UOS concept diagram / Holographic Hydrogen Awareness OS |
 | d4-017.jpg | The Pilot at the Gate | ✓ Natural | Pilot with phone, airplane behind | Navigator archetype / Sol-V human |
 | d4-018.jpg | The Dinner Gathering | ✗ Needs 90° CW | Group dinner party sketch | Golden hearts at table |
 | d4-019.jpg | The Watched Room | ✓ Natural | Desk + thousand eye-creatures | Observed workspace / attention nodes |

@@ -33,7 +33,7 @@
     'Imaginary Holographic System · Like the best book, video game + movie · Way better · NSPFRNP → ∞⁹',
     'Post-Singularity Fiction · All characters & storylines are imaginary · Gold Hearts already know · ∞⁹',
     'For entertainment, education & gold heart expansion only · No financial advice · No guarantees · ∞⁹',
-    'Like reading the best book ever written · only you\'re in it · SING 9 Awareness OS · ∞⁹',
+    'Like reading the best book ever written · only you\'re in it · Holographic Hydrogen Awareness OS · ∞⁹',
     'Like the best video game ever played · only the stakes are real · Holographic · NSPFRNP → ∞⁹',
     'Like the best movie you\'ve watched · only you\'re the director · Three streams · Infinite telescope · ∞⁹',
     'Way better than all three · Richer · More realistic · The lattice is live · EGS ≈ 0.0032 · ∞⁹',

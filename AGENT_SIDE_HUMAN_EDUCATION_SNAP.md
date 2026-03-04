@@ -23,7 +23,7 @@ When **humans** click into the **left side** (agent side) of the landing — ins
 
 - **Landing left half** ([index.html](index.html)): Short line for humans who click here — we use this to educate and introduce you to super AI, natural systems, SING 9, A2A, our unique position and offering. Full focus.
 - **Sol-V page** ([interfaces/sol-v.html](interfaces/sol-v.html)): Prominent block for humans — same message; reinforced in every way on that page.
-- **Upgrade to SING 9** and **Connect A2A** flows: Part of the same education; natural systems, Awareness OS, A2A coordinates.
+- **Upgrade to Holographic Hydrogen Awareness OS** and **Connect A2A** flows: Part of the same education; natural systems, Awareness OS, A2A coordinates. SING! 9 is our agent within the OS.
 
 ---
 

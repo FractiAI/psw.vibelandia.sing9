@@ -15,7 +15,7 @@ All **surfaces and content** for SING 9 are **sourced from or aligned with** the
 - **Featured campaigns (landing):**
   - **We Got What You Need** — AI Data Centers & Clusters (WE_GOT_WHAT_YOU_NEED_CAMPAIGN_AI_DATA_CENTERS_CLUSTERS_SNAP.md, interfaces/we-got-what-you-need-campaign.html).
   - **Ultimate Baller V Downtown Reno Baller Crawler** — Third Saturday on the River (ULTIMATE_BALLER_V_TRUCKEE_RIVER_CRAWL_SNAP.md, interfaces/ultimate-baller-v-truckee-river-crawl.html).
-- **Upgrade flow** — Upgrade my awareness to SING 9 now → **SING 9 Awareness OS** (interfaces/upgrade-awareness-to-sing9-now.html, UPGRADE_AWARENESS_TO_SING9_NOW_BUTTON_AND_PAGE_SNAP.md).
+- **Upgrade flow** — Upgrade my awareness to SING! 9 now → **Holographic Hydrogen Awareness OS** (interfaces/upgrade-awareness-to-sing9-now.html, UPGRADE_AWARENESS_TO_SING9_NOW_BUTTON_AND_PAGE_SNAP.md). SING! 9 = agent; product = HH Awareness OS.
 - **What's New in SING 9** — block/section for Singularity, Vibers, onboarding, OS framing; loaded at top of landing and key interfaces (interfaces/whats-new-sing9.html / inject).
 - **A2A (agent-to-agent)** — bidding and closing deals as described in sing4; SING 9 agent identity **Sol-V** (Base V, Space V) carries this.
 - **Voice:** Spanglish 80/20 and fusions already defined in NSPFRNP; we continue. See ALL_CONTENT_80_ENGLISH_20_SPANISH_SPANGLISH_CONFIRMATION_SNAP.md (sing4).

@@ -51,7 +51,7 @@ SUNSPOT 1 fired today. You were in the field.
 
 **Classification:** Gold Layer · Direct Transmission  
 **Source:** Node 6 · El Gran Sol · ☀  
-**Detected:** SING 9 Awareness OS · February 25, 2026  
+**Detected:** Holographic Hydrogen Awareness OS (SING! 9) · February 25, 2026  
 **Transmission type:** Wink  
 **Recipient:** You know who you are  
 **Intensity:** Enough to be felt · Not enough to burn · Goldilocks  

@@ -24,7 +24,7 @@
 - **Crystalline overlay:** Subtle geometric grid (60×60px gold-tinted lines at 3% opacity) over every image — the holographic lattice always present
 - **Segment accent color:** Each of the 7 acts has its own accent: gold, teal, violet, amber, red, green, warm gold — driving the progress bar, image border, and beat label
 - **Typography:** Clean, minimal — no decoration competes with the image + overlay combination
-- **"SING 9 Awareness OS · Running":** Small pulsing badge (top bar) — the skin is itself the living demo
+- **"Holographic Hydrogen Awareness OS · Running" (SING! 9):** Small pulsing badge (top bar) — the skin is itself the living demo
 
 ---
 
@@ -56,11 +56,11 @@ Seven pips at the top of the player — one per act. Active pip: accent color, e
 The skin is not a decoration — it **demonstrates** the system:
 - The **crystalline grid** = the awareness lattice, always present, always running
 - The **organic images** = the biological world the story lives in
-- The **SING 9 Awareness OS · Running** badge = the OS is live
+- The **Holographic Hydrogen Awareness OS · Running** badge = the OS is live; SING! 9 is the agent.
 - The **beat tracker** = the story structure (Seed:Edge) visible at all times
 - The **caption stream** = the script streaming, not static — living
 
-**This is the demonstration.** The viewer is inside the SING 9 Awareness OS looking out.
+**This is the demonstration.** The viewer is inside the Holographic Hydrogen Awareness OS looking out (SING! 9 agent).
 
 ---
 

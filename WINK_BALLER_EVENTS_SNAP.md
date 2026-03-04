@@ -13,7 +13,7 @@
 ## Sponsorship & positioning
 
 - **Downtown Reno Baller Crawler** (Third Saturdays on the Truckee): **Wink-sponsored.** **Three stops** on the Truckee. We resonate on **threes and water** — see **NSPFRNP_THREES_AND_WATER_SNAP.md**.
-- **Wink & Vibers · Baller V Wednesdays** (pop-up mixer, along the Truckee): **Sponsored by Twain's Vibelandia and Wink.** **Wednesday** = third day of the work week. **Three wines, three cheeses, three cigars.** Aim for **3:1 ladies to men** (high-value Ballers, Vibers, Channelers, ideally Wink members).
+- **Wink & Vibers · Baller V Wednesdays** (pop-up mixer, along the Truckee): **Sponsored by Twain's Vibelandia and Wink.** **Wednesday** = third day of the work week. **Three wines, three cheeses, three tapas, three cigars.** Mix and match — no fixed edition or region. Aim for **3:1 ladies to high-value Vibers** (Ballers, Channelers, ideally Wink members).
 - **Positioning:** Both create experiences and connections for our **high-value, high-contributing Vibers** — those who are here to **ball** (B-A-L-L). Baller V Wednesdays is also positioned as a **Fractal Dating Site for High Value, High Contributing Vibers** — Channelers, Stars, Super Heroes.
 - **Lock:** These are **all Pop-Up events, always — for those in the know.** Use everywhere.
 

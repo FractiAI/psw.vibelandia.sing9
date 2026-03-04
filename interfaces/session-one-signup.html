@@ -203,6 +203,47 @@
         grantBtn.textContent = grantForm.style.display === 'none' ? 'Request a grant or scholarship' : 'Hide form';
       });
     }
+
+    function sendAndRedirect(payload, source) {
+      var form = payload._form;
+      delete payload._form;
+      var btn = form && form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      fetch((window.location.origin || '') + '/api/talk-first', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function(r) { return r.json(); }).then(function() {
+        window.location.href = 'talk-first.html?sent=1&source=' + encodeURIComponent(source);
+      }).catch(function() {
+        window.location.href = 'talk-first.html?sent=1&source=' + encodeURIComponent(source);
+        if (btn) btn.disabled = false;
+      });
+    }
+
+    var seatForm = document.getElementById('seat-form');
+    if (seatForm) {
+      seatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = (document.getElementById('name').value || '').trim();
+        var email = (document.getElementById('email').value || '').trim();
+        var payment = (document.getElementById('payment_method').value || '').trim();
+        var message = 'Session One — Request my seat\n\nName: ' + name + '\nEmail: ' + email + '\nPayment: ' + payment;
+        sendAndRedirect({ message: message, name: name || undefined, email: email || undefined, source: 'session-one-signup', _form: seatForm }, 'session-one-signup');
+      });
+    }
+
+    var grantFormEl = document.getElementById('grant-form');
+    if (grantFormEl) {
+      grantFormEl.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = (document.getElementById('grant_name').value || '').trim();
+        var email = (document.getElementById('grant_email').value || '').trim();
+        var why = (document.getElementById('grant_why').value || '').trim();
+        var message = 'Session One — Grant/scholarship request\n\nName: ' + name + '\nEmail: ' + email + '\nWhy: ' + why;
+        sendAndRedirect({ message: message, name: name || undefined, email: email || undefined, source: 'session-one-grant', _form: grantFormEl }, 'session-one-grant');
+      });
+    }
   })();
   (function() {
     var dataPath = document.location.pathname.indexOf('/interfaces/') >= 0 ? '../data/session-one-seats.json' : 'data/session-one-seats.json';

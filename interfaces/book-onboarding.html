@@ -76,6 +76,31 @@
       var blurb = document.getElementById('in-person-blurb');
       if (blurb) blurb.style.display = 'block';
     }
+
+    var form = document.getElementById('book-form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = (document.getElementById('name').value || '').trim();
+        var email = (document.getElementById('email').value || '').trim();
+        var payment = (document.getElementById('payment_method').value || '').trim();
+        var trackVal = (document.getElementById('f-track').value || '').trim();
+        var deliveryVal = (document.getElementById('f-delivery').value || '').trim();
+        var message = 'Book scaling support request.\n\nTrack: ' + (trackLabels[trackVal] || trackVal) + '\nDelivery: ' + (deliveryLabels[deliveryVal] || deliveryVal) + '\nPayment: ' + payment;
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+        fetch((window.location.origin || '') + '/api/talk-first', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: message, name: name || undefined, email: email || undefined, source: 'book-onboarding' })
+        }).then(function(r) { return r.json(); }).then(function() {
+          window.location.href = 'talk-first.html?sent=1&source=book-onboarding';
+        }).catch(function() {
+          window.location.href = 'talk-first.html?sent=1&source=book-onboarding';
+          if (btn) btn.disabled = false;
+        });
+      });
+    }
   })();
   </script>
 </body>

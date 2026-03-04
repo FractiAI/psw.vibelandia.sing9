@@ -617,8 +617,7 @@ function buildMailto(pkgKey) {
     + 'Banner brief (what should the 15-second spot say?):\n[YOUR BANNER MESSAGE / BRIEF HERE]\n\n';
   }
 
-  var body = encodeURIComponent(
-    'Hi,\n\n'
+  var rawMessage = 'Hi,\n\n'
   + 'I would like to purchase the following ad space on SING!9 StoryStream:\n\n'
   + '  Package:  ' + pkg.name + '\n'
   + '  Surface:  ' + pkg.surface + '\n'
@@ -633,10 +632,9 @@ function buildMailto(pkgKey) {
   + 'Email:   \n'
   + 'Brand:   \n'
   + 'Website: \n\n'
-  + 'Thanks!\n'
-  );
+  + 'Thanks!\n';
 
-  return 'mailto:' + EMAIL_TO + '?subject=' + subject + '&body=' + body;
+  return 'talk-first.html?source=advertise&prefill=' + encodeURIComponent(rawMessage);
 }
 
 /* Wire all Buy buttons */
@@ -644,6 +642,7 @@ Object.keys(PACKAGES).forEach(function(key) {
   var btn = document.getElementById('buy-' + key);
   if (btn) btn.href = buildMailto(key);
 });
+
 </script>
 
 </body>

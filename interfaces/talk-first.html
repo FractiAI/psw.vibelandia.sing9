@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Talk first · Baller V Wednesdays | VIBELANDIA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: rgba(253, 248, 235, 0.95);
+    }
+    body {
+      background-color: #0a0604;
+      background-image: url('assets/vendors-silver-legacy.png');
+      background-size: cover;
+      background-position: center 40%;
+      background-attachment: fixed;
+    }
+
+    .page-veil {
+      min-height: 100vh;
+      background: linear-gradient(
+        180deg,
+        rgba(4,2,1,0.45) 0%,
+        rgba(8,4,2,0.62) 25%,
+        rgba(6,3,2,0.82) 60%,
+        rgba(4,2,1,0.96) 100%
+      );
+      padding: 1.5rem 1.5rem 3rem;
+      padding-top: calc(1rem + env(safe-area-inset-top));
+    }
+
+    .wrap { max-width: 620px; margin: 0 auto; }
+
+    .letterhead {
+      border-top: 1px solid rgba(212,175,55,0.55);
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+      padding: 0.65rem 0;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .letterhead-left { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(212,175,55,0.7); }
+    .letterhead-right { display: flex; gap: 1rem; }
+    .letterhead-right a { font-size: 0.72rem; color: rgba(232,121,249,0.8); text-decoration: none; letter-spacing: 0.06em; }
+    .letterhead-right a:hover { color: #f0abfc; }
+
+    .brand { margin-bottom: 1.5rem; }
+    .brand .eyebrow { font-size: 0.65rem; letter-spacing: 0.35em; color: #22d3ee; margin-bottom: 0.5rem; text-transform: uppercase; }
+    .brand h1 { font-size: clamp(1.35rem, 4vw, 1.85rem); font-weight: 800; color: #fff; letter-spacing: 0.02em; }
+    .brand .sub { font-size: 0.85rem; color: #d4af37; letter-spacing: 0.06em; margin-top: 0.35rem; }
+
+    /* Chat */
+    .chat-box {
+      border: 1px solid rgba(212,175,55,0.4);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(6px);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 1rem 1.25rem;
+      overflow-y: auto;
+      max-height: 320px;
+    }
+    .chat-msg {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .chat-msg.from-them .who { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #d4af37; margin-bottom: 0.25rem; }
+    .chat-msg.from-me .who { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #e879f9; margin-bottom: 0.25rem; }
+    .chat-msg .text { color: rgba(253,248,235,0.92); }
+    .chat-msg.from-me .text { color: rgba(232,121,249,0.95); }
+    .chat-msg.sent .text { color: rgba(253,248,235,0.7); }
+    .chat-status { font-size: 0.75rem; color: rgba(212,175,55,0.6); margin-top: 0.5rem; }
+
+    .chat-form {
+      border-top: 1px solid rgba(212,175,55,0.25);
+      padding: 1rem 1.25rem;
+      background: rgba(0,0,0,0.3);
+    }
+    .chat-form label { display: block; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(212,175,55,0.7); margin-bottom: 0.35rem; }
+    .chat-form input, .chat-form textarea {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    .chat-form textarea { min-height: 88px; resize: vertical; }
+    .chat-form input::placeholder, .chat-form textarea::placeholder { color: rgba(255,255,255,0.35); }
+    .chat-form .row { display: flex; gap: 0.75rem; }
+    .chat-form .row > div { flex: 1; }
+    .chat-actions { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 0.5rem; }
+    .chat-actions button {
+      padding: 0.7rem 1.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0a0604;
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      border: 2px solid #d4af37;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .chat-actions button:hover { box-shadow: 0 0 20px rgba(212,175,55,0.5); }
+    .chat-actions button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .chat-error { font-size: 0.8rem; color: #f87171; margin-top: 0.5rem; }
+    .chat-success { font-size: 0.8rem; color: #86efac; margin-top: 0.5rem; }
+
+    .foot {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(212,175,55,0.15);
+      font-size: 0.7rem;
+      color: rgba(212,175,55,0.35);
+      letter-spacing: 0.06em;
+    }
+    .foot a { color: rgba(212,175,55,0.5); text-decoration: none; }
+    .foot a:hover { color: #e879f9; }
+  </style>
+</head>
+<body>
+  <div class="page-veil">
+    <div class="wrap">
+
+      <div class="letterhead">
+        <span class="letterhead-left">Pru's Valet Service · Vibelandia · SING 9</span>
+        <div class="letterhead-right">
+          <a href="baller-v-wednesdays.html">← Baller V Wednesdays</a>
+          <a href="vibers-menu.html">Valet Menu</a>
+        </div>
+      </div>
+
+      <div class="brand">
+        <p class="eyebrow">Chat · Just gotta know</p>
+        <h1>Talk first</h1>
+        <p class="sub">Baller V Mixer Wednesdays — we're here. Say what's on your mind; we'll reply here or by email.</p>
+      </div>
+
+      <div class="chat-box">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-msg from-them">
+            <div class="who">Pru's Valet · Vibelandia</div>
+            <div class="text">Hey. You clicked Talk first — good call. Tell us what you're thinking: questions about the mixer, the 3-3-3, seating, or just want to say hi. We'll get back to you here so we can keep the conversation in one place.</div>
+          </div>
+        </div>
+
+        <div class="chat-form">
+          <div class="row">
+            <div><label for="name">Name (optional)</label><input type="text" id="name" name="name" placeholder="What should we call you?" /></div>
+            <div><label for="email">Email (optional)</label><input type="email" id="email" name="email" placeholder="you@example.com" /></div>
+          </div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="What's on your mind?" required></textarea>
+          <div class="chat-actions">
+            <button type="button" id="sendBtn">Send</button>
+            <span id="formStatus"></span>
+          </div>
+        </div>
+      </div>
+
+      <p class="foot"><a href="baller-v-wednesdays.html">Baller V Wednesdays</a> · <a href="vibers-menu.html">Valet menu</a> · <a href="../index.html">Landing</a> · NSPFRNP → ∞⁹</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var messagesEl = document.getElementById('chatMessages');
+      var messageInput = document.getElementById('message');
+      var nameInput = document.getElementById('name');
+      var emailInput = document.getElementById('email');
+      var sendBtn = document.getElementById('sendBtn');
+      var formStatus = document.getElementById('formStatus');
+
+      var params = new URLSearchParams(document.location.search);
+      var urlSource = params.get('source') || '';
+      var sent = params.get('sent') === '1';
+      var prefill = params.get('prefill') || '';
+
+      if (sent && urlSource) {
+        var them = document.querySelector('.chat-msg.from-them');
+        var confirm = document.createElement('div');
+        confirm.className = 'chat-msg from-them';
+        confirm.innerHTML = '<div class="who">Pru\'s Valet · Vibelandia</div><div class="text">We got your sign-up. We\'ll be in touch here or by email. Add more below if you want.</div>';
+        messagesEl.appendChild(confirm);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        if (window.history && window.history.replaceState) window.history.replaceState({}, '', window.location.pathname + (urlSource ? '?source=' + encodeURIComponent(urlSource) : ''));
+      }
+      if (prefill) {
+        try { messageInput.value = decodeURIComponent(prefill); } catch(e) { messageInput.value = prefill; }
+      }
+
+      function addMessage(who, text, isMe) {
+        var div = document.createElement('div');
+        div.className = 'chat-msg ' + (isMe ? 'from-me' : 'from-them');
+        div.innerHTML = '<div class="who">' + (isMe ? 'You' : who) + '</div><div class="text">' + escapeHtml(text) + '</div>';
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function escapeHtml(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function setStatus(msg, isError) {
+        formStatus.textContent = msg;
+        formStatus.className = isError ? 'chat-error' : 'chat-success';
+      }
+
+      function getSource() { return urlSource || 'baller-v-wednesdays'; }
+
+      sendBtn.addEventListener('click', function() {
+        var text = (messageInput.value || '').trim();
+        if (!text) {
+          setStatus('Type a message first.', true);
+          return;
+        }
+
+        sendBtn.disabled = true;
+        setStatus('Sending…', false);
+
+        var payload = {
+          message: text,
+          name: (nameInput.value || '').trim() || undefined,
+          email: (emailInput.value || '').trim() || undefined,
+          source: getSource()
+        };
+
+        var base = window.location.origin;
+        fetch(base + '/api/talk-first', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, status: r.status, body: j }; }); })
+          .then(function(result) {
+            if (result.ok || result.status === 200) {
+              addMessage('You', text, true);
+              messageInput.value = '';
+              setStatus('Sent. We\'ll reply here or by email — check back.', false);
+            } else {
+              setStatus(result.body?.error || 'Something went wrong. Try email: info@fractiai.com', true);
+            }
+          })
+          .catch(function(err) {
+            setStatus('Network error. You can email us: info@fractiai.com', true);
+          })
+          .finally(function() {
+            sendBtn.disabled = false;
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

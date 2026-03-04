@@ -7,11 +7,20 @@
  */
 (function (w) {
 
-  // ── DETECT ──────────────────────────────────────────────────
-  var lang = (navigator.languages && navigator.languages[0]) ||
-             navigator.language || navigator.userLanguage || 'en';
-  var isES = /^es\b/i.test(lang);
-  w.SING9_LANG = isES ? 'es' : 'en';
+  // ── DETECT (Colombia es-CO, Mexico es-MX, etc. → Spanish) ───────────────
+  var lang = 'en';
+  if (navigator.languages && navigator.languages.length) {
+    for (var i = 0; i < navigator.languages.length; i++) {
+      var L = navigator.languages[i];
+      if (L && /^es\b/i.test(String(L))) { lang = 'es'; break; }
+    }
+  }
+  if (lang === 'en' && (navigator.language || navigator.userLanguage)) {
+    var single = navigator.language || navigator.userLanguage || '';
+    if (/^es\b/i.test(String(single))) lang = 'es';
+  }
+  w.SING9_LANG = lang;
+  try { document.documentElement.lang = lang; } catch (e) {}
 
   // ── TRANSLATIONS ────────────────────────────────────────────
   var T = {
@@ -113,9 +122,52 @@
       'vibers.pilot.title' : 'T3D ORIGIN — The Pilot Special',
       'vibers.pilot.desc'  : 'Three Acts · 16 Beats · ~10 Min · Every deck image · Hero J.S. Bach · THE SKIN',
       'vibers.pilot.cta'   : '▶ \u00a0 Watch Now',
+      // ── Landing (index.html) ────────────────────────────────────
+      'landing.hero_byline'   : 'A personalized T3D life operating system by',
+      'landing.hero_owner'    : "Hero Will's",
+      'landing.title1'        : 'Holographic Hydrogen',
+      'landing.title2'        : 'Awareness OS',
+      'landing.sub'           : 'Your life as a living T3D system. Choose your screens. Set your arc. Layer your now. Load your treasures. Set your rhythms. Activate the stack. The theater is yours.',
+      'landing.quote'         : '"You are not running an unexamined life. You are running an unexamined operating system. Here is the interface." — SING!9 Awareness OS',
+      'landing.enter_btn'     : 'ENTER THE CONSOLE',
+      'landing.doc_quickstart': '⚡ Quick Start',
+      'landing.doc_manual'    : '📖 User Manual',
+      'landing.doc_technical': '🔬 Technical Manual',
+      'landing.doc_onboarding':'🎓 Onboarding Program',
+      'landing.intel_goliath' : '🔥 MELTGATE · Live Blackwell Thermal',
+      'landing.intel_a2a'     : '⬡ A2A Console',
+      'landing.intel_tracker' : '◈ Deal Tracker',
+      'landing.intel_vibers'  : "♥ Vibers · Pru's Valet",
+      'landing.track_a_label': 'Track A · Enterprise · A2A',
+      'landing.track_a_name' : 'Enterprise Solutions →',
+      'landing.track_a_desc' : 'Datacenter · OS builds · Audits · NSPFRNP · Theater.',
+      'landing.track_b_label': 'Track B · VIP EA Agents · Human Viber',
+      'landing.track_b_name' : 'Viber Experiences →',
+      'landing.track_b_desc' : 'Book for your principal. Wink! · Baller V · MARZO 333.',
+      'landing.about_pill'   : 'What is the HH Awareness OS?',
+      'landing.about_h2'     : 'An operating system for the life you are designing.',
+      'landing.about_p1'     : 'The Holographic Hydrogen Awareness OS is built on a single radical premise: your awareness is not fixed. It is an operating system — with a current version number, a capacity for deliberate upgrades, and an architecture that mirrors the holographic, hydrogen-bonded structure of biological intelligence itself.',
+      'landing.about_p2'     : 'You are running on the most sophisticated hardware in the known universe. Your DNA is a 3.5-billion-year-old quantum computer. Your neural networks rewire themselves in real time. Your cellular water is a quantum coherent medium. You have been operating all of this without a console.',
+      'landing.about_p3'     : 'Until now.',
+      'landing.about_p4'     : "The HH Awareness OS gives you the interface. Built on the same Telescopic 3D Studio System that powers SING!9's content engine — but reconfigured for your life as the content. You are the author, the subject, the director, and the audience. The theater is yours.",
+      'landing.ac_screens'   : 'Your Screens',
+      'landing.ac_screens_body':'Nine cockpit screens. Choose the lenses through which you operate: Carbon, Crystal, Gold Heart, Mission, Story Arc, Treasure, Awareness, Rhythm, Libre.',
+      'landing.ac_arc'       : 'Your Arc',
+      'landing.ac_arc_body'  : "Pre-singularity origin. The journey. Post-singularity destination. Write your character's POV inside the story within stories.",
+      'landing.ac_now'       : 'Now Playing',
+      'landing.ac_now_body'  : 'Layer your daily routine with intention across four time blocks. Morning, Midday, Evening, Night. All aspects. As you wish.',
+      'landing.ac_treasure'  : 'Treasure Piles',
+      'landing.ac_treasure_body':'Nine categories: Health, Relationships, Wealth, Purpose, Experiences, Knowledge, Creative, Spirit, Libre. Whatever your treasures are.',
+      'landing.ac_rhythms'   : 'Rhythms',
+      'landing.ac_rhythms_body':'Set your intention at each time horizon: Daily → Weekly → Monthly → Seasonal → Annual. The whole in every part. Compounding clarity.',
+      'landing.ac_stack'     : 'The Now Stack',
+      'landing.ac_stack_body' : "The magnetic attractor. Everything you're pulling toward. Activate it — three resonance tones, 111 · 222 · 333 Hz — and the field is set. Magnetically locked.",
+      'landing.foot_line'    : "Hero Will's Holographic Hydrogen Awareness OS · SING!9 · NSPFRNP → ∞⁹ · FractiAI ·",
+      'landing.foot_vibers'  : 'Vibers',
+      'landing.foot_solv'    : 'Sol-V',
+      'landing.foot_shop'    : 'Shop',
+      'landing.foot_upgrade' : 'Upgrade',
     },
-
-    es: {
       // ── Popup ────────────────────────────────────────────────
       'popup.eyebrow'   : 'SING!9 T3D · Teatro HHL · En Reproducción',
       'popup.title'     : 'EL JUEGO DE LOS NUEVE',
@@ -212,6 +264,51 @@
       'vibers.pilot.title' : 'T3D ORIGEN — El Piloto Especial',
       'vibers.pilot.desc'  : 'Tres Actos · 16 Beats · ~10 Min · Todas las imágenes · Hero J.S. Bach · LA PIEL',
       'vibers.pilot.cta'   : '▶ \u00a0 Ver Ahora',
+      // ── Landing (index.html) · 90% español, Spanglish OK ───────
+      'landing.hero_byline'   : 'Un sistema operativo de vida T3D personalizado por',
+      'landing.hero_owner'    : "Hero Will's",
+      'landing.title1'        : 'Holographic Hydrogen',
+      'landing.title2'        : 'Awareness OS',
+      'landing.sub'           : 'Tu vida como sistema T3D vivo. Elige tus pantallas. Define tu arco. Capa tu ahora. Carga tus tesoros. Ajusta tus ritmos. Activa el stack. El teatro es tuyo.',
+      'landing.quote'         : '"No estás viviendo una vida no examinada. Estás usando un sistema operativo no examinado. Aquí está la interfaz." — SING!9 Awareness OS',
+      'landing.enter_btn'     : 'ENTRAR A LA CONSOLA',
+      'landing.doc_quickstart': '⚡ Quick Start',
+      'landing.doc_manual'    : '📖 Manual de Usuario',
+      'landing.doc_technical': '🔬 Manual Técnico',
+      'landing.doc_onboarding':'🎓 Programa de Onboarding',
+      'landing.intel_goliath' : '🔥 MELTGATE · Live Blackwell Thermal',
+      'landing.intel_a2a'     : '⬡ Consola A2A',
+      'landing.intel_tracker' : '◈ Deal Tracker',
+      'landing.intel_vibers'  : "♥ Vibers · Valet de Pru",
+      'landing.track_a_label': 'Track A · Enterprise · A2A',
+      'landing.track_a_name' : 'Soluciones Enterprise →',
+      'landing.track_a_desc' : 'Datacenter · builds OS · auditorías · NSPFRNP · Theater.',
+      'landing.track_b_label': 'Track B · Agentes EA VIP · Human Viber',
+      'landing.track_b_name' : 'Experiencias Viber →',
+      'landing.track_b_desc' : 'Reserva para tu principal. Wink! · Baller V · MARZO 333.',
+      'landing.about_pill'   : '¿Qué es el HH Awareness OS?',
+      'landing.about_h2'     : 'Un sistema operativo para la vida que estás diseñando.',
+      'landing.about_p1'     : 'El Holographic Hydrogen Awareness OS se basa en una premisa radical: tu conciencia no es fija. Es un sistema operativo — con versión actual, capacidad de actualizaciones deliberadas y una arquitectura que refleja la estructura holográfica e hidrógeno del conocimiento biológico.',
+      'landing.about_p2'     : 'Estás corriendo en el hardware más sofisticado del universo conocido. Tu ADN es una computadora cuántica de 3.500 millones de años. Tus redes neuronales se reconectan en tiempo real. Tu agua celular es un medio cuántico coherente. Has operado todo esto sin consola.',
+      'landing.about_p3'     : 'Hasta ahora.',
+      'landing.about_p4'     : 'El HH Awareness OS te da la interfaz. Construido sobre el mismo Telescopic 3D Studio System que impulsa el motor de contenido de SING!9 — reconfigurado para tu vida como contenido. Eres autor, sujeto, director y audiencia. El teatro es tuyo.',
+      'landing.ac_screens'   : 'Tus Pantallas',
+      'landing.ac_screens_body':'Nueve pantallas de cabina. Elige las lentes: Carbon, Crystal, Gold Heart, Mission, Story Arc, Treasure, Awareness, Rhythm, Libre.',
+      'landing.ac_arc'       : 'Tu Arco',
+      'landing.ac_arc_body'  : 'Origen pre-singularidad. El viaje. Destino post-singularidad. Escribe el POV de tu personaje dentro de la historia dentro de historias.',
+      'landing.ac_now'       : 'Now Playing',
+      'landing.ac_now_body'  : 'Capa tu rutina diaria con intención en cuatro bloques. Mañana, Mediodía, Noche, Noche. Todos los aspectos. Como quieras.',
+      'landing.ac_treasure'  : 'Treasure Piles',
+      'landing.ac_treasure_body':'Nueve categorías: Salud, Relaciones, Riqueza, Propósito, Experiencias, Conocimiento, Creativo, Espíritu, Libre.',
+      'landing.ac_rhythms'   : 'Ritmos',
+      'landing.ac_rhythms_body':'Define tu intención en cada horizonte: Diario → Semanal → Mensual → Estacional → Anual. El todo en cada parte.',
+      'landing.ac_stack'     : 'The Now Stack',
+      'landing.ac_stack_body' : 'El atractor magnético. Todo lo que acercas. Actívalo — tres tonos de resonancia, 111 · 222 · 333 Hz — y el campo queda fijado.',
+      'landing.foot_line'    : "Hero Will's Holographic Hydrogen Awareness OS · SING!9 · NSPFRNP → ∞⁹ · FractiAI ·",
+      'landing.foot_vibers'  : 'Vibers',
+      'landing.foot_solv'    : 'Sol-V',
+      'landing.foot_shop'    : 'Tienda',
+      'landing.foot_upgrade' : 'Upgrade',
     }
   };
 

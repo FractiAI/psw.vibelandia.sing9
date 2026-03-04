@@ -28,6 +28,30 @@
     return handle ? handle + '\u2019s ' + label : 'My ' + label;
   }
 
+  /* Spanish labels for footer nav when locale is es (Colombia, etc.) */
+  function navLang() {
+    if (typeof window.SING9_LANG !== 'undefined') return window.SING9_LANG;
+    var L = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage || '';
+    return /^es\b/i.test(String(L)) ? 'es' : 'en';
+  }
+  var NAV_LABELS_ES = {
+    'Home': 'Inicio',
+    '⬡ Console': '⬡ Consola',
+    '◈ HFCS': '◈ HFCS',
+    '🔥 MELTGATE': '🔥 MELTGATE',
+    'A2A': 'A2A',
+    'Vibers': 'Vibers',
+    'Shop': 'Tienda',
+    'Advertise': 'Anunciar',
+    '✦ Prospectus': '✦ Prospectus',
+    'My Whiteboard': 'Mi Whiteboard',
+    "Pru's Whiteboard": "Whiteboard de Pru"
+  };
+  function navLabel(enLabel) {
+    if (navLang() !== 'es') return enLabel;
+    return NAV_LABELS_ES[enLabel] != null ? NAV_LABELS_ES[enLabel] : enLabel;
+  }
+
   /* NSPFRNP CYA footer line — rotates through imaginary/holographic system brags */
   var NAV_CYA_LINES = [
     'Imaginary Holographic System · Like the best book, video game + movie · Way better · NSPFRNP → ∞⁹',
@@ -215,7 +239,7 @@
     }
     var a = document.createElement('a');
     a.href = item.href;
-    a.textContent = item.label;
+    a.textContent = navLabel(item.label);
     if (item.match.test(path)) a.classList.add('active');
     if (item.hot)  a.classList.add('nav-goliath');
     if (item.hfcs) a.classList.add('nav-hfcs');

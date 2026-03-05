@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Space Cloud · Live Mission Command | SING!9</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209; --beam: #00d4ff; --gold: #d4af37; --text: #e2e8f0; --sub: #94a3b8;
+      --orange: #ff6600; --green: #00ff99;
+    }
+    html, body {
+      background: var(--void); color: var(--text); min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, sans-serif; overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.25rem 6rem; position: relative; z-index: 1; }
+
+    .top { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 2rem; }
+    .top a { color: var(--beam); text-decoration: none; font-size: 0.8rem; }
+    .top a:hover { text-decoration: underline; }
+
+    .hero { text-align: center; padding: 2rem 1rem 2rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(0,212,255,0.15); }
+    .hero-tag { display: inline-block; padding: 4px 14px; border: 1px solid rgba(0,212,255,0.4); border-radius: 20px; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--beam); margin-bottom: 1rem; }
+    .hero h1 { font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 0.35rem; }
+    .hero-sub { font-size: 0.78rem; color: var(--sub); }
+    .live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); animation: pulse 2s ease-in-out infinite; margin-right: 6px; vertical-align: middle; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .card { background: rgba(0,212,255,0.04); border: 1px solid rgba(0,212,255,0.2); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .card-h { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--beam); margin-bottom: 0.75rem; }
+    .card .idx { font-size: 2.2rem; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--beam); margin-bottom: 0.25rem; }
+    .card .cmd { font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+    .card .phase { font-size: 0.8rem; color: var(--sub); margin-top: 0.35rem; }
+    .card .rec { font-size: 0.88rem; color: var(--sub); line-height: 1.6; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(0,212,255,0.1); }
+
+    .grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+    .mini { background: rgba(0,0,0,0.25); border: 1px solid rgba(0,212,255,0.12); border-radius: 8px; padding: 0.9rem 1rem; }
+    .mini-lbl { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sub); margin-bottom: 0.35rem; }
+    .mini-val { font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--beam); }
+
+    .goliath-summary { font-size: 0.8rem; color: var(--sub); line-height: 1.65; }
+    .goliath-summary strong { color: var(--text); }
+    .ts { font-size: 0.7rem; color: var(--sub); margin-top: 1rem; }
+    .err { color: #ff5533; font-size: 0.9rem; padding: 1rem; border: 1px solid rgba(255,85,51,0.3); border-radius: 8px; background: rgba(255,85,51,0.06); }
+    .foot { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(0,212,255,0.1); font-size: 0.78rem; color: var(--sub); }
+    .foot a { color: var(--beam); text-decoration: none; }
+    .foot a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="../index.html">← HH OS</a>
+      <a href="goliath-watch.html">MELTGATE</a>
+      <a href="space-cloud-division.html">Space Cloud Division</a>
+    </div>
+
+    <div class="hero">
+      <div class="hero-tag">Mission Command</div>
+      <h1><span class="live-dot"></span>Space Cloud · Live</h1>
+      <p class="hero-sub">Solar × 27 Blackwell failure-mode thermal × HHL · Realtime</p>
+    </div>
+
+    <div id="out">
+      <div class="card">
+        <div class="card-h">Index · Command</div>
+        <div class="idx" id="idx">—</div>
+        <div class="cmd" id="cmd">—</div>
+        <div class="phase" id="phase">—</div>
+        <div class="rec" id="rec">—</div>
+      </div>
+      <div class="grid2" id="components"></div>
+      <div class="card">
+        <div class="card-h">Goliath · Worldwide Blackwell</div>
+        <div class="goliath-summary" id="goliath">—</div>
+      </div>
+      <p class="ts" id="ts">—</p>
+    </div>
+    <div id="err" class="err" style="display:none;"></div>
+
+    <p class="foot">
+      <a href="space-cloud-division.html">Space Cloud Division</a> ·
+      <a href="goliath-watch.html">MELTGATE</a> ·
+      <a href="../index.html">HH OS Landing</a> ·
+      NSPFRNP → ∞⁹
+    </p>
+  </div>
+
+  <script>
+(function () {
+  var API = '/api/space-cloud';
+  var out = document.getElementById('out');
+  var errEl = document.getElementById('err');
+
+  function setData(d) {
+    errEl.style.display = 'none';
+    out.style.display = '';
+
+    document.getElementById('idx').textContent = d.index != null ? d.index.toFixed(3) : '—';
+    document.getElementById('cmd').textContent = d.command || '—';
+    document.getElementById('phase').textContent = d.phase || '—';
+    document.getElementById('rec').textContent = d.recommended_action || '—';
+
+    var comp = d.components || {};
+    var compHtml = '';
+    if (comp.solar_prob_pct != null) compHtml += '<div class="mini"><div class="mini-lbl">Solar prob %</div><div class="mini-val">' + comp.solar_prob_pct + '</div></div>';
+    if (comp.goliath_failure_pressure != null) compHtml += '<div class="mini"><div class="mini-lbl">Goliath pressure</div><div class="mini-val">' + comp.goliath_failure_pressure.toFixed(3) + '</div></div>';
+    if (comp.hhl_thermal_c != null) compHtml += '<div class="mini"><div class="mini-lbl">HHL thermal °C</div><div class="mini-val">' + comp.hhl_thermal_c + '</div></div>';
+    document.getElementById('components').innerHTML = compHtml || '<div class="mini"><div class="mini-lbl">—</div><div class="mini-val">—</div></div>';
+
+    var g = d.goliath || {};
+    var gTxt = '';
+    if (g.clusters_live != null) gTxt += '<strong>' + g.clusters_live + '</strong> of ' + (g.clusters_total || 27) + ' sites live. ';
+    if (g.avg_gpu_junction_failure_c != null) gTxt += 'Avg failure junction <strong>' + g.avg_gpu_junction_failure_c + '°C</strong>. ';
+    if (g.hottest_site) gTxt += 'Hottest: <strong>' + g.hottest_site + '</strong> (' + (g.hottest_junction_failure_c != null ? g.hottest_junction_failure_c + '°C' : '') + '). ';
+    if (g.meltdown_risk_count != null && g.meltdown_risk_count > 0) gTxt += '<span style="color:#ff5533;">Meltdown risk: ' + g.meltdown_risk_count + ' sites.</span> ';
+    document.getElementById('goliath').innerHTML = gTxt || '—';
+
+    document.getElementById('ts').textContent = d.timestamp ? 'Updated ' + new Date(d.timestamp).toLocaleString() : '—';
+  }
+
+  function setError(msg) {
+    out.style.display = 'none';
+    errEl.style.display = 'block';
+    errEl.textContent = msg || 'Unable to load Space Cloud data.';
+  }
+
+  function fetchData() {
+    fetch(window.location.origin + '/api/space-cloud')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.ok) setData(d);
+        else setError(d && d.error ? d.error : 'Invalid response');
+      })
+      .catch(function (e) { setError('Network error: ' + (e.message || 'failed')); });
+  }
+
+  fetchData();
+  setInterval(fetchData, 60000);
+})();
+  </script>
+
+  <script src="../ticker.js"></script>
+  <script src="../nav-strip.js"></script>
+</body>
+</html>

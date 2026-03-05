@@ -161,6 +161,18 @@ async function computeSpaceCloud() {
 }
 
 module.exports = async (req, res) => {
+  if (req.method === 'GET') {
+    try {
+      const data = await computeSpaceCloud();
+      res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=120');
+      res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
+    } catch (err) {
+      console.error('[space-cloud] GET error:', err.message);
+      res.status(500).json({ ok: false, error: 'Service computation failed' });
+    }
+    return;
+  }
+
   const ok = await require402(req, res, {
     priceUsd:    5,
     route:       '/api/space-cloud',

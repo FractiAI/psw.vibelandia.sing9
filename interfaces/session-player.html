@@ -61,6 +61,11 @@
     .cert-block .next-link { display: inline-block; margin-right: 0.75rem; margin-top: 0.25rem; padding: 0.5rem 1rem; background: rgba(95,195,228,0.2); border: 1px solid rgba(95,195,228,0.4); border-radius: 8px; color: #5fc3e4; font-weight: 600; text-decoration: none; font-size: 0.875rem; }
     .cert-block .next-link:hover { background: rgba(95,195,228,0.3); }
     .already-done { padding: 1rem 1.25rem; background: rgba(45,212,160,0.08); border: 1px solid rgba(45,212,160,0.3); border-radius: 10px; margin-bottom: 1rem; font-size: 0.875rem; color: #2dd4a0; }
+    .prereq-block { padding: 1.25rem 1.5rem; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.35); border-radius: 12px; margin-bottom: 1.5rem; }
+    .prereq-block .prereq-title { font-size: 1rem; font-weight: 700; color: #e8d48a; margin-bottom: 0.5rem; }
+    .prereq-block .prereq-text { font-size: 0.875rem; color: rgba(232,238,244,0.85); line-height: 1.5; margin-bottom: 1rem; }
+    .prereq-block .prereq-cta { display: inline-block; padding: 0.5rem 1rem; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 8px; color: #e8d48a; font-weight: 600; text-decoration: none; font-size: 0.875rem; }
+    .prereq-block .prereq-cta:hover { background: rgba(212,175,55,0.3); }
     .load-err { color: #f87171; padding: 1rem; font-size: 0.875rem; }
     .foot { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8125rem; color: rgba(255,255,255,0.4); }
     .foot a { color: #d4af37; text-decoration: none; }
@@ -68,7 +73,7 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="nav">← <a href="onboarding.html">Learning paths</a> · <a href="../index.html">Home</a> · <a href="office-hours.html">Office Hours</a></div>
+    <div class="nav">← <a href="onboarding.html">Learning</a> · <a href="../index.html">Home</a> · <a href="office-hours.html">Office Hours</a></div>
     <div class="progress-bar-wrap" id="progress-wrap" style="display: none;">
       <div class="progress-bar-label" id="progress-label">Module 1 of 1</div>
       <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div></div>
@@ -110,12 +115,17 @@
       <div class="cert-title" id="cert-name">—</div>
       <p class="cert-note">This module counts toward your learning path qualification. Full path certificates are issued when all modules in a track are complete.</p>
       <a id="next-session-link" class="next-link" href="#" style="display: none;">Next module →</a>
-      <a id="back-track-link" class="next-link" href="onboarding.html" style="display: none;">Back to learning paths</a>
+      <a id="back-track-link" class="next-link" href="onboarding.html" style="display: none;">Back to Learning</a>
     </div>
 
     <div id="already-done" class="already-done" style="display: none;">You've completed this module. Your result is saved. See below for your certificate and next steps.</div>
+    <div id="prereq-block" class="prereq-block" style="display: none;">
+      <div class="prereq-title">Prerequisite required</div>
+      <p class="prereq-text" id="prereq-text">Complete the previous module first.</p>
+      <a id="prereq-cta" class="prereq-cta" href="#">Go to required module →</a>
+    </div>
     <div id="load-err" class="load-err" style="display: none;">—</div>
-    <p class="foot"><a href="onboarding.html">← Learning paths</a> · <a href="../index.html">Home</a> · NSPFRNP → ∞⁹</p>
+    <p class="foot"><a href="onboarding.html">← Learning</a> · <a href="../index.html">Home</a> · NSPFRNP → ∞⁹</p>
   </div>
 
   <script>
@@ -138,6 +148,12 @@
         return raw ? JSON.parse(raw) : null;
       } catch (e) { return null; }
     }
+    function getStoredForSession(tId, sId) {
+      try {
+        var raw = localStorage.getItem(STORAGE_PREFIX + tId + '_' + sId + '_result');
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) { return null; }
+    }
     function setStored(passed, score) {
       try {
         var k = storageKey();
@@ -154,7 +170,7 @@
       if (!track || !session) return;
       var n = track.sessions.length;
       var i = sessionIndex + 1;
-      var html = '<a href="onboarding.html">Onboarding</a> · <a href="onboarding-session.html?track=' + encodeURIComponent(trackId) + '">' + escapeHtml(track.name) + '</a> · Session ' + i + ' of ' + n;
+      var html = '<a href="onboarding.html">Learning</a> · <a href="onboarding-session.html?track=' + encodeURIComponent(trackId) + '">' + escapeHtml(track.name) + '</a> · Session ' + i + ' of ' + n;
       document.getElementById('breadcrumb').innerHTML = html;
     }
 
@@ -266,6 +282,35 @@
             showErr('Session not found. Use ?session=1 to ' + (track.sessions ? track.sessions.length : 1));
             return;
           }
+          var prereqBlock = document.getElementById('prereq-block');
+          if (sessionIndex >= 1) {
+            var firstIncomplete = null;
+            for (var p = 0; p < sessionIndex; p++) {
+              var prevS = track.sessions[p];
+              var stored = getStoredForSession(trackId, prevS.id);
+              if (!stored || !stored.passed) {
+                firstIncomplete = prevS;
+                break;
+              }
+            }
+            if (firstIncomplete) {
+              var prevIdx = track.sessions.indexOf(firstIncomplete);
+              prereqBlock.style.display = 'block';
+              document.getElementById('prereq-text').textContent = 'You must complete Module ' + (prevIdx + 1) + ': ' + (firstIncomplete.title || ('Session ' + (prevIdx + 1))) + ' before this module.';
+              document.getElementById('prereq-cta').href = 'session-player.html?track=' + encodeURIComponent(trackId) + '&session=' + (prevIdx + 1);
+              document.getElementById('session-title').textContent = session.title;
+              document.getElementById('session-meta').textContent = 'Session ' + (sessionIndex + 1) + ' of ' + track.sessions.length + ' · ' + track.name + ' · Prerequisite required';
+              document.getElementById('breadcrumb').innerHTML = '<a href="onboarding.html">Learning</a> · <a href="onboarding-session.html?track=' + encodeURIComponent(trackId) + '">' + escapeHtml(track.name) + '</a> · Session ' + (sessionIndex + 1) + ' of ' + track.sessions.length;
+              var n = track.sessions.length;
+              var i = sessionIndex + 1;
+              document.getElementById('progress-wrap').style.display = 'block';
+              document.getElementById('progress-label').textContent = 'Module ' + i + ' of ' + n;
+              document.getElementById('progress-fill').style.width = Math.round((i / n) * 100) + '%';
+              document.getElementById('steps-row').style.display = 'flex';
+              return;
+            }
+          }
+          prereqBlock.style.display = 'none';
           document.getElementById('session-title').textContent = session.title;
           document.getElementById('session-meta').textContent = 'Session ' + (sessionIndex + 1) + ' of ' + track.sessions.length + ' · ' + track.name;
           document.title = session.title + ' · Learning · VIBELANDIA';

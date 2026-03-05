@@ -362,6 +362,13 @@
   </style>
 </head>
 <body>
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var path = (params.get('path') || '').toLowerCase();
+  if (path === 'holographic' || path === 'organic') document.body.setAttribute('data-arc-path', path);
+})();
+</script>
 
 <!-- ── ENTRY CINEMATIC ── -->
 <div id="entry-vibe">
@@ -394,6 +401,7 @@
   <div class="stage-inner">
     <div class="stage-num">Stage 0 · Clearance</div>
 
+    <div class="path-pill" id="path-pill" style="display:none;margin-bottom:1rem;padding:0.45rem 1rem;border-radius:99px;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;"></div>
     <div class="badge"><span class="dot"></span>Golden Heart · Recognized</div>
 
     <span class="acceptance-word">Congratulations.</span>
@@ -1014,6 +1022,26 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.stage').forEach(function(s){ io.observe(s); });
+})();
+
+// ── ARC PATH PILL (yin/yang landing choice) ─────────────────────────
+(function(){
+  var path = document.body.getAttribute('data-arc-path');
+  var pill = document.getElementById('path-pill');
+  if (!pill || !path) return;
+  if (path === 'holographic') {
+    pill.style.display = 'block';
+    pill.style.background = 'linear-gradient(135deg,rgba(0,212,255,0.15),rgba(212,175,55,0.08))';
+    pill.style.border = '1px solid rgba(0,212,255,0.4)';
+    pill.style.color = '#7dd3fc';
+    pill.textContent = 'You came in through the Holographic path';
+  } else if (path === 'organic') {
+    pill.style.display = 'block';
+    pill.style.background = 'linear-gradient(135deg,rgba(34,197,94,0.15),rgba(212,175,55,0.08))';
+    pill.style.border = '1px solid rgba(34,197,94,0.4)';
+    pill.style.color = '#86efac';
+    pill.textContent = 'You came in through the Organic path';
+  }
 })();
 
 // ── PROGRESS NAV ───────────────────────────────────────────────────

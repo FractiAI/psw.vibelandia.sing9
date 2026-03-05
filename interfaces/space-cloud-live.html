@@ -47,6 +47,17 @@
 
     .goliath-summary { font-size: 0.8rem; color: var(--sub); line-height: 1.65; }
     .goliath-summary strong { color: var(--text); }
+    .archive-wrap { max-height: 280px; overflow-y: auto; margin-bottom: 0.5rem; }
+    .archive-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(0,212,255,0.08); font-size: 0.8rem; }
+    .archive-row:last-child { border-bottom: none; }
+    .archive-ts { color: var(--sub); font-variant-numeric: tabular-nums; min-width: 18ch; }
+    .archive-cmd { font-weight: 700; color: var(--gold); }
+    .archive-idx { color: var(--beam); font-variant-numeric: tabular-nums; }
+    .atlas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem; }
+    .atlas-cell { background: rgba(0,0,0,0.3); border: 1px solid rgba(0,212,255,0.2); border-radius: 8px; padding: 0.9rem 1rem; }
+    .atlas-cell .atlas-name { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--beam); margin-bottom: 0.35rem; }
+    .atlas-cell .atlas-sit { font-size: 0.85rem; font-weight: 700; color: var(--gold); }
+    .atlas-cell .atlas-cmd { font-size: 0.75rem; color: var(--sub); margin-top: 0.25rem; }
     .ts { font-size: 0.7rem; color: var(--sub); margin-top: 1rem; }
     .err { color: #ff5533; font-size: 0.9rem; padding: 1rem; border: 1px solid rgba(255,85,51,0.3); border-radius: 8px; background: rgba(255,85,51,0.06); }
     .foot { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(0,212,255,0.1); font-size: 0.78rem; color: var(--sub); }
@@ -69,6 +80,21 @@
     </div>
 
     <div id="out">
+      <div class="card">
+        <div class="card-h">Archive of commands · Responses</div>
+        <p style="font-size:0.75rem;color:var(--sub);margin-bottom:0.5rem;">History of Space Cloud mission commands (this session + stored). Newest first.</p>
+        <div id="archive-list" class="archive-wrap"></div>
+      </div>
+      <div class="grid2" id="now-grid"></div>
+      <div class="card">
+        <div class="card-h">Current active mission command</div>
+        <div class="cmd" id="active-cmd">—</div>
+        <div class="phase" id="active-phase">—</div>
+      </div>
+      <div class="card">
+        <div class="card-h">Three-atlas · Situations &amp; commands</div>
+        <div id="three-atlas" class="atlas-grid"></div>
+      </div>
       <div class="card">
         <div class="card-h">Index · Command</div>
         <div class="idx" id="idx">—</div>
@@ -98,10 +124,61 @@
   var API = '/api/space-cloud';
   var out = document.getElementById('out');
   var errEl = document.getElementById('err');
+  var ARCHIVE_KEY = 'space_cloud_archive';
+  var ARCHIVE_MAX = 100;
+
+  function loadArchive() {
+    try {
+      var raw = localStorage.getItem(ARCHIVE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  }
+  function saveArchive(arr) {
+    try {
+      localStorage.setItem(ARCHIVE_KEY, JSON.stringify(arr.slice(-ARCHIVE_MAX)));
+    } catch (e) {}
+  }
+  function pushArchive(d) {
+    var entry = {
+      ts: d.timestamp || new Date().toISOString(),
+      command: d.command || '—',
+      phase: d.phase || '—',
+      index: d.index != null ? d.index : null,
+    };
+    var arr = loadArchive();
+    arr.push(entry);
+    saveArchive(arr);
+    return arr;
+  }
 
   function setData(d) {
     errEl.style.display = 'none';
     out.style.display = '';
+
+    var archive = pushArchive(d);
+    var archiveList = document.getElementById('archive-list');
+    archiveList.innerHTML = archive.slice().reverse().map(function (e) {
+      var t = e.ts ? new Date(e.ts).toLocaleString() : '—';
+      var idx = e.index != null ? e.index.toFixed(3) : '—';
+      return '<div class="archive-row"><span class="archive-ts">' + t + '</span><span class="archive-cmd">' + (e.command || '—') + '</span><span class="archive-idx">' + idx + '</span></div>';
+    }).join('') || '<div class="archive-row" style="color:var(--sub);">No history yet. Commands will appear here after each update.</div>';
+
+    var nowGrid = document.getElementById('now-grid');
+    var sun = d.sunspots || {};
+    var iono = d.ionosphere || {};
+    nowGrid.innerHTML =
+      '<div class="mini"><div class="mini-lbl">Current sun spots (proxy)</div><div class="mini-val">' + (sun.proxy_value != null ? sun.proxy_value + '%' : '—') + '</div><div style="font-size:0.65rem;color:var(--sub);margin-top:0.25rem;">' + (sun.label || 'AR4379 M-flare') + '</div></div>' +
+      '<div class="mini"><div class="mini-lbl">Ionosphere</div><div class="mini-val" style="font-size:0.95rem;">' + (iono.state || '—') + '</div><div style="font-size:0.65rem;color:var(--sub);margin-top:0.25rem;">' + (iono.note || '') + '</div></div>';
+
+    document.getElementById('active-cmd').textContent = d.command || '—';
+    document.getElementById('active-phase').textContent = d.phase || '—';
+
+    var atlas = d.three_atlas || {};
+    var atlasHtml = '';
+    if (atlas.solar)   atlasHtml += '<div class="atlas-cell"><div class="atlas-name">Solar</div><div class="atlas-sit">' + (atlas.solar.situation || '—') + '</div><div class="atlas-cmd">' + (atlas.solar.command || '') + '</div></div>';
+    if (atlas.goliath) atlasHtml += '<div class="atlas-cell"><div class="atlas-name">Goliath</div><div class="atlas-sit">' + (atlas.goliath.situation || '—') + '</div><div class="atlas-cmd">' + (atlas.goliath.command || '') + '</div></div>';
+    if (atlas.hhl)     atlasHtml += '<div class="atlas-cell"><div class="atlas-name">HHL</div><div class="atlas-sit">' + (atlas.hhl.situation || '—') + '</div><div class="atlas-cmd">' + (atlas.hhl.command || '') + '</div></div>';
+    document.getElementById('three-atlas').innerHTML = atlasHtml || '<div class="atlas-cell"><div class="atlas-name">—</div><div class="atlas-sit">—</div></div>';
 
     document.getElementById('idx').textContent = d.index != null ? d.index.toFixed(3) : '—';
     document.getElementById('cmd').textContent = d.command || '—';
@@ -144,6 +221,16 @@
 
   fetchData();
   setInterval(fetchData, 60000);
+
+  var arch = loadArchive();
+  if (arch.length) {
+    var archiveList = document.getElementById('archive-list');
+    if (archiveList) archiveList.innerHTML = arch.slice().reverse().map(function (e) {
+      var t = e.ts ? new Date(e.ts).toLocaleString() : '—';
+      var idx = e.index != null ? e.index.toFixed(3) : '—';
+      return '<div class="archive-row"><span class="archive-ts">' + t + '</span><span class="archive-cmd">' + (e.command || '—') + '</span><span class="archive-idx">' + idx + '</span></div>';
+    }).join('');
+  }
 })();
   </script>
 

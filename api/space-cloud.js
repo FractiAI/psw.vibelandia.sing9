@@ -132,6 +132,20 @@ async function computeSpaceCloud() {
   else if (idx >= 0.40) { command = 'NOMINAL';  phase = 'STEADY-STATE';      recommended = 'Standard operations. Monitor failure-mode risk sites.'; }
   else                   { command = 'LOW';      phase = 'CONSERVATION';      recommended = 'Reduce non-essential activity. Await signal.'; }
 
+  const solarSituation = solarProb >= 60 ? 'ELEVATED' : solarProb >= 40 ? 'MODERATE' : 'QUIET';
+  const solarCommand  = solarProb >= 60 ? 'M-flare window · Monitor' : solarProb >= 40 ? 'Steady solar' : 'Low activity';
+  const goliathSituation = goliathPressure >= 0.7 ? 'HIGH PRESSURE' : goliathPressure >= 0.5 ? 'ELEVATED' : goliathPressure >= 0.3 ? 'NOMINAL' : 'LOW';
+  const goliathCommand  = goliathPressure >= 0.7 ? 'Thermal risk · Monitor clusters' : goliathPressure >= 0.5 ? 'Failure-mode elevated' : 'Within band';
+  const hhlSituation  = hhlThermal >= 85 ? 'HOT' : hhlThermal >= 80 ? 'GOLDILOCKS' : 'COOL';
+  const hhlCommand    = hhlThermal >= 80 ? '83°C band · HHL nominal' : 'Below target';
+
+  const ionosphereState = solarProb >= 50 ? 'ELEVATED' : solarProb >= 30 ? 'MODERATE' : 'QUIET';
+  const ionosphereNote = ionosphereState === 'ELEVATED'
+    ? 'Solar UV/X-ray driving F2 layer · Schumann amplitudes elevated'
+    : ionosphereState === 'MODERATE'
+    ? 'Stable cavity · 7.83 Hz nominal'
+    : 'Quiet cavity · Low geomagnetic activity';
+
   return {
     index:             parseFloat(idx.toFixed(3)),
     command,
@@ -152,6 +166,20 @@ async function computeSpaceCloud() {
       signal_basis:             'failure-mode GPU junction (cooling degradation + boost clocks)',
     },
     recommended_action: recommended,
+    sunspots: {
+      proxy_value: solarProb,
+      label: 'AR4379 M-flare probability (%)',
+      note: 'Proxy for solar activity · drives ionosphere',
+    },
+    ionosphere: {
+      state: ionosphereState,
+      note: ionosphereNote,
+    },
+    three_atlas: {
+      solar:   { situation: solarSituation,   command: solarCommand },
+      goliath: { situation: goliathSituation, command: goliathCommand },
+      hhl:     { situation: hhlSituation,     command: hhlCommand },
+    },
     clusters,
     timestamp:  new Date().toISOString(),
     anchor:     'SING9-SINGAPORE-JAN13-2026',

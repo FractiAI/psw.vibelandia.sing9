@@ -297,6 +297,7 @@
     .screen-slot .s-clear { position: absolute; top: 4px; right: 6px; font-size: 0.7rem; color: var(--muted); cursor: pointer; }
     .screen-slot .s-clear:hover { color: #ef4444; }
     .screen-slot .s-num { position: absolute; top: 5px; left: 8px; font-size: 0.55rem; color: var(--muted); }
+    .screen-slot .s-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
     .screen-picker { margin-top: 1rem; display: none; }
     .screen-picker.open { display: block; }
@@ -309,6 +310,10 @@
     }
     .sp-opt:hover { border-color: rgba(0,212,255,0.4); color: var(--beam); }
     .sp-opt .sp-icon { display: block; font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .sp-section { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin: 1rem 0 0.5rem; }
+    .sp-section:first-of-type { margin-top: 0; }
+    .sp-upload-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    .sp-upload-row input[type="file"] { font-size: 0.72rem; max-width: 220px; }
 
     /* ═══ ARC SECTION ═══ */
     .arc-stage-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
@@ -710,12 +715,25 @@
     <div class="sec-hd">
       <span class="sec-tag">02 · Cockpit Configuration</span>
       <h2>Your Screens</h2>
-      <p>Choose up to 9 screens for your cockpit. Each is a lens through which you view your life. Click any slot to assign.</p>
+      <p>Choose up to 9 screens for your cockpit. For each screen: use a default image, upload your own, or create one with AI. Click any slot to set it.</p>
     </div>
     <div class="screens-grid" id="screensGrid"></div>
     <div class="screen-picker" id="screenPicker">
-      <div class="sp-title">Select a screen type for slot <span id="pickerSlot"></span></div>
+      <div class="sp-title">Choose image for screen <span id="pickerSlot"></span></div>
+      <div class="sp-section">Use default image</div>
       <div class="sp-grid" id="pickerOpts"></div>
+      <div class="sp-section">Upload an image</div>
+      <div class="sp-upload-row">
+        <input type="file" id="screenUploadInput" accept="image/*" style="display:none;" />
+        <button type="button" class="sp-opt" id="screenUploadBtn">📤 Upload image</button>
+      </div>
+      <div class="sp-section">Create with AI</div>
+      <div class="sp-upload-row">
+        <button type="button" class="sp-opt" id="screenAiBtn">✨ Create AI image</button>
+        <span id="screenAiNote" style="font-size:0.72rem;color:var(--muted);display:none;"></span>
+      </div>
+      <div class="sp-section">Remove</div>
+      <div class="sp-grid" id="pickerClearOpt"></div>
     </div>
   </div>
 
@@ -906,11 +924,26 @@ const DEFAULT = {
   richProfile: { profilePhoto: null, photos: [], winkPreferences: {}, characterSummaryForPhoto: '', enhancedPhoto: null }
 };
 
+function normalizeScreenEntry(entry) {
+  if (entry == null) return null;
+  if (typeof entry === 'string') return { type: entry, imageSource: 'default', customImage: null, aiImage: null };
+  return {
+    type: entry.type || 'libre',
+    imageSource: entry.imageSource || 'default',
+    customImage: entry.customImage || null,
+    aiImage: entry.aiImage || null
+  };
+}
+
 let S = {};
 function load() {
   try { S = JSON.parse(localStorage.getItem('hh_os_state') || '{}'); }
   catch(e) { S = {}; }
   S = Object.assign({}, JSON.parse(JSON.stringify(DEFAULT)), S);
+  // Normalize screens: legacy string → { type, imageSource, customImage, aiImage }
+  if (S.screens && Array.isArray(S.screens)) {
+    S.screens = S.screens.map(entry => normalizeScreenEntry(entry));
+  }
   // One-time: if they already had name/archetypes (e.g. from before calibrated flag), treat as done — setup only once
   if (!S.calibrated && ((S.name && S.name.trim()) || (S.archetypes && S.archetypes.length > 0))) {
     S.calibrated = true;
@@ -1260,19 +1293,30 @@ function renderScreens() {
   grid.innerHTML = '';
   S.screens.forEach((screen, i) => {
     const slot = document.createElement('div');
-    slot.className = 'screen-slot' + (screen ? ' filled' : '');
-    if (screen) {
-      const st = SCREEN_TYPES.find(s => s.k === screen);
+    const isFilled = screen && (typeof screen === 'object' ? screen.type : screen);
+    slot.className = 'screen-slot' + (isFilled ? ' filled' : '');
+    if (isFilled) {
+      const obj = typeof screen === 'object' ? screen : { type: screen, imageSource: 'default', customImage: null, aiImage: null };
+      const st = SCREEN_TYPES.find(s => s.k === obj.type);
+      const imgSrc = obj.imageSource === 'upload' && obj.customImage ? obj.customImage : (obj.imageSource === 'ai' && obj.aiImage ? obj.aiImage : null);
       if (st) {
         slot.style.borderColor = st.c.replace('0.6)', '0.4)');
         slot.style.background = st.c.replace('0.6)', '0.05)');
+      }
+      if (imgSrc) {
         slot.innerHTML = `
           <span class="s-num">${i+1}</span>
-          <div class="s-icon">${st.e}</div>
-          <div class="s-name" style="color:${st.c}">${st.n}</div>
+          <img class="s-img" src="${imgSrc}" alt=""/>
+          <div class="s-name" style="position:relative;z-index:1;color:var(--text);text-shadow:0 0 8px rgba(0,0,0,0.8);">${st ? st.n : 'Custom'}</div>
           <span class="s-clear" title="Clear">✕</span>`;
-        slot.querySelector('.s-clear').onclick = e => { e.stopPropagation(); S.screens[i] = null; save(); renderScreens(); };
+      } else {
+        slot.innerHTML = `
+          <span class="s-num">${i+1}</span>
+          <div class="s-icon">${st ? st.e : '◎'}</div>
+          <div class="s-name" style="color:${st ? st.c : 'var(--sub)'}">${st ? st.n : 'Libre'}</div>
+          <span class="s-clear" title="Clear">✕</span>`;
       }
+      slot.querySelector('.s-clear').onclick = e => { e.stopPropagation(); S.screens[i] = null; save(); renderScreens(); };
     } else {
       slot.innerHTML = `<span class="s-num">${i+1}</span><div style="font-size:1.2rem;color:var(--muted);">+</div><div style="font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;">ADD</div>`;
     }
@@ -1292,27 +1336,82 @@ function renderScreens() {
 function renderPicker() {
   const grid = document.getElementById('pickerOpts');
   grid.innerHTML = '';
+  const aiNote = document.getElementById('screenAiNote');
+  if (aiNote) aiNote.style.display = 'none';
+
   SCREEN_TYPES.forEach(st => {
     const opt = document.createElement('div');
     opt.className = 'sp-opt';
     opt.innerHTML = `<span class="sp-icon">${st.e}</span>${st.n}<div style="font-size:0.65rem;color:var(--sub);margin-top:0.2rem;">${st.desc}</div>`;
     opt.onclick = () => {
-      S.screens[pickerActive] = st.k; save();
+      S.screens[pickerActive] = { type: st.k, imageSource: 'default', customImage: null, aiImage: null };
+      save();
       document.getElementById('screenPicker').classList.remove('open');
       renderScreens();
     };
     grid.appendChild(opt);
   });
-  // Clear option
+  const clearGrid = document.getElementById('pickerClearOpt');
+  clearGrid.innerHTML = '';
   const clr = document.createElement('div');
   clr.className = 'sp-opt';
   clr.innerHTML = `<span class="sp-icon">✕</span>CLEAR<div style="font-size:0.65rem;color:var(--sub);margin-top:0.2rem;">Remove screen</div>`;
   clr.onclick = () => {
-    S.screens[pickerActive] = null; save();
+    S.screens[pickerActive] = null;
+    save();
     document.getElementById('screenPicker').classList.remove('open');
     renderScreens();
   };
-  grid.appendChild(clr);
+  clearGrid.appendChild(clr);
+
+  // Upload: trigger hidden file input; on change, set slot to upload object
+  const uploadBtn = document.getElementById('screenUploadBtn');
+  const uploadInput = document.getElementById('screenUploadInput');
+  if (uploadBtn && uploadInput) {
+    uploadBtn.onclick = () => uploadInput.click();
+    uploadInput.onchange = function() {
+      const file = this.files && this.files[0];
+      if (!file) return;
+      const r = new FileReader();
+      r.onload = () => {
+        S.screens[pickerActive] = { type: 'libre', imageSource: 'upload', customImage: r.result, aiImage: null };
+        save();
+        document.getElementById('screenPicker').classList.remove('open');
+        renderScreens();
+      };
+      r.readAsDataURL(file);
+      this.value = '';
+    };
+  }
+
+  // AI: generate placeholder image (or call API when available)
+  const aiBtn = document.getElementById('screenAiBtn');
+  if (aiBtn && aiNote) {
+    aiBtn.onclick = function() {
+      aiNote.style.display = 'inline';
+      aiNote.textContent = 'Generating…';
+      // Placeholder: draw "Screen N · AI" on canvas so slot shows something; replace with real API later
+      const canvas = document.createElement('canvas');
+      canvas.width = 320;
+      canvas.height = 240;
+      const ctx = canvas.getContext('2d');
+      const g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      g.addColorStop(0, 'rgba(0,212,255,0.25)');
+      g.addColorStop(1, 'rgba(212,175,55,0.2)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.font = 'bold 24px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Screen ' + (pickerActive + 1), canvas.width / 2, canvas.height / 2 - 12);
+      ctx.fillText('· AI ·', canvas.width / 2, canvas.height / 2 + 18);
+      const dataUrl = canvas.toDataURL('image/png');
+      S.screens[pickerActive] = { type: 'libre', imageSource: 'ai', customImage: null, aiImage: dataUrl };
+      save();
+      document.getElementById('screenPicker').classList.remove('open');
+      renderScreens();
+    };
+  }
 }
 
 /* ═══════════════════════════════════════════

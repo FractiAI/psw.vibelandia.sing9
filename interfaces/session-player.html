@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Module · Learning · VIBELANDIA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0b0f1a; color: #e8eef4; min-height: 100vh; padding: 0 1.5rem 4rem; }
+    .wrap { max-width: 640px; margin: 0 auto; }
+    .nav { padding: 1.25rem 0; font-size: 0.875rem; }
+    .nav a { color: #5fc3e4; text-decoration: none; margin-right: 1rem; }
+    .nav a:hover { text-decoration: underline; }
+    .progress-bar-wrap { margin-bottom: 1.5rem; }
+    .progress-bar-label { font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 0.35rem; }
+    .progress-bar-track { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: #2dd4a0; border-radius: 2px; transition: width 0.3s; }
+    .steps { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .step-dot { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.5); }
+    .step-dot.done { background: rgba(45,212,160,0.2); border-color: #2dd4a0; color: #2dd4a0; }
+    .step-dot.current { background: rgba(95,195,228,0.15); border-color: #5fc3e4; color: #5fc3e4; }
+    .breadcrumb { font-size: 0.8125rem; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem; }
+    .breadcrumb a { color: #5fc3e4; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 1.375rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
+    .session-meta { font-size: 0.8125rem; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; }
+    .ask-block { padding: 1rem 1.25rem; background: rgba(95,195,228,0.06); border: 1px solid rgba(95,195,228,0.2); border-radius: 10px; margin-bottom: 1.5rem; }
+    .ask-block .ask-label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(95,195,228,0.8); margin-bottom: 0.35rem; }
+    .ask-block a { color: #5fc3e4; font-weight: 600; }
+    .content-block { padding: 1.25rem 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; margin-bottom: 1.5rem; }
+    .content-block .c-label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(212,175,55,0.8); margin-bottom: 0.5rem; }
+    .content-block .c-desc { font-size: 0.9375rem; color: rgba(232,238,244,0.85); line-height: 1.55; margin-bottom: 1rem; }
+    .content-block .c-cta { display: inline-block; padding: 0.6rem 1.25rem; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.45); border-radius: 8px; color: #e8d48a; font-weight: 700; text-decoration: none; font-size: 0.875rem; }
+    .content-block .c-cta:hover { background: rgba(212,175,55,0.3); border-color: rgba(212,175,55,0.6); }
+    .quiz-section { padding: 1.25rem 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; margin-bottom: 1.5rem; }
+    .quiz-section .q-label { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(180,110,247,0.85); margin-bottom: 0.75rem; }
+    .quiz-q { margin-bottom: 1.25rem; }
+    .quiz-q .q-text { font-size: 0.9375rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+    .quiz-q .q-opts { display: flex; flex-direction: column; gap: 0.35rem; }
+    .quiz-q label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.875rem; color: rgba(232,238,244,0.9); padding: 0.4rem 0; }
+    .quiz-q input[type="radio"] { accent-color: #8b5cf6; }
+    .quiz-submit { padding: 0.6rem 1.25rem; background: #2dd4a0; color: #0b0f1a; font-weight: 700; font-size: 0.875rem; border: none; border-radius: 8px; cursor: pointer; margin-top: 0.5rem; }
+    .quiz-submit:hover { background: #34e0ab; }
+    .quiz-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .result-block { padding: 1.25rem 1.5rem; border-radius: 12px; margin-bottom: 1rem; display: none; }
+    .result-block.show { display: block; }
+    .result-block.pass { background: rgba(45,212,160,0.12); border: 1px solid rgba(45,212,160,0.4); }
+    .result-block.fail { background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.4); }
+    .result-block .r-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .result-block.pass .r-title { color: #2dd4a0; }
+    .result-block.fail .r-title { color: #fca5a5; }
+    .result-block .r-score { font-size: 0.875rem; color: rgba(255,255,255,0.7); }
+    .result-block .r-retry { margin-top: 0.75rem; }
+    .result-block .r-retry button { padding: 0.45rem 1rem; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.5); border-radius: 6px; color: #e8d48a; font-weight: 600; cursor: pointer; font-size: 0.8125rem; }
+    .cert-block { display: none; padding: 1.5rem 1.75rem; background: linear-gradient(145deg, rgba(45,212,160,0.08), rgba(15,23,42,0.6)); border: 1px solid rgba(45,212,160,0.35); border-radius: 12px; margin-bottom: 1rem; }
+    .cert-block.show { display: block; }
+    .cert-block .cert-header { font-size: 0.625rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(45,212,160,0.9); margin-bottom: 0.5rem; }
+    .cert-block .cert-title { font-size: 1rem; font-weight: 700; color: #2dd4a0; margin-bottom: 0.25rem; }
+    .cert-block .cert-name { font-size: 1.125rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+    .cert-block .cert-note { font-size: 0.8125rem; color: rgba(255,255,255,0.5); line-height: 1.5; margin-bottom: 1rem; }
+    .cert-block .next-link { display: inline-block; margin-right: 0.75rem; margin-top: 0.25rem; padding: 0.5rem 1rem; background: rgba(95,195,228,0.2); border: 1px solid rgba(95,195,228,0.4); border-radius: 8px; color: #5fc3e4; font-weight: 600; text-decoration: none; font-size: 0.875rem; }
+    .cert-block .next-link:hover { background: rgba(95,195,228,0.3); }
+    .already-done { padding: 1rem 1.25rem; background: rgba(45,212,160,0.08); border: 1px solid rgba(45,212,160,0.3); border-radius: 10px; margin-bottom: 1rem; font-size: 0.875rem; color: #2dd4a0; }
+    .load-err { color: #f87171; padding: 1rem; font-size: 0.875rem; }
+    .foot { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8125rem; color: rgba(255,255,255,0.4); }
+    .foot a { color: #d4af37; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">← <a href="onboarding.html">Learning paths</a> · <a href="../index.html">Home</a> · <a href="office-hours.html">Office Hours</a></div>
+    <div class="progress-bar-wrap" id="progress-wrap" style="display: none;">
+      <div class="progress-bar-label" id="progress-label">Module 1 of 1</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div></div>
+    </div>
+    <div class="steps" id="steps-row" style="display: none;">
+      <span class="step-dot" id="step1" title="Learning content">1</span>
+      <span class="step-dot" id="step2" title="Knowledge check">2</span>
+      <span class="step-dot" id="step3" title="Result & certificate">3</span>
+    </div>
+    <div class="breadcrumb" id="breadcrumb">—</div>
+    <h1 id="session-title">—</h1>
+    <p class="session-meta" id="session-meta">—</p>
+
+    <div id="ask-block" class="ask-block" style="display: none;">
+      <div class="ask-label">Need help?</div>
+      <a id="ask-link" href="#">Ask an expert</a> — get answers anytime. We respond via your preferred channel.
+    </div>
+
+    <div id="content-block" class="content-block" style="display: none;">
+      <div class="c-label">1. Learning content</div>
+      <p class="c-desc" id="content-desc">—</p>
+      <a id="content-cta" class="c-cta" href="#">—</a>
+    </div>
+
+    <div id="quiz-section" class="quiz-section" style="display: none;">
+      <div class="q-label">2. Knowledge check</div>
+      <div id="quiz-questions"></div>
+      <button type="button" class="quiz-submit" id="quiz-submit">Submit</button>
+    </div>
+
+    <div id="result-block" class="result-block">
+      <div class="r-title" id="result-title">—</div>
+      <div class="r-score" id="result-score"></div>
+      <div class="r-retry" id="result-retry" style="display: none;"><button type="button" id="retry-btn">Try again</button></div>
+    </div>
+
+    <div id="cert-block" class="cert-block">
+      <div class="cert-header">Certificate of Completion</div>
+      <div class="cert-title" id="cert-name">—</div>
+      <p class="cert-note">This module counts toward your learning path qualification. Full path certificates are issued when all modules in a track are complete.</p>
+      <a id="next-session-link" class="next-link" href="#" style="display: none;">Next module →</a>
+      <a id="back-track-link" class="next-link" href="onboarding.html" style="display: none;">Back to learning paths</a>
+    </div>
+
+    <div id="already-done" class="already-done" style="display: none;">You've completed this module. Your result is saved. See below for your certificate and next steps.</div>
+    <div id="load-err" class="load-err" style="display: none;">—</div>
+    <p class="foot"><a href="onboarding.html">← Learning paths</a> · <a href="../index.html">Home</a> · NSPFRNP → ∞⁹</p>
+  </div>
+
+  <script>
+  (function() {
+    var STORAGE_PREFIX = 'sing9_session_';
+    var params = new URLSearchParams(document.location.search);
+    var trackId = params.get('track') || '';
+    var sessionNum = parseInt(params.get('session') || '1', 10);
+
+    var tracksData = null;
+    var track = null;
+    var session = null;
+    var sessionIndex = 0;
+
+    function storageKey() { return STORAGE_PREFIX + trackId + '_' + (session ? session.id : sessionNum) + '_'; }
+    function getStored() {
+      try {
+        var k = storageKey();
+        var raw = localStorage.getItem(k + 'result');
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) { return null; }
+    }
+    function setStored(passed, score) {
+      try {
+        var k = storageKey();
+        localStorage.setItem(k + 'result', JSON.stringify({ passed: !!passed, score: score, date: new Date().toISOString() }));
+      } catch (e) {}
+    }
+
+    function showErr(msg) {
+      document.getElementById('load-err').textContent = msg;
+      document.getElementById('load-err').style.display = 'block';
+    }
+
+    function renderBreadcrumb() {
+      if (!track || !session) return;
+      var n = track.sessions.length;
+      var i = sessionIndex + 1;
+      var html = '<a href="onboarding.html">Onboarding</a> · <a href="onboarding-session.html?track=' + encodeURIComponent(trackId) + '">' + escapeHtml(track.name) + '</a> · Session ' + i + ' of ' + n;
+      document.getElementById('breadcrumb').innerHTML = html;
+    }
+
+    function escapeHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    function renderContent() {
+      if (!session) return;
+      document.getElementById('content-desc').textContent = session.shortDesc || 'Work through the material at your own pace. When you\'re done, return here and take the quiz below.';
+      var cta = document.getElementById('content-cta');
+      cta.textContent = session.contentLabel || 'Open content';
+      cta.href = session.contentRef || '#';
+      if (session.contentRef && session.contentRef.indexOf('#') === 0) cta.href = 'holographic-navigator-academy.html' + session.contentRef;
+      else if (session.contentRef) cta.href = session.contentRef;
+      document.getElementById('content-block').style.display = 'block';
+    }
+
+    function buildAskLink() {
+      var prefill = 'Track: ' + (track ? track.name : trackId) + '\nSession: ' + (session ? session.title : '') + '\nMy question: ';
+      return 'talk-first.html?source=session-player&prefill=' + encodeURIComponent(prefill);
+    }
+
+    function renderQuiz() {
+      if (!session || !session.quiz || !session.quiz.questions) return;
+      var q = session.quiz;
+      var html = '';
+      q.questions.forEach(function(item, idx) {
+        html += '<div class="quiz-q" data-q="' + idx + '"><div class="q-text">' + escapeHtml(item.q) + '</div><div class="q-opts">';
+        (item.options || []).forEach(function(opt, oi) {
+          var id = 'q' + idx + '_' + oi;
+          html += '<label><input type="radio" name="q' + idx + '" value="' + oi + '" id="' + id + '"> ' + escapeHtml(opt) + '</label>';
+        });
+        html += '</div></div>';
+      });
+      document.getElementById('quiz-questions').innerHTML = html;
+      document.getElementById('quiz-section').style.display = 'block';
+    }
+
+    function submitQuiz() {
+      if (!session || !session.quiz) return;
+      var questions = session.quiz.questions;
+      var threshold = session.quiz.passThresholdPercent != null ? session.quiz.passThresholdPercent : 80;
+      var correct = 0;
+      var answered = 0;
+      questions.forEach(function(item, idx) {
+        var name = 'q' + idx;
+        var sel = document.querySelector('input[name="' + name + '"]:checked');
+        if (sel) { answered++; if (parseInt(sel.value, 10) === item.correctIndex) correct++; }
+      });
+      var score = questions.length ? Math.round((correct / questions.length) * 100) : 0;
+      var passed = score >= threshold && answered === questions.length;
+      if (answered < questions.length) {
+        alert('Please answer all questions.');
+        return;
+      }
+      setStored(passed, score);
+      showResult(passed, score);
+      if (passed) showCert();
+    }
+
+    function showResult(passed, score) {
+      var block = document.getElementById('result-block');
+      block.classList.remove('pass', 'fail');
+      block.classList.add(passed ? 'pass' : 'fail');
+      block.classList.add('show');
+      document.getElementById('result-title').textContent = passed ? 'Pass' : 'Not yet';
+      document.getElementById('result-score').textContent = 'Score: ' + score + '%. ' + (passed ? 'You met the threshold.' : 'Review the content and try again.');
+      var retry = document.getElementById('result-retry');
+      retry.style.display = passed ? 'none' : 'block';
+      document.getElementById('quiz-section').style.display = passed ? 'none' : 'block';
+      var step1 = document.getElementById('step1');
+      var step2 = document.getElementById('step2');
+      var step3 = document.getElementById('step3');
+      step1.classList.remove('current'); step1.classList.add('done');
+      step2.classList.remove('current'); step2.classList.add('done');
+      step3.classList.add(passed ? 'done' : 'current');
+    }
+
+    function showCert() {
+      if (!session) return;
+      document.getElementById('cert-name').textContent = session.certificateLabel || 'Session complete';
+      document.getElementById('cert-block').classList.add('show');
+      var next = track.sessions[sessionIndex + 1];
+      var nextLink = document.getElementById('next-session-link');
+      var backLink = document.getElementById('back-track-link');
+      if (next) {
+        nextLink.href = 'session-player.html?track=' + encodeURIComponent(trackId) + '&session=' + (sessionIndex + 2);
+        nextLink.textContent = 'Next: ' + (next.title || ('Session ' + (sessionIndex + 2))) + ' →';
+        nextLink.style.display = 'inline-block';
+        backLink.style.display = 'none';
+      } else {
+        nextLink.style.display = 'none';
+        backLink.style.display = 'inline-block';
+      }
+    }
+
+    function init() {
+      fetch('../data/onboarding-sessions.json')
+        .then(function(r) { return r.ok ? r.json() : Promise.reject(new Error('Could not load sessions')); })
+        .then(function(data) {
+          tracksData = data;
+          track = data.tracks && data.tracks[trackId];
+          if (!track) {
+            showErr('Track not found. Use ?track=cadet|session_one|session_two|officer|enlisted');
+            return;
+          }
+          sessionIndex = Math.max(0, sessionNum - 1);
+          session = track.sessions && track.sessions[sessionIndex];
+          if (!session) {
+            showErr('Session not found. Use ?session=1 to ' + (track.sessions ? track.sessions.length : 1));
+            return;
+          }
+          document.getElementById('session-title').textContent = session.title;
+          document.getElementById('session-meta').textContent = 'Session ' + (sessionIndex + 1) + ' of ' + track.sessions.length + ' · ' + track.name;
+          document.title = session.title + ' · Learning · VIBELANDIA';
+          var n = track.sessions.length;
+          var i = sessionIndex + 1;
+          var progressWrap = document.getElementById('progress-wrap');
+          var stepsRow = document.getElementById('steps-row');
+          if (n > 0) {
+            progressWrap.style.display = 'block';
+            document.getElementById('progress-label').textContent = 'Module ' + i + ' of ' + n;
+            document.getElementById('progress-fill').style.width = Math.round((i / n) * 100) + '%';
+          }
+          stepsRow.style.display = 'flex';
+          var step1 = document.getElementById('step1');
+          var step2 = document.getElementById('step2');
+          var step3 = document.getElementById('step3');
+          step1.classList.add('current');
+          step2.classList.remove('done', 'current');
+          step3.classList.remove('done', 'current');
+          renderBreadcrumb();
+          document.getElementById('ask-link').href = buildAskLink();
+          document.getElementById('ask-block').style.display = 'block';
+          renderContent();
+          renderQuiz();
+
+          var stored = getStored();
+          if (stored && stored.passed) {
+            document.getElementById('already-done').style.display = 'block';
+            showResult(true, stored.score);
+            showCert();
+            document.getElementById('quiz-section').style.display = 'none';
+            step1.classList.remove('current'); step1.classList.add('done');
+            step2.classList.add('done');
+            step3.classList.add('done');
+          }
+
+          document.getElementById('quiz-submit').addEventListener('click', submitQuiz);
+          document.getElementById('retry-btn').addEventListener('click', function() {
+            document.getElementById('result-block').classList.remove('show');
+            document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(function(el) { el.checked = false; });
+          });
+        })
+        .catch(function(e) {
+          showErr(e.message || 'Failed to load session data.');
+        });
+    }
+    init();
+  })();
+  </script>
+</body>
+</html>

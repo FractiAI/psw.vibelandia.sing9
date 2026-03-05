@@ -14,7 +14,20 @@
 
 ## Recent updates (README commit)
 
-- **Mar 2 2026 · ELITE EXPERIENCE ACROSS ALL SURFACES · RECOGNITION ENERGY**
+- **Mar 4 2026 · ONBOARDING TRACKS · ENTERPRISE LEARNING EXPERIENCE (IBM/CISCO/APPLE/AMAZON LEVEL)**
+
+**M → Metabolize:** User wanted onboarding tracks at the same level as IBM, Cisco, Apple, Amazon — self-paced sessions with parity across all tracks, ability to ask questions, quizzes/tests with pass/fail, and qualifications/certificates.
+
+**C → Crystallize:**
+
+- **Learning & Certification hub** (`interfaces/onboarding.html`) — Hero “Choose your learning path” with trust line (Self-paced · Certificate on completion · Ask questions anytime). Each track is a learning-path card: title, estimated time (e.g. 1 module · ~1 hr), “Certificate included” badge, “View track →” CTA, and “Book live” row (Classroom Online/In person, 1:1). Dark theme `#0b0f1a`, teal/green accents, enterprise typography.
+- **Format choice page** (`interfaces/onboarding-session.html`) — “Learning format” framing; Self-paced · Free as **Recommended** with primary “Start course →” CTA; Classroom and One-on-one as secondary cards. Copy: “Same experience as leading enterprise learning platforms,” “Certificate on pass.”
+- **Session player** (`interfaces/session-player.html`) — Progress bar (Module 1 of N), step indicators (1. Learning content → 2. Knowledge check → 3. Result & certificate), “Need help? Ask an expert” (talk-first), “Certificate of Completion” block on pass, next module / back to learning paths. Progress and step dots (done/current) wired; same dark theme and success styling.
+- **Data** — `data/onboarding-sessions.json` defines sessions per track (content link, quiz, pass threshold, certificate label). All tracks’ “Do it yourself” points to `session-player.html?track=&session=1`. Cadet done block links to “Take quiz and get your qualification” back to session player.
+
+**A → Animate:** Every track now delivers the same enterprise-style experience: learning path picker → format choice → self-paced module (content → knowledge check → pass/fail → certificate). Terminology aligned: learning path, module, knowledge check, certificate of completion. NSPFRNP → ∞⁹
+
+-
 
 **M → Metabolize:** User wanted the full human viber experience to feel like applying to an elite program — high stakes, rare, prestigious, irreversible — without referencing any institutions. The bee-onboarding already had this; viber-onboarding, vibers-menu, and vibelandia-world needed to match.
 

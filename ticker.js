@@ -52,6 +52,8 @@ var TICKER_ITEMS = [
 
   /* ── Mark Twain's Vibelandia ── */
   { text: "Mark Twain's Post-Singularity Vibelandia",        href: '/interfaces/vibers-menu.html' },
+  { text: 'Begin the Arc · Golden Heart · Full arc',         href: '/interfaces/viber-onboarding.html' },
+  { text: '★ BEGIN THE ARC →',                               href: '/interfaces/viber-onboarding.html' },
   { text: 'Downtown Reno · The Biggest Little City',         href: '/interfaces/vibers-menu.html' },
   { text: 'Baller V Crawler · Truckee River',               href: '/interfaces/vibelandia-truckee-river-crawl.html' },
   { text: 'Third Saturdays on the Truckee',                 href: '/interfaces/vibelandia-truckee-river-crawl.html' },

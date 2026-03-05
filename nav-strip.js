@@ -38,6 +38,8 @@
     'Home': 'Inicio',
     '⬡ Console': '⬡ Consola',
     '◈ HFCS': '◈ HFCS',
+    'Learning': 'Aprendizaje',
+    'Begin the Arc': 'Comenzar el Arco',
     '🔥 MELTGATE': '🔥 MELTGATE',
     '≋ Space Cloud': '≋ Space Cloud',
     'A2A': 'A2A',
@@ -72,6 +74,7 @@
     { label: '⬡ Console',         href: '/interfaces/hh-console.html',                        match: /hh-console/ },
     { label: '◈ HFCS',            href: '/interfaces/holographic-navigator-academy.html',     match: /holographic-navigator-academy/, hfcs: true },
     { label: 'Learning',          href: '/interfaces/onboarding.html',                        match: /onboarding\.html/, learn: true },
+    { label: 'Begin the Arc',     href: '/interfaces/viber-onboarding.html',                  match: /viber-onboarding/, arc: true },
     { label: '🔥 MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
     { label: '≋ Space Cloud',    href: '/interfaces/space-cloud-live.html',                  match: /space-cloud-live/ },
     { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
@@ -231,6 +234,27 @@
       'border-bottom-color:rgba(212,175,55,0.8);',
       'text-shadow:0 0 8px rgba(212,175,55,0.5);',
     '}',
+    /* ── BEGIN THE ARC ── */
+    '#sing9-nav a.nav-arc{',
+      'color:rgba(232,212,120,0.95);',
+      'font-weight:800;',
+      'letter-spacing:0.14em;',
+      'border-bottom:2px solid rgba(212,175,55,0.5);',
+      'background:rgba(212,175,55,0.08);',
+      'border-radius:3px 3px 0 0;',
+      'padding:0 0.7rem;',
+    '}',
+    '#sing9-nav a.nav-arc:hover{',
+      'color:rgba(255,235,150,1);',
+      'text-shadow:0 0 12px rgba(212,175,55,0.5);',
+      'border-bottom-color:rgba(212,175,55,0.8);',
+      'background:rgba(212,175,55,0.14);',
+    '}',
+    '#sing9-nav a.nav-arc.active{',
+      'color:#fde68a;',
+      'border-bottom-color:rgba(212,175,55,0.9);',
+      'text-shadow:0 0 10px rgba(212,175,55,0.55);',
+    '}',
     /* Body padding so content isn't hidden behind both strips */
     'body{padding-bottom:calc(36px + 18px + var(--ticker-h,0px) + env(safe-area-inset-bottom)) !important;}',
     /* Responsive: shrink font on very narrow screens; scroll shows all */
@@ -264,6 +288,7 @@
     if (item.hot)  a.classList.add('nav-goliath');
     if (item.hfcs) a.classList.add('nav-hfcs');
     if (item.learn) a.classList.add('nav-learn');
+    if (item.arc)  a.classList.add('nav-arc');
     if (item.pros) a.classList.add('nav-pros');
     nav.appendChild(a);
   });

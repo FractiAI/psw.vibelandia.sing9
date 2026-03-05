@@ -450,6 +450,9 @@
 
 <!-- SETUP OVERLAY -->
 <div class="setup-overlay" id="setupOverlay">
+  <script>
+  (function(){ try { var s = JSON.parse(localStorage.getItem('hh_os_state') || '{}'); if (s.calibrated || (s.name && s.name.trim()) || (s.archetypes && s.archetypes.length > 0)) document.getElementById('setupOverlay').style.display = 'none'; } catch(e){} })();
+  </script>
   <div class="setup-box">
 
     <!-- Step progress dots -->
@@ -908,6 +911,11 @@ function load() {
   try { S = JSON.parse(localStorage.getItem('hh_os_state') || '{}'); }
   catch(e) { S = {}; }
   S = Object.assign({}, JSON.parse(JSON.stringify(DEFAULT)), S);
+  // One-time: if they already had name/archetypes (e.g. from before calibrated flag), treat as done — setup only once
+  if (!S.calibrated && ((S.name && S.name.trim()) || (S.archetypes && S.archetypes.length > 0))) {
+    S.calibrated = true;
+    save();
+  }
 }
 function save() {
   localStorage.setItem('hh_os_state', JSON.stringify(S));

@@ -76,7 +76,7 @@
     { label: 'Learning',          href: '/interfaces/onboarding.html',                        match: /onboarding\.html/, learn: true },
     { label: 'Begin the Arc',     href: '/interfaces/viber-onboarding.html',                  match: /viber-onboarding/, arc: true },
     { label: '🔥 MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
-    { label: '≋ Space Cloud',    href: '/interfaces/space-cloud-live.html',                  match: /space-cloud-live/ },
+    { label: '≋ Space Cloud',    href: '/interfaces/space-cloud-division.html',                  match: /space-cloud-division/ },
     { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },

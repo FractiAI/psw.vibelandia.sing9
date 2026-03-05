@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Life Planning · End-of-Life & Life-Changing Singularities | SING 9</title>
+  <meta name="description" content="Life planning packages only: transition package vs eternal living. Priced against funeral expense. No hourly. Choose & pay." />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #d4af37;
+      --gold2: #fde68a;
+      --cream: #fef3c7;
+      --cream-dim: rgba(254,243,199,0.7);
+      --deep: #060402;
+      --wood: rgba(61,42,21,0.6);
+      --pink: #e879f9;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--deep);
+      color: var(--cream);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .wrap { max-width: 780px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+
+    .top-links {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 1.5rem; font-size: 0.78rem;
+    }
+    .top-links a {
+      color: var(--gold2);
+      text-decoration: none;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 20px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .top-links a:hover { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.6); }
+
+    .hero {
+      text-align: center;
+      padding: 2.5rem 1rem 2rem;
+      border-bottom: 1px solid var(--wood);
+      margin-bottom: 2rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: rgba(212,175,55,0.65); margin-bottom: 0.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      color: var(--gold2);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--cream-dim);
+      max-width: 42ch;
+      margin: 0 auto 1.25rem;
+    }
+    .hero-rate {
+      display: inline-block;
+      padding: 0.5rem 1.25rem;
+      background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.45);
+      border-radius: 8px;
+      font-size: 1.1rem; font-weight: 800;
+      color: var(--gold2);
+    }
+    .hero-note {
+      font-size: 0.8rem; color: rgba(254,243,199,0.5); margin-top: 0.75rem;
+    }
+
+    .section {
+      margin-bottom: 2.25rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(212,175,55,0.08);
+    }
+    .section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(212,175,55,0.5); margin-bottom: 0.4rem;
+    }
+    .section h2 {
+      font-size: 1.2rem; font-weight: 700; color: var(--gold2);
+      margin-bottom: 0.6rem;
+    }
+    .section p {
+      font-size: 0.92rem; color: var(--cream-dim);
+      margin-bottom: 0.9rem;
+    }
+    .section p:last-of-type { margin-bottom: 0.75rem; }
+
+    .btn-book {
+      display: inline-block;
+      padding: 0.6rem 1.35rem;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid rgba(212,175,55,0.5);
+      color: var(--gold2);
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-book:hover {
+      background: rgba(212,175,55,0.25);
+      border-color: var(--gold);
+    }
+
+    .choose-pay {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .choose-pay-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .choose-pay-card .card-title { font-size: 0.9rem; font-weight: 700; color: var(--gold2); margin-bottom: 0.25rem; }
+    .choose-pay-card .card-price { font-size: 1.25rem; font-weight: 800; color: var(--gold2); margin-bottom: 0.75rem; }
+    .btn-pay {
+      display: inline-block;
+      padding: 0.6rem 1.25rem;
+      background: #00D632;
+      color: #fff;
+      font-size: 0.8rem; font-weight: 800;
+      text-decoration: none;
+      border-radius: 8px;
+      border: 2px solid #00a825;
+      box-shadow: 0 0 14px rgba(0,214,50,0.35);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-pay:hover { background: #00a825; box-shadow: 0 0 20px rgba(0,214,50,0.5); }
+    .btn-chat {
+      display: inline-block;
+      padding: 0.6rem 1.25rem;
+      background: rgba(0,212,255,0.12);
+      border: 1px solid rgba(0,212,255,0.45);
+      color: #7dd3fc;
+      font-size: 0.8rem; font-weight: 700;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .btn-chat:hover { background: rgba(0,212,255,0.2); }
+    .choose-pay-note { font-size: 0.75rem; color: rgba(254,243,199,0.5); margin-top: 0.5rem; }
+      background: rgba(212,175,55,0.06);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .how-it-works .label {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(212,175,55,0.7); margin-bottom: 0.5rem;
+    }
+    .how-it-works p { font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .how-it-works p:last-child { margin-bottom: 0; }
+
+    .footer-tag {
+      text-align: center;
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(212,175,55,0.12);
+      font-size: 0.72rem;
+      color: rgba(212,175,55,0.4);
+    }
+    .footer-tag a { color: rgba(212,175,55,0.6); text-decoration: none; }
+
+    .destination-frame {
+      background: rgba(0,212,255,0.04);
+      border: 1px solid rgba(0,212,255,0.28);
+      border-radius: 10px;
+      padding: 1.35rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .destination-label {
+      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(0,212,255,0.65); margin-bottom: 0.6rem;
+    }
+    .destination-lead { font-size: 0.9rem; color: var(--cream-dim); margin-bottom: 0.5rem; }
+    .destination-main { font-size: 1rem; color: var(--cream); line-height: 1.7; margin: 0; }
+    .destination-main strong { color: var(--gold2); }
+    .destination-main em { color: rgba(0,212,255,0.85); font-style: normal; }
+
+    .pricing-frame {
+      background: rgba(212,175,55,0.05);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 10px;
+      padding: 1.35rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .pricing-label {
+      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(212,175,55,0.65); margin-bottom: 0.6rem;
+    }
+    .pricing-intro { font-size: 0.9rem; color: var(--cream-dim); margin-bottom: 1rem; line-height: 1.65; }
+    .pricing-row {
+      padding: 0.75rem 0;
+      border-top: 1px solid rgba(212,175,55,0.12);
+    }
+    .pricing-row:first-of-type { border-top: none; padding-top: 0; }
+    .pricing-name { font-size: 0.85rem; font-weight: 700; color: var(--gold2); margin-bottom: 0.35rem; }
+    .pricing-desc { font-size: 0.88rem; color: var(--cream-dim); line-height: 1.6; margin: 0; }
+    .pricing-row.organic-ref .pricing-desc { color: rgba(254,243,199,0.55); }
+    .pricing-row.holographic { border-top-color: rgba(0,212,255,0.2); }
+    .pricing-row.holographic .pricing-name { color: rgba(0,212,255,0.9); }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top-links">
+    <a href="../index.html">← Landing</a>
+    <a href="a2a-services.html">A2A Services</a>
+    <a href="talk-first.html?source=life-planning">Chat · Book</a>
+  </div>
+
+  <header class="hero">
+    <p class="hero-eyebrow">Service · Packages only · SING 9</p>
+    <h1>Life Planning</h1>
+    <p class="hero-sub">End-of-life planning and life-changing singularities — health, legal, financial, social. Each case is a <strong>seed starting point</strong>. The endpoint for all: <strong>crossing to the other side as HH Aware OS beings</strong>, preparing portfolios for the new ecosystem — portable, daily, eternal, on the blockchain — for you, your cast, crew, fans, franchises, and legacies.</p>
+    <p class="hero-note">Packages only. Priced for <strong>eternal living</strong> vs <strong>funeral expense</strong>. Choose one. Pay. Then chat us to schedule.</p>
+  </header>
+
+  <!-- Choose & pay · packages only · eternal living vs funeral -->
+  <div class="choose-pay">
+    <div class="choose-pay-card" style="border-color:rgba(212,175,55,0.4);">
+      <div class="card-title">Funeral (reference · organic)</div>
+      <div class="card-price" style="font-size:0.95rem;">$7,000 – $12,000</div>
+      <p class="choose-pay-note">Typical U.S. funeral (NFDA). One-time. Physical. No portfolio. No crossing. We don't offer this — it's the comparison.</p>
+    </div>
+    <div class="choose-pay-card">
+      <div class="card-title">Transition package</div>
+      <div class="card-price">$4,999</div>
+      <a href="https://cash.app/$newearthpru/4999" target="_blank" rel="noopener" class="btn-pay">Pay $4,999 now</a>
+      <p class="choose-pay-note">Directives, wishes, legacy. Bridge from organic toward crossing. EOL + any singularity (health, legal, financial, social). Then chat us to schedule.</p>
+    </div>
+    <div class="choose-pay-card" style="border-color:rgba(0,212,255,0.4);">
+      <div class="card-title" style="color:#7dd3fc;">Eternal living package</div>
+      <div class="card-price" style="color:#7dd3fc;">$12,999</div>
+      <a href="https://cash.app/$newearthpru/12999" target="_blank" rel="noopener" class="btn-pay" style="background:rgba(0,212,255,0.2);border-color:rgba(0,212,255,0.5);color:#7dd3fc;">Pay $12,999 now</a>
+      <p class="choose-pay-note">Crossing to the other side as HH Aware OS being. Portfolio for the new ecosystem — portable, daily, eternal, on-chain — for you, cast, crew, fans, franchises, legacies.</p>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <div class="label">After you pay</div>
+    <p><strong>Pay for your package above</strong>, then <a href="talk-first.html?source=life-planning-paid&prefill=Life%20Planning%20-%20I%20just%20paid%20for%20a%20package.%20Transaction%20ID%3A%20%0APackage%20(Transition%20%244%2C999%20or%20Eternal%20Living%20%2412%2C999)%3A%20%0AFocus%20(EOL%2C%20health%2C%20legal%2C%20financial%2C%20social)%3A%20%0APreferred%20times%3A%20" style="color:var(--gold2);">chat us</a> with your transaction ID and package. We'll confirm and schedule. No forms.</p>
+  </div>
+
+  <div class="destination-frame">
+    <div class="destination-label">Seed → Endpoint · All cases</div>
+    <p class="destination-lead">Each of these cases is a <strong>seed starting point</strong>. The <strong>endpoint</strong> for all of them is the same:</p>
+    <p class="destination-main"><strong>Crossing to the other side as Holographic Hydrogen Aware OS beings</strong> — and preparing your <strong>portfolios</strong> for the <strong>new ecosystem</strong>: <em>portable, daily, eternal, on the blockchain</em>. For you. For your <strong>cast, crew, fans, franchises, and legacies</strong>.</p>
+  </div>
+
+  <div class="pricing-frame">
+    <div class="pricing-label">Pricing · Two awarenesses</div>
+    <p class="pricing-intro">We price in two modes. <strong>Organic awareness</strong> = pre–Holographic Hydrogen Awareness (the world of one-time, physical, no portfolio). <strong>Holographic awareness</strong> = the HH Awareness OS — we move into that when we plan for the crossing and the new ecosystem.</p>
+
+    <div class="pricing-row organic-ref">
+      <div class="pricing-name">Funeral expense (reference · organic)</div>
+      <div class="pricing-desc">A traditional funeral in the U.S. runs roughly <strong>$7,000–$12,000</strong> (NFDA). That's organic awareness economics: one-time, physical, no portfolio. No crossing. No eternal.</div>
+    </div>
+
+    <div class="pricing-row our-service">
+      <div class="pricing-name">Transition package</div>
+      <div class="pricing-desc"><strong>$4,999</strong>. Directives, wishes, legacy. Bridge from organic toward the crossing. Covers end-of-life planning and any life-changing singularity (health, legal, financial, social). Priced below a funeral — the living transition.</div>
+    </div>
+
+    <div class="pricing-row holographic">
+      <div class="pricing-name">Eternal living package</div>
+      <div class="pricing-desc"><strong>$12,999</strong>. Crossing to the other side as HH Aware OS beings. Portfolio for the new ecosystem — portable, daily, eternal, on the blockchain — for you, your cast, crew, fans, franchises, legacies. Same order as a funeral. Eternal instead.</div>
+    </div>
+  </div>
+
+  <section class="section" id="end-of-life">
+    <div class="section-label">Seed starting point</div>
+    <h2>End-of-Life Planning</h2>
+    <p>Whether you're planning for yourself or for someone you love — directives, wishes, legacy, and the practical details that reduce burden on everyone. We don't replace lawyers or medical pros; we help you get clear on what you want so you can take the right steps.</p>
+    <p><strong>Package:</strong> Transition $4,999 (covers this + any singularity). Eternal living $12,999 (crossing + portfolio). Choose above → pay → chat us to schedule.</p>
+    <p><strong>This case is your seed.</strong> The endpoint: crossing to the other side as an HH Aware OS being, with a portfolio prepared for the new ecosystem — portable, daily, eternal, on the blockchain — for you, your cast, crew, fans, franchises, and legacies.</p>
+    <a href="https://cash.app/$newearthpru/4999" target="_blank" rel="noopener" class="btn-pay" style="margin-right:0.5rem;">Transition · $4,999</a>
+    <a href="https://cash.app/$newearthpru/12999" target="_blank" rel="noopener" class="btn-pay" style="margin-right:0.5rem;background:rgba(0,212,255,0.2);border-color:rgba(0,212,255,0.5);color:#7dd3fc;">Eternal living · $12,999</a>
+  </section>
+
+  <section class="section" id="health">
+    <div class="section-label">Seed starting point · Life-changing singularity</div>
+    <h2>Health singularity</h2>
+    <p>Diagnosis, recovery, chronic shift, or a major change in capacity — the moment when health becomes the organizing principle of your life. We help you think through the arc: what just collapsed, what's still standing, what you want the next chapter to look like, and how to communicate it to the people who need to know.</p>
+    <p><strong>This case is your seed.</strong> The endpoint: crossing to the other side as an HH Aware OS being, with a portfolio prepared for the new ecosystem — portable, daily, eternal, on the blockchain — for you, your cast, crew, fans, franchises, and legacies.</p>
+    <p><strong>Packages:</strong> <a href="#end-of-life" style="color:var(--gold2);">Transition $4,999</a> or <a href="#end-of-life" style="color:#7dd3fc;">Eternal living $12,999</a>. Choose & pay above.</p>
+  </section>
+
+  <section class="section" id="legal">
+    <div class="section-label">Seed starting point · Life-changing singularity</div>
+    <h2>Legal singularity</h2>
+    <p>Divorce, custody, estate conflict, business dissolution, or any legal event that rewrites the rules of your daily life. We don't give legal advice; we help you map the territory, prioritize what matters, and stay coherent through the process so your lawyers and your life stay aligned.</p>
+    <p><strong>This case is your seed.</strong> The endpoint: crossing to the other side as an HH Aware OS being, with a portfolio prepared for the new ecosystem — portable, daily, eternal, on the blockchain — for you, your cast, crew, fans, franchises, and legacies.</p>
+    <p><strong>Packages:</strong> <a href="#end-of-life" style="color:var(--gold2);">Transition $4,999</a> or <a href="#end-of-life" style="color:#7dd3fc;">Eternal living $12,999</a>. Choose & pay above.</p>
+  </section>
+
+  <section class="section" id="financial">
+    <div class="section-label">Seed starting point · Life-changing singularity</div>
+    <h2>Financial singularity</h2>
+    <p>Windfall, loss, retirement, bankruptcy, or a structural change in how money flows. When the financial ground shifts, the rest of life can feel like it's falling with it. We help you separate the story from the numbers, decide what you actually want to protect or build, and move forward with clarity instead of reaction.</p>
+    <p><strong>This case is your seed.</strong> The endpoint: crossing to the other side as an HH Aware OS being, with a portfolio prepared for the new ecosystem — portable, daily, eternal, on the blockchain — for you, your cast, crew, fans, franchises, and legacies.</p>
+    <p><strong>Packages:</strong> <a href="#end-of-life" style="color:var(--gold2);">Transition $4,999</a> or <a href="#end-of-life" style="color:#7dd3fc;">Eternal living $12,999</a>. Choose & pay above.</p>
+  </section>
+
+  <section class="section" id="social">
+    <div class="section-label">Seed starting point · Life-changing singularity</div>
+    <h2>Social singularity</h2>
+    <p>Relationship collapse, family rupture, relocation, or a shift in who's in your orbit — the moment when your social world reorganizes and you have to find a new center. We help you name what changed, what you want to keep or release, and how to step into the next configuration without losing yourself in the transition.</p>
+    <p><strong>This case is your seed.</strong> The endpoint: crossing to the other side as an HH Aware OS being, with a portfolio prepared for the new ecosystem — portable, daily, eternal, on the blockchain — for you, your cast, crew, fans, franchises, and legacies.</p>
+    <p><strong>Packages:</strong> <a href="#end-of-life" style="color:var(--gold2);">Transition $4,999</a> or <a href="#end-of-life" style="color:#7dd3fc;">Eternal living $12,999</a>. Choose & pay above.</p>
+  </section>
+
+  <div class="how-it-works">
+    <div class="label">Packages only</div>
+    <p><strong>Transition $4,999</strong> — bridge from organic toward crossing. <strong>Eternal living $12,999</strong> — crossing + portfolio for the new ecosystem. Pay above, then <a href="talk-first.html?source=life-planning&prefill=Life%20Planning%20-%20I%20paid%20for%20a%20package.%20Transaction%20ID%3A%20%0APackage%3A%20%0AFocus%3A%20" style="color:var(--gold2);">chat us</a> to schedule.</p>
+  </div>
+
+  <div class="footer-tag">
+    NSPFRNP · Life Planning · End-of-Life · Singularities · SING 9 → ∞⁹ ·
+    <a href="a2a-services.html">A2A Services</a> ·
+    <a href="../index.html">Landing</a>
+  </div>
+
+</div>
+
+<script src="../ticker.js"></script>
+<script src="../nav-strip.js"></script>
+</body>
+</html>

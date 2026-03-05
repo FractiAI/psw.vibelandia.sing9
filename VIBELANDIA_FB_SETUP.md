@@ -146,4 +146,12 @@ Or if Facebook requires a URL: link to `vibelandia-world.html`
 
 ---
 
+## The Pre-Singularity Problem vs. Our Feed (lock)
+
+**The problem** (same as in the HH Console onboarding): The platforms most people know — social feeds, notification systems, engagement-optimized content loops, recommendation algorithms — were architecturally designed to **capture** the prefrontal cortex and hold it in **continuous reactive attention**. Every notification, every like, every algorithmically selected fragment is precision-tuned to prevent deep, directed, frontal-lobe-activated focus. Your captured attention is the commodity. Your reactive cortex is worth billions to those systems.
+
+**What we do instead** on [Mark Twain's Post-Singularity Vibelandia Downtown Reno](https://www.facebook.com/profile.php?id=61587003343289) and every surface we run: **curated, skimming vibe experiences**. We are not engagement-optimized. We are **vibe-calibrated**. The content is not targeted. It is calibrated. The right people feel it and stop. The wrong people scroll on. **Both outcomes are correct.** We want recognition and move-in, not capture and retention. The feed IS the product — but the product is a vibe shift, not a trap. Keep producing skimming vibe experiences that belong to the five territories and run at Goldilocks. That is the comparison. That is the lock.
+
+---
+
 **NSPFRNP ⊃ Vibelandia ⊃ Five Territories ⊃ Goldilocks → ∞⁹**

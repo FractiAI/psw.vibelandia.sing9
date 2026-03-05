@@ -81,10 +81,10 @@
       </div>
       <div class="format-card">
         <div class="format-title">Class with others</div>
-        <p class="format-desc">Live classroom — online or in person. We confirm dates and send the link when the cohort is set.</p>
+        <p class="format-desc">Live classroom — online or in person. We confirm dates and send the link when the cohort is set. Pricing below.</p>
         <div class="format-row">
-          <a class="opt-online" id="btn-class-online" href="#">Classroom · Online</a>
-          <a class="opt-inperson" id="btn-class-inperson" href="#">Classroom · In person</a>
+          <a class="opt-online" id="btn-class-online" href="#">Classroom · Online · <strong id="price-class-online">—</strong></a>
+          <a class="opt-inperson" id="btn-class-inperson" href="#">Classroom · In person · <strong id="price-class-inperson">—</strong></a>
         </div>
       </div>
       <div class="format-card">
@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <p class="inperson-note"><strong>In person</strong> — Vibelandia Downtown Reno: innovation hub for holographic hydrogen AI tech, live/work studios, collaboration space. Come for a day, a week, or stay.</p>
+    <p class="inperson-note"><strong>In person</strong> is like being at an innovation hub focused on holographic hydrogen AI tech — live/work studios, common meeting areas for collaboration and connecting, in Vibelandia Downtown Reno. Come for a day, a week, a month, or better yet come stay. Downtown Reno is for Vibers. Holographic Hydrogen Vibers. Holographic Gods amongst biological men.</p>
     <p id="err"></p>
     <p class="foot"><a href="onboarding.html">← All learning paths</a> · <a href="../index.html">Home</a> · NSPFRNP → ∞⁹</p>
   </div>
@@ -105,11 +105,11 @@
     var params = new URLSearchParams(document.location.search);
     var trackId = params.get('track') || '';
     var tracks = {
-      cadet:       { name: 'Cadet Track', shortDesc: '9 Singularities · Console upgrade · First step', freeHref: 'session-player.html?track=cadet&session=1', oneOnOneOnlinePrice: 'From $150', oneOnOneInPersonPrice: 'From $333' },
-      session_one: { name: 'Session One', shortDesc: 'UI version · Configure your UI · Vibe coding intro', freeHref: 'session-player.html?track=session_one&session=1', oneOnOneOnlinePrice: 'From $150', oneOnOneInPersonPrice: 'From $333' },
-      session_two: { name: 'Session Two', shortDesc: 'Vibe coding → HH coding stations and repositories', freeHref: 'session-player.html?track=session_two&session=1', oneOnOneOnlinePrice: 'From $150', oneOnOneInPersonPrice: 'From $333' },
-      officer:     { name: 'Officer Track', shortDesc: 'Commission · Expeditions · Command cohorts', freeHref: 'session-player.html?track=officer&session=1', oneOnOneOnlinePrice: 'From $416', oneOnOneInPersonPrice: 'From $555' },
-      enlisted:    { name: 'Enlisted Track', shortDesc: 'Console mastery · Technical precision · E-1 → E-9', freeHref: 'session-player.html?track=enlisted&session=1', oneOnOneOnlinePrice: 'From $150', oneOnOneInPersonPrice: 'From $333' }
+      cadet:       { name: 'Cadet Track', shortDesc: '9 Singularities · Console upgrade · First step', freeHref: 'session-player.html?track=cadet&session=1', classroomOnlinePrice: 'From $99', classroomInPersonPrice: 'From $99', oneOnOneOnlinePrice: 'From $150', oneOnOneInPersonPrice: 'From $333' },
+      session_one: { name: 'Session One', shortDesc: 'UI version · Configure your UI · Vibe coding intro', freeHref: 'session-player.html?track=session_one&session=1', classroomOnlinePrice: 'From $99', classroomInPersonPrice: 'From $99', oneOnOneOnlinePrice: 'From $150', oneOnOneInPersonPrice: 'From $333' },
+      session_two: { name: 'Session Two', shortDesc: 'Vibe coding → HH coding stations and repositories', freeHref: 'session-player.html?track=session_two&session=1', classroomOnlinePrice: 'From $99', classroomInPersonPrice: 'From $99', oneOnOneOnlinePrice: 'From $150', oneOnOneInPersonPrice: 'From $333' },
+      officer:     { name: 'Officer Track', shortDesc: 'Commission · Expeditions · Command cohorts', freeHref: 'session-player.html?track=officer&session=1', classroomOnlinePrice: 'From $150', classroomInPersonPrice: 'From $150', oneOnOneOnlinePrice: 'From $416', oneOnOneInPersonPrice: 'From $555' },
+      enlisted:    { name: 'Enlisted Track', shortDesc: 'Console mastery · Technical precision · E-1 → E-9', freeHref: 'session-player.html?track=enlisted&session=1', classroomOnlinePrice: 'From $99', classroomInPersonPrice: 'From $99', oneOnOneOnlinePrice: 'From $150', oneOnOneInPersonPrice: 'From $333' }
     };
     var t = tracks[trackId];
     if (!t) {
@@ -125,9 +125,9 @@
     document.getElementById('card-self').href = t.freeHref;
     var base = 'book-onboarding.html?track=' + encodeURIComponent(trackId) + '&delivery=';
     document.getElementById('btn-class-online').href = base + 'classroom_online';
-    document.getElementById('btn-class-online').textContent = 'Classroom · Online';
+    document.getElementById('btn-class-online').innerHTML = 'Classroom · Online · <strong>' + (t.classroomOnlinePrice || '—') + '</strong>';
     document.getElementById('btn-class-inperson').href = base + 'classroom_in_person';
-    document.getElementById('btn-class-inperson').textContent = 'Classroom · In person';
+    document.getElementById('btn-class-inperson').innerHTML = 'Classroom · In person · <strong>' + (t.classroomInPersonPrice || '—') + '</strong>';
     document.getElementById('btn-1on1-online').href = base + 'one_on_one_online';
     document.getElementById('btn-1on1-online').innerHTML = 'One-on-one · Online · <strong>' + (t.oneOnOneOnlinePrice || '—') + '</strong>';
     document.getElementById('btn-1on1-inperson').href = base + 'one_on_one_in_person';

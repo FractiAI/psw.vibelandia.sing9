@@ -202,6 +202,34 @@
     .setup-prose blockquote { margin: 0.9rem 0; padding: 0.72rem 1rem; border-left: 3px solid rgba(0,212,255,0.5); background: rgba(0,212,255,0.04); border-radius: 0 8px 8px 0; color: var(--beam); font-size: 0.9rem; font-style: italic; }
     .setup-note { font-size: 0.75rem; color: var(--muted); padding: 0.6rem 0.85rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid var(--border); margin-top: 1rem; }
     .setup-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+    .rich-profile-card { margin-top: 1.5rem; padding: 1.25rem; background: var(--card); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; }
+    .rpc-title { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .rpc-note { font-size: 0.8rem; color: var(--sub); line-height: 1.6; margin-bottom: 1rem; }
+    .profile-photo-row { display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap; }
+    .profile-photo-preview { width: 80px; height: 80px; border-radius: 8px; background: var(--deep); border: 1px solid var(--border); overflow: hidden; flex-shrink: 0; }
+    .profile-photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .btn-clear-photo { background: transparent; border: 1px solid var(--border); color: var(--sub); border-radius: 6px; cursor: pointer; }
+    .btn-clear-photo:hover { color: var(--text); border-color: var(--muted); }
+    .btn-enhance-ai { font-size:0.72rem; padding:0.4rem 0.8rem; background: rgba(123,47,255,0.2); border:1px solid rgba(123,47,255,0.5); color: var(--plasma2); border-radius:8px; cursor: pointer; }
+    .btn-enhance-ai:hover { background: rgba(123,47,255,0.3); }
+    .enhanced-photo-preview { padding-top:0.5rem; border-top: 1px solid var(--border); }
+    .suggestion-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.35rem; }
+    .suggestion-chip { display: inline-block; padding: 0.2rem 0.5rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.7rem; color: var(--sub); transition: color 0.2s, border-color 0.2s; }
+    .suggestion-chip:hover { color: var(--gold2); border-color: rgba(212,175,55,0.4); }
+    .item-detail-modal { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .item-detail-modal.open { display: flex; }
+    .item-detail-backdrop { position: absolute; inset: 0; background: rgba(2,2,9,0.85); }
+    .item-detail-box { position: relative; max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto; background: var(--deep); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 1.5rem; }
+    .item-detail-title { font-size: 1rem; font-weight: 700; color: var(--gold2); margin-bottom: 1rem; }
+    .item-detail-desc { width: 100%; min-height: 80px; padding: 0.6rem; font-size: 0.85rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); margin-bottom: 1rem; resize: vertical; }
+    .item-detail-photos { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .item-detail-photos .thumb { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border); }
+    .item-detail-photos .thumb-wrap { position: relative; }
+    .item-detail-photos .thumb-remove { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: rgba(0,0,0,0.7); color: #fff; border: none; cursor: pointer; font-size: 0.65rem; line-height: 1; }
+    .item-detail-videos { margin-bottom: 0.5rem; }
+    .item-detail-videos a { display: block; font-size: 0.78rem; color: var(--beam); margin-bottom: 0.25rem; }
+    .item-detail-add-video { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .item-detail-actions { display: flex; gap: 0.75rem; margin-top: 1rem; }
 
     /* ═══ SHARED COMPONENTS ═══ */
     .sec-hd { margin-bottom: 1.25rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
@@ -593,6 +621,7 @@
 
       <label class="field-label" for="userName">Your name or handle <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
       <input class="field-input" id="userName" type="text" placeholder="e.g. Pru · Commander · Sol-V — or leave blank" autocomplete="off" />
+      <div class="suggestion-row" style="margin-top:0.5rem;font-size:0.7rem;color:var(--muted);">Suggestions: <span class="suggestion-chips" id="nameSuggestions"></span></div>
       <div class="field-error" id="nameError" style="display:none;"></div>
 
       <label class="field-label">Choose 1–3 archetypes (THE SKIN) — optional</label>
@@ -640,6 +669,32 @@
       <p>Your name, archetypes, and current state. The foundation of your console.</p>
     </div>
     <div id="calibDisplay"></div>
+    <div class="rich-profile-card" id="richProfileCard" style="display:none;">
+      <div class="rpc-title">Rich Profile · Lives in your wallet (this device)</div>
+      <p class="rpc-note">Used for WINK! to match, suggest, and assist. Your setup and photo stay on this device — no server.</p>
+      <label class="field-label">Your photo (for WINK! and console)</label>
+      <div class="profile-photo-row">
+        <div class="profile-photo-preview" id="profilePhotoPreview"></div>
+        <div>
+          <input type="file" id="profilePhotoInput" accept="image/*" style="font-size:0.75rem;max-width:220px;" />
+          <button type="button" class="btn-clear-photo" id="clearProfilePhoto" style="display:none;margin-top:0.5rem;font-size:0.7rem;padding:0.25rem 0.6rem;">Clear photo</button>
+          <div style="margin-top:0.6rem;">
+            <button type="button" class="btn-enhance-ai" id="enhancePhotoBtn" title="Build character from your arc and optionally enhance your photo with AI">Enhance with AI</button>
+            <p class="rpc-enhance-note" id="enhancePhotoNote" style="display:none;font-size:0.72rem;color:var(--sub);margin-top:0.4rem;"></p>
+          </div>
+        </div>
+      </div>
+      <div class="enhanced-photo-preview" id="enhancedPhotoPreview" style="display:none;margin-top:0.75rem;">
+        <label class="field-label">AI-enhanced portrait (from your character)</label>
+        <div class="profile-photo-preview" id="enhancedPhotoImg"></div>
+      </div>
+      <p style="margin-top:1rem;font-size:0.78rem;">
+        <a href="hh-profile-narrative.html" target="_blank" rel="noopener" style="color:var(--beam);">View public profile</a> — narrative surface others can visit.
+        <button type="button" id="shareProfileBtn" style="margin-left:0.5rem;font-size:0.72rem;padding:0.2rem 0.5rem;background:var(--card);border:1px solid var(--border);color:var(--beam);border-radius:6px;cursor:pointer;">Share my profile</button>
+        <span id="shareProfileToast" style="display:none;margin-left:0.5rem;color:var(--gold);font-size:0.72rem;">Link copied!</span>
+      </p>
+      <p style="font-size:0.72rem;color:var(--muted);">Share the link so someone can explore your profile in a public digital way.</p>
+    </div>
     <div style="margin-top:1.5rem;padding:1rem;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:0.82rem;color:var(--sub);line-height:1.75;">
       <strong style="color:var(--text);">What is the HH Awareness OS?</strong><br>
       The same Telescopic 3D Studio System you've seen — but configured for <em>your life</em> as the content. You are the author, the subject, and the co-director. Set up your screens. Define your arc. Build your Now Playing deck. Load your treasures. Set your rhythms. Then activate the Now Stack — the magnetic attractor for the life you are designing.<br><br>
@@ -673,14 +728,17 @@
       <div class="arc-field">
         <label>◈ ORIGIN — Where I came from (pre-singularity)</label>
         <textarea class="arc-textarea" id="arcOrigin" placeholder="The compression. The closed doors. The carbon descent. What brought me here..."></textarea>
+        <div class="suggestion-row" style="margin-top:0.4rem;"><span style="font-size:0.68rem;color:var(--muted);">Try:</span> <span id="arcOriginSuggestions"></span></div>
       </div>
       <div class="arc-field">
         <label>∞ THE JOURNEY — Where I am right now</label>
         <textarea class="arc-textarea" id="arcJourney" placeholder="The threshold. What I'm building. What I'm releasing. What I'm becoming..."></textarea>
+        <div class="suggestion-row" style="margin-top:0.4rem;"><span style="font-size:0.68rem;color:var(--muted);">Try:</span> <span id="arcJourneySuggestions"></span></div>
       </div>
       <div class="arc-field">
         <label>✦ DESTINATION — Post-singularity vision</label>
         <textarea class="arc-textarea" id="arcDest" placeholder="The life I am designing. The world I am stepping into. The frequency I am matching..."></textarea>
+        <div class="suggestion-row" style="margin-top:0.4rem;"><span style="font-size:0.68rem;color:var(--muted);">Try:</span> <span id="arcDestSuggestions"></span></div>
       </div>
     </div>
   </div>
@@ -736,6 +794,29 @@
   </div>
 
 </div><!-- /content -->
+
+<!-- Item detail modal: rich layers (description, photos, videos) -->
+<div class="item-detail-modal" id="itemDetailModal">
+  <div class="item-detail-backdrop" id="itemDetailBackdrop"></div>
+  <div class="item-detail-box">
+    <div class="item-detail-title" id="itemDetailTitle"></div>
+    <label class="field-label">Description</label>
+    <textarea class="item-detail-desc" id="itemDetailDesc" placeholder="Add rich context..."></textarea>
+    <label class="field-label">Photos</label>
+    <div class="item-detail-photos" id="itemDetailPhotos"></div>
+    <input type="file" id="itemDetailPhotoInput" accept="image/*" multiple style="font-size:0.72rem;margin-bottom:0.75rem;" />
+    <label class="field-label">Videos (URLs)</label>
+    <div class="item-detail-videos" id="itemDetailVideos"></div>
+    <div class="item-detail-add-video">
+      <input type="url" id="itemDetailVideoInput" placeholder="https://..." style="flex:1;padding:0.4rem;font-size:0.8rem;" />
+      <button type="button" class="btn-add" id="itemDetailVideoAdd">+ Add</button>
+    </div>
+    <div class="item-detail-actions">
+      <button type="button" class="btn-primary" id="itemDetailSave">Save</button>
+      <button type="button" class="btn-clear-photo" id="itemDetailCancel">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- BOTTOM NOW BAR -->
 <div class="now-bar">
@@ -793,6 +874,9 @@ const TREASURE_CATS = [
   { k:'libre',         e:'◎', n:'LIBRE',          c:'rgba(150,150,150,0.12)' }
 ];
 
+const NOW_PLAYING_PRESETS = { morning: ['Deep work block', 'Movement / exercise', 'Quiet focus'], midday: ['Peak output', 'Meetings that matter', 'One big win'], evening: ['Connection time', 'Wind-down ritual', 'Reflection'], night: ['Sleep 7h', 'No screens 1h before bed', 'Gratitude'] };
+const TREASURE_PRESETS = { health: ['Sleep 7h', 'Move daily', 'Real food'], relationships: ['One real conversation', 'Quality time', 'Presence'], wealth: ['Revenue target', 'Save 20%', 'Invest in growth'], purpose: ['One thing that matters', 'Mission alignment', 'Legacy step'], experiences: ['One adventure', 'Learn something new', 'Be present'], knowledge: ['Read 20 min', 'One course', 'Teach someone'], creative: ['Create something', 'Ship it', 'Play'], spirit: ['Meditate', 'Nature', 'Quiet'], libre: ['Your call', 'Wild card', 'Free slot'] };
+
 const RHYTHMS = [
   { k:'today',  e:'🌅', n:'TODAY',       sub:'Daily intention', cls:'rr-today', h:'50px' },
   { k:'week',   e:'📅', n:'THIS WEEK',   sub:'Weekly focus',    cls:'rr-week',  h:'50px' },
@@ -815,7 +899,8 @@ const DEFAULT = {
   nowPlaying: { morning:[], midday:[], evening:[], night:[] },
   treasures:  { health:[], relationships:[], wealth:[], purpose:[], experiences:[], knowledge:[], creative:[], spirit:[], libre:[] },
   rhythms:    { today:'', week:'', month:'', season:'', year:'' },
-  nowStack: [], activated: false, activatedAt: null
+  nowStack: [], activated: false, activatedAt: null,
+  richProfile: { profilePhoto: null, photos: [], winkPreferences: {}, characterSummaryForPhoto: '', enhancedPhoto: null }
 };
 
 let S = {};
@@ -828,6 +913,9 @@ function save() {
   localStorage.setItem('hh_os_state', JSON.stringify(S));
 }
 load();
+// Auto-save always: backup on leave and every 30s so setup is never lost (Rich Profile lives on edge).
+window.addEventListener('beforeunload', save);
+setInterval(save, 30000);
 
 /* ═══════════════════════════════════════════
    SETUP — MULTI-STEP WIZARD
@@ -874,6 +962,16 @@ ARCHETYPES.forEach(a => {
 });
 
 document.getElementById('userName').value = S.name || '';
+const nameSuggestions = document.getElementById('nameSuggestions');
+if (nameSuggestions) {
+  ['Pru', 'Commander', 'Sol-V', 'Viber'].forEach(label => {
+    const chip = document.createElement('span');
+    chip.className = 'suggestion-chip';
+    chip.textContent = label;
+    chip.onclick = () => { document.getElementById('userName').value = label; };
+    nameSuggestions.appendChild(chip);
+  });
+}
 
 document.getElementById('setupDone').onclick = () => {
   const inp = document.getElementById('userName');
@@ -913,19 +1011,22 @@ tick(); setInterval(tick, 10000);
 ═══════════════════════════════════════════ */
 function uid() { return Math.random().toString(36).slice(2, 9); }
 
-function makeChips(items, onDel, onStack) {
+function makeChips(items, onDel, onStack, onEdit) {
   const div = document.createElement('div');
   div.className = 'chips';
   if (!items.length) { div.innerHTML = '<span style="font-size:0.72rem;color:var(--muted);">None yet.</span>'; return div; }
   items.forEach(item => {
+    if (!item.richContent) item.richContent = { description: '', photos: [], videos: [] };
     const c = document.createElement('div');
     c.className = 'chip';
     const inStack = S.nowStack.some(x => x.ref === item.id);
-    c.innerHTML = `<span class="chip-text">${item.text}</span>
+    c.innerHTML = `<span class="chip-text" title="Click to add description, photos, videos">${item.text}</span>
       <span class="chip-stack ${inStack ? 'stacked' : ''}" title="${inStack ? 'In stack' : 'Add to Now Stack'}">${inStack ? '✓' : '⊕'}</span>
       <span class="chip-del" title="Remove">✕</span>`;
-    c.querySelector('.chip-stack').onclick = () => { toggleStack(item, onStack); renderAll(); };
-    c.querySelector('.chip-del').onclick = () => { onDel(item.id); renderAll(); };
+    const textEl = c.querySelector('.chip-text');
+    if (onEdit && textEl) textEl.style.cursor = 'pointer'; textEl.onclick = (e) => { if (onEdit && e.target.classList.contains('chip-text')) openItemModal(item); };
+    c.querySelector('.chip-stack').onclick = (e) => { e.stopPropagation(); toggleStack(item, onStack); renderAll(); };
+    c.querySelector('.chip-del').onclick = (e) => { e.stopPropagation(); onDel(item.id); renderAll(); };
     div.appendChild(c);
   });
   return div;
@@ -955,12 +1056,117 @@ function toggleStack(item, catLabel) {
   save();
 }
 
+function findItemById(id) {
+  for (const k of Object.keys(S.nowPlaying)) {
+    const i = S.nowPlaying[k].findIndex(x => x.id === id);
+    if (i >= 0) return S.nowPlaying[k][i];
+  }
+  for (const k of Object.keys(S.treasures)) {
+    const i = S.treasures[k].findIndex(x => x.id === id);
+    if (i >= 0) return S.treasures[k][i];
+  }
+  return null;
+}
+
+let itemModalItem = null;
+function openItemModal(item) {
+  itemModalItem = item;
+  if (!item.richContent) item.richContent = { description: '', photos: [], videos: [] };
+  document.getElementById('itemDetailTitle').textContent = item.text;
+  document.getElementById('itemDetailDesc').value = item.richContent.description || '';
+  renderItemDetailPhotos(item.richContent.photos || []);
+  renderItemDetailVideos(item.richContent.videos || []);
+  document.getElementById('itemDetailPhotoInput').value = '';
+  document.getElementById('itemDetailVideoInput').value = '';
+  document.getElementById('itemDetailModal').classList.add('open');
+}
+function renderItemDetailPhotos(photos) {
+  const el = document.getElementById('itemDetailPhotos');
+  el.innerHTML = '';
+  (photos || []).forEach((dataUrl, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'thumb-wrap';
+    wrap.innerHTML = '<img class="thumb" src="' + dataUrl + '" alt=""/> <button type="button" class="thumb-remove" data-i="' + i + '">×</button>';
+    wrap.querySelector('.thumb-remove').onclick = () => {
+      itemModalItem.richContent.photos.splice(i, 1);
+      renderItemDetailPhotos(itemModalItem.richContent.photos);
+    };
+    el.appendChild(wrap);
+  });
+}
+function renderItemDetailVideos(videos) {
+  const el = document.getElementById('itemDetailVideos');
+  el.innerHTML = '';
+  (videos || []).forEach((url, i) => {
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = url.slice(0, 50) + (url.length > 50 ? '…' : '');
+    const span = document.createElement('span');
+    span.innerHTML = ' <button type="button" class="thumb-remove" style="position:static;margin-left:0.5rem;">×</button>';
+    span.querySelector('button').onclick = () => {
+      itemModalItem.richContent.videos.splice(i, 1);
+      renderItemDetailVideos(itemModalItem.richContent.videos);
+    };
+    el.appendChild(a);
+    el.appendChild(span);
+  });
+}
+function closeItemModal() {
+  document.getElementById('itemDetailModal').classList.remove('open');
+  itemModalItem = null;
+}
+
+function initItemModal() {
+  const photoInput = document.getElementById('itemDetailPhotoInput');
+  if (photoInput && !photoInput.dataset.bound) {
+    photoInput.dataset.bound = '1';
+    photoInput.onchange = function() {
+      const files = this.files;
+      if (!files || !itemModalItem) return;
+      for (let i = 0; i < files.length; i++) {
+        const r = new FileReader();
+        r.onload = () => { itemModalItem.richContent.photos.push(r.result); renderItemDetailPhotos(itemModalItem.richContent.photos); };
+        r.readAsDataURL(files[i]);
+      }
+      this.value = '';
+    };
+  }
+  const videoAdd = document.getElementById('itemDetailVideoAdd');
+  const videoInput = document.getElementById('itemDetailVideoInput');
+  if (videoAdd && videoInput && !videoAdd.dataset.bound) {
+    videoAdd.dataset.bound = '1';
+    videoAdd.onclick = () => {
+      const url = (videoInput.value || '').trim();
+      if (!url || !itemModalItem) return;
+      itemModalItem.richContent.videos.push(url);
+      renderItemDetailVideos(itemModalItem.richContent.videos);
+      videoInput.value = '';
+    };
+  }
+  const saveBtn = document.getElementById('itemDetailSave');
+  if (saveBtn && !saveBtn.dataset.bound) {
+    saveBtn.dataset.bound = '1';
+    saveBtn.onclick = () => {
+      if (itemModalItem) {
+        itemModalItem.richContent.description = (document.getElementById('itemDetailDesc').value || '').trim();
+        save();
+      }
+      closeItemModal();
+      renderAll();
+    };
+  }
+  document.getElementById('itemDetailCancel').onclick = closeItemModal;
+  document.getElementById('itemDetailBackdrop').onclick = closeItemModal;
+}
+
 /* ═══════════════════════════════════════════
    RENDER CALIBRATE
 ═══════════════════════════════════════════ */
 function renderCalibrate() {
   const el = document.getElementById('calibDisplay');
-  if (!S.calibrated) { el.innerHTML = '<p style="color:var(--muted);font-size:0.82rem;">Complete setup to see your calibration summary.</p>'; return; }
+  if (!S.calibrated) { el.innerHTML = '<p style="color:var(--muted);font-size:0.82rem;">Complete setup to see your calibration summary.</p>'; document.getElementById('richProfileCard').style.display = 'none'; return; }
   const archs = S.archetypes.map(k => ARCHETYPES.find(a => a.k === k)).filter(Boolean);
   el.innerHTML = `
     <div class="calib-done">
@@ -974,6 +1180,67 @@ function renderCalibrate() {
       <button class="btn-recalib" onclick="document.getElementById('setupOverlay').style.display='flex';">Recalibrate</button>
     </div>`;
   document.getElementById('tbUser').innerHTML = `<strong>${S.name}</strong> &nbsp; ${archs.map(a => a.e).join(' ')}`;
+  const rpc = document.getElementById('richProfileCard');
+  rpc.style.display = 'block';
+  if (!S.richProfile) S.richProfile = { profilePhoto: null, photos: [], winkPreferences: {} };
+  const preview = document.getElementById('profilePhotoPreview');
+  preview.innerHTML = S.richProfile.profilePhoto ? `<img src="${S.richProfile.profilePhoto}" alt="Your photo"/>` : '';
+  document.getElementById('clearProfilePhoto').style.display = S.richProfile.profilePhoto ? 'inline-block' : 'none';
+  const photoInput = document.getElementById('profilePhotoInput');
+  if (photoInput && !photoInput.dataset.bound) {
+    photoInput.dataset.bound = '1';
+    photoInput.onchange = function() {
+      const f = this.files && this.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = function() { S.richProfile.profilePhoto = r.result; save(); renderCalibrate(); };
+      r.readAsDataURL(f);
+    };
+  }
+  const clearBtn = document.getElementById('clearProfilePhoto');
+  if (clearBtn && !clearBtn.dataset.bound) {
+    clearBtn.dataset.bound = '1';
+    clearBtn.onclick = function() { S.richProfile.profilePhoto = null; save(); renderCalibrate(); };
+  }
+  const enhanceBtn = document.getElementById('enhancePhotoBtn');
+  const enhanceNote = document.getElementById('enhancePhotoNote');
+  const enhancedPreview = document.getElementById('enhancedPhotoPreview');
+  const enhancedImg = document.getElementById('enhancedPhotoImg');
+  if (enhanceBtn && !enhanceBtn.dataset.bound) {
+    enhanceBtn.dataset.bound = '1';
+    enhanceBtn.onclick = function() {
+      const archs = (S.archetypes || []).map(k => ARCHETYPES.find(a => a.k === k)).filter(Boolean);
+      const summary = [
+        (S.name || 'Commander') + (archs.length ? ' · ' + archs.map(a => a.n).join(', ') : ''),
+        S.arc && (S.arc.origin || S.arc.journey || S.arc.destination) ? [S.arc.origin, S.arc.journey, S.arc.destination].filter(Boolean).join(' ') : ''
+      ].filter(Boolean).join(' — ');
+      S.richProfile.characterSummaryForPhoto = summary;
+      save();
+      if (enhanceNote) { enhanceNote.style.display = 'block'; enhanceNote.textContent = 'Character summary saved. ' + (summary ? '“' + summary.slice(0,80) + (summary.length > 80 ? '…”' : '"') : ''); }
+      fetch(window.location.origin + '/api/enhance-profile-photo', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ characterSummary: summary, profilePhoto: S.richProfile.profilePhoto || null }) }).then(r => r.ok ? r.json() : null).then(data => {
+        if (data && data.enhancedPhoto) { S.richProfile.enhancedPhoto = data.enhancedPhoto; save(); renderCalibrate(); }
+      }).catch(() => {});
+    };
+  }
+  if (S.richProfile.characterSummaryForPhoto && enhanceNote) { enhanceNote.style.display = 'block'; enhanceNote.textContent = 'Character: ' + S.richProfile.characterSummaryForPhoto.slice(0, 120) + (S.richProfile.characterSummaryForPhoto.length > 120 ? '…' : ''); }
+  if (S.richProfile.enhancedPhoto && enhancedPreview && enhancedImg) {
+    enhancedPreview.style.display = 'block';
+    enhancedImg.innerHTML = '<img src="' + S.richProfile.enhancedPhoto + '" alt="Enhanced portrait"/>';
+  } else if (enhancedPreview) enhancedPreview.style.display = 'none';
+  const shareBtn = document.getElementById('shareProfileBtn');
+  const shareToast = document.getElementById('shareProfileToast');
+  if (shareBtn && !shareBtn.dataset.bound) {
+    shareBtn.dataset.bound = '1';
+    shareBtn.onclick = function() {
+      try {
+        const base = window.location.href.replace(/hh-console\.html.*$/, 'hh-profile-narrative.html');
+        const url = base + (base.indexOf('?') >= 0 ? '&' : '?') + 'data=' + encodeURIComponent(btoa(JSON.stringify(S)));
+        navigator.clipboard.writeText(url).then(function() {
+          if (shareToast) { shareToast.style.display = 'inline'; shareToast.textContent = 'Link copied!'; setTimeout(function() { shareToast.style.display = 'none'; }, 2500); }
+        });
+      } catch (e) { if (shareToast) { shareToast.style.display = 'inline'; shareToast.textContent = 'Copy link from View public profile page'; setTimeout(function() { shareToast.style.display = 'none'; }, 3000); } }
+    };
+  }
 }
 
 /* ═══════════════════════════════════════════
@@ -1063,6 +1330,31 @@ function renderArc() {
   bindTA('arcOrigin', 'origin');
   bindTA('arcJourney', 'journey');
   bindTA('arcDest', 'destination');
+
+  const arcSuggestions = {
+    arcOriginSuggestions: ['The compression. The closed doors.', 'What brought me here.', 'The carbon descent.'],
+    arcJourneySuggestions: ['The threshold. What I\'m building.', 'What I\'m releasing.', 'What I\'m becoming.'],
+    arcDestSuggestions: ['The life I am designing.', 'The frequency I am matching.', 'The world I am stepping into.']
+  };
+  Object.keys(arcSuggestions).forEach(containerId => {
+    const container = document.getElementById(containerId);
+    if (!container || container.children.length) return;
+    const idToKey = { arcOriginSuggestions: ['arcOrigin', 'origin'], arcJourneySuggestions: ['arcJourney', 'journey'], arcDestSuggestions: ['arcDest', 'destination'] };
+    const [id, k] = idToKey[containerId] || [];
+    if (!id) return;
+    arcSuggestions[containerId].forEach(text => {
+      const chip = document.createElement('span');
+      chip.className = 'suggestion-chip';
+      chip.textContent = text;
+      chip.onclick = () => {
+        const el = document.getElementById(id);
+        S.arc[k] = (S.arc[k] || '').trim() ? (S.arc[k] + ' ' + text) : text;
+        el.value = S.arc[k];
+        save();
+      };
+      container.appendChild(chip);
+    });
+  });
 }
 
 /* ═══════════════════════════════════════════
@@ -1075,14 +1367,28 @@ function renderNowPlaying() {
     const block = document.createElement('div');
     block.className = 'time-block';
     block.innerHTML = `<div class="tb-head"><span class="tb-icon">${tb.e}</span><span class="tb-name">${tb.n}</span></div>`;
-    block.appendChild(makeAddRow(tb.placeholder, text => {
-      S.nowPlaying[tb.k].push({ id: uid(), text, inStack: false });
-      save();
-    }));
+    const onAdd = text => { S.nowPlaying[tb.k].push({ id: uid(), text, inStack: false, richContent: { description: '', photos: [], videos: [] } }); save(); };
+    const presets = NOW_PLAYING_PRESETS[tb.k];
+    if (presets && presets.length) {
+      const sugRow = document.createElement('div');
+      sugRow.className = 'suggestion-row';
+      sugRow.style.marginBottom = '0.5rem';
+      sugRow.innerHTML = '<span style="font-size:0.68rem;color:var(--muted);">Suggestions:</span> ';
+      presets.forEach(text => {
+        const chip = document.createElement('span');
+        chip.className = 'suggestion-chip';
+        chip.textContent = text;
+        chip.onclick = () => { onAdd(text); renderAll(); };
+        sugRow.appendChild(chip);
+      });
+      block.appendChild(sugRow);
+    }
+    block.appendChild(makeAddRow(tb.placeholder, onAdd));
     block.appendChild(makeChips(
       S.nowPlaying[tb.k],
       id => { S.nowPlaying[tb.k] = S.nowPlaying[tb.k].filter(x => x.id !== id); removeFromStack(id); save(); },
-      `${tb.e} ${tb.n}`
+      `${tb.e} ${tb.n}`,
+      (item) => openItemModal(item)
     ));
     container.appendChild(block);
   });
@@ -1098,14 +1404,28 @@ function renderTreasures() {
     const cat = document.createElement('div');
     cat.className = 'treasure-cat';
     cat.innerHTML = `<div class="tc-head"><span class="tc-icon">${tc.e}</span><span class="tc-name">${tc.n}</span></div>`;
-    cat.appendChild(makeAddRow(`Add a ${tc.n.toLowerCase()} treasure...`, text => {
-      S.treasures[tc.k].push({ id: uid(), text, inStack: false });
-      save();
-    }));
+    const onAdd = text => { S.treasures[tc.k].push({ id: uid(), text, inStack: false, richContent: { description: '', photos: [], videos: [] } }); save(); };
+    const presets = TREASURE_PRESETS[tc.k];
+    if (presets && presets.length) {
+      const sugRow = document.createElement('div');
+      sugRow.className = 'suggestion-row';
+      sugRow.style.marginBottom = '0.5rem';
+      sugRow.innerHTML = '<span style="font-size:0.68rem;color:var(--muted);">Suggestions:</span> ';
+      presets.forEach(text => {
+        const chip = document.createElement('span');
+        chip.className = 'suggestion-chip';
+        chip.textContent = text;
+        chip.onclick = () => { onAdd(text); renderAll(); };
+        sugRow.appendChild(chip);
+      });
+      cat.appendChild(sugRow);
+    }
+    cat.appendChild(makeAddRow(`Add a ${tc.n.toLowerCase()} treasure...`, onAdd));
     cat.appendChild(makeChips(
       S.treasures[tc.k],
       id => { S.treasures[tc.k] = S.treasures[tc.k].filter(x => x.id !== id); removeFromStack(id); save(); },
-      `${tc.e} ${tc.n}`
+      `${tc.e} ${tc.n}`,
+      (item) => openItemModal(item)
     ));
     container.appendChild(cat);
   });
@@ -1133,6 +1453,15 @@ function renderRhythms() {
     ta.value = S.rhythms[r.k] || '';
     ta.oninput = () => { S.rhythms[r.k] = ta.value; save(); updateTicker(); };
     row.appendChild(ta);
+    if (r.k === 'today') {
+      const sugBtn = document.createElement('button');
+      sugBtn.type = 'button';
+      sugBtn.className = 'suggestion-chip';
+      sugBtn.style.marginTop = '0.4rem';
+      sugBtn.textContent = 'Use suggestion: Set intention for the day';
+      sugBtn.onclick = () => { S.rhythms.today = 'Set intention for the day. One priority. One win.'; ta.value = S.rhythms.today; save(); updateTicker(); };
+      row.appendChild(sugBtn);
+    }
     container.appendChild(row);
   });
 }
@@ -1258,6 +1587,7 @@ function renderAll() {
 }
 
 renderAll();
+initItemModal();
 </script>
 <script src="../ticker.js"></script>
 </body>

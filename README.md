@@ -14,6 +14,23 @@
 
 ## Recent updates (README commit)
 
+- **Mar 5 2026 · HH RICH PROFILE · NARRATIVE SURFACE · SHARE · PER-ITEM RICH LAYERS**
+
+**M → Metabolize:** Rich Profile needed to support profile picture upload (confirmed), AI-enhanced portrait from character (name, archetypes, arc), per-item rich content (description, photos, videos) for every Now Playing and Treasures item, and a public narrative surface so visitors can explore a profile in a shareable, digital-visit way.
+
+**C → Crystallize:**
+
+- **Profile picture** — Upload confirmed and retained in Rich Profile card (file input, preview, Clear). Stored in `S.richProfile.profilePhoto`.
+- **AI-enhanced portrait** — "Enhance with AI" builds character summary from name, archetypes, arc (origin/journey/destination); stores `characterSummaryForPhoto` and calls `POST /api/enhance-profile-photo`; optional enhanced image stored in `S.richProfile.enhancedPhoto`. API stub ready for Replicate/Fal integration.
+- **Per-item rich layers** — Every Now Playing and Treasures item has `richContent: { description, photos[], videos[] }`. Clicking chip text opens item-detail modal: description textarea, photo uploads (data URLs), video URLs, Save/Cancel. New items created with this structure.
+- **Public narrative surface** — `interfaces/hh-profile-narrative.html` reads profile from `?data=base64(JSON)` (shareable link) or `localStorage`; renders hero (name, photo/enhanced), Arc, Now Playing by time block, Treasures by category, Rhythms; each item shows description, photos, video links for visitor exploration.
+- **Share my profile** — Console "Share my profile" button builds narrative URL with current state encoded, copies to clipboard, shows "Link copied!". Others can open the link and visit the profile in a public digital way.
+- **Docs** — `HH_RICH_PROFILE_SNAP.md` updated with all capabilities; item-detail modal and narrative page documented.
+
+**A → Animate:** Rich Profile is full stack: upload photo → optional AI enhance from character → click any item to add description/photos/videos → View public profile → Share my profile for a visitable link. NSPFRNP → ∞⁹
+
+-
+
 - **Mar 4 2026 · ONBOARDING TRACKS · ENTERPRISE LEARNING EXPERIENCE (IBM/CISCO/APPLE/AMAZON LEVEL)**
 
 **M → Metabolize:** User wanted onboarding tracks at the same level as IBM, Cisco, Apple, Amazon — self-paced sessions with parity across all tracks, ability to ask questions, quizzes/tests with pass/fail, and qualifications/certificates.

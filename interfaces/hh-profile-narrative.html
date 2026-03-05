@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Profile · HH Awareness OS · SING!9</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209; --deep: #070710;
+      --gold: #d4af37; --gold2: #fde68a;
+      --beam: #00d4ff; --text: #e2e8f0; --sub: #94a3b8; --muted: #475569;
+      --border: rgba(255,255,255,0.07); --card: rgba(255,255,255,0.025);
+    }
+    body { background: var(--void); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; padding: 1.5rem 1.25rem 3rem; }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    .nav { margin-bottom: 2rem; }
+    .nav a { font-size: 0.75rem; color: var(--beam); text-decoration: none; }
+    .nav a:hover { text-decoration: underline; }
+    .hero { text-align: center; padding: 2rem 0; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .hero-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(212,175,55,0.4); margin: 0 auto 1rem; display: block; }
+    .hero-name { font-size: 1.75rem; font-weight: 800; color: var(--gold2); margin-bottom: 0.5rem; }
+    .hero-arcs { font-size: 0.85rem; color: var(--sub); }
+    .sec { margin-bottom: 2.5rem; }
+    .sec-title { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .sec-h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 1rem; }
+    .sec p, .arc-block p { font-size: 0.9rem; line-height: 1.75; color: var(--sub); margin-bottom: 0.75rem; }
+    .arc-block { margin-bottom: 1.25rem; padding: 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 10px; }
+    .arc-block label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--beam); display: block; margin-bottom: 0.35rem; }
+    .item-card { padding: 0.9rem 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.6rem; cursor: pointer; transition: border-color 0.2s; }
+    .item-card:hover { border-color: rgba(212,175,55,0.3); }
+    .item-card h4 { font-size: 0.95rem; color: var(--gold2); margin-bottom: 0.4rem; }
+    .item-card .item-desc { font-size: 0.82rem; color: var(--sub); line-height: 1.6; margin-bottom: 0.5rem; }
+    .item-card .item-media { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+    .item-card .item-media img { max-width: 120px; max-height: 120px; border-radius: 6px; object-fit: cover; }
+    .item-card .item-media a { font-size: 0.78rem; color: var(--beam); }
+    .cat-label { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
+    .empty { font-size: 0.82rem; color: var(--muted); font-style: italic; }
+    .share-note { font-size: 0.75rem; color: var(--muted); margin-top: 2rem; padding: 1rem; background: var(--card); border-radius: 8px; }
+    .share-note a { color: var(--beam); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><a href="hh-console.html">← Console</a> &nbsp; <a href="wink.html">WINK!</a></nav>
+  <div id="narrativeRoot"></div>
+  <div class="share-note" id="shareNote" style="display:none;">
+    This profile can be shared. Copy the link above to let others visit your profile in a public digital way.
+  </div>
+</div>
+<script>
+(function() {
+  const ARCHETYPES = [{ k:'machote', e:'♛', n:'Machote' },{ k:'baller', e:'🥂', n:'Baller' },{ k:'viber', e:'✨', n:'Viber' },{ k:'bigdaddy', e:'🎩', n:'Big Daddy' },{ k:'bond', e:'🕴', n:'James Bond' },{ k:'hughes', e:'🎬', n:'Howard Hughes' },{ k:'sinatra', e:'🥃', n:'Sinatra' },{ k:'cowboy', e:'🤠', n:'Cowboy' },{ k:'creator', e:'🎨', n:'Creator' },{ k:'commander', e:'⚡', n:'Commander' },{ k:'hologram', e:'💠', n:'Holographic' },{ k:'libre', e:'🌊', n:'Free' }];
+  const TIME_LABELS = { morning: '🌅 Morning', midday: '☀ Midday', evening: '🌆 Evening', night: '🌙 Night' };
+  let P = null;
+  try {
+    const hash = location.hash.slice(1);
+    const q = new URLSearchParams(location.search).get('data');
+    const data = hash ? decodeURIComponent(hash) : (q || '');
+    if (data) {
+      try { P = JSON.parse(atob(data)); } catch (e) { P = JSON.parse(data); }
+    }
+  } catch (e) {}
+  if (!P) {
+    try { P = JSON.parse(localStorage.getItem('hh_os_state') || '{}'); } catch (e) { P = {}; }
+  }
+  if (!P.name && !P.arc) {
+    document.getElementById('narrativeRoot').innerHTML = '<p class="empty">No profile loaded. Complete setup in the <a href="hh-console.html">HH Console</a> or open a shared profile link.</p>';
+    return;
+  }
+  const archs = (P.archetypes || []).map(k => ARCHETYPES.find(a => a.k === k)).filter(Boolean);
+  const photo = (P.richProfile && P.richProfile.enhancedPhoto) || (P.richProfile && P.richProfile.profilePhoto);
+  let html = '<header class="hero">';
+  if (photo) html += '<img class="hero-photo" src="' + photo + '" alt=""/>';
+  html += '<h1 class="hero-name">' + (P.name || 'Commander') + '</h1>';
+  if (archs.length) html += '<p class="hero-arcs">' + archs.map(a => a.e + ' ' + a.n).join(' · ') + '</p>';
+  html += '</header>';
+
+  if (P.arc && (P.arc.origin || P.arc.journey || P.arc.destination)) {
+    html += '<section class="sec"><div class="sec-title">My Arc</div><h2 class="sec-h2">Story</h2>';
+    if (P.arc.origin) html += '<div class="arc-block"><label>◈ Origin</label><p>' + escapeHtml(P.arc.origin) + '</p></div>';
+    if (P.arc.journey) html += '<div class="arc-block"><label>∞ Journey</label><p>' + escapeHtml(P.arc.journey) + '</p></div>';
+    if (P.arc.destination) html += '<div class="arc-block"><label>✦ Destination</label><p>' + escapeHtml(P.arc.destination) + '</p></div>';
+    html += '</section>';
+  }
+  if (P.nowPlaying && Object.keys(P.nowPlaying).length) {
+    html += '<section class="sec"><div class="sec-title">Now Playing</div><h2 class="sec-h2">Daily deck</h2>';
+    ['morning','midday','evening','night'].forEach(k => {
+      const items = (P.nowPlaying[k] || []);
+      if (!items.length) return;
+      html += '<div class="cat-label">' + (TIME_LABELS[k] || k) + '</div>';
+      items.forEach(item => { html += renderItemCard(item); });
+    });
+    html += '</section>';
+  }
+  if (P.treasures && Object.keys(P.treasures).length) {
+    html += '<section class="sec"><div class="sec-title">Treasures</div><h2 class="sec-h2">Treasure piles</h2>';
+    Object.keys(P.treasures).forEach(k => {
+      const items = (P.treasures[k] || []);
+      if (!items.length) return;
+      html += '<div class="cat-label">' + k + '</div>';
+      items.forEach(item => { html += renderItemCard(item); });
+    });
+    html += '</section>';
+  }
+  if (P.rhythms && Object.keys(P.rhythms).length) {
+    const r = P.rhythms;
+    if (r.today || r.week || r.month || r.season || r.year) {
+      html += '<section class="sec"><div class="sec-title">Rhythms</div><h2 class="sec-h2">Temporal layers</h2>';
+      if (r.today) html += '<div class="arc-block"><label>Today</label><p>' + escapeHtml(r.today) + '</p></div>';
+      if (r.week) html += '<div class="arc-block"><label>This week</label><p>' + escapeHtml(r.week) + '</p></div>';
+      if (r.month) html += '<div class="arc-block"><label>This month</label><p>' + escapeHtml(r.month) + '</p></div>';
+      if (r.season) html += '<div class="arc-block"><label>This season</label><p>' + escapeHtml(r.season) + '</p></div>';
+      if (r.year) html += '<div class="arc-block"><label>This year</label><p>' + escapeHtml(r.year) + '</p></div>';
+      html += '</section>';
+    }
+  }
+  function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function renderItemCard(item) {
+    const rc = item.richContent || {};
+    const desc = (rc.description || '').trim();
+    const photos = rc.photos || [];
+    const videos = rc.videos || [];
+    let card = '<div class="item-card"><h4>' + escapeHtml(item.text) + '</h4>';
+    if (desc) card += '<div class="item-desc">' + escapeHtml(desc) + '</div>';
+    if (photos.length || videos.length) {
+      card += '<div class="item-media">';
+      photos.forEach(src => { card += '<img src="' + src + '" alt=""/>'; });
+      videos.forEach(url => { card += '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener">Video</a>'; });
+      card += '</div>';
+    }
+    card += '</div>';
+    return card;
+  }
+  document.getElementById('narrativeRoot').innerHTML = html;
+  try {
+    const dataParam = btoa(JSON.stringify(P));
+    const shareUrl = location.origin + location.pathname + '?data=' + encodeURIComponent(dataParam);
+    document.getElementById('shareNote').style.display = 'block';
+    document.getElementById('shareNote').innerHTML = 'Share link: <a href="' + shareUrl + '" target="_blank">' + shareUrl.slice(0, 60) + '…</a><br>Copy the link to let others visit this profile.';
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

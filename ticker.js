@@ -15,7 +15,7 @@
 
 /* ── CONFIG ─────────────────────────────────────────────────────────────── */
 
-var TICKER_SPEED = 280; /* seconds — slow, calm, heartbeat pace; soft flowing stream */
+var TICKER_SPEED = 520; /* seconds — relaxed pace always; one full pass ~8.7 min; calm, readable */
 
 /* Items: { text, href }
    href: absolute path from site root, or null for non-linked story fragments */

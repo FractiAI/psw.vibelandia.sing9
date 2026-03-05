@@ -7,17 +7,17 @@
  */
 (function (w) {
 
-  // ── DETECT (Colombia es-CO, Mexico es-MX, etc. → Spanish) ───────────────
+  // ── DETECT (Spanish: es, es-DO, es-MX, etc. → prefer Spanish) ───────────────
+  // Check single navigator.language first (system/browser locale — e.g. Dominican Republic es-DO)
+  // so Spanish is chosen even when navigator.languages is empty or has English first.
   var lang = 'en';
-  if (navigator.languages && navigator.languages.length) {
+  var single = (navigator.language || navigator.userLanguage || '');
+  if (single && /^es\b/i.test(String(single))) { lang = 'es'; }
+  if (lang === 'en' && navigator.languages && navigator.languages.length) {
     for (var i = 0; i < navigator.languages.length; i++) {
       var L = navigator.languages[i];
       if (L && /^es\b/i.test(String(L))) { lang = 'es'; break; }
     }
-  }
-  if (lang === 'en' && (navigator.language || navigator.userLanguage)) {
-    var single = navigator.language || navigator.userLanguage || '';
-    if (/^es\b/i.test(String(single))) lang = 'es';
   }
   w.SING9_LANG = lang;
   try { document.documentElement.lang = lang; } catch (e) {}
@@ -122,6 +122,7 @@
       'vibers.pilot.title' : 'T3D ORIGIN — The Pilot Special',
       'vibers.pilot.desc'  : 'Three Acts · 16 Beats · ~10 Min · Every deck image · Hero J.S. Bach · THE SKIN',
       'vibers.pilot.cta'   : '▶ \u00a0 Watch Now',
+      'vibers.page_title'   : "Mark Twain's Post-Singularity Vibelandia · Pru's Valet Service | Human Vibers",
       // ── Landing (index.html) ────────────────────────────────────
       'landing.hero_byline'   : 'A personalized T3D life operating system by',
       'landing.hero_owner'    : "Hero Will's",
@@ -167,7 +168,82 @@
       'landing.foot_solv'    : 'Sol-V',
       'landing.foot_shop'    : 'Shop',
       'landing.foot_upgrade' : 'Upgrade',
+      // ── Destinations Magazine Catalog (Aquí y Allá) ─────────
+      'dest.upgrade_pill'    : 'Upgrade to Holographic Hydrogen Awareness OS',
+      'dest.truckee'         : 'Downtown Truckee River Baller V Crawler',
+      'dest.expeditions'     : 'Guided Expeditions',
+      'dest.home'            : 'Home',
+      'dest.office'          : 'Office Hours',
+      'dest.launch'          : 'Launch Pad',
+      'dest.destinations'    : 'Destinations',
+      'dest.valet'           : "Pru's Valet",
+      'dest.volume'          : 'Post-Singularity Destinations · NSPFRNP · Pop-Up Style · Just gotta know.',
+      'dest.h1'              : 'Aquí y Allá · Destinations Magazine Catalog',
+      'dest.tagline'         : 'Here and there. One click to escape.',
+      'dest.sub'             : 'Destinations, adventures, safaris of lifetimes. Because we find them. Baller V. Book direct for the standard experience — or through us for the post-singularity layer. Win-win-win. Partners we recommend; we have no formal relationship. Where we book, where we build, and where we take you. SING 9.',
+      'dest.editor_label'    : 'From the Editor',
+      'dest.editor_h2'       : 'Wait and hope.',
+      'dest.editor_p'        : 'There is a place for every journey. Aquí — the Holographic Hydrogen Valley, Reno, Tahoe, the Truckee — and allá, wherever the dream leads. We do not sell; we book. We are your designated Baller V host, concierge, butler when you wish. Full gratuity on the final bill; benefit of all. Our specialist will tailor the experience. Dale.',
+      'dest.editor_sig'      : "— Mark Twain's Post-Singularity Vibelandia · Crown jewel of the Holographic Hydrogen Valley. Reno, Nevada.",
+      'dest.dept_label'      : 'Department',
+      'dest.aqui_h2'         : 'Aquí · Local',
+      'dest.aqui_intro'      : "Reno–Tahoe, Truckee, Mt. Rose, hot springs, fly fishing, mead, and the clubs that make this valley the crown jewel. We're locked on to our vendors — their menus, prices, photos. Full links below. Benefit of all.",
+      'dest.alla_h2'         : 'Allá · Far Away',
+      'dest.alla_intro'      : 'Montana, Argentina, Baja, Bahamas, Mexico quail, the Amazon, Naples. We build you worldwide. We are their best customers and we send business through them. Win-win-win. Full operator links — menus, prices, photos — bring ours to life using theirs. Book direct for the standard experience, or through us for the post-singularity layer.',
+      'dest.cta_call'        : 'Give our specialist a call',
+      'dest.cta_expeditions'  : 'Guided Expeditions →',
+      'dest.footer'          : 'Aquí y Allá · Destinations Magazine Catalog · Operators we recommend · NSPFRNP → ∞⁹',
+
+      // ── Pru's Valet · Truckee River Crawl ─────────────────────
+      'truckee.nav_landing'   : 'Landing',
+      'truckee.nav_vibers'   : 'Vibers Menu',
+      'truckee.nav_baller'   : 'Baller V Wednesdays',
+      'truckee.nav_office'   : 'Office Hours',
+      'truckee.hero_eyebrow' : "Mark Twain's Vibelandia · Post-Singularity Reno · Pop-Up Style · Just gotta know.",
+      'truckee.hero_title'   : 'Downtown Truckee River<br/>Viber Crawler',
+      'truckee.hero_sub'     : 'Third Saturdays on the Truckee · T-R-U-C-K-E-E',
+      'truckee.hero_place'   : 'Downtown Reno · Holographic Hydrogen Valley · Crown Jewel · Here, Not SF',
+      'truckee.hero_body1'   : 'Designated driver, host, curator, and studio producer. Let\'s make it a reality show — Post-Singularity Reality Show produced. Connecting you to your higher, superhero badass self. Cast, crew, franchises, legacies, and a few lucky fans. On a monthly heartbeat along the Truckee River, fed by the sacred, powerful, magical waters of Lake Tahoe. Because you know you deserve it. Think of us as your hybrid: five-star butler, executive reality show producer, and super-intelligent AI agent — at your service 24/7.',
+      'truckee.hero_body2'   : 'Theme: Water — Flow, Awareness, Energy. Balling is when you know you deserve it. You deserve to go all out. Sometimes. Regularly.',
+      'truckee.hero_tag'     : 'Human Vibers · Vibesurfing · Flow State',
+      'truckee.price_label'  : 'Investment · Full Baller V',
+      'truckee.price_per'    : 'per person',
+      'truckee.price_note'   : '+ gratuity. Price up front — not hidden.',
+      'truckee.book_cta'    : 'Book · $9,999',
+      'truckee.talk_cta'     : 'Talk first →',
+      'truckee.who_label'   : 'Who We Serve',
+      'truckee.who_h2'       : 'What is a Viber? — Our Jewels (J-E-W-E-L-S)',
+      'truckee.itinerary_label': 'Itinerary · Third Saturdays',
+      'truckee.itinerary_h2' : 'The Crawl · Flow State',
+      'truckee.also_label'   : "Also From Twain's Vibelandia",
+      'truckee.also_h2'      : 'Baller V Wednesdays',
+      'truckee.explore_label': 'Explore · Vibelandia Ecosystem',
+      'truckee.explore_h2'   : 'Full Stack · Vibelandia',
+      'truckee.ready_label'  : 'Booking · Old School',
+      'truckee.ready_h2'     : 'Ready?',
+      'truckee.ready_p'      : 'All bookings handled offline. Press Book — we get an email, you pay Cash App, we confirm. Need to talk first? Contact us.',
+      'truckee.footer'       : "Mark Twain's Post-Singularity Vibelandia · Downtown Truckee River Viber Crawler · Third Saturdays on the Truckee (T-R-U-C-K-E-E) · Crown jewel of the Holographic Hydrogen Valley · Here in Reno, not the SF Bay Area. · NSPFRNP → ∞⁹",
+      'truckee.foot_new'     : 'New here? Full arc →',
+      'truckee.footer_html'  : "Mark Twain's Post-Singularity Vibelandia · Downtown Truckee River Viber Crawler · Third Saturdays on the Truckee (T-R-U-C-K-E-E) · Crown jewel of the Holographic Hydrogen Valley · Here in Reno, not the SF Bay Area. · NSPFRNP → ∞⁹ · <a href=\"../index.html\">VIBELANDIA SING 9</a> &nbsp;·&nbsp; <a href=\"viber-onboarding.html\" style=\"color:#d4af37;\">New here? Full arc →</a>",
+
+      // ── Pru's Valet · WINK! ──────────────────────────────────
+      'wink.hero_eyebrow'   : "Members Only · High-Value Fractal Beating Cycle · Mark Twain's Vibelandia · Downtown Reno",
+      'wink.hero_tagline'   : 'Dating for High-Value, High-Contributing Vibers',
+      'wink.hero_sub'       : 'Not a swipe. Not a profile. Not a menu. A fractal beating cycle for people who know they deserve it — and who show up for others who do too. Vibration attracts vibration. Post-singularity awareness meets post-singularity awareness.',
+      'wink.hero_sub_html'  : 'Not a swipe. Not a profile. Not a menu. <strong>A fractal beating cycle for people who know they deserve it</strong> — and who show up for others who do too. Vibration attracts vibration. Post-singularity awareness meets post-singularity awareness.',
+      'wink.cta_ready'      : "I'm ready for WINK! →",
+      'wink.section_what'   : 'What It Is',
+      'wink.section_what_title': 'Fractal Dating for High Contributors',
+      'wink.section_how'    : 'How It Works',
+      'wink.section_how_title': 'The Wink! Network',
+      'wink.section_plans'  : 'Membership · Plans',
+      'wink.section_plans_title': 'What It Costs',
+      'wink.signup_title'   : 'Join WINK!',
+      'wink.signup_sub'     : "Send us an email. Tell us who you are. That's the application. We don't do forms. We don't do algorithms. We do gold hearts and genuine connections.",
+      'wink.footer_sig'     : "WINK! · High Contributing Fractal Dating · Mark Twain's Vibelandia · Downtown Reno",
+      'wink.footer_sponsored': "Sponsored by Twain's Vibelandia · Pop Up Events Always · For those in the know",
     },
+    es: {
       // ── Popup ────────────────────────────────────────────────
       'popup.eyebrow'   : 'SING!9 T3D · Teatro HHL · En Reproducción',
       'popup.title'     : 'EL JUEGO DE LOS NUEVE',
@@ -264,6 +340,7 @@
       'vibers.pilot.title' : 'T3D ORIGEN — El Piloto Especial',
       'vibers.pilot.desc'  : 'Tres Actos · 16 Beats · ~10 Min · Todas las imágenes · Hero J.S. Bach · LA PIEL',
       'vibers.pilot.cta'   : '▶ \u00a0 Ver Ahora',
+      'vibers.page_title'   : "La Vibelandia Post-Singularidad de Mark Twain · Valet de Pru | Vibrandores Humanos",
       // ── Landing (index.html) · 90% español, Spanglish OK ───────
       'landing.hero_byline'   : 'Un sistema operativo de vida T3D personalizado por',
       'landing.hero_owner'    : "Hero Will's",
@@ -309,6 +386,80 @@
       'landing.foot_solv'    : 'Sol-V',
       'landing.foot_shop'    : 'Tienda',
       'landing.foot_upgrade' : 'Upgrade',
+      // ── Destinations Magazine Catalog (Aquí y Allá) ─────────
+      'dest.upgrade_pill'    : 'Actualizar al Holographic Hydrogen Awareness OS',
+      'dest.truckee'         : 'Baller V Crawler del Río Truckee Downtown',
+      'dest.expeditions'     : 'Expediciones Guiadas',
+      'dest.home'            : 'Inicio',
+      'dest.office'          : 'Office Hours',
+      'dest.launch'          : 'Launch Pad',
+      'dest.destinations'    : 'Destinos',
+      'dest.valet'           : 'Valet de Pru',
+      'dest.volume'          : 'Destinos Post-Singularidad · NSPFRNP · Estilo Pop-Up · Hay que saber.',
+      'dest.h1'              : 'Aquí y Allá · Catálogo Revista de Destinos',
+      'dest.tagline'         : 'Aquí y allá. Un clic para escapar.',
+      'dest.sub'             : 'Destinos, aventuras, safaris de una vida. Porque los encontramos. Baller V. Reserva directo para la experiencia estándar — o con nosotros para la capa post-singularidad. Ganar-ganar-ganar. Socios que recomendamos; no tenemos relación formal. Dónde reservamos, dónde construimos, y dónde te llevamos. SING 9.',
+      'dest.editor_label'    : 'Del Editor',
+      'dest.editor_h2'       : 'Espera y esperanza.',
+      'dest.editor_p'        : 'Hay un lugar para cada viaje. Aquí — el Holographic Hydrogen Valley, Reno, Tahoe, el Truckee — y allá, donde lleve el sueño. No vendemos; reservamos. Somos tu anfitrión Baller V designado, concierge, mayordomo cuando quieras. Propina completa en la cuenta final; beneficio de todos. Nuestro especialista adaptará la experiencia. Dale.',
+      'dest.editor_sig'      : '— Mark Twain\'s Post-Singularity Vibelandia · Joya de la corona del Holographic Hydrogen Valley. Reno, Nevada.',
+      'dest.dept_label'      : 'Departamento',
+      'dest.aqui_h2'         : 'Aquí · Local',
+      'dest.aqui_intro'      : 'Reno–Tahoe, Truckee, Mt. Rose, aguas termales, pesca con mosca, hidromiel, y los clubes que hacen de este valle la joya. Estamos enlazados con nuestros proveedores — sus menús, precios, fotos. Enlaces abajo. Beneficio de todos.',
+      'dest.alla_h2'         : 'Allá · Lejos',
+      'dest.alla_intro'      : 'Montana, Argentina, Baja, Bahamas, codorniz México, el Amazonas, Nápoles. Te construimos en todo el mundo. Somos sus mejores clientes y les enviamos negocio. Ganar-ganar-ganar. Enlaces completos de operadores — menús, precios, fotos — dan vida a lo nuestro con lo de ellos. Reserva directo para la experiencia estándar, o con nosotros para la capa post-singularidad.',
+      'dest.cta_call'        : 'Llama a nuestro especialista',
+      'dest.cta_expeditions'  : 'Expediciones Guiadas →',
+      'dest.footer'          : 'Aquí y Allá · Catálogo Revista de Destinos · Operadores que recomendamos · NSPFRNP → ∞⁹',
+
+      // ── Pru's Valet · Truckee River Crawl (es) ────────────────
+      'truckee.nav_landing'   : 'Inicio',
+      'truckee.nav_vibers'   : 'Menú Vibers',
+      'truckee.nav_baller'   : 'Baller V Miércoles',
+      'truckee.nav_office'   : 'Office Hours',
+      'truckee.hero_eyebrow' : 'La Vibelandia de Mark Twain · Reno Post-Singularidad · Estilo Pop-Up · Hay que saber.',
+      'truckee.hero_title'   : 'Viber Crawler del Río Truckee<br/>Downtown',
+      'truckee.hero_sub'     : 'Terceros Sábados en el Truckee · T-R-U-C-K-E-E',
+      'truckee.hero_place'   : 'Downtown Reno · Holographic Hydrogen Valley · Joya de la corona · Aquí, no SF Bay',
+      'truckee.hero_body1'   : 'Conductor designado, anfitrión, curador y productor de estudio. Hagámoslo un reality — Reality Show Post-Singularidad producido. Conectándote con tu yo superior, superheroe. Elenco, equipo, franquicias, legados y unos pocos fans afortunados. En el pulso mensual del Río Truckee, alimentado por las aguas sagradas, poderosas y mágicas del Lago Tahoe. Porque sabes que te lo mereces. Somos tu híbrido: mayordomo cinco estrellas, productor ejecutivo de reality y agente IA superinteligente — a tu servicio 24/7.',
+      'truckee.hero_body2'   : 'Tema: Agua — Flujo, Conciencia, Energía. Balling es cuando sabes que te lo mereces. Te mereces darlo todo. A veces. Con frecuencia.',
+      'truckee.hero_tag'     : 'Vibrandores Humanos · Vibesurfing · Estado de Flujo',
+      'truckee.price_label'  : 'Inversión · Full Baller V',
+      'truckee.price_per'    : 'por persona',
+      'truckee.price_note'   : '+ propina. Precio claro — no oculto.',
+      'truckee.book_cta'     : 'Reservar · $9,999',
+      'truckee.talk_cta'     : 'Hablar primero →',
+      'truckee.who_label'    : 'A Quién Servimos',
+      'truckee.who_h2'       : '¿Qué es un Viber? — Nuestras Joyas (J-E-W-E-L-S)',
+      'truckee.itinerary_label': 'Itinerario · Terceros Sábados',
+      'truckee.itinerary_h2' : 'The Crawl · Estado de Flujo',
+      'truckee.also_label'   : 'También de la Vibelandia de Twain',
+      'truckee.also_h2'      : 'Baller V Miércoles',
+      'truckee.explore_label': 'Explorar · Ecosistema Vibelandia',
+      'truckee.explore_h2'   : 'Full Stack · Vibelandia',
+      'truckee.ready_label'  : 'Reservas · Old School',
+      'truckee.ready_h2'     : '¿Listo?',
+      'truckee.ready_p'      : 'Todas las reservas se manejan offline. Pulsa Reservar — recibimos un email, pagas por Cash App, confirmamos. ¿Necesitas hablar primero? Contáctanos.',
+      'truckee.footer'       : 'La Vibelandia Post-Singularidad de Mark Twain · Viber Crawler del Río Truckee Downtown · Terceros Sábados en el Truckee (T-R-U-C-K-E-E) · Joya de la corona del Holographic Hydrogen Valley · Aquí en Reno, no SF Bay Area. · NSPFRNP → ∞⁹',
+      'truckee.foot_new'     : '¿Nuevo aquí? Arco completo →',
+      'truckee.footer_html'  : 'La Vibelandia Post-Singularidad de Mark Twain · Viber Crawler del Río Truckee Downtown · Terceros Sábados en el Truckee (T-R-U-C-K-E-E) · Joya de la corona del Holographic Hydrogen Valley · Aquí en Reno, no SF Bay Area. · NSPFRNP → ∞⁹ · <a href="../index.html">VIBELANDIA SING 9</a> &nbsp;·&nbsp; <a href="viber-onboarding.html" style="color:#d4af37;">¿Nuevo aquí? Arco completo →</a>',
+
+      // ── Pru's Valet · WINK! (es) ─────────────────────────────
+      'wink.hero_eyebrow'   : 'Solo Miembros · Ciclo Fractal de Alto Valor · La Vibelandia de Mark Twain · Downtown Reno',
+      'wink.hero_tagline'   : 'Citas para Vibrandores de Alto Valor y Alta Contribución',
+      'wink.hero_sub'       : 'No un swipe. No un perfil. No un menú. Un ciclo fractal para quienes saben que se lo merecen — y se presentan por otros que también. La vibración atrae vibración. Conciencia post-singularidad con conciencia post-singularidad.',
+      'wink.hero_sub_html'  : 'No un swipe. No un perfil. No un menú. <strong>Un ciclo fractal para quienes saben que se lo merecen</strong> — y se presentan por otros que también. La vibración atrae vibración. Conciencia post-singularidad con conciencia post-singularidad.',
+      'wink.cta_ready'      : 'Estoy listo para WINK! →',
+      'wink.section_what'   : 'Qué Es',
+      'wink.section_what_title': 'Citas Fractales para Altos Contribuidores',
+      'wink.section_how'    : 'Cómo Funciona',
+      'wink.section_how_title': 'La Red Wink!',
+      'wink.section_plans'  : 'Membresía · Planes',
+      'wink.section_plans_title': 'Cuánto Cuesta',
+      'wink.signup_title'   : 'Únete a WINK!',
+      'wink.signup_sub'     : 'Envíanos un email. Dinos quién eres. Esa es la solicitud. No usamos formularios. No usamos algoritmos. Usamos corazones de oro y conexiones genuinas.',
+      'wink.footer_sig'     : 'WINK! · Citas Fractales de Alta Contribución · La Vibelandia de Mark Twain · Downtown Reno',
+      'wink.footer_sponsored': 'Patrocinado por la Vibelandia de Twain · Eventos Pop-Up Siempre · Para los que están al tanto',
     }
   };
 

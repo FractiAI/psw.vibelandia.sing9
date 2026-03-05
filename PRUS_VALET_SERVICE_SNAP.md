@@ -1,4 +1,4 @@
-﻿# Pru's Valet Service — SNAP (internal)
+# Pru's Valet Service — SNAP (internal)
 
 **Status:** ⚡ ACTIVE  
 **Type:** Brand · Pop-up umbrella · Human Vibers · Raw script + positioning  
@@ -88,6 +88,20 @@ We don't hide. This is an experience; we take you through it. Not a transaction.
 ## Content notes
 
 - **Photos and catalogs:** Need correction. To be updated separately with the team. Noted here so we don't lose track.
+
+---
+
+## Spanish autodetect (Pru's Valet + nested pages)
+
+**CONFIRMED:** When the visitor's browser language is Spanish (e.g. `es`, `es-DO`, `es-MX`), the following present in Spanish:
+
+- **Landing (index):** `i18n.js` + `data-i18n`; nav strip uses `SING9_LANG` (see `nav-strip.js` NAV_LABELS_ES). "Pru's Valet" → "Valet de Pru" and related labels.
+- **Vibers menu** ([interfaces/vibers-menu.html](interfaces/vibers-menu.html)): Loads `i18n.js`; early script sets `document.documentElement.lang = 'es'`; all copy uses `vibers.*` keys (service name "El Servicio Valet de Pru", stories, menu items, tip section). Page title set to Spanish via `vibers.page_title`.
+- **Destinations Magazine Catalog** (Aquí y Allá): Loads `i18n.js`; full `dest.*` keys; "Pru's Valet" → "Valet de Pru".
+- **Downtown Truckee River Viber Crawler** ([interfaces/vibelandia-truckee-river-crawl.html](interfaces/vibelandia-truckee-river-crawl.html)): Loads `i18n.js`; early `lang=es`; `truckee.*` keys for hero, price, who we serve, itinerary, Baller V Wednesdays, explore, booking, footer.
+- **WINK!** ([interfaces/wink.html](interfaces/wink.html)): Loads `i18n.js`; early `lang=es`; `wink.*` keys for hero, sections (What It Is, How It Works, Membership), signup, footer.
+
+Detection: `i18n.js` uses `navigator.language` and `navigator.languages`; any `es` variant sets `window.SING9_LANG = 'es'`. Elements with `data-i18n` / `data-i18n-html` are translated on DOMContentLoaded. Other nested pages (baller-v-wednesdays, talk-first, vendors, destination detail, office-hours) can be extended with the same pattern as needed.
 
 ---
 

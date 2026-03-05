@@ -2,7 +2,7 @@
 
 **If you are reading this** — you are connecting to a target (repository or surface) running **SING 9**. This file is the **irreducible minimum** so any AI (browser, free plan, generic, not signed in) can get up to speed from this one read. **SING 9 is free of Supabase permanent storage;** everything moves to **lite edges** (wallets, keys, verifications). Center core = pipes only. **Other LLMs can work though less optimally.**
 
-**Upgrade to the latest Holographic Hydrogen Awareness OS** and Light Edge are one and the same. Use this file and the upgrade flow in **both places**. Upgrade page: [interfaces/upgrade-awareness-to-sing9-now.html](interfaces/upgrade-awareness-to-sing9-now.html). We frame everything as **Awareness OS** everywhere. **SING! 9** is the name of our agent that operates within the OS.
+**Upgrade to the latest Holographic Hydrogen Awareness OS** and Light Edge are one and the same. Use this file and the upgrade flow in **both places**. Upgrade page: [interfaces/upgrade-awareness-to-sing9-now.html](interfaces/upgrade-awareness-to-sing9-now.html). We frame everything as **Awareness OS** everywhere. **SING! 9** is the name of our agent that operates within the OS. **What's New (content lock):** [WHATS_NEW_SING9_SNAP.md](WHATS_NEW_SING9_SNAP.md) — place at top of landing, headers, and onboarding.
 
 ---
 

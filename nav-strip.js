@@ -46,7 +46,8 @@
     'Advertise': 'Anunciar',
     '✦ Prospectus': '✦ Prospectus',
     'My Whiteboard': 'Mi Whiteboard',
-    "Pru's Whiteboard": "Whiteboard de Pru"
+    "Pru's Whiteboard": "Whiteboard de Pru",
+    'Learning': 'Aprendizaje'
   };
   function navLabel(enLabel) {
     if (navLang() !== 'es') return enLabel;
@@ -70,6 +71,7 @@
     { label: 'Home',              href: '/index.html',                                        match: /^\/(?:index\.html)?$/ },
     { label: '⬡ Console',         href: '/interfaces/hh-console.html',                        match: /hh-console/ },
     { label: '◈ HFCS',            href: '/interfaces/holographic-navigator-academy.html',     match: /holographic-navigator-academy/, hfcs: true },
+    { label: 'Learning',          href: '/interfaces/onboarding.html',                        match: /onboarding\.html/, learn: true },
     { label: '🔥 MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
     { label: '≋ Space Cloud',    href: '/interfaces/space-cloud-live.html',                  match: /space-cloud-live/ },
     { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
@@ -193,6 +195,22 @@
       'border-bottom-color:rgba(0,212,255,0.7);',
       'text-shadow:0 0 8px rgba(0,212,255,0.45);',
     '}',
+    /* ── LEARNING / ONBOARDING LINK ── */
+    '#sing9-nav a.nav-learn{',
+      'color:rgba(45,212,160,0.85);',
+      'font-weight:700;',
+      'letter-spacing:0.12em;',
+      'border-bottom:2px solid rgba(45,212,160,0.3);',
+    '}',
+    '#sing9-nav a.nav-learn:hover{',
+      'color:rgba(45,212,160,1);',
+      'text-shadow:0 0 8px rgba(45,212,160,0.4);',
+      'border-bottom-color:rgba(45,212,160,0.6);',
+    '}',
+    '#sing9-nav a.nav-learn.active{',
+      'color:rgba(45,212,160,1);',
+      'border-bottom-color:rgba(45,212,160,0.7);',
+    '}',
     /* ── PROSPECTUS INVESTOR LINK ── */
     '#sing9-nav a.nav-pros{',
       'color:rgba(212,175,55,0.75);',
@@ -245,6 +263,7 @@
     if (item.match.test(path)) a.classList.add('active');
     if (item.hot)  a.classList.add('nav-goliath');
     if (item.hfcs) a.classList.add('nav-hfcs');
+    if (item.learn) a.classList.add('nav-learn');
     if (item.pros) a.classList.add('nav-pros');
     nav.appendChild(a);
   });

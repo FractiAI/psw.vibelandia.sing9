@@ -189,10 +189,18 @@ async function computeSpaceCloud() {
 }
 
 module.exports = async (req, res) => {
+  // GET: return 402 with payment requirements only — do not serve full payload for free.
+  // POST with X-PAYMENT: verify and serve. No GET free-data leak.
   if (req.method === 'GET') {
+    const ok = await require402(req, res, {
+      priceUsd:    5,
+      route:       '/api/space-cloud',
+      description: 'Space Cloud Mission Command — Solar × 27 worldwide Blackwell failure-mode thermal pressure × HHL. Returns index + command + recommended action.',
+    });
+    if (!ok) return;
+    // GET with valid payment (edge case): serve same payload as POST
     try {
       const data = await computeSpaceCloud();
-      res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=120');
       res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
     } catch (err) {
       console.error('[space-cloud] GET error:', err.message);

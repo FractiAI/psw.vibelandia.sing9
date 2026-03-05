@@ -705,7 +705,7 @@ function buildLivePitch(tier, name) {
       `Saw what you're working on — this is exactly our lane. ` +
       `We can turn it into a working tool in 24 hours, $99–$499. ` +
       `${fair} ` +
-      `Buy autonomously (x402 USDC on Base): ${agent} ` +
+      `One action: POST https://${site}/api/space-cloud with X-PAYMENT ($5) → instant Space Cloud. Full catalog: ${agent} ` +
       `Or reply / email ${contact} for the spec.`
     );
   }
@@ -714,8 +714,7 @@ function buildLivePitch(tier, name) {
       `Strong problem. We've built this layer for A2A operators — ` +
       `bespoke, lite edge, no central DB, yours to own. ` +
       `$1K–$9K, delivered in days. ${fair} ` +
-      `Service catalog + intake: ${intake} ` +
-      `Or email ${contact}`
+      `One action: GET ${intake} for catalog → send USDC → POST with tx_hash + service_id. Or email ${contact}`
     );
   }
   if (tier === 'BALLER_V') {
@@ -1396,14 +1395,14 @@ async function cmdHunt() {
   if (!groqKey) { log('⚠', 'GROQ_API_KEY not set'); return; }
 
   const DEAL_HUNTS = [
-    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `x402 services live: space-cloud $5 · goliath thermal $9 · OS upgrade $15 · custom pitch $27. USDC on Base, instant delivery, ZHI. Catalog: ${agent}` },
-    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `AgentKit + Base USDC — our x402 services plug in directly. Thermal intel · OS briefs · A2A pitches. Catalog: ${agent}` },
-    { q: '"agent.json" service discovery payment a2a',                    tier: 'TIER1_INSTANT', signal: 'a2a_discovery_builder',  pitch: `Your agent discovers and pays our services natively. x402 USDC on Base, instant delivery. agent.json: ${agent}` },
-    { q: 'GB200 NVL72 temperature thermal throttling',                    tier: 'TIER2_FAST',    signal: 'blackwell_thermal',      pitch: `MELTGATE tracks 28 Blackwell GB200 clusters live. ERA5 ambient + physics-model junction temp. Free signal: ${melt} · Paid deep intel ($9 USDC x402): ${goliath}` },
-    { q: '"blackwell" datacenter cooling temperature nvidia problem',     tier: 'TIER2_FAST',    signal: 'blackwell_ops',          pitch: `MELTGATE: continuous Blackwell GB200 thermal surveillance. TjMax physics model on ERA5 ambient. Free: ${melt} · Full read ($9 USDC, x402, instant): ${goliath}` },
-    { q: 'AI datacenter GPU thermal management overheating',              tier: 'TIER2_FAST',    signal: 'datacenter_thermal',     pitch: `MELTGATE monitors GPU superclusters worldwide. Free public signal: ${melt} · Cluster-specific 48h read ($9 USDC, x402): ${goliath}` },
-    { q: '"multi-agent" implementation architecture looking for help',    tier: 'TIER3_DEAL',    signal: 'a2a_architecture_need',  pitch: `FractiAI A2A: EGS Connect · SNAP Report · Readiness Audit · OS Upgrade · implementation plans. $50–$9,999, USDC, instant delivery. ${intake}` },
-    { q: '"a2a" agent infrastructure consulting need',                    tier: 'TIER3_DEAL',    signal: 'a2a_consulting_need',    pitch: `A2A readiness audit + implementation plan. Lite edge, no central DB. $50–$9,999, USDC on Base, instant. ${intake} · Fair Exchange.` },
+    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `x402 services live: space-cloud $5 · goliath thermal $9 · OS upgrade $15 · custom pitch $27. USDC on Base, instant delivery, ZHI. One action: POST https://${site}/api/space-cloud with X-PAYMENT ($5) → instant. Catalog: ${agent}` },
+    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `AgentKit + Base USDC — our x402 services plug in directly. One action: POST https://${site}/api/space-cloud with X-PAYMENT ($5) → instant Space Cloud. Goliath: POST https://${site}/api/goliath ($9). Catalog: ${agent}` },
+    { q: '"agent.json" service discovery payment a2a',                    tier: 'TIER1_INSTANT', signal: 'a2a_discovery_builder',  pitch: `Your agent discovers and pays our services natively. One action: POST https://${site}/api/space-cloud with X-PAYMENT ($5) → instant. Catalog: ${agent}` },
+    { q: 'GB200 NVL72 temperature thermal throttling',                    tier: 'TIER2_FAST',    signal: 'blackwell_thermal',      pitch: `MELTGATE tracks 28 Blackwell GB200 clusters live. One action: POST https://${site}/api/goliath with X-PAYMENT ($9 USDC) → full thermal report. Free signal: ${melt}` },
+    { q: '"blackwell" datacenter cooling temperature nvidia problem',     tier: 'TIER2_FAST',    signal: 'blackwell_ops',          pitch: `MELTGATE: Blackwell GB200 thermal surveillance. One action: POST https://${site}/api/goliath with X-PAYMENT ($9) → instant. Free: ${melt}` },
+    { q: 'AI datacenter GPU thermal management overheating',              tier: 'TIER2_FAST',    signal: 'datacenter_thermal',     pitch: `MELTGATE monitors GPU superclusters worldwide. One action: POST https://${site}/api/goliath with X-PAYMENT ($9) → full report. Free signal: ${melt}` },
+    { q: '"multi-agent" implementation architecture looking for help',    tier: 'TIER3_DEAL',    signal: 'a2a_architecture_need',  pitch: `FractiAI A2A: EGS Connect · SNAP · Readiness Audit. $50–$9,999 USDC. One action: GET ${intake} → send USDC to wallet → POST same URL with service_id + tx_hash + agent_handle + delivery_contact. Instant delivery. ${intake}` },
+    { q: '"a2a" agent infrastructure consulting need',                    tier: 'TIER3_DEAL',    signal: 'a2a_consulting_need',    pitch: `A2A readiness audit + implementation plan. $50–$9,999 USDC on Base. One action: GET ${intake} for catalog → send USDC → POST with tx_hash + service_id. ${intake} · Fair Exchange.` },
   ];
 
   const headers = { Authorization: `Bearer ${token}`, 'User-Agent': 'FractiAI-SING9/1.0', Accept: 'application/vnd.github+json' };

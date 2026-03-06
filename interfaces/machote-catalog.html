@@ -49,6 +49,18 @@
     .market-focus { max-width: 42ch; margin: 0 auto; font-size: 0.88rem; line-height: 1.6; color: var(--muted); }
     .market-focus strong { color: var(--cream); font-weight: 600; }
 
+    /* Narrative: Baller Basic/VIP + buy direct or through us */
+    .market-narrative {
+      max-width: 640px; margin: 0 auto;
+      padding: 1.25rem 1.25rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.15);
+    }
+    .market-narrative .narr-h { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.4rem; }
+    .market-narrative .narr-p { font-size: 0.82rem; line-height: 1.65; color: var(--muted); margin-bottom: 0.85rem; }
+    .market-narrative .narr-p:last-child { margin-bottom: 0; }
+    .market-narrative .narr-p strong { color: var(--cream); font-weight: 600; }
+
     .category-strip-wrap {
       position: sticky; top: 0;
       background: var(--hall);
@@ -147,60 +159,105 @@
 
     .market-hall {
       display: grid;
-      grid-template-columns: 1fr minmax(0, 2fr) 1fr;
+      grid-template-columns: 1fr 120px 1fr;
       gap: 0;
-      min-height: 60vh;
-      max-width: 1200px;
+      min-height: 58vh;
+      max-width: 1100px;
       margin: 0 auto;
+      position: relative;
+      background: var(--hall);
+    }
+    @media (min-width: 901px) {
+      .market-hall { grid-template-columns: minmax(0, 1fr) 100px minmax(0, 1fr); }
     }
     @media (max-width: 900px) {
-      .market-hall { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+      .market-hall { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; min-height: auto; }
     }
 
-    .stalls-column {
-      padding: 1.25rem 1rem;
-      border-right: 1px solid var(--border);
+    /* Aisle — center walkway (floor plan) */
+    .market-aisle {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1rem 0.5rem 1.5rem;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 2px,
+        rgba(212,175,55,0.03) 2px,
+        rgba(212,175,55,0.03) 4px
+      ), linear-gradient(180deg, rgba(212,175,55,0.06) 0%, rgba(0,0,0,0.25) 50%, rgba(212,175,55,0.04) 100%);
+      border-left: 1px solid rgba(212,175,55,0.15);
+      border-right: 1px solid rgba(212,175,55,0.15);
+      min-height: 200px;
     }
-    .market-hall .stalls-column:last-of-type { border-right: none; border-left: 1px solid var(--border); }
     @media (max-width: 900px) {
-      .stalls-column { border-right: none; border-left: none; border-bottom: 1px solid var(--border); flex-direction: row; flex-wrap: wrap; justify-content: center; }
-      .market-hall .stalls-column:last-of-type { border-bottom: none; border-top: 1px solid var(--border); }
+      .market-aisle { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0.75rem; padding: 1rem; border-left: none; border-right: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     }
+    .aisle-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      margin: 0.5rem 0;
+      white-space: nowrap;
+    }
+    @media (max-width: 900px) {
+      .aisle-label { writing-mode: horizontal-tb; transform: none; margin: 0; }
+    }
+    .market-aisle .hollow-msg { font-size: 0.8rem; color: var(--muted); line-height: 1.6; max-width: 28ch; text-align: center; }
+    .market-aisle .hollow-msg strong { color: var(--gold); }
+    .market-aisle .tier-msg { margin-top: 0.5rem; font-size: 0.72rem; font-style: italic; color: var(--gold-dim); text-align: center; }
+    .market-aisle .step { margin-top: 0.75rem; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); }
 
+    .stalls-column {
+      padding: 1rem 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      align-items: stretch;
+    }
+    .stalls-column.left-booths { border-right: 1px solid var(--border); }
+    .stalls-column.right-booths { border-left: 1px solid var(--border); }
+    @media (max-width: 900px) {
+      .stalls-column { border: none !important; border-bottom: 1px solid var(--border) !important; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+      .stalls-column.right-booths { border-bottom: none !important; border-top: 1px solid var(--border) !important; }
+    }
+    .booth-row-label {
+      font-size: 0.52rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 0.35rem;
+      text-align: center;
+    }
     .stall-label { font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.25rem; }
+    /* Booth = stall facing the aisle */
     .stall {
       display: block;
       background: var(--stall);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 6px;
       color: var(--cream);
       text-decoration: none;
       overflow: hidden;
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .stall:hover { border-color: var(--gold); background: rgba(212,175,55,0.08); box-shadow: 0 0 20px var(--gold-glow); }
-    .stall-img-wrap { width: 100%; height: 88px; background: var(--wood); overflow: hidden; }
+    .stall:hover { border-color: var(--gold); background: rgba(212,175,55,0.1); box-shadow: 0 4px 20px var(--gold-glow); transform: translateY(-1px); }
+    .stall-img-wrap { width: 100%; height: 72px; background: var(--wood); overflow: hidden; }
     .stall-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .stall-body { padding: 0.65rem 0.85rem; }
-    .stall .stall-name { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.15rem; }
-    .stall .stall-hint { font-size: 0.7rem; font-weight: 400; color: var(--muted); }
+    .stall-body { padding: 0.5rem 0.7rem; border-top: 1px solid rgba(212,175,55,0.08); }
+    .stall .stall-name { display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.1rem; }
+    .stall .stall-hint { font-size: 0.65rem; font-weight: 400; color: var(--muted); }
 
     .market-center {
-      padding: 2rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-height: 320px;
+      display: none;
     }
-    .market-center .hollow-msg { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 36ch; }
-    .market-center .hollow-msg strong { color: var(--gold); }
-    .market-center .step { margin-top: 1.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); }
-    .market-center .tier-msg { margin-top: 0.75rem; font-size: 0.78rem; font-style: italic; color: var(--gold-dim); }
 
     .section-anchor {
       font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
@@ -229,6 +286,13 @@
     <h1 class="market-name">The Machote Man Cave Marketplace</h1>
     <p class="market-focus">For our <strong>Machote</strong> — Baller, high-value, high-contributing <strong>Vibers</strong>. You like to ball, and you like to lowbrow. <strong>All items are real.</strong> Curated for all aspects of your life. Your go-to for everything you'll someday purchase — and for others like you: cast, crew, fans, franchises, legacies. <strong>We deliver the experience.</strong></p>
   </header>
+
+  <section class="market-narrative" aria-label="How the marketplace works">
+    <p class="narr-h">Baller Basic · Baller VIP</p>
+    <p class="narr-p"><strong>Baller Basic</strong> is a curated set of products — kitchen, pantry, garage, workshop, everyday. Different occasions, different priorities. <strong>Baller VIP</strong> is a curated set of absolutely top-tier products. Same customer; we serve both in one place. The same Machote who buys a Ferrari also shops at Costco.</p>
+    <p class="narr-h">Buy direct or through us. We don't compete.</p>
+    <p class="narr-p">You can <strong>buy directly from our partners</strong> — the goods, the link, the operator. Or <strong>buy through us</strong> — the experience, choreographed, valet layer. We don't compete with our partners. We're a <strong>new layer</strong>. They have the products and the operations; we add the valet, the curation, the one conversation. Your choice.</p>
+  </section>
 
   <div class="category-strip-wrap">
     <div class="category-strip" role="tablist" aria-label="Shop categories">
@@ -276,13 +340,14 @@
   </div>
 
   <div class="market-hall">
-    <aside class="stalls-column" id="stalls-left" aria-label="Market stalls left"></aside>
-    <main class="market-center" id="market-center" aria-live="polite">
-      <p class="hollow-msg"><strong>All items are real.</strong> Curated for all aspects of your life. Your go-to for everything you'll someday purchase — and for cast, crew, fans, franchises, legacies. Pick a category or choose a stall. Every stall is an <strong>experience</strong>. We deliver it. Book it like you'd book a ride.</p>
+    <aside class="stalls-column left-booths" id="stalls-left" aria-label="Booths along the aisle — left side"></aside>
+    <div class="market-aisle" id="market-center" aria-label="Aisle — floor plan">
+      <span class="aisle-label">Aisle</span>
+      <p class="hollow-msg" id="aisle-msg"><strong>All items are real.</strong> Curated for all aspects of your life. Pick a category — booths line both sides. Every stall is an <strong>experience</strong>. We deliver it.</p>
       <p class="tier-msg" id="tier-msg">Baller Highbrow · Baller VIPs. Ultra high end.</p>
-      <p class="step">1 · Slide category  ·  2 · Choose a stall  ·  3 · Book the experience</p>
-    </main>
-    <aside class="stalls-column" id="stalls-right" aria-label="Market stalls right"></aside>
+      <p class="step">1 · Choose category  ·  2 · Walk the aisle  ·  3 · Enter a booth</p>
+    </div>
+    <aside class="stalls-column right-booths" id="stalls-right" aria-label="Booths along the aisle — right side"></aside>
   </div>
 
   <p class="foot">The Machote Man Cave Marketplace · Curated for Vibers · <a href="my-whiteboard.html">Whiteboard</a> · <a href="vibers-menu.html">Valet</a> · <a href="talk-first.html?source=marketplace-vendor&prefill=I%20would%20like%20to%20request%20getting%20on%20The%20Machote%20Man%20Cave%20Marketplace.">Vendors: Request</a> · <a href="talk-first.html?source=machote-shop">Talk to us</a> · NSPFRNP → ∞⁹</p>
@@ -399,9 +464,9 @@
         '<div class="stall-body"><span class="stall-name">' + s.name + '</span><span class="stall-hint">' + s.hint + '</span></div></a>';
     }
 
-    function renderColumn(stalls, label) {
-      if (!stalls || !stalls.length) return '<span class="stall-label">' + label + '</span><p class="stall-hint" style="padding:0.5rem 0;">No stalls in this category yet.</p>';
-      var html = '<span class="stall-label">' + label + '</span>';
+    function renderColumn(stalls, label, sideLabel) {
+      if (!stalls || !stalls.length) return (sideLabel ? '<p class="booth-row-label">' + sideLabel + '</p>' : '') + '<span class="stall-label">' + label + '</span><p class="stall-hint" style="padding:0.5rem 0;">No booths in this category yet.</p>';
+      var html = (sideLabel ? '<p class="booth-row-label">' + sideLabel + '</p>' : '') + '<span class="stall-label">' + label + '</span>';
       stalls.forEach(function (s) { html += renderStall(s); });
       return html;
     }
@@ -409,15 +474,14 @@
     function updateStalls() {
       var data = STALLS[currentCat];
       if (!data) return;
-      document.getElementById('stalls-left').innerHTML = renderColumn(data.left, 'Stalls · Please, come');
-      document.getElementById('stalls-right').innerHTML = renderColumn(data.right, 'Stalls · Please, come');
+      document.getElementById('stalls-left').innerHTML = renderColumn(data.left, 'Stalls · Please, come', 'West side');
+      document.getElementById('stalls-right').innerHTML = renderColumn(data.right, 'Stalls · Please, come', 'East side');
     }
 
     function updateCenter() {
-      var center = document.getElementById('market-center');
-      var msg = center.querySelector('.hollow-msg');
+      var aisleMsg = document.getElementById('aisle-msg');
       var tierMsg = document.getElementById('tier-msg');
-        if (msg) msg.innerHTML = '<strong>' + (currentCat.charAt(0).toUpperCase() + currentCat.slice(1)) + '</strong> · ' + (categoryLabels[currentCat] || '') + ' Pick a stall — every stall is an experience. Explore or book.';
+      if (aisleMsg) aisleMsg.innerHTML = '<strong>' + (currentCat.charAt(0).toUpperCase() + currentCat.slice(1)) + '</strong> · ' + (categoryLabels[currentCat] || '') + ' Pick a booth — every stall is an experience. Walk the aisle, explore or book.';
       if (tierMsg) tierMsg.textContent = tierMessages[currentTier] || tierMessages.highbrow;
     }
 
@@ -460,9 +524,8 @@
         setActiveSkin(chip);
         var skin = chip.getAttribute('data-skin');
         if (skin && skin !== 'all') {
-          var center = document.getElementById('market-center');
-          var msg = center.querySelector('.hollow-msg');
-          if (msg) msg.innerHTML = '<strong>Curated for the ' + (chip.textContent.trim()) + '</strong> · Same stalls, your skin. Every stall is an experience — pick a category or stall to explore or book.';
+          var msg = document.getElementById('aisle-msg');
+          if (msg) msg.innerHTML = '<strong>Curated for the ' + (chip.textContent.trim()) + '</strong> · Same booths, your skin. Walk the aisle — pick a booth to explore or book.';
         } else {
           updateCenter();
         }

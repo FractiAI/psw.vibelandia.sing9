@@ -10,7 +10,7 @@
 
 A **hybrid experience** — like Uber at the top (slide over to select category) — but **not limited to delivery**. We deliver **the experience**, which might be:
 
-- **At home** — curated goods, cellar, bar, kitchen.
+- **At home** — curated goods, kitchen, pantry, bar.
 - **On the road** — gear, fashion, tools.
 - **In real life** — travel, destinations, properties, stewardship.
 
@@ -36,7 +36,7 @@ This is the **go-to for everything you will someday be purchasing**. **All items
 
 | Category | Contents |
 |----------|----------|
-| **Lifestyle** | Kitchen · Wild proteins · Specialty items · Cheeses · Olive oil · Curated pantry · Wine cellar · Bar · Charcuterie. All hand-selected, curated. |
+| **Lifestyle** | Kitchen and pantry · Meat locker · Cheese and specialties · Bar · Olive oil · Curated pantry. All hand-selected, curated. |
 | **Gear** | Outdoors · Fashion · Mines and ranches · Beach · Fishing properties · Hunting properties. (Lease or sale framed as **stewardship and development**.) |
 | **Stewardship & Development** | Properties available for lease or sale. Today it may involve a sale or lease; we **call it** stewardship and development. |
 | **Fashions** | Curated fashion for the Machote / Baller / Viber. |

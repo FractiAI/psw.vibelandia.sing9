@@ -27,6 +27,19 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+    .floor-plan-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      background:
+        linear-gradient(90deg, transparent 38%, rgba(212,175,55,0.08) 38%, rgba(212,175,55,0.08) 62%, transparent 62%),
+        repeating-linear-gradient(0deg, transparent 0, transparent 59px, rgba(212,175,55,0.08) 59px, rgba(212,175,55,0.08) 60px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 79px, rgba(212,175,55,0.06) 79px, rgba(212,175,55,0.06) 80px);
+      background-size: 100% 100%, 100% 60px, 80px 100%;
+    }
+    body { position: relative; z-index: 1; }
 
     .top-strip {
       background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, transparent 50%);
@@ -46,7 +59,7 @@
     }
     .market-welcome { font-size: 0.65rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem; }
     .market-name { font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 800; color: var(--gold); letter-spacing: 0.02em; margin-bottom: 0.75rem; text-shadow: 0 0 30px var(--gold-glow); }
-    .market-focus { max-width: 42ch; margin: 0 auto; font-size: 0.88rem; line-height: 1.6; color: var(--muted); }
+    .market-focus { max-width: 48ch; margin: 0 auto; font-size: 0.88rem; line-height: 1.6; color: var(--muted); }
     .market-focus strong { color: var(--cream); font-weight: 600; }
 
     /* Narrative: Baller Basic/VIP + buy direct or through us */
@@ -272,6 +285,7 @@
   </style>
 </head>
 <body>
+  <div class="floor-plan-bg" aria-hidden="true"></div>
 
   <div class="top-strip">
     <a href="my-whiteboard.html">← Whiteboard</a>
@@ -284,7 +298,7 @@
   <header class="market-masthead">
     <p class="market-welcome">Welcome</p>
     <h1 class="market-name">The Machote Man Cave Marketplace</h1>
-    <p class="market-focus">For our <strong>Machote</strong> — Baller, high-value, high-contributing <strong>Vibers</strong>. You like to ball, and you like to lowbrow. <strong>All items are real.</strong> Curated for all aspects of your life. Your go-to for everything you'll someday purchase — and for others like you: cast, crew, fans, franchises, legacies. <strong>We deliver the experience.</strong></p>
+    <p class="market-focus">A <strong>daily marketplace</strong> for everything the Baller V, Machote, needs. Vendor space like a trade show — but this is your go-to for life: kitchen, pantry, gear, fashions, destinations, experiences. <strong>All items are real.</strong> Curated for cast, crew, fans, franchises, legacies. <strong>We deliver the experience.</strong></p>
   </header>
 
   <section class="market-narrative" aria-label="How the marketplace works">

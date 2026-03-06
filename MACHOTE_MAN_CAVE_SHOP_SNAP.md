@@ -1,6 +1,6 @@
-# Machote Man Cave Shop — SNAP (Vision · Categories · UX)
+# The Machote Man Cave Marketplace — SNAP (Vision · Categories · UX)
 
-**Name:** Machote Man Cave Shop — **Machote** not Mahote.  
+**Name:** The Machote Man Cave Marketplace — **Machote** not Mahote.  
 **Status:** ⚡ ACTIVE · One at a time  
 **NSPFRNP:** Narrative, storytelling, intuitive 1-2-3 · escape, immerse, book.
 
@@ -20,17 +20,15 @@ A **hybrid experience** — like Uber at the top (slide over to select category)
 
 ## 2. Who It's For (Focus — Front and Center)
 
-We provide for **all the needs of our Machote**: Baller, high-value, high-contributing, vibrant **Vibers**. Not "five" — **Vibers**.
+We provide for **all the needs of our Machote**: Baller, high-value, high-contributing **Vibers**. You like to ball, and you like to lowbrow.
 
-They are **cast, crew, fans, franchises, legacies, creators** — whether in:
+They are **cast, crew, fans, franchises, legacies, creators** — whether in technology, business, entertainment, music, art. Say this clearly at the start. The landing page makes it obvious: this market is for them.
 
-- Technology  
-- Business  
-- Entertainment  
-- Music  
-- Art  
+---
 
-Say this clearly at the start. The landing page makes it obvious: this market is for them.
+## 2a. How It's Used — Real, Go-To, All Aspects of Life
+
+This is the **go-to for everything you will someday be purchasing**. **All items are real.** All different items are real. It is **curated for all aspects of your life** — as a high-value, high-contributing Viber, Machote who likes to ball and also likes to lowbrow — and for **others like you**: cast, crew, fans, franchises, legacies. Therefore the same market serves the creator and the whole ecosystem.
 
 ---
 
@@ -98,4 +96,10 @@ From the HH Console profile setup: **Machote, Baller, Viber, Big Daddy, Bond, Ho
 
 ---
 
-**NSPFRNP ⊃ Machote Man Cave Shop ⊃ Market · Categories · Experiences · Book like Uber → ∞⁹**
+## 9. Aligned Vendors, Producers, Providers — Request to Be on the Marketplace
+
+A button (and footer link) for **aligned vendors, producers, and providers** to request getting on the marketplace. **Same process as registering for our classes or requesting a scholarship or grant.** One flow: request via talk-first (or equivalent); we review and respond. The marketplace page includes a clear CTA: "Aligned vendors, producers, providers: Request to be on our marketplace" with subtext that it's the same process as classes or scholarship/grant.
+
+---
+
+**NSPFRNP ⊃ The Machote Man Cave Marketplace ⊃ Market · Categories · Experiences · Vendors request (same as classes/scholarship) · Book like Uber → ∞⁹**

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Talk first · Baller V Wednesdays | VIBELANDIA</title>
+  <title>Talk first · Pru's Valet · SING 9</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -144,24 +144,23 @@
     <div class="wrap">
 
       <div class="letterhead">
-        <span class="letterhead-left">Pru's Valet Service · Vibelandia · SING 9</span>
-        <div class="letterhead-right">
-          <a href="baller-v-wednesdays.html">← Baller V Wednesdays</a>
-          <a href="vibers-menu.html">Valet Menu</a>
+        <span class="letterhead-left">Pru's Valet · Vibelandia · SING 9</span>
+        <div class="letterhead-right" id="letterheadBack">
+          <a href="vibers-menu.html">← Valet Menu</a>
         </div>
       </div>
 
       <div class="brand">
         <p class="eyebrow">Chat · Just gotta know</p>
         <h1>Talk first</h1>
-        <p class="sub">Baller V Mixer Wednesdays — we're here. Say what's on your mind; we'll reply here or by email.</p>
+        <p class="sub" id="brandSub">Marketplace, destinations, Baller V, Crawler, classes, WINK!, A2A — say what's on your mind. We'll reply here or by email.</p>
       </div>
 
       <div class="chat-box">
         <div class="chat-messages" id="chatMessages">
-          <div class="chat-msg from-them">
+          <div class="chat-msg from-them" id="openingMsg">
             <div class="who">Pru's Valet · Vibelandia</div>
-            <div class="text">Hey. You clicked Talk first — good call. Tell us what you're thinking: questions about the mixer, the 3-3-3, seating, or just want to say hi. We'll get back to you here so we can keep the conversation in one place.</div>
+            <div class="text">Hey. You clicked Talk first — good call. We're Pru's Valet · SING 9. We're here for: <strong>The Machote Man Cave Marketplace</strong> (vendors, producers, providers — request to be on the marketplace; same process as classes or scholarship). <strong>Destinations</strong> (book an experience, Crawler, Baller V Wednesdays). <strong>Session One</strong> / classes / grants. <strong>WINK!</strong> <strong>A2A</strong> services. Life Planning. Vibelandia move-in. Whatever you're after — tell us below; we'll get back here or by email.</div>
           </div>
         </div>
 
@@ -179,7 +178,7 @@
         </div>
       </div>
 
-      <p class="foot"><a href="baller-v-wednesdays.html">Baller V Wednesdays</a> · <a href="vibers-menu.html">Valet menu</a> · <a href="../index.html">Landing</a> · NSPFRNP → ∞⁹</p>
+      <p class="foot"><a href="vibers-menu.html">Valet menu</a> · <a href="machote-catalog.html">Marketplace</a> · <a href="destinations-magazine-catalog.html">Destinations</a> · <a href="baller-v-wednesdays.html">Baller V</a> · <a href="session-one-signup.html">Session One</a> · <a href="../index.html">Landing</a> · NSPFRNP → ∞⁹</p>
     </div>
   </div>
 
@@ -197,11 +196,51 @@
       var sent = params.get('sent') === '1';
       var prefill = params.get('prefill') || '';
 
+      var sourceBack = {
+        'marketplace-vendor': { href: 'machote-catalog.html', label: '← Marketplace' },
+        'marketplace': { href: 'machote-catalog.html', label: '← Marketplace' },
+        'destinations-catalog': { href: 'destinations-magazine-catalog.html', label: '← Destinations' },
+        'destination': { href: 'destinations-magazine-catalog.html', label: '← Destinations' },
+        'truckee-river-crawl': { href: 'vibelandia-truckee-river-crawl.html', label: '← Crawler' },
+        'baller-v-wednesdays': { href: 'baller-v-wednesdays.html', label: '← Baller V' },
+        'session-one-signup': { href: 'session-one-signup.html', label: '← Session One' },
+        'session-one-grant': { href: 'session-one-signup.html', label: '← Session One' },
+        'wink': { href: 'wink.html', label: '← WINK!' },
+        'vendors-operator': { href: 'vendors.html', label: '← Vendors' },
+        'vibelandia-move-in': { href: 'vibelandia-world.html', label: '← Vibelandia' },
+        'life-planning': { href: 'life-planning.html', label: '← Life Planning' }
+      };
+      var back = sourceBack[urlSource];
+      if (back) {
+        var backEl = document.getElementById('letterheadBack');
+        if (backEl) backEl.innerHTML = '<a href="' + back.href + '">' + back.label + '</a> <a href="vibers-menu.html">Valet Menu</a>';
+      }
+
+      var sourceOpening = {
+        'marketplace-vendor': 'You\'re requesting to be on <strong>The Machote Man Cave Marketplace</strong> — same process as registering for our classes or requesting a scholarship or grant. Tell us about your offer, your business, and how to reach you. We\'ll review and get back to you.',
+        'marketplace': 'You\'re reaching out about <strong>The Machote Man Cave Marketplace</strong>. Tell us which stall or experience you\'re interested in, or anything else. We\'ll reply here or by email.',
+        'destinations-catalog': 'You want to talk to a specialist about <strong>Destinations</strong>. Tell us where you\'re thinking — Crawler, Baller V, guided expeditions, or a specific destination. We\'ll get back to you.',
+        'truckee-river-crawl': 'You\'re interested in the <strong>Downtown Truckee River Baller V Crawler</strong>. Tell us your preferred date, group size, or questions. We\'ll reply here or by email.',
+        'baller-v-wednesdays': 'You\'re asking about <strong>Baller V Wednesdays</strong> — the 3-3-3 tastings, mixer, seating. Say what\'s on your mind; we\'ll get back to you.',
+        'session-one-signup': 'You\'re requesting your seat for <strong>Session One</strong>. We\'ll confirm when we have 9 and send the link. Add anything below.',
+        'session-one-grant': 'You\'re requesting a <strong>grant or scholarship</strong> for Session One. We\'ll review and get back to you. Add your details below.',
+        'wink': 'You\'re interested in <strong>WINK!</strong> Tell us what you\'re after — membership tier, questions — and we\'ll reply.',
+        'life-planning': 'You\'re reaching out about <strong>Life Planning</strong> — consultation, legal, health, financial, or social. Tell us briefly what you need; we\'ll get back to you.'
+      };
+      var openingText = sourceOpening[urlSource];
+      if (openingText) {
+        var openingEl = document.getElementById('openingMsg');
+        if (openingEl) {
+          var textEl = openingEl.querySelector('.text');
+          if (textEl) textEl.innerHTML = openingText;
+        }
+      }
+
       if (sent && urlSource) {
         var them = document.querySelector('.chat-msg.from-them');
         var confirm = document.createElement('div');
         confirm.className = 'chat-msg from-them';
-        confirm.innerHTML = '<div class="who">Pru\'s Valet · Vibelandia</div><div class="text">We got your sign-up. We\'ll be in touch here or by email. Add more below if you want.</div>';
+        confirm.innerHTML = '<div class="who">Pru\'s Valet · Vibelandia</div><div class="text">We got your message. We\'ll be in touch here or by email. Add more below if you want.</div>';
         messagesEl.appendChild(confirm);
         messagesEl.scrollTop = messagesEl.scrollHeight;
         if (window.history && window.history.replaceState) window.history.replaceState({}, '', window.location.pathname + (urlSource ? '?source=' + encodeURIComponent(urlSource) : ''));
@@ -229,7 +268,7 @@
         formStatus.className = isError ? 'chat-error' : 'chat-success';
       }
 
-      function getSource() { return urlSource || 'baller-v-wednesdays'; }
+      function getSource() { return urlSource || 'talk-first'; }
 
       sendBtn.addEventListener('click', function() {
         var text = (messageInput.value || '').trim();

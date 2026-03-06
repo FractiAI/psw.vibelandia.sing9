@@ -28,7 +28,6 @@
       overflow-x: hidden;
     }
 
-    /* ── TOP STRIP ── */
     .top-strip {
       background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, transparent 50%);
       border-bottom: 1px solid var(--border);
@@ -39,80 +38,75 @@
     .top-strip a { color: var(--gold-dim); text-decoration: none; }
     .top-strip a:hover { color: var(--gold); }
 
-    /* ── MARKET MASTHEAD ── */
     .market-masthead {
       text-align: center;
       padding: 2rem 1.25rem 1.5rem;
       border-bottom: 1px solid var(--border);
       background: linear-gradient(180deg, rgba(212,175,55,0.04) 0%, transparent 100%);
     }
-    .market-welcome {
-      font-size: 0.65rem;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-      margin-bottom: 0.5rem;
-    }
-    .market-name {
-      font-size: clamp(1.75rem, 5vw, 2.5rem);
-      font-weight: 800;
-      color: var(--gold);
-      letter-spacing: 0.02em;
-      margin-bottom: 0.75rem;
-      text-shadow: 0 0 30px var(--gold-glow);
-    }
-    .market-focus {
-      max-width: 42ch;
-      margin: 0 auto;
-      font-size: 0.88rem;
-      line-height: 1.6;
-      color: var(--muted);
-    }
+    .market-welcome { font-size: 0.65rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem; }
+    .market-name { font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 800; color: var(--gold); letter-spacing: 0.02em; margin-bottom: 0.75rem; text-shadow: 0 0 30px var(--gold-glow); }
+    .market-focus { max-width: 42ch; margin: 0 auto; font-size: 0.88rem; line-height: 1.6; color: var(--muted); }
     .market-focus strong { color: var(--cream); font-weight: 600; }
 
-    /* ── UBER-LIKE CATEGORY STRIP ── */
     .category-strip-wrap {
       position: sticky; top: 0;
       background: var(--hall);
       border-bottom: 1px solid var(--border);
       z-index: 50;
-      padding: 0.6rem 0;
+      padding: 0.5rem 1rem 0.6rem;
     }
     .category-strip {
-      display: flex;
-      gap: 0.5rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding: 0 1rem;
-      scrollbar-width: thin;
+      display: flex; gap: 0.5rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; padding: 0.1rem 0; scrollbar-width: thin;
     }
     .category-strip::-webkit-scrollbar { height: 4px; }
     .category-strip::-webkit-scrollbar-track { background: var(--wood); }
     .category-strip::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
     .cat-pill {
-      flex-shrink: 0;
-      scroll-snap-align: start;
-      padding: 0.5rem 1rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: rgba(212,175,55,0.06);
-      color: var(--gold-dim);
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, color 0.2s;
-      text-decoration: none;
-      white-space: nowrap;
+      flex-shrink: 0; scroll-snap-align: start;
+      padding: 0.5rem 1rem; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em;
+      border: 1px solid var(--border); border-radius: 999px;
+      background: rgba(212,175,55,0.06); color: var(--gold-dim);
+      cursor: pointer; transition: border-color 0.2s, background 0.2s, color 0.2s;
+      text-decoration: none; white-space: nowrap;
     }
-    .cat-pill:hover, .cat-pill.active {
-      border-color: var(--gold);
-      background: rgba(212,175,55,0.12);
-      color: var(--gold);
-    }
+    .cat-pill:hover, .cat-pill.active { border-color: var(--gold); background: rgba(212,175,55,0.12); color: var(--gold); }
 
-    /* ── MARKET HALL: LEFT · CENTER · RIGHT ── */
+    /* Tier: Baller Highbrow (VIPs) | Baller Basic — same customer, different occasions */
+    .tier-strip {
+      display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+      padding: 0.4rem 1rem 0.5rem; background: rgba(0,0,0,0.2);
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+      font-size: 0.7rem;
+    }
+    .tier-pill {
+      padding: 0.35rem 0.9rem; border-radius: 6px;
+      border: 1px solid rgba(212,175,55,0.25);
+      background: transparent; color: var(--muted);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .tier-pill:hover { border-color: var(--gold-dim); color: var(--cream); }
+    .tier-pill.active { border-color: var(--gold); background: rgba(212,175,55,0.12); color: var(--gold); font-weight: 600; }
+    .tier-pill .tier-tag { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); display: block; margin-bottom: 0.1rem; }
+    .tier-pill.active .tier-tag { color: var(--gold); }
+
+    /* Skin: characters from Console */
+    .skin-strip {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; align-items: center;
+      padding: 0.5rem 1rem; background: var(--hall);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.68rem;
+    }
+    .skin-label { color: var(--gold-dim); letter-spacing: 0.2em; text-transform: uppercase; margin-right: 0.25rem; }
+    .skin-chip {
+      padding: 0.25rem 0.6rem; border-radius: 4px;
+      border: 1px solid rgba(212,175,55,0.15);
+      background: rgba(212,175,55,0.04);
+      color: var(--muted); cursor: pointer; transition: all 0.2s;
+    }
+    .skin-chip:hover, .skin-chip.active { border-color: var(--gold-dim); color: var(--gold); background: rgba(212,175,55,0.08); }
+
     .market-hall {
       display: grid;
       grid-template-columns: 1fr minmax(0, 2fr) 1fr;
@@ -138,34 +132,24 @@
       .market-hall .stalls-column:last-of-type { border-bottom: none; border-top: 1px solid var(--border); }
     }
 
-    .stall-label {
-      font-size: 0.58rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-      margin-bottom: 0.25rem;
-    }
+    .stall-label { font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.25rem; }
     .stall {
       display: block;
-      padding: 0.85rem 1rem;
       background: var(--stall);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--cream);
       text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
+      overflow: hidden;
       transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     }
-    .stall:hover {
-      border-color: var(--gold);
-      background: rgba(212,175,55,0.08);
-      box-shadow: 0 0 20px var(--gold-glow);
-    }
-    .stall .stall-name { display: block; margin-bottom: 0.2rem; }
-    .stall .stall-hint { font-size: 0.72rem; font-weight: 400; color: var(--muted); }
+    .stall:hover { border-color: var(--gold); background: rgba(212,175,55,0.08); box-shadow: 0 0 20px var(--gold-glow); }
+    .stall-img-wrap { width: 100%; height: 88px; background: var(--wood); overflow: hidden; }
+    .stall-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .stall-body { padding: 0.65rem 0.85rem; }
+    .stall .stall-name { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .stall .stall-hint { font-size: 0.7rem; font-weight: 400; color: var(--muted); }
 
-    /* ── CENTER HOLLOWED OUT ── */
     .market-center {
       padding: 2rem 1.5rem;
       display: flex;
@@ -175,43 +159,19 @@
       text-align: center;
       min-height: 320px;
     }
-    .market-center .hollow-msg {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 36ch;
-    }
+    .market-center .hollow-msg { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 36ch; }
     .market-center .hollow-msg strong { color: var(--gold); }
-    .market-center .step {
-      margin-top: 1.5rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-    }
+    .market-center .step { margin-top: 1.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); }
+    .market-center .tier-msg { margin-top: 0.75rem; font-size: 0.78rem; font-style: italic; color: var(--gold-dim); }
 
-    /* ── SECTION ANCHORS ── */
     .section-anchor {
-      font-size: 0.62rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-      margin-top: 1rem;
-      margin-bottom: 0.25rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid rgba(212,175,55,0.1);
+      font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold-dim); margin-top: 1rem; margin-bottom: 0.25rem;
+      padding-top: 0.75rem; border-top: 1px solid rgba(212,175,55,0.1);
     }
     .section-anchor:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 
-    /* ── FOOTER ── */
-    .foot {
-      margin-top: 2rem;
-      padding: 1.5rem 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-align: center;
-    }
+    .foot { margin-top: 2rem; padding: 1.5rem 1rem; border-top: 1px solid var(--border); font-size: 0.72rem; color: var(--muted); text-align: center; }
     .foot a { color: var(--beam); text-decoration: none; }
     .foot a:hover { text-decoration: underline; }
   </style>
@@ -228,82 +188,243 @@
   <header class="market-masthead">
     <p class="market-welcome">Welcome</p>
     <h1 class="market-name">Machote Man Cave Shop</h1>
-    <p class="market-focus">For our <strong>Machote</strong> — Baller, high-value, high-contributing, vibrant <strong>Vibers</strong>. Cast, crew, fans, franchises, legacies, creators. Technology, business, entertainment, music, art. All your needs, one market.</p>
+    <p class="market-focus">For our <strong>Machote</strong> — Baller, high-value, high-contributing <strong>Vibers</strong>. Cast, crew, fans, franchises, legacies, creators. Technology, business, entertainment, music, art. All your needs, one market.</p>
   </header>
 
   <div class="category-strip-wrap">
     <div class="category-strip" role="tablist" aria-label="Shop categories">
-      <a href="#lifestyle" class="cat-pill active" role="tab">Lifestyle</a>
-      <a href="#gear" class="cat-pill" role="tab">Gear</a>
-      <a href="#stewardship" class="cat-pill" role="tab">Stewardship & Development</a>
-      <a href="#fashions" class="cat-pill" role="tab">Fashions</a>
-      <a href="#interiors" class="cat-pill" role="tab">Interiors</a>
-      <a href="#tech" class="cat-pill" role="tab">Technology & Tools</a>
-      <a href="#destinations" class="cat-pill" role="tab">Destinations</a>
+      <a href="#lifestyle" class="cat-pill active" role="tab" data-cat="lifestyle">Lifestyle</a>
+      <a href="#gear" class="cat-pill" role="tab" data-cat="gear">Gear</a>
+      <a href="#stewardship" class="cat-pill" role="tab" data-cat="stewardship">Stewardship & Development</a>
+      <a href="#fashions" class="cat-pill" role="tab" data-cat="fashions">Fashions</a>
+      <a href="#interiors" class="cat-pill" role="tab" data-cat="interiors">Interiors</a>
+      <a href="#tech" class="cat-pill" role="tab" data-cat="tech">Technology & Tools</a>
+      <a href="#destinations" class="cat-pill" role="tab" data-cat="destinations">Destinations</a>
     </div>
   </div>
 
-  <div class="market-hall">
-    <aside class="stalls-column" aria-label="Market stalls left">
-      <span class="stall-label">Stalls · Please, come</span>
-      <span class="section-anchor">Food & table</span>
-      <a href="#lifestyle" class="stall"><span class="stall-name">Kitchen & Cellar</span><span class="stall-hint">Wine, bar, curated</span></a>
-      <a href="#lifestyle" class="stall"><span class="stall-name">Wild Proteins</span><span class="stall-hint">Hand-selected</span></a>
-      <a href="#lifestyle" class="stall"><span class="stall-name">Charcuterie & Cheese</span><span class="stall-hint">Olive oil, specialty</span></a>
-      <span class="section-anchor">Gear & outdoors</span>
-      <a href="#gear" class="stall"><span class="stall-name">Outdoors & Ranch</span><span class="stall-hint">Mines, beach, fishing</span></a>
-      <a href="#fashions" class="stall"><span class="stall-name">Fashions</span><span class="stall-hint">Curated for the Baller</span></a>
-    </aside>
+  <div class="tier-strip">
+    <button type="button" class="tier-pill active" data-tier="highbrow" aria-pressed="true">
+      <span class="tier-tag">Baller VIPs</span>
+      Baller Highbrow
+    </button>
+    <button type="button" class="tier-pill" data-tier="basic" aria-pressed="false">
+      <span class="tier-tag">Different occasions · Different priorities</span>
+      Baller Basic
+    </button>
+  </div>
 
+  <div class="skin-strip">
+    <span class="skin-label">The skin ·</span>
+    <span class="skin-chip active" data-skin="all">All</span>
+    <span class="skin-chip" data-skin="machote">♛ Machote</span>
+    <span class="skin-chip" data-skin="baller">🥂 Baller</span>
+    <span class="skin-chip" data-skin="viber">✨ Viber</span>
+    <span class="skin-chip" data-skin="cowboy">🤠 Cowboy</span>
+    <span class="skin-chip" data-skin="creator">🎨 Creator</span>
+    <span class="skin-chip" data-skin="commander">⚡ Commander</span>
+    <span class="skin-chip" data-skin="outdoorsman">🏕 Outdoorsman</span>
+    <span class="skin-chip" data-skin="channeler">✦ Channeler</span>
+    <span class="skin-chip" data-skin="bond">🕴 Bond</span>
+    <span class="skin-chip" data-skin="sinatra">🥃 Sinatra</span>
+    <span class="skin-chip" data-skin="hologram">💠 Holographic</span>
+  </div>
+
+  <div class="market-hall">
+    <aside class="stalls-column" id="stalls-left" aria-label="Market stalls left"></aside>
     <main class="market-center" id="market-center" aria-live="polite">
-      <p class="hollow-msg"><strong>Pick a category above</strong> or choose a stall to the left or right. We deliver the experience — at home, on the road, or in real life. Book an experience like you'd book a ride.</p>
+      <p class="hollow-msg"><strong>Pick a category above</strong> or choose a stall. We deliver the experience — at home, on the road, or in real life. Book an experience like you'd book a ride.</p>
+      <p class="tier-msg" id="tier-msg">Baller Highbrow · Baller VIPs. Ultra high end.</p>
       <p class="step">1 · Slide category  ·  2 · Choose a stall  ·  3 · Book or explore</p>
     </main>
-
-    <aside class="stalls-column" aria-label="Market stalls right">
-      <span class="stall-label">Stalls · Please, come</span>
-      <span class="section-anchor">Interiors & tech</span>
-      <a href="#interiors" class="stall"><span class="stall-name">Interiors</span><span class="stall-hint">Furniture, rugs</span></a>
-      <a href="#tech" class="stall"><span class="stall-name">Technology & Tools</span><span class="stall-hint">Build, create, operate</span></a>
-      <span class="section-anchor">Places & experiences</span>
-      <a href="#destinations" class="stall"><span class="stall-name">Destinations</span><span class="stall-hint">Travel · Book an experience</span></a>
-      <a href="#stewardship" class="stall"><span class="stall-name">Stewardship & Development</span><span class="stall-hint">Properties · Lease or steward</span></a>
-    </aside>
+    <aside class="stalls-column" id="stalls-right" aria-label="Market stalls right"></aside>
   </div>
 
   <p class="foot">Machote Man Cave Shop · Curated for Vibers · <a href="my-whiteboard.html">Whiteboard</a> · <a href="vibers-menu.html">Valet</a> · <a href="talk-first.html?source=machote-shop">Talk to us</a> · NSPFRNP → ∞⁹</p>
 
   <script>
   (function () {
-    var pills = document.querySelectorAll('.cat-pill');
-    var center = document.getElementById('market-center');
-    var labels = {
+    // Tier copy
+    var tierMessages = {
+      highbrow: 'Baller Highbrow · Baller VIPs. Ultra high end.',
+      basic: 'Baller Basic · Same customer, different occasions, different priorities. The same Machote who buys a Ferrari also shops at Costco. Old school. Cellar, kitchen, garage, workshop. Curated.'
+    };
+
+    // Stalls per category: { left: [{ name, hint, image }], right: [...] }
+    var STALLS = {
+      lifestyle: {
+        left: [
+          { name: 'Kitchen & Cellar', hint: 'Wine, bar, curated', image: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=400&h=260&fit=crop' },
+          { name: 'Wild Proteins', hint: 'Hand-selected', image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400&h=260&fit=crop' },
+          { name: 'Charcuterie & Cheese', hint: 'Olive oil, specialty', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=260&fit=crop' },
+          { name: 'Wine Cellar', hint: 'Reserve & daily', image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&h=260&fit=crop' }
+        ],
+        right: [
+          { name: 'Bar & Spirits', hint: 'Curated bottles', image: 'https://images.unsplash.com/photo-1536935338788-846bb9981813?w=400&h=260&fit=crop' },
+          { name: 'Pantry & Oils', hint: 'Specialty, small batch', image: 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=260&fit=crop' },
+          { name: 'Table & Gather', hint: 'Dinner, asado', image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=260&fit=crop' }
+        ]
+      },
+      gear: {
+        left: [
+          { name: 'Outdoors & Ranch', hint: 'Mines, beach, fishing', image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=260&fit=crop' },
+          { name: 'Fishing & Hunt', hint: 'Tackle, optics', image: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=400&h=260&fit=crop' },
+          { name: 'Ranch & Land', hint: 'Stewardship', image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=260&fit=crop' }
+        ],
+        right: [
+          { name: 'Beach & Water', hint: 'Boats, gear', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=260&fit=crop' },
+          { name: 'Camp & Trail', hint: 'Boots, packs', image: 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=400&h=260&fit=crop' },
+          { name: 'Workshop', hint: 'Tools, garage', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=260&fit=crop' }
+        ]
+      },
+      stewardship: {
+        left: [
+          { name: 'Ranch & Acreage', hint: 'Lease or steward', image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=260&fit=crop' },
+          { name: 'Fishing & Hunting Properties', hint: 'Development', image: 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=400&h=260&fit=crop' }
+        ],
+        right: [
+          { name: 'Mines & Land', hint: 'Stewardship', image: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=400&h=260&fit=crop' },
+          { name: 'Lodge & Retreat', hint: 'Own or lease', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&h=260&fit=crop' }
+        ]
+      },
+      fashions: {
+        left: [
+          { name: 'Baller', hint: 'Ultra high end', image: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?w=400&h=260&fit=crop' },
+          { name: 'Ranch & Western', hint: 'Cowboy, outdoorsman', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=260&fit=crop' },
+          { name: 'Leather & Fur', hint: 'Curated', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=260&fit=crop' }
+        ],
+        right: [
+          { name: 'Evening & Night', hint: 'Bond, Sinatra', image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=260&fit=crop' },
+          { name: 'Outdoor & Trail', hint: 'Creator, commander', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=260&fit=crop' }
+        ]
+      },
+      interiors: {
+        left: [
+          { name: 'Furniture', hint: 'Statement pieces', image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=260&fit=crop' },
+          { name: 'Rugs & Textiles', hint: 'Old world', image: 'https://images.unsplash.com/photo-1600166898405-da9535204843?w=400&h=260&fit=crop' },
+          { name: 'Lighting', hint: 'Cellar, workshop', image: 'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&h=260&fit=crop' }
+        ],
+        right: [
+          { name: 'Garage & Workshop', hint: 'Lowbrow anchor', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=260&fit=crop' },
+          { name: 'Kitchen & Home', hint: 'Grandpa cellar vibe', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=260&fit=crop' }
+        ]
+      },
+      tech: {
+        left: [
+          { name: 'Build & Create', hint: 'Technologist, creator', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=260&fit=crop' },
+          { name: 'Tools & Operate', hint: 'Commander', image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=260&fit=crop' },
+          { name: 'Channel & Stream', hint: 'Channeler, viber', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=260&fit=crop' }
+        ],
+        right: [
+          { name: 'Studio & Lab', hint: 'Holographic', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=260&fit=crop' },
+          { name: 'Old School Tools', hint: 'Lowbrow workshop', image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=400&h=260&fit=crop' }
+        ]
+      },
+      destinations: {
+        left: [
+          { name: 'At Home', hint: 'Experiences delivered', image: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=400&h=260&fit=crop' },
+          { name: 'On the Road', hint: 'Book an experience', image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=260&fit=crop' },
+          { name: 'Travel', hint: 'Destinations catalog', image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=260&fit=crop', url: 'destinations-magazine-catalog.html' }
+        ],
+        right: [
+          { name: 'Crawler & Baller V', hint: 'Reno, Truckee', image: 'https://images.unsplash.com/photo-1531259683007-3a9ea0547bc4?w=400&h=260&fit=crop', url: 'vibelandia-truckee-river-crawl.html' },
+          { name: 'Guided Expeditions', hint: 'Elk, quail, bonefish', image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&h=260&fit=crop', url: 'guided-expeditions.html' }
+        ]
+      }
+    };
+
+    var categoryLabels = {
       lifestyle: 'Lifestyle · Kitchen, wild proteins, wine cellar, bar, charcuterie. All hand-selected.',
       gear: 'Gear · Outdoors, ranches, beach, fishing, hunting. Stewardship & development.',
       stewardship: 'Stewardship & Development · Properties for lease or stewardship. We call it stewardship.',
       fashions: 'Fashions · Curated for the Machote. Baller. Viber.',
-      interiors: 'Interiors · Furniture, rugs, interior design.',
-      tech: 'Technology & Tools · Build, create, operate.',
+      interiors: 'Interiors · Furniture, rugs, interior design. Cellar, kitchen, garage, workshop.',
+      tech: 'Technology & Tools · Build, create, operate. Technologists, creators, channelers.',
       destinations: 'Destinations · Book an experience. At home, on the road, or travel.'
     };
 
-    function setActive(pill) {
-      pills.forEach(function (p) { p.classList.remove('active'); });
+    var currentCat = 'lifestyle';
+    var currentTier = 'highbrow';
+
+    function renderStall(s) {
+      var img = s.image ? '<div class="stall-img-wrap"><img src="' + s.image + '" alt="" loading="lazy" onerror="this.parentElement.style.display=\'none\'"/></div>' : '';
+      var href = s.url || ('talk-first.html?source=machote-shop&prefill=' + encodeURIComponent('Machote Man Cave Shop: ' + s.name));
+      return '<a href="' + href + '" class="stall">' + img +
+        '<div class="stall-body"><span class="stall-name">' + s.name + '</span><span class="stall-hint">' + s.hint + '</span></div></a>';
+    }
+
+    function renderColumn(stalls, label) {
+      if (!stalls || !stalls.length) return '<span class="stall-label">' + label + '</span><p class="stall-hint" style="padding:0.5rem 0;">No stalls in this category yet.</p>';
+      var html = '<span class="stall-label">' + label + '</span>';
+      stalls.forEach(function (s) { html += renderStall(s); });
+      return html;
+    }
+
+    function updateStalls() {
+      var data = STALLS[currentCat];
+      if (!data) return;
+      document.getElementById('stalls-left').innerHTML = renderColumn(data.left, 'Stalls · Please, come');
+      document.getElementById('stalls-right').innerHTML = renderColumn(data.right, 'Stalls · Please, come');
+    }
+
+    function updateCenter() {
+      var center = document.getElementById('market-center');
+      var msg = center.querySelector('.hollow-msg');
+      var tierMsg = document.getElementById('tier-msg');
+      if (msg) msg.innerHTML = '<strong>' + (currentCat.charAt(0).toUpperCase() + currentCat.slice(1)) + '</strong> · ' + (categoryLabels[currentCat] || '') + ' Pick a stall to explore or book.';
+      if (tierMsg) tierMsg.textContent = tierMessages[currentTier] || tierMessages.highbrow;
+    }
+
+    function setActivePill(pill) {
+      document.querySelectorAll('.cat-pill').forEach(function (p) { p.classList.remove('active'); });
       if (pill) pill.classList.add('active');
     }
 
-    pills.forEach(function (pill) {
+    function setActiveTier(btn) {
+      document.querySelectorAll('.tier-pill').forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+      if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); }
+    }
+
+    function setActiveSkin(chip) {
+      document.querySelectorAll('.skin-chip').forEach(function (c) { c.classList.remove('active'); });
+      if (chip) chip.classList.add('active');
+    }
+
+    document.querySelectorAll('.cat-pill').forEach(function (pill) {
       pill.addEventListener('click', function (e) {
         e.preventDefault();
-        setActive(pill);
-        var id = pill.getAttribute('href').slice(1);
+        currentCat = pill.getAttribute('data-cat') || 'lifestyle';
+        setActivePill(pill);
         pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        var msg = center && center.querySelector('.hollow-msg');
-        if (msg && labels[id]) {
-          msg.innerHTML = '<strong>' + pill.textContent.trim() + '</strong> · ' + labels[id] + ' Pick a stall to explore or book.';
+        updateStalls();
+        updateCenter();
+      });
+    });
+
+    document.querySelectorAll('.tier-pill').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        currentTier = btn.getAttribute('data-tier') || 'highbrow';
+        setActiveTier(btn);
+        updateCenter();
+      });
+    });
+
+    document.querySelectorAll('.skin-chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        setActiveSkin(chip);
+        var skin = chip.getAttribute('data-skin');
+        if (skin && skin !== 'all') {
+          var center = document.getElementById('market-center');
+          var msg = center.querySelector('.hollow-msg');
+          if (msg) msg.innerHTML = '<strong>Curated for the ' + (chip.textContent.trim()) + '</strong> · Same stalls, your skin. Pick a category or stall to explore.';
+        } else {
+          updateCenter();
         }
       });
     });
+
+    updateStalls();
+    updateCenter();
   })();
   </script>
 

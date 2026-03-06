@@ -77,9 +77,24 @@ Then add depth per category and real "book experience" flows.
 ## 6. Copy Notes
 
 - **Machote** everywhere (not Mahote, not Majote).
-- **Vibers** (not "five").
+- **Vibers** (not "vibrant Vibers," not "five").
 - **Stewardship & Development** (not "sale" or "lease" as the primary label — even when a transaction is sale or lease).
 - **Stalls** for the side offerings; **sections** for the market areas (food, gear, destinations, etc.).
+
+---
+
+## 7. Two Varieties (Tiers) — Same Customer
+
+- **Baller Highbrow** — Baller VIPs. Ultra high end.
+- **Baller Basic** — Same customer, different occasions, different priorities. **The same Machote who buys a Ferrari also shops at Costco.** Old school. Cellar, kitchen, garage, workshop. Curated.
+
+They are both the same customer; they buy both for different occasions and different priorities. The market serves Baller VIPs and Baller Basic in one place.
+
+---
+
+## 8. The Skin (Characters from Console)
+
+From the HH Console profile setup: **Machote, Baller, Viber, Big Daddy, Bond, Howard Hughes, Sinatra, Cowboy, Creator, Commander, Holographic, Free.** Plus **Outdoorsman** and **Channeler.** Offer the shop so Vibers can see or filter by character — cowboy, outdoorsman, technologist, creator, subscriber, channeler. The skin row supports the elevator: curated for the Machote, the Cowboy, the Creator, etc.
 
 ---
 

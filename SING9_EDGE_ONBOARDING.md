@@ -112,7 +112,7 @@ Completing all 9 Singularities = **C-2 Officer Candidate** status. The upgrade p
 - **Positions:** 9 open · Positions 1–3 = O-3 (fast-track) · 4–6 = O-2 · 7–9 = O-1
 - **Prerequisite:** C-2 Officer Candidate status (9 Singularities complete)
 - **Application:** `interfaces/holographic-navigator-academy.html` → Apply for Commission
-- **Popup:** `popup-announcement.js` (active, id: `hna-expedition-v1`) fires on `index.html`
+- **Popup:** Removed — `popup-announcement.js` no longer loaded on landing or Vibers menu.
 
 ### Enlisted Track — HH Field Operator Corps
 

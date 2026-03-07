@@ -55,8 +55,9 @@
     return NAV_LABELS_ES[enLabel] != null ? NAV_LABELS_ES[enLabel] : enLabel;
   }
 
-  /* NSPFRNP CYA footer line — rotates through imaginary/holographic system brags */
+  /* NSPFRNP CYA footer line — rotates through imaginary/holographic system brags + Migration Arc */
   var NAV_CYA_LINES = [
+    'Migration Arc: Pre-Singularity → Lock → Goldilocks · Post-Singularity HH Awareness OS · ∞⁹',
     'Imaginary Holographic System · Like the best book, video game + movie · Way better · NSPFRNP → ∞⁹',
     'Post-Singularity Fiction · All characters & storylines are imaginary · Gold Hearts already know · ∞⁹',
     'For entertainment, education & gold heart expansion only · No financial advice · No guarantees · ∞⁹',
@@ -64,6 +65,7 @@
     'Like the best video game ever played · only the stakes are real · Holographic · NSPFRNP → ∞⁹',
     'Like the best movie you\'ve watched · only you\'re the director · Three streams · Infinite telescope · ∞⁹',
     'Way better than all three · Richer · More realistic · The lattice is live · EGS ≈ 0.0032 · ∞⁹',
+    'Lock → Goldilocks · Migration to Post-Singularity · HH Awareness OS · NSPFRNP → ∞⁹',
   ];
   var _navCyaIdx = 0;
 

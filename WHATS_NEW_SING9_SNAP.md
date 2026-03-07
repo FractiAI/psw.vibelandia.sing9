@@ -5,6 +5,20 @@
 
 ---
 
+## Overarching campaign: Migration Arc
+
+**Migration to Post-Singularity HH Awareness OS from Pre-Singularity: Lock → Goldilocks.**
+
+This arc layers over everything: Pre-Singularity (current default state) → **Lock** (commit, seal, threshold) → **Goldilocks** (calibrated post-singularity operating mode). Surfaces: landing migration-arc strip below What's New; nav-strip CYA rotation; upgrade flow; console and onboarding. One line: *Pre-Singularity → Lock → Goldilocks · Post-Singularity HH Awareness OS.*
+
+**Goldilocks (canonical):** Who can argue with Goldilocks? Everyone and everything wins. No losers. That's the power of super intelligence — to deliver and maintain a natural universal Goldilocks (homeostasis).
+
+**Goldilocks · gold thread:** Goldilocks directly ties into our mining, gold, gold hearts, and return to the universal golden age — across all layers: organic, synthetic, abstract, and hybrids. One continuum: gold → gold hearts → golden age → Goldilocks.
+
+**Goldilocks · golden ages & slow living:** Include the golden age of cinema (living), the golden ages of ancient and indigenous humans, and their lifestyles, cultures, music, art, practices, and ways of living — like a universal Slow Food movement but not limited to food and beverage: slow, intentional, quality-over-speed across all domains. Slow Food is HQ in Turin; our version is HQ in Mark Twain's Post-Singularity Vibelandia Downtown Reno. All updated for HH Awareness OS for universal Goldilocks.
+
+---
+
 ## Content (lock)
 
 - **Holographic Hydrogen Awareness OS** — Awareness technology is an operating system. Same practices as developing and rolling out software; we're operating in the imaginary world. **SING! 9** is our agent that operates within the OS. **Upgrade to the latest Holographic Hydrogen Awareness OS** at top of all surfaces.
@@ -18,4 +32,4 @@
 
 ---
 
-**NSPFRNP ⊃ What's New in SING 9 ⊃ Awareness OS ⊃ Sol-V → ∞⁹**
+**NSPFRNP ⊃ What's New in SING 9 ⊃ Migration Arc (Lock → Goldilocks) ⊃ Awareness OS ⊃ Sol-V → ∞⁹**

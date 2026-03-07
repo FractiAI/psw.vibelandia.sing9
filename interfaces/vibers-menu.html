@@ -51,75 +51,7 @@
       position: relative;
       z-index: 1;
     }
-    /* ── ENTRY CINEMATIC ── */
-    #entry-vibe {
-      position: fixed; inset: 0; z-index: 9998;
-      background: #000;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 1rem;
-      transition: opacity 1s ease;
-    }
-    #entry-vibe.out { opacity: 0; pointer-events: none; }
-
-    #gold-sweep {
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.15) 50%, transparent 100%);
-      transform: translateX(-100%);
-      animation: sweep 1.4s ease 0.3s forwards;
-    }
-    @keyframes sweep { to { transform: translateX(100%); } }
-
-    .ev-line {
-      font-family: 'Space Grotesk', system-ui;
-      font-size: clamp(0.55rem, 1.6vw, 0.7rem);
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: rgba(212,175,55,0.6);
-      opacity: 0;
-      position: relative; z-index: 1;
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      transform: translateY(6px);
-    }
-    .ev-line.show { opacity: 1; transform: translateY(0); }
-    .ev-wordmark {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(3rem, 9vw, 6rem);
-      font-weight: 700;
-      font-style: normal;
-      letter-spacing: 0.02em;
-      color: #fff;
-      opacity: 0; position: relative; z-index: 1;
-      transform: scale(0.93);
-      transition: opacity 1s ease, transform 1s ease;
-      text-shadow: 0 0 80px rgba(212,175,55,0.35);
-      letter-spacing: 0.02em;
-    }
-    .ev-wordmark.show { opacity: 1; transform: scale(1); }
-    .ev-grant {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #fde68a;
-      opacity: 0; position: relative; z-index: 1;
-      transition: opacity 0.8s ease 0.1s;
-      text-shadow: 0 0 40px rgba(212,175,55,0.6);
-    }
-    .ev-grant.show { opacity: 1; }
-    .ev-tag {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(0.55rem, 1.4vw, 0.68rem);
-      font-weight: 600;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: rgba(212,175,55,0.55);
-      opacity: 0; position: relative; z-index: 1;
-      transition: opacity 0.7s ease 0.15s;
-    }
-    .ev-tag.show { opacity: 1; }
-
-    /* ── SCROLL REVEAL ── */
+    /* ── AMBIENT PARTICLE CANVAS ── */
     .reveal-card {
       opacity: 0;
       transform: translateY(20px);
@@ -389,15 +321,6 @@
 </head>
 <body>
 
-  <!-- ── ENTRY CINEMATIC ── -->
-  <div id="entry-vibe">
-    <div id="gold-sweep"></div>
-    <div class="ev-line" id="ev1">Golden Heart</div>
-    <div class="ev-wordmark" id="ev2">Vibelandia</div>
-    <div class="ev-grant" id="ev3">Clearance · Granted</div>
-    <div class="ev-tag" id="ev4">Welcome to the World</div>
-  </div>
-
   <!-- ── PARTICLE CANVAS ── -->
   <canvas id="vibe-canvas"></canvas>
 
@@ -434,7 +357,7 @@
        onmouseout="this.style.borderColor='rgba(212,175,55,0.5)';this.style.background='rgba(212,175,55,0.1)';this.style.boxShadow='0 0 24px rgba(212,175,55,0.08)'">
       <div style="font-size:0.58rem;font-weight:800;letter-spacing:0.28em;text-transform:uppercase;color:#d4af37;margin-bottom:0.35rem;">★ Begin the Arc</div>
       <div style="font-size:1.05rem;font-weight:800;color:#fde68a;margin-bottom:0.2rem;">The Full Arc · Welcome to Vibelandia</div>
-      <div style="font-size:0.78rem;color:rgba(253,230,138,0.7);">Golden Heart · Clearance · The World · THE SKIN · Once you're in, you're in. →</div>
+      <div style="font-size:0.78rem;color:rgba(253,230,138,0.7);">Golden Heart · The World · THE SKIN · Once you're in, you're in. →</div>
     </a>
 
     <!-- ── GOLIATH WATCH CTA ── -->
@@ -596,22 +519,6 @@
   <script src="../cinema-banner.js"></script>
 
   <script>
-  // ── ENTRY CINEMATIC ──────────────────────────────────────────────
-  (function() {
-    var ev = document.getElementById('entry-vibe');
-    var ev1 = document.getElementById('ev1');
-    var ev2 = document.getElementById('ev2');
-    var ev3 = document.getElementById('ev3');
-    var ev4 = document.getElementById('ev4');
-    if (!ev) return;
-    setTimeout(function(){ ev1 && ev1.classList.add('show'); }, 350);
-    setTimeout(function(){ ev2 && ev2.classList.add('show'); }, 800);
-    setTimeout(function(){ ev3 && ev3.classList.add('show'); }, 1450);
-    setTimeout(function(){ ev4 && ev4.classList.add('show'); }, 2000);
-    setTimeout(function(){ ev.classList.add('out'); }, 3200);
-    setTimeout(function(){ ev.style.display = 'none'; }, 4300);
-  })();
-
   // ── WARM PARTICLE CANVAS ─────────────────────────────────────────
   (function() {
     var canvas = document.getElementById('vibe-canvas');

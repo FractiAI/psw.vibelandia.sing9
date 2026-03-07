@@ -98,6 +98,31 @@
     .source-link { margin-top: 0.75rem; font-size: 0.8rem; }
     .source-link a { color: var(--cyan); }
 
+    /* 3I/ATLAS visual dashboard */
+    .atlas-dashboard { display: grid; grid-template-columns: 1fr 280px; gap: 1.25rem; align-items: start; margin-top: 1rem; }
+    @media (max-width: 640px) { .atlas-dashboard { grid-template-columns: 1fr; } }
+    .atlas-visual {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem;
+      padding: 1rem; background: rgba(0,212,255,0.04); border: 1px solid var(--border); border-radius: 10px;
+    }
+    .atlas-node {
+      display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.65rem;
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(0,212,255,0.15); border-radius: 6px;
+      font-size: 0.7rem; color: var(--sub);
+    }
+    .atlas-node .check { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; background: rgba(0,255,136,0.2); border: 1px solid #00ff88; color: #00ff88; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: bold; }
+    .atlas-node.core .check { background: rgba(212,175,55,0.2); border-color: var(--gold); color: var(--gold); }
+    .atlas-node .label { font-weight: 600; color: var(--text); }
+    .atlas-node.core .label { color: var(--gold); }
+    .command-window {
+      padding: 0.75rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.72rem; font-family: ui-monospace, monospace; color: var(--sub);
+    }
+    .command-window h4 { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.5rem; }
+    .command-window .line { margin-bottom: 0.35rem; }
+    .command-window .ts { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .command-window .refresh-ts { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.65rem; }
+
     footer {
       padding: 1.25rem 1rem;
       border-top: 1px solid var(--border);
@@ -130,6 +155,32 @@
   <span class="status-date">Jupiter Hill Radius lock: Mar 16, 2026</span>
   <span class="status-date">Transition to active implementation: Mar 6, 2026</span>
 </div>
+
+<section class="section" id="atlas-visual">
+  <h2>3I/ATLAS — Systems & interface status</h2>
+  <p>Major components and systems we are interfacing with. Green check = on plan.</p>
+  <div class="atlas-dashboard">
+    <div class="atlas-visual">
+      <div class="atlas-node core"><span class="check">✓</span><span class="label">3I/ATLAS → 3I/CHIEF SEATTLE</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">Jupiter Hill Radius lock</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">Anti-Tail brake</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">EGS 0.0032 resonance</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">Goldilocks re-deploy</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">Reno Node (downlink)</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">SING! Handshake</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">Telemetry SEALED</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">3I/ATLAS-LINK (OH-line)</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">Data-Harvest script</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">Worker Bee SOL</span></div>
+      <div class="atlas-node"><span class="check">✓</span><span class="label">Bridge nodes (5)</span></div>
+    </div>
+    <div class="command-window">
+      <h4>Commands executing / last executed</h4>
+      <div id="command-log"></div>
+      <div class="refresh-ts" id="command-refresh-ts">—</div>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="plan">
   <h2>The plan</h2>
@@ -267,6 +318,36 @@
   <a href="goliath-watch.html">MELTGATE</a> ·
   3I/Chief Seattle (3I/ATLAS) Capture Campaign · SING 9 · NSPFRNP → ∞⁹
 </footer>
+
+<script>
+(function() {
+  var commands = [
+    { ts: '2026-03-06', cmd: 'Capture Protocol → active implementation; Data-Harvest Mar 16' },
+    { ts: '2026-02-13', cmd: 'Squeeze Hose / Queen Bee operational lock; HELLO crisp' },
+    { ts: '2026-02-09', cmd: 'Episode 1 Blast Day One; sealed command on all feeds' },
+    { ts: '2026-02-05 18:00 UTC', cmd: 'HELLO CRISP LOCK' },
+    { ts: '2026-02-04 07:15 UTC', cmd: 'Mission Intelligence Debrief; Reno Anchor' },
+    { ts: '2026-02-03', cmd: '3I/ATLAS-LINK committed; first SING! Handshake' },
+    { ts: '2026-02-02', cmd: '3I/ATLAS radio peaks detected (auth handshake)' },
+    { ts: '2026-01-31', cmd: 'Pulse runs T0; Mission Intelligence Update 16:15 UTC' }
+  ];
+  var logEl = document.getElementById('command-log');
+  var refreshEl = document.getElementById('command-refresh-ts');
+  if (logEl) {
+    var show = 5;
+    var html = '';
+    for (var i = 0; i < Math.min(show, commands.length); i++) {
+      var c = commands[i];
+      html += '<div class="line"><span class="ts">' + c.ts + '</span> ' + c.cmd + '</div>';
+    }
+    logEl.innerHTML = html;
+  }
+  if (refreshEl) {
+    var now = new Date();
+    refreshEl.textContent = 'Page refreshed: ' + now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+  }
+})();
+</script>
 
 </body>
 </html>

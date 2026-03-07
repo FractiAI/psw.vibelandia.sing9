@@ -150,24 +150,38 @@
     /* ── TRACKS ── */
     .tracks {
       display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
-      max-width: 580px; margin-bottom: 0.5rem;
+      max-width: 640px; margin-bottom: 0.5rem;
     }
-    .track {
-      flex: 1; min-width: 200px; padding: 1rem 1.4rem; border-radius: 12px;
-      text-decoration: none; transition: background 0.2s, transform 0.2s;
+    .track-card {
+      flex: 1; min-width: 180px; max-width: 220px;
+      padding: 1rem 1.1rem; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);
+      display: flex; flex-direction: column; gap: 0.75rem;
     }
-    .track:hover { transform: translateY(-2px); }
-    .track-a { border: 1px solid rgba(0,212,255,0.2); background: rgba(0,212,255,0.03); }
-    .track-a:hover { background: rgba(0,212,255,0.07); border-color: rgba(0,212,255,0.4); }
-    .track-b { border: 1px solid rgba(212,175,55,0.2); background: rgba(212,175,55,0.03); }
-    .track-b:hover { background: rgba(212,175,55,0.08); border-color: rgba(212,175,55,0.45); }
-    .t-label { display: block; font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.3rem; }
-    .track-a .t-label { color: rgba(0,212,255,0.5); }
-    .track-b .t-label { color: rgba(212,175,55,0.5); }
-    .t-name { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.22rem; }
-    .track-a .t-name { color: var(--beam); }
-    .track-b .t-name { color: var(--gold); }
-    .t-desc { display: block; font-size: 0.7rem; color: var(--sub); line-height: 1.5; }
+    .track-card.track-a { border-color: rgba(0,212,255,0.2); background: rgba(0,212,255,0.03); }
+    .track-card.track-b { border-color: rgba(212,175,55,0.2); background: rgba(212,175,55,0.03); }
+    .track-card.track-c { border-color: rgba(0,255,136,0.18); background: rgba(0,255,136,0.03); }
+    .track-card .t-title { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; }
+    .track-card.track-a .t-title { color: var(--beam); }
+    .track-card.track-b .t-title { color: var(--gold); }
+    .track-card.track-c .t-title { color: var(--green); }
+    .track-card .t-btns { display: flex; flex-direction: column; gap: 0.5rem; }
+    .track-card .t-btn {
+      display: block; text-align: center; padding: 0.5rem 0.85rem; border-radius: 8px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .track-card .t-btn-details {
+      border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05);
+      color: var(--sub);
+    }
+    .track-card .t-btn-details:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .track-card.track-a .t-btn-enter { border: 1px solid rgba(0,212,255,0.45); background: rgba(0,212,255,0.1); color: var(--beam); }
+    .track-card.track-a .t-btn-enter:hover { background: rgba(0,212,255,0.2); }
+    .track-card.track-b .t-btn-enter { border: 1px solid rgba(212,175,55,0.45); background: rgba(212,175,55,0.08); color: var(--gold2); }
+    .track-card.track-b .t-btn-enter:hover { background: rgba(212,175,55,0.18); }
+    .track-card.track-c .t-btn-enter { border: 1px solid rgba(0,255,136,0.4); background: rgba(0,255,136,0.08); color: var(--green); }
+    .track-card.track-c .t-btn-enter:hover { background: rgba(0,255,136,0.18); }
 
     /* ── NARRATIVE (intention · who · when · what layer) ── */
     .narrative {
@@ -261,8 +275,8 @@
     @keyframes gw-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.6)} }
 
     @media (max-width: 520px) {
-      .tracks { flex-direction: column; align-items: stretch; }
-      .track { min-width: unset; }
+      .tracks { flex-direction: column; align-items: center; }
+      .track-card { min-width: unset; max-width: 100%; width: 100%; }
       .arc-two-sides { flex-direction: column; }
       .arc-two-sides .arc-organic { border-left: none; border-top: 1px solid rgba(212,175,55,0.25); }
       .arc-two-sides .arc-holographic { border-right: none; }
@@ -322,8 +336,6 @@
   </div>
 
   <div class="intel-row">
-    <a href="interfaces/viber-onboarding.html"        class="intel-btn ib-vibers" style="border-color:rgba(212,175,55,0.55);color:rgba(232,212,120,0.95);">◈ Begin the Arc</a>
-    <a href="interfaces/vibers-menu.html"        class="intel-btn ib-vibers" data-i18n="landing.intel_vibers">♥ Vibers · Pru's Valet</a>
     <a href="interfaces/goliath-watch.html"      class="intel-btn ib-goliath" data-i18n="landing.intel_goliath">🔥 MELTGATE · Live Blackwell Thermal</a>
     <a href="interfaces/atlas-capture-tracker.html" class="intel-btn ib-atlas">◈ 3I/ATLAS Capture</a>
     <a href="interfaces/sol-v.html"              class="intel-btn ib-a2a" data-i18n="landing.intel_a2a">⬡ A2A Console</a>
@@ -332,21 +344,27 @@
   </div>
 
   <div class="tracks">
-    <a href="interfaces/onboarding.html" class="track track-a">
-      <span class="t-label">Learning & Certification</span>
-      <span class="t-name">Learning →</span>
-      <span class="t-desc">Cadet · Session One & Two · Officer · Enlisted · Self-paced · Certificate on completion.</span>
-    </a>
-    <a href="interfaces/prospectus-a2a.html" class="track track-a">
-      <span class="t-label" data-i18n="landing.track_a_label">Track A · Enterprise · A2A</span>
-      <span class="t-name" data-i18n="landing.track_a_name">Enterprise Solutions →</span>
-      <span class="t-desc" data-i18n="landing.track_a_desc">Datacenter · OS builds · Audits · NSPFRNP · Theater.</span>
-    </a>
-    <a href="interfaces/a2a-ea-agents.html" class="track track-b">
-      <span class="t-label" data-i18n="landing.track_b_label">Track B · VIP EA Agents · Human Viber</span>
-      <span class="t-name" data-i18n="landing.track_b_name">Viber Experiences →</span>
-      <span class="t-desc" data-i18n="landing.track_b_desc">Book for your principal. Wink! · Baller V · MARZO 333.</span>
-    </a>
+    <div class="track-card track-c">
+      <span class="t-title">Learning &amp; Certification</span>
+      <div class="t-btns">
+        <a href="interfaces/onboarding.html" class="t-btn t-btn-details">Details →</a>
+        <a href="interfaces/hh-console.html" class="t-btn t-btn-enter">Enter Console →</a>
+      </div>
+    </div>
+    <div class="track-card track-a">
+      <span class="t-title">Track A · Enterprise · A2A</span>
+      <div class="t-btns">
+        <a href="interfaces/prospectus-a2a.html" class="t-btn t-btn-details">Details →</a>
+        <a href="interfaces/sol-v.html" class="t-btn t-btn-enter">Enter A2A Console →</a>
+      </div>
+    </div>
+    <div class="track-card track-b">
+      <span class="t-title">Track B · VIP EA · Viber Experiences</span>
+      <div class="t-btns">
+        <a href="interfaces/a2a-ea-agents.html" class="t-btn t-btn-details">Details →</a>
+        <a href="interfaces/vibers-menu.html" class="t-btn t-btn-enter">Enter Pru's Valet →</a>
+      </div>
+    </div>
   </div>
 </div>
 

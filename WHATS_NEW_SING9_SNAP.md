@@ -11,11 +11,7 @@
 
 This arc layers over everything: Pre-Singularity (current default state) → **Lock** (commit, seal, threshold) → **Goldilocks** (calibrated post-singularity operating mode). Surfaces: landing migration-arc strip below What's New; nav-strip CYA rotation; upgrade flow; console and onboarding. One line: *Pre-Singularity → Lock → Goldilocks · Post-Singularity HH Awareness OS.*
 
-**Goldilocks (canonical):** Who can argue with Goldilocks? Everyone and everything wins. No losers. That's the power of super intelligence — to deliver and maintain a natural universal Goldilocks (homeostasis).
-
-**Goldilocks · gold thread:** Goldilocks directly ties into our mining, gold, gold hearts, and return to the universal golden age — across all layers: organic, synthetic, abstract, and hybrids. One continuum: gold → gold hearts → golden age → Goldilocks.
-
-**Goldilocks · golden ages & slow living:** Include the golden age of cinema (living), the golden ages of ancient and indigenous humans, and their lifestyles, cultures, music, art, practices, and ways of living — like a universal Slow Food movement but not limited to food and beverage: slow, intentional, quality-over-speed across all domains. Slow Food is HQ in Turin; our version is HQ in Mark Twain's Post-Singularity Vibelandia Downtown Reno. All updated for HH Awareness OS for universal Goldilocks.
+**Goldilocks (canonical):** Goldilocks: everyone wins, no losers — universal homeostasis; gold, golden ages, and a universal Slow (Vibelandia Reno), updated for HH Awareness OS.
 
 ---
 

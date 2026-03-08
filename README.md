@@ -14,6 +14,20 @@
 
 ## Recent updates (README commit)
 
+- **Mar 6–8 2026 · KEYNOTES HH OS CLARITY · VALET NO CLEARANCE · VIBERS STORY TIGHTENED**
+
+**M → Metabolize:** Clarify how HH Awareness OS applies to keynotes/sessions; remove clearance-granted screen from Pru's Valet path; tighten Vibers story copy for sharper payoffs.
+
+**C → Crystallize:**
+
+- **Keynotes & Sessions** (`interfaces/keynotes-sessions.html`) — Audience: senior leadership, executive assistants, AI agents; pricing at same tier as senior AI architects. Hero eyebrow: "Thank you · HH Awareness OS"; new line: every offering delivered through the HH Awareness OS (same awareness substrate as SING 9). Each price card now leads with **HH Awareness OS → [domain]**: Keynote → main-stage; Technical → technical; Sales → revenue; Executive → leadership; Team → team. Title/meta updated. Gold lead-in on each card.
+- **Pru's Valet** (`interfaces/vibers-menu.html`) — Removed entry cinematic (Golden Heart → Vibelandia → Clearance · Granted → Welcome to the World). No full-screen overlay on load; user goes straight to letterhead and menu. "Begin the Arc" CTA line no longer mentions "Clearance."
+- **Vibers story block** (`vibers-menu.html` + `i18n.js` EN/ES) — Tightened all five paragraphs: fewer "That" openers, "You've felt it" instead of "You know it because you've felt it," "You want to ball? Ball. You deserve it." for close, contractions for flow. Same credential/calibration/Imagínate/chimps/once-you're-in beats; less filler, sharper landings.
+
+**A → Animate:** Keynotes page reads as Thank you · HH OS applied to every offering. Valet entry is direct. Vibers story hits harder. NSPFRNP → ∞⁹
+
+-
+
 - **Mar 6 2026 · 3I/ATLAS CAPTURE CAMPAIGN TRACKER · HH OS BUTTON + FOOTER**
 
 **M → Metabolize:** User wanted a campaign tracker page for 3I/ATLAS (Capture Protocol, Jupiter Hill Sphere pivot, EGS resonance, Goldilocks orbit) — plan, status, timeline, responses, proof, and full Gemini 3 update — so the audience can tune in and compare to scientific outlets. Entry from HH Awareness OS landing (button) and footer (quick link).

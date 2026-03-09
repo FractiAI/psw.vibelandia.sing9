@@ -59,7 +59,7 @@ This one is.
 
 Five territories: The West · Aquí y Allá · The Ball · The Wild · The Frequency. All running at Goldilocks — not too much, not too little, always right.
 
-When you're ready to live it — not just scroll it — Pru's Valet handles everything.
+When you're ready to live it — not just scroll it — Pru's Vibelandia Valet handles everything.
 One email. Old school. info@fractiai.com
 
 Downtown Reno · Ranging Everywhere

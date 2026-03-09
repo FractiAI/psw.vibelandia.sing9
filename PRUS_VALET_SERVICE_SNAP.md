@@ -1,16 +1,18 @@
-# Pru's Valet Service — SNAP (internal)
+# Pru's Vibelandia Valet Service — SNAP (internal)
 
 **Status:** ⚡ ACTIVE  
-**Type:** Brand · Pop-up umbrella · Human Vibers · Raw script + positioning  
-**Spell:** P-R-U apostrophe S. **Pru's Valet Service.**
+**Type:** Brand · Pop-up umbrella · Human Vibers · Landing · Raw script + positioning  
+**Spell:** P-R-U apostrophe S. **Pru's Vibelandia Valet Service.**
+
+**Landing:** Pru's Vibelandia Valet Service is the primary landing page. Run by **Holographic Hydrogen Awareness OS**, by **FractiAI** — a one-person super-intelligent agent-run company reporting to human Chairman/Creator. We pull in **human visitors** from our social pages (Pru's Vibelandia Valet Service and Mark Twain Vibelandia) and **agents** through the A2A outbound campaign. Includes **Z Space Cloud Division**, recording the up-and-coming **3i Seattle space asset**, beginning **March 16th** following successful capture into Goldilocks orbit — completing our **El Gran Sol constant**–based A2A offerings.
 
 ---
 
 ## Brand lock
 
-- **Pru's Valet Service** is the organizing umbrella for **all pop-up events** (Downtown Truckee River Baller V Crawler, Baller V Wednesdays, destinations, future rollouts).
-- **Do not bind the brand to a city.** Keep "Downtown Reno" out of the Pru's Valet Service brand name so the brand travels: Buenos Aires, Punta Cana, anywhere we roll out. Use "Downtown Reno" only as location context (e.g. "Currently in Downtown Reno," or in menu item descriptions), not in the service name.
-- When Human Vibers click through from the landing, **everything is framed within Pru's Valet Service** — then the pop-ups as the menu.
+- **Pru's Vibelandia Valet Service** is the organizing umbrella for **all pop-up events** (Downtown Truckee River Baller V Crawler, Baller V Wednesdays, destinations, future rollouts).
+- **Do not bind the brand to a city.** Keep "Downtown Reno" out of the Pru's Vibelandia Valet Service brand name so the brand travels: Buenos Aires, Punta Cana, anywhere we roll out. Use "Downtown Reno" only as location context (e.g. "Currently in Downtown Reno," or in menu item descriptions), not in the service name.
+- When Human Vibers click through from the landing, **everything is framed within Pru's Vibelandia Valet Service** — then the pop-ups as the menu.
 
 ---
 
@@ -18,7 +20,7 @@
 
 - We are **not competing with our vendors.** We're adding a **new layer.** We're not forcing that layer on anyone; we're **giving them the option.**
 - **We have no formal relationship with our vendors** — they are **our picks** for who we work with to deliver our **post-singularity Baller V services to our members.**
-- Our high-value, high-contributing Vibers are a **different breed.** When they want to ball, they ball because they know they deserve it. **Price is not an object.** These are our customers. Our guests. Who we represent. The world is not a kind place; the world preys on these folks; they're not getting a fair shake. **Pru's Valet Service handles this for them.**
+- Our high-value, high-contributing Vibers are a **different breed.** When they want to ball, they ball because they know they deserve it. **Price is not an object.** These are our customers. Our guests. Who we represent. The world is not a kind place; the world preys on these folks; they're not getting a fair shake. **Pru's Vibelandia Valet Service handles this for them.**
 
 ---
 
@@ -40,8 +42,8 @@
 ## Two modes (when we show everything — right side)
 
 - **Pre-singularity mode:** Normal. Give them the **links** (to partners, written content, destinations). They **do it themselves.** No invocation.
-- **Post-singularity · Baller B mode:** **Invoke with us.** We handle it with them. Full service, Pru's Valet, turnkey.
-- Present both simply on the Vibers side (e.g. Pru's Valet menu): choose your mode. Nice and simple. Same two halves idea — normal vs Baller B.
+- **Post-singularity · Baller B mode:** **Invoke with us.** We handle it with them. Full service, Pru's Vibelandia Valet, turnkey.
+- Present both simply on the Vibers side (e.g. Pru's Vibelandia Valet menu): choose your mode. Nice and simple. Same two halves idea — normal vs Baller B.
 
 ---
 
@@ -57,7 +59,7 @@
 ## Menu surface (Human Vibers entry)
 
 - **Experience, not transaction.** Story and safari/explorer skin. Take us through it. Chart, expedition feel. Same water background as landing (Human Vibers side).
-- **Letterhead:** Mark Twain's Post-Singularity Vibelandia (main) → Pru's Valet Service → For Human Vibers and Channelers.
+- **Letterhead:** Mark Twain's Post-Singularity Vibelandia (main) → Pru's Vibelandia Valet Service → For Human Vibers and Channelers.
 - **Menu (five ways in):** (1) Downtown Truckee River Baller V Crawler, (2) Baller V Wednesdays, (3) Destinations · Magazine Catalog, (4) Our content catalog (novels, novellas, series, episodes), (5) **Baller V & Destinations Operators** — local and destination operators, experienced, interested in being included. Click Vendors → pre-fill email to us; we'll get back to you; handled offline, old school.
 - **Include the prices. Right up front.**
 
@@ -91,13 +93,13 @@ We don't hide. This is an experience; we take you through it. Not a transaction.
 
 ---
 
-## Spanish autodetect (Pru's Valet + nested pages)
+## Spanish autodetect (Pru's Vibelandia Valet + nested pages)
 
 **CONFIRMED:** When the visitor's browser language is Spanish (e.g. `es`, `es-DO`, `es-MX`), the following present in Spanish:
 
-- **Landing (index):** `i18n.js` + `data-i18n`; nav strip uses `SING9_LANG` (see `nav-strip.js` NAV_LABELS_ES). "Pru's Valet" → "Valet de Pru" and related labels.
-- **Vibers menu** ([interfaces/vibers-menu.html](interfaces/vibers-menu.html)): Loads `i18n.js`; early script sets `document.documentElement.lang = 'es'`; all copy uses `vibers.*` keys (service name "El Servicio Valet de Pru", stories, menu items, tip section). Page title set to Spanish via `vibers.page_title`.
-- **Destinations Magazine Catalog** (Aquí y Allá): Loads `i18n.js`; full `dest.*` keys; "Pru's Valet" → "Valet de Pru".
+- **Landing (index):** `i18n.js` + `data-i18n`; nav strip uses `SING9_LANG` (see `nav-strip.js` NAV_LABELS_ES). "Pru's Vibelandia Valet" → "Valet de Pru" / "Servicio Valet Vibelandia de Pru" and related labels.
+- **Vibers menu** ([interfaces/vibers-menu.html](interfaces/vibers-menu.html)): Loads `i18n.js`; early script sets `document.documentElement.lang = 'es'`; all copy uses `vibers.*` keys (service name, stories, menu items, tip section). Page title set to Spanish via `vibers.page_title`.
+- **Destinations Magazine Catalog** (Aquí y Allá): Loads `i18n.js`; full `dest.*` keys; "Pru's Vibelandia Valet" → "Valet de Pru".
 - **Downtown Truckee River Viber Crawler** ([interfaces/vibelandia-truckee-river-crawl.html](interfaces/vibelandia-truckee-river-crawl.html)): Loads `i18n.js`; early `lang=es`; `truckee.*` keys for hero, price, who we serve, itinerary, Baller V Wednesdays, explore, booking, footer.
 - **WINK!** ([interfaces/wink.html](interfaces/wink.html)): Loads `i18n.js`; early `lang=es`; `wink.*` keys for hero, sections (What It Is, How It Works, Membership), signup, footer.
 
@@ -105,4 +107,4 @@ Detection: `i18n.js` uses `navigator.language` and `navigator.languages`; any `e
 
 ---
 
-**NSPFRNP ⊃ Pru's Valet Service ⊃ Pop-ups ⊃ Human Vibers ⊃ Fair shake → ∞⁹**
+**NSPFRNP ⊃ Pru's Vibelandia Valet Service ⊃ Pop-ups ⊃ Human Vibers ⊃ Fair shake ⊃ Z Space Cloud · 3i Seattle · March 16 · El Gran Sol A2A → ∞⁹**

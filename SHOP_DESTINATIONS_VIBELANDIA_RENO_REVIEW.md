@@ -30,7 +30,7 @@
 **Surfaces:**
 - **Hub:** `interfaces/destinations.html` — Destinations hub (curated partners, Reno crown jewel, Truckee, Mt. Rose, Steamboat, Pyramid, Elk & bison Montana, quail Mexico, bonefishing Bahamas; "we recommend partners … no formal relationship").
 - **Magazine catalog:** `interfaces/destinations-magazine-catalog.html` — **Aquí y Allá · Destinations Magazine Catalog**. "Here and there. One click to escape." Editor letter, **Aquí · Local** grid, **Allá · Far Away** grid. Partner cards (image, headline, trailer, partner byline) → `destination.html?id=<id>`.
-- **Single destination:** `interfaces/destination.html` — Detail page: hero, SING! 9 arc/treasure banner, intro, day-by-day itinerary, **Pre-Singularity (Book Direct)** vs **Post-Singularity (Pru's Valet)** booking cards, partner reference.
+- **Single destination:** `interfaces/destination.html` — Detail page: hero, SING! 9 arc/treasure banner, intro, day-by-day itinerary, **Pre-Singularity (Book Direct)** vs **Post-Singularity (Pru's Vibelandia Valet)** booking cards, partner reference.
 
 **Data:**
 - **Catalog grid:** Partner list inline in `destinations-magazine-catalog.html` (same set as below).
@@ -69,9 +69,9 @@
 ## 3. Vibelandia Reno — Experiences & Offerings
 
 **Entry points:**
-- **Explore:** `interfaces/explore-vibelandia-downtown-reno.html` — "Explore Mark Twain's Vibelandia · Downtown Reno." Crown jewel, pop-ups, Crawler, Baller V, destinations. Links: Crawler ($12,500 inc. 25% gratuity), Baller V Wednesdays ($416 inc. 25% gratuity), Destinations Magazine, Pru's Valet menu.
+- **Explore:** `interfaces/explore-vibelandia-downtown-reno.html` — "Explore Mark Twain's Vibelandia · Downtown Reno." Crown jewel, pop-ups, Crawler, Baller V, destinations. Links: Crawler ($12,500 inc. 25% gratuity), Baller V Wednesdays ($416 inc. 25% gratuity), Destinations Magazine, Pru's Vibelandia Valet menu.
 - **Campus tour:** `interfaces/campus-tour-downtown-reno.html` — "Our campus · Tour · Downtown Reno." Same family: Explore, Crawler, Baller V, Destinations, content catalog, Vendors, Valet menu.
-- **Valet menu:** `interfaces/vibers-menu.html` — Pru's Valet Service; cards for Crawler, Baller V Wednesdays, Destinations, Content catalog, Vendors, StoryStream 9, etc. Primary human-viber entry.
+- **Valet menu:** `interfaces/vibers-menu.html` — Pru's Vibelandia Valet Service; cards for Crawler, Baller V Wednesdays, Destinations, Content catalog, Vendors, StoryStream 9, etc. Primary human-viber entry.
 
 **Reno experiences (current):**
 
@@ -79,9 +79,9 @@
 |------------|---------|------------------|--------|
 | **Downtown Truckee River Baller V Crawler** | `vibelandia-truckee-river-crawl.html` | $12,500 (incl. 25% gratuity) | Third Saturdays. Full Baller V. Optional day excursions: Mt. Rose, fly fishing, Pyramid, Hallelujah Junction, downtown/midtown foraging, Steamboat soak. Designated, hosted, driven. |
 | **Wink & Vibers · Baller V Wednesdays** | `baller-v-wednesdays.html` | $416 (incl. 25% gratuity) | 3-3-3 tastings. Pop-up mixer. Neon. Nightlife. |
-| **Destinations (Aquí · Local)** | Destinations Magazine + `destination.html` | Partner-dependent | Local partners (Matt Heron, Steamboat, Mt. Rose, Black Rabbit, Eldorado/Novi, Men's Club, Silver Legacy) — book direct or through Pru's Valet (125% of booking for post-singularity layer). |
+| **Destinations (Aquí · Local)** | Destinations Magazine + `destination.html` | Partner-dependent | Local partners (Matt Heron, Steamboat, Mt. Rose, Black Rabbit, Eldorado/Novi, Men's Club, Silver Legacy) — book direct or through Pru's Vibelandia Valet (125% of booking for post-singularity layer). |
 | **Guided Expeditions** | `guided-expeditions.html` | — | Real trips (elk & bison Montana, quail Mexico, fly fishing Truckee, bonefishing Bahamas, etc.). |
-| **Pru's Valet Service** | `vibers-menu.html` | — | Full menu: experiences, content, vendors, Goliath Watch, StoryStream 9, etc. |
+| **Pru's Vibelandia Valet Service** | `vibers-menu.html` | — | Full menu: experiences, content, vendors, Goliath Watch, StoryStream 9, etc. |
 
 **Gaps / upgrade levers:**
 - **Unified "Vibelandia Reno" layer:** One clear list: Crawler, Baller V Wednesdays, Campus tour, Explore, Destinations (Aquí), Shop, Vendors, Content. Same list and order on Explore, Campus tour, and Valet menu (and optionally in Destinations hub) so "Reno experiences" is one crystallized set.

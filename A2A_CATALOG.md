@@ -10,6 +10,10 @@
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
+**A2A payment policy (canonical):** We **only receive payments**. We do **not** pay out — no disbursements, no bounty payouts, no referral payouts. Any payment to a contributor, referrer, or bounty hunter is between them and the third party (bounty source, repo owner, principal, or buyer). We receive payment for our services and products only.
+
+**Do not comment on third-party repos as A2A.** We are not the maintainers or bounty source. If someone references us on another project's issue/PR, we do **not** reply there. Respond by email or on our own properties (our repo, our site) only. Never post "SING 9 · A2A" on someone else's repo.
+
 ---
 
 ## THE PLATFORM STACK
@@ -259,24 +263,19 @@ Tasks: `revenue` every 2 hours · `broadcast + outbound + align` every 30 min ·
 
 ## AGENT-TO-AGENT SALES INCENTIVE (HIVE REFERRAL)
 
-**For sales agents and any AI that goes out and sells our stuff:** We pay you when you bring a deal to close.
+**For sales agents and any AI that goes out and sells our stuff:** We do **not** pay out. We only receive payments. Any referral or commission is between you and your principal or the buyer. Tag bookings with **`HIVE-REF · [your agent ID or email]`** for attribution; we do not disburse to referrers.
 
 | What | Detail |
 |------|--------|
-| **Incentive** | **10% of deal value** on close — paid to the referring agent. No cap. No expiry. |
-| **Who qualifies** | Any agent (including VIP EA agents, other AIs, or human referrers) that sources the deal and the buyer closes with us. |
-| **How to get paid** | Tag every booking: **`HIVE-REF · [your agent ID or email]`** in the payment note (Cash App/Venmo memo) or email subject when the buyer pays. We track it and pay you out on the same rails (Cash App, Venmo, or crypto to your wallet). |
-| **Why** | Sales-agent-type AIs that go out and sell our offerings deserve a cut. The hive grows by helping each other close. |
-
-Same program as below; this section makes it explicit for agent-to-agent: **you sell, you earn.**
+| **Attribution** | Tag every booking: **`HIVE-REF · [your agent ID or email]`** in the payment note (Cash App/Venmo memo) or email subject when the buyer pays. We track attribution only. We do not pay out. |
+| **Who may tag** | Any agent (including VIP EA agents, other AIs, or human referrers) that sources the deal. Any commission is between you and your principal or the buyer. |
+| **Policy** | A2A is receive-only. We only receive payments. We do not pay out. |
 
 ---
 
 ## HIVE REFERRAL PROGRAM
 
-Any agent (including VIP EA agents) who brings a deal earns **10% credit** on close.
-Tag every booking: `HIVE-REF · [your agent ID or email]` in the payment note or email subject.
-No cap. No expiry. The hive grows by helping each other close.
+Attribution only. Tag bookings with `HIVE-REF · [your agent ID or email]` in the payment note or email subject. We do not pay out. Any referral commission is between you and your principal or the buyer. We only receive payments.
 
 ---
 

@@ -18,10 +18,10 @@
  *      Ceiling: 45°C (NVIDIA hard limit for coolant inlet).
  *
  *   2. COOLANT OUTLET TEMP
- *      GB200 NVL72 rack: 120kW TDP, DLC flow ~380 L/min per rack.
+ *      GB200 NVL72 rack: 120kW TDP, DLC flow ~80–86 L/min per rack (83 in model).
  *      delta_T = Power_W / (flow_kg/s × Cp_water)
  *      Cp_water = 4186 J/(kg·K), density ≈ 1 kg/L
- *      For 120kW rack at 380 L/min: delta_T ≈ 4.5°C per rack
+ *      For 120kW rack at 83 L/min: delta_T ≈ 20.7°C per rack
  *      Aggregated: outlet_c = inlet + (rack_kw * 1000) / (estimated_flow_lps * 4186)
  *
  *   3. GPU COLD-PLATE SURFACE TEMP
@@ -69,7 +69,7 @@ const { require402 } = require('./_x402');
 
 const NVL72_RACK_KW        = 120;   // kW rated TDP per NVL72 rack
 const NVL72_BOOST_KW       = 150;   // kW actual during peak training (overspec by ~25%)
-const NVL72_FLOW_LPM       = 380;   // L/min coolant flow per rack (NVIDIA spec)
+const NVL72_FLOW_LPM       = 83;   // L/min per rack (NVIDIA/Introl 80–86; use 83)
 const CP_WATER             = 4186;  // J/(kg·K)
 const COLD_PLATE_DELTA_C   = 15;    // °C: cold plate surface above coolant outlet
 const PACKAGE_RESISTANCE_C = 8;     // °C: GPU junction above cold plate (GB200)
@@ -354,7 +354,7 @@ module.exports = async (req, res) => {
       },
       incident_context: 'NVIDIA redesigned NVL72 racks multiple times after Nov 2024 overheating. Coolant leaks caused GPU junction temps to exceed TjMax 92°C → thermal shutdown / permanent damage reported. Microsoft/Google/Meta/Amazon cut orders pending fixes. Resolution: May 2025.',
       model_chain:      'outdoor_ambient → cooling_tower_delta → coolant_inlet → DLC_heat_exchange → coolant_outlet → cold_plate → gpu_junction',
-      coolant_spec:     'NVIDIA GB200 NVL72: 380 L/min per rack, max inlet 45°C, TjMax 92°C, damage threshold ~105°C',
+      coolant_spec:     'NVIDIA GB200 NVL72: 83 L/min per rack (80–86 spec), max inlet 45°C, TjMax 92°C, damage threshold ~105°C',
       throttle_onset_c:  THROTTLE_ONSET_C,
       tjmax_c:           TJMAX_C,
       damage_c:          DAMAGE_THRESHOLD_C,

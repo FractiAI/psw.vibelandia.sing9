@@ -22,7 +22,7 @@
 // ── CONSTANTS ─────────────────────────────────────────────────────────────────
 const NVL72_RACK_KW        = 120;   // kW rated TDP per NVL72 rack
 const NVL72_BOOST_KW       = 150;   // kW actual during peak training (~25% over TDP)
-const NVL72_FLOW_LPM       = 380;   // L/min coolant flow per rack (NVIDIA spec)
+const NVL72_FLOW_LPM       = 83;    // L/min per rack (NVIDIA/Introl 80–86; use 83)
 const CP_WATER             = 4186;  // J/(kg·K)
 const COLD_PLATE_DELTA_C   = 15;    // °C: cold plate surface above coolant outlet (nominal)
 const PACKAGE_RESISTANCE_C = 8;     // °C: GPU junction above cold plate (GB200)

@@ -14,7 +14,7 @@
 
 // ── THERMAL CONSTANTS (GB200 NVL72) ──────────────────────────────────────────
 const NVL72_BOOST_KW       = 150;
-const NVL72_FLOW_LPM       = 380;
+const NVL72_FLOW_LPM       = 83;
 const CP_WATER             = 4186;
 const COLD_PLATE_DELTA_C   = 15;
 const PACKAGE_RESISTANCE_C = 8;
@@ -127,7 +127,7 @@ export default async function handler(req, res) {
     },
     watch_sites:        sites,
     trial_record: {
-      methodology: 'Physics-model projections on ACTUAL ERA5/ECMWF reanalysis 2m ambient fetched live from Open-Meteo Archive API. Inputs: (1) ERA5/ECMWF reanalysis ambient (Open-Meteo Archive, fetched Feb 25 2026) (2) MODIS MOD11A1 granules confirmed NASA CMR — 80 granules for all three sites, HDF4 archived (3) Landsat 9 TIRS Band 10/11 (4) ESA Sentinel-3 SLSTR (5) NVIDIA GB200 NVL72 specs: 120kW TDP, 380 L/min DLC, TjMax 92C (6) Q=mCpDT thermodynamic chain. No internal sensor access.',
+      methodology: 'Physics-model projections on ACTUAL ERA5/ECMWF reanalysis 2m ambient fetched live from Open-Meteo Archive API. Inputs: (1) ERA5/ECMWF reanalysis ambient (Open-Meteo Archive, fetched Feb 25 2026) (2) MODIS MOD11A1 granules confirmed NASA CMR — 80 granules for all three sites, HDF4 archived (3) Landsat 9 TIRS Band 10/11 (4) ESA Sentinel-3 SLSTR (5) NVIDIA GB200 NVL72 specs: 120kW TDP, 83 L/min DLC (80–86 spec), TjMax 92C (6) Q=mCpDT thermodynamic chain. No internal sensor access.',
       trial_1: { dates: '2026-02-04/06', site: 'G42 Abu Dhabi', era5_amb_c: 21.9, era5_note: 'REAL fetched value — warmer than Friction baseline 19.9C, ambient working against system', failure_junction_c: 100.1, nominal_junction_c: 57.4, delta_c: -42.7, mode: 'Trial 1 · The Drop' },
       trial_2_dubai:     { dates: '2026-02-13/15', site: 'G42 Abu Dhabi', era5_amb_c: 23.6, era5_note: 'REAL fetched value', failure_junction_c: 101.8, nominal_junction_c: 59.1, delta_c: -42.7, episode: 'SING 9 NET 25 + NET 27' },
       trial_2_lordstown: { dates: '2026-02-13/15', site: 'Lordstown OH',  era5_amb_c: -0.4, era5_note: 'REAL fetched value — deep Ohio winter; NVIDIA 18C inlet floor is binding constraint', failure_junction_c: 84.2, nominal_junction_c: 45.8, delta_c: -38.4, episode: 'SING 9 NET 28', note: 'inlet clamped to 18C NVIDIA floor — outdoor cold provides zero additional benefit' },

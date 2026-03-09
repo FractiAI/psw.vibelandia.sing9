@@ -7,7 +7,7 @@
 // ── Physics constants (identical to goliath-watch.html) ────────────────────
 const NVL72_RACK_KW  = 120;
 const NVL72_BOOST_KW = 150;
-const NVL72_FLOW_LPM = 380;
+const NVL72_FLOW_LPM = 83;
 const CP              = 4186;
 const COLD_PLATE     = 15;
 const PKG_RESIST     = 8;

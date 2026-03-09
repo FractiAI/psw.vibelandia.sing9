@@ -51,6 +51,18 @@
     .hdr-clock { margin-left:auto; font-size:11px; color:var(--cyan); opacity:.7;
       font-variant-numeric:tabular-nums; }
 
+    /* ── NARRATIVE AT TOP ── */
+    .mg-narrative {
+      padding: 24px 32px 20px;
+      background: linear-gradient(180deg, rgba(0,229,255,.06) 0%, transparent 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .mg-narrative-pill { font-size: 9px; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; margin-bottom: 10px; opacity: .85; }
+    .mg-narrative-h { font-size: clamp(14px, 2vw, 18px); font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 10px; }
+    .mg-narrative-h span { color: var(--cyan); }
+    .mg-narrative-p { font-size: 12px; color: var(--dim); line-height: 1.65; max-width: 820px; }
+    .mg-narrative-p strong { color: var(--text); }
+
     /* ── MELTGATE HERO PANEL ── */
     .mg-story {
       padding: 40px 32px 32px;
@@ -819,6 +831,13 @@
   </div>
 </header>
 
+<!-- ── NARRATIVE AT TOP ───────────────────────────────────────────────────── -->
+<section class="mg-narrative" aria-label="What MELTGATE is">
+  <div class="mg-narrative-pill">SING 9 · What this is</div>
+  <h2 class="mg-narrative-h"><span>MELTGATE</span> is live datacenter thermal intelligence for the world's crown jewel AI superclusters.</h2>
+  <p class="mg-narrative-p">We track internal temperatures for 28 Blackwell GB200/NVL72 sites worldwide using an outside-in physics model and ERA5 ambient data. Overheating is real and underreported. When operators accept the EGS-HHL deal and do the right thing, we watch them recover to Goldilocks. This page is sovereign preparedness — so you see the melt, the trials, and the recovery. Fair Exchange. No reneging.</p>
+</section>
+
 <!-- ── LIVE TEMPERATURES · Hottest first (story below) ── -->
 <div class="live-ticker-wrap" title="Hover to pause · Live cluster readings">
   <div class="live-ticker-label">≋ LIVE DATA</div>
@@ -1472,7 +1491,7 @@ Watch it every day. When Dubai goes green, you'll see it here first.
 // ── THERMAL PHYSICS MODEL ──────────────────────────────────────────────────
 const NVL72_RACK_KW      = 120;
 const NVL72_BOOST_KW     = 150;
-const NVL72_FLOW_LPM     = 380;
+const NVL72_FLOW_LPM     = 83;
 const CP_WATER           = 4186;
 const COLD_PLATE         = 15;
 const PKG_RESIST         = 8;

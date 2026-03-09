@@ -236,7 +236,7 @@ function invertHeatSignature(dT_anomaly_C, site, ambient_C) {
   const nr_full   = Math.min(site.nr, racks_total);  // use site.nr as cluster model
   const inlet_raw = ambient_C + fd_offset;
   const inlet_c   = Math.min(INLET_MAX, Math.max(INLET_FLOOR, inlet_raw));
-  const flow_lps  = (380 * nr_full * flow_eff) / 60;
+  const flow_lps  = (83 * nr_full * flow_eff) / 60;
   const total_pw  = per_rack_kW * nr_full * 1000;
   const outlet_c  = inlet_c + total_pw / (flow_lps * CP_WATER);
   const surface_c = outlet_c + cold_plate_delta;
@@ -299,7 +299,7 @@ const NEWS_ANCHORS = [
   {
     source:    'NVIDIA GB200 NVL72 published datasheet',
     date:      '2024-06-01',
-    event:     'TjMax = 92°C, inlet max = 45°C, DLC flow = 380 L/min specified',
+    event:     'TjMax = 92°C, inlet max = 45°C, DLC flow = 83 L/min (80–86 spec)',
     implication: 'These are hard physical limits, not estimates. The physics chain is anchored on real published numbers.',
     model_calibration: 'inlet_c <= 45°C, TjMax = 92°C — these are EXACT, no uncertainty.',
     confirms:  'hard_spec',

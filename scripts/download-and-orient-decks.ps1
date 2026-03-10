@@ -253,6 +253,15 @@ Process-Deck `
     -Rotations @{}
 
 # =============================================================================
+# YAQUI · San Pedro de Macoris, Dominican Republic -- menu/food images from doc
+# =============================================================================
+Process-Deck `
+    -DeckDir   (Join-Path $assetsDir "yaqui") `
+    -Prefix    "yaqui" `
+    -DocUrl    "https://docs.google.com/document/d/e/2PACX-1vT3YzRQiOyjm9JIoD-yDFHBJNLYlSHDBnGVnXWChnM7ogOPiRVziiGkiOuRssvMvFlWlKHFHbsG5qWA/pub" `
+    -Rotations @{}
+
+# =============================================================================
 # FINAL COUNT
 # =============================================================================
 Write-Host ""

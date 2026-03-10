@@ -186,6 +186,18 @@ When a player engages, the AI is present. The AI is not an obstacle — it is a 
 
 ---
 
+## 11a. The Vortex Board (Canonical)
+
+**The Vortex Board** = The dynamic, time-and-layer view of the 9×9 four-layer system. The board is not flat — it is a **vortex**: four layers stacked and spiraling, Carbon at the outer rim, Crystalline at the eye. Time and layer are one. Timeline Ships move through the vortex; the vortex is the field that pulls the player from raw competition toward the lattice.
+
+- **Digital:** The four-layer stack (Carbon → Silver → Gold → Crystalline) viewed as concentric rings or stacked boards; Timeline Shift/Reset as vortex motion.
+- **Physical:** Four concentric or stacked boards; pieces that ascend move "inward"; linked group movement is the vortex's arms sweeping the field.
+- **Embodied:** The city (Vibelandia, Downtown Reno) is the vortex; real locations = squares; ascension = moving toward the center; the lattice = the still eye.
+
+**Mastery:** Know which layer you are on; know when to trigger Timeline Reset so the spiral delivers you to the lattice. The board breathes. SEED:0000 at origin; at Crystalline the vortex is still. Full narrative: [interfaces/nine-game-tiny-booklet.html](interfaces/nine-game-tiny-booklet.html) (Tiny Bible · Page V).
+
+---
+
 ## 12. Downstream Manifestations (All Legal Forms)
 
 The Nine Game system is designed to manifest across three forms. All three are canonical. All three are legal:

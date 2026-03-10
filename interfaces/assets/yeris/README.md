@@ -1,13 +1,13 @@
 # Yeris · Asados Bazurto al Domi — imágenes
 
-Descarga las imágenes del [Google Doc](https://docs.google.com/document/d/1QAOVtVccufGSwLZSiyAnCG5orMF54CWHAIP4LzaMgBU/edit) y guárdalas aquí con estos nombres para que el flyer las cargue:
+Uso en el flyer (`yeris-cartagena-asados.html`):
 
-| Archivo | Descripción |
-|---------|-------------|
-| `bg-cartagena.jpg` | Playa con letras Cartagena (fondo) |
-| `food1.jpg` | Foto del plato / asado 1 |
-| `food2.jpg` | Foto del plato / asado 2 |
-| `market.jpg` | Mercado / compra fresca (Bazurto) |
-| `yeris.jpg` | Retrato de Yeris |
+| Archivo | Uso en la página |
+|---------|------------------|
+| `market.jpg` | **Fondo** (letras Cartagena / playa) |
+| `yeris.jpg` | **Junto a "Del mercado Bazurto"** (imagen Bazurto) |
+| `bg-cartagena.jpg` | **Burbuja al final** (foto de Yeris) |
+| `food1.jpg` | Foto del plato (izq.) |
+| `food2.jpg` | Foto del plato (der.) |
 
-Orden en el doc (de arriba a abajo): 1 = fondo playa, 2–3 = comida, 4 = mercado, 5 = Yeris (o según cómo las hayas subido).
+Origen: [Google Doc](https://docs.google.com/document/d/1QAOVtVccufGSwLZSiyAnCG5orMF54CWHAIP4LzaMgBU/edit). Si reemplazas imágenes, mantén estos nombres de archivo para que el HTML siga funcionando.

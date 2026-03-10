@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c4d5c" />
   <title>Asados Bazurto al Domi · Fines de Semana · Con Yeris · Cartagena</title>
   <meta name="description" content="Asados Bazurto al Domi. Fines de semana. Chuleta o pescado al domicilio, Paseo Bolívar, Cartagena. Con Yeris. WhatsApp 300 426 2831." />
   <style>
@@ -15,12 +16,13 @@
     }
     .flyer {
       min-height: 100vh;
+      min-height: 100dvh;
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 1rem 1rem;
+      padding: max(1rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
       background: #0c4d5c center center / cover no-repeat;
     }
     .flyer::before {
@@ -70,36 +72,37 @@
       gap: 0;
       max-width: 380px;
       width: 100%;
+      padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
     }
 
     .menu-card {
       background: rgba(255,248,240,0.96);
       border-radius: 16px;
-      padding: 1.25rem 1.5rem;
+      padding: 1rem 1.15rem 1.25rem;
       width: 100%;
       box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,175,55,0.25);
       border: 2px solid rgba(212,175,55,0.45);
     }
     .menu-card h1 {
-      font-size: 1.28rem;
+      font-size: clamp(1.05rem, 4.5vw, 1.28rem);
       font-weight: 800;
       color: #b45309;
       text-align: center;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
       letter-spacing: 0.02em;
-      line-height: 1.22;
+      line-height: 1.25;
     }
     .menu-card .sub {
-      font-size: 0.82rem;
+      font-size: clamp(0.78rem, 2.5vw, 0.82rem);
       color: #6b5344;
       text-align: center;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
     }
     .narrative {
-      font-size: 0.8rem;
+      font-size: clamp(0.75rem, 2.2vw, 0.8rem);
       color: #5c4a3d;
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
       line-height: 1.5;
       font-style: italic;
     }
@@ -107,53 +110,77 @@
 
     .menu-with-photos {
       display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
+      flex-direction: column;
+      gap: 0.6rem;
       width: 100%;
     }
+    .plato-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed rgba(180,83,9,0.28);
+    }
+    .plato-row:last-child { border-bottom: none; }
     .food-photo {
       flex-shrink: 0;
-      width: 80px;
-      height: 80px;
+      width: 72px;
+      height: 72px;
       border-radius: 12px;
       object-fit: cover;
       border: 2px solid rgba(212,175,55,0.35);
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .food-photo.right { order: 1; }
-    .platos { flex: 1; min-width: 0; }
-    .plato {
+    .plato-row .plato {
+      flex: 1;
+      min-width: 0;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding: 0.45rem 0;
-      border-bottom: 1px dashed rgba(180,83,9,0.28);
       gap: 0.5rem;
     }
-    .plato:last-child { border-bottom: none; }
-    .plato .nombre { font-size: 0.98rem; font-weight: 600; color: #1a1a1a; }
-    .plato .precio { font-size: 1rem; font-weight: 800; color: #b45309; white-space: nowrap; }
+    .plato .nombre { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; word-break: break-word; }
+    .plato .precio { font-size: 1rem; font-weight: 800; color: #b45309; white-space: nowrap; flex-shrink: 0; }
 
     .market-line {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
       margin-top: 0.75rem;
       padding-top: 0.6rem;
       border-top: 1px dashed rgba(180,83,9,0.2);
-    }
-    .market-line .market-pic {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid rgba(212,175,55,0.3);
     }
     .market-line .txt {
       font-size: 0.75rem;
       color: #6b5344;
       font-weight: 600;
+      text-align: center;
+    }
+    .market-banner {
+      width: 100%;
+      margin-top: 0.75rem;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      height: 115px;
+      background: #0c4d5c center center / cover no-repeat;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .market-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .market-banner .banner-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.5rem 0.75rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2));
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
     }
     .zona {
       font-size: 0.78rem;
@@ -187,18 +214,20 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      margin-top: 0.85rem;
-      padding: 0.85rem 1.6rem;
+      margin-top: 0.75rem;
+      padding: 0.9rem 1.5rem;
+      min-height: 48px;
       background: #25D366;
       color: #fff;
-      font-size: 0.98rem;
+      font-size: clamp(0.9rem, 2.8vw, 0.98rem);
       font-weight: 700;
       text-decoration: none;
       border-radius: 28px;
       box-shadow: 0 4px 20px rgba(37,211,102,0.5);
       transition: transform 0.2s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+    .wa-btn:hover, .wa-btn:active { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
     .wa-btn svg { width: 22px; height: 22px; fill: currentColor; }
 
     .foot-note {
@@ -226,23 +255,28 @@
         <p class="narrative"><strong>Ingredientes frescos del mercado.</strong> Lo que no quieres cocinar en tus fines de semana — lo llevamos al domi, con el sabor de siempre.</p>
 
         <div class="menu-with-photos">
-          <img class="food-photo" src="assets/yeris/food1.jpg" alt="Asado" width="80" height="80" />
-          <div class="platos">
+          <div class="plato-row">
+            <img class="food-photo" src="assets/yeris/food2.jpg" alt="Chuleta" width="72" height="72" />
             <div class="plato">
               <span class="nombre">Asado con chuleta</span>
               <span class="precio">17.000 COP</span>
             </div>
+          </div>
+          <div class="plato-row">
+            <img class="food-photo" src="assets/yeris/food1.jpg" alt="Pescado" width="72" height="72" />
             <div class="plato">
               <span class="nombre">Asado con pescado</span>
               <span class="precio">20.000 COP</span>
             </div>
           </div>
-          <img class="food-photo right" src="assets/yeris/food2.jpg" alt="Asado" width="80" height="80" />
         </div>
 
         <div class="market-line">
-          <img class="market-pic" src="assets/yeris/yeris.jpg" alt="Bazurto" width="44" height="44" />
           <span class="txt">Del mercado Bazurto · fresco a tu mesa</span>
+        </div>
+        <div class="market-banner">
+          <img src="assets/yeris/yeris.jpg" alt="Mercado Bazurto" />
+          <span class="banner-caption">Del mercado Bazurto · fresco a tu mesa</span>
         </div>
         <p class="zona">Al domicilio · Zona Paseo Bolívar</p>
       </div>

@@ -70,17 +70,24 @@ function Get-DocImageUrls {
     param([string]$DocUrl)
     Write-Host "  Scraping: $DocUrl" -ForegroundColor Gray
     try {
-        $resp = Invoke-WebRequest -Uri $DocUrl -UseBasicParsing -TimeoutSec 30
+        $headers = @{
+            "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            "Accept" = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+        }
+        $resp = Invoke-WebRequest -Uri $DocUrl -UseBasicParsing -TimeoutSec 30 -Headers $headers
         $html = $resp.Content
-        # Match all src= or data-src= containing googleusercontent or ggpht image URLs
-        $matches = [regex]::Matches($html, 'src="(https://[^"]*(?:googleusercontent|ggpht|googleapis)[^"]*)"')
+        # Match all src= or data-src= containing googleusercontent, ggpht, or docs-images-rt
+        $matches = [regex]::Matches($html, 'src="(https://[^"]*(?:googleusercontent|ggpht|googleapis|docs-images-rt)[^"]*)"')
         $urls = $matches | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
         # Also catch any lh[N] direct URLs
         $matches2 = [regex]::Matches($html, '"(https://lh\d[^"]*)"')
         $urls2 = $matches2 | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
-        $all = ($urls + $urls2) | Sort-Object -Unique
-        # Filter to likely image URLs (not tiny icon/avatar sizes)
-        $imgUrls = $all | Where-Object { $_ -match "docsz|imgurl|w\d{3,4}|=w" -or $_ -match "lh\d-rt" }
+        # docs-images-rt (Google Docs inline images)
+        $matches3 = [regex]::Matches($html, 'src="(https://docs\.google\.com/docs-images-rt/[^"]+)"')
+        $urls3 = $matches3 | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
+        $all = ($urls + $urls2 + $urls3) | Sort-Object -Unique
+        # Filter to likely image URLs (not tiny icon/avatar sizes); keep all docs-images-rt
+        $imgUrls = $all | Where-Object { $_ -match "docsz|imgurl|w\d{3,4}|=w|docs-images-rt" -or $_ -match "lh\d-rt" }
         if ($imgUrls.Count -eq 0) {
             # Fallback: grab everything that looks like a content image
             $imgUrls = $all | Where-Object { $_ -notmatch "logo|favicon|icon|avatar|profile" }
@@ -107,7 +114,10 @@ function Process-Deck {
     Write-Host "=======================================" -ForegroundColor Yellow
 
     $urlsFile = Join-Path $DeckDir "urls.txt"
-    $existing = Get-Content $urlsFile | Where-Object { $_ -match "^http" }
+    $existing = @()
+    if (Test-Path $urlsFile) {
+        $existing = Get-Content $urlsFile | Where-Object { $_ -match "^http" }
+    }
 
     # If urls.txt only has the Google Doc page URL (not individual image CDN URLs), scrape it
     $needsScrape = ($existing.Count -le 1) -or ($existing | Where-Object { $_ -match "googleusercontent|ggpht" } | Measure-Object).Count -eq 0
@@ -231,6 +241,15 @@ Process-Deck `
     -DeckDir   (Join-Path $assetsDir "deck7") `
     -Prefix    "d7" `
     -DocUrl    "https://docs.google.com/document/d/e/2PACX-1vRaEOG7cShMIx51s60xxmQi2TMua_8u2zFc7Q5iXWQKXYNz5hWel_G0g6gMcO0aC6VZ_R9ReGpqJwBC/pub" `
+    -Rotations @{}
+
+# =============================================================================
+# NINE GAME · Queen's Rush -- Box cover + fold-out images from published doc
+# =============================================================================
+Process-Deck `
+    -DeckDir   (Join-Path $assetsDir "nine-game-queens-rush") `
+    -Prefix    "ng" `
+    -DocUrl    "https://docs.google.com/document/d/e/2PACX-1vTukj2IbsmWAjATbUIeVal-p0Xo9ReTED-aao0W-XKgceUH7NWwOPiSTxCOPTlm6IqCAC1fvloUfYr1/pub" `
     -Rotations @{}
 
 # =============================================================================

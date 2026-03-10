@@ -20,20 +20,19 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 1.5rem 1rem 1rem;
-      background: #0c3d4d center center / cover no-repeat;
+      padding: 1.25rem 1rem 1rem;
+      background: #0c4d5c center center / cover no-repeat;
     }
     .flyer::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(12,61,77,0.75) 0%, rgba(12,61,77,0.5) 35%, rgba(12,61,77,0.4) 60%, rgba(12,61,77,0.85) 100%);
+      background: linear-gradient(180deg, rgba(12,61,77,0.7) 0%, rgba(12,61,77,0.45) 30%, rgba(12,61,77,0.35) 55%, rgba(12,61,77,0.82) 100%);
       z-index: 0;
     }
     .flyer > * { position: relative; z-index: 1; }
 
-    /* Cartagena letters = background image */
-    .bg-cartagena {
+    .bg-beach {
       position: absolute;
       inset: 0;
       background-size: cover;
@@ -45,89 +44,142 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.1) 55%, rgba(0,0,0,0.5) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.12) 28%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.55) 100%);
       z-index: 0;
     }
 
-    .top-bar {
-      width: 100%;
+    .top-tag {
       text-align: center;
-      padding: 0.5rem 0;
+      padding: 0.4rem 0;
     }
-    .top-bar .tag {
+    .top-tag span {
       display: inline-block;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-      background: rgba(0,0,0,0.35);
-      padding: 0.35rem 0.9rem;
+      color: rgba(255,255,255,0.9);
+      background: rgba(0,0,0,0.4);
+      padding: 0.35rem 0.85rem;
       border-radius: 20px;
     }
 
-    .menu-card {
-      background: rgba(255,248,240,0.95);
-      border-radius: 16px;
-      padding: 1.5rem 1.75rem;
-      max-width: 340px;
+    .menu-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      max-width: 380px;
       width: 100%;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(212,175,55,0.2);
-      border: 2px solid rgba(212,175,55,0.4);
+    }
+
+    .menu-card {
+      background: rgba(255,248,240,0.96);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      width: 100%;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,175,55,0.25);
+      border: 2px solid rgba(212,175,55,0.45);
     }
     .menu-card h1 {
-      font-size: 1.35rem;
+      font-size: 1.28rem;
       font-weight: 800;
       color: #b45309;
       text-align: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       letter-spacing: 0.02em;
-      line-height: 1.25;
+      line-height: 1.22;
     }
     .menu-card .sub {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: #6b5344;
       text-align: center;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.75rem;
     }
-    .menu-card .platos {
+    .narrative {
+      font-size: 0.8rem;
+      color: #5c4a3d;
+      text-align: center;
       margin-bottom: 1rem;
+      line-height: 1.5;
+      font-style: italic;
     }
-    .menu-card .plato {
+    .narrative strong { color: #b45309; }
+
+    .menu-with-photos {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      width: 100%;
+    }
+    .food-photo {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid rgba(212,175,55,0.35);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .food-photo.right { order: 1; }
+    .platos { flex: 1; min-width: 0; }
+    .plato {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding: 0.5rem 0;
-      border-bottom: 1px dashed rgba(180,83,9,0.25);
-      gap: 0.75rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px dashed rgba(180,83,9,0.28);
+      gap: 0.5rem;
     }
-    .menu-card .plato:last-child { border-bottom: none; }
-    .menu-card .plato .nombre { font-size: 1rem; font-weight: 600; color: #1a1a1a; }
-    .menu-card .plato .precio { font-size: 1.05rem; font-weight: 800; color: #b45309; white-space: nowrap; }
-    .menu-card .zona {
-      font-size: 0.8rem;
+    .plato:last-child { border-bottom: none; }
+    .plato .nombre { font-size: 0.98rem; font-weight: 600; color: #1a1a1a; }
+    .plato .precio { font-size: 1rem; font-weight: 800; color: #b45309; white-space: nowrap; }
+
+    .market-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      padding-top: 0.6rem;
+      border-top: 1px dashed rgba(180,83,9,0.2);
+    }
+    .market-line .market-pic {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+    .market-line .txt {
+      font-size: 0.75rem;
       color: #6b5344;
+      font-weight: 600;
+    }
+    .zona {
+      font-size: 0.78rem;
+      color: #6b5344;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .yeris-wrap {
       text-align: center;
       margin-top: 0.75rem;
     }
-
-    .yeris-photo-wrap {
-      margin-top: 1rem;
-      text-align: center;
-    }
-    .yeris-photo-wrap .photo {
-      width: 140px;
-      height: 140px;
+    .yeris-wrap .photo {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid rgba(255,248,240,0.95);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.45);
     }
-    .yeris-photo-wrap .name {
-      font-size: 1rem;
+    .yeris-wrap .name {
+      font-size: 0.95rem;
       font-weight: 700;
       color: #fff;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
-      margin-top: 0.5rem;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.65);
+      margin-top: 0.4rem;
     }
 
     .wa-btn {
@@ -135,11 +187,11 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      margin-top: 1rem;
-      padding: 0.9rem 1.75rem;
+      margin-top: 0.85rem;
+      padding: 0.85rem 1.6rem;
       background: #25D366;
       color: #fff;
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       text-decoration: none;
       border-radius: 28px;
@@ -147,52 +199,64 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
-    .wa-btn svg { width: 24px; height: 24px; fill: currentColor; }
+    .wa-btn svg { width: 22px; height: 22px; fill: currentColor; }
 
     .foot-note {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.7);
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.75);
       text-align: center;
       margin-top: 0.5rem;
     }
-    .foot-note a { color: rgba(255,255,255,0.9); text-decoration: none; }
+    .foot-note a { color: rgba(255,255,255,0.95); text-decoration: none; }
   </style>
 </head>
 <body>
   <div class="flyer">
-    <!-- Background: Cartagena letters (from Google Doc - first image) -->
-    <div class="bg-cartagena" style="background-image: url('https://docs.google.com/docs-images-rt/AHDoZz5PJf8L0Y8rynB1XRDmbuoqFKJBsKr5CRqawFdPLbZ8kezxl6YX6n-xh1bm6GtT2hYHsQWTccRdvlECHwSCn2DTYgREmkqn_Bi3nk-_sRh6rksWxnBR1BjjfEuNQ4eqrm1Waq3yxNNh_Koi');"></div>
+    <!-- Background: playa con letras Cartagena — add assets/yeris/bg-cartagena.jpg -->
+    <div class="bg-beach" style="background-image: url('assets/yeris/bg-cartagena.jpg');"></div>
 
-    <div class="top-bar">
-      <span class="tag">Asados Bazurto al domi · Para los que no quieren cocinar en sus fines de semana</span>
+    <div class="top-tag">
+      <span>Asados Bazurto al domi · Para los que no quieren cocinar en sus fines de semana</span>
     </div>
 
-    <div class="menu-card">
-      <h1>ASADOS BAZURTO AL DOMI FINES DE SEMANA CON YERIS</h1>
-      <p class="sub">Chuleta o pescado · Área Paseo Bolívar · Al domicilio</p>
-      <div class="platos">
-        <div class="plato">
-          <span class="nombre">Asado con chuleta</span>
-          <span class="precio">17.000 COP</span>
+    <div class="menu-block">
+      <div class="menu-card">
+        <h1>ASADOS BAZURTO AL DOMI FINES DE SEMANA CON YERIS</h1>
+        <p class="sub">Chuleta o pescado · Área Paseo Bolívar · Al domicilio</p>
+        <p class="narrative"><strong>Ingredientes frescos del mercado.</strong> Lo que no quieres cocinar en tus fines de semana — lo llevamos al domi, con el sabor de siempre.</p>
+
+        <div class="menu-with-photos">
+          <img class="food-photo" src="assets/yeris/food1.jpg" alt="Asado" width="80" height="80" />
+          <div class="platos">
+            <div class="plato">
+              <span class="nombre">Asado con chuleta</span>
+              <span class="precio">17.000 COP</span>
+            </div>
+            <div class="plato">
+              <span class="nombre">Asado con pescado</span>
+              <span class="precio">20.000 COP</span>
+            </div>
+          </div>
+          <img class="food-photo right" src="assets/yeris/food2.jpg" alt="Asado" width="80" height="80" />
         </div>
-        <div class="plato">
-          <span class="nombre">Asado con pescado</span>
-          <span class="precio">20.000 COP</span>
+
+        <div class="market-line">
+          <img class="market-pic" src="assets/yeris/market.jpg" alt="Mercado" width="44" height="44" />
+          <span class="txt">Del mercado Bazurto · fresco a tu mesa</span>
         </div>
+        <p class="zona">Al domicilio · Zona Paseo Bolívar</p>
       </div>
-      <p class="zona">Al domicilio · Zona Paseo Bolívar</p>
-    </div>
 
-    <div class="yeris-photo-wrap">
-      <!-- Yeris photo (from Google Doc - fourth image, bottom center) -->
-      <img class="photo" src="https://docs.google.com/docs-images-rt/AHDoZz4OuD-Yi96Jzg_z28dCCxsKBUSH2weSGh3Z8ZjXoUGmf6DUgYIRhcM31Cr55oiuSjnx90MLdbVaDJgHAaqJrwBDQX7CuRLiwooUtl0GscIV8xnrWLayZzn6eqmFjrdZ7ZjtzkFt76vdT0d_tgc" alt="Yeris · Asados Cartagena" width="140" height="140" />
-      <p class="name">Yeris</p>
-    </div>
+      <div class="yeris-wrap">
+        <img class="photo" src="assets/yeris/yeris.jpg" alt="Yeris · Asados Cartagena" width="120" height="120" />
+        <p class="name">Yeris</p>
+      </div>
 
-    <a href="https://wa.me/573004262831" class="wa-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.865 9.865 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Pedir por WhatsApp · 300 426 2831
-    </a>
+      <a href="https://wa.me/573004262831" class="wa-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.865 9.865 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pedir por WhatsApp · 300 426 2831
+      </a>
+    </div>
 
     <p class="foot-note">ASADOS BAZURTO AL DOMI FINES DE SEMANA CON YERIS · Cartagena · <a href="../index.html">Vibelandia</a></p>
   </div>

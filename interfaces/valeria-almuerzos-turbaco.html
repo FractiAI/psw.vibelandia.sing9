@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0c4d5c" />
+  <title>Almuerzos de Piscina Valeria · Turbaco · Colombia</title>
+  <meta name="description" content="Almuerzos de Piscina Valeria, Turbaco, Colombia. Al domicilio área Turbaco. Arroz con bistec, carne molida, frijoles y pescado, sancocho trifásico. +4.000 COP fuera de Bellavista. WhatsApp 314 8815093." />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #1a1a1a;
+    }
+    .flyer {
+      min-height: 100vh;
+      min-height: 100dvh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: max(1rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+      background: #0c4d5c center center / cover no-repeat;
+    }
+    .flyer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(12,61,77,0.7) 0%, rgba(12,61,77,0.45) 30%, rgba(12,61,77,0.35) 55%, rgba(12,61,77,0.82) 100%);
+      z-index: 0;
+    }
+    .flyer > * { position: relative; z-index: 1; }
+
+    .bg-beach {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+    }
+    .flyer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.12) 28%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.55) 100%);
+      z-index: 0;
+    }
+
+    .top-tag {
+      text-align: center;
+      padding: 0.4rem 0;
+    }
+    .top-tag span {
+      display: inline-block;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      background: rgba(0,0,0,0.4);
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+    }
+
+    .menu-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      max-width: 380px;
+      width: 100%;
+      padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
+    }
+
+    .menu-card {
+      background: rgba(255,248,240,0.96);
+      border-radius: 16px;
+      padding: 1rem 1.15rem 1.25rem;
+      width: 100%;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,175,55,0.25);
+      border: 2px solid rgba(212,175,55,0.45);
+    }
+    .menu-card h1 {
+      font-size: clamp(1.05rem, 4.5vw, 1.28rem);
+      font-weight: 800;
+      color: #b45309;
+      text-align: center;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+    }
+    .menu-card .sub {
+      font-size: clamp(0.78rem, 2.5vw, 0.82rem);
+      color: #6b5344;
+      text-align: center;
+      margin-bottom: 0.6rem;
+    }
+    .narrative {
+      font-size: clamp(0.75rem, 2.2vw, 0.8rem);
+      color: #5c4a3d;
+      text-align: center;
+      margin-bottom: 0.85rem;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .narrative strong { color: #b45309; }
+
+    .menu-with-photos {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      width: 100%;
+    }
+    .plato-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed rgba(180,83,9,0.28);
+    }
+    .plato-row:last-child { border-bottom: none; }
+    .food-photo {
+      flex-shrink: 0;
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid rgba(212,175,55,0.35);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .plato-row .plato {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .plato .nombre { font-size: 0.95rem; font-weight: 600; color: #1a1a1a; word-break: break-word; }
+    .plato .precio { font-size: 1rem; font-weight: 800; color: #b45309; white-space: nowrap; flex-shrink: 0; }
+
+    .market-line {
+      margin-top: 0.75rem;
+      padding-top: 0.6rem;
+      border-top: 1px dashed rgba(180,83,9,0.2);
+    }
+    .market-line .txt {
+      font-size: 0.75rem;
+      color: #6b5344;
+      font-weight: 600;
+      text-align: center;
+    }
+    .market-banner {
+      width: 100%;
+      margin-top: 0.75rem;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      height: 115px;
+      background: #0c4d5c center center / cover no-repeat;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .market-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .market-banner .banner-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.5rem 0.75rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2));
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    }
+    .zona {
+      font-size: 0.78rem;
+      color: #6b5344;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .yeris-wrap {
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+    .yeris-wrap .photo {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 32%;
+      border: 4px solid rgba(255,248,240,0.98);
+      box-shadow: 0 0 0 2px rgba(212,175,55,0.4), 0 12px 36px rgba(0,0,0,0.5), 0 0 40px rgba(212,175,55,0.15);
+    }
+    .yeris-wrap .name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5);
+      margin-top: 0.4rem;
+    }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      padding: 0.9rem 1.5rem;
+      min-height: 48px;
+      background: #25D366;
+      color: #fff;
+      font-size: clamp(0.9rem, 2.8vw, 0.98rem);
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 28px;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .wa-btn:hover, .wa-btn:active { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+    .wa-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+    .foot-note {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    .foot-note a { color: rgba(255,255,255,0.95); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="flyer">
+    <!-- Background: Piscina -->
+    <div class="bg-beach" style="background-image: url('assets/valeria/valeria-007.jpg');"></div>
+
+    <div class="top-tag">
+      <span>Almuerzos de Piscina Valeria · Turbaco · Al domi</span>
+    </div>
+
+    <div class="menu-block">
+      <div class="menu-card">
+        <h1>ALMUERZOS DE PISCINA VALERIA</h1>
+        <p class="sub">Al domicilio área Turbaco · Adicional 4.000 COP fuera de Bellavista</p>
+        <p class="narrative"><strong>Almuerzos de piscina.</strong> Lun-Mié-Vie-Sáb de 12pm a 4pm. Al domi en Turbaco — arroz con bistec, carne molida, frijoles y pescado, sancocho trifásico.</p>
+
+        <div class="menu-with-photos">
+          <div class="plato-row">
+            <img class="food-photo" src="assets/valeria/valeria-001.jpg" alt="Arroz de fideos y carne en bistec" width="72" height="72" />
+            <div class="plato">
+              <span class="nombre">Arroz de fideos y carne en bistec</span>
+              <span class="precio">15.000 COP</span>
+            </div>
+          </div>
+          <div class="plato-row">
+            <img class="food-photo" src="assets/valeria/valeria-002.jpg" alt="Arroz y carne molida" width="72" height="72" />
+            <div class="plato">
+              <span class="nombre">Arroz y carne molida</span>
+              <span class="precio">15.000 COP</span>
+            </div>
+          </div>
+          <div class="plato-row">
+            <img class="food-photo" src="assets/valeria/valeria-003.jpg" alt="Arroz de frijoles y pescado" width="72" height="72" />
+            <div class="plato">
+              <span class="nombre">Arroz de frijoles y pescado</span>
+              <span class="precio">17.000 COP</span>
+            </div>
+          </div>
+          <div class="plato-row">
+            <img class="food-photo" src="assets/valeria/valeria-004.jpg" alt="Sancocho trifásico y arroz" width="72" height="72" />
+            <div class="plato">
+              <span class="nombre">Sancocho trifásico y arroz</span>
+              <span class="precio">20.000 COP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="market-line">
+          <span class="txt">Plaza Turbaco</span>
+        </div>
+        <div class="market-banner">
+          <img src="assets/valeria/valeria-005.jpg" alt="Plaza Turbaco" />
+          <span class="banner-caption">Plaza Turbaco</span>
+        </div>
+        <p class="zona">Al domicilio área Turbaco · +4.000 COP fuera de Bellavista · Lun-Mié-Vie-Sáb 12pm a 4pm</p>
+      </div>
+
+      <div class="yeris-wrap">
+        <img class="photo" src="assets/valeria/valeria-006.jpg" alt="Valeria · Almuerzos Piscina" width="96" height="96" />
+        <p class="name">Valeria</p>
+      </div>
+
+      <a href="https://wa.me/573148815093" class="wa-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.865 9.865 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pedir por WhatsApp · 314 881 5093
+      </a>
+    </div>
+
+    <p class="foot-note">ALMUERZOS DE PISCINA VALERIA · Turbaco · Colombia · <a href="../index.html">Vibelandia</a></p>
+  </div>
+</body>
+</html>

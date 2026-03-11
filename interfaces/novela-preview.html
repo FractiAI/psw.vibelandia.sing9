@@ -26,6 +26,17 @@
     .foot { border-top: 1px solid rgba(212,175,55,0.1); padding: 1.5rem 2rem; font-size: 0.68rem; color: rgba(212,175,55,0.3); letter-spacing: 0.05em; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
     .foot a { color: rgba(212,175,55,0.4); text-decoration: none; }
     .foot a:hover { color: var(--pink); }
+    .gate-overlay { position: fixed; inset: 0; z-index: 200; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .gate-overlay[hidden] { display: none; }
+    .gate-box { max-width: 400px; text-align: center; }
+    .gate-box h3 { font-size: 1rem; font-weight: 800; color: var(--pink); margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+    .gate-box p { font-size: 0.88rem; color: var(--cream-dim); line-height: 1.6; margin-bottom: 1.25rem; }
+    .gate-btns { display: flex; flex-direction: column; gap: 0.6rem; }
+    .gate-btn { display: block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; border: none; text-decoration: none; text-align: center; transition: transform 0.12s ease, box-shadow 0.2s ease; }
+    .gate-btn-yes { background: linear-gradient(135deg, var(--pink) 0%, rgba(180,0,80,0.9) 100%); color: #fff; border: 1px solid rgba(232,121,249,0.6); }
+    .gate-btn-yes:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(232,121,249,0.35); }
+    .gate-btn-no { background: transparent; color: var(--cream-dim); border: 1px solid rgba(253,248,235,0.2); }
+    .gate-btn-no:hover { color: var(--cream); border-color: rgba(253,248,235,0.4); }
   </style>
 </head>
 <body>
@@ -35,7 +46,17 @@
     <a href="catalog.html">Content Catalog</a>
     <a href="first-singularity-january-13th.html">First Singularity</a>
   </nav>
-  <div class="content">
+  <div id="ageGateOverlay" class="gate-overlay">
+    <div class="gate-box">
+      <h3>21+ only</h3>
+      <p>Confirm you are 21 or older to read the first chapter.</p>
+      <div class="gate-btns">
+        <button type="button" class="gate-btn gate-btn-yes" id="gateYes">Yes, I'm 21+</button>
+        <a href="gold-heart-novela.html" class="gate-btn gate-btn-no" id="gateNo">No, take me back</a>
+      </div>
+    </div>
+  </div>
+  <div id="chapterContent" class="content" hidden>
     <a href="gold-heart-novela.html" class="back-link">← Back to Gold Heart Novela</a>
     <div class="age-gate"><strong>21+ · Members Only.</strong> First chapter — pop-up style. You're in the right room.</div>
     <p class="chapter-label">First Chapter</p>
@@ -53,5 +74,26 @@
     <a href="catalog.html">Content Catalog</a>
     <a href="../index.html">Home</a>
   </footer>
+  <script>
+    (function() {
+      var CTA_KEY = 'goldheart_21_ok';
+      var overlay = document.getElementById('ageGateOverlay');
+      var content = document.getElementById('chapterContent');
+      var yesBtn = document.getElementById('gateYes');
+      try {
+        if (sessionStorage.getItem(CTA_KEY)) {
+          if (overlay) overlay.hidden = true;
+          if (content) content.hidden = false;
+        }
+      } catch (e) {}
+      if (yesBtn && overlay && content) {
+        yesBtn.addEventListener('click', function() {
+          try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
+          overlay.hidden = true;
+          content.hidden = false;
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

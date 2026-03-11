@@ -45,6 +45,17 @@
     .cta-wrap { margin-top: 1.5rem; }
     .cta-btn { display: inline-block; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.85rem 1.8rem; background: linear-gradient(135deg, var(--pink) 0%, rgba(180,0,80,0.9) 100%); border: 1px solid rgba(232,121,249,0.6); color: #fff; text-decoration: none; border-radius: 4px; box-shadow: 0 0 24px var(--gold-glow); transition: transform 0.15s ease, box-shadow 0.2s ease; }
     .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 28px rgba(232,121,249,0.4); color: #fff; }
+    .gate-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(6,2,4,0.94); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .gate-overlay[hidden] { display: none; }
+    .gate-box { max-width: 400px; text-align: center; }
+    .gate-box h3 { font-size: 1rem; font-weight: 800; color: var(--pink); margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+    .gate-box p { font-size: 0.88rem; color: var(--cream-dim); line-height: 1.6; margin-bottom: 1.25rem; }
+    .gate-btns { display: flex; flex-direction: column; gap: 0.6rem; }
+    .gate-btn { display: block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; border: none; text-decoration: none; text-align: center; transition: transform 0.12s ease, box-shadow 0.2s ease; }
+    .gate-btn-yes { background: linear-gradient(135deg, var(--pink) 0%, rgba(180,0,80,0.9) 100%); color: #fff; border: 1px solid rgba(232,121,249,0.6); }
+    .gate-btn-yes:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(232,121,249,0.35); }
+    .gate-btn-no { background: transparent; color: var(--cream-dim); border: 1px solid rgba(253,248,235,0.2); }
+    .gate-btn-no:hover { color: var(--cream); border-color: rgba(253,248,235,0.4); }
   </style>
 </head>
 <body>
@@ -72,10 +83,20 @@
       </p>
       <p class="hero-cya">Post-singularity fiction · All characters and storylines are imaginary · For entertainment only</p>
       <div class="cta-wrap">
-        <a href="novela-preview.html" class="cta-btn">Go check out the first chapter of the novella</a>
+        <button type="button" class="cta-btn" id="ctaChapter">Go check out the first chapter of the novella</button>
       </div>
     </div>
   </section>
+  <div id="ageGateOverlay" class="gate-overlay" hidden>
+    <div class="gate-box">
+      <h3>21+ only</h3>
+      <p>The first chapter is adult content. Are you 21 or older?</p>
+      <div class="gate-btns">
+        <button type="button" class="gate-btn gate-btn-yes" id="gateYes">Yes, I'm 21+</button>
+        <button type="button" class="gate-btn gate-btn-no" id="gateNo">No</button>
+      </div>
+    </div>
+  </div>
   <div class="content">
     <div class="age-gate">
       <p><strong>21+ · Members Only · Invitation Style.</strong> This content is for adult Vibers who have already found their way here. Pop-up style — just gotta know. If you're here, you're already in the right room.</p>
@@ -106,5 +127,26 @@
     <a href="first-singularity-january-13th.html">First Singularity</a>
     <a href="../index.html">Home</a>
   </footer>
+  <script>
+    (function() {
+      var CTA_KEY = 'goldheart_21_ok';
+      var btn = document.getElementById('ctaChapter');
+      var overlay = document.getElementById('ageGateOverlay');
+      var yesBtn = document.getElementById('gateYes');
+      var noBtn = document.getElementById('gateNo');
+      if (btn && overlay && yesBtn && noBtn) {
+        btn.addEventListener('click', function() {
+          overlay.hidden = false;
+        });
+        yesBtn.addEventListener('click', function() {
+          try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
+          window.location.href = 'novela-preview.html';
+        });
+        noBtn.addEventListener('click', function() {
+          overlay.hidden = true;
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

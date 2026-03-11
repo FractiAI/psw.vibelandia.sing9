@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Queen's Rush · Chapter 1: The Itch | VIBELANDIA SING 9</title>
+  <script>
+    (function() {
+      var lang = 'en';
+      try {
+        var stored = sessionStorage.getItem('queensrush_lang');
+        if (stored === 'es' || stored === 'en') lang = stored;
+        else if (navigator.language && String(navigator.language).toLowerCase().startsWith('es')) lang = 'es';
+        else if (navigator.languages && [].some.call(navigator.languages, function(l) { return String(l).toLowerCase().startsWith('es'); })) lang = 'es';
+        sessionStorage.setItem('queensrush_lang', lang);
+      } catch (e) {}
+      document.documentElement.lang = lang;
+    })();
+  </script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root { --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35); --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55); --pink: #e879f9; --cyan: #22d3ee; --bg: #060204; }
@@ -54,6 +67,9 @@
     .gate-btn-yes:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(232,121,249,0.35); }
     .gate-btn-no { background: transparent; color: var(--cream-dim); border: 1px solid rgba(253,248,235,0.2); }
     .gate-btn-no:hover { color: var(--cream); border-color: rgba(253,248,235,0.4); }
+    .lang-es { display: none; }
+    html[lang="es"] .lang-en { display: none; }
+    html[lang="es"] .lang-es { display: block; }
   </style>
 </head>
 <body>
@@ -65,25 +81,33 @@
   </nav>
   <div id="ageGateOverlay" class="gate-overlay">
     <div class="gate-box">
-      <h3>21+ only</h3>
-      <p>Confirm you are 21 or older to read the first chapter.</p>
+      <h3 class="lang-en">21+ only</h3>
+      <h3 class="lang-es">Solo +21</h3>
+      <p class="lang-en">Confirm you are 21 or older to read the first chapter.</p>
+      <p class="lang-es">Confirma que tienes 21 años o más para leer el primer capítulo.</p>
       <div class="gate-btns">
-        <button type="button" class="gate-btn gate-btn-yes" id="gateYes">Yes, I'm 21+</button>
+        <button type="button" class="gate-btn gate-btn-yes lang-en" id="gateYes">Yes, I'm 21+</button>
+        <button type="button" class="gate-btn gate-btn-yes lang-es" id="gateYesEs">Sí, tengo 21 o más</button>
         <a href="gold-heart-novela.html" class="gate-btn gate-btn-no" id="gateNo">No, take me back</a>
       </div>
     </div>
   </div>
   <div id="chapterContent" class="content" hidden>
     <a href="gold-heart-novela.html" class="back-link">← Queen's Rush</a>
-    <div class="age-gate"><strong>21+ · Queen's Rush · The Nine Game.</strong> Chapter 1 — The Itch. You're in the right room.</div>
+    <div class="age-gate lang-en"><strong>21+ · Queen's Rush · The Nine Game.</strong> Chapter 1 — The Itch. You're in the right room.</div>
+    <div class="age-gate lang-es"><strong>+21 · Queen's Rush · El Nine Game.</strong> Capítulo 1 — La picazón. Estás en la habitación correcta.</div>
 
-    <p class="chapter-label">The Pitch</p>
-    <h1>Queen's Rush · Empire Indigestion</h1>
+    <p class="chapter-label lang-en">The Pitch</p>
+    <p class="chapter-label lang-es">La propuesta</p>
+    <h1 class="lang-en">Queen's Rush · Empire Indigestion</h1>
+    <h1 class="lang-es">Queen's Rush · Indigestión del imperio</h1>
     <div class="pitch">
-      <p>You swallowed the pill. Maybe the blue one (the Golden Cage of status and sterile success), or the red one (the Awakened hustle that left you more anxious). Either way, you won the game—and now you have Indigestion. That burning in your chest isn’t a “mental health issue.” <strong>You are bored as fuck.</strong> The $500-an-hour therapy and the retreats aren’t a replacement for boredom when you’re trapped in a life that’s not really yours. <strong>Why the boredom?</strong> Clean read: you’re following a script that isn’t yours. Not investing time in yourself. Not connecting to your higher self. Committed to an artificial life and mission—totally disconnected from who you are at your core. The boredom is your body refusing the lie. For that to change: come over here. Only then. <strong>Queen's Rush</strong> is the answer to that boredom: the Nine Game—180° Oasis, Vortex Board. Read. Watch. Participate. Stop digesting the lie. Start resonating with the SOS.</p>
+      <p class="lang-en">You swallowed the pill. Maybe the blue one (the Golden Cage of status and sterile success), or the red one (the Awakened hustle that left you more anxious). Either way, you won the game—and now you have Indigestion. That burning in your chest isn’t a “mental health issue.” <strong>You are bored as fuck.</strong> The $500-an-hour therapy and the retreats aren’t a replacement for boredom when you’re trapped in a life that’s not really yours. <strong>Why the boredom?</strong> Clean read: you’re following a script that isn’t yours. Not investing time in yourself. Not connecting to your higher self. Committed to an artificial life and mission—totally disconnected from who you are at your core. The boredom is your body refusing the lie. For that to change: come over here. Only then. <strong>Queen's Rush</strong> is the answer to that boredom: the Nine Game—180° Oasis, Vortex Board. Read. Watch. Participate. Stop digesting the lie. Start resonating with the SOS.</p>
+      <p class="lang-es">Te tragaste la pastilla. La azul (la jaula dorada del estatus y el éxito estéril) o la roja (el despertar que te dejó más ansiosa). Ganaste el juego—y ahora tienes Indigestión. Esa quemazón en el pecho no es un tema de salud mental. <strong>Estás aburrida como la mierda.</strong> La terapia y los retiros no sustituyen el aburrimiento cuando estás atrapada en una vida que no es tuya. <strong>¿Por qué el aburrimiento?</strong> Sigues un guion que no es tuyo. No inviertes en ti. No te conectas con tu ser superior. Comprometida con una vida y misión artificiales—desconectada de quién eres. El aburrimiento es tu cuerpo rechazando la mentira. Para que cambie: ven aquí. Solo entonces. <strong>Queen's Rush</strong> es la respuesta: el Nine Game—Oasis 180°, Vortex Board. Lee. Mira. Participa. Deja de digerir la mentira. Empieza a resonar con el SOS.</p>
     </div>
 
-    <h2>CHAPTER 1: THE ITCH</h2>
+    <h2 class="lang-en">CHAPTER 1: THE ITCH</h2>
+    <h2 class="lang-es">CAPÍTULO 1: LA PICAZÓN</h2>
     <div class="prose">
       <p>The clock on Dr. Aris’s wall was a masterpiece of minimalist Swiss engineering. It cost more than most people’s cars, and it was currently ticking away the most expensive forty-five minutes of Elena’s week. She had chosen him—or rather, the script had chosen him—because his practice came recommended by three women in her circle, all of whom had the same marble floors, the same leather-bound notebooks, the same way of saying <em>And how does that make you feel?</em> as if the question were a key that could unlock something. It never did. It only turned the lock one more time.</p>
       <p><em>Tick. 0°. Tick. 0°.</em></p>
@@ -116,12 +140,17 @@
     </div>
 
     <div class="checkpoint">
-      <p class="chapter-label">Offline · Take It Further</p>
-      <p><strong>You finished Chapter 1.</strong> Keep reading—or take the next step in the real world.</p>
+      <p class="chapter-label lang-en">Offline · Take It Further</p>
+      <p class="chapter-label lang-es">Presencial · Lleva más lejos</p>
+      <p class="lang-en"><strong>You finished Chapter 1.</strong> Keep reading—or take the next step in the real world.</p>
+      <p class="lang-es"><strong>Terminaste el Capítulo 1.</strong> Sigue leyendo—o da el siguiente paso en el mundo real.</p>
       <div class="checkpoint-btns">
-        <a href="novela-ch2.html" class="checkpoint-btn checkpoint-yes">Continue to Chapter 2: The Connect</a>
-        <a href="office-hours.html" class="checkpoint-btn checkpoint-offline" id="btnNotch1">Take it up a notch — Home experience · WhatsApp · Book offline</a>
-        <a href="explore-vibelandia-downtown-reno.html" class="checkpoint-btn checkpoint-offline" id="btnNotch2">Pick it up another notch — Nightclub date · Vibelandia, downtown Reno · Book offline</a>
+        <a href="novela-ch2.html" class="checkpoint-btn checkpoint-yes lang-en">Continue to Chapter 2: The Connect</a>
+        <a href="novela-ch2.html" class="checkpoint-btn checkpoint-yes lang-es">Seguir al Capítulo 2: La conexión</a>
+        <a href="office-hours.html" class="checkpoint-btn checkpoint-offline lang-en">Take it up a notch — Home experience · WhatsApp · Book offline</a>
+        <a href="office-hours.html" class="checkpoint-btn checkpoint-offline lang-es">Súbele — Experiencia en casa · WhatsApp · Reservar</a>
+        <a href="explore-vibelandia-downtown-reno.html" class="checkpoint-btn checkpoint-offline lang-en">Pick it up another notch — Nightclub date · Vibelandia, downtown Reno · Book offline</a>
+        <a href="explore-vibelandia-downtown-reno.html" class="checkpoint-btn checkpoint-offline lang-es">Otro nivel — Cita nightclub · Vibelandia, Reno centro · Reservar</a>
         <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-no">← Back to Queen's Rush</a>
       </div>
     </div>
@@ -137,8 +166,10 @@
   </div>
   <footer class="foot">
     <span>VIBELANDIA · SING 9 · NSPFRNP → ∞⁹</span>
-    <span>Queen's Rush · Chapter 1: The Itch · The Nine Game · 21+</span>
-    <a href="gold-heart-novela.html">← Queen's Rush</a>
+    <span class="lang-en">Queen's Rush · Chapter 1: The Itch · The Nine Game · 21+</span>
+    <span class="lang-es">Queen's Rush · Capítulo 1: La picazón · El Nine Game · +21</span>
+    <a href="gold-heart-novela.html" class="lang-en">← Queen's Rush</a>
+    <a href="gold-heart-novela.html" class="lang-es">← Queen's Rush</a>
     <a href="nine-game-hub.html">The Nine Game</a>
     <a href="catalog.html">Content Catalog</a>
     <a href="../index.html">Home</a>
@@ -149,10 +180,12 @@
       var overlay = document.getElementById('ageGateOverlay');
       var content = document.getElementById('chapterContent');
       var yesBtn = document.getElementById('gateYes');
+      var yesBtnEs = document.getElementById('gateYesEs');
       try {
         if (sessionStorage.getItem(CTA_KEY)) {
           if (overlay) overlay.hidden = true;
           if (content) content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch1'; } catch (e) {}
         }
       } catch (e) {}
       if (yesBtn && overlay && content) {
@@ -160,6 +193,15 @@
           try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
           overlay.hidden = true;
           content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch1'; } catch (e) {}
+        });
+      }
+      if (yesBtnEs && overlay && content) {
+        yesBtnEs.addEventListener('click', function() {
+          try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
+          overlay.hidden = true;
+          content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch1'; } catch (e) {}
         });
       }
     })();

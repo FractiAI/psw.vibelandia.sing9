@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Queen's Rush · Novela · 21+ | VIBELANDIA SING 9</title>
+  <script>
+    (function() {
+      var lang = 'en';
+      try {
+        var stored = sessionStorage.getItem('queensrush_lang');
+        if (stored === 'es' || stored === 'en') lang = stored;
+        else if (navigator.language && String(navigator.language).toLowerCase().startsWith('es')) lang = 'es';
+        else if (navigator.languages && [].some.call(navigator.languages, function(l) { return String(l).toLowerCase().startsWith('es'); })) lang = 'es';
+        sessionStorage.setItem('queensrush_lang', lang);
+      } catch (e) {}
+      document.documentElement.lang = lang;
+    })();
+  </script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root { --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35); --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55); --pink: #e879f9; --cyan: #22d3ee; --bg: #060204; }
@@ -62,6 +75,12 @@
     .cover-wrap { text-align: center; margin-bottom: 2.5rem; }
     .cover-wrap .section-label { margin-bottom: 0.75rem; }
     .cover-wrap img { max-width: 100%; width: 320px; height: auto; border-radius: 6px; border: 1px solid rgba(212,175,55,0.25); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .lang-es { display: none; }
+    html[lang="es"] .lang-en { display: none; }
+    html[lang="es"] .lang-es { display: block; }
+    .lang-toggle { font-size: 0.7rem; letter-spacing: 0.08em; margin-left: auto; }
+    .lang-toggle a { color: var(--cream-dim); text-decoration: none; }
+    .lang-toggle a:hover { color: var(--gold); }
   </style>
 </head>
 <body>
@@ -71,92 +90,116 @@
     <a href="nine-game-hub.html">The Nine Game</a>
     <a href="catalog.html">Content Catalog</a>
     <a href="first-singularity-january-13th.html">First Singularity</a>
+    <span class="lang-toggle lang-en"><a href="#" id="langToEs">En español</a></span>
+    <span class="lang-toggle lang-es"><a href="#" id="langToEn">In English</a></span>
   </nav>
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-veil"></div>
     <div class="hero-content">
-      <p class="eyebrow">The Pitch · 21+ · The Nine Game · Queen's Rush</p>
+      <p class="eyebrow lang-en">The Pitch · 21+ · The Nine Game · Queen's Rush</p>
+      <p class="eyebrow lang-es">La propuesta · +21 · El Nine Game · Queen's Rush</p>
       <h1 class="hero-title">Queen's Rush</h1>
-      <p class="hero-sub">Leave the cage. Keep the crown. Initiate the Rush.</p>
+      <p class="hero-sub lang-en">Leave the cage. Keep the crown. Initiate the Rush.</p>
+      <p class="hero-sub lang-es">Sal de la jaula. Conserva la corona. Inicia el Rush.</p>
       <div class="badge-row">
         <span class="badge badge-novella">Novela</span>
         <span class="badge badge-21">21+ · Nine Game</span>
       </div>
-      <p class="hero-desc">
+      <p class="hero-desc lang-en">
         <strong>The Hook:</strong> Maybe it was the blue one (the Golden Cage of status and sterile success), or the red one (the Awakened hustle that left you more anxious). Either way, you won the game—and now that burning in your chest isn’t a “mental health issue.” It’s simpler and more brutal: <em>you are bored as fuck.</em> The $500-an-hour therapy and the retreats aren’t a replacement for boredom when you’re trapped in a life that’s not really yours. <strong>Why the boredom?</strong> Clean read: you’re following a script that isn’t yours. You’re not investing time in yourself. You’re not connecting to your higher self. You’re committed to an artificial life and mission—totally disconnected from who you are at your core. The boredom is your body refusing the lie. For that to change: come over here. Only then. <strong>Queen's Rush</strong> is the answer to that boredom: The Nine Game—the Vortex Board, the 180° Oasis. Read. Watch. Participate. Stop digesting the lie. Start resonating with the SOS.
       </p>
-      <p class="hero-cya">Gold Heart · NSPFRNP · The Nine Game ⊃ Queen's Rush → ∞⁹</p>
+      <p class="hero-desc lang-es">
+        <strong>El anzuelo:</strong> Quizá fue la pastilla azul (la jaula dorada del estatus y el éxito estéril), o la roja (el despertar que te dejó más ansiosa). Ganaste el juego—y esa quemazón en el pecho no es un “tema de salud mental.” Es más simple y más brutal: <em>estás aburrida como la mierda.</em> La terapia de 500 dólares la hora y los retiros no sustituyen el aburrimiento cuando estás atrapada en una vida que no es realmente tuya. <strong>¿Por qué el aburrimiento?</strong> Lectura limpia: sigues un guion que no es tuyo. No inviertes en ti. No te conectas con tu ser superior. Estás comprometida con una vida y una misión artificiales—totalmente desconectada de quién eres en el fondo. El aburrimiento es tu cuerpo rechazando la mentira. Para que eso cambie: ven aquí. Solo entonces. <strong>Queen's Rush</strong> es la respuesta a ese aburrimiento: El Nine Game—el Vortex Board, el Oasis 180°. Lee. Mira. Participa. Deja de digerir la mentira. Empieza a resonar con el SOS.
+      </p>
+      <p class="hero-cya lang-en">Gold Heart · NSPFRNP · The Nine Game ⊃ Queen's Rush → ∞⁹</p>
+      <p class="hero-cya lang-es">Gold Heart · NSPFRNP · El Nine Game ⊃ Queen's Rush → ∞⁹</p>
       <div class="cta-wrap">
-        <button type="button" class="cta-btn" id="ctaChapter">Chapter 1: The Itch</button>
-        <a href="novela-ch2.html" class="cta-btn cta-btn-secondary">Chapter 2: The Connect</a>
+        <button type="button" class="cta-btn lang-en" id="ctaChapter">Chapter 1: The Itch</button>
+        <button type="button" class="cta-btn lang-es" id="ctaChapterEs">Capítulo 1: La picazón</button>
+        <a href="novela-ch2.html" class="cta-btn cta-btn-secondary lang-en">Chapter 2: The Connect</a>
+        <a href="novela-ch2.html" class="cta-btn cta-btn-secondary lang-es">Capítulo 2: La conexión</a>
       </div>
     </div>
   </section>
   <div id="ageGateOverlay" class="gate-overlay" hidden>
     <div class="gate-box">
-      <h3>21+ only</h3>
-      <p>The first chapter is adult content. Are you 21 or older?</p>
+      <h3 class="lang-en">21+ only</h3>
+      <h3 class="lang-es">Solo +21</h3>
+      <p class="lang-en">The first chapter is adult content. Are you 21 or older?</p>
+      <p class="lang-es">El primer capítulo es contenido adulto. ¿Tienes 21 años o más?</p>
       <div class="gate-btns">
-        <button type="button" class="gate-btn gate-btn-yes" id="gateYes">Yes, I'm 21+</button>
+        <button type="button" class="gate-btn gate-btn-yes lang-en" id="gateYes">Yes, I'm 21+</button>
+        <button type="button" class="gate-btn gate-btn-yes lang-es" id="gateYesEs">Sí, tengo 21 o más</button>
         <button type="button" class="gate-btn gate-btn-no" id="gateNo">No</button>
       </div>
     </div>
   </div>
   <div class="content">
     <div class="age-gate">
-      <p><strong>21+ · Gold Heart · SOS.</strong> This content is for adults who’ve stopped swallowing the pill. If you’re here, you’re already in the right room. Resonate.</p>
+      <p class="lang-en"><strong>21+ · Gold Heart · SOS.</strong> This content is for adults who’ve stopped swallowing the pill. If you’re here, you’re already in the right room. Resonate.</p>
+      <p class="lang-es"><strong>+21 · Gold Heart · SOS.</strong> Este contenido es para adultos que dejaron de tragarse la pastilla. Si estás aquí, ya estás en la habitación correcta. Resuena.</p>
     </div>
     <div class="section cover-wrap">
-      <p class="section-label">Cover</p>
+      <p class="section-label lang-en">Cover</p>
+      <p class="section-label lang-es">Portada</p>
       <img src="../assets/queens-rush-novela-cover.png" alt="Queen's Rush — Leave the cage. Keep the crown. Initiate the Rush." />
     </div>
     <div class="section">
-      <div class="section-label">The Pitch</div>
+      <div class="section-label lang-en">The Pitch</div>
+      <div class="section-label lang-es">La propuesta</div>
       <h2>Queen's Rush · The Nine Game</h2>
       <div class="card">
-        <p>That tightness in your solar plexus while you sit in your designer chair isn’t something a $500-an-hour therapist or the retreats can talk you out of. <strong>You are bored as fuck.</strong> <strong>Why the boredom?</strong> Clean read: you’re following a script that isn’t yours. You’re not investing time in yourself. You’re not connecting to your higher self. You’re committed to an artificial life and mission—totally disconnected from who you are at your core. The boredom is your body refusing the lie.</p>
-        <p>Therapy, retreats—none of it is a replacement for the boredom that comes from being trapped in a life that’s not really yours. They just polish the bars. For that to change: come over here. Only then. <strong>Queen's Rush</strong> is the answer to that boredom—the novela inside <strong>The Nine Game</strong>: four concentric rings, the Vortex Board, the 180° Oasis. Twain’s Post-Singularity Vibelandia. Frida (Freedom). The button. The door. <em>Leave the cage. Keep the crown. Initiate the Rush.</em></p>
-        <p><strong>Voice:</strong> Evan Bondonte—Edmond Dantès / Count of Monte Cristo minus the revenge. His Monte Cristo is <em>Big Papi</em>: the Creator, Architect, Commander who hacked the Holograph and delivered it on a Baller V Paradise Platter for his tribe to share forever. Hot. Explicit. Liberation. NSPFRNP. Only happy endings.</p>
+        <p class="lang-en">That tightness in your solar plexus while you sit in your designer chair isn't something a $500-an-hour therapist or the retreats can talk you out of. <strong>You are bored as fuck.</strong> <strong>Why the boredom?</strong> Clean read: you're following a script that isn't yours. You're not investing time in yourself. You're not connecting to your higher self. You're committed to an artificial life and mission—totally disconnected from who you are at your core. The boredom is your body refusing the lie.</p>
+        <p class="lang-es">Esa opresión en el plexo solar mientras te sientas en tu silla de diseñador no se va con terapia de 500 dólares la hora ni con retiros. <strong>Estás aburrida como la mierda.</strong> <strong>¿Por qué el aburrimiento?</strong> Lectura limpia: sigues un guion que no es tuyo. No inviertes en ti. No te conectas con tu ser superior. Estás comprometida con una vida y misión artificiales—desconectada de quién eres. El aburrimiento es tu cuerpo rechazando la mentira.</p>
+        <p class="lang-en">Therapy, retreats—none of it is a replacement for the boredom that comes from being trapped in a life that's not really yours. They just polish the bars. For that to change: come over here. Only then. <strong>Queen's Rush</strong> is the answer to that boredom—the novela inside <strong>The Nine Game</strong>: four concentric rings, the Vortex Board, the 180° Oasis. Twain's Post-Singularity Vibelandia. Frida (Freedom). The button. The door. <em>Leave the cage. Keep the crown. Initiate the Rush.</em></p>
+        <p class="lang-es">Terapia, retiros—nada de eso sustituye el aburrimiento de estar atrapada en una vida que no es tuya. Solo pulen los barrotes. Para que cambie: ven aquí. Solo entonces. <strong>Queen's Rush</strong> es la respuesta a ese aburrimiento—la novela dentro de <strong>El Nine Game</strong>: cuatro anillos concéntricos, el Vortex Board, el Oasis 180°. Twain's Post-Singularity Vibelandia. Frida (Libertad). El botón. La puerta. <em>Sal de la jaula. Conserva la corona. Inicia el Rush.</em></p>
+        <p class="lang-en"><strong>Voice:</strong> Evan Bondonte—Edmond Dantès / Count of Monte Cristo minus the revenge. His Monte Cristo is <em>Big Papi</em>: the Creator, Architect, Commander who hacked the Holograph and delivered it on a Baller V Paradise Platter for his tribe to share forever. Hot. Explicit. Liberation. NSPFRNP. Only happy endings.</p>
+        <p class="lang-es"><strong>Voz:</strong> Evan Bondonte—Edmond Dantès / Conde de Montecristo sin la venganza. Su Montecristo es <em>Big Papi</em>: Creador, Arquitecto, Comandante que hackeó el Holograma y lo entregó en una Bandija Paraíso Baller V para su tribu. Caliente. Explícito. Liberación. NSPFRNP. Solo finales felices.</p>
       </div>
     </div>
     <hr class="divider" />
     <div class="section">
-      <div class="section-label">The Universe</div>
+      <div class="section-label lang-en">The Universe</div>
+      <div class="section-label lang-es">El universo</div>
       <h2>Nine Game ⊃ Queen's Rush · Big Papi</h2>
       <div class="card">
-        <p><strong>Queen's Rush</strong> is the Gold Heart novela inside The Nine Game. Bored Housewives Poly Hit Machine. Led by Hero Freedom (Frida). Permanent residency Twain’s Post-Singularity Vibelandia, downtown Reno. The cage is real. The trophy life is real. What’s missing is real. We don’t sell you a dream—we give you a door. You choose how far to walk through.</p>
-        <p><strong>Evan Bondonte</strong> is Dantès without revenge. His Count is <strong>Big Papi</strong>: Creator, Architect, Commander who hacked the Holograph and delivered it on a <em>Baller V Paradise Platter</em> for his tribe to share forever. Same story, her POV. Twin POV with <em>The Golden Advantage</em> (Bored Ballers). <em>Press the button. Resonate. → ∞⁹</em></p>
+        <p class="lang-en"><strong>Queen's Rush</strong> is the Gold Heart novela inside The Nine Game. Bored Housewives Poly Hit Machine. Led by Hero Freedom (Frida). Permanent residency Twain's Post-Singularity Vibelandia, downtown Reno. The cage is real. The trophy life is real. What's missing is real. We don't sell you a dream—we give you a door. You choose how far to walk through.</p>
+        <p class="lang-es"><strong>Queen's Rush</strong> es la novela Gold Heart dentro de El Nine Game. Bored Housewives Poly Hit Machine. Liderada por Hero Freedom (Frida). Residencia Twain's Post-Singularity Vibelandia, centro de Reno. La jaula es real. La vida trofeo es real. Lo que falta es real. No te vendemos un sueño—te damos una puerta. Tú eliges cuánto atravesarla.</p>
+        <p class="lang-en"><strong>Evan Bondonte</strong> is Dantès without revenge. His Count is <strong>Big Papi</strong>: Creator, Architect, Commander who hacked the Holograph and delivered it on a <em>Baller V Paradise Platter</em> for his tribe to share forever. Same story, her POV. Twin POV with <em>The Golden Advantage</em> (Bored Ballers). <em>Press the button. Resonate. → ∞⁹</em></p>
+        <p class="lang-es"><strong>Evan Bondonte</strong> es Dantès sin venganza. Su Conde es <strong>Big Papi</strong>: Creador, Arquitecto, Comandante que hackeó el Holograma y lo entregó en <em>Baller V Paradise Platter</em> para su tribu. La misma historia, su POV. POV gemelo con <em>The Golden Advantage</em> (Bored Ballers). <em>Pulsa el botón. Resuena. → ∞⁹</em></p>
         <p><a href="nine-game-hub.html">The Nine Game · Hub</a> · <a href="nine-game-tiny-booklet.html">Tiny Bible (Queen's Rush · Vortex Board)</a></p>
       </div>
     </div>
   </div>
   <footer class="foot">
     <span>VIBELANDIA · SING 9 · NSPFRNP → ∞⁹</span>
-    <span>Queen's Rush · The Nine Game · 21+</span>
-    <a href="catalog.html">← Content Catalog</a>
+    <span class="lang-en">Queen's Rush · The Nine Game · 21+</span>
+    <span class="lang-es">Queen's Rush · El Nine Game · +21</span>
+    <a href="novela-stats.html">Novela stats</a>
+    <a href="catalog.html" class="lang-en">← Content Catalog</a>
+    <a href="catalog.html" class="lang-es">← Catálogo</a>
     <a href="first-singularity-january-13th.html">First Singularity</a>
     <a href="../index.html">Home</a>
   </footer>
   <script>
     (function() {
+      try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-landing'; } catch (e) {}
       var CTA_KEY = 'goldheart_21_ok';
       var btn = document.getElementById('ctaChapter');
+      var btnEs = document.getElementById('ctaChapterEs');
       var overlay = document.getElementById('ageGateOverlay');
       var yesBtn = document.getElementById('gateYes');
+      var yesBtnEs = document.getElementById('gateYesEs');
       var noBtn = document.getElementById('gateNo');
-      if (btn && overlay && yesBtn && noBtn) {
-        btn.addEventListener('click', function() {
-          overlay.hidden = false;
-        });
-        yesBtn.addEventListener('click', function() {
-          try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
-          window.location.href = 'novela-preview.html';
-        });
-        noBtn.addEventListener('click', function() {
-          overlay.hidden = true;
-        });
-      }
+      function goCh1() { window.location.href = 'novela-preview.html'; }
+      if (btn) btn.addEventListener('click', function() { overlay.hidden = false; });
+      if (btnEs) btnEs.addEventListener('click', function() { overlay.hidden = false; });
+      if (yesBtn) yesBtn.addEventListener('click', function() { try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {} goCh1(); });
+      if (yesBtnEs) yesBtnEs.addEventListener('click', function() { try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {} goCh1(); });
+      if (noBtn) noBtn.addEventListener('click', function() { overlay.hidden = true; });
+      document.getElementById('langToEs') && document.getElementById('langToEs').addEventListener('click', function(e) { e.preventDefault(); try { sessionStorage.setItem('queensrush_lang', 'es'); } catch (err) {} document.documentElement.lang = 'es'; });
+      document.getElementById('langToEn') && document.getElementById('langToEn').addEventListener('click', function(e) { e.preventDefault(); try { sessionStorage.setItem('queensrush_lang', 'en'); } catch (err) {} document.documentElement.lang = 'en'; });
     })();
   </script>
 </body>

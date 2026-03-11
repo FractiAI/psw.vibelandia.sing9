@@ -4,6 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Queen's Rush · Chapter 2: The Connect | VIBELANDIA SING 9</title>
+  <script>
+    (function() {
+      var lang = 'en';
+      try {
+        var stored = sessionStorage.getItem('queensrush_lang');
+        if (stored === 'es' || stored === 'en') lang = stored;
+        else if (navigator.language && String(navigator.language).toLowerCase().startsWith('es')) lang = 'es';
+        else if (navigator.languages && [].some.call(navigator.languages, function(l) { return String(l).toLowerCase().startsWith('es'); })) lang = 'es';
+        sessionStorage.setItem('queensrush_lang', lang);
+      } catch (e) {}
+      document.documentElement.lang = lang;
+    })();
+  </script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root { --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35); --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55); --pink: #e879f9; --cyan: #22d3ee; --bg: #060204; }
@@ -55,6 +68,9 @@
     .gate-btn-yes:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(232,121,249,0.35); }
     .gate-btn-no { background: transparent; color: var(--cream-dim); border: 1px solid rgba(253,248,235,0.2); }
     .gate-btn-no:hover { color: var(--cream); border-color: rgba(253,248,235,0.4); }
+    .lang-es { display: none; }
+    html[lang="es"] .lang-en { display: none; }
+    html[lang="es"] .lang-es { display: block; }
   </style>
 </head>
 <body>
@@ -67,22 +83,30 @@
   </nav>
   <div id="ageGateOverlay" class="gate-overlay">
     <div class="gate-box">
-      <h3>21+ only</h3>
-      <p>Confirm you are 21 or older to read Chapter 2.</p>
+      <h3 class="lang-en">21+ only</h3>
+      <h3 class="lang-es">Solo +21</h3>
+      <p class="lang-en">Confirm you are 21 or older to read Chapter 2.</p>
+      <p class="lang-es">Confirma que tienes 21 años o más para leer el Capítulo 2.</p>
       <div class="gate-btns">
-        <button type="button" class="gate-btn gate-btn-yes" id="gateYes">Yes, I'm 21+</button>
+        <button type="button" class="gate-btn gate-btn-yes lang-en" id="gateYes">Yes, I'm 21+</button>
+        <button type="button" class="gate-btn gate-btn-yes lang-es" id="gateYesEs">Sí, tengo 21 o más</button>
         <a href="gold-heart-novela.html" class="gate-btn gate-btn-no" id="gateNo">No, take me back</a>
       </div>
     </div>
   </div>
   <div id="chapterContent" class="content" hidden>
-    <a href="novela-preview.html" class="back-link">← Chapter 1: The Itch</a>
-    <div class="age-gate"><strong>21+ · Queen's Rush · The Nine Game.</strong> Chapter 2 — The Connect. You're in the right room.</div>
+    <a href="novela-preview.html" class="back-link lang-en">← Chapter 1: The Itch</a>
+    <a href="novela-preview.html" class="back-link lang-es">← Capítulo 1: La picazón</a>
+    <div class="age-gate lang-en"><strong>21+ · Queen's Rush · The Nine Game.</strong> Chapter 2 — The Connect. You're in the right room.</div>
+    <div class="age-gate lang-es"><strong>+21 · Queen's Rush · El Nine Game.</strong> Capítulo 2 — La conexión. Estás en la habitación correcta.</div>
 
-    <p class="chapter-label">Queen's Rush</p>
-    <h1>Chapter 2: The Connect</h1>
+    <p class="chapter-label lang-en">Queen's Rush</p>
+    <p class="chapter-label lang-es">Queen's Rush</p>
+    <h1 class="lang-en">Chapter 2: The Connect</h1>
+    <h1 class="lang-es">Capítulo 2: La conexión</h1>
 
-    <h2>CHAPTER 2: THE CONNECT</h2>
+    <h2 class="lang-en">CHAPTER 2: THE CONNECT</h2>
+    <h2 class="lang-es">CAPÍTULO 2: LA CONEXIÓN</h2>
     <div class="prose">
       <p>That same week, the girls from the office had a plan. One of them had been to Reno—downtown—and swore the food at this place was worth the drive. A members’ club. Upscale. “You need a night out,” she told Elena. “We all do.” So they went. Not the vineyard. Not the foundation. Not the script. Reno. The kind of night that wasn’t on the calendar.</p>
       <p>Reno’s top gentleman’s club was nothing like the word “gentleman’s” suggested in the brochures. It was all low light and good bourbon and a cigar list that made her pause. She had been about to leave. She had said she’d stay for one drink. Then she’d seen the humidor and thought, <em>When was the last time I did something just because I wanted to?</em> She asked for a cigar. She didn’t know the first thing about them. She just wanted to stand there, in that room, and want something without translating it into a performance.</p>
@@ -115,13 +139,19 @@
     </div>
 
     <div class="checkpoint">
-      <p class="chapter-label">Offline · Take It Further</p>
-      <p><strong>You finished Chapter 2.</strong> Keep reading—or take the next step in the real world.</p>
+      <p class="chapter-label lang-en">Offline · Take It Further</p>
+      <p class="chapter-label lang-es">Presencial · Lleva más lejos</p>
+      <p class="lang-en"><strong>You finished Chapter 2.</strong> Keep reading—or take the next step in the real world.</p>
+      <p class="lang-es"><strong>Terminaste el Capítulo 2.</strong> Sigue leyendo—o da el siguiente paso en el mundo real.</p>
       <div class="checkpoint-btns">
-        <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-yes">Continue to Queen's Rush · More chapters soon</a>
-        <a href="office-hours.html" class="checkpoint-btn checkpoint-offline">Take it up a notch — Home experience · WhatsApp · Book offline</a>
-        <a href="explore-vibelandia-downtown-reno.html" class="checkpoint-btn checkpoint-offline">Pick it up another notch — Nightclub date · Vibelandia, downtown Reno · Book offline</a>
-        <a href="novela-preview.html" class="checkpoint-btn checkpoint-no">← Chapter 1: The Itch</a>
+        <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-yes lang-en">Continue to Queen's Rush · More chapters soon</a>
+        <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-yes lang-es">Seguir a Queen's Rush · Más capítulos pronto</a>
+        <a href="office-hours.html" class="checkpoint-btn checkpoint-offline lang-en">Take it up a notch — Home experience · WhatsApp · Book offline</a>
+        <a href="office-hours.html" class="checkpoint-btn checkpoint-offline lang-es">Súbele — Experiencia en casa · WhatsApp · Reservar</a>
+        <a href="explore-vibelandia-downtown-reno.html" class="checkpoint-btn checkpoint-offline lang-en">Pick it up another notch — Nightclub date · Vibelandia, downtown Reno · Book offline</a>
+        <a href="explore-vibelandia-downtown-reno.html" class="checkpoint-btn checkpoint-offline lang-es">Otro nivel — Cita nightclub · Vibelandia, Reno centro · Reservar</a>
+        <a href="novela-preview.html" class="checkpoint-btn checkpoint-no lang-en">← Chapter 1: The Itch</a>
+        <a href="novela-preview.html" class="checkpoint-btn checkpoint-no lang-es">← Capítulo 1: La picazón</a>
       </div>
     </div>
 
@@ -136,9 +166,12 @@
   </div>
   <footer class="foot">
     <span>VIBELANDIA · SING 9 · NSPFRNP → ∞⁹</span>
-    <span>Queen's Rush · Chapter 2: The Connect · The Nine Game · 21+</span>
-    <a href="gold-heart-novela.html">← Queen's Rush</a>
-    <a href="novela-preview.html">Chapter 1</a>
+    <span class="lang-en">Queen's Rush · Chapter 2: The Connect · The Nine Game · 21+</span>
+    <span class="lang-es">Queen's Rush · Capítulo 2: La conexión · El Nine Game · +21</span>
+    <a href="gold-heart-novela.html" class="lang-en">← Queen's Rush</a>
+    <a href="gold-heart-novela.html" class="lang-es">← Queen's Rush</a>
+    <a href="novela-preview.html" class="lang-en">Chapter 1</a>
+    <a href="novela-preview.html" class="lang-es">Capítulo 1</a>
     <a href="nine-game-hub.html">The Nine Game</a>
     <a href="catalog.html">Content Catalog</a>
     <a href="../index.html">Home</a>
@@ -149,10 +182,12 @@
       var overlay = document.getElementById('ageGateOverlay');
       var content = document.getElementById('chapterContent');
       var yesBtn = document.getElementById('gateYes');
+      var yesBtnEs = document.getElementById('gateYesEs');
       try {
         if (sessionStorage.getItem(CTA_KEY)) {
           if (overlay) overlay.hidden = true;
           if (content) content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch2'; } catch (e) {}
         }
       } catch (e) {}
       if (yesBtn && overlay && content) {
@@ -160,6 +195,15 @@
           try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
           overlay.hidden = true;
           content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch2'; } catch (e) {}
+        });
+      }
+      if (yesBtnEs && overlay && content) {
+        yesBtnEs.addEventListener('click', function() {
+          try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
+          overlay.hidden = true;
+          content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch2'; } catch (e) {}
         });
       }
     })();

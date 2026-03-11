@@ -69,6 +69,16 @@ Bring over raw feeds from sing4 (and from ongoing sessions) into the catalog and
 - **interfaces/:** 175+ surfaces; novel/novella UIs, Office Hours, Launch Pad, destinations, campaigns.
 - **episodes/:** EPISODE_*.md — Net, 279, 3I, Chairman, Harry Houdini, Baller V, etc.
 - **protocols/:** MCA, Seed:Edge format, PIPE, etc. (mirrored in SING9 as needed).
+- **Music · Golden Backdoor:** HERO_JO_GOLDEN_BACKDOOR_STUDIOS_SNAP.md, catalogs/music/README.md (full track list + style), GOLDEN_BACKDOOR_MUSIC_MOLDS_SNAP.md (vibe/structure for text-to-music). See [GOLDEN_BACKDOOR_SING4_REFERENCE.md](GOLDEN_BACKDOOR_SING4_REFERENCE.md).
+
+---
+
+## 7. Music · Golden Backdoor Studios · Playlists · Songs · Text-to-music prompts
+
+| Item | In SING9 | Location / notes |
+|------|----------|------------------|
+| **T3D ORIGIN 15-track soundtrack (clickable, prompts)** | ✅ | data/golden-backdoor-studios.json · interfaces/golden-backdoor-studios.html — each track clickable; prompt for text-to-music AI. Linked from My Whiteboard, Soundtrack. |
+| **SING4 full catalog (Hit Factory lineup, molds, prompts)** | → sing4 | [GOLDEN_BACKDOOR_SING4_REFERENCE.md](GOLDEN_BACKDOOR_SING4_REFERENCE.md) — where to find studios, playlists, songs, and prompt content in psw.vibelandia.sing4. Pull from catalogs/music/README.md + GOLDEN_BACKDOOR_MUSIC_MOLDS_SNAP.md for text-to-music. |
 
 ---
 

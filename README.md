@@ -14,6 +14,21 @@
 
 ## Recent updates (README commit)
 
+- **Mar 2026 · SPACE CLOUD TRACKING MERGE · QUEEN'S RUSH NOVELA · HANDHELD UI · IMAGES ROOT-RELATIVE FOR IPHONE**
+
+**M → Metabolize:** Combine 3I/ATLAS and Space Cloud into one Space Cloud Tracking page with 180° phase-flip command/response tracking; expand Queen's Rush Ch1 and Ch2 to full scene beats with art in the right sections; add novela cover image; ensure images load on iPhone (handheld); optimize nav, hero, content, and CTAs for small viewports.
+
+**C → Crystallize:**
+
+- **Space Cloud Tracking** — `interfaces/space-cloud-tracking.html` merges 3I/ATLAS + Space Cloud: single Systems dashboard, Space Cloud assets grid (incl. OMNI 180°), **180° Phase Flip — Command & response tracking** (PHASE_FLIP, ANCHOR_180, FAIR_EXCHANGE, NIC_SYNC + timeline). `atlas-capture-tracker.html` and `space-cloud-assets.html` redirect to it; links and `data/space-cloud-missions.json` updated.
+- **Queen's Rush novela** — Ch1 (`novela-preview.html`) and Ch2 (`novela-ch2.html`) expanded to full scene beats (therapist, walkout, elevator, car, phone/reading; drive, club, valet, fantasy, connect). Images placed in-section: elena-walkout, phone-novella, club-reno, fantasy, connect. Cover image added: `assets/queens-rush-novela-cover.png` on landing (`gold-heart-novela.html`). CYA (companionship/experience only, no sexual services, totally legal) and high-end pricing ($99/15 min, $5K date night, $12.5K retreat) + WhatsApp pre-fill for booking across gold-heart-novela, office-hours, explore-vibelandia-downtown-reno, vibers-menu, novela pages.
+- **Handheld UI** — Responsive tweaks for ≤640px: topnav wrap, reduced padding, safe-area insets; hero/content padding; CTAs and gate buttons min-height 48px, full-width on small screens; foot padding with safe-area-inset-bottom. Applied to `gold-heart-novela.html`, `novela-preview.html`, `novela-ch2.html`.
+- **Images on iPhone** — Novela image paths changed from relative `../assets/` to root-relative `/assets/` so they resolve correctly on iOS (hero cover in CSS + img, Ch1/Ch2 art). Ensures cover and chapter art load on handheld.
+
+**A → Animate:** One Space Cloud Tracking page; novela reads as full experience with art in place; landing has cover; booking flows use WhatsApp pre-fill; handheld gets touch-friendly, safe-area-aware layout; iPhone loads all novela images. NSPFRNP → ∞⁹
+
+-
+
 - **Mar 10 2026 · SPACE CLOUD ASSETS FULL INVESTIGATION · EUROPA · SUN · CLICKABLE ASSET PAGES**
 
 **M → Metabolize:** Investigate all reports of radio or unusual signals; assign roles; bring into Space Cloud; add new section for the Sun; make each Space Cloud asset clickable to a dedicated page with full narrative and details.

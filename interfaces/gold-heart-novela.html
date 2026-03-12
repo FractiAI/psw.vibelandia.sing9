@@ -26,7 +26,7 @@
     .topnav a { color: var(--cream-dim); text-decoration: none; }
     .topnav a:hover { color: var(--cream); }
     .hero { position: relative; height: 80vh; min-height: 440px; display: flex; align-items: flex-end; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background: linear-gradient(155deg, #1a0014 0%, #2e0022 40%, #3d0033 60%, #0a0208 100%), url('../assets/queens-rush-novela-cover.png') center/cover no-repeat; background-blend-mode: multiply; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(155deg, #1a0014 0%, #2e0022 40%, #3d0033 60%, #0a0208 100%), url('/assets/queens-rush-novela-cover.png') center/cover no-repeat; background-blend-mode: multiply; }
     .hero-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,2,4,0.05) 0%, rgba(6,2,4,0.25) 50%, rgba(6,2,4,0.9) 72%, rgba(6,2,4,0.99) 100%); }
     .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 3.5rem; max-width: 680px; }
     .eyebrow { font-size: 0.63rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--pink); margin-bottom: 0.65rem; text-shadow: 0 0 12px rgba(232,121,249,0.4); }
@@ -81,6 +81,24 @@
     .lang-toggle { font-size: 0.7rem; letter-spacing: 0.08em; margin-left: auto; }
     .lang-toggle a { color: var(--cream-dim); text-decoration: none; }
     .lang-toggle a:hover { color: var(--gold); }
+    /* Handheld / small viewport */
+    @media (max-width: 640px) {
+      .topnav { padding: 0.6rem 1rem; padding-top: max(0.6rem, env(safe-area-inset-top)); gap: 0.6rem; flex-wrap: wrap; }
+      .topnav .brand { font-size: 0.68rem; }
+      .topnav a { padding: 0.35rem 0; min-height: 44px; display: inline-flex; align-items: center; -webkit-tap-highlight-color: rgba(232,121,249,0.2); }
+      .hero { min-height: 60vh; }
+      .hero-content { padding: 0 1.25rem 2.5rem; }
+      .hero-title { font-size: clamp(1.85rem, 8vw, 2.5rem); }
+      .hero-desc { font-size: 0.9rem; }
+      .cta-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+      .cta-wrap .cta-btn { margin-right: 0; width: 100%; text-align: center; min-height: 48px; padding: 0.9rem 1rem; -webkit-tap-highlight-color: rgba(232,121,249,0.25); }
+      .content { padding: 2rem 1rem 3rem; }
+      .cover-wrap img { width: 100%; max-width: 280px; }
+      .card { padding: 1.2rem 1.25rem; }
+      .gate-box { max-width: 100%; padding: 0 1rem; }
+      .gate-btn { min-height: 48px; padding: 0.85rem 1rem; -webkit-tap-highlight-color: rgba(232,121,249,0.2); }
+      .foot { padding: 1.25rem 1rem; padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+    }
   </style>
 </head>
 <body>
@@ -145,7 +163,7 @@
     <div class="section cover-wrap">
       <p class="section-label lang-en">Cover</p>
       <p class="section-label lang-es">Portada</p>
-      <img src="../assets/queens-rush-novela-cover.png" alt="Queen's Rush — Leave the cage. Keep the crown. Initiate the Rush." />
+      <img src="/assets/queens-rush-novela-cover.png" alt="Queen's Rush — Leave the cage. Keep the crown. Initiate the Rush." />
     </div>
     <div class="section">
       <div class="section-label lang-en">The Pitch</div>

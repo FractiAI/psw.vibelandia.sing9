@@ -8,10 +8,14 @@
     (function() {
       var lang = 'en';
       try {
+        if (typeof location !== 'undefined' && location.search && location.search.indexOf('lang=es') !== -1) lang = 'es';
+        else if (typeof location !== 'undefined' && location.search && location.search.indexOf('lang=en') !== -1) lang = 'en';
+        else {
         var stored = sessionStorage.getItem('queensrush_lang');
         if (stored === 'es' || stored === 'en') lang = stored;
         else if (navigator.language && String(navigator.language).toLowerCase().startsWith('es')) lang = 'es';
         else if (navigator.languages && [].some.call(navigator.languages, function(l) { return String(l).toLowerCase().startsWith('es'); })) lang = 'es';
+        }
         sessionStorage.setItem('queensrush_lang', lang);
       } catch (e) {}
       document.documentElement.lang = lang;
@@ -100,12 +104,14 @@
       <div class="gate-btns">
         <button type="button" class="gate-btn gate-btn-yes lang-en" id="gateYes">Yes, I'm 21+</button>
         <button type="button" class="gate-btn gate-btn-yes lang-es" id="gateYesEs">Sí, tengo 21 o más</button>
-        <a href="gold-heart-novela.html" class="gate-btn gate-btn-no" id="gateNo">No, take me back</a>
+        <a href="gold-heart-novela.html" class="gate-btn gate-btn-no lang-en" id="gateNo">No, take me back</a>
+        <a href="gold-heart-novela.html" class="gate-btn gate-btn-no lang-es">No, llévame atrás</a>
       </div>
     </div>
   </div>
   <div id="chapterContent" class="content" hidden>
-    <a href="gold-heart-novela.html" class="back-link">← Queen's Rush</a>
+    <a href="gold-heart-novela.html" class="back-link lang-en">← Queen's Rush</a>
+    <a href="gold-heart-novela.html" class="back-link lang-es">← Queen's Rush</a>
     <div class="age-gate lang-en"><strong>21+ · Queen's Rush · The Nine Game.</strong> Chapter 1 — The Itch. You're in the right room.</div>
     <div class="age-gate lang-es"><strong>+21 · Queen's Rush · El Nine Game.</strong> Capítulo 1 — La picazón. Estás en la habitación correcta.</div>
 
@@ -121,34 +127,39 @@
     <h2 class="lang-en">CHAPTER 1: THE ITCH</h2>
     <h2 class="lang-es">CAPÍTULO 1: LA PICAZÓN</h2>
     <div class="prose">
-      <p>The clock on Dr. Aris’s wall was a masterpiece of minimalist Swiss engineering. It cost more than most people’s cars, and it was currently ticking away the most expensive forty-five minutes of Elena’s week. She had chosen him—or rather, the script had chosen him—because his practice came recommended by three women in her circle, all of whom had the same marble floors, the same leather-bound notebooks, the same way of saying <em>And how does that make you feel?</em> as if the question were a key that could unlock something. It never did. It only turned the lock one more time. The window behind him looked out on a slice of sky so neutral it could have been a painting. No weather. No signal. Just blue-gray void.</p>
-      <p><em>Tick. 0°. Tick. 0°.</em></p>
-      <p>“And how does that realization make you feel, Elena?” Aris asked, his voice a perfectly calibrated frequency of professional empathy. He had set down his pen. His hands were folded. The leather of his notebook was the same brown as the chair she sat in—chosen, she had read once in a design magazine, for its “grounding” effect. She had never felt less grounded. She had never felt more like a specimen.</p>
-      <p>Elena didn’t look at him. She looked at the marble floor. She felt the silk of her dress against her skin, and it felt like sandpaper. She felt the blue pill of her perfect life—the CEO husband, the vineyard, the board seats—sitting in her stomach like a lead weight. She had built it all according to the blueprint: the right school, the right marriage, the right house, the right charities. Every milestone had been a checkbox. Every checkbox had been a brick in a wall she had never once been asked if she wanted to live behind. The wall had a name. It was called <em>success</em>. It was called <em>having it all</em>. She had stopped believing in the name years ago. She had never said it out loud.</p>
-      <p>“I feel,” she started, her voice dry, “like I’m screaming inside a vacuum.”</p>
-      <p>“We’ve talked about this ‘emptiness’ before,” Aris noted, picking the pen back up, scribbling in his leather-bound notebook. “It’s a symptom of—”</p>
-      <p>“It’s a symptom of being bored as fuck, Aris.”</p>
-      <p>The silence that followed was the first genuine thing that had happened in the room for months. Aris blinked. The clinical mask slipped for a micro-second. She had never said it that plainly. She had always translated the feeling into the vocabulary he expected: <em>disconnected</em>, <em>unfulfilled</em>, <em>as if something is missing</em>. Today she was done translating. The clock kept ticking. The sky in the window didn’t change. She waited for him to correct her, to reframe her, to put the feeling back in its box. He didn’t. He couldn’t. She had taken the box and thrown it out the window.</p>
-      <p>“You have everything, Elena. Most women would—”</p>
-      <p>“Most women are starving in a different desert,” she snapped. She stood up, her heels clicking against the stone with a predatory sharpness. “You want to talk about my childhood. You want to audit my ‘issues.’ But my childhood didn’t build this cage, and my issues aren’t the problem. The problem is that there is no Signal here. It’s just… static.” She didn’t wait for him to reply. She walked out—past his desk, past the chair that was supposed to ground her, past the Swiss clock that had eaten another forty-five minutes of her life. She didn’t look back.</p>
-      <p>In the hallway she passed the receptionist, who gave her the same practiced smile and the same “See you next week, Elena.” She passed the potted orchids that had never once made her feel alive. She pressed the elevator button. The doors opened. She stepped in. The numbers descended: 12, 11, 10. She watched them. She thought, <em>I have been descending for years.</em> When the doors opened on the lobby, she walked through the marble rotunda and pushed through the glass door into the light.</p>
+      <p class="lang-en">The clock on Dr. Aris’s wall was a masterpiece of minimalist Swiss engineering. It cost more than most people’s cars, and it was currently ticking away the most expensive forty-five minutes of Elena’s week. She had chosen him—or rather, the script had chosen him—because his practice came recommended by three women in her circle, all of whom had the same marble floors, the same leather-bound notebooks, the same way of saying <em>And how does that make you feel?</em> as if the question were a key that could unlock something. It never did. It only turned the lock one more time. The window behind him looked out on a slice of sky so neutral it could have been a painting. No weather. No signal. Just blue-gray void.</p>
+      <p class="lang-es">El reloj en la pared del Dr. Aris era una obra maestra de la ingeniería suiza minimalista. Costaba más que el coche de la mayoría de la gente, y estaba consumiendo los cuarenta y cinco minutos más caros de la semana de Elena. Lo había elegido a él—o más bien, el guion lo había elegido—porque su consulta venía recomendada por tres mujeres de su círculo, todas con los mismos suelos de mármol, los mismos cuadernos de piel, la misma forma de decir <em>¿Y cómo te hace sentir eso?</em> como si la pregunta fuera una llave que pudiera abrir algo. Nunca lo hizo. Solo giró la cerradura una vez más. La ventana detrás de él daba a un trozo de cielo tan neutro que podía ser un cuadro. Sin tiempo. Sin señal. Solo vacío gris azulado.</p>
+      <p class="lang-en"><em>Tick. 0°. Tick. 0°.</em></p>
+      <p class="lang-en">“And how does that realization make you feel, Elena?” Aris asked, his voice a perfectly calibrated frequency of professional empathy. He had set down his pen. His hands were folded. The leather of his notebook was the same brown as the chair she sat in—chosen, she had read once in a design magazine, for its “grounding” effect. She had never felt less grounded. She had never felt more like a specimen.</p>
+      <p class="lang-en">Elena didn’t look at him. She looked at the marble floor. She felt the silk of her dress against her skin, and it felt like sandpaper. She felt the blue pill of her perfect life—the CEO husband, the vineyard, the board seats—sitting in her stomach like a lead weight. She had built it all according to the blueprint: the right school, the right marriage, the right house, the right charities. Every milestone had been a checkbox. Every checkbox had been a brick in a wall she had never once been asked if she wanted to live behind. The wall had a name. It was called <em>success</em>. It was called <em>having it all</em>. She had stopped believing in the name years ago. She had never said it out loud.</p>
+      <p class="lang-en">“I feel,” she started, her voice dry, “like I’m screaming inside a vacuum.”</p>
+      <p class="lang-en">“We’ve talked about this ‘emptiness’ before,” Aris noted, picking the pen back up, scribbling in his leather-bound notebook. “It’s a symptom of—”</p>
+      <p class="lang-en">“It’s a symptom of being bored as fuck, Aris.”</p>
+      <p class="lang-en">The silence that followed was the first genuine thing that had happened in the room for months. Aris blinked. The clinical mask slipped for a micro-second. She had never said it that plainly. She had always translated the feeling into the vocabulary he expected: <em>disconnected</em>, <em>unfulfilled</em>, <em>as if something is missing</em>. Today she was done translating. The clock kept ticking. The sky in the window didn’t change. She waited for him to correct her, to reframe her, to put the feeling back in its box. He didn’t. He couldn’t. She had taken the box and thrown it out the window.</p>
+      <p class="lang-en">“You have everything, Elena. Most women would—”</p>
+      <p class="lang-en">“Most women are starving in a different desert,” she snapped. She stood up, her heels clicking against the stone with a predatory sharpness. “You want to talk about my childhood. You want to audit my ‘issues.’ But my childhood didn’t build this cage, and my issues aren’t the problem. The problem is that there is no Signal here. It’s just… static.” She didn’t wait for him to reply. She walked out—past his desk, past the chair that was supposed to ground her, past the Swiss clock that had eaten another forty-five minutes of her life. She didn’t look back.</p>
+      <p class="lang-en">In the hallway she passed the receptionist, who gave her the same practiced smile and the same “See you next week, Elena.” She passed the potted orchids that had never once made her feel alive. She pressed the elevator button. The doors opened. She stepped in. The numbers descended: 12, 11, 10. She watched them. She thought, <em>I have been descending for years.</em> When the doors opened on the lobby, she walked through the marble rotunda and pushed through the glass door into the light.</p>
 
       <figure class="art-support" aria-label="Art: Elena leaving the building">
         <img src="/assets/novela-ch1-elena-walkout.png" alt="Elena in silk dress, leaving the glass building into sun glare." />
-        <figcaption class="art-caption">Art supports the words · 21+</figcaption>
+        <figcaption class="art-caption lang-en">Art supports the words · 21+</figcaption>
+        <figcaption class="art-caption lang-es">El arte apoya las palabras · +21</figcaption>
       </figure>
 
-      <p>Outside, the sun was a white glare. The city moved around her—suits, phones, agendas—and she moved through it like a ghost in a costume. Her car was in the garage. She found it. She got in. She didn’t start the engine. She sat there, her hands on the steering wheel, and she let them shake. Not from fear. From the first crack in the performance. She had said the thing she was never supposed to say. She had named the itch. The itch had a name now. It had always had a name. She had just been too afraid to use it.</p>
-      <p>She pulled up her phone. Not the calendar—she couldn’t face the next high-status transaction yet. She opened Instagram. She scrolled. She didn’t see the posts. She saw shapes. Colors. Other people’s scripts. Then she did see. A post from an account she didn’t follow: <strong>Queen’s Rush</strong>. Gold and pink. A line: <em>Leave the cage. Keep the crown. Initiate the Rush.</em> A link to a novella. Something in her chest shifted. She tapped it.</p>
-      <p>It took her to a page. Clean. No ads. Just the title—Queen’s Rush—and a button: <em>Chapter 1: The Itch</em>. She tapped again. The first chapter loaded. Words. A woman in a therapist’s office. A Swiss clock. Boredom named out loud. She read it sitting in the driver’s seat with the engine off and the sun beating down on the roof. She read about the Sigil, the voice, the Oasis. She read the line: <em>You aren’t sick. You’re just thirsty.</em> The tightness in her solar plexus didn’t “heal.” It dissolved. She had found the novella by chance. By the time she finished the first chapter, she was no longer just reading. She was <em>feeling</em>. A low heat. Not shame. Not panic. Want. The itch was finally being scratched—and underneath it, something warmer. Something she had not let herself feel in years.</p>
+      <p class="lang-en">Outside, the sun was a white glare. The city moved around her—suits, phones, agendas—and she moved through it like a ghost in a costume. Her car was in the garage. She found it. She got in. She didn’t start the engine. She sat there, her hands on the steering wheel, and she let them shake. Not from fear. From the first crack in the performance. She had said the thing she was never supposed to say. She had named the itch. The itch had a name now. It had always had a name. She had just been too afraid to use it.</p>
+      <p class="lang-en">She pulled up her phone. Not the calendar—she couldn’t face the next high-status transaction yet. She opened Instagram. She scrolled. She didn’t see the posts. She saw shapes. Colors. Other people’s scripts. Then she did see. A post from an account she didn’t follow: <strong>Queen’s Rush</strong>. Gold and pink. A line: <em>Leave the cage. Keep the crown. Initiate the Rush.</em> A link to a novella. Something in her chest shifted. She tapped it.</p>
+      <p class="lang-en">It took her to a page. Clean. No ads. Just the title—Queen’s Rush—and a button: <em>Chapter 1: The Itch</em>. She tapped again. The first chapter loaded. Words. A woman in a therapist’s office. A Swiss clock. Boredom named out loud. She read it sitting in the driver’s seat with the engine off and the sun beating down on the roof. She read about the Sigil, the voice, the Oasis. She read the line: <em>You aren’t sick. You’re just thirsty.</em> The tightness in her solar plexus didn’t “heal.” It dissolved. She had found the novella by chance. By the time she finished the first chapter, she was no longer just reading. She was <em>feeling</em>. A low heat. Not shame. Not panic. Want. The itch was finally being scratched—and underneath it, something warmer. Something she had not let herself feel in years.</p>
 
       <figure class="art-support" aria-label="Art: Phone screen, Queen's Rush chapter">
         <img src="/assets/novela-ch1-phone-novella.png" alt="Phone in hand, Queen's Rush chapter on screen, golden light." />
-        <figcaption class="art-caption">Art supports the words · 21+</figcaption>
+        <figcaption class="art-caption lang-en">Art supports the words · 21+</figcaption>
+        <figcaption class="art-caption lang-es">El arte apoya las palabras · +21</figcaption>
       </figure>
 
-      <p>She sat there for a long time. She didn’t check the next meeting. She didn’t check the time. She looked at the horizon—the ragged line of buildings and sky—and she let herself wonder what was on the other side of the script. She had connected to the Queen’s Rush page from our Instagram. She had read the first chapter. She had begun to feel the heat. The rest was just a matter of how far she was willing to go.</p>
-      <p><strong>The itch was finally being scratched.</strong></p>
+      <p class="lang-en">She sat there for a long time. She didn’t check the next meeting. She didn’t check the time. She looked at the horizon—the ragged line of buildings and sky—and she let herself wonder what was on the other side of the script. She had connected to the Queen’s Rush page from our Instagram. She had read the first chapter. She had begun to feel the heat. The rest was just a matter of how far she was willing to go.</p>
+      <p class="lang-en"><strong>The itch was finally being scratched.</strong></p>
+      <p class="lang-es">Se quedó ahí mucho rato. No miró la siguiente reunión. No miró la hora. Miró el horizonte—la línea irregular de edificios y cielo—y se permitió preguntarse qué había al otro lado del guion. Había llegado a la página de Queen's Rush desde nuestro Instagram. Había leído el primer capítulo. Había empezado a sentir el calor. El resto era solo cuánto estaba dispuesta a llegar.</p>
+      <p class="lang-es"><strong>La picazón por fin se estaba rascando.</strong></p>
     </div>
 
     <div class="checkpoint">
@@ -163,11 +174,12 @@
         <a href="https://wa.me/17755551234?text=Hola%20%E2%80%94%20Queen's%20Rush%20%C2%B7%20Cap%C3%ADtulo%201%20%C2%B7%20La%20picaz%C3%B3n.%2015%20min%20%C2%BFWhat's%20up%3F%20%E2%80%94%2099%20USD.%20Hablemos%20offline%2C%20luego%20pago." class="checkpoint-btn checkpoint-offline lang-es" target="_blank" rel="noopener">15 min What's up? · 99 USD · WhatsApp</a>
         <a href="explore-vibelandia-downtown-reno.html" class="checkpoint-btn checkpoint-offline lang-en">Nightclub date · Vibelandia, downtown Reno · $5,000</a>
         <a href="explore-vibelandia-downtown-reno.html" class="checkpoint-btn checkpoint-offline lang-es">Otro nivel — Cita nightclub · Vibelandia, Reno centro · 5.000 USD</a>
-        <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-no">← Back to Queen's Rush</a>
+        <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-no lang-en">← Back to Queen's Rush</a>
+        <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-no lang-es">← Volver a Queen's Rush</a>
       </div>
     </div>
 
-    <div class="log">
+    <div class="log lang-en">
       <strong># LOG: [SOS_PILOT_1.0]</strong><br>
       * <strong>Status:</strong> Chapter 1 Deployed.<br>
       * <strong>Mechanism:</strong> 180° Phase-Cancellation of the Clinical Desert.<br>

@@ -8,10 +8,14 @@
     (function() {
       var lang = 'en';
       try {
+        if (typeof location !== 'undefined' && location.search && location.search.indexOf('lang=es') !== -1) lang = 'es';
+        else if (typeof location !== 'undefined' && location.search && location.search.indexOf('lang=en') !== -1) lang = 'en';
+        else {
         var stored = sessionStorage.getItem('queensrush_lang');
         if (stored === 'es' || stored === 'en') lang = stored;
         else if (navigator.language && String(navigator.language).toLowerCase().startsWith('es')) lang = 'es';
         else if (navigator.languages && [].some.call(navigator.languages, function(l) { return String(l).toLowerCase().startsWith('es'); })) lang = 'es';
+        }
         sessionStorage.setItem('queensrush_lang', lang);
       } catch (e) {}
       document.documentElement.lang = lang;
@@ -137,8 +141,9 @@
       <div class="cta-wrap">
         <button type="button" class="cta-btn lang-en" id="ctaChapter">Chapter 1: The Itch</button>
         <button type="button" class="cta-btn lang-es" id="ctaChapterEs">Capítulo 1: La picazón</button>
+        <a href="novela-preview.html?lang=es" class="cta-btn cta-btn-secondary lang-es">Capítulo 1: La picazón</a>
         <a href="novela-ch2.html" class="cta-btn cta-btn-secondary lang-en">Chapter 2: The Connect</a>
-        <a href="novela-ch2.html" class="cta-btn cta-btn-secondary lang-es">Capítulo 2: La conexión</a>
+        <a href="novela-ch2.html?lang=es" class="cta-btn cta-btn-secondary lang-es">Capítulo 2: La conexión</a>
       </div>
     </div>
   </section>
@@ -233,7 +238,7 @@
       var yesBtn = document.getElementById('gateYes');
       var yesBtnEs = document.getElementById('gateYesEs');
       var noBtn = document.getElementById('gateNo');
-      function goCh1() { window.location.href = 'novela-preview.html'; }
+      function goCh1() { var lang = document.documentElement.getAttribute('lang') || sessionStorage.getItem('queensrush_lang') || 'en'; window.location.href = lang === 'es' ? 'novela-preview.html?lang=es' : 'novela-preview.html'; }
       if (btn) btn.addEventListener('click', function() { overlay.hidden = false; });
       if (btnEs) btnEs.addEventListener('click', function() { overlay.hidden = false; });
       if (yesBtn) yesBtn.addEventListener('click', function() { try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {} goCh1(); });

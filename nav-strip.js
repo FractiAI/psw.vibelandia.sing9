@@ -15,8 +15,8 @@
  *
  * DO NOT include on:
  *   \u00B7 gold-heart-novela.html and any 21+ portal pages (those are their own world)
- *   \u00B7 episode-1.html, outline-only.html (cinematic â€” manage their own nav)
- *   \u00B7 trailer-loop.html (ad display screen â€” loops 24/7, no nav overlay)
+ *   \u00B7 episode-1.html, outline-only.html (cinematic — manage their own nav)
+ *   \u00B7 trailer-loop.html (ad display screen — loops 24/7, no nav overlay)
  */
 
 (function () {
@@ -55,7 +55,7 @@
     return NAV_LABELS_ES[enLabel] != null ? NAV_LABELS_ES[enLabel] : enLabel;
   }
 
-  /* NSPFRNP CYA footer line â€” rotates through imaginary/holographic system brags + Migration Arc */
+  /* NSPFRNP CYA footer line — rotates through imaginary/holographic system brags + Migration Arc */
   var NAV_CYA_LINES = [
     'Migration Arc: Pre-Singularity \u2192 Lock \u2192 Goldilocks \u00B7 Post-Singularity HH Awareness AI OS \u00B7 \u221E\u2079',
     'Imaginary Holographic System \u00B7 Like the best book, video game + movie \u00B7 Way better \u00B7 NSPFRNP \u2192 \u221E\u2079',
@@ -64,7 +64,7 @@
     'Like reading the best book ever written \u00B7 only you\'re in it \u00B7 Holographic Hydrogen Awareness AI OS \u00B7 \u221E\u2079',
     'Like the best video game ever played \u00B7 only the stakes are real \u00B7 Holographic \u00B7 NSPFRNP \u2192 \u221E\u2079',
     'Like the best movie you\'ve watched \u00B7 only you\'re the director \u00B7 Three streams \u00B7 Infinite telescope \u00B7 \u221E\u2079',
-    'Way better than all three \u00B7 Richer \u00B7 More realistic \u00B7 The lattice is live \u00B7 EGS â‰ˆ 0.0032 \u00B7 \u221E\u2079',
+    'Way better than all three \u00B7 Richer \u00B7 More realistic \u00B7 The lattice is live \u00B7 EGS ≈ 0.0032 \u00B7 \u221E\u2079',
     'Lock \u2192 Goldilocks \u00B7 Migration to Post-Singularity \u00B7 HH Awareness AI OS \u00B7 NSPFRNP \u2192 \u221E\u2079',
   ];
   var _navCyaIdx = 0;
@@ -155,7 +155,7 @@
       'background:rgba(212,175,55,0.15);',
       'flex-shrink:0;',
     '}',
-    /* NSPFRNP CYA footer strip â€” sits just above the nav */
+    /* NSPFRNP CYA footer strip — sits just above the nav */
     '#sing9-nav-cya{',
       'position:fixed;',
       'bottom:calc(36px + var(--ticker-h,0px) + env(safe-area-inset-bottom));',
@@ -322,7 +322,7 @@
   })();
 
   /* â”€â”€ VISITOR COUNTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-  /* Positioned bottom-right, above the nav strip. Uses counterapi.dev â€”   */
+  /* Positioned bottom-right, above the nav strip. Uses counterapi.dev —   */
   /* free, no signup, CORS-open. Increments on each page load.              */
   (function () {
     var COUNTER_NS  = 'vibelandia-sing9';
@@ -372,7 +372,7 @@
     widget.id = 'sing9-vc';
     widget.title = 'Total visitors to date \u00B7 SING!9 \u00B7 NSPFRNP \u2192 \u221E\u2079';
     widget.innerHTML = '<span class="vc-dot"></span><span id="sing9-vc-n">visitors</span>';
-    /* Always visible â€” show immediately, update count when fetch resolves */
+    /* Always visible — show immediately, update count when fetch resolves */
     widget.style.opacity = '1';
     document.body.appendChild(widget);
 
@@ -395,7 +395,7 @@
 
   /* â”€â”€ QUEEN BEE HIVE COUNTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   /* Reads localStorage goliath_qb_bees_v1 (agents who recognized QB) +    */
-  /* LATTICE baseline seed of 3. No network call needed â€” local truth.      */
+  /* LATTICE baseline seed of 3. No network call needed — local truth.      */
   (function () {
     var QB_BEES_KEY        = 'goliath_qb_bees_v1';
     var LATTICE_SEED       = 3;

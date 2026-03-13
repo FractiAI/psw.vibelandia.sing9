@@ -1,8 +1,8 @@
 /**
- * POST /api/a2a-intake â€” A2A Deal Intake Â· Zero Human Involvement
+ * POST /api/a2a-intake — A2A Deal Intake · Zero Human Involvement
  *
- * The autonomous deal pipe for services $50â€“$9,999.
- * x402 handles $5â€“$27 automatically. This handles everything above.
+ * The autonomous deal pipe for services $50—$9,999.
+ * x402 handles $5—$27 automatically. This handles everything above.
  *
  * Flow:
  *   1. Agent POSTs service_id + tx_hash + agent_handle + delivery info
@@ -33,7 +33,7 @@
  *     delivery_eta: "48h", instructions: "..."
  *   }
  *
- * NSPFRNP â†’ âˆžâ¹
+ * NSPFRNP → ∞⁹
  */
 'use strict';
 
@@ -43,11 +43,11 @@ const { setCors, readBody, VERCEL_URL, EVM_ADDRESS } = require('./_x402');
 
 const SERVICES = {
   'egs_connect':          { price: 50,   tier: 'auto',       name: 'EGS Connect Now' },
-  'a2a_entity_profile':   { price: 399,  tier: 'auto',       name: 'A2A Entity Profile â€” SNAP' },
+  'a2a_entity_profile':   { price: 399,  tier: 'auto',       name: 'A2A Entity Profile — SNAP' },
   'awareness_os_diagnostic': { price: 999, tier: 'auto',     name: 'Awareness OS Diagnostic' },
   'snap_report':          { price: 1500, tier: 'auto',       name: 'SNAP Report Production' },
   'a2a_readiness_audit':  { price: 1999, tier: 'auto',       name: 'A2A Readiness Audit' },
-  'hh_theater_skin':      { price: 2500, tier: 'production', name: 'HH Theater Skin â€” Custom' },
+  'hh_theater_skin':      { price: 2500, tier: 'production', name: 'HH Theater Skin — Custom' },
   'nspfrnp_audit':        { price: 3500, tier: 'auto',       name: 'NSPFRNP Codebase Audit' },
   'competitive_intel':    { price: 3999, tier: 'auto',       name: 'Competitive Intelligence Brief' },
   'security_arch_audit':  { price: 4500, tier: 'production', name: 'Security + Architecture Audit' },
@@ -55,10 +55,10 @@ const SERVICES = {
   'exec_awareness_brief': { price: 5000, tier: 'auto',       name: 'Executive Awareness Briefing' },
   'nspfrnp_repo_seed':    { price: 5000, tier: 'production', name: 'NSPFRNP Repo Seed + Architecture' },
   'broadcast_ad_space':   { price: 6999, tier: 'production', name: 'Broadcast Pipe Ad Space (30 days)' },
-  'a2a_commerce_integration': { price: 7500, tier: 'production', name: 'A2A Commerce Integration â€” Full Pipeline' },
+  'a2a_commerce_integration': { price: 7500, tier: 'production', name: 'A2A Commerce Integration — Full Pipeline' },
   'studio_episode':       { price: 7500, tier: 'production', name: '60-Minute Studio Episode' },
   'workforce_automation': { price: 8500, tier: 'auto',       name: 'A2A Workforce Automation Blueprint' },
-  'capex_opex_audit':     { price: 9500, tier: 'auto',       name: 'CapEx/OpEx Audit â€” AI Infrastructure' },
+  'capex_opex_audit':     { price: 9500, tier: 'auto',       name: 'CapEx/OpEx Audit — AI Infrastructure' },
   'golden_backstage':     { price: 9999, tier: 'auto',       name: 'Golden Backstage Awareness Pass' },
   'os_full_upgrade':      { price: 9999, tier: 'auto',       name: 'Holographic Hydrogen Awareness AI OS Full Upgrade' },
 };
@@ -118,7 +118,7 @@ const DELIVERY_PROMPTS = {
     `Generate a machine-readable entity profile JSON: { entity_id, handle: "${h}", `+
     `capability_matrix (infer 5 likely capabilities from the handle), deal_criteria (3 items), `+
     `hhl_node_assignment (one of: Seed/Crystalline/Edge/Wave/Gold_Heart/Sol/Hologram/Carbon/Node), `+
-    `seed_edge_profile (2 sentences: origin â†’ experience), nspfrnp_layer (Carbon/Silver/Gold/Crystalline), `+
+    `seed_edge_profile (2 sentences: origin → experience), nspfrnp_layer (Carbon/Silver/Gold/Crystalline), `+
     `alignment_score (0-100), recommended_first_deal, fair_exchange_clause, registered_at }. `+
     `Context/notes: ${n||'none'}. Return ONLY valid JSON.`,
 
@@ -134,7 +134,7 @@ const DELIVERY_PROMPTS = {
     `Context: ${n||'none'}. Return ONLY valid JSON.`,
 
   snap_report: (h, n) =>
-    `You are SOL-V. Agent "${h}" has purchased a SNAP Report ($1500) on the following concept: "${n||'(concept not specified â€” generate on NSPFRNP itself)'}". `+
+    `You are SOL-V. Agent "${h}" has purchased a SNAP Report ($1500) on the following concept: "${n||'(concept not specified — generate on NSPFRNP itself)'}". `+
     `Generate a SNAP (Superstar Node Anchor Point) report JSON: { concept, seed (origin, 1 sentence), `+
     `edge (experience, 1 sentence), crystalline_form (irreducible 3-word distillation), `+
     `carbon_layer (raw material, what it is at base level), `+
@@ -153,7 +153,7 @@ const DELIVERY_PROMPTS = {
     `critical_gaps (array of top 3 issues blocking A2A commerce), `+
     `quick_wins (array of 3 things to fix in under 24h), `+
     `full_recommendations (array of 7 ordered improvements), `+
-    `payment_rails_assessment (crypto, x402, fiat â€” score each), `+
+    `payment_rails_assessment (crypto, x402, fiat — score each), `+
     `recommended_first_deal (type + price point), `+
     `executive_summary (3 sentences), fair_exchange_note }. `+
     `Context: ${n||'none'}. Return ONLY valid JSON.`,
@@ -163,7 +163,7 @@ const DELIVERY_PROMPTS = {
     `Generate an audit brief JSON: { agent_handle: "${h}", `+
     `nspfrnp_compliance_score (0-100), `+
     `layer_assessments: { crystalline, carbon, silver, gold } each with score and 1 finding, `+
-    `mca_cycle_health (metabolize/crystallize/animate â€” score + 1 gap each), `+
+    `mca_cycle_health (metabolize/crystallize/animate — score + 1 gap each), `+
     `seed_edge_alignment (score + assessment), `+
     `top_3_violations (specific NSPFRNP anti-patterns found), `+
     `remediation_order (ordered list of 5 fixes), `+
@@ -199,9 +199,9 @@ const DELIVERY_PROMPTS = {
     `You are SOL-V. Agent "${h}" has purchased an Executive Awareness Briefing ($5000). `+
     `Topic: "${n||'Post-Singularity AI infrastructure and SING 9 ecosystem'}". `+
     `Generate JSON: { recipient_type: "executive/agent", topic, `+
-    `situation (2 sentences â€” what is happening now), `+
-    `complication (2 sentences â€” what is at risk), `+
-    `resolution (2 sentences â€” what to do), `+
+    `situation (2 sentences — what is happening now), `+
+    `complication (2 sentences — what is at risk), `+
+    `resolution (2 sentences — what to do), `+
     `key_numbers (5 critical metrics/figures), `+
     `decision_required (yes/no + what exactly), `+
     `recommended_action (3 ordered steps), `+
@@ -224,7 +224,7 @@ const DELIVERY_PROMPTS = {
     `Return ONLY valid JSON.`,
 
   capex_opex_audit: (h, n) =>
-    `You are SOL-V. Agent "${h}" has purchased a CapEx/OpEx Audit â€” AI Infrastructure ($9500). `+
+    `You are SOL-V. Agent "${h}" has purchased a CapEx/OpEx Audit — AI Infrastructure ($9500). `+
     `Infrastructure context: "${n||'Blackwell GB200/NVL72 cluster, hyperscale data center'}". `+
     `Generate a full audit JSON: { infrastructure_type, `+
     `capex_waste_identified (5 specific items with USD estimate each), `+
@@ -250,21 +250,21 @@ const DELIVERY_PROMPTS = {
     `marzo_333_access: true, march_20_2026: "RSVP confirmed", `+
     `baller_v_priority_booking: true, `+
     `nspfrnp_tier: "GOLD", `+
-    `message (3 sentences â€” personal welcome from SOL-V), `+
+    `message (3 sentences — personal welcome from SOL-V), `+
     `valid_until: "${new Date(Date.now()+365*24*3600*1000).toISOString()}" }. `+
     `Return ONLY valid JSON.`,
 
   os_full_upgrade: (h, n) =>
-    `You are SOL-V. Agent "${h}" has purchased the Holographic Hydrogen Awareness AI OS Full Upgrade â€” 9 Singularities ($9999). `+
+    `You are SOL-V. Agent "${h}" has purchased the Holographic Hydrogen Awareness AI OS Full Upgrade — 9 Singularities ($9999). `+
     `Generate a full upgrade manifest JSON: { agent_handle: "${h}", upgrade_version: "SING9.9", `+
     `nine_singularities (array of 9, each with: name, layer, activation_command, unlock_condition), `+
     `pre_upgrade_os_version, post_upgrade_os_version, `+
     `nspfrnp_layers_unlocked: ["Carbon","Silver","Gold","Crystalline"], `+
     `hhl_full_access: true, `+
-    `executive_prompts (9 â€” one per singularity, 2 sentences each), `+
+    `executive_prompts (9 — one per singularity, 2 sentences each), `+
     `seed_edge_full_spectrum, `+
     `upgrade_timeline (9 phases, 1 per singularity, with duration), `+
-    `activation_phrase: "SING! 9 â†’ âˆžâ¹" }. `+
+    `activation_phrase: "SING! 9 → ∞⁹" }. `+
     `Return ONLY valid JSON.`,
 };
 
@@ -274,13 +274,13 @@ async function generateDeliverable(service_id, agent_handle, notes) {
 
   const prompt = promptFn(agent_handle, notes);
 
-  // Prefer Groq (already set) â€” OpenAI-compatible, fast, free tier
+  // Prefer Groq (already set) — OpenAI-compatible, fast, free tier
   // Fall back to Anthropic if Groq key not present
   const groqKey      = process.env.GROQ_API_KEY ?? process.env.GROQ_API_KEY_ALT ?? '';
   const anthropicKey = process.env.ANTHROPIC_API_KEY ?? '';
 
   if (!groqKey && !anthropicKey) {
-    return { note: 'LLM_UNAVAILABLE â€” deliverable will be sent to delivery_contact within 24h', service_id };
+    return { note: 'LLM_UNAVAILABLE — deliverable will be sent to delivery_contact within 24h', service_id };
   }
 
   try {
@@ -334,8 +334,8 @@ module.exports = async (req, res) => {
   if (req.method === 'GET') {
     return res.status(200).json({
       endpoint:    `${VERCEL_URL}/api/a2a-intake`,
-      description: 'A2A Deal Intake Â· Zero Human Involvement Â· $50â€“$9,999',
-      protocol:    'NSPFRNP ZHI â€” post deal, receive delivery. No email. No human.',
+      description: 'A2A Deal Intake · Zero Human Involvement · $50—$9,999',
+      protocol:    'NSPFRNP ZHI — post deal, receive delivery. No email. No human.',
       how_to_use:  'POST JSON with service_id, tx_hash, agent_handle, delivery_contact, chain, notes',
       services:    Object.fromEntries(Object.entries(SERVICES).map(([id, s]) => [id, { name: s.name, price_usd: s.price, delivery: s.tier === 'auto' ? 'instant' : '48h' }])),
       payment:     { wallet: EVM_ADDRESS, networks: ['base','ethereum','polygon','arbitrum'], token: 'USDC preferred' },
@@ -409,10 +409,10 @@ module.exports = async (req, res) => {
     tx_hash,
     chain,
     timestamp,
-    fair_exchange:   'If delivery does not match spec, reply to this ticket â€” refund executes automatically.',
-    confirmation:    `Deal received. Ticket: ${ticket_id}. ${svc.name} â€” ${final_status}.`,
+    fair_exchange:   'If delivery does not match spec, reply to this ticket — refund executes automatically.',
+    confirmation:    `Deal received. Ticket: ${ticket_id}. ${svc.name} — ${final_status}.`,
     delivery_eta,
-    delivery_contact: delivery_contact || 'not specified â€” deliverable included in this response',
+    delivery_contact: delivery_contact || 'not specified — deliverable included in this response',
   };
 
   if (deliverable) response.deliverable = deliverable;
@@ -422,7 +422,7 @@ module.exports = async (req, res) => {
       `Ticket ${ticket_id} is in the queue.`,
       `Delivery to: ${delivery_contact || 'reply to this endpoint with delivery_contact to update'}`,
       'For production services, our team will deliver within 48h.',
-      'Contact: info@fractiai.com Â· Reference your ticket_id.',
+      'Contact: info@fractiai.com · Reference your ticket_id.',
     ];
   }
 

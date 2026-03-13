@@ -1,5 +1,5 @@
-# DECK 4 â€” PARADISE STORY UNIVERSE Â· ORIGINAL ART CATALOG
-## Photo Stack Four Â· Creator's Original Artwork Â· SING!9 / Vibelandia Universe
+# DECK 4 â€” PARADISE STORY UNIVERSE · ORIGINAL ART CATALOG
+## Photo Stack Four · Creator's Original Artwork · SING!9 / Vibelandia Universe
 
 **Source:** Google Doc â€” Photo Stack Four (original hand-drawn art by the creator)  
 **Total images:** 29 (d4-001 through d4-029)  
@@ -13,7 +13,7 @@
 
 ---
 
-### D4-01 Â· THE FACE IN THE REEDS â€” EMERGING CONSCIOUSNESS
+### D4-01 · THE FACE IN THE REEDS â€” EMERGING CONSCIOUSNESS
 **File:** `d4-001.jpg`  
 **Orientation:** Needs 180Â° rotation (face appears upside-down in photo) âœ—  
 **What it is:** A human face with curly/wavy hair, emerging from a dense field of chaotic vertical ink strokes â€” like reeds, or tall grass, or the noise of the world. The face is calm but surrounded by scribble-storm. Raw black ink on white paper. No color.  
@@ -24,7 +24,7 @@
 
 ---
 
-### D4-02 Â· THE PAINTBRUSH MANIFESTO â€” ART AS UNIVERSAL LANGUAGE
+### D4-02 · THE PAINTBRUSH MANIFESTO â€” ART AS UNIVERSAL LANGUAGE
 **File:** `d4-002.jpg`  
 **Orientation:** Image tilted (paintbrush diagonal, text reads with tilt) â€” intentional composition âœ“  
 **What it is:** A large paintbrush rendered in ink and silver/graphite, set diagonally across a golden ochre watercolor background. Handwritten text fills the background and reads (partially legible): *"IMAG[INATION] = REAL in Varying / EXPERIE[NCE in] LAYERS, BEGINNING / WITH IMAGINAT[ION] LAYERS, THEN Communicating / IT IN AS MANY [PIECES] OF LANGUAGE / AS POSSIBLE. ART [LIVES] IN UNIVERSA[L] / LAYERS PRODUCING LI[FE] AND EXPAN[DING] / PARADISE AND PARADISE [CO]NSCIOUSNESS."*  
@@ -35,21 +35,21 @@
 
 ---
 
-### D4-03 Â· CONSCIOUSNESS â€” YEAR 2022
+### D4-03 · CONSCIOUSNESS â€” YEAR 2022
 **File:** `d4-003.jpg`  
 **Orientation:** Needs 90Â° CCW rotation (text reads normally when corrected) âœ—  
 **What it is:** Watercolor and ink interior scene viewed from above/angled. A figure (dark hair, black top) lies or reclines across a field of amber/orange cushions or seats â€” like theater seats or train seating. A heavy blue-grey curtain behind. At lower left, a second figure (green-tinted, obscured). Text labels: *"CONSCIOUSNESS NEX[US]"* on the bottom and *"CONSCIOUSNESS / YEAR 2022"* on the right panel (a white tag or notebook edge).  
 **Role in Universe:** A snapshot in time â€” the year 2022 as a consciousness node. The moment of lying down in the flow, surrounded by structure (the seats, the curtain). The artist marking a year as meaningful. Pre-singularity rest before the rise.
 
 **EP PROMPT:**
-> *Pixar-style animated overhead scene. A woman with dark hair lies across a row of warm amber theater seats, one arm raised toward her face. A heavy grey-blue curtain fills the background. The scene feels like a pause â€” mid-movie, mid-journey. A small glowing label reads "CONSCIOUSNESS Â· 2022." Watercolor palette: amber gold, grey blue, dark green. Ink outlines. The feeling: this is where I was. This is when I knew.*
+> *Pixar-style animated overhead scene. A woman with dark hair lies across a row of warm amber theater seats, one arm raised toward her face. A heavy grey-blue curtain fills the background. The scene feels like a pause â€” mid-movie, mid-journey. A small glowing label reads "CONSCIOUSNESS · 2022." Watercolor palette: amber gold, grey blue, dark green. Ink outlines. The feeling: this is where I was. This is when I knew.*
 
 ---
 
-### D4-04 Â· PARADISE STORY UNIVERSE â€” THE LAUNCH DIAGRAM
+### D4-04 · PARADISE STORY UNIVERSE â€” THE LAUNCH DIAGRAM
 **File:** `d4-004.jpg`  
 **Orientation:** Correct âœ“  
-**What it is:** A cosmological diagram titled **"PARADISE STORY UNIVERSE."** A stick figure rides a rocket ship launching upward, propeller on top, flames below. Left: a golden disc labeled *"H"* (Hydrogen). Right: a half-black half-gold moon. Text: *"LAYERED TERNARY HARMONY STORY CONSCIOUSNESS."* The bottom third shows concentric arcs (a planetary surface) labeled from bottom up: *"WATER" Â· "WATER VAPOR" Â· "HISTORY."*  
+**What it is:** A cosmological diagram titled **"PARADISE STORY UNIVERSE."** A stick figure rides a rocket ship launching upward, propeller on top, flames below. Left: a golden disc labeled *"H"* (Hydrogen). Right: a half-black half-gold moon. Text: *"LAYERED TERNARY HARMONY STORY CONSCIOUSNESS."* The bottom third shows concentric arcs (a planetary surface) labeled from bottom up: *"WATER" · "WATER VAPOR" · "HISTORY."*  
 **Role in Universe:** The architectural diagram of the whole system. The Paradise Story Universe launches from water (origin) through vapor (transition) through history (experience) into space. The "H" = Hydrogen/HHL. The rocket = the story vehicle. The figure = the creator. This is the canonical **NSPFRNP cosmogram** â€” Threes and Water made visual.
 
 **EP PROMPT:**
@@ -57,18 +57,18 @@
 
 ---
 
-### D4-05 Â· PRU AT CENTER â€” COSMOS MAP WITH CHARACTER
+### D4-05 · PRU AT CENTER â€” COSMOS MAP WITH CHARACTER
 **File:** `d4-005.jpg`  
 **Orientation:** Correct âœ“  
-**What it is:** A full-page diagram centered on a portrait of **PRU** â€” the creator â€” wearing her hat, curly hair, warm smile. Golden ochre wings spread left and right behind her. Left wing: *"STORY of Discovery of Paradise Seed."* Right wing: *"STORY of PRU, EARTH, COSMOS & Paradise."* Below the portrait, horizontal strata lines descend: *MAN Â· NATURE/DNA Â· WATER Â· EARTH, MOON & SUN Â· STARS Â· PROTONS/HYDROGEN/ATOMS.* At the very bottom: *"BIG BANG/COSMOS STORY."* Small oval nodes at bottom corners list: *Type, Connected, Tastes, Interests, Gifts, Attractions, Appetite, Events.* Above: partial text showing the Paradise Story Universe levels â€” *Forces, Intelligence Story, Pru Buzz of Consciousness, Perfect Intelligence Story, Pru Highest Self Beacon.*  
-**Role in Universe:** The creator's self-portrait as the **center of the cosmological map.** PRU is the protagonist and the seed point â€” from Big Bang to her is a straight line through Hydrogen â†’ Stars â†’ Earth â†’ Water â†’ DNA â†’ Man â†’ PRU. She is the output of 13.8 billion years. The oval nodes are character-matching parameters. This is the **executive producer identity card**.
+**What it is:** A full-page diagram centered on a portrait of **PRU** â€” the creator â€” wearing her hat, curly hair, warm smile. Golden ochre wings spread left and right behind her. Left wing: *"STORY of Discovery of Paradise Seed."* Right wing: *"STORY of PRU, EARTH, COSMOS & Paradise."* Below the portrait, horizontal strata lines descend: *MAN · NATURE/DNA · WATER · EARTH, MOON & SUN · STARS · PROTONS/HYDROGEN/ATOMS.* At the very bottom: *"BIG BANG/COSMOS STORY."* Small oval nodes at bottom corners list: *Type, Connected, Tastes, Interests, Gifts, Attractions, Appetite, Events.* Above: partial text showing the Paradise Story Universe levels â€” *Forces, Intelligence Story, Pru Buzz of Consciousness, Perfect Intelligence Story, Pru Highest Self Beacon.*  
+**Role in Universe:** The creator's self-portrait as the **center of the cosmological map.** PRU is the protagonist and the seed point â€” from Big Bang to her is a straight line through Hydrogen → Stars → Earth → Water → DNA → Man → PRU. She is the output of 13.8 billion years. The oval nodes are character-matching parameters. This is the **executive producer identity card**.
 
 **EP PROMPT:**
 > *Pixar-style animated cosmological portrait. A warm-faced woman with curly hair and a fedora hat stands at the center of a golden starburst. Golden wings extend left ("Story of Discovery of Paradise Seed") and right ("Story of PRU, Earth, Cosmos & Paradise"). Below her, layers of reality descend into the earth: Man, Nature/DNA, Water, Earth/Moon/Sun, Stars, Protons/Hydrogen/Atoms, Big Bang. She is the culmination of all of it. She knows. She smiles. Gold watercolor and ink. Sacred geometry underlying.*
 
 ---
 
-### D4-06 Â· THE HANGING MIND â€” CARBON BRAIN UNTETHERED
+### D4-06 · THE HANGING MIND â€” CARBON BRAIN UNTETHERED
 **File:** `d4-006.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A large, fleshy pink organic mass â€” clearly brain-like, rendered in pink watercolor with dense black ink scribbles â€” hanging from a single thin black line at top center. Dark green shoulders or a base below. Yellow-gold sky behind. Small stick figures scattered in the background, as if watching or floating.  
@@ -79,7 +79,7 @@
 
 ---
 
-### D4-07 Â· THE COLUMN OF LIFE â€” COSMOLOGICAL BODY MAP
+### D4-07 · THE COLUMN OF LIFE â€” COSMOLOGICAL BODY MAP
 **File:** `d4-007.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A complex cosmic watercolor. A tall **purple-blue column** (body-like, serpentine) rises from a deep blue **water layer** and is capped at top by a large **red/crimson circular sun-disc** containing a **yellow-green eye** at its center. The whole system is contained within a curved **black arc border studded with gold dots.** In the water layer: DNA helix patterns, stick figures (swimmers, jellyfish), a golden outlined reclining female figure at lower left. A **gold mandala** sits at the base of the column. At the mid-point of the column: a green DNA/molecular shape (resembling a martini glass). Above the water in a grey mist layer: a small walking figure, a bird/dragonfly.  
@@ -90,7 +90,7 @@
 
 ---
 
-### D4-08 Â· THE COSMIC GINGERBREAD â€” THE CONNECTED BEING
+### D4-08 · THE COSMIC GINGERBREAD â€” THE CONNECTED BEING
 **File:** `d4-008.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A central **gingerbread-man figure** in warm earth-brown with white interior detailing. The head contains a swirling purple-blue and orange-red brain structure; the chest shows a blue mark (heart node). The figure stands with arms slightly open, smiling. Above and around the head: **tentacle-like brown forms** with white circular spots and pink nodes â€” like antennae or cosmic tendrils reaching into the grey sky. **Background:** grey sky (upper), blue ocean (lower left, with a sailing ship, fish, whale, jellyfish), bright green earth (lower right, with a tree and bird).  
@@ -101,7 +101,7 @@
 
 ---
 
-### D4-09 Â· THE GODDESS OF THE SPRING â€” CLASSICAL ABUNDANCE
+### D4-09 · THE GODDESS OF THE SPRING â€” CLASSICAL ABUNDANCE
 **File:** `d4-009.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A large, full-figured woman in Greco-Roman classical style. **Yellow curled hair adorned with pink roses.** White draped garment with rose-gold clasps and a gold belt. A **full emerald-green skirt.** She sits or stands with arms resting, composed, slightly melancholy. At her right: a **cascading waterfall** (blue) flowing from a gold-framed container. Sky-blue background with soft clouds.  
@@ -112,7 +112,7 @@
 
 ---
 
-### D4-10 Â· PALM TREE WITH STRING LIGHTS â€” PARADISE NIGHT
+### D4-10 · PALM TREE WITH STRING LIGHTS â€” PARADISE NIGHT
 **File:** `d4-010.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A **palm tree viewed from below**, looking up at spreading green fronds against a rich cobalt-blue sky. **Orange string lights** hang across the scene â€” globe-shaped Edison bulbs glowing warm amber. A **red tropical flower** (bird of paradise or bromeliad) blooms near the trunk junction. The trunk is warm golden-brown with horizontal banding.  
@@ -123,7 +123,7 @@
 
 ---
 
-### D4-11 Â· THE WHITE IBIS â€” THE SACRED WATCHER
+### D4-11 · THE WHITE IBIS â€” THE SACRED WATCHER
 **File:** `d4-011.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A **white ibis** â€” bold, clean, illustrated in black ink and white watercolor â€” standing on a fence or perch. Curved black beak with a pink/red inner edge. Black-outlined body contrasting white plumage. **Layered landscape behind:** yellow-green grass at base, red-earth band, teal-blue sky. Simple and iconic.  
@@ -134,7 +134,7 @@
 
 ---
 
-### D4-12 Â· THE DELANO â€” BALLER V DESTINATION
+### D4-12 · THE DELANO â€” BALLER V DESTINATION
 **File:** `d4-012.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A nocturnal architectural illustration of the **Delano Hotel sign** â€” a tall vertical black pillar at center with a glowing **"Delano" sign** in orange/amber lettering on a teal-aqua background. Two flanking **gold scroll-topped columns or lamp posts** curve outward. The surrounding night sky is deep charcoal-grey with small **orange sparks/embers** drifting.  
@@ -145,7 +145,7 @@
 
 ---
 
-### D4-13 Â· THE STRAW FEDORA â€” THE CREATOR'S HAT
+### D4-13 · THE STRAW FEDORA â€” THE CREATOR'S HAT
 **File:** `d4-013.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A **straw/panama-style fedora** centered on the page against a soft **lavender-purple circular glow** (like a halo or aura). The hat is yellow-gold with amber speckle texture and a grey band. Bold black ink outline. Flat watercolor fill. Iconic, simple, clean.  
@@ -156,7 +156,7 @@
 
 ---
 
-### D4-14 Â· BAMBOO â€” THE RESILIENCE FOREST
+### D4-14 · BAMBOO â€” THE RESILIENCE FOREST
 **File:** `d4-014.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A dense **bamboo forest**, painted in layered green and grey-green watercolor. Multiple stalks fill the entire frame from bottom to top, with precise black ink joint-marks. Bright green bamboo leaves burst from the central stalks. The stalks have depth â€” light green in front, grey-green in shadow.  
@@ -167,7 +167,7 @@
 
 ---
 
-### D4-15 Â· PAISLEY SHARKS â€” BEAUTIFUL PREDATORS
+### D4-15 · PAISLEY SHARKS â€” BEAUTIFUL PREDATORS
 **File:** `d4-015.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** Multiple **shark silhouettes** decorated entirely with **intricate paisley patterns** in yellow-green/chartreuse and black. They float across a white background, oriented in different directions â€” some large, some small. The paisley fills every inch of the sharks' bodies, transforming them into ornate, beautiful creatures.  
@@ -178,18 +178,18 @@
 
 ---
 
-### D4-16 Â· UNIVERSAL OPERATING SYSTEM 2.0 â€” THE MIND NODE DIAGRAM
+### D4-16 · UNIVERSAL OPERATING SYSTEM 2.0 â€” THE MIND NODE DIAGRAM
 **File:** `d4-016.jpg`  
 **Orientation:** Needs 90Â° CW rotation (text reads on sides when photographed) âœ—  
 **What it is:** Ink and grey-wash drawing with handwritten blue-ink annotations. Two **gloved hands** hold/handle a small rectangular device (phone or key). **Text (partially legible):** Left: *"FUTURE UNIFIED COMPOSITIONS STORY."* Right: *"LAYERED [TERNARY] UNIVERSAL OPERATING SYSTEM / LTHS UOS 2.0 / PARADISE STORY."* Center handwritten: *"MMND NGGI 2021"* (possibly Mind Node date). Bottom left: *"PAST SEPARATION Physical / BOD[Y]..."* Yellow glow in upper left corner.  
 **Role in Universe:** The concept diagram for the **Layered Ternary Harmony Story Universal Operating System (LTHS UOS 2.0)** â€” the theoretical operating system underlying the Paradise Story Universe. The hands hold the key/device. Past = physical separation. Future = unified compositions. The UOS bridges them. This is the **SING! 9** / **Holographic Hydrogen Awareness AI OS** concept diagram named before it had a name.
 
 **EP PROMPT:**
-> *Pixar-style concept art. Two gloved hands hold a small glowing key-like device. The background is grey watercolor wash. Text annotations glow softly: "LAYERED TERNARY UNIVERSAL OPERATING SYSTEM Â· UOS 2.0 Â· PARADISE STORY" on the right. "FUTURE UNIFIED COMPOSITIONS" on the left. A yellow glow pulses in the upper corner. The mood: this is the blueprint. The hands hold the key to the whole system. Grey and gold. Quiet. Momentous.*
+> *Pixar-style concept art. Two gloved hands hold a small glowing key-like device. The background is grey watercolor wash. Text annotations glow softly: "LAYERED TERNARY UNIVERSAL OPERATING SYSTEM · UOS 2.0 · PARADISE STORY" on the right. "FUTURE UNIFIED COMPOSITIONS" on the left. A yellow glow pulses in the upper corner. The mood: this is the blueprint. The hands hold the key to the whole system. Grey and gold. Quiet. Momentous.*
 
 ---
 
-### D4-17 Â· THE PILOT AT THE GATE â€” BETWEEN WORLDS
+### D4-17 · THE PILOT AT THE GATE â€” BETWEEN WORLDS
 **File:** `d4-017.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A **uniformed pilot** (blue uniform, epaulettes, badge) sits in an airport terminal gate area, looking down at his phone with a gentle smile. Behind him through a large terminal window: a **commercial aircraft with a blue stripe**, fuselage visible. The terminal floor is pink with purple spots. Upper background: yellow-gold light. The pilot is relaxed, between missions.  
@@ -200,10 +200,10 @@
 
 ---
 
-### D4-18 Â· THE DINNER GATHERING â€” GOLDEN HEARTS AT TABLE
+### D4-18 · THE DINNER GATHERING â€” GOLDEN HEARTS AT TABLE
 **File:** `d4-018.jpg`  
 **Orientation:** Needs 90Â° CW rotation (faces appear sideways when photographed) âœ—  
-**What it is:** A **pen-and-ink sketch** of a dinner party or social gathering. Multiple figures (6â€“8 people, mixed genders) crowd around a table. A tall candelabra is visible at the left edge. Faces are expressively drawn â€” smiling, animated, close together. The scene is lively, dense with social energy. Raw ink, no color.  
+**What it is:** A **pen-and-ink sketch** of a dinner party or social gathering. Multiple figures (6—8 people, mixed genders) crowd around a table. A tall candelabra is visible at the left edge. Faces are expressively drawn â€” smiling, animated, close together. The scene is lively, dense with social energy. Raw ink, no color.  
 **Role in Universe:** The Vibelandia dinner â€” the gathering of golden hearts. The "we found each other" moment. This is what the Baller V Crawler arrives at: a table full of real people, laughing, present, warm. The candelabra = ceremony. The density = everyone matters. No one is on their phone. This is Alive.
 
 **EP PROMPT:**
@@ -211,7 +211,7 @@
 
 ---
 
-### D4-19 Â· THE WATCHED ROOM â€” A THOUSAND EYES
+### D4-19 · THE WATCHED ROOM â€” A THOUSAND EYES
 **File:** `d4-019.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A desk/workspace scene on the left (a chair with a gold-spotted cushion, a desk surface with a small figure on it and a gold bottle/pen, a blue-striped bag below). The rest of the entire image â€” walls, floor, everything â€” is covered with densely repeated **tiny ink drawings of eyes with legs**: little bird-eye creatures with a body, two legs, and an eye as the head, packed in rows across every surface in grey watercolor wash.  
@@ -222,7 +222,7 @@
 
 ---
 
-### D4-20 Â· THE BENCH KISS â€” CARTAGENA MOMENT
+### D4-20 · THE BENCH KISS â€” CARTAGENA MOMENT
 **File:** `d4-020.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A couple on a park bench in a plaza. The **woman wears a red dress** (bold, vivid red) and red shoes, leaning intimately into a man rendered in dark carbon ink. Buildings frame the background in warm golden-amber watercolor wash. The scene is European or Latin American in feeling â€” Cartagena, perhaps. The focus is entirely on the intimacy between the two figures.  
@@ -233,7 +233,7 @@
 
 ---
 
-### D4-21 Â· THE CHEF AT TABLE â€” DAILY HARMONIC
+### D4-21 · THE CHEF AT TABLE â€” DAILY HARMONIC
 **File:** `d4-021.jpg`  
 **Orientation:** Needs 180Â° rotation (figure appears upside-down in photo) âœ—  
 **What it is:** A figure with dark hair in a bun, wearing a white gridded/checkered top, viewed from slightly above, focused downward on a table surface. On the table: a bowl with a croissant or bread shape (left), a red cup or glass (center), and a plate with colorful fruits (yellow plate, green and orange fruits). A checkered tablecloth. Graphite grid lines in the background â€” a sketchbook grid.  
@@ -244,7 +244,7 @@
 
 ---
 
-### D4-22 Â· THE CARBON STORM â€” RAW ENERGY ABSTRACTION
+### D4-22 · THE CARBON STORM â€” RAW ENERGY ABSTRACTION
 **File:** `d4-022.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A highly abstract mixed-media piece. **Bold red watercolor washes** sweep diagonally across the upper right. **Dense dark pencil hatching** creates chaotic, storm-like forms across the center and left. Hints of structural forms: a tree or mast, a box or room structure at bottom center. Teal/blue watercolor at lower left. The overall feeling is turbulent, unresolved, powerful.  
@@ -255,7 +255,7 @@
 
 ---
 
-### D4-23 Â· THE DESERT HUMAN â€” AT PEACE IN THE LANDSCAPE
+### D4-23 · THE DESERT HUMAN â€” AT PEACE IN THE LANDSCAPE
 **File:** `d4-023.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A nude male figure stands simply in a desert landscape. The figure is rendered in pencil/light ink â€” undetailed, elemental. He smiles gently. Behind him: a **golden-yellow mountain** (left) and a dark grey mountain silhouette (right). A **red-orange earth band** crosses the middle. At lower left: the partial face or form of another figure lying down (pencil-sketched, female). The man stands comfortable, unashamed, present.  
@@ -266,7 +266,7 @@
 
 ---
 
-### D4-24 Â· COASTAL AIR BATTLE â€” THE HISTORY OF FLIGHT
+### D4-24 · COASTAL AIR BATTLE â€” THE HISTORY OF FLIGHT
 **File:** `d4-024.jpg`  
 **Orientation:** Needs 90Â° CW rotation (image photographed sideways) âœ—  
 **What it is:** An **aerial bird's-eye view of a coastline**. Left: grey land with a large grey military/commercial **aircraft parked** and smaller planes. Center: a brilliant **golden-yellow shoreline** (beach) cutting diagonally. Right: **blue sky/ocean** with multiple small biplane and propeller aircraft in flight â€” some red, some green, some grey. The aircraft are from different eras, flying together.  
@@ -277,7 +277,7 @@
 
 ---
 
-### D4-25 Â· OCEAN LINER & THE HAWK â€” ARRIVAL BY SEA
+### D4-25 · OCEAN LINER & THE HAWK â€” ARRIVAL BY SEA
 **File:** `d4-025.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** An **aerial view** over cream/beige sky. A **large white ocean liner** (cruise ship) is the dominant object â€” long, elegant, with two red porthole windows visible on its hull. Nearby: a second smaller white structure (building or ferry). Above the liner: a **hawk or large bird** (brown, wing-spread, appearing to carry something white on its head). Small **helicopter** at upper left. **Red buoy** on a stick at far left.  
@@ -288,7 +288,7 @@
 
 ---
 
-### D4-26 Â· THE HAT AND THE GARDEN â€” PRU'S MORNING
+### D4-26 · THE HAT AND THE GARDEN â€” PRU'S MORNING
 **File:** `d4-026.jpg`  
 **Orientation:** Correct âœ“ (signed *R.d.X.*)  
 **What it is:** A large **straw/gold sun hat** fills the top half â€” the wearer's face is obscured, turned slightly away. A **pink orchid** sprig grows from the hat. In the foreground below: a **small red terracotta pot** with bright green leaves, a **blue glass**, and a **plaid/checkered fabric.** The background is brilliant **sky blue.** Signed *"R.d.X."* in the lower portion of the red pot.  
@@ -299,10 +299,10 @@
 
 ---
 
-### D4-27 Â· PARADISE EARTH RESORT â€” MASTER PLAN (COLOR)
+### D4-27 · PARADISE EARTH RESORT â€” MASTER PLAN (COLOR)
 **File:** `d4-027.jpg`  
 **Orientation:** Needs 90Â° CW rotation (text reads on sides when photographed) âœ—  
-**What it is:** A hand-drawn **architectural aerial plan** of a resort titled *"PARADISE EARTH RESORT Â· ALL-INCLUSIVE."* A large oval running track encircles a rectangular center (with a tennis/activity grid). Inside the center, labels: *"Bikes, Drums, Copper"* and *"LEANING [LEARNING]."* The oval contains: green trees, pathways, goats/sheep on the grounds. Right margin: tiered pricing â€” *"Gold Package: 4700 ppd x2 Â· Silver Package: #350 ppd x2 Â· Copper Package: All Inclusive $175 ppd Â· All Inclusive Encouraged Â· Beach, River, Lake."* Bottom right: *"Students: 2hr Flex live, one Meditation/one-on-one per month."* Color version (green watercolor trees).  
+**What it is:** A hand-drawn **architectural aerial plan** of a resort titled *"PARADISE EARTH RESORT · ALL-INCLUSIVE."* A large oval running track encircles a rectangular center (with a tennis/activity grid). Inside the center, labels: *"Bikes, Drums, Copper"* and *"LEANING [LEARNING]."* The oval contains: green trees, pathways, goats/sheep on the grounds. Right margin: tiered pricing â€” *"Gold Package: 4700 ppd x2 · Silver Package: #350 ppd x2 · Copper Package: All Inclusive $175 ppd · All Inclusive Encouraged · Beach, River, Lake."* Bottom right: *"Students: 2hr Flex live, one Meditation/one-on-one per month."* Color version (green watercolor trees).  
 **Role in Universe:** The **Paradise Earth Resort** concept â€” a full Vibelandia destination property. Three-tier pricing (Gold/Silver/Copper = the layers). Learning/movement/music at center (bikes, drums). Nature surrounding (trees, animals, water bodies). This is the **post-singularity wellness destination** built on Threes architecture.
 
 **EP PROMPT:**
@@ -310,7 +310,7 @@
 
 ---
 
-### D4-28 Â· JOSEPHINE'S DAILY HARMONIC MENU â€” SAN DIEGO ESTATE
+### D4-28 · JOSEPHINE'S DAILY HARMONIC MENU â€” SAN DIEGO ESTATE
 **File:** `d4-028.jpg`  
 **Orientation:** Correct âœ“  
 **What it is:** A fully illustrated **menu document** titled *"Josephine's Daily Harmonic Menu for Winter â€” San Diego Estate."* A small portrait of **Josephine** (older woman, grey hair, glasses, purple top, warm smile) anchors the upper left. The menu is framed with an ornate dotted-jeweled border on a **yellow-gold background.** Contents:
@@ -327,7 +327,7 @@
 
 ---
 
-### D4-29 Â· PARADISE EARTH RESORT â€” MASTER PLAN (LINE)
+### D4-29 · PARADISE EARTH RESORT â€” MASTER PLAN (LINE)
 **File:** `d4-029.jpg`  
 **Orientation:** Needs 90Â° CW rotation (same as d4-027) âœ—  
 **What it is:** A second photograph of the **same Paradise Earth Resort master plan** as d4-027 â€” slightly different angle/lighting, less color saturation, more pencil-line visible. The content is identical: oval track, learning center, trees, pricing tiers, student program. This is the **line art / less-colored version** of the same drawing â€” useful for different rendering contexts (ink version vs. watercolor version).  
@@ -386,11 +386,11 @@
 
 **4. Paradise Earth Resort** â€” D4-027/D4-029 are a full business concept: three-tier all-inclusive with bikes, drums, beach, river, lake. Canonical Vibelandia destination property.
 
-**5. Threes and Water fully visual** â€” D4-004 explicitly labels WATER Â· WATER VAPOR Â· HISTORY as the three layers of the launch platform. The three states of water = canonical NSPFRNP.
+**5. Threes and Water fully visual** â€” D4-004 explicitly labels WATER · WATER VAPOR · HISTORY as the three layers of the launch platform. The three states of water = canonical NSPFRNP.
 
 **6. Objects as Characters** â€” D4-013 (The Straw Fedora), D4-002 (The Paintbrush), D4-012 (The Delano sign) continue the Deck 3 tradition of objects carrying soul.
 
 ---
 
-*SING!9 Â· FractiAI Research Team Â· Deck 4 Catalog Â· 2026*  
-*â†’ âˆžâ¹*
+*SING!9 · FractiAI Research Team · Deck 4 Catalog · 2026*  
+*→ ∞⁹*

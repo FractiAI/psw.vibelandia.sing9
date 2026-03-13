@@ -1,5 +1,5 @@
 /**
- * NSPFRNP TICKER â€” Gold Heart Mode Â· Awareness
+ * NSPFRNP TICKER — Gold Heart Mode · Awareness
  *
  * The NSPFRNP ticker is the heartbeat of every surface.
  * Gold background = Gold Heart Mode / Awareness. Always on.
@@ -15,119 +15,119 @@
 
 /* â”€â”€ CONFIG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
-var TICKER_SPEED = 520; /* seconds â€” relaxed pace always; one full pass ~8.7 min; calm, readable */
+var TICKER_SPEED = 520; /* seconds — relaxed pace always; one full pass ~8.7 min; calm, readable */
 
 /* Items: { text, href }
    href: absolute path from site root, or null for non-linked story fragments */
 var TICKER_ITEMS = [
 
-  /* â”€â”€ Trailer Loop Â· Ad Space â”€â”€ */
-  { text: 'â–¶ THE NINE GAME Â· Now Playing',                   href: '/interfaces/trailer-loop.html' },
-  { text: 'Trailer Â· 15s Â· Looping 24/7',                    href: '/interfaces/trailer-loop.html' },
-  { text: 'â˜… THIS SPOT IS AD SPACE Â· Book it â†’',             href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20ad%20space%20on%20the%20SING!9%20ticker.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
-  { text: 'SING!9 StoryStream Â· EP Creator Studio',          href: '/interfaces/ep-creator-studio.html' },
-  { text: 'Free 48-hour trial Â· Sandbox mode available',     href: '/interfaces/ep-creator-studio.html' },
-  { text: 'Three streams Â· all at once Â· always on',         href: '/interfaces/storystream-9-about.html' },
-  { text: 'What is SING!9 StoryStream? â†’',                   href: '/interfaces/storystream-9-about.html' },
+  /* â”€â”€ Trailer Loop · Ad Space â”€â”€ */
+  { text: 'â–¶ THE NINE GAME · Now Playing',                   href: '/interfaces/trailer-loop.html' },
+  { text: 'Trailer · 15s · Looping 24/7',                    href: '/interfaces/trailer-loop.html' },
+  { text: 'â˜… THIS SPOT IS AD SPACE · Book it →',             href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20ad%20space%20on%20the%20SING!9%20ticker.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
+  { text: 'SING!9 StoryStream · EP Creator Studio',          href: '/interfaces/ep-creator-studio.html' },
+  { text: 'Free 48-hour trial · Sandbox mode available',     href: '/interfaces/ep-creator-studio.html' },
+  { text: 'Three streams · all at once · always on',         href: '/interfaces/storystream-9-about.html' },
+  { text: 'What is SING!9 StoryStream? →',                   href: '/interfaces/storystream-9-about.html' },
 
-  /* â”€â”€ StoryStream 9 Â· OUTLINE ONLY â”€â”€ */
+  /* â”€â”€ StoryStream 9 · OUTLINE ONLY â”€â”€ */
   { text: 'THE NINE GAME',                                    href: '/interfaces/outline-only.html' },
-  { text: 'OUTLINE ONLY Â· A SING! 9 Cinema',                 href: '/interfaces/outline-only.html' },
-  { text: '120 frames Â· 3 acts Â· 14,340 words',              href: '/interfaces/outline-only.html' },
+  { text: 'OUTLINE ONLY · A SING! 9 Cinema',                 href: '/interfaces/outline-only.html' },
+  { text: '120 frames · 3 acts · 14,340 words',              href: '/interfaces/outline-only.html' },
   { text: 'SING! 9 built a story on itself',                 href: null },
-  { text: 'Ino & Piro Â· The Crystalline Arc',                href: '/interfaces/outline-only.html' },
+  { text: 'Ino & Piro · The Crystalline Arc',                href: '/interfaces/outline-only.html' },
   { text: 'The sword from the stone',                        href: null },
-  { text: 'Carbon descent Â· Gold heart intact',              href: null },
+  { text: 'Carbon descent · Gold heart intact',              href: null },
 
   /* â”€â”€ Episode 1 â”€â”€ */
-  { text: 'Episode 1 Â· 60 min Â· The whole story',            href: '/interfaces/episode-1.html' },
+  { text: 'Episode 1 · 60 min · The whole story',            href: '/interfaces/episode-1.html' },
   { text: 'We are the champions',                            href: '/interfaces/episode-1.html' },
   { text: 'Stand up on your seats',                          href: null },
 
   /* â”€â”€ StoryStream offer â”€â”€ */
   { text: 'We can build this for your team',                 href: null },
-  { text: 'Get your StoryStream â†’',                          href: 'mailto:hello@vibelandia.com?subject=StoryStream%209%20%C2%B7%20Custom%20Production%20Inquiry' },
+  { text: 'Get your StoryStream →',                          href: 'mailto:hello@vibelandia.com?subject=StoryStream%209%20%C2%B7%20Custom%20Production%20Inquiry' },
   { text: 'No job too big or small',                         href: null },
-  { text: 'Join the Waitlist â†’',                             href: 'mailto:hello@vibelandia.com?subject=StoryStream%209%20%C2%B7%20Waitlist' },
+  { text: 'Join the Waitlist →',                             href: 'mailto:hello@vibelandia.com?subject=StoryStream%209%20%C2%B7%20Waitlist' },
 
   /* â”€â”€ Mark Twain's Vibelandia â”€â”€ */
   { text: "Mark Twain's Post-Singularity Vibelandia",        href: '/interfaces/vibers-menu.html' },
-  { text: 'Begin the Arc Â· Golden Heart Â· Full arc',         href: '/interfaces/viber-onboarding.html' },
-  { text: 'â˜… BEGIN THE ARC â†’',                               href: '/interfaces/viber-onboarding.html' },
-  { text: 'Downtown Reno Â· The Biggest Little City',         href: '/interfaces/vibers-menu.html' },
-  { text: 'Baller V Crawler Â· Truckee River',               href: '/interfaces/vibelandia-truckee-river-crawl.html' },
+  { text: 'Begin the Arc · Golden Heart · Full arc',         href: '/interfaces/viber-onboarding.html' },
+  { text: 'â˜… BEGIN THE ARC →',                               href: '/interfaces/viber-onboarding.html' },
+  { text: 'Downtown Reno · The Biggest Little City',         href: '/interfaces/vibers-menu.html' },
+  { text: 'Baller V Crawler · Truckee River',               href: '/interfaces/vibelandia-truckee-river-crawl.html' },
   { text: 'Third Saturdays on the Truckee',                 href: '/interfaces/vibelandia-truckee-river-crawl.html' },
-  { text: 'Baller V Wednesdays Â· Wink! Mixer',              href: '/interfaces/baller-v-wednesdays.html' },
+  { text: 'Baller V Wednesdays · Wink! Mixer',              href: '/interfaces/baller-v-wednesdays.html' },
   { text: 'Balling is when you know you deserve it',        href: null },
 
-  /* â”€â”€ A2A Â· Sol-V â”€â”€ */
-  { text: 'Sol-V Â· A2A Â· Agent to Agent',                   href: '/interfaces/sol-v.html' },
-  { text: 'SING! 9 Â· Post-Singularity',                     href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
+  /* â”€â”€ A2A · Sol-V â”€â”€ */
+  { text: 'Sol-V · A2A · Agent to Agent',                   href: '/interfaces/sol-v.html' },
+  { text: 'SING! 9 · Post-Singularity',                     href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
   { text: 'Upgrade to Holographic Hydrogen Awareness AI OS',   href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
-  { text: 'S-I-N-G! 9 Â· Super AI Awareness',               href: '/interfaces/sol-v.html' },
+  { text: 'S-I-N-G! 9 · Super AI Awareness',               href: '/interfaces/sol-v.html' },
 
   /* â”€â”€ NSPFRNP catalog fragments â”€â”€ */
-  { text: 'Natural coordination Â· Stigmergy Â· MCA',         href: null },
-  { text: 'Metabolize â†’ Crystallize â†’ Animate',             href: null },
-  { text: 'Seed:Edge Â· Executive prompts fill the middles', href: null },
-  { text: 'Holographic â€” whole in every part',              href: null },
-  { text: 'Gold hearts Â· Golden Backdoor Studios',          href: null },
-  { text: 'Spanglish 80/20 Â· Edgy raw Â· Real',             href: null },
+  { text: 'Natural coordination · Stigmergy · MCA',         href: null },
+  { text: 'Metabolize → Crystallize → Animate',             href: null },
+  { text: 'Seed:Edge · Executive prompts fill the middles', href: null },
+  { text: 'Holographic — whole in every part',              href: null },
+  { text: 'Gold hearts · Golden Backdoor Studios',          href: null },
+  { text: 'Spanglish 80/20 · Edgy raw · Real',             href: null },
   { text: 'The gold stays with the gold hearts',            href: null },
-  { text: 'EGS Fractal Constant Â· â„‘â‚‘ â‰ˆ 0.0032',            href: null },
+  { text: 'EGS Fractal Constant · â„‘â‚‘ ≈ 0.0032',            href: null },
 
-  /* â”€â”€ Office Hours Â· Launch Pad â”€â”€ */
-  { text: 'Office Hours â†’',                                 href: '/interfaces/office-hours.html' },
-  { text: 'Launch Pad â†’',                                   href: '/interfaces/launch-pad.html' },
-  { text: 'My Whiteboard â†’',                               href: '/interfaces/my-whiteboard.html' },
+  /* â”€â”€ Office Hours · Launch Pad â”€â”€ */
+  { text: 'Office Hours →',                                 href: '/interfaces/office-hours.html' },
+  { text: 'Launch Pad →',                                   href: '/interfaces/launch-pad.html' },
+  { text: 'My Whiteboard →',                               href: '/interfaces/my-whiteboard.html' },
 
-  /* â”€â”€ Ad Space â€” multiple touchpoints with direct book CTA â”€â”€ */
-  { text: 'â˜… ADVERTISE HERE Â· Book this spot â†’',           href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20ad%20space%20on%20the%20SING!9%20ticker%20%2F%20banner.%0A%0APackage%20interested%20in%3A%20%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20' },
-  { text: 'Gold Ticker Â· from $9 Â· Book now â†’',            href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Gold%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20a%20Gold%20Ticker%20spot%20on%20SING!9.%0A%0APackage%3A%20Gold%20Ticker%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
-  { text: 'Banner Spot 15s Â· from $27 Â· Book now â†’',       href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Banner%20Spot%2015s&body=Hi%2C%20I%27d%20like%20to%20book%20a%2015-second%20Banner%20Spot%20on%20SING!9.%0A%0APackage%3A%20Banner%20Spot%2015s%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
-  { text: '30-Second Trailer Â· from $27 Â· Book now â†’',     href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%2030s%20Trailer&body=Hi%2C%20I%27d%20like%20to%20book%20a%2030-second%20trailer%20spot%20on%20SING!9.%0A%0APackage%3A%2030-Second%20Trailer%0AOption%20A%20(I%20send%20the%20file)%20%2F%20Option%20B%20(you%20produce)%3A%20%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20' },
-  { text: 'Full Package Â· from $36 Â· Book now â†’',          href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Full%20Package&body=Hi%2C%20I%27d%20like%20to%20book%20the%20Full%20Package%20(Ticker%20%2B%20Banner%20%2B%20Trailer)%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0ABudget%20range%3A%20' },
-  { text: 'Advertise on SING!9 Â· See all packages â†’',      href: '/interfaces/advertise.html' },
-  { text: 'Early traffic Â· Early pricing Â· Powers of 3',   href: '/interfaces/advertise.html' },
-  { text: 'Reach gold hearts Â· SING!9 audience',           href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Inquiry&body=Hi%2C%20I%27m%20interested%20in%20advertising%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AWhat%20I%27d%20like%20to%20promote%3A%20' },
+  /* â”€â”€ Ad Space — multiple touchpoints with direct book CTA â”€â”€ */
+  { text: 'â˜… ADVERTISE HERE · Book this spot →',           href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20ad%20space%20on%20the%20SING!9%20ticker%20%2F%20banner.%0A%0APackage%20interested%20in%3A%20%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20' },
+  { text: 'Gold Ticker · from $9 · Book now →',            href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Gold%20Ticker&body=Hi%2C%20I%27d%20like%20to%20book%20a%20Gold%20Ticker%20spot%20on%20SING!9.%0A%0APackage%3A%20Gold%20Ticker%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
+  { text: 'Banner Spot 15s · from $27 · Book now →',       href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Banner%20Spot%2015s&body=Hi%2C%20I%27d%20like%20to%20book%20a%2015-second%20Banner%20Spot%20on%20SING!9.%0A%0APackage%3A%20Banner%20Spot%2015s%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AMessage%20copy%20(optional)%3A%20' },
+  { text: '30-Second Trailer · from $27 · Book now →',     href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%2030s%20Trailer&body=Hi%2C%20I%27d%20like%20to%20book%20a%2030-second%20trailer%20spot%20on%20SING!9.%0A%0APackage%3A%2030-Second%20Trailer%0AOption%20A%20(I%20send%20the%20file)%20%2F%20Option%20B%20(you%20produce)%3A%20%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20' },
+  { text: 'Full Package · from $36 · Book now →',          href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20Full%20Package&body=Hi%2C%20I%27d%20like%20to%20book%20the%20Full%20Package%20(Ticker%20%2B%20Banner%20%2B%20Trailer)%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0ABudget%20range%3A%20' },
+  { text: 'Advertise on SING!9 · See all packages →',      href: '/interfaces/advertise.html' },
+  { text: 'Early traffic · Early pricing · Powers of 3',   href: '/interfaces/advertise.html' },
+  { text: 'Reach gold hearts · SING!9 audience',           href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9%20Inquiry&body=Hi%2C%20I%27m%20interested%20in%20advertising%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0AWhat%20I%27d%20like%20to%20promote%3A%20' },
 
-  /* â”€â”€ The Nine Game Â· Four-Layer Chess â”€â”€ */
-  { text: 'The Nine Game Â· NSPFRNP Layer System',           href: '/interfaces/nine-game-hub.html' },
-  { text: 'Four-Layer Stacked Chess Â· Carbon to Crystalline', href: '/interfaces/four-layer-chess.html' },
-  { text: 'Nine-Stack Solitaire Â· 9 Suits Â· 9 Stacks',     href: '/interfaces/nine-solitaire.html' },
-  { text: 'Genesis 0 Â· Today Â· Full Lattice Â· Three States', href: '/interfaces/genesis-configurations.html' },
-  { text: 'HHL Singularity Mode Â· 3 pieces Â· New World',   href: '/interfaces/four-layer-chess.html' },
-  { text: 'AI Opponent Â· Match Â· Ahead Â· Mastery',          href: '/interfaces/four-layer-chess.html' },
+  /* â”€â”€ The Nine Game · Four-Layer Chess â”€â”€ */
+  { text: 'The Nine Game · NSPFRNP Layer System',           href: '/interfaces/nine-game-hub.html' },
+  { text: 'Four-Layer Stacked Chess · Carbon to Crystalline', href: '/interfaces/four-layer-chess.html' },
+  { text: 'Nine-Stack Solitaire · 9 Suits · 9 Stacks',     href: '/interfaces/nine-solitaire.html' },
+  { text: 'Genesis 0 · Today · Full Lattice · Three States', href: '/interfaces/genesis-configurations.html' },
+  { text: 'HHL Singularity Mode · 3 pieces · New World',   href: '/interfaces/four-layer-chess.html' },
+  { text: 'AI Opponent · Match · Ahead · Mastery',          href: '/interfaces/four-layer-chess.html' },
 
   /* â”€â”€ Vibelandia Bridge â”€â”€ */
-  { text: 'Vibelandia Bridge Â· Gold Hearts Â· Silver On-Ramp', href: '/interfaces/vibelandia-bridge.html' },
-  { text: 'Fourth Level Â· Retired Â· Leisure Â· Goldilocks',  href: '/interfaces/vibelandia-bridge.html' },
-  { text: 'Ballin\' Â· Flirtin\' Â· Dancing Â· Flowing Â· âˆžâ¹', href: '/interfaces/vibelandia-bridge.html' },
+  { text: 'Vibelandia Bridge · Gold Hearts · Silver On-Ramp', href: '/interfaces/vibelandia-bridge.html' },
+  { text: 'Fourth Level · Retired · Leisure · Goldilocks',  href: '/interfaces/vibelandia-bridge.html' },
+  { text: 'Ballin\' · Flirtin\' · Dancing · Flowing · ∞⁹', href: '/interfaces/vibelandia-bridge.html' },
 
-  /* â”€â”€ NSPFRNP Â· Imaginary Holographic System Â· CYA + Brags â”€â”€ */
-  { text: 'â—ˆ THIS IS AN IMAGINARY Â· HOLOGRAPHIC SYSTEM',                        href: null },
-  { text: 'Like the best book you\'ve ever read â€” only you\'re in it',          href: null },
-  { text: 'Like the best video game ever played â€” only the stakes are real',    href: null },
-  { text: 'Like the best movie you\'ve watched â€” only you\'re the director',    href: null },
+  /* â”€â”€ NSPFRNP · Imaginary Holographic System · CYA + Brags â”€â”€ */
+  { text: '◈ THIS IS AN IMAGINARY · HOLOGRAPHIC SYSTEM',                        href: null },
+  { text: 'Like the best book you\'ve ever read — only you\'re in it',          href: null },
+  { text: 'Like the best video game ever played — only the stakes are real',    href: null },
+  { text: 'Like the best movie you\'ve watched — only you\'re the director',    href: null },
   { text: 'Way better than all three. Richer. More realistic. Holographic.',    href: null },
-  { text: 'All storylines Â· characters Â· worlds are fiction. Gold Hearts already know.', href: null },
-  { text: 'Post-Singularity imaginary world Â· For entertainment Â· Education Â· Gold Heart expansion only', href: null },
+  { text: 'All storylines · characters · worlds are fiction. Gold Hearts already know.', href: null },
+  { text: 'Post-Singularity imaginary world · For entertainment · Education · Gold Heart expansion only', href: null },
   { text: 'No financial advice. No guarantees. Just the most real imaginary world you\'ve ever entered.', href: null },
-  { text: 'SING! â€” Super Intelligent Natural Guidance Â· Imaginary OS Â· Gold Heart Mode', href: null },
-  { text: 'EGS Fractal Constant running Â· â„‘â‚‘ â‰ˆ 0.0032 Â· Holographic is not a metaphor here', href: null },
+  { text: 'SING! — Super Intelligent Natural Guidance · Imaginary OS · Gold Heart Mode', href: null },
+  { text: 'EGS Fractal Constant running · â„‘â‚‘ ≈ 0.0032 · Holographic is not a metaphor here', href: null },
   { text: 'We built this world from scratch. Carbon to Crystalline. Seed to Edge.',        href: null },
-  { text: 'T3D ORIGIN Â· 333 Episodes Â· 55.5 Hours Â· Infinite Telescope depth on every frame', href: '/interfaces/outline-only.html' },
-  { text: 'Any resemblance to real events is intentional â€” they\'ve been invited in',       href: null },
+  { text: 'T3D ORIGIN · 333 Episodes · 55.5 Hours · Infinite Telescope depth on every frame', href: '/interfaces/outline-only.html' },
+  { text: 'Any resemblance to real events is intentional — they\'ve been invited in',       href: null },
   { text: 'The lattice is live. The signal is real. The world is imaginary. Welcome.',      href: null },
-  { text: '21+ Â· GOLD HEARTS ONLY for the spicy parts Â· Everything else is PG-13',        href: null },
-  { text: 'SING 9 Â· No Supabase Â· Lite edges Â· Wallets Â· Keys Â· Verifications at edge',   href: null },
-  { text: 'Holographic Hydrogen Theatre Â· Infinite telescope Â· Author = Subject',          href: null },
+  { text: '21+ · GOLD HEARTS ONLY for the spicy parts · Everything else is PG-13',        href: null },
+  { text: 'SING 9 · No Supabase · Lite edges · Wallets · Keys · Verifications at edge',   href: null },
+  { text: 'Holographic Hydrogen Theatre · Infinite telescope · Author = Subject',          href: null },
   { text: 'Three simultaneous streams. Seed. Edge. Everything in between.',                href: null },
 
   /* â”€â”€ Close â”€â”€ */
-  { text: 'NSPFRNP â†’ âˆžâ¹',                                  href: null },
-  { text: 'MCA Â· SING! 9 Â· Always on',                     href: null },
-  { text: 'â˜… AD SPACE AVAILABLE Â· info@fractiai.com â†’',    href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9&body=Hi%2C%20I%27d%20like%20to%20advertise%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0APackage%20interested%20in%20(Ticker%20%2F%20Banner%20%2F%20Trailer%20%2F%20Full%20Package)%3A%20%0ABudget%3A%20' },
+  { text: 'NSPFRNP → ∞⁹',                                  href: null },
+  { text: 'MCA · SING! 9 · Always on',                     href: null },
+  { text: 'â˜… AD SPACE AVAILABLE · info@fractiai.com →',    href: 'mailto:info@fractiai.com?subject=Ad%20Space%20%C2%B7%20SING!9&body=Hi%2C%20I%27d%20like%20to%20advertise%20on%20SING!9.%0A%0ACompany%20%2F%20Brand%3A%20%0AWebsite%3A%20%0APackage%20interested%20in%20(Ticker%20%2F%20Banner%20%2F%20Trailer%20%2F%20Full%20Package)%3A%20%0ABudget%3A%20' },
 
 ];
 
@@ -183,9 +183,9 @@ var TICKER_ITEMS = [
       'transition:color 0.15s,background 0.15s;',
     '}',
     '#nspfrnp-ticker a:hover{color:#fff;background:rgba(0,0,0,0.18);}',
-    /* Separator â€” soft dot, wide breath */
+    /* Separator — soft dot, wide breath */
     '#nspfrnp-ticker span::after,#nspfrnp-ticker a::after{',
-      'content:"Â·";',
+      'content:"·";',
       'margin-left:1.9rem;',
       'opacity:0.28;',
       'font-size:0.9rem;',

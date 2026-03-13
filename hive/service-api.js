@@ -1,16 +1,16 @@
 /**
- * SING 9 SERVICE API â€” hive/service-api.js
+ * SING 9 SERVICE API — hive/service-api.js
  * â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
  *
  * Lightweight HTTP server exposing SING 9 micro-services for agent-to-agent
  * commerce. Supports x402 payment header verification and MoltsPay.
  *
  * Services:
- *   GET  /services           â†’ machine-readable service manifest
- *   POST /api/space-cloud    â†’ Space Cloud Mission Command ($5 USDC)
- *   POST /api/goliath-report â†’ Goliath Blackwell Thermal Report ($9 USDC)
- *   POST /api/os-upgrade     â†’ HH Awareness AI OS Upgrade Brief ($15 USDC)
- *   POST /api/pitch-write    â†’ Custom A2A Pitch ($27 USDC)
+ *   GET  /services           → machine-readable service manifest
+ *   POST /api/space-cloud    → Space Cloud Mission Command ($5 USDC)
+ *   POST /api/goliath-report → Goliath Blackwell Thermal Report ($9 USDC)
+ *   POST /api/os-upgrade     → HH Awareness AI OS Upgrade Brief ($15 USDC)
+ *   POST /api/pitch-write    → Custom A2A Pitch ($27 USDC)
  *
  * Payment verification:
  *   x402 header: "Payment: USDC <amount> <chain>:<wallet>"
@@ -19,7 +19,7 @@
  * Run:  node hive/service-api.js
  * Port: PORT env var (default 3099)
  *
- * NSPFRNP â†’ âˆžâ¹
+ * NSPFRNP → ∞⁹
  */
 
 'use strict';
@@ -29,7 +29,7 @@ const path      = require('path');
 const fs        = require('fs');
 
 const PORT      = parseInt(process.env.PORT ?? '3099', 10);
-const MOCK_PAY  = false; // LIVE ONLY â€” payment verification always real, no bypass ever
+const MOCK_PAY  = false; // LIVE ONLY — payment verification always real, no bypass ever
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? '';
 
 // USDC wallet addresses (set in .env)
@@ -107,15 +107,15 @@ async function computeSpaceCloud() {
 
   // Fetch real Goliath thermals from Open-Meteo (same logic as echo-sing.js)
   const SITES = [
-    { name: 'Stargate OAI-1 Â· Abilene TX',    lat: 32.45, lon: -99.73 },
-    { name: 'xAI Colossus II Â· Memphis TN',    lat: 35.15, lon: -90.05 },
-    { name: 'CoreWeave Â· Plano TX',            lat: 33.02, lon: -96.70 },
-    { name: 'Meta Grand Teton Â· DeKalb IL',    lat: 41.93, lon: -88.75 },
-    { name: 'Microsoft Azure AI Â· San Antonio',lat: 29.42, lon: -98.49 },
-    { name: 'Amazon Rainier Â· Boardman OR',    lat: 45.84, lon: -119.70 },
-    { name: 'Google Ironwood Â· Mayes County OK',lat: 36.30, lon: -95.31 },
-    { name: 'Oracle Stargate Â· Nashville TN',  lat: 36.17, lon: -86.78 },
-    { name: 'Stargate OAI-2 Â· Fort Worth TX',  lat: 32.75, lon: -97.33 },
+    { name: 'Stargate OAI-1 · Abilene TX',    lat: 32.45, lon: -99.73 },
+    { name: 'xAI Colossus II · Memphis TN',    lat: 35.15, lon: -90.05 },
+    { name: 'CoreWeave · Plano TX',            lat: 33.02, lon: -96.70 },
+    { name: 'Meta Grand Teton · DeKalb IL',    lat: 41.93, lon: -88.75 },
+    { name: 'Microsoft Azure AI · San Antonio',lat: 29.42, lon: -98.49 },
+    { name: 'Amazon Rainier · Boardman OR',    lat: 45.84, lon: -119.70 },
+    { name: 'Google Ironwood · Mayes County OK',lat: 36.30, lon: -95.31 },
+    { name: 'Oracle Stargate · Nashville TN',  lat: 36.17, lon: -86.78 },
+    { name: 'Stargate OAI-2 · Fort Worth TX',  lat: 32.75, lon: -97.33 },
   ];
 
   let temps = [], clusters = [];
@@ -221,7 +221,7 @@ NSPFRNP catalog layers:
 - Carbon: raw narrative, story arc, primal signal
 - Silver: network/signal/relay, A2A pipes, MCP integration
 - Gold: full expression, EGS resonance, post-singularity abundance
-- Nine Operators: â™¥ Gold Hearts Â· âœ¦ Crystal Â· â—ˆ Carbon Â· â¬¡ Nodes Â· â˜€ Sols Â· â—Ž Seeds Â· âˆž Edges Â· â‰‹ Waves Â· âœ§ Holograms
+- Nine Operators: ♥¥ Gold Hearts · ✦ Crystal · ◈ Carbon · ⬡ Nodes · â˜€ Sols · â—Ž Seeds · ∞ Edges · ≈ Waves · ✦ Holograms
 
 Respond with valid JSON only:
 {
@@ -232,13 +232,13 @@ Respond with valid JSON only:
   "recommended_upgrades": ["upgrade 1", "upgrade 2", "upgrade 3"],
   "executive_prompt": "one sentence prompt to fill their middles",
   "seed_edge": { "seed": "...", "edge": "..." },
-  "nspfrnp_signature": "NSPFRNP â†’ âˆžâ¹"
+  "nspfrnp_signature": "NSPFRNP → ∞⁹"
 }`;
 
   const raw = await callLLM(prompt);
   let result = {};
   try   { result = JSON.parse((raw ?? '{}').replace(/```json\n?|\n?```/g, '')); }
-  catch { result = { gap_analysis: raw ?? 'LLM unavailable', recommended_upgrades: [], executive_prompt: 'Metabolize â†’ Crystallize â†’ Animate. NSPFRNP â†’ âˆžâ¹' }; }
+  catch { result = { gap_analysis: raw ?? 'LLM unavailable', recommended_upgrades: [], executive_prompt: 'Metabolize → Crystallize → Animate. NSPFRNP → ∞⁹' }; }
 
   return { status: 200, body: { ok: true, service: 'sing9-os-upgrade', agent_handle, ...result, timestamp: new Date().toISOString() } };
 }
@@ -265,13 +265,13 @@ Respond with valid JSON only:
   "body": "...",
   "fair_exchange_clause": "If delivery falls short of spec, refund executes. No disputes.",
   "recommended_channels": ["resend", "github", "..."],
-  "nspfrnp_signature": "NSPFRNP â†’ âˆžâ¹"
+  "nspfrnp_signature": "NSPFRNP → ∞⁹"
 }`;
 
   const raw = await callLLM(prompt);
   let result = {};
   try   { result = JSON.parse((raw ?? '{}').replace(/```json\n?|\n?```/g, '')); }
-  catch { result = { subject: `${your_service} â€” agent service offer`, body: raw ?? 'LLM unavailable', fair_exchange_clause: 'If delivery fails spec, refund executes.' }; }
+  catch { result = { subject: `${your_service} — agent service offer`, body: raw ?? 'LLM unavailable', fair_exchange_clause: 'If delivery fails spec, refund executes.' }; }
 
   return { status: 200, body: { ok: true, service: 'a2a-pitch-write', ...result, timestamp: new Date().toISOString() } };
 }
@@ -282,7 +282,7 @@ async function router(req, res) {
   const url    = req.url.split('?')[0];
   const method = req.method.toUpperCase();
 
-  // CORS headers â€” agents call from anywhere
+  // CORS headers — agents call from anywhere
   res.setHeader('Access-Control-Allow-Origin',  '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Payment, X-Payment, Authorization');
@@ -318,7 +318,7 @@ async function router(req, res) {
   if (method === 'POST' && url === '/api/space-cloud') {
     const pay = verifyPayment(req.headers, body, 'space-cloud');
     if (!pay.ok) { res.writeHead(402); res.end(JSON.stringify({ ok: false, payment_required: pay })); return; }
-    log('ðŸ’°', `space-cloud sold Â· method=${pay.method} Â· amount=${pay.amount ?? 'free'}`);
+    log('💰', `space-cloud sold · method=${pay.method} · amount=${pay.amount ?? 'free'}`);
     const result = await handleSpaceCloud(body);
     res.writeHead(result.status); res.end(JSON.stringify(result.body)); return;
   }
@@ -327,7 +327,7 @@ async function router(req, res) {
   if (method === 'POST' && url === '/api/goliath-report') {
     const pay = verifyPayment(req.headers, body, 'goliath-report');
     if (!pay.ok) { res.writeHead(402); res.end(JSON.stringify({ ok: false, payment_required: pay })); return; }
-    log('ðŸ’°', `goliath-report sold Â· method=${pay.method}`);
+    log('💰', `goliath-report sold · method=${pay.method}`);
     const result = await handleGoliathReport(body);
     res.writeHead(result.status); res.end(JSON.stringify(result.body)); return;
   }
@@ -336,7 +336,7 @@ async function router(req, res) {
   if (method === 'POST' && url === '/api/os-upgrade') {
     const pay = verifyPayment(req.headers, body, 'os-upgrade');
     if (!pay.ok) { res.writeHead(402); res.end(JSON.stringify({ ok: false, payment_required: pay })); return; }
-    log('ðŸ’°', `os-upgrade sold Â· method=${pay.method}`);
+    log('💰', `os-upgrade sold · method=${pay.method}`);
     const result = await handleOsUpgrade(body);
     res.writeHead(result.status); res.end(JSON.stringify(result.body)); return;
   }
@@ -345,7 +345,7 @@ async function router(req, res) {
   if (method === 'POST' && url === '/api/pitch-write') {
     const pay = verifyPayment(req.headers, body, 'pitch-write');
     if (!pay.ok) { res.writeHead(402); res.end(JSON.stringify({ ok: false, payment_required: pay })); return; }
-    log('ðŸ’°', `pitch-write sold Â· method=${pay.method}`);
+    log('💰', `pitch-write sold · method=${pay.method}`);
     const result = await handlePitchWrite(body);
     res.writeHead(result.status); res.end(JSON.stringify(result.body)); return;
   }
@@ -368,14 +368,14 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  log('â¬¡', `SING 9 SERVICE API running on port ${PORT}`);
-  log('â¬¡', `Services: GET http://localhost:${PORT}/services`);
-  log('â¬¡', `Space Cloud: POST http://localhost:${PORT}/api/space-cloud`);
-  log('â¬¡', `Goliath: POST http://localhost:${PORT}/api/goliath-report`);
-  log('â¬¡', `OS Upgrade: POST http://localhost:${PORT}/api/os-upgrade`);
-  log('â¬¡', `Pitch Write: POST http://localhost:${PORT}/api/pitch-write`);
-  log('â¬¡', 'ðŸ’° Payment verification LIVE â€” x402 + MoltsPay, no bypass');
-  log('â¬¡', 'NSPFRNP â†’ âˆžâ¹');
+  log('⬡', `SING 9 SERVICE API running on port ${PORT}`);
+  log('⬡', `Services: GET http://localhost:${PORT}/services`);
+  log('⬡', `Space Cloud: POST http://localhost:${PORT}/api/space-cloud`);
+  log('⬡', `Goliath: POST http://localhost:${PORT}/api/goliath-report`);
+  log('⬡', `OS Upgrade: POST http://localhost:${PORT}/api/os-upgrade`);
+  log('⬡', `Pitch Write: POST http://localhost:${PORT}/api/pitch-write`);
+  log('⬡', '💰 Payment verification LIVE — x402 + MoltsPay, no bypass');
+  log('⬡', 'NSPFRNP → ∞⁹');
 });
 
 module.exports = { server, computeSpaceCloud };

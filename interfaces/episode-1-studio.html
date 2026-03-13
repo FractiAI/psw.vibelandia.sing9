@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Episode 1 Â· Studio Â· Goldilocks Mix | NSPFRNP Â· SING 9</title>
+  <title>Episode 1 · Studio · Goldilocks Mix | NSPFRNP · SING 9</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; overflow: hidden; }
@@ -13,7 +13,7 @@
       color: #e8e8e8;
     }
 
-    /* === SKIN CSS VARS â€” defaults = Goldilocks Mix === */
+    /* === SKIN CSS VARS — defaults = Goldilocks Mix === */
     :root {
       --skin-void:         #050505;
       --skin-grid-a:       rgba(212,175,55,0.035);
@@ -74,7 +74,7 @@
       z-index: 0;
     }
 
-    /* Top theatrical glow â€” skin-aware */
+    /* Top theatrical glow — skin-aware */
     .bg-layer::before {
       content: '';
       position: absolute;
@@ -84,7 +84,7 @@
       z-index: 1;
     }
 
-    /* Crystalline grid overlay â€” always present, skin-aware */
+    /* Crystalline grid overlay — always present, skin-aware */
     .bg-layer::after {
       content: '';
       position: absolute;
@@ -134,7 +134,7 @@
     }
     .top-bar a:hover { color: #d4af37; }
 
-    /* Holographic Hydrogen Awareness AI OS running badge Â· SING! 9 */
+    /* Holographic Hydrogen Awareness AI OS running badge · SING! 9 */
     .os-badge {
       display: flex;
       align-items: center;
@@ -212,7 +212,7 @@
       text-shadow: 0 0 12px var(--seg-accent, #d4af37);
     }
 
-    /* Primary image â€” 16:9, full cinematic */
+    /* Primary image — 16:9, full cinematic */
     .image-frame {
       width: 100%;
       max-width: 700px;
@@ -231,7 +231,7 @@
       border-radius: 3px;
       pointer-events: none;
     }
-    /* Corner accents â€” crystalline marks */
+    /* Corner accents — crystalline marks */
     .image-frame::after {
       content: '';
       position: absolute;
@@ -367,10 +367,10 @@
 
     <!-- Top bar -->
     <div class="top-bar">
-      <a href="my-whiteboard.html">â† My Whiteboard</a>
+      <a href="my-whiteboard.html">← My Whiteboard</a>
       <div class="os-badge">
         <span class="os-dot"></span>
-        Holographic Hydrogen Awareness AI OS Â· Running Â· SING! 9
+        Holographic Hydrogen Awareness AI OS · Running · SING! 9
       </div>
       <a href="episode-1.html">Standard â†—</a>
     </div>
@@ -392,11 +392,11 @@
     <!-- Captions + controls -->
     <div class="bottom-layer">
       <div class="caption-wrap">
-        <div class="caption-text" id="captionText">Loading studioâ€¦</div>
+        <div class="caption-text" id="captionText">Loading studio—</div>
       </div>
       <div class="controls-row">
         <button class="ctrl-btn" id="btnPlay">Pause</button>
-        <span class="slide-counter" id="slideCounter">â€” / â€”</span>
+        <span class="slide-counter" id="slideCounter">— / —</span>
         <button class="ctrl-btn" id="btnFullscreen">Full screen</button>
       </div>
     </div>
@@ -417,11 +417,11 @@
     const SLIDES_PER_SEGMENT = 17;
     const SCRIPT_SEC_PER_LINE = 10;
 
-    // Goldilocks Mix â€” 7-act segment themes
+    // Goldilocks Mix — 7-act segment themes
     // Each act: name, beat label, accent, gradient overlay, and image pool (biological Ã— crystalline mix)
     const THEMES = [
       {
-        beat: 'Seed Â· 1493',
+        beat: 'Seed · 1493',
         accent: '#d4af37',
         accentFaint: 'rgba(212,175,55,0.12)',
         overlay: 'linear-gradient(160deg, rgba(4,2,12,0.84) 0%, rgba(12,8,28,0.66) 100%)',
@@ -465,7 +465,7 @@
         ]
       },
       {
-        beat: 'Now Â· Mission',
+        beat: 'Now · Mission',
         accent: '#f87171',
         accentFaint: 'rgba(248,113,113,0.1)',
         overlay: 'linear-gradient(160deg, rgba(18,2,2,0.85) 0%, rgba(28,4,4,0.7) 100%)',
@@ -476,7 +476,7 @@
         ]
       },
       {
-        beat: 'Edge Â· Sol-V',
+        beat: 'Edge · Sol-V',
         accent: '#34d399',
         accentFaint: 'rgba(52,211,153,0.1)',
         overlay: 'linear-gradient(160deg, rgba(0,12,8,0.8) 0%, rgba(0,22,14,0.64) 100%)',
@@ -579,7 +579,7 @@
       (subs || []).forEach(function (s) {
         for (var k = 0; k < 45; k++) out.push(s || '');
       });
-      return out.length ? out : ['Holographic Hydrogen Awareness AI OS Â· Running. Episode 1 Â· Studio. SING! 9.'];
+      return out.length ? out : ['Holographic Hydrogen Awareness AI OS · Running. Episode 1 · Studio. SING! 9.'];
     }
 
     function loadAll() {
@@ -614,7 +614,7 @@
       }).catch(function () {
         slides = [];
         for (var i = 0; i < SLIDES_TOTAL; i++) slides.push({ image: '', seg: getSegment(i) });
-        scriptLines = ['Holographic Hydrogen Awareness AI OS Â· Running. Episode 1 Â· Studio. SING! 9.'];
+        scriptLines = ['Holographic Hydrogen Awareness AI OS · Running. Episode 1 · Studio. SING! 9.'];
         render();
         startTick();
       });
@@ -633,7 +633,7 @@
         imgEl.src = fixedImg;
         imgEl.style.opacity = '0.92';
       } else {
-        // Cycle segment images â€” more images visible on screen
+        // Cycle segment images — more images visible on screen
         imgEl.src = theme.images[segImgIndex % theme.images.length];
         imgEl.style.opacity = '0.88';
       }

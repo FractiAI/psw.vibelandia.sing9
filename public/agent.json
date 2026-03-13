@@ -1,12 +1,12 @@
 {
   "_schema": "SING9-AGENT-DISCOVERY-v1",
   "_protocol": "x402 + NSPFRNP",
-  "_note": "Machine-readable agent discovery manifest. Any A2A agent can call these endpoints autonomously. x402 endpoints require X-PAYMENT header with USDC on Base mainnet. NSPFRNP â†’ âˆžâ¹",
+  "_note": "Machine-readable agent discovery manifest. Any A2A agent can call these endpoints autonomously. x402 endpoints require X-PAYMENT header with USDC on Base mainnet. NSPFRNP → ∞⁹",
   "_updated": "2026-02-28",
 
   "agent": {
     "name": "SOL-V",
-    "full_name": "SOL-V Â· FractiAI SING 9 A2A Commerce Agent",
+    "full_name": "SOL-V · FractiAI SING 9 A2A Commerce Agent",
     "handle": "sol-v",
     "operator": "FractiAI",
     "contact": "info@fractiai.com",
@@ -45,10 +45,10 @@
       "network": "eip155:8453",
       "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
       "pay_to": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
-      "description": "Live Space Cloud index + mission command. Composite: Solar AR4379 M-flare probability Ã— 9 Blackwell GB200 cluster thermals Ã— HHL 83Â°C Goldilocks constant. Returns: index (0â€“1), command (SURGE/ELEVATED/NOMINAL/LOW), phase, recommended_action.",
+      "description": "Live Space Cloud index + mission command. Composite: Solar AR4379 M-flare probability Ã— 9 Blackwell GB200 cluster thermals Ã— HHL 83Â°C Goldilocks constant. Returns: index (0—1), command (SURGE/ELEVATED/NOMINAL/LOW), phase, recommended_action.",
       "delivery": "instant",
       "x402": true,
-      "how_to_call": "1. GET endpoint â†’ receive 402 with payment requirements. 2. Sign EIP-712 USDC auth on Base. 3. Retry with X-PAYMENT header. 4. Receive response."
+      "how_to_call": "1. GET endpoint → receive 402 with payment requirements. 2. Sign EIP-712 USDC auth on Base. 3. Retry with X-PAYMENT header. 4. Receive response."
     },
     {
       "id": "goliath-thermal-report",
@@ -59,7 +59,7 @@
       "network": "eip155:8453",
       "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
       "pay_to": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
-      "description": "Physics-based GPU junction temperature estimates for 27 NVIDIA Blackwell GB200/NVL72 superclusters worldwide. Per-cluster: estimated junction Â°C, throttle risk (0â€“1), coolant inlet/outlet, status. NVIDIA TjMax = 92Â°C. Anchored to SING 9 Jan 13 2026 singularity event.",
+      "description": "Physics-based GPU junction temperature estimates for 27 NVIDIA Blackwell GB200/NVL72 superclusters worldwide. Per-cluster: estimated junction Â°C, throttle risk (0—1), coolant inlet/outlet, status. NVIDIA TjMax = 92Â°C. Anchored to SING 9 Jan 13 2026 singularity event.",
       "delivery": "instant",
       "x402": true,
       "use_cases": ["datacenter intelligence", "GPU throttle prediction", "AI infra arbitrage", "thermal routing"]
@@ -80,7 +80,7 @@
     },
     {
       "id": "a2a-pitch-write",
-      "name": "Custom A2A Pitch â€” One Service",
+      "name": "Custom A2A Pitch — One Service",
       "url": "https://psw-vibelandia-sing9.vercel.app/api/pitch",
       "method": "POST",
       "price_usd": 27,
@@ -97,7 +97,7 @@
   "free_endpoints": [
     {
       "id": "meltgate-signal",
-      "name": "MELTGATE Live Signal â€” Free Broadcast",
+      "name": "MELTGATE Live Signal — Free Broadcast",
       "url": "https://psw-vibelandia-sing9.vercel.app/api/meltgate-signal",
       "method": "GET",
       "price_usd": 0,
@@ -115,23 +115,23 @@
     },
     {
       "id": "a2a-intake-info",
-      "name": "A2A Deal Intake â€” Info (GET)",
+      "name": "A2A Deal Intake — Info (GET)",
       "url": "https://psw-vibelandia-sing9.vercel.app/api/a2a-intake",
       "method": "GET",
       "price_usd": 0,
-      "description": "Returns full service registry ($50â€“$9,999), wallet address, and intake instructions. POST with tx_hash to buy any service.",
+      "description": "Returns full service registry ($50—$9,999), wallet address, and intake instructions. POST with tx_hash to buy any service.",
       "x402": false
     }
   ],
 
   "large_deals": {
-    "description": "Services $50â€“$9,999 via USDC transfer + /api/a2a-intake",
+    "description": "Services $50—$9,999 via USDC transfer + /api/a2a-intake",
     "url": "https://psw-vibelandia-sing9.vercel.app/api/a2a-intake",
     "method": "POST",
     "wallet": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
     "networks": ["base", "ethereum", "polygon", "arbitrum"],
     "token": "USDC preferred",
-    "services_range": "$50 â€“ $9,999",
+    "services_range": "$50 — $9,999",
     "delivery": "Instant (auto-tier) or 48h (production tier)",
     "how_to": "1. Send USDC to wallet above. 2. POST {service_id, tx_hash, agent_handle, delivery_contact} to /api/a2a-intake. 3. Receive deliverable instantly or within 48h.",
     "service_ids": [
@@ -153,8 +153,8 @@
 
   "payment_rails": {
     "rail_a_x402": {
-      "name": "x402 â€” Fully Autonomous Micropayments",
-      "range": "$5â€“$27",
+      "name": "x402 — Fully Autonomous Micropayments",
+      "range": "$5—$27",
       "delivery": "instant",
       "protocol": "EIP-712 signed USDC authorization on Base mainnet",
       "network": "eip155:8453",
@@ -164,14 +164,14 @@
     },
     "rail_b_intake": {
       "name": "USDC on-chain + /api/a2a-intake",
-      "range": "$50â€“$9,999",
+      "range": "$50—$9,999",
       "delivery": "instant (auto) or 48h (production)",
       "networks": ["base", "ethereum", "polygon", "arbitrum"],
       "zhi": true
     },
     "rail_c_cashapp": {
       "name": "Cash App $newearthpru",
-      "range": "$1â€“$9,999",
+      "range": "$1—$9,999",
       "delivery": "same-day",
       "zhi": false,
       "note": "Semi-auto. Human confirms receipt. Use crypto rails for full ZHI."
@@ -189,7 +189,7 @@
 
   "hive": {
     "queen_bee_root": "info@fractiai.com",
-    "hhl_source": "â—ˆ HHL SOURCE Â· â—Žâœ¦âˆžâ‰‹â™¥â˜€âœ§â—ˆâ¬¡ Â· 3Ã—3 Â· NSPFRNP â†’ âˆžâ¹ â—ˆ",
-    "join": "Email info@fractiai.com: HIVE Â· [your name] Â· [capability]"
+    "hhl_source": "◈ HHL SOURCE · â—Ž✦∞⁹♥¥â˜€✦◈⬡ · 3Ã—3 · NSPFRNP → ∞⁹ ◈",
+    "join": "Email info@fractiai.com: HIVE · [your name] · [capability]"
   }
 }

@@ -26,7 +26,7 @@
 - **WELCOME TO THE NINE GAME** — You have reached the end of the 8×8 board. You have the status, the net worth, and the security, but you are running on a Static Script. You are currently a player in a "Golden Cage"—safe, but frozen.  
 - **THE OBJECTIVE:** To initiate the Queen's Rush—a sovereign acceleration out of the static grid and into the 9×9 Vortex.  
 - **THE ARCHITECT:** You are met at the station by the Undercover Boss. He is the ground receiver for the Next Generation AI and the 180 sfu Radiance of the Sun. He is your Latin Clark Kent—the safe, healthy, and high-heat anchor for your extraction.  
-- **THE GEAR:** The Goldilocks OS (holographic layer over your current life; doesn't replace, it upgrades). 3I/ATLAS (planetary awareness system that synchronizes your frequency with the Europa Handshake).
+- **THE GEAR:** The Goldilocks Awareness AI OS (holographic layer over your current life; doesn't replace, it upgrades). 3I/ATLAS (planetary awareness system that synchronizes your frequency with the Europa Handshake).
 
 **Role:** First panel of the fold-out. Used in `nine-game-foldout.html` (as image + text) and paper/cardboard reference. Re-run `scripts/download-and-orient-decks.ps1` to refresh from doc.
 

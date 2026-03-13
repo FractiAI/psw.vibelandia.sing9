@@ -258,10 +258,22 @@
     .about-card {
       padding: 1.1rem; border: 1px solid rgba(255,255,255,0.07);
       border-radius: 12px; background: rgba(255,255,255,0.02);
+      transition: border-color 0.2s, background 0.2s;
     }
+    .about-card:hover { border-color: rgba(212,175,55,0.2); background: rgba(255,255,255,0.04); }
+    .about-card .ac-main {
+      display: block; text-decoration: none; color: inherit;
+    }
+    .about-card .ac-main:hover { color: inherit; }
     .about-card .ac-icon { font-size: 1.4rem; margin-bottom: 0.5rem; display: block; }
     .about-card .ac-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
     .about-card .ac-body { font-size: 0.78rem; color: var(--sub); line-height: 1.65; }
+    .about-card .ac-configure {
+      display: inline-block; margin-top: 0.75rem; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold2, #fde68a); border: 1px solid rgba(212,175,55,0.35); padding: 0.35rem 0.7rem; border-radius: 6px;
+      text-decoration: none; transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .about-card .ac-configure:hover { color: #fff; border-color: rgba(212,175,55,0.6); background: rgba(212,175,55,0.08); }
     .about-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 2rem 0; }
 
     /* ── FOOTER ── */
@@ -434,41 +446,59 @@
 
   <div class="about-grid">
     <div class="about-card">
-      <span class="ac-icon">📺</span>
-      <div class="ac-title" data-i18n="landing.ac_screens">Your Screens</div>
-      <div class="ac-body" data-i18n="landing.ac_screens_body">Nine cockpit screens. Choose the lenses through which you operate: Carbon, Crystal, Gold Heart, Mission, Story Arc, Treasure, Awareness, Rhythm, Libre.</div>
+      <a href="interfaces/hh-os-docs.html#screens-overview" class="ac-main">
+        <span class="ac-icon">📺</span>
+        <div class="ac-title" data-i18n="landing.ac_screens">Your Screens</div>
+        <div class="ac-body" data-i18n="landing.ac_screens_body">Nine cockpit screens. Choose the lenses through which you operate: Carbon, Crystal, Gold Heart, Mission, Story Arc, Treasure, Awareness, Rhythm, Libre.</div>
+      </a>
+      <a href="interfaces/hh-console.html#screens" class="ac-configure" data-i18n="landing.ac_configure">Configure yours →</a>
     </div>
     <div class="about-card">
-      <span class="ac-icon">🎭</span>
-      <div class="ac-title" data-i18n="landing.ac_arc">Your Arc</div>
-      <div class="ac-body" data-i18n="landing.ac_arc_body">Pre-singularity origin. The journey. Post-singularity destination. Write your character's POV inside the story within stories.</div>
+      <a href="interfaces/hh-os-docs.html#arc-panel" class="ac-main">
+        <span class="ac-icon">🎭</span>
+        <div class="ac-title" data-i18n="landing.ac_arc">Your Arc</div>
+        <div class="ac-body" data-i18n="landing.ac_arc_body">Pre-singularity origin. The journey. Post-singularity destination. Write your character's POV inside the story within stories.</div>
+      </a>
+      <a href="interfaces/hh-console.html#arc" class="ac-configure" data-i18n="landing.ac_configure">Configure yours →</a>
     </div>
     <div class="about-card">
-      <span class="ac-icon">▶</span>
-      <div class="ac-title" data-i18n="landing.ac_now">Now Playing</div>
-      <div class="ac-body" data-i18n="landing.ac_now_body">Layer your daily routine with intention across four time blocks. Morning, Midday, Evening, Night. All aspects. As you wish.</div>
+      <a href="interfaces/hh-os-docs.html#now-playing" class="ac-main">
+        <span class="ac-icon">▶</span>
+        <div class="ac-title" data-i18n="landing.ac_now">Now Playing</div>
+        <div class="ac-body" data-i18n="landing.ac_now_body">Layer your daily routine with intention across four time blocks. Morning, Midday, Evening, Night. All aspects. As you wish.</div>
+      </a>
+      <a href="interfaces/hh-console.html#now" class="ac-configure" data-i18n="landing.ac_configure">Configure yours →</a>
     </div>
     <div class="about-card">
-      <span class="ac-icon">💎</span>
-      <div class="ac-title" data-i18n="landing.ac_treasure">Treasure Piles</div>
-      <div class="ac-body" data-i18n="landing.ac_treasure_body">Nine categories: Health, Relationships, Wealth, Purpose, Experiences, Knowledge, Creative, Spirit, Libre. Whatever your treasures are.</div>
+      <a href="interfaces/hh-os-docs.html#treasure-piles" class="ac-main">
+        <span class="ac-icon">💎</span>
+        <div class="ac-title" data-i18n="landing.ac_treasure">Treasure Piles</div>
+        <div class="ac-body" data-i18n="landing.ac_treasure_body">Nine categories: Health, Relationships, Wealth, Purpose, Experiences, Knowledge, Creative, Spirit, Libre. Whatever your treasures are.</div>
+      </a>
+      <a href="interfaces/hh-console.html#treasures" class="ac-configure" data-i18n="landing.ac_configure">Configure yours →</a>
     </div>
     <div class="about-card">
-      <span class="ac-icon">🔄</span>
-      <div class="ac-title" data-i18n="landing.ac_rhythms">Rhythms</div>
-      <div class="ac-body" data-i18n="landing.ac_rhythms_body">Set your intention at each time horizon: Daily → Weekly → Monthly → Seasonal → Annual. The whole in every part. Compounding clarity.</div>
+      <a href="interfaces/hh-os-docs.html#rhythms" class="ac-main">
+        <span class="ac-icon">🔄</span>
+        <div class="ac-title" data-i18n="landing.ac_rhythms">Rhythms</div>
+        <div class="ac-body" data-i18n="landing.ac_rhythms_body">Set your intention at each time horizon: Daily → Weekly → Monthly → Seasonal → Annual. The whole in every part. Compounding clarity.</div>
+      </a>
+      <a href="interfaces/hh-console.html#rhythms" class="ac-configure" data-i18n="landing.ac_configure">Configure yours →</a>
     </div>
     <div class="about-card">
-      <span class="ac-icon">⚡</span>
-      <div class="ac-title" data-i18n="landing.ac_stack">The Now Stack</div>
-      <div class="ac-body" data-i18n="landing.ac_stack_body">The magnetic attractor. Everything you're pulling toward. Activate it — three resonance tones, 111 · 222 · 333 Hz — and the field is set. Magnetically locked.</div>
+      <a href="interfaces/hh-os-docs.html#now-stack" class="ac-main">
+        <span class="ac-icon">⚡</span>
+        <div class="ac-title" data-i18n="landing.ac_stack">The Now Stack</div>
+        <div class="ac-body" data-i18n="landing.ac_stack_body">The magnetic attractor. Everything you're pulling toward. Activate it — three resonance tones, 111 · 222 · 333 Hz — and the field is set. Magnetically locked.</div>
+      </a>
+      <a href="interfaces/hh-console.html#stack" class="ac-configure" data-i18n="landing.ac_configure">Configure yours →</a>
     </div>
   </div>
 
   <hr class="about-divider" />
 
-  <p>This system is grounded in <strong>nine peer-reviewed scientific convergence points</strong> — from quantum coherence in biological systems to epigenetic updateability, from the holographic principle to resonance biology. Read the full technical manual to understand the substrate you're working with.</p>
-  <p>For operators: read the Quick Start. For practitioners: read the User Manual. For builders: read the Onboarding Programmer Track. For system architects: read the Onboarding Architect Track and the full Technical Manual.</p>
+  <p>This system is grounded in <strong>nine peer-reviewed scientific convergence points</strong> — from quantum coherence in biological systems to epigenetic updateability, from the holographic principle to resonance biology. Read the <a href="interfaces/hh-os-docs.html#technical">full technical manual</a> to understand the substrate you're working with.</p>
+  <p>For operators: read the <a href="interfaces/hh-os-docs.html#quickstart">Quick Start</a>. For practitioners: read the <a href="interfaces/hh-os-docs.html#usermanual">User Manual</a>. For builders: read the Onboarding Programmer Track. For system architects: read the Onboarding Architect Track and the <a href="interfaces/hh-os-docs.html#technical">Technical Manual</a>. <a href="interfaces/hh-console.html">Open HH Awareness OS Console →</a></p>
 
   <hr class="about-divider" />
 

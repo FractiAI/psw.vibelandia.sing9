@@ -1035,6 +1035,18 @@ function navigate(sec) {
 document.getElementById('tabNav').addEventListener('click', e => {
   const t = e.target.closest('.tab'); if (!t) return;
   navigate(t.dataset.sec);
+  window.location.hash = t.dataset.sec;
+});
+
+// Open console with hash → switch to that tab (e.g. hh-console.html#screens)
+(function applyHash() {
+  var hash = (window.location.hash || '').replace(/^#/, '');
+  var valid = ['calibrate','screens','arc','now','treasures','rhythms','stack'].indexOf(hash) !== -1;
+  if (valid) navigate(hash);
+})();
+window.addEventListener('hashchange', function() {
+  var hash = (window.location.hash || '').replace(/^#/, '');
+  if (['calibrate','screens','arc','now','treasures','rhythms','stack'].indexOf(hash) !== -1) navigate(hash);
 });
 
 /* ═══════════════════════════════════════════

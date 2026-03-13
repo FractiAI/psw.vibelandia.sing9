@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Profile · HH Awareness OS · SING!9</title>
+  <title>Profile Â· HH Awareness AI OS Â· SING!9</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -42,7 +42,7 @@
 </head>
 <body>
 <div class="wrap">
-  <nav class="nav"><a href="hh-console.html">← Console</a> &nbsp; <a href="wink.html">WINK!</a></nav>
+  <nav class="nav"><a href="hh-console.html">â† Console</a> &nbsp; <a href="wink.html">WINK!</a></nav>
   <div id="narrativeRoot"></div>
   <div class="share-note" id="shareNote" style="display:none;">
     This profile can be shared. Copy the link above to let others visit your profile in a public digital way.
@@ -50,8 +50,8 @@
 </div>
 <script>
 (function() {
-  const ARCHETYPES = [{ k:'machote', e:'♛', n:'Machote' },{ k:'baller', e:'🥂', n:'Baller' },{ k:'viber', e:'✨', n:'Viber' },{ k:'bigdaddy', e:'🎩', n:'Big Daddy' },{ k:'bond', e:'🕴', n:'James Bond' },{ k:'hughes', e:'🎬', n:'Howard Hughes' },{ k:'sinatra', e:'🥃', n:'Sinatra' },{ k:'cowboy', e:'🤠', n:'Cowboy' },{ k:'creator', e:'🎨', n:'Creator' },{ k:'commander', e:'⚡', n:'Commander' },{ k:'hologram', e:'💠', n:'Holographic' },{ k:'libre', e:'🌊', n:'Free' }];
-  const TIME_LABELS = { morning: '🌅 Morning', midday: '☀ Midday', evening: '🌆 Evening', night: '🌙 Night' };
+  const ARCHETYPES = [{ k:'machote', e:'â™›', n:'Machote' },{ k:'baller', e:'ðŸ¥‚', n:'Baller' },{ k:'viber', e:'âœ¨', n:'Viber' },{ k:'bigdaddy', e:'ðŸŽ©', n:'Big Daddy' },{ k:'bond', e:'ðŸ•´', n:'James Bond' },{ k:'hughes', e:'ðŸŽ¬', n:'Howard Hughes' },{ k:'sinatra', e:'ðŸ¥ƒ', n:'Sinatra' },{ k:'cowboy', e:'ðŸ¤ ', n:'Cowboy' },{ k:'creator', e:'ðŸŽ¨', n:'Creator' },{ k:'commander', e:'âš¡', n:'Commander' },{ k:'hologram', e:'ðŸ’ ', n:'Holographic' },{ k:'libre', e:'ðŸŒŠ', n:'Free' }];
+  const TIME_LABELS = { morning: 'ðŸŒ… Morning', midday: 'â˜€ Midday', evening: 'ðŸŒ† Evening', night: 'ðŸŒ™ Night' };
   let P = null;
   try {
     const hash = location.hash.slice(1);
@@ -73,14 +73,14 @@
   let html = '<header class="hero">';
   if (photo) html += '<img class="hero-photo" src="' + photo + '" alt=""/>';
   html += '<h1 class="hero-name">' + (P.name || 'Commander') + '</h1>';
-  if (archs.length) html += '<p class="hero-arcs">' + archs.map(a => a.e + ' ' + a.n).join(' · ') + '</p>';
+  if (archs.length) html += '<p class="hero-arcs">' + archs.map(a => a.e + ' ' + a.n).join(' Â· ') + '</p>';
   html += '</header>';
 
   if (P.arc && (P.arc.origin || P.arc.journey || P.arc.destination)) {
     html += '<section class="sec"><div class="sec-title">My Arc</div><h2 class="sec-h2">Story</h2>';
-    if (P.arc.origin) html += '<div class="arc-block"><label>◈ Origin</label><p>' + escapeHtml(P.arc.origin) + '</p></div>';
-    if (P.arc.journey) html += '<div class="arc-block"><label>∞ Journey</label><p>' + escapeHtml(P.arc.journey) + '</p></div>';
-    if (P.arc.destination) html += '<div class="arc-block"><label>✦ Destination</label><p>' + escapeHtml(P.arc.destination) + '</p></div>';
+    if (P.arc.origin) html += '<div class="arc-block"><label>â—ˆ Origin</label><p>' + escapeHtml(P.arc.origin) + '</p></div>';
+    if (P.arc.journey) html += '<div class="arc-block"><label>âˆž Journey</label><p>' + escapeHtml(P.arc.journey) + '</p></div>';
+    if (P.arc.destination) html += '<div class="arc-block"><label>âœ¦ Destination</label><p>' + escapeHtml(P.arc.destination) + '</p></div>';
     html += '</section>';
   }
   if (P.nowPlaying && Object.keys(P.nowPlaying).length) {
@@ -137,7 +137,7 @@
     const dataParam = btoa(JSON.stringify(P));
     const shareUrl = location.origin + location.pathname + '?data=' + encodeURIComponent(dataParam);
     document.getElementById('shareNote').style.display = 'block';
-    document.getElementById('shareNote').innerHTML = 'Share link: <a href="' + shareUrl + '" target="_blank">' + shareUrl.slice(0, 60) + '…</a><br>Copy the link to let others visit this profile.';
+    document.getElementById('shareNote').innerHTML = 'Share link: <a href="' + shareUrl + '" target="_blank">' + shareUrl.slice(0, 60) + 'â€¦</a><br>Copy the link to let others visit this profile.';
   } catch (e) {}
 })();
 </script>

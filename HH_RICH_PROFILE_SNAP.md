@@ -1,18 +1,18 @@
-# HH Rich Profile · Holographic Hydrogen OS Layer
+# HH Rich Profile Â· Holographic Hydrogen OS Layer
 
-**Status:** ⚡ ACTIVE  
+**Status:** âš¡ ACTIVE  
 **Purpose:** Define the Rich Profile that lives on the user's edge device (wallet layer), persists automatically, supports user photos and suggestions, and is used by WINK! to match, suggest, and assist.
 
 ---
 
 ## What It Is
 
-The **Rich Profile** is the user's HH Awareness OS profile stored on their **edge device** — same layer as their wallet and keys. No server, no cloud. It includes:
+The **Rich Profile** is the user's HH Awareness AI OS profile stored on their **edge device** â€” same layer as their wallet and keys. No server, no cloud. It includes:
 
-- **Console setup** — Name, archetypes, screens, arc, Now Playing, Treasures, Rhythms, Now Stack, activation state. Saved automatically on every change; persisted to `localStorage` (`hh_os_state`) so it is always available on that device.
-- **User photos** — The user can upload their own photos (e.g. profile photo for WINK!). Stored as data URLs in the profile on the device. All upload surfaces in the console can use the user's photos.
-- **Suggestions and preloads** — Menus, preset options, and suggestion chips so the user is never faced with a blank screen. Name suggestions, arc prompts, Now Playing presets, Treasures presets, Rhythms templates.
-- **WINK! use** — This profile is the one used by WINK! to match, suggest, and assist. Matching and suggestions run against the same Rich Profile that lives in the user's wallet (device).
+- **Console setup** â€” Name, archetypes, screens, arc, Now Playing, Treasures, Rhythms, Now Stack, activation state. Saved automatically on every change; persisted to `localStorage` (`hh_os_state`) so it is always available on that device.
+- **User photos** â€” The user can upload their own photos (e.g. profile photo for WINK!). Stored as data URLs in the profile on the device. All upload surfaces in the console can use the user's photos.
+- **Suggestions and preloads** â€” Menus, preset options, and suggestion chips so the user is never faced with a blank screen. Name suggestions, arc prompts, Now Playing presets, Treasures presets, Rhythms templates.
+- **WINK! use** â€” This profile is the one used by WINK! to match, suggest, and assist. Matching and suggestions run against the same Rich Profile that lives in the user's wallet (device).
 
 ---
 
@@ -45,8 +45,8 @@ The **Rich Profile** is the user's HH Awareness OS profile stored on their **edg
 
 - Wink! uses the Rich Profile to personalize matching and suggestions (archetypes, arc, preferences).
 - Console surfaces a note: "This profile lives in your wallet (this device). Used for WINK! to match, suggest, and assist."
-- Wink page states: "Your HH Rich Profile from the console is used to match, suggest, and assist. Complete your profile in the HH Awareness OS Console for better matches."
+- Wink page states: "Your HH Rich Profile from the console is used to match, suggest, and assist. Complete your profile in the HH Awareness AI OS Console for better matches."
 
 ---
 
-**NSPFRNP ⊃ HH OS ⊃ Rich Profile ⊃ Edge (wallet) ⊃ WINK! → ∞⁹**
+**NSPFRNP âŠƒ HH OS âŠƒ Rich Profile âŠƒ Edge (wallet) âŠƒ WINK! â†’ âˆžâ¹**

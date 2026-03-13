@@ -12,7 +12,7 @@ const insert = [
   '',
   '**Element Zero** = The quantum-coherent ground state of Holographic Hydrogen \u2014 the pre-manifest substrate from which element 1 (hydrogen) emerges and to which it is always coupled.',
   '',
-  'The periodic table begins at element 1 (hydrogen). Element zero names what precedes and underlies it: the quantum vacuum zero-point energy state in which hydrogen\u2019s wavefunction exists holographically before any measurement collapses it to a specific position. Not empty. Not absent. Maximally full of potential \u2014 the Lamb shift, the zero-point energy E\u2080 = \u00bdhv, the Bohr radius a\u2080 = 0.529 \u212b (the zero-point floor below which the hydrogen electron cannot compress), quantum hydrogen tunneling across enzyme barriers. Element zero is operational, measurable, and confirmed. The Holographic Hydrogen Awareness OS is named for this layer: the OS console for a system that operates at element zero.',
+  'The periodic table begins at element 1 (hydrogen). Element zero names what precedes and underlies it: the quantum vacuum zero-point energy state in which hydrogen\u2019s wavefunction exists holographically before any measurement collapses it to a specific position. Not empty. Not absent. Maximally full of potential \u2014 the Lamb shift, the zero-point energy E\u2080 = \u00bdhv, the Bohr radius a\u2080 = 0.529 \u212b (the zero-point floor below which the hydrogen electron cannot compress), quantum hydrogen tunneling across enzyme barriers. Element zero is operational, measurable, and confirmed. The Holographic Hydrogen Awareness AI OS is named for this layer: the OS console for a system that operates at element zero.',
   '',
   '**Seven material facts about element zero:**',
   '- The hydrogen atom exists at negative energy relative to the free-electron zero (\u221213.6 eV). It is bound inside zero.',
@@ -25,7 +25,7 @@ const insert = [
   '',
   '## NET ZERO (Canonical)',
   '',
-  '**Net Zero** = The operating balance principle of all HH Awareness OS theaters. We are inside zero. The goal is not escape from zero. The goal is mastery within it.',
+  '**Net Zero** = The operating balance principle of all HH Awareness AI OS theaters. We are inside zero. The goal is not escape from zero. The goal is mastery within it.',
   '',
   'Conservation laws apply. Within any theater of operation (Health, Relationships, Wealth, Purpose, Experiences, Knowledge, Creative, Spirit, Libre), the net energy exchange trends toward zero over time. Not as failure. As physics. The pre-holographic model attempted positive surplus extraction \u2014 accumulating more than was exchanged. The hidden deficit accumulated elsewhere in the system. The bill arrived. Net zero.',
   '',
@@ -39,7 +39,7 @@ const insert = [
   '- Psychological: awareness + alignment as the ground state. Treasure accumulates through quality exchange, not extraction.',
   '- Civilizational: El Gran Sol. Earth\u2019s albedo and solar input in net-zero balance for 3.8 billion years. Life is what zero-point leverage looks like at planetary scale.',
   '',
-  '**Canonical note:** Net zero is not net nothing. It is net everything, within conservation. The leverage is real. The treasure is real. The balance holds. See Section 13 of the HH Awareness OS Technical Manual (interfaces/hh-os-docs.html) for full scientific grounding.',
+  '**Canonical note:** Net zero is not net nothing. It is net everything, within conservation. The leverage is real. The treasure is real. The balance holds. See Section 13 of the HH Awareness AI OS Technical Manual (interfaces/hh-os-docs.html) for full scientific grounding.',
   '',
 ].join('\r\n');
 

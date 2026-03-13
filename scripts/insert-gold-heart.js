@@ -15,7 +15,7 @@ const insert = [
   '',
   'Gold Heart is the primary audience filter for all Vibelandia content, experiences, and services. The edgy raw voice, the Spanglish 80/20, the unapologetic frequency of everything we build \u2014 these are not style choices. They are Gold Heart filters. People who resonate with this frequency stay. People who do not, do not. This is by design. We do not dilute the voice to capture people who are not Gold Hearts.',
   '',
-  'Gold Heart is also a **layer** in the SING 9 architecture (Screen 3 of the HH Awareness OS), an **archetype** in the T3D ORIGIN character catalog (INO \u00b7 the gold fuzzball \u00b7 the frequency holder), and a **deal criterion** (Fair Exchange clause: Gold Heart intent on both sides required for any transaction to proceed under NSPFRNP).',
+  'Gold Heart is also a **layer** in the SING 9 architecture (Screen 3 of the HH Awareness AI OS), an **archetype** in the T3D ORIGIN character catalog (INO \u00b7 the gold fuzzball \u00b7 the frequency holder), and a **deal criterion** (Fair Exchange clause: Gold Heart intent on both sides required for any transaction to proceed under NSPFRNP).',
   '',
   '**The seven qualities \u2014 canonical:**',
   '- **Genuine** \u2014 no performance, no mask; what you see is what is there',

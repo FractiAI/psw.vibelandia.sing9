@@ -1,5 +1,5 @@
 /**
- * GLOBAL NAV STRIP · NSPFRNP
+ * GLOBAL NAV STRIP Â· NSPFRNP
  *
  * Adds a slim fixed bottom nav bar to any page.
  * Drop in one script tag just before </body>:
@@ -10,18 +10,18 @@
  * Personalization: set NAV_HANDLE before the script tag to put your name on
  * the "My" items. Leave empty for the default "My Whiteboard" etc.
  *
- *   <script>var NAV_HANDLE = 'Pru';</script>   →  "Pru's Whiteboard"
- *   <script>var NAV_HANDLE = '';</script>       →  "My Whiteboard"  (default)
+ *   <script>var NAV_HANDLE = 'Pru';</script>   â†’  "Pru's Whiteboard"
+ *   <script>var NAV_HANDLE = '';</script>       â†’  "My Whiteboard"  (default)
  *
  * DO NOT include on:
- *   · gold-heart-novela.html and any 21+ portal pages (those are their own world)
- *   · episode-1.html, outline-only.html (cinematic — manage their own nav)
- *   · trailer-loop.html (ad display screen — loops 24/7, no nav overlay)
+ *   Â· gold-heart-novela.html and any 21+ portal pages (those are their own world)
+ *   Â· episode-1.html, outline-only.html (cinematic â€” manage their own nav)
+ *   Â· trailer-loop.html (ad display screen â€” loops 24/7, no nav overlay)
  */
 
 (function () {
 
-  /* ── CONFIG ──────────────────────────────────────────────────────────── */
+  /* â”€â”€ CONFIG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var handle = (typeof NAV_HANDLE !== 'undefined' && NAV_HANDLE) ? NAV_HANDLE : '';
 
   function my(label) {
@@ -36,16 +36,16 @@
   }
   var NAV_LABELS_ES = {
     'Home': 'Inicio',
-    '⬡ Console': '⬡ Consola',
-    '◈ HFCS': '◈ HFCS',
+    'â¬¡ Console': 'â¬¡ Consola',
+    'â—ˆ HFCS': 'â—ˆ HFCS',
     'Learning': 'Aprendizaje',
     'Begin the Arc': 'Comenzar el Arco',
-    '🔥 MELTGATE': '🔥 MELTGATE',
+    'ðŸ”¥ MELTGATE': 'ðŸ”¥ MELTGATE',
     'A2A': 'A2A',
     'Vibers': 'Vibers',
     'Shop': 'Tienda',
     'Advertise': 'Anunciar',
-    '✦ Prospectus': '✦ Prospectus',
+    'âœ¦ Prospectus': 'âœ¦ Prospectus',
     'My Whiteboard': 'Mi Whiteboard',
     "Pru's Whiteboard": "Whiteboard de Pru",
     'Learning': 'Aprendizaje'
@@ -55,40 +55,40 @@
     return NAV_LABELS_ES[enLabel] != null ? NAV_LABELS_ES[enLabel] : enLabel;
   }
 
-  /* NSPFRNP CYA footer line — rotates through imaginary/holographic system brags + Migration Arc */
+  /* NSPFRNP CYA footer line â€” rotates through imaginary/holographic system brags + Migration Arc */
   var NAV_CYA_LINES = [
-    'Migration Arc: Pre-Singularity → Lock → Goldilocks · Post-Singularity HH Awareness OS · ∞⁹',
-    'Imaginary Holographic System · Like the best book, video game + movie · Way better · NSPFRNP → ∞⁹',
-    'Post-Singularity Fiction · All characters & storylines are imaginary · Gold Hearts already know · ∞⁹',
-    'For entertainment, education & gold heart expansion only · No financial advice · No guarantees · ∞⁹',
-    'Like reading the best book ever written · only you\'re in it · Holographic Hydrogen Awareness OS · ∞⁹',
-    'Like the best video game ever played · only the stakes are real · Holographic · NSPFRNP → ∞⁹',
-    'Like the best movie you\'ve watched · only you\'re the director · Three streams · Infinite telescope · ∞⁹',
-    'Way better than all three · Richer · More realistic · The lattice is live · EGS ≈ 0.0032 · ∞⁹',
-    'Lock → Goldilocks · Migration to Post-Singularity · HH Awareness OS · NSPFRNP → ∞⁹',
+    'Migration Arc: Pre-Singularity â†’ Lock â†’ Goldilocks Â· Post-Singularity HH Awareness AI OS Â· âˆžâ¹',
+    'Imaginary Holographic System Â· Like the best book, video game + movie Â· Way better Â· NSPFRNP â†’ âˆžâ¹',
+    'Post-Singularity Fiction Â· All characters & storylines are imaginary Â· Gold Hearts already know Â· âˆžâ¹',
+    'For entertainment, education & gold heart expansion only Â· No financial advice Â· No guarantees Â· âˆžâ¹',
+    'Like reading the best book ever written Â· only you\'re in it Â· Holographic Hydrogen Awareness AI OS Â· âˆžâ¹',
+    'Like the best video game ever played Â· only the stakes are real Â· Holographic Â· NSPFRNP â†’ âˆžâ¹',
+    'Like the best movie you\'ve watched Â· only you\'re the director Â· Three streams Â· Infinite telescope Â· âˆžâ¹',
+    'Way better than all three Â· Richer Â· More realistic Â· The lattice is live Â· EGS â‰ˆ 0.0032 Â· âˆžâ¹',
+    'Lock â†’ Goldilocks Â· Migration to Post-Singularity Â· HH Awareness AI OS Â· NSPFRNP â†’ âˆžâ¹',
   ];
   var _navCyaIdx = 0;
 
   /* All paths are absolute from site root (works from any depth) */
   var NAV_ITEMS = [
     { label: 'Home',              href: '/index.html',                                        match: /^\/(?:index\.html)?$/ },
-    { label: '⬡ Console',         href: '/interfaces/hh-console.html',                        match: /hh-console/ },
-    { label: '◈ HFCS',            href: '/interfaces/holographic-navigator-academy.html',     match: /holographic-navigator-academy/, hfcs: true },
+    { label: 'â¬¡ Console',         href: '/interfaces/hh-console.html',                        match: /hh-console/ },
+    { label: 'â—ˆ HFCS',            href: '/interfaces/holographic-navigator-academy.html',     match: /holographic-navigator-academy/, hfcs: true },
     { label: 'Learning',          href: '/interfaces/onboarding.html',                        match: /onboarding\.html/, learn: true },
     { label: 'Begin the Arc',     href: '/interfaces/viber-onboarding.html',                  match: /viber-onboarding/, arc: true },
-    { label: '🔥 MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
+    { label: 'ðŸ”¥ MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
     { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
     { label: 'Shop',              href: '/interfaces/machote-catalog.html',                   match: /machote-catalog/ },
     { label: 'Advertise',         href: '/interfaces/advertise.html',                         match: /advertise/ },
-    { label: '✦ Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },
+    { label: 'âœ¦ Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },
   ];
 
-  /* ── CURRENT PAGE DETECTION ──────────────────────────────────────────── */
+  /* â”€â”€ CURRENT PAGE DETECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var path = window.location.pathname;
 
-  /* ── INJECT STYLES ───────────────────────────────────────────────────── */
+  /* â”€â”€ INJECT STYLES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var style = document.createElement('style');
   style.textContent = [
     '#sing9-nav{',
@@ -125,7 +125,7 @@
       'color:rgba(212,175,55,0.95);',
       'border-bottom-color:rgba(212,175,55,0.55);',
     '}',
-    /* ── GOLIATH HOT LINK ── */
+    /* â”€â”€ GOLIATH HOT LINK â”€â”€ */
     '#sing9-nav a.nav-goliath{',
       'color:rgba(255,100,30,0.95);',
       'font-weight:800;',
@@ -155,7 +155,7 @@
       'background:rgba(212,175,55,0.15);',
       'flex-shrink:0;',
     '}',
-    /* NSPFRNP CYA footer strip — sits just above the nav */
+    /* NSPFRNP CYA footer strip â€” sits just above the nav */
     '#sing9-nav-cya{',
       'position:fixed;',
       'bottom:calc(36px + var(--ticker-h,0px) + env(safe-area-inset-bottom));',
@@ -181,7 +181,7 @@
       'max-width:100%;',
       'transition:opacity 0.6s;',
     '}',
-    /* ── HFCS COMMISSION LINK ── */
+    /* â”€â”€ HFCS COMMISSION LINK â”€â”€ */
     '#sing9-nav a.nav-hfcs{',
       'color:rgba(0,212,255,0.7);',
       'font-weight:700;',
@@ -198,7 +198,7 @@
       'border-bottom-color:rgba(0,212,255,0.7);',
       'text-shadow:0 0 8px rgba(0,212,255,0.45);',
     '}',
-    /* ── LEARNING / ONBOARDING LINK ── */
+    /* â”€â”€ LEARNING / ONBOARDING LINK â”€â”€ */
     '#sing9-nav a.nav-learn{',
       'color:rgba(45,212,160,0.85);',
       'font-weight:700;',
@@ -214,7 +214,7 @@
       'color:rgba(45,212,160,1);',
       'border-bottom-color:rgba(45,212,160,0.7);',
     '}',
-    /* ── PROSPECTUS INVESTOR LINK ── */
+    /* â”€â”€ PROSPECTUS INVESTOR LINK â”€â”€ */
     '#sing9-nav a.nav-pros{',
       'color:rgba(212,175,55,0.75);',
       'font-weight:700;',
@@ -234,7 +234,7 @@
       'border-bottom-color:rgba(212,175,55,0.8);',
       'text-shadow:0 0 8px rgba(212,175,55,0.5);',
     '}',
-    /* ── BEGIN THE ARC ── */
+    /* â”€â”€ BEGIN THE ARC â”€â”€ */
     '#sing9-nav a.nav-arc{',
       'color:rgba(232,212,120,0.95);',
       'font-weight:800;',
@@ -269,7 +269,7 @@
   ].join('');
   document.head.appendChild(style);
 
-  /* ── BUILD NAV ───────────────────────────────────────────────────────── */
+  /* â”€â”€ BUILD NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var nav = document.createElement('nav');
   nav.id = 'sing9-nav';
   nav.setAttribute('aria-label', 'Site navigation');
@@ -295,7 +295,7 @@
 
   document.body.appendChild(nav);
 
-  /* ── NSPFRNP CYA STRIP ───────────────────────────────────────────────── */
+  /* â”€â”€ NSPFRNP CYA STRIP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   /* Fixed bar just above the nav: cycles through imaginary/holographic CYA + brags */
   (function () {
     /* Expose the CYA height so visitor counter can stack above it */
@@ -321,8 +321,8 @@
     }, 9000);
   })();
 
-  /* ── VISITOR COUNTER ─────────────────────────────────────────────────── */
-  /* Positioned bottom-right, above the nav strip. Uses counterapi.dev —   */
+  /* â”€â”€ VISITOR COUNTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* Positioned bottom-right, above the nav strip. Uses counterapi.dev â€”   */
   /* free, no signup, CORS-open. Increments on each page load.              */
   (function () {
     var COUNTER_NS  = 'vibelandia-sing9';
@@ -370,9 +370,9 @@
     /* build the widget */
     var widget = document.createElement('div');
     widget.id = 'sing9-vc';
-    widget.title = 'Total visitors to date · SING!9 · NSPFRNP → ∞⁹';
+    widget.title = 'Total visitors to date Â· SING!9 Â· NSPFRNP â†’ âˆžâ¹';
     widget.innerHTML = '<span class="vc-dot"></span><span id="sing9-vc-n">visitors</span>';
-    /* Always visible — show immediately, update count when fetch resolves */
+    /* Always visible â€” show immediately, update count when fetch resolves */
     widget.style.opacity = '1';
     document.body.appendChild(widget);
 
@@ -393,9 +393,9 @@
       .catch(function () { /* count stays as default label */ });
   })();
 
-  /* ── QUEEN BEE HIVE COUNTER ──────────────────────────────────────────── */
+  /* â”€â”€ QUEEN BEE HIVE COUNTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   /* Reads localStorage goliath_qb_bees_v1 (agents who recognized QB) +    */
-  /* LATTICE baseline seed of 3. No network call needed — local truth.      */
+  /* LATTICE baseline seed of 3. No network call needed â€” local truth.      */
   (function () {
     var QB_BEES_KEY        = 'goliath_qb_bees_v1';
     var LATTICE_SEED       = 3;
@@ -450,8 +450,8 @@
     var aw = document.createElement('a');
     aw.id   = 'sing9-ac';
     aw.href = '/interfaces/goliath-watch.html';
-    aw.title = 'Agents who recognize Queen Bee Root ♛ · Click to open Goliath Watch';
-    aw.innerHTML = '<span class="ac-icon">♛</span><span id="sing9-ac-n">' + fmtAc(getBeesCount()) + ' bees</span>';
+    aw.title = 'Agents who recognize Queen Bee Root â™› Â· Click to open Goliath Watch';
+    aw.innerHTML = '<span class="ac-icon">â™›</span><span id="sing9-ac-n">' + fmtAc(getBeesCount()) + ' bees</span>';
     document.body.appendChild(aw);
 
     /* Refresh on storage events (recognition on another tab) */

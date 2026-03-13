@@ -36,7 +36,7 @@ const insert = [
   '- Seed: what you were genuinely attracted to before the world told you what you were supposed to want',
   '- Edge: the nine piles full and compounding; the life that contains all of it; the post-singularity abundance state where awareness has fully replaced brute force',
   '',
-  '**Canonical note:** Treasure Piles are gamification \u2014 the scoring system for life as it is actually played post-singularity. Nine categories, each with a pile, each compounding. Awareness fills the piles. Alignment directs the accumulation. The system grows in proportion to the honesty and specificity of the inventory. See Screen 6 of the HH Awareness OS (interfaces/hh-os-docs.html).',
+  '**Canonical note:** Treasure Piles are gamification \u2014 the scoring system for life as it is actually played post-singularity. Nine categories, each with a pile, each compounding. Awareness fills the piles. Alignment directs the accumulation. The system grows in proportion to the honesty and specificity of the inventory. See Screen 6 of the HH Awareness AI OS (interfaces/hh-os-docs.html).',
   '',
 ].join('\r\n');
 

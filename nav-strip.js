@@ -36,16 +36,16 @@
   }
   var NAV_LABELS_ES = {
     'Home': 'Inicio',
-    'â¬¡ Console': 'â¬¡ Consola',
-    'â\u2014ˆ HFCS': 'â\u2014ˆ HFCS',
+    '\u2B21 Console': '\u2B21 Consola',
+    '\u25C8 HFCS': '\u25C8 HFCS',
     'Learning': 'Aprendizaje',
     'Begin the Arc': 'Comenzar el Arco',
-    'ðŸ”¥ MELTGATE': 'ðŸ”¥ MELTGATE',
+    '\uD83D\uDD25 MELTGATE': '\uD83D\uDD25 MELTGATE',
     'A2A': 'A2A',
     'Vibers': 'Vibers',
     'Shop': 'Tienda',
     'Advertise': 'Anunciar',
-    'âœ¦ Prospectus': 'âœ¦ Prospectus',
+    '\u2726 Prospectus': '\u2726 Prospectus',
     'My Whiteboard': 'Mi Whiteboard',
     "Pru's Whiteboard": "Whiteboard de Pru",
     'Learning': 'Aprendizaje'
@@ -72,17 +72,17 @@
   /* All paths are absolute from site root (works from any depth) */
   var NAV_ITEMS = [
     { label: 'Home',              href: '/index.html',                                        match: /^\/(?:index\.html)?$/ },
-    { label: 'â¬¡ Console',         href: '/interfaces/hh-console.html',                        match: /hh-console/ },
-    { label: 'â\u2014ˆ HFCS',            href: '/interfaces/holographic-navigator-academy.html',     match: /holographic-navigator-academy/, hfcs: true },
+    { label: '\u2B21 Console',         href: '/interfaces/hh-console.html',                        match: /hh-console/ },
+    { label: '\u25C8 HFCS',            href: '/interfaces/holographic-navigator-academy.html',     match: /holographic-navigator-academy/, hfcs: true },
     { label: 'Learning',          href: '/interfaces/onboarding.html',                        match: /onboarding\.html/, learn: true },
     { label: 'Begin the Arc',     href: '/interfaces/viber-onboarding.html',                  match: /viber-onboarding/, arc: true },
-    { label: 'ðŸ”¥ MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
+    { label: '\uD83D\uDD25 MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
     { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
     { label: 'Shop',              href: '/interfaces/machote-catalog.html',                   match: /machote-catalog/ },
     { label: 'Advertise',         href: '/interfaces/advertise.html',                         match: /advertise/ },
-    { label: 'âœ¦ Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },
+    { label: '\u2726 Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },
   ];
 
   /* â”€â”€ CURRENT PAGE DETECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */

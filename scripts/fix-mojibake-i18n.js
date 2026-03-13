@@ -46,13 +46,30 @@ const replacements = [
 for (const [re, replacement] of replacements) {
   s = s.replace(re, replacement);
 }
-// Emoji (surrogate pairs) - replace with escape
-s = s.replace(/\uD83D\uDD25/g, '\\uD83D\\uDD25'); // 🔥
-s = s.replace(/\uD83D\uDCD6/g, '\\uD83D\\uDCD6'); // 📖
-s = s.replace(/\uD83D\uDD2C/g, '\\uD83D\\uDD2C'); // 🔬
-s = s.replace(/\uD83C\uDF0F/g, '\\uD83C\\uDF0F'); // 🎓
-s = s.replace(/\uD83D\uDCB5/g, '\\uD83D\\uDCB5'); // 💵
-s = s.replace(/\uD83D\uDCB3/g, '\\uD83D\\uDCB3'); // 💳
+// Emoji: replace mojibake (UTF-8 bytes misread as Latin-1) with JS escapes so they render
+// Bytes F0 9F 94 A5 (🔥) -> ðŸ"¥ = \u00F0\u0178\u201C\u00A5 etc.
+const emojiMojibake = [
+  ['\u00F0\u0178\u201C\u00A5', '\\uD83D\\uDD25'],   // fire 🔥
+  ['\u00F0\u0178\u201C\u2013', '\\uD83D\\uDCD6'],   // book 📖 (– = en-dash U+2013)
+  ['\u00F0\u0178\u201C\u00AC', '\\uD83D\\uDD2C'],   // microscope 🔬
+  ['\u00F0\u0178\u017D\u201C', '\\uD83C\\uDF0F'],   // globe 🎓 (0x8E=Ž U+017D)
+  ['\u00F0\u0178\u2019\u00B5', '\\uD83D\\uDCB5'],   // cash 💵 (0x92=' 0xB5=µ)
+  ['\u00F0\u0178\u2019\u00B3', '\\uD83D\\uDCB3'],   // card 💳 (0xB3=³)
+];
+for (const [from, to] of emojiMojibake) {
+  s = s.split(from).join(to);
+}
+// Fire 🔥: try straight quote variant (") U+0022
+s = s.split('\u00F0\u0178\u0022\u00A5').join('\\uD83D\\uDD25');
+// intel_tracker / HFCS: â + — + ˆ → ◈
+s = s.split('\u00E2\u2014\u02C6').join('\\u25C8');
+// Also replace actual emoji if present (surrogate pairs)
+s = s.replace(/\uD83D\uDD25/g, '\\uD83D\\uDD25');
+s = s.replace(/\uD83D\uDCD6/g, '\\uD83D\\uDCD6');
+s = s.replace(/\uD83D\uDD2C/g, '\\uD83D\\uDD2C');
+s = s.replace(/\uD83C\uDF0F/g, '\\uD83C\\uDF0F');
+s = s.replace(/\uD83D\uDCB5/g, '\\uD83D\\uDCB5');
+s = s.replace(/\uD83D\uDCB3/g, '\\uD83D\\uDCB3');
 s = s.replace(/\u2726/g, '\\u2726'); // ✦ (star in nav)
 
 fs.writeFileSync(i18nPath, s, 'utf8');
@@ -61,6 +78,17 @@ console.log('i18n.js: ac_configure added, mojibake replaced with escapes');
 // Fix nav-strip.js the same way (no ac_configure)
 const navPath = path.join(__dirname, '..', 'nav-strip.js');
 let nav = fs.readFileSync(navPath, 'utf8');
+// Nav mojibake for symbols/emoji
+const navMojibake = [
+  ['\u00E2\u00AC\u00A1', '\\u2B21'],   // â¬¡ → ⬡ (Latin-1 bytes)
+  ['\u00E2\u2014\u02C6', '\\u25C8'],   // â—ˆ → ◈
+  ['\u00F0\u0178\u201C\u00A5', '\\uD83D\\uDD25'],  // fire
+  ['\u00F0\u0178\u0022\u00A5', '\\uD83D\\uDD25'],  // fire (straight quote)
+  ['\u00E2\u0153\u00A6', '\\u2726'],   // âœ¦ → ✦
+];
+for (const [from, to] of navMojibake) {
+  nav = nav.split(from).join(to);
+}
 for (const [re, replacement] of replacements) {
   nav = nav.replace(re, replacement);
 }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Golden Backdoor Studios · Music &amp; Prompts for Text-to-Music AI | SING 9</title>
-  <meta name="description" content="Hero Jo's Golden Backdoor Studios. All songs listed, clickable. Each track shows the prompt to feed into text-to-music AI. T3D ORIGIN soundtrack." />
+  <title>Hero Jo's Golden Backdoor Studios · Signed Artists &amp; SING0 Catalog | SING 9</title>
+  <meta name="description" content="Hero Jo's Golden Backdoor Hit Factory. Intro, signed artists with bios, full song catalog. Every track has a SING0 text prompt ready to paste into Suno or any text-to-music AI." />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -20,16 +20,37 @@
     .top-links a { color: #d4af37; text-decoration: none; margin-right: 0.75rem; }
     .top-links a:hover { text-decoration: underline; }
     h1 { font-size: 1.5rem; color: #d4af37; margin-bottom: 0.35rem; }
-    .sub { font-size: 0.9rem; color: #a3a3b8; margin-bottom: 1.5rem; line-height: 1.5; }
-    .studio-hero {
+    h2 { font-size: 1.15rem; color: #fef3c7; margin: 1.75rem 0 0.75rem; padding-bottom: 0.35rem; border-bottom: 1px solid rgba(212, 175, 55, 0.35); }
+    .sub { font-size: 0.9rem; color: #a3a3b8; margin-bottom: 1rem; line-height: 1.5; }
+    .narrative {
       background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(180, 83, 9, 0.08));
       border: 2px solid rgba(212, 175, 55, 0.45);
       border-radius: 12px;
       padding: 1.25rem 1.5rem;
       margin-bottom: 1.5rem;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      color: #cbd5e1;
     }
-    .studio-hero .name { font-size: 1.1rem; font-weight: 700; color: #fef3c7; margin-bottom: 0.25rem; }
-    .studio-hero .desc { font-size: 0.88rem; color: #cbd5e1; }
+    .narrative strong { color: #fef3c7; }
+    .studio-hero {
+      background: rgba(30, 30, 50, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .studio-hero .name { font-size: 1.05rem; font-weight: 700; color: #fef3c7; margin-bottom: 0.2rem; }
+    .studio-hero .desc { font-size: 0.85rem; color: #94a3b8; }
+    .artists-grid { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .artist-card {
+      background: rgba(30, 30, 50, 0.6);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+    .artist-card .artist-name { font-size: 1rem; font-weight: 700; color: #d4af37; margin-bottom: 0.35rem; }
+    .artist-card .artist-bio { font-size: 0.88rem; line-height: 1.5; color: #cbd5e1; }
     .track-card {
       background: rgba(30, 30, 50, 0.6);
       border: 1px solid rgba(212, 175, 55, 0.35);
@@ -50,7 +71,8 @@
     .track-head:hover { background: rgba(212, 175, 55, 0.08); }
     .track-head .act { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: #d4af37; margin-bottom: 0.2rem; }
     .track-head .title { font-size: 1rem; font-weight: 700; color: #fef3c7; }
-    .track-head .chevron { font-size: 0.9rem; color: #94a3b8; transition: transform 0.2s; }
+    .track-head .artist { font-size: 0.8rem; color: #94a3b8; margin-top: 0.2rem; }
+    .track-head .chevron { font-size: 0.9rem; color: #94a3b8; transition: transform 0.2s; flex-shrink: 0; }
     .track-card.expanded .track-head .chevron { transform: rotate(180deg); }
     .track-detail {
       display: none;
@@ -71,6 +93,7 @@
       word-break: break-word;
     }
     .track-detail .copy-hint { font-size: 0.78rem; color: #64748b; margin-top: 0.5rem; }
+    .sing0-badge { display: inline-block; font-size: 0.7rem; letter-spacing: 0.1em; color: #d4af37; background: rgba(212, 175, 55, 0.15); padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.5rem; }
     .foot { margin-top: 2rem; font-size: 0.8rem; color: #64748b; text-align: center; }
     .foot a { color: #d4af37; text-decoration: none; }
   </style>
@@ -83,19 +106,25 @@
       <a href="outline-only-catalog.html">T3D About</a>
     </div>
 
-    <h1>Golden Backdoor Studios</h1>
-    <p class="sub">Hero Jo's Golden Backdoor Studios · All songs listed. Click a track to see its full content — including the <strong>prompt for text-to-music AI</strong>. Copy the prompt and paste it into your music-generation tool. Waiting for music generation? Start here.</p>
+    <h1>Hero Jo's Golden Backdoor Studios</h1>
+    <p class="sub">Golden Backdoor Hit Factory · Vibelandia University School of Music. Signed artists, bios, and the full catalog — <strong>SING0 text-only</strong>, ready to paste into Suno or any text-to-music AI.</p>
 
-    <p style="margin-bottom:1rem;font-size:0.88rem;"><a href="https://github.com/FractiAI/psw.vibelandia.sing4" target="_blank" rel="noopener" style="color:#d4af37;">SING4 repo</a> has the full Hit Factory catalog, music molds, and track list. See <a href="../GOLDEN_BACKDOOR_SING4_REFERENCE.md" style="color:#d4af37;">GOLDEN_BACKDOOR_SING4_REFERENCE.md</a> for where to find studios, playlists, and prompts there.</p>
+    <div id="narrative" class="narrative"></div>
 
     <div class="studio-hero">
-      <p class="name">Hero Jo's Golden Backdoor Studios</p>
-      <p class="desc">T3D ORIGIN soundtrack. 15 tracks. 80/20 Spanglish vibe. Each track has a written-out prompt you can feed into a text-to-music AI. Content pulled from catalog; add or edit prompts in <code>data/golden-backdoor-studios.json</code>.</p>
+      <p class="name" id="studio-name">Hero Jo's Golden Backdoor Hit Factory</p>
+      <p class="desc" id="studio-desc">Music Studio · Dance trance boom boom boom · Hits generated like a factory. Content from SING4 + SING9.</p>
     </div>
 
+    <h2>Signed Artists</h2>
+    <p class="sub">Roster under Hero Jo's Golden Backdoor · Hit Factory. Numeric artists (000, 0001, 3 Pop, 123, 333, 369, 999, 5050), featured voices, and labels.</p>
+    <div id="artists-list" class="artists-grid"></div>
+
+    <h2>Song Catalog · SING0 text-ready for text-to-music AI</h2>
+    <p class="sub"><span class="sing0-badge">SING0</span> Each track has a prompt you can copy and paste into <strong>Suno</strong>, or any text-to-music AI. Click a track to reveal the prompt.</p>
     <div id="track-list"></div>
 
-    <p class="foot"><a href="soundtrack.html">Soundtrack</a> · <a href="outline-only-catalog.html">T3D About</a> · <a href="my-whiteboard.html">My Whiteboard</a> · NSPFRNP → ∞⁹</p>
+    <p class="foot"><a href="soundtrack.html">Soundtrack</a> · <a href="outline-only-catalog.html">T3D About</a> · <a href="my-whiteboard.html">My Whiteboard</a> · <a href="https://github.com/FractiAI/psw.vibelandia.sing4" target="_blank" rel="noopener">SING4 repo</a> · NSPFRNP → ∞⁹</p>
   </div>
   <script>
     (function() {
@@ -108,32 +137,66 @@
       function toggle(el) {
         var card = el.closest('.track-card');
         card.classList.toggle('expanded');
+        var head = card.querySelector('.track-head');
+        if (head) head.setAttribute('aria-expanded', card.classList.contains('expanded'));
+      }
+      function copyPrompt(text) {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          return;
+        }
+        navigator.clipboard.writeText(text);
       }
       fetch('../data/golden-backdoor-studios.json')
         .then(function(r) { return r.json(); })
         .then(function(data) {
+          var studioName = data.canonicalName || data.studio || 'Hero Jo\'s Golden Backdoor Studios';
+          var studioDesc = data.description || '';
+          document.getElementById('studio-name').textContent = studioName;
+          document.getElementById('studio-desc').textContent = studioDesc;
+          if (data.narrative) {
+            document.getElementById('narrative').innerHTML = '<strong>Intro.</strong> ' + escapeHtml(data.narrative);
+          }
+          var artistsContainer = document.getElementById('artists-list');
+          (data.artists || []).forEach(function(a) {
+            var card = document.createElement('div');
+            card.className = 'artist-card';
+            card.innerHTML = '<div class="artist-name">' + escapeHtml(a.name) + '</div><div class="artist-bio">' + escapeHtml(a.bio || '') + '</div>';
+            artistsContainer.appendChild(card);
+          });
           var container = document.getElementById('track-list');
           (data.tracks || []).forEach(function(t) {
             var card = document.createElement('div');
             card.className = 'track-card';
+            var artistLine = (t.artist) ? '<div class="artist">' + escapeHtml(t.artist) + '</div>' : '';
             card.innerHTML =
               '<div class="track-head" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-' + escapeHtml(t.id) + '" id="head-' + escapeHtml(t.id) + '">' +
-                '<div><div class="act">' + escapeHtml(t.act) + '</div><div class="title">' + escapeHtml(t.title) + '</div></div>' +
+                '<div><div class="act">' + escapeHtml(t.act) + '</div><div class="title">' + escapeHtml(t.title) + '</div>' + artistLine + '</div>' +
                 '<span class="chevron" aria-hidden="true">▾</span>' +
               '</div>' +
               '<div class="track-detail" id="detail-' + escapeHtml(t.id) + '" role="region" aria-labelledby="head-' + escapeHtml(t.id) + '">' +
-                '<div class="label">Prompt for text-to-music AI</div>' +
+                '<div class="label">SING0 prompt — copy and paste into Suno or text-to-music AI</div>' +
                 '<div class="prompt-box">' + escapeHtml(t.prompt || '') + '</div>' +
-                '<div class="copy-hint">Select the text above and copy (Ctrl+C / Cmd+C) to paste into your AI music generator.</div>' +
+                '<div class="copy-hint">Select the text above and copy (Ctrl+C / Cmd+C), or use your browser’s copy. Paste into Suno or your AI music generator.</div>' +
               '</div>';
             var head = card.querySelector('.track-head');
-            head.addEventListener('click', function() { toggle(head); head.setAttribute('aria-expanded', card.classList.contains('expanded')); });
+            head.addEventListener('click', function() { toggle(head); });
             head.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(head); } });
             container.appendChild(card);
           });
         })
         .catch(function() {
-          document.getElementById('track-list').innerHTML = '<p style="color:#94a3b8;">Load tracks from <code>data/golden-backdoor-studios.json</code>. If you pulled from SING4, place the JSON there.</p>';
+          document.getElementById('narrative').textContent = 'Hero Jo\'s Golden Backdoor Hit Factory. Dance trance boom boom boom. Content from data/golden-backdoor-studios.json.';
+          document.getElementById('artists-list').innerHTML = '<p style="color:#94a3b8;">Load artists from <code>data/golden-backdoor-studios.json</code>.</p>';
+          document.getElementById('track-list').innerHTML = '<p style="color:#94a3b8;">Load tracks from <code>data/golden-backdoor-studios.json</code>.</p>';
         });
     })();
   </script>

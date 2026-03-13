@@ -17,10 +17,10 @@ if (!s.includes("'landing.ac_configure'")) {
 const mojibakeStrings = [
   ['\u00C2\u00B7', '\\u00B7'],       // Â· → ·
   ['\u00E2\u20AC\u201C', '\\u2014'], // â€" → —
-  ['\u00E2\u20AC\u201C', '\\u2014'], // â€" (alternate) → —
-  ['\u00E2\u02C6\u017E\u00E2\u00B9', '\\u221E\\u2079'], // âˆžâ¹ → ∞⁹
-  ['\u00E2\u20AC\u201C', '\\u2014'], // â€" → —
   ['\u00E2\u20AC\u2013', '\\u2014'], // â€" (en-dash) → —
+  ['\u00E2\u02C6\u017E\u00E2\u00B9', '\\u221E\\u2079'], // âˆžâ¹ → ∞⁹
+  ['\u00E2\u02C6\u017E\u00E2\u2079', '\\u221E\\u2079'], // âˆžâ¹ (⁹) → ∞⁹
+  ['\u00E2\u2020\u2019', '\\u2192'], // â†' → →
 ];
 for (const [from, to] of mojibakeStrings) {
   s = s.split(from).join(to);
@@ -63,6 +63,10 @@ for (const [from, to] of emojiMojibake) {
 s = s.split('\u00F0\u0178\u0022\u00A5').join('\\uD83D\\uDD25');
 // intel_tracker / HFCS: â + — + ˆ → ◈
 s = s.split('\u00E2\u2014\u02C6').join('\\u25C8');
+// Other mojibake: âœ• (✕), âœŽ (✎), â†º (›)
+s = s.split('\u00E2\u0153\u2022').join('\\u2715');
+s = s.split('\u00E2\u0153\u017D').join('\\u270E');
+s = s.split('\u00E2\u2020\u00BA').join('\\u203A');
 // Also replace actual emoji if present (surrogate pairs)
 s = s.replace(/\uD83D\uDD25/g, '\\uD83D\\uDD25');
 s = s.replace(/\uD83D\uDCD6/g, '\\uD83D\\uDCD6');
@@ -78,9 +82,15 @@ console.log('i18n.js: ac_configure added, mojibake replaced with escapes');
 // Fix nav-strip.js the same way (no ac_configure)
 const navPath = path.join(__dirname, '..', 'nav-strip.js');
 let nav = fs.readFileSync(navPath, 'utf8');
-// Nav mojibake for symbols/emoji
+// Apply same punctuation mojibake to nav (CYA lines, comments)
+for (const [from, to] of mojibakeStrings) {
+  nav = nav.split(from).join(to);
+}
+// ∞⁹: match âˆžâ + any 2 chars (variant encodings for ¹/⁹)
+nav = nav.replace(/\u00E2\u02C6\u017E\u00E2../g, '\\u221E\\u2079');
+// Nav-specific mojibake for symbols/emoji
 const navMojibake = [
-  ['\u00E2\u00AC\u00A1', '\\u2B21'],   // â¬¡ → ⬡ (Latin-1 bytes)
+  ['\u00E2\u00AC\u00A1', '\\u2B21'],   // â¬¡ → ⬡
   ['\u00E2\u2014\u02C6', '\\u25C8'],   // â—ˆ → ◈
   ['\u00F0\u0178\u201C\u00A5', '\\uD83D\\uDD25'],  // fire
   ['\u00F0\u0178\u0022\u00A5', '\\uD83D\\uDD25'],  // fire (straight quote)
@@ -89,11 +99,14 @@ const navMojibake = [
 for (const [from, to] of navMojibake) {
   nav = nav.split(from).join(to);
 }
+// Nav: strip stray Â before \u00B7 (mojibake bullet)
+nav = nav.split('\u00C2\\u00B7').join('\\u00B7');
+nav = nav.split('\u00C2\u00B7').join('\\u00B7');
 for (const [re, replacement] of replacements) {
   nav = nav.replace(re, replacement);
 }
 nav = nav.replace(/\uD83D\uDD25/g, '\\uD83D\\uDD25');
 nav = nav.replace(/\u2726/g, '\\u2726');
-nav = nav.replace(/\u203A/g, '\\u203A'); // single angle quote ›
+nav = nav.replace(/\u203A/g, '\\u203A');
 fs.writeFileSync(navPath, nav, 'utf8');
 console.log('nav-strip.js: mojibake replaced with escapes');

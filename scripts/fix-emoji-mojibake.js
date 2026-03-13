@@ -33,3 +33,36 @@ nav = nav.replace(/'[^']*HFCS': '[^']*'/g, "'\\u25C8 HFCS': '\\u25C8 HFCS'");
 nav = nav.replace(/'[^']*MELTGATE': '[^']*'/g, "'\\uD83D\\uDD25 MELTGATE': '\\uD83D\\uDD25 MELTGATE'");
 fs.writeFileSync(navPath, nav);
 console.log('nav-strip emoji/mojibake fixed');
+
+// Fix HTML files: replace mojibake with actual Unicode characters (HTML shows them when file is UTF-8)
+const htmlMojibakeToChar = [
+  ['\u00E2\u20AC\u201C', '\u2014'],   // â€" → —
+  ['\u00E2\u20AC\u2013', '\u2014'],   // â€" (en-dash) → —
+  ['\u00E2\u2020\u2019', '\u2192'],   // â†' → →
+  ['\u00C2\u00B7', '\u00B7'],         // Â· → ·
+  ['\u00E2\u02C6\u017E\u00E2\u00B9', '\u221E\u2079'], // âˆžâ¹ → ∞⁹
+  ['\u00E2\u2014\u02C6', '\u25C8'],   // â—ˆ → ◈
+  ['\u00F0\u0178\u201C\u00A5', '\uD83D\uDD25'], // ðŸ"¥ → 🔥
+  ['\u00F0\u0178\u0022\u00A5', '\uD83D\uDD25'],
+  ['\u00F0\u0178\u201C\u2013', '\uD83D\uDCD6'], // ðŸ"– → 📖
+  ['\u00F0\u0178\u201C\u00AC', '\uD83D\uDD2C'], // ðŸ"¬ → 🔬
+  ['\u00E2\u00AC\u00A1', '\u2B21'],   // â¬¡ → ⬡
+  ['\u00E2\u0161\u00A1', '\u26A1'],   // âš¡ → ⚡
+  ['\u00F0\u0178\u017D\u201C', '\uD83C\uDF0F'],   // ðŸŽ" → 🎓 (globe)
+  ['\u00F0\u0178\u0022\u00AC', '\uD83D\uDD2C'],   // ðŸ"¬ (straight quote) → 🔬
+];
+const htmlFiles = [
+  path.join(__dirname, '..', 'interfaces', 'hh-os-docs.html'),
+];
+for (const htmlPath of htmlFiles) {
+  if (!fs.existsSync(htmlPath)) continue;
+  let html = fs.readFileSync(htmlPath, 'utf8');
+  for (const [from, to] of htmlMojibakeToChar) {
+    html = html.split(from).join(to);
+  }
+  // Section pills: replace any mojibake before " Technical Manual" / " Onboarding Program"
+  html = html.replace(/section-pill pill-tm">[^<]*Technical Manual<\/div>/, 'section-pill pill-tm">\uD83D\uDD2C Technical Manual</div>');
+  html = html.replace(/section-pill pill-ob">[^<]*Onboarding Program<\/div>/, 'section-pill pill-ob">\uD83C\uDF0F Onboarding Program</div>');
+  fs.writeFileSync(htmlPath, html);
+  console.log('hh-os-docs.html: mojibake replaced with Unicode chars');
+}

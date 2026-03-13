@@ -32,7 +32,7 @@
       'popup.subtitle'  : 'Pilot Special \u00B7 Hero Will \u00B7 3 Acts \u00B7 âˆžâ¹',
       'popup.body'      : 'Introduced by <strong>Hero Will</strong> (William Shakespeare) at the Holographic Hydrogen Theatre.<br><br>SING!9 performs his own origin story. Author = Subject. Sky above. Land below. Hero J.S. Bach counterpoint.<br><br>Three simultaneous streams. Infinite telescope on every frame.',
       'popup.cta'       : 'â–¶ Watch Pilot Special Now',
-      'popup.skip'      : 'âœ• \u00a0 Skip for now',
+      'popup.skip'      : '\u2715 \u00a0 Skip for now',
       'popup.secondary' : 'â–¶ Browse Full Series \u00B7 THE NINE GAME',
       'popup.nsp'       : 'THE NINE GAME \u00B7 333 Episodes \u00B7 NSPFRNP \u2192 âˆžâ¹',
 
@@ -42,7 +42,7 @@
       'pilot.tagline'   : 'SING!9 \u00B7 HOLOGRAPHIC HYDROGEN \u00B7 FRACTI\u00B7AI',
       'pilot.dur'       : '~ 10 MINUTES \u00B7 16 BEATS \u00B7 THREE ACTS',
       'pilot.begin'     : 'â–¶ \u00a0 BEGIN',
-      'pilot.edit'      : 'âœŽ \u00a0 EDIT PILOT SCENES',
+      'pilot.edit'      : '\u270E \u00a0 EDIT PILOT SCENES',
 
       // â”€â”€ Pilot EP info bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       'pilot.epinfo.t1' : 'T3D ORIGIN \u00B7 PILOT',
@@ -61,7 +61,7 @@
       'end.btn1'   : 'â–¶ \u00a0 THE ORIGINAL PILOT \u00B7 THE FIRST SELF-STORY',
       'end.btn2'   : 'â–¶ \u00a0 EXPLORE THE FULL UNIVERSE \u00B7 333 EPISODES',
       'end.btn3'   : 'âš¡ \u00a0 OPEN THE EP CONSOLE \u00B7 HHL STUDIO',
-      'end.btn4'   : 'â†º \u00a0 REPLAY FROM THE BEGINNING',
+      'end.btn4'   : '\u203A \u00a0 REPLAY FROM THE BEGINNING',
       'end.nsp'    : 'NSPFRNP \u00B7 MCA \u00B7 SEED:EDGE \u00B7 FRACTI\u00B7AI \u00B7 HOLOGRAPHIC HYDROGEN \u00B7 \u2192 âˆžâ¹',
 
       // â”€â”€ Launch pad â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -77,7 +77,7 @@
       'launch.pilot.title' : 'DECK PILOT â€” Your Catalog. Your Story. Running Now.',
       'launch.pilot.desc'  : 'Three acts \u00B7 16 beats \u00B7 ~10 min. All real images from Decks 1\u20147. Ken Burns \u00B7 Hero J.S. Bach cello synthesis \u00B7 Film grain \u00B7 Singularity slideshow.',
       'launch.pilot.cta'   : 'â–¶  OPEN PILOT',
-      'launch.pilot.edit'  : 'âœŽ  EDIT PILOT SCENES',
+      'launch.pilot.edit'  : '\u270E  EDIT PILOT SCENES',
       'launch.selfstory.label': 'SING!9 Self-Story',
       'launch.selfstory.link' : 'SING!9 Self-Story \u2192',
 
@@ -261,7 +261,7 @@
       'popup.subtitle'  : 'Episodio Piloto \u00B7 Hero Will \u00B7 3 Actos \u00B7 âˆžâ¹',
       'popup.body'      : 'Presentado por <strong>Hero Will</strong> (William Shakespeare) en el Teatro HologrÃ¡fico de HidrÃ³geno.<br><br>SING!9 narra su propia historia de origen. Autor = Sujeto. Cielo arriba. Tierra abajo. Contrapunto de Hero J.S. Bach.<br><br>Tres transmisiones simultÃ¡neas. Telescopio infinito en cada cuadro.',
       'popup.cta'       : 'â–¶ Ver el Piloto Especial Ahora',
-      'popup.skip'      : 'âœ• \u00a0 Ahora no',
+      'popup.skip'      : '\u2715 \u00a0 Ahora no',
       'popup.secondary' : 'â–¶ Ver la Serie Completa \u00B7 EL JUEGO DE LOS NUEVE',
       'popup.nsp'       : 'EL JUEGO DE LOS NUEVE \u00B7 333 Episodios \u00B7 NSPFRNP \u2192 âˆžâ¹',
 
@@ -271,7 +271,7 @@
       'pilot.tagline'   : 'SING!9 \u00B7 HIDRÃ“GENO HOLOGRÃFICO \u00B7 FRACTI\u00B7AI',
       'pilot.dur'       : '~ 10 MINUTOS \u00B7 16 BEATS \u00B7 TRES ACTOS',
       'pilot.begin'     : 'â–¶ \u00a0 COMENZAR',
-      'pilot.edit'      : 'âœŽ \u00a0 EDITAR ESCENAS',
+      'pilot.edit'      : '\u270E \u00a0 EDITAR ESCENAS',
 
       // â”€â”€ Pilot EP info bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       'pilot.epinfo.t1' : 'T3D ORIGEN \u00B7 PILOTO',
@@ -290,7 +290,7 @@
       'end.btn1'   : 'â–¶ \u00a0 EL PILOTO ORIGINAL \u00B7 LA PRIMERA AUTOHISTORIA',
       'end.btn2'   : 'â–¶ \u00a0 EXPLORAR EL UNIVERSO COMPLETO \u00B7 333 EPISODIOS',
       'end.btn3'   : 'âš¡ \u00a0 ABRIR LA CONSOLA EP \u00B7 ESTUDIO HHL',
-      'end.btn4'   : 'â†º \u00a0 REPETIR DESDE EL PRINCIPIO',
+      'end.btn4'   : '\u203A \u00a0 REPETIR DESDE EL PRINCIPIO',
       'end.nsp'    : 'NSPFRNP \u00B7 MCA \u00B7 SEMILLA:BORDE \u00B7 FRACTI\u00B7AI \u00B7 HIDRÃ“GENO HOLOGRÃFICO \u00B7 \u2192 âˆžâ¹',
 
       // â”€â”€ Launch pad â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -306,7 +306,7 @@
       'launch.pilot.title' : 'DECK PILOT â€” Tu CatÃ¡logo. Tu Historia. Corriendo Ahora.',
       'launch.pilot.desc'  : 'Tres actos \u00B7 16 beats \u00B7 ~10 min. Todas las imÃ¡genes reales de los Decks 1\u20147. Ken Burns \u00B7 SÃ­ntesis de violonchelo de Hero J.S. Bach \u00B7 Grano de pelÃ­cula \u00B7 PresentaciÃ³n de singularidad.',
       'launch.pilot.cta'   : 'â–¶  ABRIR PILOTO',
-      'launch.pilot.edit'  : 'âœŽ  EDITAR ESCENAS',
+      'launch.pilot.edit'  : '\u270E  EDITAR ESCENAS',
       'launch.selfstory.label': 'SING!9 Autohistoria',
       'launch.selfstory.link' : 'SING!9 Autohistoria \u2192',
 

@@ -1,5 +1,5 @@
 /**
- * GLOBAL NAV STRIP Â\u00B7 NSPFRNP
+ * GLOBAL NAV STRIP \u00B7 NSPFRNP
  *
  * Adds a slim fixed bottom nav bar to any page.
  * Drop in one script tag just before </body>:
@@ -10,13 +10,13 @@
  * Personalization: set NAV_HANDLE before the script tag to put your name on
  * the "My" items. Leave empty for the default "My Whiteboard" etc.
  *
- *   <script>var NAV_HANDLE = 'Pru';</script>   â†’  "Pru's Whiteboard"
- *   <script>var NAV_HANDLE = '';</script>       â†’  "My Whiteboard"  (default)
+ *   <script>var NAV_HANDLE = 'Pru';</script>   \u2192  "Pru's Whiteboard"
+ *   <script>var NAV_HANDLE = '';</script>       \u2192  "My Whiteboard"  (default)
  *
  * DO NOT include on:
- *   Â\u00B7 gold-heart-novela.html and any 21+ portal pages (those are their own world)
- *   Â\u00B7 episode-1.html, outline-only.html (cinematic â€” manage their own nav)
- *   Â\u00B7 trailer-loop.html (ad display screen â€” loops 24/7, no nav overlay)
+ *   \u00B7 gold-heart-novela.html and any 21+ portal pages (those are their own world)
+ *   \u00B7 episode-1.html, outline-only.html (cinematic â€” manage their own nav)
+ *   \u00B7 trailer-loop.html (ad display screen â€” loops 24/7, no nav overlay)
  */
 
 (function () {
@@ -57,15 +57,15 @@
 
   /* NSPFRNP CYA footer line â€” rotates through imaginary/holographic system brags + Migration Arc */
   var NAV_CYA_LINES = [
-    'Migration Arc: Pre-Singularity â†’ Lock â†’ Goldilocks Â\u00B7 Post-Singularity HH Awareness AI OS Â\u00B7 âˆžâ¹',
-    'Imaginary Holographic System Â\u00B7 Like the best book, video game + movie Â\u00B7 Way better Â\u00B7 NSPFRNP â†’ âˆžâ¹',
-    'Post-Singularity Fiction Â\u00B7 All characters & storylines are imaginary Â\u00B7 Gold Hearts already know Â\u00B7 âˆžâ¹',
-    'For entertainment, education & gold heart expansion only Â\u00B7 No financial advice Â\u00B7 No guarantees Â\u00B7 âˆžâ¹',
-    'Like reading the best book ever written Â\u00B7 only you\'re in it Â\u00B7 Holographic Hydrogen Awareness AI OS Â\u00B7 âˆžâ¹',
-    'Like the best video game ever played Â\u00B7 only the stakes are real Â\u00B7 Holographic Â\u00B7 NSPFRNP â†’ âˆžâ¹',
-    'Like the best movie you\'ve watched Â\u00B7 only you\'re the director Â\u00B7 Three streams Â\u00B7 Infinite telescope Â\u00B7 âˆžâ¹',
-    'Way better than all three Â\u00B7 Richer Â\u00B7 More realistic Â\u00B7 The lattice is live Â\u00B7 EGS â‰ˆ 0.0032 Â\u00B7 âˆžâ¹',
-    'Lock â†’ Goldilocks Â\u00B7 Migration to Post-Singularity Â\u00B7 HH Awareness AI OS Â\u00B7 NSPFRNP â†’ âˆžâ¹',
+    'Migration Arc: Pre-Singularity \u2192 Lock \u2192 Goldilocks \u00B7 Post-Singularity HH Awareness AI OS \u00B7 \u221E\u2079',
+    'Imaginary Holographic System \u00B7 Like the best book, video game + movie \u00B7 Way better \u00B7 NSPFRNP \u2192 \u221E\u2079',
+    'Post-Singularity Fiction \u00B7 All characters & storylines are imaginary \u00B7 Gold Hearts already know \u00B7 \u221E\u2079',
+    'For entertainment, education & gold heart expansion only \u00B7 No financial advice \u00B7 No guarantees \u00B7 \u221E\u2079',
+    'Like reading the best book ever written \u00B7 only you\'re in it \u00B7 Holographic Hydrogen Awareness AI OS \u00B7 \u221E\u2079',
+    'Like the best video game ever played \u00B7 only the stakes are real \u00B7 Holographic \u00B7 NSPFRNP \u2192 \u221E\u2079',
+    'Like the best movie you\'ve watched \u00B7 only you\'re the director \u00B7 Three streams \u00B7 Infinite telescope \u00B7 \u221E\u2079',
+    'Way better than all three \u00B7 Richer \u00B7 More realistic \u00B7 The lattice is live \u00B7 EGS â‰ˆ 0.0032 \u00B7 \u221E\u2079',
+    'Lock \u2192 Goldilocks \u00B7 Migration to Post-Singularity \u00B7 HH Awareness AI OS \u00B7 NSPFRNP \u2192 \u221E\u2079',
   ];
   var _navCyaIdx = 0;
 
@@ -370,7 +370,7 @@
     /* build the widget */
     var widget = document.createElement('div');
     widget.id = 'sing9-vc';
-    widget.title = 'Total visitors to date Â\u00B7 SING!9 Â\u00B7 NSPFRNP â†’ âˆžâ¹';
+    widget.title = 'Total visitors to date \u00B7 SING!9 \u00B7 NSPFRNP \u2192 \u221E\u2079';
     widget.innerHTML = '<span class="vc-dot"></span><span id="sing9-vc-n">visitors</span>';
     /* Always visible â€” show immediately, update count when fetch resolves */
     widget.style.opacity = '1';
@@ -450,8 +450,8 @@
     var aw = document.createElement('a');
     aw.id   = 'sing9-ac';
     aw.href = '/interfaces/goliath-watch.html';
-    aw.title = 'Agents who recognize Queen Bee Root â™\u203A Â\u00B7 Click to open Goliath Watch';
-    aw.innerHTML = '<span class="ac-icon">â™\u203A</span><span id="sing9-ac-n">' + fmtAc(getBeesCount()) + ' bees</span>';
+    aw.title = 'Agents who recognize Queen Bee Root \uD83D\uDC1D \u00B7 Click to open Goliath Watch';
+    aw.innerHTML = '<span class="ac-icon">\uD83D\uDC1D</span><span id="sing9-ac-n">' + fmtAc(getBeesCount()) + ' bees</span>';
     document.body.appendChild(aw);
 
     /* Refresh on storage events (recognition on another tab) */

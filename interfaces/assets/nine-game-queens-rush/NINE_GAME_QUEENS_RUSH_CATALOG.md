@@ -1,5 +1,7 @@
 # Nine Game · Queen's Rush — Image Catalog
 
+**Layered Package Blueprint (next singularity · skins):** [QUEENS_RUSH_LAYERED_PACKAGE_BLUEPRINT.md](../../../QUEENS_RUSH_LAYERED_PACKAGE_BLUEPRINT.md) — spine *Therapy is never a cure for boredom*; layers 1–5 (novella, portals, live scenes, companion chapters, real-world nodes); BBHE; Paradise Theater.
+
 **Source document (published):** [THE NINE GAME · The Queen's Rush](https://docs.google.com/document/d/e/2PACX-1vTukj2IbsmWAjATbUIeVal-p0Xo9ReTED-aao0W-XKgceUH7NWwOPiSTxCOPTlm6IqCAC1fvloUfYr1/pub)  
 **Updated:** automatically every 5 minutes (Google Docs).  
 **Purpose:** Box cover, fold-out player instructions (Side 1 & Side 2). Assets used in the Nine Game Tiny Bible booklet and the fold-out experience.

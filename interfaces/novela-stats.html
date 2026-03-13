@@ -46,7 +46,8 @@
       var PAGES = [
         { key: 'queensrush-landing', label: 'Landing (Queen\'s Rush)', url: 'gold-heart-novela.html' },
         { key: 'queensrush-ch1', label: 'Chapter 1: The Itch', url: 'novela-preview.html' },
-        { key: 'queensrush-ch2', label: 'Chapter 2: The Connect', url: 'novela-ch2.html' }
+        { key: 'queensrush-ch2', label: 'Chapter 2: The Connect', url: 'novela-ch2.html' },
+        { key: 'queensrush-ch3', label: 'Chapter 3: The Pattern', url: 'novela-ch3.html' }
       ];
       function getCount(key) {
         return fetch('https://api.countapi.xyz/get/' + NAMESPACE + '/' + key)
@@ -54,12 +55,13 @@
           .then(function(d) { return d.value != null ? d.value : 0; })
           .catch(function() { return null; });
       }
-      function render(landing, ch1, ch2) {
+      function render(landing, ch1, ch2, ch3) {
         var funnel = document.getElementById('funnel');
         var summary = document.getElementById('summary');
-        var max = Math.max(landing || 0, ch1 || 0, ch2 || 0, 1);
+        var vals = [landing, ch1, ch2, ch3];
+        var max = Math.max.apply(null, vals.concat([1]));
         funnel.innerHTML = PAGES.map(function(p, i) {
-          var v = [landing, ch1, ch2][i];
+          var v = vals[i];
           var pct = landing && v != null ? Math.round(100 * v / landing) + '%' : '—';
           var bar = landing && v != null ? Math.round(100 * v / landing) : 0;
           return '<div class="funnel-row">' +
@@ -69,18 +71,18 @@
             '</div>' +
             '<div class="funnel-bar-wrap"><div class="funnel-bar" style="width:' + (bar || 0) + '%"></div></div>';
         }).join('');
-        var reachedCh2 = ch2 != null ? ch2 : 0;
-        var reachedCh1 = ch1 != null ? ch1 : 0;
         summary.innerHTML = '<strong>Funnel:</strong> ' + (landing != null ? landing : '—') + ' visitors hit the landing. ' +
-          (ch1 != null ? reachedCh1 + ' reached Chapter 1' : '—') +
+          (ch1 != null ? ch1 + ' reached Chapter 1' : '—') +
           (landing && ch1 != null ? ' (' + Math.round(100 * ch1 / landing) + '% of landing)' : '') + '. ' +
-          (ch2 != null ? reachedCh2 + ' reached Chapter 2' : '—') +
-          (ch1 && ch2 != null ? ' (' + Math.round(100 * ch2 / ch1) + '% of Ch1)' : '') + '.';
+          (ch2 != null ? ch2 + ' reached Chapter 2' : '—') +
+          (ch1 && ch2 != null ? ' (' + Math.round(100 * ch2 / ch1) + '% of Ch1)' : '') + '. ' +
+          (ch3 != null ? ch3 + ' reached Chapter 3' : '—') +
+          (ch2 && ch3 != null ? ' (' + Math.round(100 * ch3 / ch2) + '% of Ch2)' : '') + '.';
       }
       function load() {
         Promise.all(PAGES.map(function(p) { return getCount(p.key); }))
           .then(function(vals) {
-            render(vals[0], vals[1], vals[2]);
+            render(vals[0], vals[1], vals[2], vals[3]);
           })
           .catch(function() {
             document.getElementById('funnel').innerHTML = '<p class="error">Could not load counts (CORS or network). Open from same origin or try a CORS proxy.</p>';

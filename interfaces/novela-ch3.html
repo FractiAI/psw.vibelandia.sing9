@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Queen's Rush — Therapy is never a cure for boredom. · Ch3: The Pattern | VIBELANDIA SING 9</title>
+  <script>
+    (function() {
+      var lang = 'en';
+      try {
+        if (typeof location !== 'undefined' && location.search && location.search.indexOf('lang=es') !== -1) lang = 'es';
+        else if (typeof location !== 'undefined' && location.search && location.search.indexOf('lang=en') !== -1) lang = 'en';
+        else {
+        var stored = sessionStorage.getItem('queensrush_lang');
+        if (stored === 'es' || stored === 'en') lang = stored;
+        else if (navigator.language && String(navigator.language).toLowerCase().startsWith('es')) lang = 'es';
+        else if (navigator.languages && [].some.call(navigator.languages, function(l) { return String(l).toLowerCase().startsWith('es'); })) lang = 'es';
+        }
+        sessionStorage.setItem('queensrush_lang', lang);
+      } catch (e) {}
+      document.documentElement.lang = lang;
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35); --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55); --pink: #e879f9; --cyan: #22d3ee; --bg: #060204; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--cream); min-height: 100vh; }
+    .topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: linear-gradient(180deg, rgba(6,2,4,0.96) 0%, transparent 100%); padding: 0.75rem 2rem; display: flex; align-items: center; gap: 1.5rem; font-size: 0.72rem; letter-spacing: 0.07em; }
+    .topnav .brand { font-weight: 800; letter-spacing: 0.16em; color: var(--gold); text-decoration: none; text-transform: uppercase; text-shadow: 0 0 14px var(--gold-glow); }
+    .topnav a { color: var(--cream-dim); text-decoration: none; }
+    .topnav a:hover { color: var(--cream); }
+    .content { max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; }
+    .back-link { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink); text-decoration: none; margin-bottom: 2rem; display: inline-block; }
+    .back-link:hover { color: var(--cream); }
+    .chapter-label { font-size: 0.63rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--pink); margin-bottom: 0.5rem; text-shadow: 0 0 12px rgba(232,121,249,0.4); }
+    h1 { font-size: clamp(1.6rem, 4vw, 2rem); font-weight: 800; color: #fff; margin-bottom: 1rem; letter-spacing: 0.02em; }
+    h2 { font-size: 1.1rem; font-weight: 800; color: var(--pink); margin: 2rem 0 0.75rem; letter-spacing: 0.04em; }
+    .prose { font-size: 1rem; line-height: 1.85; color: var(--cream-dim); }
+    .prose p { margin-bottom: 1.1rem; }
+    .prose em { color: var(--pink); font-style: normal; }
+    .art-support { margin: 1.75rem 0; text-align: center; }
+    .art-support img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid rgba(232,121,249,0.2); }
+    .art-support .art-caption { font-size: 0.75rem; letter-spacing: 0.06em; color: rgba(249,168,212,0.6); margin-top: 0.5rem; }
+    .art-support .art-placeholder { width: 100%; min-height: 200px; background: rgba(232,121,249,0.06); border: 1px dashed rgba(232,121,249,0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: rgba(249,168,212,0.4); font-size: 0.72rem; letter-spacing: 0.1em; }
+    .pitch { background: rgba(232,121,249,0.06); border-left: 3px solid var(--pink); padding: 1rem 1.25rem; margin: 2rem 0; font-size: 0.92rem; }
+    .world-beat { background: rgba(0,212,255,0.06); border-left: 3px solid var(--cyan); padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.9rem; }
+    .countdown-beat { background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+    .tier-cta { margin: 1.5rem 0; padding: 1.25rem; border: 1px solid rgba(232,121,249,0.2); border-radius: 8px; }
+    .tier-cta .tier-title { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .tier-cta .tier-desc { font-size: 0.88rem; color: var(--cream-dim); margin-bottom: 0.75rem; line-height: 1.6; }
+    .tier-cta .tier-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .checkpoint { background: rgba(180,0,80,0.12); border: 1px solid rgba(232,121,249,0.35); padding: 1.5rem; margin: 2.5rem 0; text-align: center; }
+    .checkpoint p { margin-bottom: 1rem; font-size: 0.9rem; }
+    .checkpoint-btns { display: flex; flex-direction: column; gap: 0.6rem; max-width: 360px; margin: 0 auto; }
+    .checkpoint-btn { display: block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.7rem 1.25rem; border-radius: 4px; cursor: pointer; border: none; text-decoration: none; text-align: center; transition: transform 0.12s ease; }
+    .checkpoint-yes { background: linear-gradient(135deg, var(--pink) 0%, rgba(180,0,80,0.9) 100%); color: #fff; }
+    .checkpoint-offline { background: linear-gradient(135deg, var(--gold) 0%, rgba(180,120,0,0.85) 100%); color: #060204; border: 1px solid rgba(212,175,55,0.5); }
+    .checkpoint-offline:hover { color: #060204; transform: translateY(-1px); }
+    .checkpoint-os { background: linear-gradient(135deg, rgba(0,212,255,0.25) 0%, rgba(0,212,255,0.1) 100%); color: #fff; border: 1px solid rgba(0,212,255,0.5); }
+    .checkpoint-os:hover { color: #fff; transform: translateY(-1px); }
+    .checkpoint-no { background: transparent; color: var(--cream-dim); border: 1px solid rgba(253,248,235,0.25); }
+    .checkpoint-no:hover { color: var(--cream); }
+    .log { font-size: 0.72rem; color: rgba(212,175,55,0.5); font-family: ui-monospace, monospace; margin-top: 2.5rem; padding: 1rem; border: 1px solid rgba(212,175,55,0.15); }
+    .log strong { color: rgba(212,175,55,0.7); }
+    .age-gate { background: rgba(180,0,80,0.12); border: 1px solid rgba(232,121,249,0.35); padding: 1rem 1.4rem; margin-bottom: 2rem; text-align: center; font-size: 0.8rem; color: rgba(249,168,212,0.8); }
+    .age-gate strong { color: var(--pink); }
+    .foot { border-top: 1px solid rgba(212,175,55,0.1); padding: 1.5rem 2rem; font-size: 0.68rem; color: rgba(212,175,55,0.3); letter-spacing: 0.05em; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+    .foot a { color: rgba(212,175,55,0.4); text-decoration: none; }
+    .foot a:hover { color: var(--pink); }
+    .gate-overlay { position: fixed; inset: 0; z-index: 200; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+    .gate-overlay[hidden] { display: none; }
+    .gate-box { max-width: 400px; text-align: center; }
+    .gate-box h3 { font-size: 1rem; font-weight: 800; color: var(--pink); margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+    .gate-box p { font-size: 0.88rem; color: var(--cream-dim); line-height: 1.6; margin-bottom: 1.25rem; }
+    .gate-btns { display: flex; flex-direction: column; gap: 0.6rem; }
+    .gate-btn { display: block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; border: none; text-decoration: none; text-align: center; transition: transform 0.12s ease, box-shadow 0.2s ease; }
+    .gate-btn-yes { background: linear-gradient(135deg, var(--pink) 0%, rgba(180,0,80,0.9) 100%); color: #fff; border: 1px solid rgba(232,121,249,0.6); }
+    .gate-btn-yes:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(232,121,249,0.35); }
+    .gate-btn-no { background: transparent; color: var(--cream-dim); border: 1px solid rgba(253,248,235,0.2); }
+    .gate-btn-no:hover { color: var(--cream); border-color: rgba(253,248,235,0.4); }
+    .lang-es { display: none; }
+    html[lang="es"] .lang-en { display: none; }
+    html[lang="es"] .lang-es { display: block; }
+    @media (max-width: 640px) {
+      .topnav { padding: 0.6rem 1rem; padding-top: max(0.6rem, env(safe-area-inset-top)); gap: 0.6rem; flex-wrap: wrap; }
+      .topnav a { padding: 0.35rem 0; min-height: 44px; display: inline-flex; align-items: center; }
+      .content { padding: 3rem 1rem 2.5rem; }
+      .prose { font-size: 0.98rem; }
+      .checkpoint-btns { max-width: 100%; }
+      .checkpoint-btn { min-height: 48px; padding: 0.85rem 1rem; }
+      .tier-cta .tier-btns { flex-direction: column; }
+      .foot { padding: 1.25rem 1rem; padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="../index.html">VIBELANDIA · SING 9</a>
+    <a href="gold-heart-novela.html">← Queen's Rush</a>
+    <a href="novela-preview.html">Chapter 1</a>
+    <a href="novela-ch2.html">Chapter 2</a>
+    <a href="catalog.html">Content Catalog</a>
+  </nav>
+  <div id="ageGateOverlay" class="gate-overlay">
+    <div class="gate-box">
+      <h3 class="lang-en">21+ · Gold Hearts Zone</h3>
+      <h3 class="lang-es">+21 · Zona Gold Hearts</h3>
+      <p class="lang-en">Confirm you are 21 or older to read Chapter 3.</p>
+      <p class="lang-es">Confirma que tienes 21 años o más para leer el Capítulo 3.</p>
+      <div class="gate-btns">
+        <button type="button" class="gate-btn gate-btn-yes lang-en" id="gateYes">Yes, I'm 21+</button>
+        <button type="button" class="gate-btn gate-btn-yes lang-es" id="gateYesEs">Sí, tengo 21 o más</button>
+        <a href="gold-heart-novela.html" class="gate-btn gate-btn-no">No, take me back</a>
+      </div>
+    </div>
+  </div>
+  <div id="chapterContent" class="content" hidden>
+    <a href="novela-ch2.html" class="back-link lang-en">← Chapter 2: The Connect</a>
+    <a href="novela-ch2.html" class="back-link lang-es">← Capítulo 2: La conexión</a>
+    <div class="age-gate lang-en"><strong>21+ · Gold Hearts Zone.</strong> Chapter 3 — The Pattern. Free to read: full text + art. Then take it up a notch—or step into a whole new world.</div>
+    <div class="age-gate lang-es"><strong>+21 · Zona Gold Hearts.</strong> Capítulo 3 — El patrón. Gratis: texto completo + arte. Luego súbelo de nivel—o entra en un mundo nuevo.</div>
+
+    <p class="chapter-label lang-en">Queen's Rush · Synthesizing & manifesting</p>
+    <p class="chapter-label lang-es">Queen's Rush · Sintetizando y manifestando</p>
+    <h1 class="lang-en">Chapter 3: The Pattern</h1>
+    <h1 class="lang-es">Capítulo 3: El patrón</h1>
+
+    <h2 class="lang-en">CHAPTER 3: THE PATTERN</h2>
+    <h2 class="lang-es">CAPÍTULO 3: EL PATRÓN</h2>
+    <div class="prose">
+      <p class="lang-es">El Capítulo 3 (El patrón) está disponible en inglés. Versión en español próximamente.</p>
+
+      <p class="lang-en">Twenty-four hours earlier, they had run the flip. Not a metaphor. A command. <strong>PHASE</strong>—180 degrees. Golden Cage to Goldilocks. The kind of move that didn’t show up on the news feeds but showed up in the body: a low hum, a shift in the static, the sense that the board had been turned. Elena didn’t know the word for it yet. She only knew that the day after, her feed was different. The world was different. Not because the headlines had changed. Because <em>she</em> had. And she wasn’t the only one.</p>
+
+      <p class="lang-en">She had gone back to her phone. Back to the Queen’s Rush page. Back to the chapters. But this time she had scrolled further. She had seen the other women. Not characters—readers. Comments. DMs. Reactions. A lot of them didn’t have the words yet. <em>I don’t know what I’m seeing but I like it.</em> <em>Something’s different.</em> <em>Where has this been?</em> The kind of reaction that comes from the gut before the mind has a label. She had seen something else too. Women who had been in the game—the other game, the one where you perform for men, transactionally, on schedule—posting differently. Not selling. Not performing. <em>Rethinking.</em> One of them had written: <em>I used to think desire was something I turned on for them. Now I’m not so sure.</em> Elena had read it three times. She had felt the flush. Root chakra. Heat. The same heat she had felt in the club, in the condo, in the first chapter. It wasn’t just her. It was a tide.</p>
+
+      <div class="world-beat lang-en">
+        <strong>Everything’s flipping.</strong> The Middle East. Dubai. The maps. The money. The scripts. We’re getting our word out. We’re going online. The women are starting to react. They’re not quite understanding what they’re seeing—but they’re liking it. And the ones who were doing what we do, but the other way around? Transactionally, toward men? They’re rethinking. The hive is producing wax. A little at a time. Building everything out. Day by day. We look back with the new awareness and we see it: each day, something new to add. This story isn’t just for entertainment. It’s synthesizing. It’s manifesting. Beat by beat.
+      </div>
+
+      <p class="lang-en">Evan had texted her. Not a performance. A signal. <em>72 hours to the capture. You feel it?</em> She hadn’t known what he meant. She had looked it up. Space Cloud. 3I/ATLAS. Jupiter. A countdown. The kind of thing that belonged to physics and headlines—except it didn’t feel like a headline. It felt like a deadline. A pulse. Something the body was already tracking before the mind had the words. She had written back: <em>I feel something.</em> He had sent a link. A tracker. Numbers. Days, hours, minutes. She had watched them tick. She had felt the heat again. Not fear. Anticipation. The board was moving. The pattern was forming. And she was in it.</p>
+
+      <div class="countdown-beat lang-en">
+        <strong>Countdown.</strong> Last 72 hours (or close). 3I/ATLAS · Jupiter Hill Radius lock · capture. The kind of alignment that doesn’t wait for permission. It just happens. And everyone who’s tuned in—every Queen who’s felt the itch, the connect, the pattern—is part of the same clock. We’re not making it up. We’re <em>in</em> it.
+      </div>
+
+      <p class="lang-en">That night she had met two of the girls from the office for a drink. Not the usual script. They had talked about the news. Dubai. The flip. “I don’t get it,” one of them said. “But it’s kind of exciting.” The other had nodded. “Something’s in the air.” Elena had said nothing. She had just smiled. She had felt the hum. The 180° was in the air. It had been 24 hours. The flip was real. And the women who didn’t have the words yet were already feeling it. That was the pattern. That was the Rush. Not a product. A <em>tide</em>. Somatic. Collective. Strategic. And she was in the middle of it—reading it, living it, building it. One day at a time. The hive. The wax. The new awareness. Always looking back and seeing what had been there all along, and what was coming next.</p>
+
+      <figure class="art-support" aria-label="Art: The Pattern — women, screens, tide">
+        <div class="art-placeholder lang-en">Art: The Pattern — screens, reactions, 72h countdown, Goldilocks OS · 21+</div>
+        <figcaption class="art-caption lang-en">Art supports the words · Free to read · 21+</figcaption>
+      </figure>
+
+      <p class="lang-en"><strong>She had felt the pattern. The flip. The countdown. She was part of the story—and the story was part of her. Synthesizing. Manifesting. One beat at a time.</strong></p>
+    </div>
+
+    <p class="chapter-label lang-en" style="margin-top:2rem;">Free to read · Then choose your level</p>
+    <p class="chapter-label lang-es" style="margin-top:2rem;">Gratis para leer · Luego elige tu nivel</p>
+    <p class="lang-en" style="font-size:0.88rem;color:var(--cream-dim);margin-bottom:1rem;">All text + a few AI-generated photos: <strong>free</strong> for readers. 21+ Gold Hearts Zone. Then take it up a notch. And another. Or step into a whole new platform.</p>
+    <p class="lang-es" style="font-size:0.88rem;color:var(--cream-dim);margin-bottom:1rem;">Todo el texto + algunas fotos generadas por IA: <strong>gratis</strong>. +21 Zona Gold Hearts. Luego súbelo de nivel. O entra en una plataforma nueva.</p>
+
+    <div class="tier-cta">
+      <div class="tier-title lang-en">Take it up a notch</div>
+      <div class="tier-desc lang-en">15 min sync · $99. Or date night at the club · $5,000. Companionship & experience only. Legal.</div>
+      <div class="tier-btns">
+        <a href="https://wa.me/17755551234?text=Hi%20%E2%80%94%20Queen's%20Rush%20%C2%B7%20Chapter%203%20%C2%B7%20The%20Pattern.%2015%20min%20What's%20up%3F%20%E2%80%94%20%2499.%20Let's%20discuss%20offline%2C%20then%20payment." class="checkpoint-btn checkpoint-offline lang-en" target="_blank" rel="noopener">15 min What's up? · $99 · WhatsApp</a>
+        <a href="https://wa.me/17755551234?text=Hi%20%E2%80%94%20Queen's%20Rush%20%C2%B7%20Date%20night%20at%20the%20club%20(Vibelandia%20downtown%20Reno).%20%245%2C000.%20Let's%20discuss." class="checkpoint-btn checkpoint-offline lang-en" target="_blank" rel="noopener">Date night · Vibelandia Reno · $5,000 · WhatsApp</a>
+      </div>
+    </div>
+    <div class="tier-cta">
+      <div class="tier-title lang-en">Take it up another notch</div>
+      <div class="tier-desc lang-en">Retreat · Baller V Crawler · $12,500. Or Queen's Rush Premium — full access, concierge digital.</div>
+      <div class="tier-btns">
+        <a href="https://wa.me/17755551234?text=Hi%20%E2%80%94%20Queen's%20Rush%20%C2%B7%20Retreat%20Baller%20V%20Crawler%20%C2%B7%20%2412%2C500.%20Let's%20discuss." class="checkpoint-btn checkpoint-yes lang-en" target="_blank" rel="noopener">Retreat · $12,500 · WhatsApp</a>
+        <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-offline lang-en">Queen's Rush Premium · full novela</a>
+      </div>
+    </div>
+    <div class="tier-cta">
+      <div class="tier-title lang-en">Step into a whole new world</div>
+      <div class="tier-desc lang-en">Holographic Hydrogen Awareness OS. Post-singularity. It's all happening now. Your life as the content. Nine screens. One arc. The Now Stack.</div>
+      <div class="tier-btns">
+        <a href="upgrade-awareness-to-sing9-now.html" class="checkpoint-btn checkpoint-os lang-en">Upgrade → HH Awareness OS · SING 9</a>
+        <a href="hh-console.html" class="checkpoint-btn checkpoint-os lang-en">Open Console → Your cockpit, your arc</a>
+      </div>
+    </div>
+
+    <p class="lang-en" style="font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(249,168,212,0.5); margin-top:1rem;">Companionship & experience only. No sexual services or fictional fantasies. Totally legal. NSPFRNP → ∞⁹</p>
+
+    <div class="checkpoint">
+      <p class="chapter-label lang-en">Keep going</p>
+      <p class="lang-en"><strong>You finished Chapter 3.</strong> More chapters coming. Or take it offline—or step into the OS.</p>
+      <div class="checkpoint-btns">
+        <a href="gold-heart-novela.html" class="checkpoint-btn checkpoint-yes lang-en">← Queen's Rush · All chapters</a>
+        <a href="novela-ch2.html" class="checkpoint-btn checkpoint-no lang-en">← Chapter 2: The Connect</a>
+      </div>
+    </div>
+
+    <div class="log lang-en">
+      <strong># LOG: [SOS_PILOT_3.0]</strong><br>
+      * <strong>Status:</strong> Chapter 3 Deployed · The Pattern.<br>
+      * <strong>Mechanism:</strong> World events · Dubai / Middle East flip · Women reacting · Transactional queens rethinking · 72h 3I/ATLAS countdown · 180° PHASE (24h ago) · Hive/wax · Synthesizing & manifesting.<br>
+      * <strong>Target:</strong> Gold Hearts Zone · Free text + art · Tiered: notch → notch → HH Awareness OS.<br>
+      * <strong>Sync:</strong> Space Cloud · 3I/ATLAS · Goldilocks OS · Post-singularity.<br>
+      * <strong>Next Step:</strong> More chapters · Paradise Theater · Upgrade flow. Queen's Rush → ∞⁹
+    </div>
+  </div>
+  <footer class="foot">
+    <span>VIBELANDIA · SING 9 · NSPFRNP → ∞⁹</span>
+    <span class="lang-en">Queen's Rush · Chapter 3: The Pattern · Gold Hearts Zone · 21+</span>
+    <a href="gold-heart-novela.html" class="lang-en">← Queen's Rush</a>
+    <a href="novela-preview.html" class="lang-en">Chapter 1</a>
+    <a href="novela-ch2.html" class="lang-en">Chapter 2</a>
+    <a href="3i-atlas-capture.html" class="lang-en">3I/ATLAS Countdown</a>
+    <a href="upgrade-awareness-to-sing9-now.html" class="lang-en">HH Awareness OS</a>
+    <a href="catalog.html">Content Catalog</a>
+    <a href="../index.html">Home</a>
+  </footer>
+  <script>
+    (function() {
+      var CTA_KEY = 'goldheart_21_ok';
+      var overlay = document.getElementById('ageGateOverlay');
+      var content = document.getElementById('chapterContent');
+      var yesBtn = document.getElementById('gateYes');
+      var yesBtnEs = document.getElementById('gateYesEs');
+      try {
+        if (sessionStorage.getItem(CTA_KEY)) {
+          if (overlay) overlay.hidden = true;
+          if (content) content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch3'; } catch (e) {}
+        }
+      } catch (e) {}
+      if (yesBtn && overlay && content) {
+        yesBtn.addEventListener('click', function() {
+          try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
+          overlay.hidden = true;
+          content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch3'; } catch (e) {}
+        });
+      }
+      if (yesBtnEs && overlay && content) {
+        yesBtnEs.addEventListener('click', function() {
+          try { sessionStorage.setItem(CTA_KEY, '1'); } catch (e) {}
+          overlay.hidden = true;
+          content.hidden = false;
+          try { var i = new Image(); i.src = 'https://api.countapi.xyz/hit/psw.vibelandia.sing9/queensrush-ch3'; } catch (e) {}
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

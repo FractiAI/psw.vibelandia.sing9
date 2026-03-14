@@ -93,6 +93,10 @@
       word-break: break-word;
     }
     .track-detail .copy-hint { font-size: 0.78rem; color: #64748b; margin-top: 0.5rem; }
+    .track-detail .listen-row { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(212, 175, 55, 0.2); }
+    .track-detail .listen-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #94a3b8; margin-bottom: 0.35rem; }
+    .track-detail .listen-audio { width: 100%; max-width: 320px; height: 36px; margin-bottom: 0.35rem; }
+    .track-detail .suno-credit { font-size: 0.78rem; color: #d4af37; }
     .sing0-badge { display: inline-block; font-size: 0.7rem; letter-spacing: 0.1em; color: #d4af37; background: rgba(212, 175, 55, 0.15); padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.5rem; }
     .foot { margin-top: 2rem; font-size: 0.8rem; color: #64748b; text-align: center; }
     .foot a { color: #d4af37; text-decoration: none; }
@@ -121,7 +125,7 @@
     <div id="artists-list" class="artists-grid"></div>
 
     <h2>Song Catalog · SING0 text-ready for text-to-music AI</h2>
-    <p class="sub"><span class="sing0-badge">SING0</span> Each track has a prompt you can copy and paste into <strong>Suno</strong>, or any text-to-music AI. Click a track to reveal the prompt.</p>
+    <p class="sub"><span class="sing0-badge">SING0</span> Each track has a prompt you can copy and paste into <strong>SUNO AI</strong> or any text-to-music AI. We used <strong>SUNO AI</strong> for these versions. Click a track to reveal the prompt and listen.</p>
     <div id="track-list"></div>
 
     <p class="foot"><a href="soundtrack.html">Soundtrack</a> · <a href="outline-only-catalog.html">T3D About</a> · <a href="my-whiteboard.html">My Whiteboard</a> · <a href="https://github.com/FractiAI/psw.vibelandia.sing4" target="_blank" rel="noopener">SING4 repo</a> · NSPFRNP → ∞⁹</p>
@@ -183,9 +187,10 @@
                 '<span class="chevron" aria-hidden="true">▾</span>' +
               '</div>' +
               '<div class="track-detail" id="detail-' + escapeHtml(t.id) + '" role="region" aria-labelledby="head-' + escapeHtml(t.id) + '">' +
-                '<div class="label">SING0 prompt — copy and paste into Suno or text-to-music AI</div>' +
+                (t.audio ? '<div class="listen-row"><div class="listen-label">Listen · SUNO AI</div><audio class="listen-audio" src="../assets/audio/' + escapeHtml(t.audio) + '" controls preload="metadata" title="' + escapeHtml(t.title) + '"></audio><p class="suno-credit">Generated with SUNO AI. Text-to-music AI.</p></div>' : '') +
+                '<div class="label">SING0 prompt — copy and paste into SUNO AI or text-to-music AI</div>' +
                 '<div class="prompt-box">' + escapeHtml(t.prompt || '') + '</div>' +
-                '<div class="copy-hint">Select the text above and copy (Ctrl+C / Cmd+C), or use your browser’s copy. Paste into Suno or your AI music generator.</div>' +
+                '<div class="copy-hint">Select the text above and copy (Ctrl+C / Cmd+C), or use your browser’s copy. Paste into SUNO AI or your AI music generator.</div>' +
               '</div>';
             var head = card.querySelector('.track-head');
             head.addEventListener('click', function() { toggle(head); });

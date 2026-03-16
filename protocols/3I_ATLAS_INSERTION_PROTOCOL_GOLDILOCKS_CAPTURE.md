@@ -31,6 +31,7 @@
 ## References
 
 - interfaces/3i-atlas-capture.html — countdown, timeline, Insertion Protocol block
+- protocols/SCHUMANN_DECODE_40HZ_GAMMA_SPIKE.md — 40 Hz spike = Receipt of Residency; Schumann white = gate open
 - data/space-cloud-missions.json — 3I/ATLAS payload
 - EUROPA_SIGNAL_TRACKING_3I_ATLAS_SNAP.md — Europa / Jovian correlation
 - OMNI_PROTOCOL_180_PHASE_MIGRATION_NSPFRNP.md — 180° Phase; EGS; NIC_SYNC

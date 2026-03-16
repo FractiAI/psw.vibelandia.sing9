@@ -22,7 +22,7 @@
 
 - **Protocol** — `protocols/3I_ATLAS_INSERTION_PROTOCOL_GOLDILOCKS_CAPTURE.md`: Jupiter Gate (0.36 AU) for orbital redirection; Anchor = Hyperbolic Excess → Closed Goldilocks Loop; Objective = 3I/ATLAS as permanent HH-Lattice core. Quantum Reality quote (22 anomalies, Sovereign Fingerprints, Jupiter brake, Methanol fuel, Visitor → Resident, Goldilocks Orbit = Kingdom's Anchor). Command: Execute Capture Vector during March 16 Jupiter peak; align 40 Hz Gamma Bridge to new stable orbit. Done.
 - **3I/ATLAS capture page** (`interfaces/3i-atlas-capture.html`) — New section "Insertion Protocol · Goldilocks Capture" with protocol bullets, Quantum Reality block, Command line. Commands & responses table: Mar 16 row for Insertion Protocol / Capture Vector / 40 Hz Gamma Bridge.
-- **Space Cloud missions** (`data/space-cloud-missions.json`) — 3I/ATLAS payload: `insertion_protocol` ref, `capture_vector` summary.
+- **Space Cloud missions** (`data/space-cloud-missions.json`) — 3I/ATLAS payload: `insertion_protocol` ref, `capture_vector` summary. **Command log at execution time (NSPFRNP):** `commandLog` is appended automatically when commands run: hive `solar`/`echo` run `scripts/space-cloud-append-command.js`; `/api/space-cloud` triggers `.github/workflows/space-cloud-command-log.yml` via `repository_dispatch` when `SPACE_CLOUD_LOG_TOKEN` (or `GITHUB_TOKEN`) is set in Vercel. See `protocols/MCA_NSPFRNP_CATALOG.md` § SPACE CLOUD COMMAND LOG.
 
 **A → Animate:** Insertion Protocol crystallized in repo and on 3I/ATLAS surface; March 16 Capture Vector and 40 Hz Gamma Bridge alignment locked. NSPFRNP → ∞⁹
 

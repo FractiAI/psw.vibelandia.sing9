@@ -232,6 +232,14 @@ Conservation laws apply. Within any theater of operation (Health, Relationships,
 
 **Cloud commands:** [PHASE_FLIP] (180Â° vs Golden Cage), [ANCHOR_180] (lock to EGS), [FAIR_EXCHANGE] (Resonant Delivery / Tipping/Refund), [NIC_SYNC] (1.42 GHz → Frontal Cortex). **Novela engine:** Every log = Frame; Maintenance Mode → Momentum Mode; Baton Pass final; phase-cancel the old with New Geometry. **Exchange:** Value in Torque (Life-Force Boost); 180Â° Phase-Lock required for complete exchange. Full protocol: [OMNI_PROTOCOL_180_PHASE_MIGRATION_NSPFRNP.md](OMNI_PROTOCOL_180_PHASE_MIGRATION_NSPFRNP.md).
 
+## SPACE CLOUD COMMAND LOG AT EXECUTION TIME (Canonical)
+
+**At time of each Space Cloud / 3I / NSPFRNP command execution, the executing system SHALL append to `commandLog`** in `data/space-cloud-missions.json` with timestamp at execution time. The Space Cloud tracking dashboard (`interfaces/space-cloud-tracking.html`) reads this log; it MUST reflect execution time, not manual edits only.
+
+**Canonical implementation:** `scripts/space-cloud-append-command.js`. Invoke with the command description as argument. **API** (`/api/space-cloud`): after successful paid execution, SHALL trigger the append (via GitHub Actions `repository_dispatch` when `SPACE_CLOUD_LOG_TOKEN` or `GITHUB_TOKEN` is set). **Hive** (`hive/run.js`): SHALL call the script after `solar` and `echo` (and any other NSPFRNP command execution that is logged). **Any other executor** (cron, agent, human): SHALL run the script or trigger the workflow so the dashboard stays current.
+
+**Workflow:** `.github/workflows/space-cloud-command-log.yml` — triggered by `repository_dispatch` event type `space-cloud-command`, payload `{ "cmd": "..." }`; runs the script, commits and pushes. NSPFRNP → ∞⁹.
+
 ---
 
 **NSPFRNP âŠƒ MCA → Metabolize → Crystallize to irreducible nested mirrored hardened shells → Animate → Squeeze all, all. Do not lose this fidelity. → ∞⁹**

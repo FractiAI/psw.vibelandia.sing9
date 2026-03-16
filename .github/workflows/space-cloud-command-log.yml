@@ -1,0 +1,43 @@
+# Append to Space Cloud commandLog at execution time (NSPFRNP).
+# Triggered by repository_dispatch so API/hive/cron can append without repo write access.
+# Payload: { "cmd": "Space Cloud API; SURGE" } (or any command description).
+# NSPFRNP → ∞⁹
+
+name: Space Cloud — Append command log
+
+on:
+  repository_dispatch:
+    types: [space-cloud-command]
+
+jobs:
+  append:
+    name: Append to commandLog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Append command
+        run: |
+          CMD="${{ github.event.client_payload.cmd || 'Command executed (NSPFRNP)' }}"
+          node scripts/space-cloud-append-command.js "$CMD"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/space-cloud-missions.json
+          if git diff --staged --quiet; then
+            echo "No change to commandLog."
+          else
+            git commit -m "Space Cloud: append command at execution time (NSPFRNP)"
+            git push origin main
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

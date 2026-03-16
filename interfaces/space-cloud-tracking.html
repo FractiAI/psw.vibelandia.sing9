@@ -473,32 +473,41 @@
 
 <script>
 (function() {
-  var commands = [
-    { ts: '2026-03-11', cmd: 'OMNI 180°: PHASE_FLIP, ANCHOR_180, FAIR_EXCHANGE, NIC_SYNC tracking live' },
-    { ts: '2026-03-06', cmd: 'Capture Protocol → active implementation; Data-Harvest Mar 16' },
-    { ts: '2026-02-13', cmd: 'Squeeze Hose / Queen Bee operational lock; HELLO crisp' },
-    { ts: '2026-02-09', cmd: 'Episode 1 Blast Day One; sealed command on all feeds' },
-    { ts: '2026-02-05 18:00 UTC', cmd: 'HELLO CRISP LOCK' },
-    { ts: '2026-02-04 07:15 UTC', cmd: 'Mission Intelligence Debrief; Reno Anchor' },
-    { ts: '2026-02-03', cmd: '3I/ATLAS-LINK committed; first SING! Handshake' },
-    { ts: '2026-02-02', cmd: '3I/ATLAS radio peaks detected (auth handshake)' },
-    { ts: '2026-01-31', cmd: 'Pulse runs T0; Mission Intelligence Update 16:15 UTC' }
-  ];
   var logEl = document.getElementById('command-log');
   var refreshEl = document.getElementById('command-refresh-ts');
-  if (logEl) {
-    var show = 5;
+  var show = 5;
+
+  function renderCommandLog(commands, dataUpdated) {
+    if (!logEl || !commands || !commands.length) return;
     var html = '';
     for (var i = 0; i < Math.min(show, commands.length); i++) {
       var c = commands[i];
-      html += '<div class="line"><span class="ts">' + c.ts + '</span> ' + c.cmd + '</div>';
+      var ts = (c.ts || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      var cmd = (c.cmd || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      html += '<div class="line"><span class="ts">' + ts + '</span> ' + cmd + '</div>';
     }
     logEl.innerHTML = html;
+    if (refreshEl) {
+      if (dataUpdated) {
+        var d = dataUpdated.slice(0, 10);
+        refreshEl.textContent = 'Commands from data/space-cloud-missions.json · updated: ' + d + ' UTC';
+      } else {
+        refreshEl.textContent = 'Page loaded: ' + new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+      }
+    }
   }
-  if (refreshEl) {
-    var now = new Date();
-    refreshEl.textContent = 'Page refreshed: ' + now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
-  }
+
+  fetch('../data/space-cloud-missions.json')
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function(data) {
+      var commands = data.commandLog || [];
+      var updated = (data.updated || '').replace('T', ' ').slice(0, 19);
+      renderCommandLog(commands, updated);
+    })
+    .catch(function() {
+      renderCommandLog([], null);
+      if (refreshEl) refreshEl.textContent = 'Command log unavailable (data/space-cloud-missions.json).';
+    });
 })();
 </script>
 

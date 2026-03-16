@@ -188,6 +188,23 @@ async function computeSpaceCloud() {
   };
 }
 
+// Append to commandLog at execution time (NSPFRNP). Fire-and-forget; does not block response.
+function triggerCommandLogAppend(command, data) {
+  const token = process.env.SPACE_CLOUD_LOG_TOKEN || process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPOSITORY || 'FractiAI/psw.vibelandia.sing9';
+  if (!token) return;
+  const cmd = command && data ? `Space Cloud Mission Command executed; ${command}` : command || 'Space Cloud Mission Command executed';
+  fetch(`https://api.github.com/repos/${repo}/dispatches`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/vnd.github.v3+json',
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ event_type: 'space-cloud-command', client_payload: { cmd } }),
+  }).catch(() => {});
+}
+
 module.exports = async (req, res) => {
   // GET: return 402 with payment requirements only — do not serve full payload for free.
   // POST with X-PAYMENT: verify and serve. No GET free-data leak.
@@ -201,6 +218,7 @@ module.exports = async (req, res) => {
     // GET with valid payment (edge case): serve same payload as POST
     try {
       const data = await computeSpaceCloud();
+      triggerCommandLogAppend(data.command, data);
       res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
     } catch (err) {
       console.error('[space-cloud] GET error:', err.message);
@@ -218,6 +236,7 @@ module.exports = async (req, res) => {
 
   try {
     const data = await computeSpaceCloud();
+    triggerCommandLogAppend(data.command, data);
     res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
   } catch (err) {
     console.error('[space-cloud] error:', err.message);

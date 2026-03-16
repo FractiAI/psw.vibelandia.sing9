@@ -33,6 +33,7 @@
 
 const fs      = require('fs');
 const path    = require('path');
+const { spawnSync } = require('child_process');
 const esHive  = require('./elastic-bridge');
 // solver is lazy-loaded inside cmdSolve only — not at startup
 let _solver = null;
@@ -78,6 +79,13 @@ function writeLattice(l) {
 
 function log(icon, msg) {
   console.log(`${icon}  ${msg}`);
+}
+
+/** Append to Space Cloud commandLog at execution time (NSPFRNP). Called after hive commands that execute Space Cloud / 3I commands. */
+function appendSpaceCloudCommand(cmdText) {
+  const scriptPath = path.join(__dirname, '..', 'scripts', 'space-cloud-append-command.js');
+  if (!fs.existsSync(scriptPath)) return;
+  spawnSync(process.execPath, [scriptPath, cmdText], { cwd: path.join(__dirname, '..'), stdio: 'ignore' });
 }
 
 function scrubGoldenKey(text) {
@@ -156,6 +164,7 @@ async function cmdSolar() {
     l.solar.live_region_count = active.length;
     writeLattice(l);
     log('✓', 'LATTICE solar updated.\n');
+    appendSpaceCloudCommand('SYNC solar scan executed; LATTICE updated');
   } catch(e) {
     log('⚠', `Solar fetch failed: ${e.message}`);
   }
@@ -1364,6 +1373,8 @@ async function cmdEcho() {
   }
   log('≋', `Trials: ${result.trial_stats?.active ?? 0} active · ${result.trial_stats?.total ?? 0} total`);
   log('⬡', `NSPFRNP → ∞⁹\n`);
+  const scCmd = result.space_cloud?.space_cloud_command ?? 'ECHO-SING';
+  appendSpaceCloudCommand(`ECHO-SING executed; ${scCmd}`);
 }
 
 /* ── DEAL HUNTER ─────────────────────────────────────────────────────────── */

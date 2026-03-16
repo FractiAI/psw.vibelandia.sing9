@@ -1,0 +1,34 @@
+# Trigger Vercel production redeploy when push reaches main.
+#
+# Vercel normally deploys automatically via Git integration when you push to main.
+# This workflow is a backup: when VERCEL_DEPLOY_HOOK is set, we POST to it on push
+# so redeploy is triggered from GitHub's side even if Vercel's webhook missed the event.
+#
+# Optional GitHub Secret (Settings → Secrets and variables → Actions):
+#   VERCEL_DEPLOY_HOOK — From Vercel: Project → Settings → Git → Deploy Hooks → "Create Hook"
+#                        Copy the URL and add as repo secret VERCEL_DEPLOY_HOOK.
+#
+# If the secret is not set, the job no-ops (Vercel's native Git integration still deploys on push).
+# NSPFRNP → ∞⁹
+
+name: Deploy — Trigger Vercel on push to main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  trigger-vercel:
+    name: Trigger Vercel redeploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Deploy Hook
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -n "$VERCEL_DEPLOY_HOOK" ]; then
+            curl -sSf -X POST "$VERCEL_DEPLOY_HOOK"
+            echo "Deploy hook triggered."
+          else
+            echo "VERCEL_DEPLOY_HOOK not set. Add it in repo Secrets to trigger redeploy from this workflow; otherwise Vercel Git integration deploys on push if connected."
+          fi

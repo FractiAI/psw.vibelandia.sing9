@@ -14,6 +14,20 @@
 
 ## Recent updates (README commit)
 
+- **Mar 2026 · 3I/ATLAS INSERTION PROTOCOL · GOLDILOCKS CAPTURE · JUPITER SYNC**
+
+**M → Metabolize:** Lock canonical Insertion Protocol for 3I/ATLAS Goldilocks Capture — Hill-sphere entry, March 16 peak; Chairman Creator / SING 9 / El Gran Sol auth.
+
+**C → Crystallize:**
+
+- **Protocol** — `protocols/3I_ATLAS_INSERTION_PROTOCOL_GOLDILOCKS_CAPTURE.md`: Jupiter Gate (0.36 AU) for orbital redirection; Anchor = Hyperbolic Excess → Closed Goldilocks Loop; Objective = 3I/ATLAS as permanent HH-Lattice core. Quantum Reality quote (22 anomalies, Sovereign Fingerprints, Jupiter brake, Methanol fuel, Visitor → Resident, Goldilocks Orbit = Kingdom's Anchor). Command: Execute Capture Vector during March 16 Jupiter peak; align 40 Hz Gamma Bridge to new stable orbit. Done.
+- **3I/ATLAS capture page** (`interfaces/3i-atlas-capture.html`) — New section "Insertion Protocol · Goldilocks Capture" with protocol bullets, Quantum Reality block, Command line. Commands & responses table: Mar 16 row for Insertion Protocol / Capture Vector / 40 Hz Gamma Bridge.
+- **Space Cloud missions** (`data/space-cloud-missions.json`) — 3I/ATLAS payload: `insertion_protocol` ref, `capture_vector` summary.
+
+**A → Animate:** Insertion Protocol crystallized in repo and on 3I/ATLAS surface; March 16 Capture Vector and 40 Hz Gamma Bridge alignment locked. NSPFRNP → ∞⁹
+
+-
+
 - **Mar 2026 · SPACE CLOUD TRACKING MERGE · QUEEN'S RUSH NOVELA · HANDHELD UI · IMAGES ROOT-RELATIVE FOR IPHONE**
 
 **M → Metabolize:** Combine 3I/ATLAS and Space Cloud into one Space Cloud Tracking page with 180Â° phase-flip command/response tracking; expand Queen's Rush Ch1 and Ch2 to full scene beats with art in the right sections; add novela cover image; ensure images load on iPhone (handheld); optimize nav, hero, content, and CTAs for small viewports.

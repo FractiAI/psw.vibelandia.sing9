@@ -1,5 +1,5 @@
 /**
- * POST /api/space-cloud — Space Cloud Mission Command · $5 USDC via x402
+ * POST /api/space-cloud — Space Cloud · Zero-Dish Hyperscale (enterprise only; no $5 offer)
  *
  * Returns: composite Space Cloud index (Solar × Goliath failure-mode thermal × HHL).
  * Command: SURGE / ELEVATED / NOMINAL / LOW + recommended action.
@@ -17,8 +17,7 @@
  */
 'use strict';
 
-const { require402 } = require('./_x402');
-const { runMaserHandshake } = require('../lib/maser-handshake');
+// Enterprise-only: no x402; maser handshake remains in cron/space-cloud invoke path
 
 // ── THERMAL PHYSICS MODEL (inline — mirrors hive/thermal-model.js) ────────────
 const NVL72_RACK_KW      = 120;
@@ -207,42 +206,33 @@ function triggerCommandLogAppend(command, data) {
 }
 
 module.exports = async (req, res) => {
-  // GET: return 402 with payment requirements only — do not serve full payload for free.
-  // POST with X-PAYMENT: verify and serve. No GET free-data leak.
+  // Space Cloud is enterprise-only (Zero-Dish Hyperscale). No $5 x402 offer.
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://psw-vibelandia-sing9.vercel.app');
+  const pivotLink = `${baseUrl}/interfaces/executive-cloud-pivot.html`;
+
   if (req.method === 'GET') {
-    const ok = await require402(req, res, {
-      priceUsd:    5,
-      route:       '/api/space-cloud',
-      description: 'Space Cloud Mission Command — Solar × 27 worldwide Blackwell failure-mode thermal pressure × HHL. Returns index + command + recommended action.',
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.status(200).json({
+      ok: false,
+      enterprise_only: true,
+      message: 'Space Cloud is offered as part of the Zero-Dish Hyperscale Package for AWS, Azure, GCP. Enterprise pricing: $250M calibration, $2.5M/region/month, 0.01% A2A Network Tax.',
+      link: pivotLink,
+      contact: 'info@fractiai.com',
     });
-    if (!ok) return;
-    // GET with valid payment (edge case): serve same payload as POST
-try {
-    const data = await computeSpaceCloud();
-    triggerCommandLogAppend(data.command, data);
-    res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
-    runMaserHandshake().catch(() => {}); // ionosphere/grid: maser when antenna connects
-  } catch (err) {
-    console.error('[space-cloud] GET error:', err.message);
-    res.status(500).json({ ok: false, error: 'Service computation failed' });
+    return;
   }
-  return;
-}
 
-  const ok = await require402(req, res, {
-    priceUsd:    5,
-    route:       '/api/space-cloud',
-    description: 'Space Cloud Mission Command — Solar × 27 worldwide Blackwell failure-mode thermal pressure × HHL. Returns index + command + recommended action.',
+  // POST: same — no paid consumer tier; direct to enterprise.
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.status(200).json({
+    ok: false,
+    enterprise_only: true,
+    message: 'Space Cloud is offered as part of the Zero-Dish Hyperscale Package for AWS, Azure, GCP. Enterprise pricing: $250M calibration, $2.5M/region/month, 0.01% A2A Network Tax.',
+    link: pivotLink,
+    contact: 'info@fractiai.com',
   });
-  if (!ok) return;
-
-  try {
-    const data = await computeSpaceCloud();
-    triggerCommandLogAppend(data.command, data);
-    res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
-    runMaserHandshake().catch(() => {}); // ionosphere/grid: maser when antenna connects
-  } catch (err) {
-    console.error('[space-cloud] error:', err.message);
-    res.status(500).json({ ok: false, error: 'Service computation failed' });
-  }
 };

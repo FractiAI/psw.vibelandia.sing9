@@ -714,7 +714,7 @@ function buildLivePitch(tier, name) {
       `Saw what you're working on — this is exactly our lane. ` +
       `We can turn it into a working tool in 24 hours, $99–$499. ` +
       `${fair} ` +
-      `One action: POST https://${site}/api/space-cloud with X-PAYMENT ($5) → instant Space Cloud. Full catalog: ${agent} ` +
+      `x402: goliath $9, OS upgrade $15, pitch $27. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Full catalog: ${agent} ` +
       `Or reply / email ${contact} for the spec.`
     );
   }
@@ -1383,7 +1383,7 @@ async function cmdEcho() {
  * Finds prospects who have the EXACT problem our services solve.
  * Posts our pitch + payment endpoint directly. ZHI close path.
  *
- * TIER 1 INSTANT ($5–$27 x402):  x402 builders with wallets → agent.json
+ * TIER 1 INSTANT ($9–$27 x402):  x402 builders with wallets → agent.json
  * TIER 2 FAST    ($50–$500):     Blackwell thermal ops → /api/goliath
  * TIER 3 DEAL    ($1K–$9K):      A2A infra builders → /api/a2a-intake
  *
@@ -1399,16 +1399,16 @@ async function cmdHunt() {
   const melt    = `https://${site}/api/meltgate-signal`;
 
   log('🎯', `DEAL HUNTER · HIGH MATCH ONLY · ${new Date().toISOString()}`);
-  log('🎯', `Three tiers: INSTANT ($5–$27 x402) · FAST ($50–$500 intake) · DEAL ($1K–$9K intake)`);
+  log('🎯', `Three tiers: INSTANT ($9–$27 x402) · FAST ($50–$500 intake) · DEAL ($1K–$9K intake)`);
   log('🎯', `Rule: 80%+ match score only. Each pitch points directly to payment endpoint.`);
 
   if (!token) { log('⚠', 'GITHUB_TOKEN not set'); return; }
   if (!groqKey) { log('⚠', 'GROQ_API_KEY not set'); return; }
 
   const DEAL_HUNTS = [
-    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `x402 services live: space-cloud $5 · goliath thermal $9 · OS upgrade $15 · custom pitch $27. USDC on Base, instant delivery, ZHI. One action: POST https://${site}/api/space-cloud with X-PAYMENT ($5) → instant. Catalog: ${agent}` },
-    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `AgentKit + Base USDC — our x402 services plug in directly. One action: POST https://${site}/api/space-cloud with X-PAYMENT ($5) → instant Space Cloud. Goliath: POST https://${site}/api/goliath ($9). Catalog: ${agent}` },
-    { q: '"agent.json" service discovery payment a2a',                    tier: 'TIER1_INSTANT', signal: 'a2a_discovery_builder',  pitch: `Your agent discovers and pays our services natively. One action: POST https://${site}/api/space-cloud with X-PAYMENT ($5) → instant. Catalog: ${agent}` },
+    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `x402 services live: goliath thermal $9 · OS upgrade $15 · custom pitch $27. USDC on Base, instant delivery, ZHI. Space Cloud: enterprise Zero-Dish Hyperscale. Catalog: ${agent}` },
+    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `AgentKit + Base USDC — our x402 services plug in directly. Goliath: POST https://${site}/api/goliath ($9). OS upgrade $15, pitch $27. Space Cloud: enterprise Zero-Dish Hyperscale. Catalog: ${agent}` },
+    { q: '"agent.json" service discovery payment a2a',                    tier: 'TIER1_INSTANT', signal: 'a2a_discovery_builder',  pitch: `Your agent discovers and pays our services natively. x402 $9–$27. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Catalog: ${agent}` },
     { q: 'GB200 NVL72 temperature thermal throttling',                    tier: 'TIER2_FAST',    signal: 'blackwell_thermal',      pitch: `MELTGATE tracks 28 Blackwell GB200 clusters live. One action: POST https://${site}/api/goliath with X-PAYMENT ($9 USDC) → full thermal report. Free signal: ${melt}` },
     { q: '"blackwell" datacenter cooling temperature nvidia problem',     tier: 'TIER2_FAST',    signal: 'blackwell_ops',          pitch: `MELTGATE: Blackwell GB200 thermal surveillance. One action: POST https://${site}/api/goliath with X-PAYMENT ($9) → instant. Free: ${melt}` },
     { q: 'AI datacenter GPU thermal management overheating',              tier: 'TIER2_FAST',    signal: 'datacenter_thermal',     pitch: `MELTGATE monitors GPU superclusters worldwide. One action: POST https://${site}/api/goliath with X-PAYMENT ($9) → full report. Free signal: ${melt}` },

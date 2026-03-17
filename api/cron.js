@@ -9,7 +9,7 @@
  *
  * THREE DEAL TIERS — by speed of close:
  *
- *   TIER 1 · INSTANT ($5–$27 x402)
+ *   TIER 1 · INSTANT ($9–$27 x402)
  *     Target: developers already using x402 / Coinbase AgentKit / Base USDC
  *     They already have wallets. They already know how to pay x402.
  *     Match signal: repos/issues about x402, coinbase agentkit, base micropayment
@@ -45,13 +45,13 @@ const MELT   = `${BASE}/api/meltgate-signal`;
 // Relevance score: HIGH = they can pay USDC today + we deliver ZHI in seconds.
 
 const DEAL_HUNTS = [
-  // ── TIER 1: x402 INSTANT ($5–$27) ─────────────────────────────────────────
+  // ── TIER 1: x402 INSTANT ($9–$27) ─────────────────────────────────────────
   // People already building with x402 / Coinbase AgentKit — they can pay in seconds
   {
     q:      'x402 micropayment coinbase base',
     tier:   'TIER1_INSTANT',
     signal: 'x402_builder',
-    pitch:  `x402 services live: space-cloud $5 · goliath thermal $9 · OS upgrade $15 · custom pitch $27. USDC on Base, instant delivery, ZHI. Catalog: ${AGENT}`,
+    pitch:  `x402 services live: goliath thermal $9 · OS upgrade $15 · custom pitch $27. USDC on Base, instant delivery, ZHI. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Catalog: ${AGENT}`,
   },
   {
     q:      '"agentkit" payment "base" usdc agent',
@@ -228,7 +228,7 @@ module.exports = async (req, res) => {
     phase:     'HUNT',
     deal_hunt: deals,
     pipes: {
-      tier1_instant: `x402 $5–$27 · ${AGENT}`,
+      tier1_instant: `x402 $9–$27 · ${AGENT}`,
       tier2_fast:    `intake $50–$500 · ${INTAKE}`,
       tier3_deal:    `intake $1K–$9K · ${INTAKE}`,
     },

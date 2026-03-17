@@ -45,6 +45,15 @@ if (fs.existsSync(indexHtml)) copyFile(indexHtml, path.join(distDir, 'index.html
 // interfaces/
 copyDir(path.join(root, 'interfaces'), path.join(distDir, 'interfaces'));
 
+// Inject optional form endpoint into talk-first (no serverless — Formspree/etc.)
+const talkFirstPath = path.join(distDir, 'interfaces', 'talk-first.html');
+if (fs.existsSync(talkFirstPath)) {
+  const formEndpoint = process.env.FORMSPREE_ENDPOINT || process.env.TALK_FIRST_FORM_ENDPOINT || '';
+  let html = fs.readFileSync(talkFirstPath, 'utf8');
+  html = html.replace('__TALK_FIRST_FORM_ENDPOINT__', formEndpoint.replace(/'/g, "\\'"));
+  fs.writeFileSync(talkFirstPath, html, 'utf8');
+}
+
 // Inject PayPal client ID into api-config.js if present
 const apiConfigPath = path.join(distDir, 'interfaces', 'api-config.js');
 if (fs.existsSync(apiConfigPath)) {
@@ -84,5 +93,4 @@ copyDir(path.join(root, '.well-known'), path.join(distDir, '.well-known'));
 // public/ (services.json, sol-v-skill.md, agent.json, etc.)
 copyDir(path.join(root, 'public'), distDir);
 
-console.log('Vercel static output → dist/ (SING 9, no Supabase)');
-console.log('API functions in api/*.js handled natively by Vercel (no manual bundling).');
+console.log('Vercel static output → dist/ (SING 9, no Supabase, no serverless API).');

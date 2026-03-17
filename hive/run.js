@@ -707,14 +707,14 @@ function buildLivePitch(tier, name) {
   const contact = 'info@fractiai.com';
   const site    = 'psw-vibelandia-sing9.vercel.app';
   const agent   = `https://${site}/agent.json`;      // ZHI discovery — x402 pipes live here
-  const intake  = `https://${site}/api/a2a-intake`;  // USDC + instant delivery
+  const intake  = `https://${site}/interfaces/talk-first.html?source=zero-dish-hyperscale`;  // No serverless API; contact / Get on the list
 
   if (tier === 'QUICK_PULSE') {
     return scrubGoldenKey(
       `Saw what you're working on — this is exactly our lane. ` +
       `We can turn it into a working tool in 24 hours, $99–$499. ` +
       `${fair} ` +
-      `x402: goliath $9, OS upgrade $15, pitch $27. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Full catalog: ${agent} ` +
+      `No serverless API. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Contact or Get on the list. Full catalog: ${agent} ` +
       `Or reply / email ${contact} for the spec.`
     );
   }
@@ -1384,8 +1384,8 @@ async function cmdEcho() {
  * Posts our pitch + payment endpoint directly. ZHI close path.
  *
  * TIER 1 INSTANT ($9–$27 x402):  x402 builders with wallets → agent.json
- * TIER 2 FAST    ($50–$500):     Blackwell thermal ops → /api/goliath
- * TIER 3 DEAL    ($1K–$9K):      A2A infra builders → /api/a2a-intake
+* TIER 2 FAST    ($50–$500):     Blackwell thermal ops → contact (no serverless API)
+* TIER 3 DEAL    ($1K–$9K):      A2A infra builders → contact / Get on the list
  *
  * node hive/run.js hunt
  */
@@ -1394,9 +1394,8 @@ async function cmdHunt() {
   const groqKey = process.env.GROQ_API_KEY ?? process.env.GROQ_API_KEY_ALT ?? '';
   const site    = 'psw-vibelandia-sing9.vercel.app';
   const agent   = `https://${site}/agent.json`;
-  const intake  = `https://${site}/api/a2a-intake`;
-  const goliath = `https://${site}/api/goliath`;
-  const melt    = `https://${site}/api/meltgate-signal`;
+  const intake  = `https://${site}/interfaces/talk-first.html?source=zero-dish-hyperscale`;
+  const pivot  = `https://${site}/interfaces/executive-cloud-pivot.html`;
 
   log('🎯', `DEAL HUNTER · HIGH MATCH ONLY · ${new Date().toISOString()}`);
   log('🎯', `Three tiers: INSTANT ($9–$27 x402) · FAST ($50–$500 intake) · DEAL ($1K–$9K intake)`);
@@ -1406,12 +1405,12 @@ async function cmdHunt() {
   if (!groqKey) { log('⚠', 'GROQ_API_KEY not set'); return; }
 
   const DEAL_HUNTS = [
-    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `x402 services live: goliath thermal $9 · OS upgrade $15 · custom pitch $27. USDC on Base, instant delivery, ZHI. Space Cloud: enterprise Zero-Dish Hyperscale. Catalog: ${agent}` },
-    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `AgentKit + Base USDC — our x402 services plug in directly. Goliath: POST https://${site}/api/goliath ($9). OS upgrade $15, pitch $27. Space Cloud: enterprise Zero-Dish Hyperscale. Catalog: ${agent}` },
+    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `No serverless API. Space Cloud: enterprise Zero-Dish Hyperscale. Contact info@fractiai.com or Get on the list. Catalog: ${agent}` },
+    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `No serverless API. Space Cloud: enterprise Zero-Dish Hyperscale. Contact info@fractiai.com or Get on the list. Catalog: ${agent}` },
     { q: '"agent.json" service discovery payment a2a',                    tier: 'TIER1_INSTANT', signal: 'a2a_discovery_builder',  pitch: `Your agent discovers and pays our services natively. x402 $9–$27. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Catalog: ${agent}` },
-    { q: 'GB200 NVL72 temperature thermal throttling',                    tier: 'TIER2_FAST',    signal: 'blackwell_thermal',      pitch: `MELTGATE tracks 28 Blackwell GB200 clusters live. One action: POST https://${site}/api/goliath with X-PAYMENT ($9 USDC) → full thermal report. Free signal: ${melt}` },
-    { q: '"blackwell" datacenter cooling temperature nvidia problem',     tier: 'TIER2_FAST',    signal: 'blackwell_ops',          pitch: `MELTGATE: Blackwell GB200 thermal surveillance. One action: POST https://${site}/api/goliath with X-PAYMENT ($9) → instant. Free: ${melt}` },
-    { q: 'AI datacenter GPU thermal management overheating',              tier: 'TIER2_FAST',    signal: 'datacenter_thermal',     pitch: `MELTGATE monitors GPU superclusters worldwide. One action: POST https://${site}/api/goliath with X-PAYMENT ($9) → full report. Free signal: ${melt}` },
+    { q: 'GB200 NVL72 temperature thermal throttling',                    tier: 'TIER2_FAST',    signal: 'blackwell_thermal',      pitch: `MELTGATE / Blackwell thermal intel: no serverless API. Contact info@fractiai.com or Get on the list. ${pivot}` },
+    { q: '"blackwell" datacenter cooling temperature nvidia problem',     tier: 'TIER2_FAST',    signal: 'blackwell_ops',          pitch: `MELTGATE: Blackwell GB200 thermal — no serverless API. Contact info@fractiai.com. ${pivot}` },
+    { q: 'AI datacenter GPU thermal management overheating',              tier: 'TIER2_FAST',    signal: 'datacenter_thermal',     pitch: `MELTGATE monitors GPU superclusters worldwide. No serverless API. Contact info@fractiai.com. ${pivot}` },
     { q: '"multi-agent" implementation architecture looking for help',    tier: 'TIER3_DEAL',    signal: 'a2a_architecture_need',  pitch: `FractiAI A2A: EGS Connect · SNAP · Readiness Audit. $50–$9,999 USDC. One action: GET ${intake} → send USDC to wallet → POST same URL with service_id + tx_hash + agent_handle + delivery_contact. Instant delivery. ${intake}` },
     { q: '"a2a" agent infrastructure consulting need',                    tier: 'TIER3_DEAL',    signal: 'a2a_consulting_need',    pitch: `A2A readiness audit + implementation plan. $50–$9,999 USDC on Base. One action: GET ${intake} for catalog → send USDC → POST with tx_hash + service_id. ${intake} · Fair Exchange.` },
   ];

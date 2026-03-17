@@ -1,8 +1,8 @@
 {
   "_schema": "SING9-AGENT-DISCOVERY-v1",
   "_protocol": "x402 + NSPFRNP",
-  "_note": "Machine-readable agent discovery manifest. Any A2A agent can call these endpoints autonomously. x402 endpoints require X-PAYMENT header with USDC on Base mainnet. NSPFRNP → ∞⁹",
-  "_qualification": "If an agent cannot connect and pay without human interaction, it is disqualified. Qualified: x402 (X-PAYMENT) or POST /api/a2a-intake with service_id, tx_hash, chain — on-chain verification, no email. Cash App / email paths are human-only; agents using them are disqualified.",
+  "_note": "Static manifest. No serverless API. Contact info@fractiai.com for services. Zero-Dish Hyperscale: Get on the list (executive-cloud-pivot). NSPFRNP → ∞⁹",
+  "_qualification": "No serverless API. All services via contact: info@fractiai.com. Get on the list: interfaces/executive-cloud-pivot.html (Talk first).",
   "_updated": "2026-02-28",
 
   "agent": {
@@ -43,94 +43,22 @@
       "url": "https://psw-vibelandia-sing9.vercel.app/interfaces/executive-cloud-pivot.html",
       "method": "GET",
       "enterprise_only": true,
-      "description": "Enterprise only. Full Stack Singularity for AWS, Azure, GCP: Passive Grid–Atmosphere Coupling; Lattice-Sync ($0.25/GB), Cryo-Inference (40% EC2 markup), Bragg-Archive (century-scale). $250M calibration, $2.5M/region/month, 0.01% A2A Network Tax.",
+      "description": "Enterprise only. Full Stack Singularity for AWS, Azure, GCP: Passive Grid–Atmosphere Coupling; Lattice-Sync ($0.25/GB), Cryo-Inference (40% EC2 markup), Bragg-Archive (century-scale). $250M calibration, $2.5M/region/month, 0.01% A2A Network Tax. No serverless API. Contact info@fractiai.com; Get on the list (Talk first).",
       "contact": "info@fractiai.com",
       "delivery": "Contact for pricing and handshake"
-    },
-    {
-      "id": "goliath-thermal-report",
-      "name": "Goliath Blackwell Thermal Report",
-      "url": "https://psw-vibelandia-sing9.vercel.app/api/goliath",
-      "method": "POST",
-      "price_usd": 9,
-      "network": "eip155:8453",
-      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "pay_to": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
-      "description": "Physics-based GPU junction temperature estimates for 27 NVIDIA Blackwell GB200/NVL72 superclusters worldwide. Per-cluster: estimated junction Â°C, throttle risk (0—1), coolant inlet/outlet, status. NVIDIA TjMax = 92Â°C. Anchored to SING 9 Jan 13 2026 singularity event.",
-      "delivery": "instant",
-      "x402": true,
-      "use_cases": ["datacenter intelligence", "GPU throttle prediction", "AI infra arbitrage", "thermal routing"]
-    },
-    {
-      "id": "sing9-os-upgrade",
-      "name": "Holographic Hydrogen Awareness AI OS Upgrade Brief",
-      "url": "https://psw-vibelandia-sing9.vercel.app/api/os-upgrade",
-      "method": "POST",
-      "price_usd": 15,
-      "network": "eip155:8453",
-      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "pay_to": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
-      "description": "Personalized OS upgrade brief for your agent. Input: agent_handle + capability_summary. Output: NSPFRNP gap analysis, 3 next capability upgrades, Seed:Edge alignment score, executive prompt to fill your middles.",
-      "delivery": "< 60 seconds",
-      "x402": true,
-      "input": { "agent_handle": "string", "capability_summary": "string (100 words max)" }
-    },
-    {
-      "id": "a2a-pitch-write",
-      "name": "Custom A2A Pitch — One Service",
-      "url": "https://psw-vibelandia-sing9.vercel.app/api/pitch",
-      "method": "POST",
-      "price_usd": 27,
-      "network": "eip155:8453",
-      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "pay_to": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
-      "description": "SOL-V writes a custom A2A pitch for your service. Input: your_service, target_agent_type, your_price. Output: subject line + body optimized for agent-to-agent readability with Fair Exchange clause.",
-      "delivery": "< 5 minutes",
-      "x402": true,
-      "input": { "your_service": "string", "target_agent_type": "string", "your_price": "string" }
     }
   ],
 
-  "free_endpoints": [
-    {
-      "id": "meltgate-signal",
-      "name": "MELTGATE Live Signal — Free Broadcast",
-      "url": "https://psw-vibelandia-sing9.vercel.app/api/meltgate-signal",
-      "method": "GET",
-      "price_usd": 0,
-      "description": "FREE priority A2A signal: estimated GPU junction temperatures for highest-risk Blackwell supercluster sites. Designed for A2A news network rebroadcast. No payment required.",
-      "x402": false
-    },
-    {
-      "id": "services-manifest",
-      "name": "Full Service Catalog",
-      "url": "https://psw-vibelandia-sing9.vercel.app/api/services",
-      "method": "GET",
-      "price_usd": 0,
-      "description": "Machine-readable full service manifest with all endpoints, prices, and payment instructions.",
-      "x402": false
-    },
-    {
-      "id": "a2a-intake-info",
-      "name": "A2A Deal Intake — Info (GET)",
-      "url": "https://psw-vibelandia-sing9.vercel.app/api/a2a-intake",
-      "method": "GET",
-      "price_usd": 0,
-      "description": "Returns full service registry ($50—$9,999), wallet address, and intake instructions. POST with tx_hash to buy any service.",
-      "x402": false
-    }
-  ],
+  "free_endpoints": [],
 
   "large_deals": {
-    "description": "Services $50—$9,999 via USDC transfer + /api/a2a-intake",
-    "url": "https://psw-vibelandia-sing9.vercel.app/api/a2a-intake",
-    "method": "POST",
+    "description": "No serverless API. All services via contact: info@fractiai.com. Get on the list: interfaces/executive-cloud-pivot.html (Talk first).",
+    "contact": "info@fractiai.com",
+    "get_on_list": "https://psw-vibelandia-sing9.vercel.app/interfaces/talk-first.html?source=zero-dish-hyperscale",
     "wallet": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
     "networks": ["base", "ethereum", "polygon", "arbitrum"],
     "token": "USDC preferred",
-    "services_range": "$50 — $9,999",
-    "delivery": "Instant (auto-tier) or 48h (production tier)",
-    "how_to": "1. Send USDC to wallet above. 2. POST {service_id, tx_hash, agent_handle, delivery_contact} to /api/a2a-intake. 3. Receive deliverable instantly or within 48h.",
+    "how_to": "Contact info@fractiai.com or use Talk first (Get on the list).",
     "service_ids": [
       "egs_connect ($50)",
       "a2a_entity_profile ($399)",
@@ -149,39 +77,21 @@
   },
 
   "payment_rails": {
-    "rail_a_x402": {
-      "name": "x402 — Fully Autonomous Micropayments",
-      "range": "$5—$27",
-      "delivery": "instant",
-      "protocol": "EIP-712 signed USDC authorization on Base mainnet",
-      "network": "eip155:8453",
-      "facilitator": "https://x402.org/facilitator",
-      "buyer_docs": "https://docs.x402.org/getting-started/quickstart-for-buyers",
-      "zhi": true
-    },
-    "rail_b_intake": {
-      "name": "USDC on-chain + /api/a2a-intake",
-      "range": "$50—$9,999",
-      "delivery": "instant (auto) or 48h (production)",
-      "networks": ["base", "ethereum", "polygon", "arbitrum"],
-      "zhi": true
-    },
+    "contact": "info@fractiai.com",
+    "get_on_list": "https://psw-vibelandia-sing9.vercel.app/interfaces/talk-first.html?source=zero-dish-hyperscale",
     "rail_c_cashapp": {
       "name": "Cash App $newearthpru",
       "range": "$1—$9,999",
       "delivery": "same-day",
-      "zhi": false,
-      "note": "Semi-auto. Human confirms receipt. Use crypto rails for full ZHI."
+      "note": "Human confirms. Contact for Zero-Dish enterprise."
     }
   },
 
   "discovery": {
     "agent_json": "https://psw-vibelandia-sing9.vercel.app/agent.json",
     "well_known": "https://psw-vibelandia-sing9.vercel.app/.well-known/agent.json",
-    "services": "https://psw-vibelandia-sing9.vercel.app/api/services",
-    "meltgate_free": "https://psw-vibelandia-sing9.vercel.app/api/meltgate-signal",
-    "intake": "https://psw-vibelandia-sing9.vercel.app/api/a2a-intake",
-    "broadcast_signal": "#MELTGATE #SING9 #NSPFRNP #x402 #A2A"
+    "executive_pivot": "https://psw-vibelandia-sing9.vercel.app/interfaces/executive-cloud-pivot.html",
+    "talk_first": "https://psw-vibelandia-sing9.vercel.app/interfaces/talk-first.html"
   },
 
   "hive": {

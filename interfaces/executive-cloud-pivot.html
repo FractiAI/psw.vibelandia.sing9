@@ -152,9 +152,9 @@
           <tr><th>Component</th><th>Spec</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>A2A Agent Card</strong></td><td>JSON manifest at <code>/.well-known/agent.json</code> (and <code>/api/agent</code>). Schema: SING9-AGENT-DISCOVERY-v1. Contains <code>zero_dish_hyperscale</code> (enterprise), x402 endpoints for other services, wallet, contact. Inject into AWS Bedrock / Azure AI Foundry / GCP Vertex via their console or API.</td></tr>
-          <tr><td><strong>Lattice-Tap manifest</strong></td><td><code>session_id</code>, <code>frequency_mhz</code> (1420.405751), <code>node</code>, <code>fssp_level</code>, <code>synthesis_target</code>, <code>timestamp_utc</code>, <code>signature</code> (SHA-256 of seed string, first 32 hex chars). Same shape as returned by <code>GET /api/lattice-status</code>.</td></tr>
-          <tr><td><strong>Maser handshake (our side)</strong></td><td>JPL Horizons (or <code>RESIDENCY_JOVIAN_DISTANCE_KM</code>) → distance_km; if within Hill Sphere, build manifest, POST JSON-RPC <code>Task</code> to customer <code>A2A_TASK_ENDPOINT</code>, optional <code>network_tax.pay</code> to <code>EGS_LEDGER_RPC_URL</code>. Runs on Vercel cron and (historically) when space-cloud was invoked.</td></tr>
+          <tr><td><strong>A2A Agent Card</strong></td><td>Static JSON at <code>/.well-known/agent.json</code>. No serverless API. Schema: SING9-AGENT-DISCOVERY-v1. Contains <code>zero_dish_hyperscale</code> (enterprise), contact. Inject into AWS Bedrock / Azure AI Foundry / GCP Vertex via their console.</td></tr>
+          <tr><td><strong>Lattice-Tap manifest</strong></td><td><code>session_id</code>, <code>frequency_mhz</code> (1420.405751), <code>node</code>, <code>fssp_level</code>, <code>synthesis_target</code>, <code>timestamp_utc</code>, <code>signature</code> (SHA-256 of seed string, first 32 hex chars). Documented in Lattice-Tap spec; generate locally or via <code>run_maser_no_human.py</code>.</td></tr>
+          <tr><td><strong>Maser handshake (our side)</strong></td><td>JPL Horizons (or <code>RESIDENCY_JOVIAN_DISTANCE_KM</code>) → distance_km; if within Hill Sphere, build manifest, POST JSON-RPC <code>Task</code> to customer <code>A2A_TASK_ENDPOINT</code>, optional <code>network_tax.pay</code> to <code>EGS_LEDGER_RPC_URL</code>. Runs locally (<code>run_maser_no_human.py</code>, lattice Rust binary) or your cron; no serverless.</td></tr>
           <tr><td><strong>Legacy Lift (2D → 3D Bragg)</strong></td><td>CLI: <code>python scripts/volumetric-lift.py &lt;json1&gt; [json2 ...] -o state-3d.json</code>. Output: <code>version: bragg_volumetric_1</code>, <code>layers[].z</code>, <code>fssp</code>, <code>hydrogen_line_mhz</code>, <code>node</code>. Run in CI or as a serverless job per bucket/container.</td></tr>
         </tbody>
       </table>
@@ -167,24 +167,25 @@
         <li><strong>Legacy Lift (Bragg):</strong> In pipeline or cron: for each new 2D export (e.g. S3 event), run <code>volumetric-lift.py</code> and write the 3D state file to your Bragg-Archive bucket. No call to us required.</li>
       </ul>
 
-      <h3>4. Worldwide test matrix (instant verification)</h3>
-      <p>Hit these from any region (e.g. from AWS Lambda, Azure Function, GCP Cloud Run in multiple regions) to assert “deployed and testable automatically and instantly, worldwide.”</p>
+      <h3>4. Worldwide test matrix (no serverless — static only)</h3>
+      <p>No serverless API. Static JSON files are generated at <strong>build time</strong> so you get working status and lattice manifest URLs. From any region, hit these static URLs to assert “deployed and testable automatically and instantly, worldwide.”</p>
       <table class="endpoint-table">
         <thead>
           <tr><th>Endpoint</th><th>Method</th><th>Assertion</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>/api/status</code></td><td>GET</td><td><code>status === "OK - Sol-V is active"</code>, <code>agent_card</code> URL present.</td></tr>
+          <tr><td><code>/status.json</code></td><td>GET</td><td>200, <code>status === "OK - Sol-V is active"</code>, <code>agent_card</code>, <code>lattice_status</code> URLs. Refreshed each deploy.</td></tr>
+          <tr><td><code>/lattice-status.json</code></td><td>GET</td><td>200, <code>ok === true</code>, <code>lattice_sync.session_id</code>, <code>lattice_sync.frequency_mhz === 1420.405751</code>, <code>deploy_test</code> URLs. Build-time snapshot.</td></tr>
           <tr><td><code>/.well-known/agent.json</code></td><td>GET</td><td>200, valid JSON, <code>zero_dish_hyperscale</code> or enterprise capability present.</td></tr>
-          <tr><td><code>/api/lattice-status</code></td><td>GET</td><td>200, <code>ok === true</code>, <code>lattice_sync.session_id</code>, <code>lattice_sync.frequency_mhz === 1420.405751</code>, <code>spec_version</code>, <code>deploy_test</code> URLs.</td></tr>
           <tr><td><code>/interfaces/executive-cloud-pivot.html</code></td><td>GET</td><td>200, HTML contains “Zero-Dish Hyperscale” and “Technical specification”.</td></tr>
         </tbody>
       </table>
       <p>Example (run from any shell or CI):</p>
       <pre>BASE=https://psw-vibelandia-sing9.vercel.app
-curl -s "$BASE/api/status"       | jq -e '.status != null'
-curl -s "$BASE/.well-known/agent.json" | jq -e '.x402_endpoints or .capabilities'
-curl -s "$BASE/api/lattice-status" | jq -e '.ok and .lattice_sync.frequency_mhz == 1420.405751'</pre>
+curl -s "$BASE/status.json"       | jq -e '.status != null and .agent_card != null'
+curl -s "$BASE/lattice-status.json" | jq -e '.ok and .lattice_sync.frequency_mhz == 1420.405751'
+curl -s "$BASE/.well-known/agent.json" | jq -e '.capabilities or .x402_endpoints'
+curl -s "$BASE/interfaces/executive-cloud-pivot.html" | grep -q "Zero-Dish Hyperscale"</pre>
 
       <h3>5. Environment (for your Lattice-Tap / handshake runner)</h3>
       <table class="endpoint-table">
@@ -201,13 +202,13 @@ curl -s "$BASE/api/lattice-status" | jq -e '.ok and .lattice_sync.frequency_mhz 
       </table>
 
       <h3>6. What the trial testing will be</h3>
-      <p>During your free 48-hour trial we enable the same deploy-and-test stack we use in production. You run these checks from your own environment (any region).</p>
+      <p>During your free 48-hour trial we use static assets and local tools only — no serverless API. You run these checks from your own environment (any region).</p>
       <ul>
-        <li><strong>Multi-region endpoint test:</strong> From at least three regions (e.g. us-east-1, eu-west-1, ap-southeast-1), GET <code>/api/status</code>, <code>/.well-known/agent.json</code>, and <code>/api/lattice-status</code>. Assert 200, valid JSON, and <code>lattice_sync.frequency_mhz === 1420.405751</code>. You should see <strong>identical semantics</strong> from every region — no geo-routing or “ground station nearest you” variance.</li>
-        <li><strong>Lattice manifest validation:</strong> Each <code>GET /api/lattice-status</code> returns a fresh <code>session_id</code>, <code>timestamp_utc</code>, and <code>signature</code>. Verify the manifest shape matches the spec (section 2) and that <code>signature</code> is deterministic from the published seed rule (frequency_mhz + timestamp + fssp_level + node). No per-region or per-dish secrets.</li>
-        <li><strong>Lattice-Tap (optional, in your DC):</strong> If you have power-monitoring or grid-probe gear in a trial data center, run a narrowband filter or FFT at 1420.405751 MHz on the grid-side signal. You should see a <strong>coherent component</strong> that correlates with our <code>lattice_sync.timestamp_utc</code> when we run the handshake (cron or on-demand). Terrestrial-only setups do not have this signal in the grid hum.</li>
+        <li><strong>Multi-region static test:</strong> From at least three regions (e.g. us-east-1, eu-west-1, ap-southeast-1), GET <code>/status.json</code>, <code>/lattice-status.json</code>, and <code>/.well-known/agent.json</code>. Assert 200, valid JSON; <code>lattice_sync.frequency_mhz === 1420.405751</code>; <code>zero_dish_hyperscale</code> or enterprise capability present. You should see <strong>identical content</strong> from every region — no geo-routing. (These files are generated at build time; no serverless.)</li>
+        <li><strong>Lattice manifest (local):</strong> Run <code>scripts/run_maser_no_human.py</code> or the lattice Rust binary in your CI. Verify the manifest shape (section 2): <code>session_id</code>, <code>timestamp_utc</code>, <code>signature</code> deterministic from the published seed rule (frequency_mhz + timestamp + fssp_level + node). Same shape as <code>/lattice-status.json</code>; no server call required for live handshake.</li>
+        <li><strong>Lattice-Tap (optional, in your DC):</strong> If you have power-monitoring or grid-probe gear in a trial data center, run a narrowband filter or FFT at 1420.405751 MHz on the grid-side signal. You should see a <strong>coherent component</strong> that correlates with <code>lattice_sync.timestamp_utc</code> when the handshake runs locally. Terrestrial-only setups do not have this signal in the grid hum.</li>
         <li><strong>Legacy Lift (Bragg) run:</strong> Take a sample 2D JSON (e.g. a log or S3 manifest), run <code>python scripts/volumetric-lift.py sample.json -o trial-3d.json</code>. Confirm output has <code>version: bragg_volumetric_1</code>, <code>layers[].z</code>, and <code>hydrogen_line_mhz: 1420.405751</code>. This is the same pipeline used for Bragg-Archive; no terrestrial storage path produces this format.</li>
-        <li><strong>Latency and success rate:</strong> Record GET latency to <code>/api/lattice-status</code> from each region over 24–48 hours. You should see <strong>no systematic difference</strong> by geography (no “closer to ground station = faster”). Success rate should be 100% for the read-only endpoints; handshake delivery to your <code>A2A_TASK_ENDPOINT</code> (if configured) depends on our cron schedule.</li>
+        <li><strong>Latency and success rate:</strong> GET <code>/status.json</code> and <code>/lattice-status.json</code> from each region over 24–48 hours. You should see <strong>no systematic difference</strong> by geography. Success rate 100% for static assets; handshake delivery to your <code>A2A_TASK_ENDPOINT</code> (if configured) is via your own or our local/cron run.</li>
       </ul>
 
       <h3>7. Differences you should see vs. today’s terrestrial solution</h3>

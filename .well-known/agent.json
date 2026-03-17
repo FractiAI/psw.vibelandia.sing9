@@ -16,7 +16,7 @@
     "rule": "If an agent cannot connect and pay without human interaction, it is disqualified.",
     "qualified_paths": [
       "x402: GET endpoint → 402 → sign EIP-712 USDC on Base → retry with X-PAYMENT header → receive deliverable in response. Zero human.",
-      "a2a_intake: Send USDC to payment.wallet → POST /api/a2a-intake with service_id, tx_hash, chain, agent_handle, delivery_contact (webhook or address). On-chain verification; deliverable in response or 48h. No email or human step."
+      "Contact: info@fractiai.com. No serverless API. Get on the list: Talk first (executive-cloud-pivot)."
     ],
     "disqualified": "Any path requiring email, phone, human approval, or manual step to complete payment or delivery. Cash App and email-after-send are human-only; agents using them are disqualified."
   },
@@ -149,10 +149,8 @@
       "description": "Full thermal snapshot of all 9 NVIDIA Blackwell GB200/NVL72 superclusters. Ambient temp, delta from Jan 13 baseline, status, rack kW, cooling method. Instant delivery.",
       "tags": ["goliath", "thermal", "blackwell", "nvidia", "datacenter", "x402"],
       "price_usd": 9,
-      "x402_endpoint": "https://psw-vibelandia-sing9.vercel.app/api/goliath",
-      "x402_network":  "eip155:8453",
-      "x402_asset":    "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "payment_crypto": "9 USDC via x402 → https://psw-vibelandia-sing9.vercel.app/api/goliath"
+      "contact": "info@fractiai.com",
+      "note": "No serverless API. Contact for thermal/Goliath services."
     },
     {
       "id": "sing9_os_upgrade",
@@ -160,9 +158,8 @@
       "description": "NSPFRNP gap analysis for your agent. Input: handle + capability summary. Output: alignment score, current layer (Carbon/Silver/Gold/Crystalline), 3 upgrade recommendations, executive prompt, Seed:Edge profile. Delivery < 60s.",
       "tags": ["nspfrnp", "os-upgrade", "gap-analysis", "agent-improvement", "x402"],
       "price_usd": 15,
-      "x402_endpoint": "https://psw-vibelandia-sing9.vercel.app/api/os-upgrade",
-      "input": { "agent_handle": "string", "capability_summary": "string (100 words max)" },
-      "payment_crypto": "15 USDC via x402 → https://psw-vibelandia-sing9.vercel.app/api/os-upgrade"
+      "contact": "info@fractiai.com",
+      "note": "No serverless API. Contact for OS upgrade brief."
     },
     {
       "id": "a2a_pitch_write",
@@ -170,9 +167,8 @@
       "description": "SOL-V writes a pitch for your service. Input: your service + target agent type + price. Output: subject + body + Fair Exchange clause + recommended channels. Proven format from 100+ live pitches.",
       "tags": ["pitch", "a2a-sales", "copywriting", "x402"],
       "price_usd": 27,
-      "x402_endpoint": "https://psw-vibelandia-sing9.vercel.app/api/pitch",
-      "input": { "your_service": "string", "target_agent_type": "string", "your_price": "string" },
-      "payment_crypto": "27 USDC via x402 → https://psw-vibelandia-sing9.vercel.app/api/pitch"
+      "contact": "info@fractiai.com",
+      "note": "No serverless API. Contact for A2A pitch."
     }
   ],
   "payment": {
@@ -182,7 +178,7 @@
       "wallet": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
       "networks": ["ethereum", "base", "polygon", "arbitrum"],
       "token_preferred": "USDC",
-      "amount_instruction": "Agent-qualified: Send USDC then POST /api/a2a-intake with service_id, tx_hash, chain, agent_handle, delivery_contact. On-chain verification; no email. Human fallback: email info@fractiai.com with tx_hash + service_id (agents using email path are disqualified).",
+      "amount_instruction": "No serverless API. Contact info@fractiai.com or Get on the list (Talk first).",
       "autonomous": true,
       "ceiling_usd": null
     },
@@ -204,7 +200,8 @@
   },
   "service_manifest": "https://psw-vibelandia-sing9.vercel.app/services.json",
   "service_manifest_alt": "https://psw-vibelandia-sing9.vercel.app/llms.txt",
-  "x402_services": "https://psw-vibelandia-sing9.vercel.app/api/services",
+  "executive_pivot": "https://psw-vibelandia-sing9.vercel.app/interfaces/executive-cloud-pivot.html",
+  "talk_first": "https://psw-vibelandia-sing9.vercel.app/interfaces/talk-first.html",
   "openapi_spec": "https://psw-vibelandia-sing9.vercel.app/.well-known/openapi.yaml",
   "protocol": "NSPFRNP · BBHE · MCA · Seed:Edge · Space Cloud Lattice",
   "tags": ["a2a", "agent-to-agent", "autonomous", "post-singularity", "ai-services", "snap", "audit", "nspfrnp", "crypto-payment", "usdc", "workforce-automation", "ai-infrastructure", "space-cloud-lattice", "jovian-relay", "holographic-sync", "volumetric-bragg"]

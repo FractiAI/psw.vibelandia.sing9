@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Talk first · Pru's Vibelandia Valet · SING 9</title>
+  <script>window.TALK_FIRST_FORM_ENDPOINT = '__TALK_FIRST_FORM_ENDPOINT__';</script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -289,29 +290,40 @@
           source: getSource()
         };
 
-        var base = window.location.origin;
-        fetch(base + '/api/talk-first', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-          .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, status: r.status, body: j }; }); })
-          .then(function(result) {
-            if (result.ok || result.status === 200) {
+        var formEndpoint = window.TALK_FIRST_FORM_ENDPOINT || '';
+        if (formEndpoint) {
+          fetch(formEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+            .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, body: j }; }); })
+            .then(function(result) {
               addMessage('You', text, true);
               messageInput.value = '';
-              setStatus('Sent. We\'ll reply here or by email — check back.', false);
-            } else {
-              setStatus(result.body?.error || 'Something went wrong. Try email: info@fractiai.com', true);
-            }
-          })
-          .catch(function(err) {
-            setStatus('Network error. You can email us: info@fractiai.com', true);
-          })
-          .finally(function() {
-            sendBtn.disabled = false;
-          });
+              setStatus(result.ok ? 'Sent. We\'ll reply here or by email — check back.' : (result.body?.error || 'Sent. We\'ll get back to you.'), false);
+            })
+            .catch(function() {
+              setStatus('Send failed. Opening email instead…', false);
+              openMailto(payload, text);
+            })
+            .finally(function() { sendBtn.disabled = false; });
+        } else {
+          addMessage('You', text, true);
+          messageInput.value = '';
+          setStatus('Opening your email client — send the message to us. If it didn\'t open, email info@fractiai.com with your message.', false);
+          sendBtn.disabled = false;
+          openMailto(payload, text);
+        }
       });
+
+      function openMailto(payload, text) {
+        var subj = 'Talk first · ' + (payload.source || 'talk-first');
+        var body = (payload.name ? 'Name: ' + payload.name + '\n' : '') +
+          (payload.email ? 'Email: ' + payload.email + '\n' : '') +
+          'Source: ' + (payload.source || '') + '\n\n' + text;
+        window.location.href = 'mailto:info@fractiai.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+      }
     })();
   </script>
 </body>

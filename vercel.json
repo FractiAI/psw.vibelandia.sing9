@@ -2,12 +2,8 @@
   "version": 2,
   "name": "psw-vibelandia-sing9",
   "framework": null,
-  "buildCommand": "node scripts/vercel-static-output.mjs",
+  "buildCommand": "node scripts/generate-static-endpoints.mjs && node scripts/vercel-static-output.mjs",
   "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/.well-known/agent.json", "destination": "/api/agent" },
-    { "source": "/.well-known/ai-plugin.json", "destination": "/api/agent" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -15,14 +11,6 @@
         { "key": "X-Protocol", "value": "NSPFRNP" },
         { "key": "X-Octave-0", "value": "Seed" },
         { "key": "X-Octave-1", "value": "Edge" }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, X-PAYMENT, X-402-Payment, Authorization, Payment" }
       ]
     }
   ]

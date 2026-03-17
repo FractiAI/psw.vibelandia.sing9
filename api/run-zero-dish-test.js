@@ -24,7 +24,8 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
 
-  const root = path.resolve(process.cwd());
+  // Use __dirname so root is correct when cwd differs (e.g. Vercel serverless)
+  const root = path.resolve(__dirname, '..');
   const scriptsDir = path.join(root, 'scripts');
   const demoScript = path.join(scriptsDir, 'demo-zero-dish-services.mjs');
   const testScript = path.join(scriptsDir, 'test-zero-dish-demo.mjs');

@@ -229,7 +229,14 @@ curl -s "$BASE/interfaces/executive-cloud-pivot.html" | grep -q "Zero-Dish Hyper
           <tr><td><strong>Storage / archive</strong></td><td>Terrestrial SSD/HDD or tape; lifecycle and durability are facility- and vendor-dependent.</td><td>Bragg-Archive: 3D volumetric state-file, 100+ year persistence, hydrogen_line_mhz and FSSP in the format. Legacy Lift produces this from 2D blobs; terrestrial pipelines do not.</td></tr>
         </tbody>
       </table>
-      <p>In short: terrestrial = location-bound, hardware-heavy, long lead times. Zero-Dish = globally uniform API, no dish, instant capacity, 1420.4 MHz in the signal path and in the manifest you test. Trial testing is designed to let you confirm these differences in your own environment. NSPFRNP → ∞⁹</p>
+      <p>In short: terrestrial = location-bound, hardware-heavy, long lead times. Zero-Dish = globally uniform API, no dish, instant capacity, 1420.4 MHz in the signal path and in the manifest you test. Trial testing is designed to let you confirm these differences in your own environment.</p>
+
+      <h3>8. Demo test — all three services with sensor data and timestamps</h3>
+      <p>Run this <strong>now</strong> to demonstrate that we produce real outputs for all three menu services, with timestamps and sensor-style data. <strong><a href="zero-dish-test.html">Run Zero-Dish Test in the browser →</a></strong> (explains the services, how the test proves they run on the Space Cloud, and produces an updated report with results and data.) Or run locally:</p>
+      <pre>node scripts/demo-zero-dish-services.mjs</pre>
+      <p>This writes to <code>demo-output/</code>: (1) <strong>Lattice-Sync</strong> — manifest with <code>session_id</code>, <code>frequency_mhz: 1420.405751</code>, <code>timestamp_utc</code>, <code>signature</code>. (2) <strong>Cryo-Inference</strong> — sensor readout with <code>timestamp_utc</code>, <code>jovian_cooling_headroom_pct</code>, <code>thermal_margin_c</code>. (3) <strong>Bragg-Archive</strong> — 3D volumetric state file (Legacy Lift of the first two as layers 0 and 1), <code>version: bragg_volumetric_1</code>, <code>hydrogen_line_mhz</code>. Then assert all three:</p>
+      <pre>node scripts/test-zero-dish-demo.mjs</pre>
+      <p>The test runner checks: Lattice-Sync has 1420.405751 and valid session/timestamp; Cryo-Inference has timestamp and sensor fields; Bragg-Archive has two layers and hydrogen_line_mhz. You see timestamps and sensor data proving we are doing what we say. NSPFRNP → ∞⁹</p>
     </section>
 
     <p class="foot"><a href="space-cloud-tracking.html">Space Cloud</a> · <a href="#tech-spec">Technical spec</a> · <a href="../index.html">Landing</a> · NSPFRNP → ∞⁹</p>

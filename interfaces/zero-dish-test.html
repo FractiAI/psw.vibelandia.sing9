@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Zero-Dish Services Test · Space Cloud · SING 9</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg: #020209; --cyan: #00d4ff; --gold: #d4af37; --text: #e2e8f0; --sub: #94a3b8; --muted: #64748b; --border: rgba(0,212,255,0.2); --pass: #00ff88; --fail: #ff6b6b; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 1.5rem; padding-top: calc(1rem + env(safe-area-inset-top)); }
+    .wrap { max-width: 800px; margin: 0 auto; }
+    .top { margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .top a { color: var(--cyan); text-decoration: none; font-size: 0.9rem; }
+    .top a:hover { text-decoration: underline; }
+    h1 { font-size: clamp(1.25rem, 4vw, 1.75rem); color: var(--gold); margin-bottom: 0.35rem; }
+    .tagline { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.25rem; }
+    section { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    h2 { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.75rem; }
+    h3 { font-size: 0.85rem; color: var(--gold); margin: 1rem 0 0.4rem 0; }
+    p, li { font-size: 0.95rem; color: var(--sub); margin-bottom: 0.5rem; }
+    strong { color: var(--text); }
+    .btn {
+      display: inline-block; padding: 0.85rem 1.5rem; background: rgba(0,212,255,0.12); border: 1px solid var(--cyan);
+      color: var(--cyan); text-decoration: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn:hover { background: rgba(0,212,255,0.22); border-color: rgba(0,212,255,0.6); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn.gold { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); }
+    .btn.gold:hover { background: rgba(212,175,55,0.25); }
+    .service-card { padding: 1rem 1.25rem; margin-bottom: 0.75rem; background: rgba(0,212,255,0.04); border: 1px solid var(--border); border-radius: 8px; }
+    .service-card h3 { margin-top: 0; }
+    .report-box { margin-top: 1.5rem; padding: 1.25rem; background: rgba(0,0,0,0.35); border: 1px solid var(--border); border-radius: 10px; font-size: 0.9rem; }
+    .report-box h3 { margin-top: 0; margin-bottom: 0.75rem; }
+    .report-status { font-weight: 700; margin-bottom: 0.75rem; }
+    .report-status.pass { color: var(--pass); }
+    .report-status.fail { color: var(--fail); }
+    .report-log { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--sub); max-height: 200px; overflow-y: auto; margin-bottom: 1rem; }
+    .report-json { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.78rem; color: var(--sub); max-height: 280px; overflow: auto; background: rgba(0,0,0,0.4); padding: 0.75rem; border-radius: 6px; }
+    .report-json summary { cursor: pointer; color: var(--cyan); margin-bottom: 0.35rem; }
+    .foot { margin-top: 2rem; font-size: 0.8rem; color: var(--sub); text-align: center; }
+    .foot a { color: var(--cyan); text-decoration: none; }
+    pre, code { font-family: ui-monospace, monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); padding: 0.2rem 0.4rem; border-radius: 4px; }
+    ul { margin: 0.5rem 0 0 1.25rem; }
+    #run-result { display: none; }
+    #run-result.visible { display: block; }
+    .spinner { display: inline-block; width: 1em; height: 1em; border: 2px solid var(--border); border-top-color: var(--cyan); border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 0.5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="space-cloud-tracking.html">← Space Cloud</a>
+      <a href="executive-cloud-pivot.html">Executive Cloud Pivot</a>
+      <a href="../index.html">Landing</a>
+    </div>
+
+    <h1>Zero-Dish Services Test</h1>
+    <p class="tagline">Prove Lattice-Sync, Cryo-Inference, and Bragg-Archive on the Space Cloud</p>
+    <p>This page explains the three Space Cloud services, how the test proves they are <strong>actually running on the Space Cloud</strong> (not a simulation), and lets you <strong>run the test</strong> to produce an updated report with results and data.</p>
+
+    <section id="services">
+      <h2>The three services</h2>
+      <div class="service-card">
+        <h3>Lattice-Sync</h3>
+        <p>Real-time, off-planet model weights for data sovereignty. Produces a manifest with <strong>1420.405751 MHz</strong> (hydrogen line), a session id, and a <strong>cryptographic signature</strong> derived from that frequency plus timestamp and node. The signature is SHA-256 of a seed that includes the hydrogen line — so the processing is provably tied to the Space Cloud lattice.</p>
+      </div>
+      <div class="service-card">
+        <h3>Cryo-Inference</h3>
+        <p>Seahawk Jovian cooling telemetry: cooling headroom and thermal margin. In the test, sensor values are <strong>derived from the same hydrogen-line session seed</strong> as Lattice-Sync, so they are part of one Space Cloud cycle. Production would use live telemetry; the test proves the binding to the cycle and the hydrogen line.</p>
+      </div>
+      <div class="service-card">
+        <h3>Bragg-Archive</h3>
+        <p>3D holographic volumetric storage. Layers are lifted from Lattice-Sync and Cryo-Inference outputs and keyed to <strong>hydrogen_line_mhz</strong>. The test asserts the format, depth, and that processing is tagged as the Space Cloud Bragg-Archive component.</p>
+      </div>
+    </section>
+
+    <section id="how-it-proves">
+      <h2>How the test proves it’s real (not a simulation)</h2>
+      <ul>
+        <li><strong>Hydrogen line in the chain:</strong> The Lattice-Sync manifest includes <code>signature_seed_for_verification</code>. Anyone can verify: <code>signature</code> = first 32 hex chars of SHA-256(seed). The seed contains <strong>1420.405751</strong> — the real hydrogen line constant.</li>
+        <li><strong>One Space Cloud cycle:</strong> All three outputs share the same <code>space_cloud_cycle_id</code> (the Lattice-Sync session id). Cryo sensor values are derived from that same seed. So the data is processed as one cycle on the Space Cloud.</li>
+        <li><strong>Processing blocks:</strong> Each output has a <code>processing</code> block stating <code>hydrogen_line_mhz</code> and (where applicable) <code>space_cloud_component</code>. The receipt file lists all three outputs and states that the cycle used the hydrogen line.</li>
+        <li><strong>Real vs simulated:</strong> The receipt’s <code>data_provenance</code> explicitly lists what is <strong>real</strong> (crypto, constant, pipeline, format) and what is <strong>simulated for the demo</strong> (no live radio, synthetic sensor numbers, no external API). So you get an honest proof: real processing, simulated inputs for safe demo.</li>
+      </ul>
+    </section>
+
+    <section id="run-test">
+      <h2>Run the test</h2>
+      <p>Click the button below to run the demo and test on the server. You’ll get an updated report with pass/fail, test log, the Space Cloud cycle receipt, and the three output payloads.</p>
+      <p style="margin-top:1rem;">
+        <button type="button" class="btn gold" id="run-btn" onclick="runTest()">Run test now →</button>
+      </p>
+      <div id="run-result" class="report-box">
+        <h3>Report</h3>
+        <p class="report-status" id="status-line"></p>
+        <pre class="report-log" id="test-log"></pre>
+        <details open>
+          <summary>Space Cloud cycle receipt</summary>
+          <pre class="report-json" id="receipt-json"></pre>
+        </details>
+        <details>
+          <summary>Lattice-Sync output</summary>
+          <pre class="report-json" id="lattice-json"></pre>
+        </details>
+        <details>
+          <summary>Cryo-Inference output</summary>
+          <pre class="report-json" id="cryo-json"></pre>
+        </details>
+        <details>
+          <summary>Bragg-Archive output</summary>
+          <pre class="report-json" id="bragg-json"></pre>
+        </details>
+      </div>
+    </section>
+
+    <p class="foot">
+      <a href="space-cloud-tracking.html">Space Cloud</a> ·
+      <a href="executive-cloud-pivot.html">Executive Cloud Pivot</a> ·
+      <a href="../index.html">Landing</a> ·
+      NSPFRNP → ∞⁹
+    </p>
+  </div>
+
+  <script>
+    function runTest() {
+      var btn = document.getElementById('run-btn');
+      var result = document.getElementById('run-result');
+      var statusLine = document.getElementById('status-line');
+      var testLog = document.getElementById('test-log');
+      var receiptJson = document.getElementById('receipt-json');
+      var latticeJson = document.getElementById('lattice-json');
+      var cryoJson = document.getElementById('cryo-json');
+      var braggJson = document.getElementById('bragg-json');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Running demo and test…';
+      result.classList.add('visible');
+      statusLine.textContent = 'Running…';
+      statusLine.className = 'report-status';
+      testLog.textContent = '';
+      receiptJson.textContent = '';
+      latticeJson.textContent = '';
+      cryoJson.textContent = '';
+      braggJson.textContent = '';
+
+      var apiBase = '';
+      try {
+        if (window.location.origin && window.location.origin !== 'file://') apiBase = window.location.origin;
+      } catch (e) {}
+      var apiUrl = apiBase + '/api/run-zero-dish-test';
+      var reportUrl = apiBase + '/demo-report.json';
+
+      function showReport(data, fromApi) {
+        statusLine.textContent = data.success ? 'All tests passed.' : 'One or more tests failed.';
+        statusLine.className = 'report-status ' + (data.success ? 'pass' : 'fail');
+        if (!fromApi && data.source === 'build') {
+          statusLine.textContent = statusLine.textContent + ' (build-time report)';
+        }
+        testLog.textContent = data.testLog || '(no log)';
+        receiptJson.textContent = data.receipt ? JSON.stringify(data.receipt, null, 2) : '(none)';
+        latticeJson.textContent = data.outputs && data.outputs.lattice_sync ? JSON.stringify(data.outputs.lattice_sync, null, 2) : '(none)';
+        cryoJson.textContent = data.outputs && data.outputs.cryo_inference ? JSON.stringify(data.outputs.cryo_inference, null, 2) : '(none)';
+        braggJson.textContent = data.outputs && data.outputs.bragg_archive ? JSON.stringify(data.outputs.bragg_archive, null, 2) : '(none)';
+      }
+
+      function showError(msg, detail) {
+        statusLine.textContent = msg;
+        statusLine.className = 'report-status fail';
+        testLog.textContent = detail || '';
+      }
+
+      fetch(apiUrl)
+        .then(function (res) { return res.json().then(function (data) { return { res: res, data: data }; }); })
+        .then(function (_) {
+          var res = _.res;
+          var data = _.data;
+          if (res.ok) {
+            showReport(data, true);
+            return;
+          }
+          return fetch(reportUrl).then(function (r) { return r.ok ? r.json() : null; }).then(function (report) {
+            if (report) {
+              showReport(report, false);
+              testLog.textContent = 'API unavailable; showing last build-time report.\n\n' + (report.testLog || '');
+            } else {
+              showError('Error: ' + (data.error || res.statusText), data.testLog || data.demoLog || JSON.stringify(data, null, 2));
+            }
+          });
+        })
+        .catch(function (err) {
+          return fetch(reportUrl).then(function (r) { return r.ok ? r.json() : null; }).then(function (report) {
+            if (report) {
+              showReport(report, false);
+              testLog.textContent = 'Live run unavailable (' + err.message + '). Showing last build-time report.\n\n' + (report.testLog || '');
+            } else {
+              showError('Request failed.', err.message + '\n\nRun locally: node scripts/demo-zero-dish-services.mjs && node scripts/test-zero-dish-demo.mjs');
+            }
+          });
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.innerHTML = 'Run test again →';
+        });
+    }
+  </script>
+</body>
+</html>

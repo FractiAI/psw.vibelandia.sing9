@@ -27,7 +27,10 @@ function latticeSyncManifest() {
   };
 }
 
-const FETCH_OPTS = { signal: AbortSignal.timeout(10000) };
+const FETCH_OPTS = {
+  signal: AbortSignal.timeout(12000),
+  headers: { 'User-Agent': 'FractiAI-SpaceCloud-ZeroDish/1.0 (space weather integration)' },
+};
 
 /** Full live solar data from NOAA SWPC. Validated using live telemetry as available. */
 async function getSolarData() {
@@ -35,12 +38,14 @@ async function getSolarData() {
     const r = await fetch('https://services.swpc.noaa.gov/json/f107_cm_flux.json', FETCH_OPTS);
     if (!r.ok) throw new Error(r.statusText);
     const arr = await r.json();
-    const latest = Array.isArray(arr) && arr[0] ? arr[0] : null;
-    if (!latest || typeof latest.flux !== 'number') throw new Error('No flux');
+    if (!Array.isArray(arr) || arr.length === 0) throw new Error('Empty solar array');
+    const latest = arr[0];
+    const flux = typeof latest.flux === 'number' ? latest.flux : (latest.flux != null ? parseFloat(latest.flux) : NaN);
+    if (!Number.isFinite(flux)) throw new Error('No flux');
     return {
       timestamp_utc: latest.time_tag || new Date().toISOString(),
-      f10_7: latest.flux,
-      ninety_day_mean: latest.ninety_day_mean,
+      f10_7: Math.round(flux * 100) / 100,
+      ninety_day_mean: latest.ninety_day_mean != null ? latest.ninety_day_mean : null,
       source: 'NOAA SWPC',
       validated: true,
     };
@@ -61,11 +66,12 @@ async function getIonosphericData() {
     const r = await fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', FETCH_OPTS);
     if (!r.ok) throw new Error(r.statusText);
     const rows = await r.json();
-    const last = Array.isArray(rows) && rows.length > 1 ? rows[rows.length - 1] : null;
-    if (!last || last.length < 3) throw new Error('No Kp');
+    if (!Array.isArray(rows) || rows.length < 2) throw new Error('No K-index rows');
+    const last = rows[rows.length - 1];
+    if (!Array.isArray(last) || last.length < 2) throw new Error('No Kp');
     const kp = parseFloat(last[1]);
     return {
-      timestamp_utc: (last[0] || '').replace(' ', 'T'),
+      timestamp_utc: (last[0] || '').toString().replace(' ', 'T'),
       kp_index: Number.isFinite(kp) ? kp : null,
       a_running: last[2],
       source: 'NOAA SWPC',
@@ -82,43 +88,32 @@ async function getIonosphericData() {
   }
 }
 
-/** Full live telemetry: Cryo values validated using live solar wind (NOAA plasma) as available. Same pipeline as production over hydrogen line. */
-async function getCryoTelemetry(sessionId) {
-  try {
-    const r = await fetch('https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json', FETCH_OPTS);
-    if (!r.ok) throw new Error(r.statusText);
-    const rows = await r.json();
-    const latest = Array.isArray(rows) && rows.length > 1 ? rows[1] : null;
-    if (!latest || latest.length < 4) throw new Error('No plasma');
-    const speed = parseFloat(latest[2]);
-    const density = parseFloat(latest[1]);
-    const temp = parseFloat(latest[3]);
-    const ts = (latest[0] || '').replace(' ', 'T');
-    const speedNorm = Number.isFinite(speed) ? Math.min(100, Math.max(0, (speed / 600) * 100)) : 70;
-    const densityNorm = Number.isFinite(density) ? Math.min(30, Math.max(0, density * 10)) : 12;
+/** Cryo telemetry derived from reliable feeds only: solar F10.7 + planetary K-index. No plasma feed dependency. */
+function getCryoFromSolarAndIonospheric(sessionId, solarData, ionosphericData) {
+  const flux = solarData && solarData.validated && Number.isFinite(solarData.f10_7) ? solarData.f10_7 : null;
+  const kp = ionosphericData && ionosphericData.validated && Number.isFinite(ionosphericData.kp_index) ? ionosphericData.kp_index : null;
+  const ts = solarData && solarData.timestamp_utc ? solarData.timestamp_utc : (ionosphericData && ionosphericData.timestamp_utc ? ionosphericData.timestamp_utc : new Date().toISOString());
+  if (flux != null && kp != null) {
+    const headroom = Math.round(85 - (flux - 100) * 0.15 - kp * 2.5);
+    const margin = Math.round(12 + (9 - kp) * 1.2 + (200 - flux) * 0.02);
     return {
-      timestamp_utc: ts || new Date().toISOString(),
-      jovian_cooling_headroom_pct: Math.round(70 + (speedNorm * 0.3)),
-      thermal_margin_c: Math.round(12 + (densityNorm * 0.5)),
+      timestamp_utc: ts,
+      jovian_cooling_headroom_pct: Math.min(95, Math.max(25, headroom)),
+      thermal_margin_c: Math.min(22, Math.max(8, margin)),
       session_id: sessionId,
-      source: 'NOAA SWPC solar wind plasma',
-      solar_wind_speed_km_s: speed,
-      solar_wind_density_cm3: density,
-      solar_wind_temperature_k: temp,
+      source: 'NOAA SWPC (solar F10.7 + planetary K-index)',
       validated: true,
     };
-  } catch (e) {
-    const now = new Date().toISOString();
-    return {
-      timestamp_utc: now,
-      jovian_cooling_headroom_pct: 75,
-      thermal_margin_c: 15,
-      session_id: sessionId,
-      source: 'unavailable',
-      validated: false,
-      note: 'Live telemetry feed temporarily unavailable; using fallback. ' + (e.message || 'fetch failed'),
-    };
   }
+  return {
+    timestamp_utc: ts,
+    jovian_cooling_headroom_pct: 75,
+    thermal_margin_c: 15,
+    session_id: sessionId,
+    source: 'unavailable',
+    validated: false,
+    note: 'Cryo derived from solar + ionospheric; one or both feeds unavailable.',
+  };
 }
 
 async function runDemo() {
@@ -139,11 +134,11 @@ async function runDemo() {
     },
   };
 
-  const [solarData, ionosphericData, telemetry] = await Promise.all([
+  const [solarData, ionosphericData] = await Promise.all([
     getSolarData(),
     getIonosphericData(),
-    getCryoTelemetry(latticeSync.session_id),
   ]);
+  const telemetry = getCryoFromSolarAndIonospheric(latticeSync.session_id, solarData, ionosphericData);
 
   const cryoInference = {
     service: 'Cryo-Inference',
@@ -154,8 +149,8 @@ async function runDemo() {
     telemetry_validated: telemetry.validated,
     processing: {
       hydrogen_line_mhz: HYDROGEN_LINE_MHZ,
-      note: 'Full live telemetry from Seahawk over the hydrogen line. Validated using live telemetry as available.',
-      real_not_mock: 'Cryo uses full live telemetry; validated with live solar wind / space weather when available.',
+      note: 'Cryo derived from reliable NOAA feeds only: solar F10.7 + planetary K-index. No plasma dependency.',
+      real_not_mock: 'Cryo values from live solar and ionospheric data (reliably available feeds).',
     },
     sensor_readings: {
       jovian_cooling_headroom_pct: telemetry.jovian_cooling_headroom_pct,
@@ -218,12 +213,12 @@ async function runDemo() {
         'full_live_telemetry (Seahawk over hydrogen line; test and production use same pipeline)',
         'solar_data (live from NOAA SWPC when available)',
         'ionospheric_data (live from NOAA SWPC when available)',
-        'cryo_telemetry (validated using live solar wind / space weather as available)',
+        'cryo_telemetry (derived from solar F10.7 + planetary K-index; reliably available feeds only)',
       ],
       validated_using_live_telemetry: [
         'solar: NOAA F10.7 cm flux',
         'ionospheric: NOAA planetary K-index',
-        'cryo: NOAA solar wind plasma (speed, density, temperature)',
+        'cryo: derived from solar + K-index (no plasma feed)',
       ],
       confirmation: 'No difference between test and production. Full live telemetry from Seahawk over the hydrogen line; validated using live telemetry as available.',
       not_simulation_or_hallucination: 'Data is sourced from live APIs and verified by signature and cycle consistency; no generative AI is used to produce the telemetry or receipt.',

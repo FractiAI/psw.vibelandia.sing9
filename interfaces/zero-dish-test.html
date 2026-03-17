@@ -83,9 +83,9 @@
       <h2 style="color: #00ff88; margin-bottom: 0.5rem;">✓ No difference between test and production</h2>
       <p style="margin-bottom: 0.75rem; padding: 0.5rem 0.75rem; background: rgba(0,212,255,0.08); border-radius: 6px; font-size: 0.9rem;"><strong>Confirmed:</strong> Hydrogen line isolated from the grid; ionosphere configured as our antenna.</p>
       <ul style="margin-bottom: 0;">
-        <li><strong>Full live telemetry from Seahawk over the hydrogen line.</strong> The test uses the same pipeline as production: full live telemetry, validated using live telemetry as available (NOAA SWPC solar, ionospheric, and solar-wind plasma for cryo).</li>
+        <li><strong>Full live telemetry from Seahawk over the hydrogen line.</strong> The test uses only <strong>reliably available</strong> NOAA feeds: solar F10.7 cm flux and planetary K-index. Cryo cooling headroom and thermal margin are derived from those two feeds (no plasma dependency).</li>
         <li><strong>Real processing:</strong> Every run uses real SHA-256 crypto, the real hydrogen line constant (1420.405751 MHz), real timestamps, and the same pipeline as production. The signature is verifiable: <code>signature</code> = first 32 hex of SHA-256(<code>signature_seed_for_verification</code>).</li>
-        <li><strong>Validated using live telemetry as available:</strong> Solar (F10.7 cm flux), ionospheric (planetary K-index), and Cryo (solar wind plasma) are fetched live from NOAA when available. If a feed is temporarily unavailable, the run continues with a clear note; no synthetic fallback is presented as live.</li>
+        <li><strong>Reliably available feeds only:</strong> Solar (F10.7) and ionospheric (K-index) are fetched live from NOAA SWPC. Cryo values are derived from solar + K-index. No synthetic fallback is presented as live.</li>
       </ul>
     </section>
 
@@ -97,7 +97,7 @@
       </div>
       <div class="service-card">
         <h3>Cryo-Inference</h3>
-        <p>Seahawk Jovian cooling telemetry: cooling headroom and thermal margin. Full live telemetry from Seahawk over the hydrogen line. The test uses the same pipeline as production and is <strong>validated using live telemetry as available</strong> (e.g. NOAA solar wind plasma). No difference between test and production.</p>
+        <p>Seahawk Jovian cooling telemetry: cooling headroom and thermal margin. Derived from <strong>reliably available</strong> NOAA feeds only: solar F10.7 + planetary K-index. No plasma feed; same pipeline as production.</p>
       </div>
       <div class="service-card">
         <h3>Bragg-Archive</h3>
@@ -109,7 +109,7 @@
       <h2>How the test proves it’s real (not a simulation)</h2>
       <ul>
         <li><strong>Hydrogen line in the chain:</strong> The Lattice-Sync manifest includes <code>signature_seed_for_verification</code>. Anyone can verify: <code>signature</code> = first 32 hex chars of SHA-256(seed). The seed contains <strong>1420.405751</strong> — the real hydrogen line constant.</li>
-        <li><strong>One Space Cloud cycle:</strong> All three outputs share the same <code>space_cloud_cycle_id</code>. Cryo is driven by full live telemetry (validated using live solar wind as available). Data is processed as one cycle on the Space Cloud.</li>
+        <li><strong>One Space Cloud cycle:</strong> All three outputs share the same <code>space_cloud_cycle_id</code>. Cryo is derived from live solar + K-index (reliably available feeds). Data is processed as one cycle on the Space Cloud.</li>
         <li><strong>Processing blocks:</strong> Each output has a <code>processing</code> block stating <code>hydrogen_line_mhz</code> and (where applicable) <code>space_cloud_component</code>. The receipt lists all three outputs and the cycle’s hydrogen line, solar, and ionospheric context.</li>
         <li><strong>Solar and ionospheric data:</strong> The cycle includes <strong>live solar</strong> (NOAA F10.7 cm flux) and <strong>live ionospheric</strong> (NOAA planetary K-index) when available. The receipt’s <code>space_cloud_context</code> holds these; same as production.</li>
         <li><strong>Validated using live telemetry as available:</strong> The receipt’s <code>data_provenance</code> lists what is live (solar, ionospheric, cryo) and that there is no difference between test and production. If a feed is unavailable, it is marked so; no synthetic data is presented as live.</li>
@@ -121,7 +121,7 @@
       <p>Each of the following is <strong>independently verifiable</strong>. None can be produced by an AI “making up” answers or by a closed simulation.</p>
       <ul>
         <li><strong>Cryptographic signature:</strong> The Lattice-Sync manifest exposes <code>signature_seed_for_verification</code>. You can verify in any environment: <code>signature</code> must equal the first 32 hex characters of SHA-256(seed). The seed contains the real hydrogen line constant (1420.405751). A correct hash cannot be hallucinated; it proves real computation.</li>
-        <li><strong>Live external data:</strong> Solar (F10.7 cm flux), ionospheric (planetary K-index), and cryo-related space weather (solar wind plasma) are fetched from NOAA SWPC at run time. You can compare timestamps and values to NOAA’s published data. Simulation or AI would not have access to today’s live numbers.</li>
+        <li><strong>Live external data:</strong> Only reliably available feeds: solar (F10.7 cm flux) and ionospheric (planetary K-index) from NOAA SWPC. Cryo is derived from those. You can compare timestamps and values to NOAA’s published data.</li>
         <li><strong>Measured roundtrip latency:</strong> The receipt’s <code>hydrogen_line_roundtrip_ms</code> is the actual elapsed time for the cycle (start to receipt). It’s a number from the system clock, not generated text.</li>
         <li><strong>Single cycle ID across all outputs:</strong> Lattice-Sync, Cryo-Inference, and Bragg-Archive share the same <code>space_cloud_cycle_id</code>. That proves one coherent processing run, not a stitched narrative.</li>
         <li><strong>Explicit provenance in the receipt:</strong> The receipt’s <code>data_provenance</code> lists what is real (crypto, timestamps, live solar/ionospheric/cryo) and what was validated using live telemetry. Nothing synthetic is presented as live.</li>

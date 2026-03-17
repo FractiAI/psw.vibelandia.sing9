@@ -30,14 +30,33 @@
     .btn.gold:hover { background: rgba(212,175,55,0.25); }
     .service-card { padding: 1rem 1.25rem; margin-bottom: 0.75rem; background: rgba(0,212,255,0.04); border: 1px solid var(--border); border-radius: 8px; }
     .service-card h3 { margin-top: 0; }
-    .report-box { margin-top: 1.5rem; padding: 1.25rem; background: rgba(0,0,0,0.35); border: 1px solid var(--border); border-radius: 10px; font-size: 0.9rem; }
+    .report-box { margin-top: 1.5rem; padding: 1.25rem; background: rgba(0,0,0,0.35); border: 1px solid var(--border); border-radius: 12px; font-size: 0.9rem; }
     .report-box h3 { margin-top: 0; margin-bottom: 0.75rem; }
-    .report-status { font-weight: 700; margin-bottom: 0.75rem; }
+    .report-status { font-weight: 700; margin-bottom: 0.5rem; font-size: 1.1rem; }
     .report-status.pass { color: var(--pass); }
     .report-status.fail { color: var(--fail); }
-    .report-log { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.82rem; color: var(--sub); max-height: 200px; overflow-y: auto; margin-bottom: 1rem; }
-    .report-json { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.78rem; color: var(--sub); max-height: 280px; overflow: auto; background: rgba(0,0,0,0.4); padding: 0.75rem; border-radius: 6px; }
-    .report-json summary { cursor: pointer; color: var(--cyan); margin-bottom: 0.35rem; }
+    .report-hero { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .report-hero .badge { font-size: 0.75rem; padding: 0.35rem 0.6rem; border-radius: 6px; font-weight: 600; letter-spacing: 0.05em; }
+    .report-hero .badge.live { background: rgba(0,255,136,0.15); color: var(--pass); border: 1px solid rgba(0,255,136,0.4); }
+    .report-hero .badge.latency { background: rgba(0,212,255,0.12); color: var(--cyan); border: 1px solid var(--border); }
+    .report-dashboard { display: grid; gap: 1rem; margin-bottom: 1.25rem; grid-template-columns: 1fr; }
+    @media (min-width: 640px) { .report-dashboard { grid-template-columns: repeat(2, 1fr); } }
+    .report-dashboard .report-card:first-child { grid-column: 1 / -1; }
+    .report-card { background: rgba(0,212,255,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; }
+    .report-card h4 { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.6rem; font-weight: 600; }
+    .report-card .card-title { font-size: 0.95rem; color: var(--gold); margin-bottom: 0.5rem; font-weight: 600; }
+    .report-card .metric-row { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; margin: 0.5rem 0; }
+    .report-card .metric { display: flex; flex-direction: column; gap: 0.15rem; }
+    .report-card .metric-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    .report-card .metric-value { font-size: 1rem; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+    .report-card .metric-value.mono { font-family: ui-monospace, monospace; font-size: 0.88rem; word-break: break-all; }
+    .report-card .card-note { font-size: 0.82rem; color: var(--sub); margin-top: 0.5rem; line-height: 1.5; }
+    .report-card .validated { color: var(--pass); font-size: 0.8rem; }
+    .report-card .unvalidated { color: var(--muted); font-size: 0.8rem; }
+    .report-log { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.8rem; color: var(--sub); max-height: 180px; overflow-y: auto; margin-bottom: 1rem; padding: 0.75rem; background: rgba(0,0,0,0.3); border-radius: 8px; }
+    .report-raw-section { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .report-raw-section summary { cursor: pointer; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .report-json { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.78rem; color: var(--sub); max-height: 280px; overflow: auto; background: rgba(0,0,0,0.4); padding: 0.75rem; border-radius: 6px; margin-top: 0.5rem; }
     .foot { margin-top: 2rem; font-size: 0.8rem; color: var(--sub); text-align: center; }
     .foot a { color: var(--cyan); text-decoration: none; }
     pre, code { font-family: ui-monospace, monospace; font-size: 0.82rem; background: rgba(0,0,0,0.3); padding: 0.2rem 0.4rem; border-radius: 4px; }
@@ -118,34 +137,43 @@
       </p>
       <div id="run-result" class="report-box">
         <h3>Report</h3>
-        <p class="report-status" id="status-line"></p>
-        <p id="latency-line" class="report-latency" style="margin-bottom:0.75rem;font-size:0.9rem;color:var(--cyan);"></p>
+        <div class="report-hero">
+          <p class="report-status" id="status-line"></p>
+          <span id="badge-live" class="badge live" style="display:none;">Live run</span>
+          <span id="badge-latency" class="badge latency" style="display:none;"></span>
+        </div>
         <div id="provenance-callout" class="provenance-callout" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.25);border-radius:8px;font-size:0.85rem;"></div>
-        <pre class="report-log" id="test-log"></pre>
-        <details open>
-          <summary>Space Cloud cycle receipt</summary>
-          <pre class="report-json" id="receipt-json"></pre>
+        <div id="report-dashboard" class="report-dashboard" style="display:none;"></div>
+        <details id="details-log" style="margin-bottom:0.5rem;">
+          <summary>Test log</summary>
+          <pre class="report-log" id="test-log"></pre>
         </details>
-        <details>
-          <summary>Lattice-Sync output</summary>
-          <pre class="report-json" id="lattice-json"></pre>
-        </details>
-        <details>
-          <summary>Cryo-Inference output</summary>
-          <pre class="report-json" id="cryo-json"></pre>
-        </details>
-        <details>
-          <summary>Bragg-Archive output</summary>
-          <pre class="report-json" id="bragg-json"></pre>
-        </details>
-        <details>
-          <summary>Solar data (live from NOAA SWPC when available)</summary>
-          <pre class="report-json" id="solar-json"></pre>
-        </details>
-        <details>
-          <summary>Ionospheric data (live from NOAA SWPC when available)</summary>
-          <pre class="report-json" id="ionospheric-json"></pre>
-        </details>
+        <div class="report-raw-section">
+          <details>
+            <summary>Space Cloud cycle receipt (raw JSON)</summary>
+            <pre class="report-json" id="receipt-json"></pre>
+          </details>
+          <details>
+            <summary>Lattice-Sync (raw JSON)</summary>
+            <pre class="report-json" id="lattice-json"></pre>
+          </details>
+          <details>
+            <summary>Cryo-Inference (raw JSON)</summary>
+            <pre class="report-json" id="cryo-json"></pre>
+          </details>
+          <details>
+            <summary>Bragg-Archive (raw JSON)</summary>
+            <pre class="report-json" id="bragg-json"></pre>
+          </details>
+          <details>
+            <summary>Solar data (raw JSON)</summary>
+            <pre class="report-json" id="solar-json"></pre>
+          </details>
+          <details>
+            <summary>Ionospheric data (raw JSON)</summary>
+            <pre class="report-json" id="ionospheric-json"></pre>
+          </details>
+        </div>
       </div>
     </section>
 
@@ -171,6 +199,10 @@
       var ionosphericJson = document.getElementById('ionospheric-json');
       var latencyLine = document.getElementById('latency-line');
       var provenanceCallout = document.getElementById('provenance-callout');
+      var badgeLive = document.getElementById('badge-live');
+      var badgeLatency = document.getElementById('badge-latency');
+      var reportDashboard = document.getElementById('report-dashboard');
+      var detailsLog = document.getElementById('details-log');
 
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner"></span>Running demo and test…';
@@ -178,7 +210,10 @@
       statusLine.textContent = 'Running…';
       statusLine.className = 'report-status';
       if (latencyLine) latencyLine.textContent = '';
+      if (badgeLive) badgeLive.style.display = 'none';
+      if (badgeLatency) { badgeLatency.style.display = 'none'; badgeLatency.textContent = ''; }
       if (provenanceCallout) { provenanceCallout.style.display = 'none'; provenanceCallout.innerHTML = ''; }
+      if (reportDashboard) { reportDashboard.style.display = 'none'; reportDashboard.innerHTML = ''; }
       testLog.textContent = '';
       receiptJson.textContent = '';
       latticeJson.textContent = '';
@@ -194,18 +229,19 @@
       var apiUrl = apiBase + '/api/run-zero-dish-test';
       var reportUrl = apiBase + '/demo-report.json';
 
+      function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
       function showReport(data, fromApi) {
         statusLine.textContent = data.success ? 'All tests passed.' : 'One or more tests failed.';
         statusLine.className = 'report-status ' + (data.success ? 'pass' : 'fail');
         if (data.live_run) {
-          statusLine.textContent = statusLine.textContent + ' — Live run (real, not mock).';
+          if (badgeLive) { badgeLive.textContent = 'Live run'; badgeLive.style.display = 'inline-block'; }
         } else if (!fromApi && data.source === 'build') {
           statusLine.textContent = statusLine.textContent + ' (build-time report)';
         }
-        if (latencyLine) {
-          latencyLine.textContent = (data.receipt && typeof data.receipt.hydrogen_line_roundtrip_ms === 'number')
-            ? ('LATENCY: Hydrogen line roundtrip: ' + data.receipt.hydrogen_line_roundtrip_ms + ' ms')
-            : '';
+        var roundtrip = data.receipt && typeof data.receipt.hydrogen_line_roundtrip_ms === 'number';
+        if (badgeLatency && roundtrip) {
+          badgeLatency.textContent = data.receipt.hydrogen_line_roundtrip_ms + ' ms roundtrip';
+          badgeLatency.style.display = 'inline-block';
         }
         if (provenanceCallout && data.receipt && data.receipt.data_provenance) {
           var p = data.receipt.data_provenance;
@@ -217,13 +253,73 @@
           provenanceCallout.innerHTML = parts.join(' ');
           provenanceCallout.style.display = 'block';
         }
+        var r = data.receipt;
+        var out = data.outputs || {};
+        var lat = out.lattice_sync;
+        var cryo = out.cryo_inference;
+        var bragg = out.bragg_archive;
+        var solar = out.solar;
+        var iono = out.ionospheric;
+        if (reportDashboard && (r || lat || cryo || bragg)) {
+          var html = '';
+          if (r) {
+            html += '<div class="report-card"><h4>Space Cloud cycle</h4><div class="card-title">' + esc(r.space_cloud_cycle_id || '—') + '</div>';
+            html += '<div class="metric-row"><div class="metric"><span class="metric-label">Timestamp</span><span class="metric-value mono">' + esc(r.timestamp_utc || '—') + '</span></div>';
+            html += '<div class="metric"><span class="metric-label">Hydrogen line</span><span class="metric-value">' + esc(r.hydrogen_line_mhz_used != null ? r.hydrogen_line_mhz_used + ' MHz' : '—') + '</span></div>';
+            if (typeof r.hydrogen_line_roundtrip_ms === 'number') html += '<div class="metric"><span class="metric-label">Roundtrip</span><span class="metric-value">' + r.hydrogen_line_roundtrip_ms + ' ms</span></div>';
+            html += '</div>';
+            if (r.grid_isolation_and_antenna && r.grid_isolation_and_antenna.confirmation) html += '<p class="card-note">' + esc(r.grid_isolation_and_antenna.confirmation) + '</p>';
+            html += '</div>';
+          }
+          if (lat) {
+            html += '<div class="report-card"><h4>Lattice-Sync</h4><div class="card-title">Manifest · Hydrogen line in signature</div>';
+            html += '<div class="metric-row"><div class="metric"><span class="metric-label">Session</span><span class="metric-value mono">' + esc(lat.session_id) + '</span></div>';
+            html += '<div class="metric"><span class="metric-label">Frequency</span><span class="metric-value">' + esc(lat.frequency_mhz != null ? lat.frequency_mhz + ' MHz' : '—') + '</span></div>';
+            html += '<div class="metric"><span class="metric-label">Timestamp</span><span class="metric-value mono">' + esc(lat.timestamp_utc) + '</span></div></div>';
+            html += '<div class="metric-row"><div class="metric"><span class="metric-label">Signature</span><span class="metric-value mono">' + esc(typeof lat.signature === 'string' ? lat.signature.slice(0, 16) + '…' : '—') + '</span></div></div>';
+            html += '<p class="card-note">Verify: signature = first 32 hex of SHA-256(signature_seed_for_verification).</p></div>';
+          }
+          if (cryo) {
+            var sr = cryo.sensor_readings || {};
+            var headroom = sr.jovian_cooling_headroom_pct;
+            var margin = sr.thermal_margin_c;
+            html += '<div class="report-card"><h4>Cryo-Inference</h4><div class="card-title">Seahawk cooling telemetry</div>';
+            html += '<div class="metric-row"><div class="metric"><span class="metric-label">Cooling headroom</span><span class="metric-value">' + (headroom != null ? headroom + ' %' : '—') + '</span></div>';
+            html += '<div class="metric"><span class="metric-label">Thermal margin</span><span class="metric-value">' + (margin != null ? margin + ' °C' : '—') + '</span></div>';
+            html += '<div class="metric"><span class="metric-label">Source</span><span class="metric-value">' + esc(cryo.telemetry_source || '—') + '</span></div></div>';
+            html += '<p class="card-note">' + (cryo.telemetry_validated ? '<span class="validated">Validated with live telemetry.</span>' : '<span class="unvalidated">Feed unavailable; fallback values.</span>') + ' ' + esc(cryo.timestamp_utc || '') + '</p></div>';
+          }
+          if (bragg) {
+            html += '<div class="report-card"><h4>Bragg-Archive</h4><div class="card-title">Volumetric storage</div>';
+            html += '<div class="metric-row"><div class="metric"><span class="metric-label">Version</span><span class="metric-value">' + esc(bragg.version) + '</span></div>';
+            html += '<div class="metric"><span class="metric-label">Layers</span><span class="metric-value">' + (bragg.depth != null ? bragg.depth : (bragg.layers && bragg.layers.length) || '—') + '</span></div>';
+            html += '<div class="metric"><span class="metric-label">Hydrogen line</span><span class="metric-value">' + esc(bragg.hydrogen_line_mhz != null ? bragg.hydrogen_line_mhz + ' MHz' : '—') + '</span></div></div>';
+            html += '<p class="card-note">Layers lifted from Lattice-Sync and Cryo-Inference; keyed to hydrogen line.</p></div>';
+          }
+          if (solar || iono) {
+            html += '<div class="report-card"><h4>Space weather</h4><div class="card-title">Live from NOAA SWPC</div><div class="metric-row">';
+            if (solar) {
+              html += '<div class="metric"><span class="metric-label">Solar F10.7</span><span class="metric-value">' + (solar.f10_7 != null ? solar.f10_7 : '—') + '</span></div>';
+              html += '<div class="metric"><span class="metric-label">Solar source</span><span class="metric-value">' + esc(solar.source || '—') + '</span></div>';
+            }
+            if (iono) {
+              html += '<div class="metric"><span class="metric-label">Kp index</span><span class="metric-value">' + (iono.kp_index != null ? iono.kp_index : '—') + '</span></div>';
+              html += '<div class="metric"><span class="metric-label">Iono source</span><span class="metric-value">' + esc(iono.source || '—') + '</span></div>';
+            }
+            html += '</div>';
+            var anyValid = (solar && solar.validated) || (iono && iono.validated);
+            html += '<p class="card-note">' + (anyValid ? '<span class="validated">Live data validated when available.</span>' : '<span class="unvalidated">One or more feeds temporarily unavailable.</span>') + '</p></div>';
+          }
+          reportDashboard.innerHTML = html;
+          reportDashboard.style.display = 'block';
+        }
         testLog.textContent = data.testLog || '(no log)';
         receiptJson.textContent = data.receipt ? JSON.stringify(data.receipt, null, 2) : '(none)';
-        latticeJson.textContent = data.outputs && data.outputs.lattice_sync ? JSON.stringify(data.outputs.lattice_sync, null, 2) : '(none)';
-        cryoJson.textContent = data.outputs && data.outputs.cryo_inference ? JSON.stringify(data.outputs.cryo_inference, null, 2) : '(none)';
-        braggJson.textContent = data.outputs && data.outputs.bragg_archive ? JSON.stringify(data.outputs.bragg_archive, null, 2) : '(none)';
-        if (solarJson) solarJson.textContent = data.outputs && data.outputs.solar ? JSON.stringify(data.outputs.solar, null, 2) : '(none)';
-        if (ionosphericJson) ionosphericJson.textContent = data.outputs && data.outputs.ionospheric ? JSON.stringify(data.outputs.ionospheric, null, 2) : '(none)';
+        latticeJson.textContent = out.lattice_sync ? JSON.stringify(out.lattice_sync, null, 2) : '(none)';
+        cryoJson.textContent = out.cryo_inference ? JSON.stringify(out.cryo_inference, null, 2) : '(none)';
+        braggJson.textContent = out.bragg_archive ? JSON.stringify(out.bragg_archive, null, 2) : '(none)';
+        if (solarJson) solarJson.textContent = out.solar ? JSON.stringify(out.solar, null, 2) : '(none)';
+        if (ionosphericJson) ionosphericJson.textContent = out.ionospheric ? JSON.stringify(out.ionospheric, null, 2) : '(none)';
       }
 
       function showError(msg, detail) {

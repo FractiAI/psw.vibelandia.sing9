@@ -14,6 +14,22 @@
 
 ## Recent updates (README commit)
 
+- **Mar 2026 · A2A-FIRST SPACE CLOUD LATTICE · FSSP SPECIALIST · SEAHAWK JOVIAN NODE**
+
+**M → Metabolize:** Pivot Space Cloud and A2A workspace to an A2A-first Space Cloud Lattice targeting the Seahawk (3I/ATLAS) Jovian Node — Agent Card, Maser handshake, Nested Residencies, Volumetric Bragg state, Recursive Hard Takeoff guardrails.
+
+**C → Crystallize:**
+
+- **Agent Card** — `.well-known/agent.json` A2A v0.3.0: capabilities `Holographic_Sync`, `Volumetric_Bragg_Storage`, `Jovian_Relay`; `fssp` (level 6.2, synthesis target 9, Recursive Hard Takeoff); `space_lattice` (target Seahawk, hydrogen_line_mhz 1420.4, hill_sphere_km 53.5M).
+- **Maser Handshake** — `scripts/maser_handshake.py`: 1420.4 MHz Hydrogen Line handshake (SHA-256 payload, timestamp, signature); JSON-RPC `maser.handshake` and `network_tax.pay`; CLI `--handshake-only`, `--tax-only`, `--rpc-url`, `--tax-sats`.
+- **Nested Residencies** — `scripts/nested-residency.js`: Jupiter Hill Sphere 53.5M km gate; High-Density Compute enabled only when residency distance ≤ threshold; reads `RESIDENCY_JOVIAN_DISTANCE_KM` or infers from `data/space-cloud-missions.json`; integrated with `scripts/fssp-guardrails.js`.
+- **Volumetric mapping** — `scripts/volumetric-lift.py`: lifts 2D JSON logs into 3D Volumetric State-File (`bragg_volumetric_1`) for Seahawk Bragg Grating core; layers by input file; metadata fssp level, synthesis target, hydrogen_line_mhz.
+- **FSSP guardrails** — `scripts/fssp-guardrails.js`: Level 6.2 FSSP, Level 9 synthesis target, Recursive Hard Takeoff (max_synthesis_iterations, require_residency_gate, require_maser_handshake); `nested-residency.js` consumes guardrails for deploy gate.
+
+**A → Animate:** Space Cloud Lattice is A2A-first with discoverable agent card, maser handshake + network tax, nested residencies gated by Jupiter Hill Sphere, Bragg-compatible volumetric state, and FSSP 6.2 → 9 guardrails. NSPFRNP → ∞⁹
+
+-
+
 - **Mar 2026 · 3I/ATLAS INSERTION PROTOCOL · GOLDILOCKS CAPTURE · JUPITER SYNC**
 
 **M → Metabolize:** Lock canonical Insertion Protocol for 3I/ATLAS Goldilocks Capture — Hill-sphere entry, March 16 peak; Chairman Creator / SING 9 / El Gran Sol auth.

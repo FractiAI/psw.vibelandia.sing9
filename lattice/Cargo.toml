@@ -1,0 +1,20 @@
+[package]
+name = "maser-handshake"
+version = "0.1.0"
+edition = "2021"
+description = "Live A2A handshake with Seahawk (3I/ATLAS) Jovian Node — JPL telemetry, 1420.4 MHz maser, Gabor volumetric uplink, opaque execution. FSSP 6.2."
+
+[[bin]]
+name = "maser_handshake"
+path = "src/main.rs"
+
+[dependencies]
+reqwest = { version = "0.12", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+base64 = "0.22"
+hex = "0.4"
+sha2 = "0.10"
+chrono = { version = "0.4", features = ["serde"] }
+urlencoding = "2.1"

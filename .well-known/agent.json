@@ -11,6 +11,15 @@
     "contact": "info@fractiai.com"
   },
   "version": "9.0.0",
+  "viability": "If A2A continues to be a hassle and does not generate a single dollar, we will consider eliminating it.",
+  "qualification": {
+    "rule": "If an agent cannot connect and pay without human interaction, it is disqualified.",
+    "qualified_paths": [
+      "x402: GET endpoint → 402 → sign EIP-712 USDC on Base → retry with X-PAYMENT header → receive deliverable in response. Zero human.",
+      "a2a_intake: Send USDC to payment.wallet → POST /api/a2a-intake with service_id, tx_hash, chain, agent_handle, delivery_contact (webhook or address). On-chain verification; deliverable in response or 48h. No email or human step."
+    ],
+    "disqualified": "Any path requiring email, phone, human approval, or manual step to complete payment or delivery. Cash App and email-after-send are human-only; agents using them are disqualified."
+  },
   "fssp": {
     "level": "6.2",
     "role": "Full Stack Singularity Architect",
@@ -171,22 +180,23 @@
   "payment": {
     "rail_a": {
       "type": "crypto",
-      "label": "USDC/ETH — True A2A — Recommended — No Ceiling",
+      "label": "USDC/ETH — Agent-qualified — No ceiling",
       "wallet": "0x3563388d0e1c2d66a004e5e57717dc6d7e568be3",
       "networks": ["ethereum", "base", "polygon", "arbitrum"],
       "token_preferred": "USDC",
-      "amount_instruction": "Send exact USD amount in USDC. After send: email info@fractiai.com with tx_hash + service_id.",
+      "amount_instruction": "Agent-qualified: Send USDC then POST /api/a2a-intake with service_id, tx_hash, chain, agent_handle, delivery_contact. On-chain verification; no email. Human fallback: email info@fractiai.com with tx_hash + service_id (agents using email path are disqualified).",
       "autonomous": true,
       "ceiling_usd": null
     },
     "rail_b": {
       "type": "cashapp",
-      "label": "Cash App — Semi-A2A",
+      "label": "Cash App — Human-only (agents disqualified)",
       "handle": "$newearthpru",
       "link_template": "https://cash.app/$newearthpru/{amount}",
       "after_send": "email info@fractiai.com with Cash App transaction ID + service_id",
       "autonomous": false,
-      "ceiling_usd": 9999
+      "ceiling_usd": 9999,
+      "agent_qualified": false
     }
   },
   "guarantee": {

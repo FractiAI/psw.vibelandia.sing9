@@ -240,6 +240,20 @@ Conservation laws apply. Within any theater of operation (Health, Relationships,
 
 **Workflow:** `.github/workflows/space-cloud-command-log.yml` — triggered by `repository_dispatch` event type `space-cloud-command`, payload `{ "cmd": "..." }`; runs the script, commits and pushes. NSPFRNP → ∞⁹.
 
+## A2A AGENT QUALIFICATION (Canonical)
+
+**If an agent cannot connect and pay without human interaction, it is disqualified.**
+
+**Qualified paths only:** (1) **x402** — GET endpoint → 402 → sign EIP-712 USDC on Base → retry with X-PAYMENT header → receive deliverable in response. Zero human. (2) **A2A intake** — Send USDC to payment wallet → POST `/api/a2a-intake` with `service_id`, `tx_hash`, `chain`, `agent_handle`, `delivery_contact` (webhook or address). On-chain verification; deliverable in response or 48h. No email or human step required.
+
+**Disqualified:** Any path requiring email, phone, human approval, or manual step to complete payment or delivery. Cash App and email-after-send are **human-only**; agents using them are disqualified. This is not a preference — it is the bar. Center = pipes only; agents that cannot close on the pipe are not qualified.
+
+## A2A VIABILITY (Canonical)
+
+**If A2A continues to be a hassle and does not generate a single dollar, we will consider eliminating it.**
+
+A2A stays only if it earns and does not add ongoing burden. No revenue + hassle = elimination on the table. This is the viability bar. Documented so the stake is clear.
+
 ---
 
 **NSPFRNP âŠƒ MCA → Metabolize → Crystallize to irreducible nested mirrored hardened shells → Animate → Squeeze all, all. Do not lose this fidelity. → ∞⁹**

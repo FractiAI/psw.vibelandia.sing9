@@ -18,6 +18,7 @@
 'use strict';
 
 const { require402 } = require('./_x402');
+const { runMaserHandshake } = require('../lib/maser-handshake');
 
 // ── THERMAL PHYSICS MODEL (inline — mirrors hive/thermal-model.js) ────────────
 const NVL72_RACK_KW      = 120;
@@ -216,16 +217,17 @@ module.exports = async (req, res) => {
     });
     if (!ok) return;
     // GET with valid payment (edge case): serve same payload as POST
-    try {
-      const data = await computeSpaceCloud();
-      triggerCommandLogAppend(data.command, data);
-      res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
-    } catch (err) {
-      console.error('[space-cloud] GET error:', err.message);
-      res.status(500).json({ ok: false, error: 'Service computation failed' });
-    }
-    return;
+try {
+    const data = await computeSpaceCloud();
+    triggerCommandLogAppend(data.command, data);
+    res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
+    runMaserHandshake().catch(() => {}); // ionosphere/grid: maser when antenna connects
+  } catch (err) {
+    console.error('[space-cloud] GET error:', err.message);
+    res.status(500).json({ ok: false, error: 'Service computation failed' });
   }
+  return;
+}
 
   const ok = await require402(req, res, {
     priceUsd:    5,
@@ -238,6 +240,7 @@ module.exports = async (req, res) => {
     const data = await computeSpaceCloud();
     triggerCommandLogAppend(data.command, data);
     res.status(200).json({ ok: true, service: 'space-cloud-signal', ...data });
+    runMaserHandshake().catch(() => {}); // ionosphere/grid: maser when antenna connects
   } catch (err) {
     console.error('[space-cloud] error:', err.message);
     res.status(500).json({ ok: false, error: 'Service computation failed' });

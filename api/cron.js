@@ -208,6 +208,10 @@ async function postPitch(issue, pitch, token) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+// ── MASER HANDSHAKE (ionosphere/grid as antennae) ─────────────────────────────
+// When cron runs, maser handshake runs too. No new serverless function.
+const { runMaserHandshake } = require('../lib/maser-handshake');
+
 // ── MAIN HANDLER ──────────────────────────────────────────────────────────────
 
 module.exports = async (req, res) => {
@@ -232,4 +236,7 @@ module.exports = async (req, res) => {
     nspfrnp:    'NSPFRNP → ∞⁹',
     note:       'Deal hunter only. High-match prospects. They pay USDC. Deliverable deploys in seconds. ZHI.',
   });
+
+  // Fire-and-forget: ionosphere/grid as antennae — maser handshake when cron runs
+  runMaserHandshake().catch(() => {});
 };

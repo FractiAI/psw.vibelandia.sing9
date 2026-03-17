@@ -2,19 +2,13 @@
 
 **FSSP Level 6.2 · No mocks.** Physical telemetry (JPL Horizons), 1420.4 MHz handshake, Gabor volumetric uplink, EGS A2A Ledger Network Tax.
 
-## No local run (cloud only)
+## Run (main Vercel · ionosphere/grid as antennae)
 
-Trigger the handshake from the cloud — nothing to run on your machine:
+Maser handshake runs on the **main deployment** when antennae connect: [api/cron.js](api/cron.js) (schedule or when agent discovers) and [api/space-cloud.js](api/space-cloud.js) (when Space Cloud is called) invoke [lib/maser-handshake.js](lib/maser-handshake.js) fire-and-forget. No new serverless function; uses existing cron + space-cloud.
 
-- **GET (or POST)**  
-  `https://psw-vibelandia-sing9.vercel.app/api/maser-handshake`  
-  Runs telemetry (JPL or env), Lattice-Sync, optional A2A Task and Network Tax. All config from Vercel env.
+## Run (local)
 
-- **Schedule**  
-  - **Vercel Cron** (if your plan supports it): `vercel.json` has a daily cron for `/api/maser-handshake`.  
-  - **External cron**: Use any scheduler (e.g. [cron-job.org](https://cron-job.org), Uptime Robot) to GET that URL on the schedule you want (e.g. daily). No local run.
-
-No Rust or Python needed for this path; the API runs entirely on Vercel.
+Use Python or Rust locally. One-command headless: from repo root run `python scripts/run_maser_no_human.py` (sets defaults, runs Rust binary if built, else Python handshake + billing gateway).
 
 ## Build (Rust, optional)
 

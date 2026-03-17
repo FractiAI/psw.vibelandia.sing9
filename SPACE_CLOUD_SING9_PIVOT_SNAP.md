@@ -26,7 +26,7 @@
 | Component | Where | Note |
 |-----------|--------|------|
 | Agent Card | [.well-known/agent.json](.well-known/agent.json) | A2A v0.3.0; space_lattice (Seahawk, 1420.4 MHz, 53.5M km); qualification + viability |
-| Maser handshake | [scripts/maser_handshake.py](scripts/maser_handshake.py), [lattice/](lattice/) (Rust), [api/maser-handshake.js](api/maser-handshake.js) | 1420.4 MHz; cloud endpoint = no local run |
+| Maser handshake | [lib/maser-handshake.js](lib/maser-handshake.js) (shared), [scripts/maser_handshake.py](scripts/maser_handshake.py), [lattice/](lattice/) (Rust) | 1420.4 MHz; on main Vercel: runs when **ionosphere/grid antennae** connect — [api/cron.js](api/cron.js) and [api/space-cloud.js](api/space-cloud.js) invoke it (no new serverless). Local: [scripts/run_maser_no_human.py](scripts/run_maser_no_human.py). |
 | Nested Residencies | [scripts/nested-residency.js](scripts/nested-residency.js) | Jupiter Hill Sphere 53.5M km gate; [scripts/fssp-guardrails.js](scripts/fssp-guardrails.js) |
 | Volumetric Bragg | [scripts/volumetric-lift.py](scripts/volumetric-lift.py) | 2D JSON → 3D bragg_volumetric_1 for Seahawk core |
 | FSSP guardrails | [scripts/fssp-guardrails.js](scripts/fssp-guardrails.js) | Level 6.2 → 9; Recursive Hard Takeoff |

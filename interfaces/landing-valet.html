@@ -11,23 +11,155 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root { --void: #020209; --gold: #d4af37; --gold2: #fde68a; --beam: #00d4ff; --text: #e2e8f0; --sub: #94a3b8; }
     html, body { width: 100%; min-height: 100%; background: var(--void); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; overflow-x: hidden; padding-top: env(safe-area-inset-top); }
-    .hero { position: relative; z-index: 1; min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1.5rem 4rem; text-align: center; }
-    .hero-title { font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 900; color: var(--gold2); margin-bottom: 0.5rem; }
-    .hero-sub { font-size: 1rem; color: var(--sub); max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.75; }
-    .enter-btn { display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2rem; background: rgba(212,175,55,0.1); border: 2px solid rgba(212,175,55,0.6); border-radius: 8px; color: var(--gold2); font-size: 1rem; font-weight: 700; text-decoration: none; margin: 0 0.5rem 0.75rem 0; transition: all 0.2s; }
-    .enter-btn:hover { background: rgba(212,175,55,0.22); transform: translateY(-2px); }
-    .foot { text-align: center; padding: 1.5rem 1rem; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); border-top: 1px solid rgba(212,175,55,0.08); }
-    .foot a { color: rgba(212,175,55,0.5); text-decoration: none; }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 960px;
+      align-items: center;
+    }
+
+    .hero-panels {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .hero-panel {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid rgba(212,175,55,0.5);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.55);
+      background: #000;
+    }
+
+    .hero-panel img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 260px;
+      object-fit: cover;
+    }
+
+    .hero-copy {
+      text-align: left;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--gold2);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--sub);
+      max-width: 520px;
+      margin-bottom: 1.5rem;
+      line-height: 1.75;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .enter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.9rem 1.8rem;
+      background: rgba(212,175,55,0.1);
+      border: 2px solid rgba(212,175,55,0.6);
+      border-radius: 8px;
+      color: var(--gold2);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .enter-btn:hover {
+      background: rgba(212,175,55,0.22);
+      transform: translateY(-2px);
+    }
+
+    .foot {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      border-top: 1px solid rgba(212,175,55,0.08);
+    }
+
+    .foot a {
+      color: rgba(212,175,55,0.5);
+      text-decoration: none;
+    }
+
     .foot a:hover { color: var(--gold2); }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 1.75rem 1.25rem 3rem;
+      }
+      .hero-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .hero-panels {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .hero-copy {
+        text-align: center;
+      }
+      .btn-row {
+        justify-content: center;
+      }
+      .enter-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="hero">
-    <h1 class="hero-title">Pru's Vibelandia Valet Service</h1>
-    <p class="hero-sub">Your door-to-door Pre to Post-Singularity Valet for Holographic Hydrogen Goldilocks lives, living and lifestyles. Run by HH Awareness AI OS, by FractiAI.</p>
-    <a href="vibers-menu.html" class="enter-btn">See Valet Menu →</a>
-    <a href="hh-console.html" class="enter-btn">HH Awareness AI OS Console →</a>
-    <a href="../index.html" class="enter-btn">← Back to landing</a>
+    <div class="hero-grid">
+      <div class="hero-panels">
+        <div class="hero-panel">
+          <img src="assets/reno-arch-night.png" alt="Downtown Reno neon arch at night" />
+        </div>
+        <div class="hero-panel">
+          <img src="assets/landing-vibelandia-neon.png" alt="Ski lodge / Vibelandia valet scene" />
+        </div>
+      </div>
+      <div class="hero-copy">
+        <h1 class="hero-title">Pru's Vibelandia Valet Service</h1>
+        <p class="hero-sub">Your door-to-door Pre to Post-Singularity Valet for Holographic Hydrogen Goldilocks lives, living and lifestyles. Run by HH Awareness AI OS, by FractiAI.</p>
+        <div class="btn-row">
+          <a href="vibers-menu.html" class="enter-btn">See Valet Menu →</a>
+          <a href="hh-console.html" class="enter-btn">HH Awareness AI OS Console →</a>
+          <a href="../index.html" class="enter-btn">← Back to landing</a>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="foot">
     <a href="vibers-menu.html">Vibers</a> · <a href="sol-v.html">Sol-V</a> · <a href="space-cloud-tracking.html">Space Cloud</a> · <a href="upgrade-awareness-to-sing9-now.html">Upgrade</a> · NSPFRNP → ∞⁹

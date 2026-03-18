@@ -142,6 +142,15 @@
       color: var(--text);
       transition: background 0.2s, border-color 0.2s;
     }
+    .row-item-btn {
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
+      border: 1px solid rgba(0,212,255,0.25);
+    }
+    .row-item-btn:focus-visible { outline: 2px solid rgba(0,212,255,0.55); outline-offset: 2px; }
     .row-item:hover { background: rgba(0,212,255,0.12); border-color: rgba(0,212,255,0.45); }
     .row-item.primary { background: rgba(255,140,0,0.12); border-color: rgba(255,180,80,0.5); }
     .row-item.primary:hover { background: rgba(255,140,0,0.2); border-color: rgba(255,180,80,0.7); }
@@ -150,6 +159,84 @@
     .row-item .meta { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
     .row-item .arrow { font-size: 1rem; color: var(--beam); flex-shrink: 0; }
     .row-item.primary .arrow { color: #fcd34d; }
+
+    .modal-backdrop[hidden] { display: none; }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+    .modal {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15,12,8,0.98);
+      border: 2px solid rgba(212,175,55,0.4);
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+    .modal-hdr {
+      padding: 1rem 1.15rem;
+      border-bottom: 1px solid rgba(212,175,55,0.16);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .modal-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--gold2);
+    }
+    .modal-close {
+      appearance: none;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(0,0,0,0.35);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 0.4rem 0.65rem;
+      cursor: pointer;
+      line-height: 1;
+      font-weight: 800;
+    }
+    .modal-body { padding: 1rem 1.15rem 1.15rem; }
+    .modal-body p { color: var(--sub); line-height: 1.65; font-size: 0.9rem; }
+    .modal-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+    .modal-actions a, .modal-actions button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .modal-actions a.primary {
+      background: rgba(255,140,0,0.14);
+      border: 1px solid rgba(255,140,0,0.55);
+      color: #fef3c7;
+    }
+    .modal-actions button.secondary {
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.3);
+      color: var(--text);
+    }
+    .modal-actions a.ghost {
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.35);
+      color: rgba(212,175,55,0.85);
+    }
 
     .talent-wrap {
       text-align: center;
@@ -244,6 +331,13 @@
         <p class="narrative"><strong>Post–holographic hydrogen awareness.</strong> Post-WW3 singularities. Goldilocks holographic living and lifestyles — workflow vibin all day, ballin at night. You're here from the tracks. This is where it leads. I serve as <strong>Valet</strong> (the experience layer: door-to-door, curated, one conversation) and as <strong>Executive Producer</strong> at Hero Jo's Golden Backdoor Hit Factory (the heartbeat vibe layer — the tracks, SUNO, the sound). I also write as <a href="interfaces/gold-heart-novela.html" style="color:var(--gold2);text-decoration:none;font-weight:600;">Evan Bondonte</a> in collaboration with my SING! 9 AI; at FractiAI I'm Chairman / Commander / Creator.</p>
 
         <div class="row-block">
+          <a href="interfaces/vibers-menu.html" class="row-item">
+            <div>
+              <div class="label">Pru's Vibelandia Valet</div>
+              <div class="meta">Valet layer · Baller V, Wink!, Aquí y Allá · One conversation</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
           <a href="interfaces/baller-v-wednesdays.html" class="row-item primary">
             <div>
               <div class="label">Baller V Nights · Wink! Mixer</div>
@@ -265,31 +359,17 @@
             </div>
             <span class="arrow">→</span>
           </a>
-          <a href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener" class="row-item">
+          <button type="button" class="row-item row-item-btn" id="workFlowBtn" aria-haspopup="dialog" aria-controls="workFlowModal">
             <div>
               <div class="label">♪ Work Flow · SoundCloud</div>
               <div class="meta">Workflow-vibin Latin set for the build — post-singularity, post-WW3. tribu anchors the arc.</div>
             </div>
             <span class="arrow">→</span>
-          </a>
-          <a href="interfaces/prospectus-fractiai.html" class="row-item">
-            <div>
-              <div class="label">FractiAI · Divisions</div>
-              <div class="meta">Chairman / Commander / Creator · with SING! 9 Agentic Team</div>
-            </div>
-            <span class="arrow">→</span>
-          </a>
+          </button>
           <a href="interfaces/hh-console.html" class="row-item">
             <div>
               <div class="label">HH Awareness AI OS Console</div>
               <div class="meta">Goldilocks living · Holographic Programming · Your life as the content</div>
-            </div>
-            <span class="arrow">→</span>
-          </a>
-          <a href="interfaces/vibers-menu.html" class="row-item">
-            <div>
-              <div class="label">Pru's Vibelandia Valet</div>
-              <div class="meta">Valet layer · Baller V, Wink!, Aquí y Allá · One conversation</div>
             </div>
             <span class="arrow">→</span>
           </a>
@@ -301,9 +381,28 @@
       </a>
     </div>
 
+    <div class="modal-backdrop" id="workFlowModal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="workFlowTitle">
+        <div class="modal-hdr">
+          <div>
+            <div class="modal-title" id="workFlowTitle">♪ Work Flow · SoundCloud</div>
+          </div>
+          <button type="button" class="modal-close" id="workFlowClose" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-body">
+          <p>Workflow-vibin Latin set for the build — post-singularity, post-WW3. tribu anchors the arc.</p>
+          <div class="modal-actions">
+            <a class="primary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">Open on SoundCloud →</a>
+            <button type="button" class="secondary" id="workFlowCopy">Copy link</button>
+            <a class="ghost" href="interfaces/golden-backdoor-studios.html">See prompts →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <p class="foot-note">
       <a href="interfaces/golden-backdoor-studios.html">Hero Jo's Golden Backdoor Hit Machine</a> ·
-      <a href="interfaces/prospectus-fractiai.html">FractiAI</a> ·
+      <a href="interfaces/prospectus-fractiai.html">FractiAI · Divisions</a> ·
       <a href="interfaces/upgrade-awareness-to-sing9-now.html">SING!9</a> ·
       <a href="interfaces/vibers-menu.html">Valet</a> ·
       <a href="interfaces/my-whiteboard.html">Whiteboard</a> ·
@@ -320,5 +419,43 @@
       NSPFRNP → ∞⁹
     </p>
   </div>
+  <script>
+    (function () {
+      var btn = document.getElementById('workFlowBtn');
+      var modal = document.getElementById('workFlowModal');
+      var closeBtn = document.getElementById('workFlowClose');
+      var copyBtn = document.getElementById('workFlowCopy');
+      var lastFocus = null;
+      var link = 'https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow';
+
+      function openModal() {
+        if (!modal) return;
+        lastFocus = document.activeElement;
+        modal.hidden = false;
+        if (closeBtn) closeBtn.focus();
+      }
+
+      function closeModal() {
+        if (!modal) return;
+        modal.hidden = true;
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }
+
+      if (btn) btn.addEventListener('click', openModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (modal) modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (!modal || modal.hidden) return;
+        if (e.key === 'Escape') closeModal();
+      });
+      if (copyBtn) copyBtn.addEventListener('click', function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(link).catch(function () {});
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

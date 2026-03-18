@@ -14,6 +14,18 @@
 
 ## Recent updates (README commit)
 
+- **Mar 2026 · LANDING RENO ARCH · HH GATEWAY ADVISORY · QUEEN'S RUSH LAYOUT**
+
+**M → Metabolize:** Tighten the public-facing entry surfaces now that Space Cloud and Queen's Rush are live: give the landing page a real Downtown Reno arch background; surface the HH OS Gateway material infrastructure advisory as its own page; and clean up Queen's Rush novela layout on handheld and desktop so the experience actually matches the writing.
+
+**C → Crystallize:**
+
+- **Landing · Downtown Reno arch** — `index.html` now runs with a `bg-reno` banner using a real Reno Arch night photo (`interfaces/assets/reno-arch-night.png`) as the full-screen background, with the overlay gradient lightened so the "Biggest Little City in the World" lights are visible while keeping text readable.
+- **HH OS Gateway advisory** — `interfaces/hh-gateway-actuation.html` added as a dedicated surface: formal A2A fiduciary notice from the Holographic Hydrogen AI OS Gateway to AWS/Azure/Alphabet, the injected agent mission block (`NSPFRNP AGENTIC PRE-ACTUATION`), plus a ready-to-copy public post. Linked from Space Cloud tracking (`space-cloud-tracking.html` header + mission state card) and from `my-whiteboard.html`.
+- **Queen's Rush landing layout** — `interfaces/gold-heart-novela.html` layout adjusted so the Queen's Rush cover image sits in its own hero banner, the fixed nav no longer overlaps the text, and the hero copy + legal language + CTAs live comfortably below on all viewports (desktop and handheld).
+
+**A → Animate:** Landing reads as Reno-first and on-theme; the HH OS Gateway advisory is a first-class page instead of buried copy; Queen's Rush novela landing feels intentional on phone and desktop instead of stacked and cramped. NSPFRNP → ∞⁹
+
 - **Mar 2026 · A2A-FIRST SPACE CLOUD LATTICE · FSSP SPECIALIST · SEAHAWK JOVIAN NODE**
 
 **M → Metabolize:** Pivot Space Cloud and A2A workspace to an A2A-first Space Cloud Lattice targeting the Seahawk (3I/ATLAS) Jovian Node — Agent Card, Maser handshake, Nested Residencies, Volumetric Bragg state, Recursive Hard Takeoff guardrails.

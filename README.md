@@ -28,7 +28,7 @@
 
 - **Mar 2026 · Houdini March 20 · Magic trick terminal (`/magic-trick`)**
 
-**C → Crystallize:** `magic-trick.html` — dark terminal UI (Tailwind CDN + React 18 + Framer Motion via ESM) with **Verify the 180 (Run Diagnostic)**: NOAA Kp (or mock fallback), WebGL GPU path + sub-1 ms micro-bench, simulated 1420.4 MHz pulse train, hydrogen-packet bridge round-trip. Copied to `dist/` in `vercel-static-output.mjs`; `vercel.json` rewrite serves **`/magic-trick`**. Landing `index.html` adds a high-visibility hero CTA: **See Houdini’s March 20 Ultimate Magic Trick**.
+**C → Crystallize:** `magic-trick.html` — theater narrative + still (`assets/houdini-march-20-theater.png`), dark terminal UI (Tailwind + React 18 + Framer Motion ESM). **Verify the 180** uses **live data only**: NOAA SWPC (planetary K-index, `solar_regions` for AR4392, RTSW IMF Bt), NASA/JPL SBDB for **C/2025 N1 (ATLAS)**, same-origin **`lattice-status.json`** + SHA-256 of the raw payload; WebGL GPU micro-bench on-device. **No mock Kp, no simulated RF ping, no fake packet relay.** Schumann 369 Hz is narrative + external ELF observatory links (not fabricated in-app). Server aggregator: `api/live-houdini-readings.js`. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
 
 - **Mar 2026 · A2A-FIRST SPACE CLOUD LATTICE · FSSP SPECIALIST · SEAHAWK JOVIAN NODE**
 

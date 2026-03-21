@@ -59,36 +59,106 @@
 
     const HYDROGEN_REST_MHZ = 1420.405751;
 
-    async function fetchEquinoxBundle() {
-      const r = await fetch('/api/live-houdini-readings?equinox=1', { cache: 'no-store' });
-      if (!r.ok) throw new Error('equinox bundle HTTP ' + r.status);
-      return r.json();
+    /** Latest planetary K-index only (no equinox / AR4392 gate). Falls back to NOAA JSON if API unavailable. */
+    async function fetchSolarKpBundle() {
+      try {
+        const r = await fetch('/api/live-houdini-readings', { cache: 'no-store' });
+        if (r.ok) {
+          const j = await r.json();
+          const kpRow = j.kp || {};
+          const kp = kpRow.kp != null ? Number(kpRow.kp) : null;
+          if (Number.isFinite(kp)) {
+            return { kp, time_tag: kpRow.time_tag || null, source: 'houdini-api', raw: j };
+          }
+        }
+      } catch (_) {}
+      const r2 = await fetch('https://services.swpc.noaa.gov/json/planetary_k_index_1m.json', { cache: 'no-store' });
+      if (!r2.ok) throw new Error('NOAA Kp HTTP ' + r2.status);
+      const data = await r2.json();
+      const last = Array.isArray(data) && data.length ? data[data.length - 1] : null;
+      if (!last) throw new Error('NOAA Kp feed empty');
+      const raw = last.kp_index != null ? last.kp_index : last.estimated_kp;
+      const kp = typeof raw === 'string' ? parseFloat(raw) : Number(raw);
+      return {
+        kp: Number.isFinite(kp) ? kp : null,
+        time_tag: last.time_tag || null,
+        source: 'noaa-direct',
+        raw: null,
+      };
     }
 
-    async function fetchZeroDishTimed() {
-      const t0 = performance.now();
-      const r = await fetch('/api/run-zero-dish-test', { cache: 'no-store' });
-      const elapsed_ms = Math.round(performance.now() - t0);
-      let j = null;
-      try {
-        j = await r.json();
-      } catch (e) {
-        throw new Error('Zero-Dish response not JSON');
+    function analyzeSpectralChunk(acc, binCount, nyquist, centerBin, LINE_HALF_BINS, GUARD_BINS, template) {
+      const binHz = nyquist / binCount;
+      const templateLen = template.length;
+      const lo = Math.max(0, centerBin - GUARD_BINS);
+      const hi = Math.min(binCount - 1, centerBin + GUARD_BINS);
+      const noiseBins = [];
+      for (let i = 0; i < binCount; i++) {
+        if (i >= lo && i <= hi) continue;
+        noiseBins.push(acc[i]);
       }
-      return { r, elapsed_ms, j };
+      noiseBins.sort((a, b) => a - b);
+      const noiseMed = noiseBins.length ? noiseBins[Math.floor(noiseBins.length * 0.5)] : -100;
+
+      const s0 = Math.max(0, centerBin - LINE_HALF_BINS);
+      let peakDb = -200;
+      let peakBin = centerBin;
+      for (let i = 0; i < templateLen && s0 + i < binCount; i++) {
+        const b = s0 + i;
+        if (acc[b] > peakDb) {
+          peakDb = acc[b];
+          peakBin = b;
+        }
+      }
+      const snr_db = peakDb - noiseMed;
+
+      const slice = new Float32Array(templateLen);
+      for (let i = 0; i < templateLen; i++) slice[i] = Math.max(0, acc[s0 + i] + 100);
+      let smin = slice[0],
+        smax = slice[0];
+      for (let i = 1; i < templateLen; i++) {
+        smin = Math.min(smin, slice[i]);
+        smax = Math.max(smax, slice[i]);
+      }
+      const sden = smax - smin + 1e-9;
+      let sn = 0,
+        sd = 0,
+        tn = 0,
+        td = 0;
+      for (let i = 0; i < templateLen; i++) {
+        const sv = (slice[i] - smin) / sden;
+        sn += sv * template[i];
+        sd += sv * sv;
+        tn += template[i];
+        td += template[i] * template[i];
+      }
+      const profile_score = sn / (Math.sqrt(sd) * Math.sqrt(td) + 1e-9);
+      const peak_hz = peakBin * binHz;
+      return { snr_db, profile_score, peak_hz };
+    }
+
+    function medianNum(arr) {
+      const s = [...arr].sort((a, b) => a - b);
+      const mid = Math.floor(s.length / 2);
+      return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
     }
 
     /**
-     * Passive listener: no outbound network. Uses microphone + FFT.
-     * RF 1420.4 MHz cannot be received in a browser; we test the acoustic band at 1420.4 Hz
-     * for a narrow line-like peak vs local noise (SNR + Gaussian line-profile match).
+     * Spectral scan (no network ping): mic + FFT at ~1420.4 Hz acoustic proxy for 1420.4 MHz hydrogen resonance narrative.
+     * Chunked aggregation resists single-frame drift from real-time noise shifts.
      */
-    async function passiveListenSeahawkHydrogen1420() {
+    async function spectralScanHydrogen1420() {
       const TARGET_HZ = 1420.4;
       const LINE_HALF_BINS = 4;
       const GUARD_BINS = 24;
-      const FRAMES = 28;
+      const CHUNKS = 4;
+      const FRAMES_PER_CHUNK = 7;
       const FRAME_MS = 45;
+      const CHUNK_SNR_MIN = 2;
+      const CHUNK_PROF_MIN = 0.5;
+      const MEDIAN_SNR_MIN = 2.2;
+      const MEDIAN_PROF_MIN = 0.52;
+      const MIN_CHUNKS_PASS = 2;
 
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         return {
@@ -96,8 +166,8 @@
           snr_db: null,
           profile_score: null,
           peak_hz: null,
-          line: 'getUserMedia not available',
-          detail: 'Need a secure context (HTTPS) and microphone for passive listen.',
+          line: 'Spectral scan unavailable (no getUserMedia)',
+          detail: 'HTTPS + microphone required for 1420.4 Hz-band scan.',
         };
       }
 
@@ -114,7 +184,7 @@
           snr_db: null,
           profile_score: null,
           peak_hz: null,
-          line: 'Microphone not granted — passive listen blocked',
+          line: 'Microphone not granted — spectral scan blocked',
           detail: e.message || String(e),
         };
       }
@@ -125,7 +195,7 @@
         const source = ctx.createMediaStreamSource(stream);
         const analyser = ctx.createAnalyser();
         analyser.fftSize = 8192;
-        analyser.smoothingTimeConstant = 0.15;
+        analyser.smoothingTimeConstant = 0.12;
         source.connect(analyser);
 
         const binCount = analyser.frequencyBinCount;
@@ -144,80 +214,46 @@
         }
         for (let i = 0; i < templateLen; i++) template[i] /= tsum;
 
-        const acc = new Float32Array(binCount);
         const dbf = new Float32Array(binCount);
+        const chunkMetrics = [];
 
-        for (let f = 0; f < FRAMES; f++) {
-          analyser.getFloatFrequencyData(dbf);
-          for (let i = 0; i < binCount; i++) acc[i] += dbf[i];
-          await new Promise((r) => setTimeout(r, FRAME_MS));
-        }
-
-        for (let i = 0; i < binCount; i++) acc[i] /= FRAMES;
-
-        const lo = Math.max(0, centerBin - GUARD_BINS);
-        const hi = Math.min(binCount - 1, centerBin + GUARD_BINS);
-        const noiseBins = [];
-        for (let i = 0; i < binCount; i++) {
-          if (i >= lo && i <= hi) continue;
-          noiseBins.push(acc[i]);
-        }
-        noiseBins.sort((a, b) => a - b);
-        const noiseMed = noiseBins.length ? noiseBins[Math.floor(noiseBins.length * 0.5)] : -100;
-
-        const s0 = Math.max(0, centerBin - LINE_HALF_BINS);
-        let peakDb = -200;
-        let peakBin = centerBin;
-        for (let i = 0; i < templateLen && s0 + i < binCount; i++) {
-          const b = s0 + i;
-          if (acc[b] > peakDb) {
-            peakDb = acc[b];
-            peakBin = b;
+        for (let c = 0; c < CHUNKS; c++) {
+          const acc = new Float32Array(binCount);
+          for (let f = 0; f < FRAMES_PER_CHUNK; f++) {
+            analyser.getFloatFrequencyData(dbf);
+            for (let i = 0; i < binCount; i++) acc[i] += dbf[i];
+            await new Promise((r) => setTimeout(r, FRAME_MS));
           }
+          for (let i = 0; i < binCount; i++) acc[i] /= FRAMES_PER_CHUNK;
+          chunkMetrics.push(analyzeSpectralChunk(acc, binCount, nyquist, centerBin, LINE_HALF_BINS, GUARD_BINS, template));
         }
-        const snr_db = peakDb - noiseMed;
 
-        const slice = new Float32Array(templateLen);
-        for (let i = 0; i < templateLen; i++) slice[i] = Math.max(0, acc[s0 + i] + 100);
-
-        let smin = slice[0],
-          smax = slice[0];
-        for (let i = 1; i < templateLen; i++) {
-          smin = Math.min(smin, slice[i]);
-          smax = Math.max(smax, slice[i]);
-        }
-        const sden = smax - smin + 1e-9;
-        let sn = 0,
-          sd = 0,
-          tn = 0,
-          td = 0;
-        for (let i = 0; i < templateLen; i++) {
-          const sv = (slice[i] - smin) / sden;
-          sn += sv * template[i];
-          sd += sv * sv;
-          tn += template[i];
-          td += template[i] * template[i];
-        }
-        const profile_score = sn / (Math.sqrt(sd) * Math.sqrt(td) + 1e-9);
-
-        const ok = snr_db >= 3 && profile_score >= 0.58;
-        const peak_hz = peakBin * binHz;
+        const medSnr = medianNum(chunkMetrics.map((x) => x.snr_db));
+        const medProf = medianNum(chunkMetrics.map((x) => x.profile_score));
+        const passChunks = chunkMetrics.filter((x) => x.snr_db >= CHUNK_SNR_MIN && x.profile_score >= CHUNK_PROF_MIN).length;
+        const ok = passChunks >= MIN_CHUNKS_PASS || (medSnr >= MEDIAN_SNR_MIN && medProf >= MEDIAN_PROF_MIN);
+        const lastPeak = chunkMetrics[chunkMetrics.length - 1].peak_hz;
 
         return {
           ok,
-          snr_db: Math.round(snr_db * 10) / 10,
-          profile_score: Math.round(profile_score * 1000) / 1000,
-          peak_hz: Math.round(peak_hz * 10) / 10,
+          snr_db: Math.round(medSnr * 10) / 10,
+          profile_score: Math.round(medProf * 1000) / 1000,
+          peak_hz: Math.round(lastPeak * 10) / 10,
           target_hz: TARGET_HZ,
-          line: ok
-            ? 'SNR ' + Math.round(snr_db * 10) / 10 + ' dB · profile ' + Math.round(profile_score * 1000) / 1000 + ' · LOCK'
-            : 'No narrow 1420.4 Hz-class line lock (SNR or profile low)',
+          pass_chunks: passChunks,
+          line: ok ? 'Hydrogen Bridge: COHERENT' : 'Spectral scan: no coherence at 1420.4 Hz band',
           detail:
-            'Passive FFT · peak @ ~' +
-            Math.round(peak_hz * 10) / 10 +
-            ' Hz · acoustic proxy (RF ' +
+            'Spectral scan · ' +
+            passChunks +
+            '/' +
+            CHUNKS +
+            ' chunks above threshold · median SNR ' +
+            Math.round(medSnr * 10) / 10 +
+            ' dB · profile ' +
+            Math.round(medProf * 1000) / 1000 +
+            ' · acoustic proxy for RF ' +
             HYDROGEN_REST_MHZ +
-            ' MHz not available in-browser)',
+            ' MHz',
         };
       } finally {
         try {
@@ -235,28 +271,32 @@
       return r.json();
     }
 
-    async function verifyLatticeFromOrigin() {
-      const url = new URL('/lattice-status.json', window.location.origin).href;
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) throw new Error('lattice-status.json HTTP ' + res.status);
-      const text = await res.text();
-      const json = JSON.parse(text);
-      const enc = new TextEncoder().encode(text);
-      const buf = await crypto.subtle.digest('SHA-256', enc);
-      const hex = [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
-      const sig = json.lattice_sync && json.lattice_sync.signature;
-      const freq = json.constants && json.constants.hydrogen_line_mhz;
-      return {
-        url,
-        sha256_prefix: hex.slice(0, 32),
-        signature: typeof sig === 'string' ? sig : null,
-        hydrogen_line_mhz: freq != null ? freq : null,
-        ok:
-          typeof sig === 'string' &&
-          sig.length >= 16 &&
-          json.lattice_sync &&
-          json.lattice_sync.frequency_mhz != null,
-      };
+    async function fetchBlankStoneHydrogen() {
+      const t0 = performance.now();
+      const r = await fetch('/api/blank-stone-hydrogen', { cache: 'no-store' });
+      const elapsed_ms = Math.round(performance.now() - t0);
+      const headerMhz = r.headers.get('X-Hydrogen-Line-MHz');
+      const headerBlank = r.headers.get('X-SING9-Blank-Stone');
+      let j = null;
+      try {
+        j = await r.json();
+      } catch (e) {
+        throw new Error('Blank Stone response not JSON');
+      }
+      return { r, j, elapsed_ms, headerMhz, headerBlank };
+    }
+
+    function validateBlankStonePacket({ r, j, headerMhz }) {
+      if (!r.ok) return { ok: false, reason: 'HTTP ' + r.status };
+      if (j.blank_stone !== true || j.legacy_operating_system !== false) return { ok: false, reason: 'blank_stone / no_legacy_os' };
+      const hz = Number(j.hydrogen_line_mhz);
+      if (!Number.isFinite(hz) || Math.abs(hz - HYDROGEN_REST_MHZ) > 0.05) return { ok: false, reason: 'hydrogen_line_mhz' };
+      if (typeof j.packet_hex !== 'string' || j.packet_hex.length < 32) return { ok: false, reason: 'raw_packet' };
+      if (headerMhz != null && headerMhz !== '') {
+        const hm = Number(headerMhz);
+        if (Number.isFinite(hm) && Math.abs(hm - HYDROGEN_REST_MHZ) > 0.05) return { ok: false, reason: 'header_mhz_mismatch' };
+      }
+      return { ok: true };
     }
 
     function StatusCard({ title, subtitle, status, line, detail }) {
@@ -294,6 +334,34 @@
             mark
           ),
         ])
+      );
+    }
+
+    function Locked180Badge({ visible }) {
+      if (!visible) return null;
+      return h(
+        motion.div,
+        {
+          className: 'fixed bottom-6 left-1/2 z-50 w-[min(92vw,28rem)] -translate-x-1/2 px-2',
+          initial: { scale: 0.6, opacity: 0, y: 24 },
+          animate: { scale: 1, opacity: 1, y: 0 },
+          transition: { type: 'spring', stiffness: 220, damping: 18 },
+        },
+        h(
+          'div',
+          {
+            className:
+              'rounded-2xl border-4 border-amber-300 bg-gradient-to-br from-amber-500 via-yellow-400 to-amber-600 px-6 py-5 text-center shadow-[0_0_72px_rgba(251,191,36,0.65)] sm:px-10 sm:py-6',
+          },
+          [
+            h('div', { className: 'text-2xl font-black tracking-tight text-amber-950 sm:text-4xl' }, '180 Locked'),
+            h(
+              'div',
+              { className: 'mt-1 text-[0.65rem] font-bold uppercase tracking-[0.4em] text-amber-900/85' },
+              'All channels · ∞⁹'
+            ),
+          ]
+        )
       );
     }
 
@@ -375,9 +443,9 @@
                       h('td', { className: 'py-1.5 align-top' }, 'JPL ephemeris + H I rest frequency'),
                     ]),
                     h('tr', null, [
-                      h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'Power'),
-                      h('td', { className: 'py-1.5 pr-2 align-top' }, 'G2 · AR4392'),
-                      h('td', { className: 'py-1.5 align-top' }, 'Equinox-window Kp_max + AR4392 on 2026-03-20 + RTSW Bt'),
+                      h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'Ground'),
+                      h('td', { className: 'py-1.5 pr-2 align-top' }, 'Planetary Kp ≥ 5'),
+                      h('td', { className: 'py-1.5 align-top' }, 'Live NOAA K-index (G2/G3-class storm gate) — energy in the ground, not flare AR checks'),
                     ]),
                     h('tr', null, [
                       h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'Sync'),
@@ -411,10 +479,11 @@
     function App() {
       const idle = {
         status: 'idle',
-        line: 'Run diagnostic: equinox NOAA, cloud probe, passive 1420.4 Hz-band listen, lattice + Bragg (Zero-Dish).',
+        line: 'Run diagnostic: live Kp (ground storm gate), cloud probe, 1420.4 Hz spectral scan, Blank Stone hydrogen packet.',
         detail: '',
       };
       const [running, setRunning] = useState(false);
+      const [locked180, setLocked180] = useState(false);
       const [solar, setSolar] = useState(idle);
       const [cloud, setCloud] = useState(idle);
       const [seahawk, setSeahawk] = useState(idle);
@@ -422,53 +491,46 @@
 
       const runDiagnostic = useCallback(async () => {
         setRunning(true);
-        const scanning = { status: 'scanning', line: 'Equinox + cloud + passive listen + volumetric…', detail: '' };
+        setLocked180(false);
+        let solarPass = false;
+        let cloudPass = false;
+        let seahawkPass = false;
+        let volPass = false;
+
+        const scanning = { status: 'scanning', line: 'Kp + cloud + spectral scan + Blank Stone…', detail: '' };
         setSolar(scanning);
         setCloud(scanning);
         setSeahawk(scanning);
         setVol(scanning);
 
-        let bundle = null;
         try {
-          bundle = await fetchEquinoxBundle();
+          const sk = await fetchSolarKpBundle();
+          const kp = sk.kp;
+          const kpOk = kp != null && Number.isFinite(Number(kp));
+          solarPass = kpOk && Number(kp) >= 5;
+
+          let solarLine = '';
+          if (!kpOk) solarLine = 'Planetary K-index unavailable from live feeds';
+          else if (!solarPass) solarLine = 'Kp ' + kp + ' — below storm gate (need Kp ≥ 5, G2/G3-class)';
+          else solarLine = 'Kp ' + kp + ' · ground-coupled storm energy (G2/G3 gate)';
+
+          const solarDetail =
+            (sk.time_tag ? 'Sample @ ' + sk.time_tag + ' · ' : '') +
+            'Source: ' +
+            sk.source +
+            ' · narrative: ionospheric/ground driver, not AR flare latch' +
+            (sk.raw && sk.raw.errors && sk.raw.errors.length
+              ? ' · API notes: ' + sk.raw.errors.map((err) => err.step).join(', ')
+              : '');
+
+          setSolar({ status: solarPass ? 'pass' : 'fail', line: solarLine, detail: solarDetail });
         } catch (e) {
           setSolar({
             status: 'fail',
-            line: 'Equinox bundle failed (need deployed /api/live-houdini-readings?equinox=1)',
+            line: 'Planetary K-index fetch failed',
             detail: e.message || String(e),
           });
-        }
-
-        if (bundle) {
-          const ex = bundle.equinox || {};
-          const kpMax = ex.kp_max != null ? ex.kp_max : bundle.kp && bundle.kp.kp;
-          const kpOk = kpMax != null && Number.isFinite(Number(kpMax));
-          const g2 = kpOk && Number(kpMax) > 5;
-          const solarPass = ex.found === true && g2;
-
-          let solarLine = '';
-          if (!ex.found) {
-            solarLine =
-              'Equinox window 2026-03-20 06–18 UTC: incomplete in NOAA feed' +
-              (ex.snapshot_used ? ' (used /data snapshot)' : ' — add /data/equinox-2026-03-20-noaa-snapshot.json');
-          } else if (!kpOk) solarLine = 'Kp samples missing in equinox window';
-          else if (!g2) solarLine = 'Kp_max ' + kpMax + ' in window — below G2 gate (need > 5)';
-          else solarLine = 'Kp_max ' + kpMax + ' @ equinox window · G2+';
-
-          const ar = bundle.ar4392;
-          const rtsw = bundle.rtsw;
-          let solarDetail =
-            (ex.kp_closest_to_instant
-              ? 'Closest-to-equinox sample: Kp ' + ex.kp_closest_to_instant.kp_index + ' @ ' + ex.kp_closest_to_instant.time_tag + ' · '
-              : '') +
-            (ex.kp_sample_count != null ? ex.kp_sample_count + ' Kp rows in window · ' : '') +
-            (ar ? 'AR4392 on 2026-03-20 · ' : 'AR4392 absent for equinox date · ') +
-            (rtsw ? 'RTSW Bt ' + rtsw.bt_nT + ' nT · ' + rtsw.source + ' @ ' + rtsw.time_tag : 'RTSW sample missing') +
-            (bundle.atlas && bundle.atlas.fullname ? ' · JPL: ' + bundle.atlas.fullname : '');
-          if (bundle.errors && bundle.errors.length) {
-            solarDetail += ' · API errors: ' + bundle.errors.map((err) => err.step).join(', ');
-          }
-          setSolar({ status: solarPass ? 'pass' : 'fail', line: solarLine, detail: solarDetail });
+          solarPass = false;
         }
 
         try {
@@ -479,9 +541,9 @@
             !probe.remote_gpu_hook.attempted ||
             probe.remote_gpu_hook.ok === true ||
             (probe.remote_gpu_hook.json && probe.remote_gpu_hook.json.ok === true);
-          const pass = probe.ok === true && cryptoOk && remoteGpuOk;
+          cloudPass = probe.ok === true && cryptoOk && remoteGpuOk;
           setCloud({
-            status: pass ? 'pass' : 'fail',
+            status: cloudPass ? 'pass' : 'fail',
             line:
               (probe.cpu_model || 'CPU') +
               ' · ' +
@@ -501,6 +563,7 @@
                 : ' · Set GPU_REMOTE_PROBE_URL to hit a GPU endpoint'),
           });
         } catch (e) {
+          cloudPass = false;
           setCloud({
             status: 'fail',
             line: 'Cloud compute probe unreachable',
@@ -510,15 +573,17 @@
 
         let listen = null;
         try {
-          listen = await passiveListenSeahawkHydrogen1420();
+          listen = await spectralScanHydrogen1420();
         } catch (e) {
+          seahawkPass = false;
           setSeahawk({
             status: 'fail',
-            line: 'Passive Seahawk listen failed',
+            line: 'Spectral scan failed',
             detail: e.message || String(e),
           });
         }
         if (listen) {
+          seahawkPass = !!listen.ok;
           setSeahawk({
             status: listen.ok ? 'pass' : 'fail',
             line: listen.line,
@@ -526,54 +591,35 @@
           });
         }
 
-        let zd = null;
         try {
-          zd = await fetchZeroDishTimed();
-        } catch (_) {
-          /* volumetric card handles missing Zero-Dish */
-        }
-
-        let L = null;
-        try {
-          L = await verifyLatticeFromOrigin();
+          const bs = await fetchBlankStoneHydrogen();
+          const v = validateBlankStonePacket(bs);
+          volPass = v.ok === true;
+          setVol({
+            status: volPass ? 'pass' : 'fail',
+            line: volPass
+              ? 'Blank Stone node · raw hydrogen-line packet OK'
+              : 'Blank Stone / hydrogen packet check failed' + (v.reason ? ' (' + v.reason + ')' : ''),
+            detail: volPass
+              ? (bs.j.node_class || 'edge') +
+                ' · ' +
+                bs.elapsed_ms +
+                ' ms · packet ' +
+                (bs.j.packet_hex ? bs.j.packet_hex.slice(0, 16) + '…' : '—') +
+                ' · MHz ' +
+                bs.j.hydrogen_line_mhz
+              : (bs.j && bs.j.note) || 'Deploy /api/blank-stone-hydrogen on this origin.',
+          });
         } catch (e) {
+          volPass = false;
           setVol({
             status: 'fail',
-            line: 'lattice-status.json unreachable',
+            line: 'Blank Stone endpoint unreachable',
             detail: e.message || String(e),
           });
         }
 
-        if (L && zd && zd.j) {
-          const br = zd.j.outputs && zd.j.outputs.bragg_archive;
-          const braggOk =
-            br &&
-            br.version === 'bragg_volumetric_1' &&
-            br.hydrogen_line_mhz === 1420.405751 &&
-            Array.isArray(br.layers) &&
-            br.layers.length >= 2;
-          const volPass = L.ok === true && zd.j.success === true && braggOk;
-          setVol({
-            status: volPass ? 'pass' : 'fail',
-            line: volPass
-              ? 'Lattice SHA + Bragg volumetric lift confirmed'
-              : 'Lattice file and/or Bragg archive checks failed',
-            detail:
-              'Static lattice SHA-256 ' +
-              L.sha256_prefix +
-              '… · Bragg ' +
-              (br && br.version ? br.version : 'missing') +
-              ' · layers ' +
-              (br && br.layers ? br.layers.length : 0),
-          });
-        } else if (L && !zd) {
-          setVol({
-            status: L.ok ? 'pass' : 'fail',
-            line: L.ok ? 'Lattice manifest only (Zero-Dish unavailable)' : 'Lattice checks failed',
-            detail: L.url + ' · sig ' + (L.signature ? L.signature.slice(0, 20) + '…' : '—'),
-          });
-        }
-
+        setLocked180(solarPass && cloudPass && seahawkPass && volPass);
         setRunning(false);
       }, []);
 
@@ -615,7 +661,7 @@
                   h(
                     'p',
                     { className: 'mt-2 max-w-xl text-xs text-slate-400' },
-                    'Diagnostics: NOAA samples in the Mar 20 2026 equinox UTC window (optional /data snapshot), Vercel cloud CPU/crypto probe, timed Zero-Dish API ping (Seahawk cycle), lattice manifest + Bragg volumetric proof.'
+                    'Diagnostics: live planetary K-index (Kp ≥ 5 storm gate — ground energy), Vercel cloud CPU/crypto probe, 1420.4 Hz-band spectral scan (hydrogen bridge proxy), Blank Stone edge node + hydrogen-line packet.'
                   ),
                 ]),
                 h(
@@ -690,8 +736,8 @@
                     motion.div,
                     { key: 'h', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Seahawk live ping · Zero-Dish cycle',
-                      subtitle: 'Timed /api/run-zero-dish-test',
+                      title: 'Seahawk · Spectral scan (1420.4 MHz narrative)',
+                      subtitle: 'Mic FFT · 1420.4 Hz acoustic proxy — no network ping',
                       status: seahawk.status,
                       line: seahawk.line,
                       detail: seahawk.detail,
@@ -701,8 +747,8 @@
                     motion.div,
                     { key: 'v', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Volumetric access · lattice + Bragg',
-                      subtitle: 'lattice-status.json + bragg_volumetric_1',
+                      title: 'Volumetric · Blank Stone hydrogen relay',
+                      subtitle: '/api/blank-stone-hydrogen · no legacy OS path',
                       status: vol.status,
                       line: vol.line,
                       detail: vol.detail,
@@ -714,10 +760,11 @@
               h(
                 'p',
                 { className: 'mt-10 text-center text-[0.65rem] text-slate-600' },
-                'Equinox NOAA + cloud probe + passive 1420.4 Hz-band listen + lattice/Bragg · NSPFRNP → ∞⁹ · SING 9'
+                'Live Kp + cloud probe + spectral scan + Blank Stone packet · NSPFRNP → ∞⁹ · SING 9'
               ),
             ]
           ),
+          h(Locked180Badge, { visible: locked180 && !running }),
         ]
       );
     }

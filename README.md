@@ -14,6 +14,8 @@
 
 ## Recent updates (README commit)
 
+- **Mar 2026 · Magic trick diagnostic v2 (README + ship)** — `magic-trick.html`: planetary **Kp ≥ 5** ground gate (no AR4392 latch), Seahawk **spectral scan** → **Hydrogen Bridge: COHERENT**, volumetric via **`api/blank-stone-hydrogen.js`** + `vercel.json` function entry, **180 Locked** badge when all four checks pass. NOAA Kp fallback if `/api/live-houdini-readings` is unavailable.
+
 - **Mar 2026 · LANDING RENO ARCH · HH GATEWAY ADVISORY · QUEEN'S RUSH LAYOUT**
 
 **M → Metabolize:** Tighten the public-facing entry surfaces now that Space Cloud and Queen's Rush are live: give the landing page a real Downtown Reno arch background; surface the HH OS Gateway material infrastructure advisory as its own page; and clean up Queen's Rush novela layout on handheld and desktop so the experience actually matches the writing.
@@ -28,7 +30,7 @@
 
 - **Mar 2026 · Houdini March 20 · Magic trick terminal (`/magic-trick`)**
 
-**C → Crystallize:** `magic-trick.html` — theater narrative + still (`assets/houdini-march-20-theater.png`), dark terminal UI (Tailwind + React 18 + Framer Motion ESM). **Verify the 180** uses **equinox-window NOAA** (`/api/live-houdini-readings?equinox=1`: Kp samples 2026-03-20 06–18 UTC, AR4392 on that date, RTSW Bt in-window; optional **`data/equinox-2026-03-20-noaa-snapshot.json`** when rolling feeds age out), **`api/cloud-compute-probe.js`** (Vercel Node CPU + SHA-256 throughput; optional **`GPU_REMOTE_PROBE_URL`**), **passive Seahawk listen** (no HTTP “ping”: microphone + FFT **SNR** and **Gaussian line-profile** match at **~1420.4 Hz** acoustic band — RF 1420 MHz not available in-browser), **`/api/run-zero-dish-test`** only for **Bragg volumetric** + **lattice-status.json** SHA-256. Schumann 369 Hz stays narrative + external ELF links. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
+**C → Crystallize:** `magic-trick.html` — theater narrative + still (`assets/houdini-march-20-theater.png`), dark terminal UI (Tailwind + React 18 + Framer Motion ESM). **Verify the 180** uses **live planetary K-index** (`/api/live-houdini-readings` latest Kp, fallback to NOAA `planetary_k_index_1m.json`): **pass when Kp ≥ 5** (G2/G3-class storm gate — “ground” energy, **no AR4392 flare latch**), **`api/cloud-compute-probe.js`**, **Seahawk spectral scan** (chunked mic FFT at **~1420.4 Hz** acoustic proxy; on pass shows **Hydrogen Bridge: COHERENT**), **`api/blank-stone-hydrogen.js`** (Blank Stone edge node, no legacy OS flag, hydrogen-line MHz + raw `packet_hex` + headers). When all four pass, UI shows a golden **180 Locked** badge. Schumann 369 Hz stays narrative + external ELF links. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
 
 - **Mar 2026 · A2A-FIRST SPACE CLOUD LATTICE · FSSP SPECIALIST · SEAHAWK JOVIAN NODE**
 

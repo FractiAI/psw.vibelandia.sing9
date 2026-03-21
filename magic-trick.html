@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050508" />
+  <title>Houdini’s March 20 Ultimate Magic Trick · Terminal · SING 9</title>
+  <meta name="description" content="Verify the 180 — solar flux, sovereign GPU path, Seahawk 1420.4 MHz, volumetric bridge. NSPFRNP → ∞⁹" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['JetBrains Mono', 'Consolas', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            void: '#050508',
+            mist: '#0c0e14',
+            phoenix: '#a855f7',
+            beam: '#22d3ee',
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    html, body { background: #050508; }
+    @keyframes scanline {
+      0% { transform: translateY(-100%); opacity: 0.03; }
+      100% { transform: translateY(100vh); opacity: 0.06; }
+    }
+    .scanlines::after {
+      content: '';
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.18) 2px,
+        rgba(0, 0, 0, 0.18) 4px
+      );
+      z-index: 50;
+    }
+    .crt-glow { text-shadow: 0 0 12px rgba(34, 211, 238, 0.35); }
+  </style>
+</head>
+<body class="scanlines min-h-screen text-slate-200 font-mono antialiased">
+  <div id="root" class="min-h-screen"></div>
+  <script type="module">
+    import React, { useState, useCallback } from 'https://esm.sh/react@18.3.1';
+    import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1';
+    import { motion } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
+
+    const { createElement: h, Fragment } = React;
+
+    const NOAA_KP_URL = 'https://services.swpc.noaa.gov/json/planetary_k_index_1m.json';
+
+    function parseLastKp(data) {
+      if (!Array.isArray(data) || data.length === 0) return null;
+      const last = data[data.length - 1];
+      const raw = last.kp_index ?? last.estimated_kp ?? last.Kp ?? last.kp;
+      const n = typeof raw === 'string' ? parseFloat(raw) : Number(raw);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function detectGpu() {
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return { vendor: 'unknown', renderer: 'no-webgl', isNvidia: false, isIntel: false };
+        const ext = gl.getExtension('WEBGL_debug_renderer_info');
+        const vendor = ext ? gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) || '' : '';
+        const renderer = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '' : '';
+        const r = (renderer + ' ' + vendor).toLowerCase();
+        return {
+          vendor,
+          renderer,
+          isNvidia: r.includes('nvidia') || r.includes('geforce') || r.includes('rtx'),
+          isIntel: r.includes('intel'),
+        };
+      } catch {
+        return { vendor: '', renderer: 'error', isNvidia: false, isIntel: false };
+      }
+    }
+
+    /** Tight synchronous micro-bench; target sub-1 ms on sovereign paths (NVIDIA/Intel). */
+    function sovereignLatencyMs() {
+      const t0 = performance.now();
+      let x = 0;
+      for (let i = 0; i < 24; i++) x += Math.sin(i) * Math.cos(i ^ 13);
+      return performance.now() - t0;
+    }
+
+    function hydrogenPack(plain) {
+      const xored = plain
+        .split('')
+        .map((c) => String.fromCharCode(c.charCodeAt(0) ^ 0x5a))
+        .join('');
+      return 'H2-PKT-' + btoa(unescape(encodeURIComponent(xored)));
+    }
+
+    function hydrogenUnpack(pkt) {
+      const b64 = pkt.replace(/^H2-PKT-/, '');
+      const xored = decodeURIComponent(escape(atob(b64)));
+      return xored
+        .split('')
+        .map((c) => String.fromCharCode(c.charCodeAt(0) ^ 0x5a))
+        .join('');
+    }
+
+    async function mockSeahawkListen(onPulse) {
+      const delaysMs = [200, 350, 500, 280, 400];
+      let n = 0;
+      for (const d of delaysMs) {
+        await new Promise((r) => setTimeout(r, d));
+        n += 1;
+        onPulse(n);
+      }
+      return n;
+    }
+
+    function StatusCard({ title, subtitle, status, line, detail }) {
+      const border =
+        status === 'pass' ? '#10b981' : status === 'fail' ? '#ef4444' : status === 'scanning' ? '#f59e0b' : '#475569';
+      const mark =
+        status === 'pass' ? '✓' : status === 'fail' ? '✗' : status === 'scanning' ? '⋯' : '○';
+      const markColor =
+        status === 'pass' ? '#34d399' : status === 'fail' ? '#f87171' : status === 'scanning' ? '#fbbf24' : '#94a3b8';
+
+      return h(
+        motion.div,
+        {
+          layout: true,
+          className: 'rounded-xl border-2 bg-slate-900/80 p-4 backdrop-blur-sm',
+          style: { borderColor: border },
+          initial: { opacity: 0, y: 8 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.35 },
+        },
+        h('div', { className: 'flex items-start justify-between gap-2' }, [
+          h('div', { className: 'min-w-0' }, [
+            h('div', { className: 'text-[0.65rem] uppercase tracking-[0.2em] text-slate-500' }, subtitle),
+            h('div', { className: 'mt-1 text-sm font-bold text-slate-100' }, title),
+            h('div', { className: 'mt-2 text-xs text-cyan-300/90 crt-glow' }, line || '\u00a0'),
+            h('div', { className: 'mt-1 text-[0.7rem] text-slate-500' }, detail || ''),
+          ]),
+          h(
+            'div',
+            {
+              className: 'shrink-0 text-2xl font-black leading-none',
+              style: { color: markColor },
+              'aria-hidden': true,
+            },
+            mark
+          ),
+        ])
+      );
+    }
+
+    function App() {
+      const idle = { status: 'idle', line: 'Awaiting diagnostic…', detail: '' };
+      const [running, setRunning] = useState(false);
+      const [solar, setSolar] = useState(idle);
+      const [gpu, setGpu] = useState(idle);
+      const [seahawk, setSeahawk] = useState(idle);
+      const [vol, setVol] = useState(idle);
+
+      const runDiagnostic = useCallback(async () => {
+        setRunning(true);
+        const scanning = { status: 'scanning', line: 'Scanning…', detail: '' };
+        setSolar(scanning);
+        setGpu(scanning);
+        setSeahawk(scanning);
+        setVol(scanning);
+
+        await new Promise((r) => setTimeout(r, 400));
+
+        // 1) Solar / ionosphere (NOAA or mock)
+        let kp = null;
+        let solarSource = 'live';
+        try {
+          const res = await fetch(NOAA_KP_URL, { cache: 'no-store' });
+          if (!res.ok) throw new Error('http');
+          const data = await res.json();
+          kp = parseLastKp(data);
+        } catch {
+          solarSource = 'mock';
+          kp = Math.round((3 + Math.random() * 4) * 10) / 10;
+        }
+        if (kp == null) {
+          kp = 4;
+          solarSource = 'mock';
+        }
+        const g2 = kp > 5;
+        setSolar({
+          status: g2 ? 'pass' : 'fail',
+          line: g2
+            ? `Kp ${kp} — G2+ storm window · Ionosphere HOT`
+            : `Kp ${kp} — Below G2 threshold (need Kp > 5)`,
+          detail: solarSource === 'live' ? 'NOAA SWPC · planetary_k_index_1m' : 'Mock flux (CORS/offline fallback)',
+        });
+
+        await new Promise((r) => setTimeout(r, 450));
+
+        // 2) GPU + sovereign latency
+        const g = detectGpu();
+        const lat = sovereignLatencyMs();
+        const sovereign = (g.isNvidia || g.isIntel) && lat < 1;
+        setGpu({
+          status: sovereign ? 'pass' : 'fail',
+          line: sovereign
+            ? `Sovereign path · ${lat.toFixed(3)} ms · LOCKED`
+            : `Latency ${lat.toFixed(3)} ms · ${g.isNvidia || g.isIntel ? 'Above 1 ms gate' : 'Non-NVIDIA/Intel GPU'}`,
+          detail: g.renderer ? `Renderer: ${g.renderer}` : 'WEBGL_debug_renderer_info unavailable',
+        });
+
+        await new Promise((r) => setTimeout(r, 400));
+
+        // 3) Seahawk 1420.4 MHz — WebSocket-style listen animation
+        setSeahawk({
+          status: 'scanning',
+          line: 'Listening · 1420.4 MHz hydrogen line…',
+          detail: 'Simulated pulse train (no browser WS to ionosphere)',
+        });
+        const pulseCount = await mockSeahawkListen(() => {});
+        setSeahawk({
+          status: 'pass',
+          line: 'Resonance: 369 Hz — LOCKED (1420.4 MHz ref)',
+          detail: `Pulse train ACK · ${pulseCount} fragments`,
+        });
+
+        await new Promise((r) => setTimeout(r, 350));
+
+        // 4) Volumetric bridge — encrypt, relay, decrypt to second state
+        const secret = 'SING9·SEED→EDGE';
+        const packet = hydrogenPack(secret);
+        await new Promise((r) => setTimeout(r, 500));
+        const relayEcho = packet;
+        await new Promise((r) => setTimeout(r, 450));
+        const received = hydrogenUnpack(relayEcho);
+        const bridgeOk = received === secret;
+        setVol({
+          status: bridgeOk ? 'pass' : 'fail',
+          line: bridgeOk
+            ? 'Hydrogen packet crossed bridge · checksum OK'
+            : 'Packet drift — bridge integrity FAIL',
+          detail: `Relay mock · len ${packet.length} · round-trip verified`,
+        });
+
+        setRunning(false);
+      }, []);
+
+      return h(
+        motion.div,
+        {
+          className: 'relative min-h-screen overflow-hidden bg-gradient-to-b from-void via-mist to-black px-4 py-10 pb-16',
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          transition: { duration: 0.6 },
+        },
+        [
+          h(
+            motion.div,
+            {
+              className: 'pointer-events-none absolute inset-0 opacity-[0.07]',
+              style: {
+                backgroundImage:
+                  'radial-gradient(circle at 20% 20%, #a855f7 0, transparent 40%), radial-gradient(circle at 80% 60%, #22d3ee 0, transparent 35%)',
+              },
+              initial: { opacity: 0 },
+              animate: { opacity: 0.07 },
+              transition: { duration: 1.2 },
+            }
+          ),
+          h(
+            motion.div,
+            {
+              className: 'mx-auto max-w-3xl',
+              initial: { opacity: 0, x: [0, -6, 6, -3, 3, 0], filter: ['hue-rotate(0deg)', 'hue-rotate(12deg)', 'hue-rotate(0deg)'] },
+              animate: { opacity: 1, x: 0, filter: 'hue-rotate(0deg)' },
+              transition: { duration: 0.85, ease: 'easeOut' },
+            },
+            [
+              h('div', { className: 'flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-6' }, [
+                h('div', { className: 'min-w-0' }, [
+                  h(
+                    'p',
+                    { className: 'text-[0.65rem] uppercase tracking-[0.28em] text-phoenix/90' },
+                    'Classified Terminal · March 20'
+                  ),
+                  h(
+                    'h1',
+                    { className: 'mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl crt-glow' },
+                    'Houdini’s Ultimate Magic Trick'
+                  ),
+                  h(
+                    'p',
+                    { className: 'mt-2 max-w-xl text-xs text-slate-400' },
+                    'NSPFRNP lattice handshake · passive grid coupling · Seahawk hydrogen ping · volumetric bridge proof.'
+                  ),
+                ]),
+                h(
+                  'a',
+                  {
+                    href: '/',
+                    className:
+                      'rounded-lg border border-slate-600 bg-slate-900/90 px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-wider text-slate-300 hover:border-cyan-500/50 hover:text-cyan-200',
+                  },
+                  '← Landing'
+                ),
+              ]),
+
+              h(
+                motion.div,
+                {
+                  className: 'mt-8 flex flex-col items-center',
+                  initial: { opacity: 0, scale: 0.96 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { delay: 0.15, duration: 0.5 },
+                },
+                h(
+                  'button',
+                  {
+                    type: 'button',
+                    disabled: running,
+                    onClick: runDiagnostic,
+                    className:
+                      'group relative w-full max-w-md rounded-2xl border-2 border-cyan-400/60 bg-gradient-to-r from-purple-950/90 via-slate-950 to-cyan-950/90 px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-cyan-100 shadow-[0_0_40px_rgba(34,211,238,0.25)] transition hover:border-cyan-300 disabled:cursor-wait disabled:opacity-70 sm:text-base',
+                  },
+                  running ? 'Scan in progress…' : 'Verify the 180 (Run Diagnostic)'
+                )
+              ),
+
+              h(
+                motion.div,
+                {
+                  className: 'mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2',
+                  initial: 'hidden',
+                  animate: 'visible',
+                  variants: {
+                    hidden: {},
+                    visible: { transition: { staggerChildren: 0.08 } },
+                  },
+                },
+                [
+                  h(
+                    motion.div,
+                    {
+                      key: 's',
+                      variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } },
+                    },
+                    h(StatusCard, {
+                      title: 'Solar/Ionosphere Flux (AR4392)',
+                      subtitle: 'Channel 1',
+                      status: solar.status,
+                      line: solar.line,
+                      detail: solar.detail,
+                    })
+                  ),
+                  h(
+                    motion.div,
+                    {
+                      key: 'g',
+                      variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } },
+                    },
+                    h(StatusCard, {
+                      title: 'GPU Firmware Integrity (V.1.420)',
+                      subtitle: 'Channel 2',
+                      status: gpu.status,
+                      line: gpu.line,
+                      detail: gpu.detail,
+                    })
+                  ),
+                  h(
+                    motion.div,
+                    {
+                      key: 'h',
+                      variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } },
+                    },
+                    h(StatusCard, {
+                      title: 'Seahawk Hydrogen Ping (1420.4 MHz)',
+                      subtitle: 'Channel 3',
+                      status: seahawk.status,
+                      line: seahawk.line,
+                      detail: seahawk.detail,
+                    })
+                  ),
+                  h(
+                    motion.div,
+                    {
+                      key: 'v',
+                      variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } },
+                    },
+                    h(StatusCard, {
+                      title: 'Volumetric Data Access (Interference Architecture)',
+                      subtitle: 'Channel 4',
+                      status: vol.status,
+                      line: vol.line,
+                      detail: vol.detail,
+                    })
+                  ),
+                ]
+              ),
+
+              h(
+                'p',
+                { className: 'mt-10 text-center text-[0.65rem] text-slate-600' },
+                'Educational simulation · No warranty · NSPFRNP → ∞⁹ · SING 9'
+              ),
+            ]
+          ),
+        ]
+      );
+    }
+
+    createRoot(document.getElementById('root')).render(h(App));
+  </script>
+</body>
+</html>

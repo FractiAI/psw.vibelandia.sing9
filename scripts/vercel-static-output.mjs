@@ -42,6 +42,10 @@ function copyDir(srcDir, destDir) {
 const indexHtml = path.join(root, 'index.html');
 if (fs.existsSync(indexHtml)) copyFile(indexHtml, path.join(distDir, 'index.html'));
 
+// Houdini March 20 magic trick terminal (pretty URL via vercel.json rewrite → /magic-trick.html)
+const magicTrickHtml = path.join(root, 'magic-trick.html');
+if (fs.existsSync(magicTrickHtml)) copyFile(magicTrickHtml, path.join(distDir, 'magic-trick.html'));
+
 // interfaces/
 copyDir(path.join(root, 'interfaces'), path.join(distDir, 'interfaces'));
 

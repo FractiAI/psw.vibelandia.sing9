@@ -59,97 +59,29 @@
 
     const HYDROGEN_REST_MHZ = 1420.405751;
 
-    function findAr4392(regions) {
-      if (!Array.isArray(regions)) return null;
-      return regions.find((r) => Number(r.region) === 4392 || String(r.region) === '4392') || null;
+    async function fetchEquinoxBundle() {
+      const r = await fetch('/api/live-houdini-readings?equinox=1', { cache: 'no-store' });
+      if (!r.ok) throw new Error('equinox bundle HTTP ' + r.status);
+      return r.json();
     }
 
-    function latestRtsw(rows) {
-      if (!Array.isArray(rows) || rows.length === 0) return null;
-      for (let i = rows.length - 1; i >= 0; i--) {
-        const r = rows[i];
-        if (r && (r.active === true || r.active === 'true') && typeof r.bt === 'number') {
-          return { time_tag: r.time_tag, source: r.source || 'RTSW', bt_nT: r.bt };
-        }
-      }
-      const last = rows[rows.length - 1];
-      if (!last || typeof last.bt !== 'number') return null;
-      return { time_tag: last.time_tag, source: last.source || 'RTSW', bt_nT: last.bt };
-    }
-
-    async function fetchLiveReadingsDirect() {
-      const out = {
-        fetched_at_utc: new Date().toISOString(),
-        kp: null,
-        ar4392: null,
-        rtsw: null,
-        atlas: null,
-        errors: [],
-      };
-      const safe = async (label, fn) => {
-        try {
-          await fn();
-        } catch (e) {
-          out.errors.push({ step: label, message: e.message || String(e) });
-        }
-      };
-
-      await safe('noaa_planetary_k', async () => {
-        const r = await fetch('https://services.swpc.noaa.gov/json/planetary_k_index_1m.json', { cache: 'no-store' });
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        const data = await r.json();
-        if (!Array.isArray(data) || !data.length) throw new Error('empty Kp array');
-        const last = data[data.length - 1];
-        const raw = last.kp_index ?? last.estimated_kp ?? last.Kp;
-        const kp = typeof raw === 'string' ? parseFloat(raw) : Number(raw);
-        out.kp = { kp: Number.isFinite(kp) ? kp : null, time_tag: last.time_tag || null };
-        if (out.kp.kp == null) throw new Error('unparsed Kp');
-      });
-
-      await safe('noaa_solar_regions', async () => {
-        const r = await fetch('https://services.swpc.noaa.gov/json/solar_regions.json', { cache: 'no-store' });
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        const data = await r.json();
-        out.ar4392 = findAr4392(data);
-      });
-
-      await safe('noaa_rtsw_mag', async () => {
-        const r = await fetch('https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json', { cache: 'no-store' });
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        const data = await r.json();
-        const row = latestRtsw(data);
-        if (!row) throw new Error('no RTSW Bt');
-        out.rtsw = row;
-      });
-
-      await safe('jpl_sbdb_atlas', async () => {
-        const r = await fetch(
-          'https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=' + encodeURIComponent('C/2025 N1') + '&cad=1',
-          { cache: 'no-store' }
-        );
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        const data = await r.json();
-        const obj = data.object || {};
-        const orb = data.orbit || {};
-        const qEl = Array.isArray(orb.elements) ? orb.elements.find((e) => e.name === 'q') : null;
-        out.atlas = {
-          fullname: obj.fullname || null,
-          spkid: obj.spkid || null,
-          last_obs: orb.last_obs || null,
-          q_au: qEl ? qEl.value : null,
-        };
-        if (!out.atlas.fullname) throw new Error('missing JPL designation');
-      });
-
-      return out;
-    }
-
-    async function fetchLiveReadings() {
+    async function fetchZeroDishTimed() {
+      const t0 = performance.now();
+      const r = await fetch('/api/run-zero-dish-test', { cache: 'no-store' });
+      const elapsed_ms = Math.round(performance.now() - t0);
+      let j = null;
       try {
-        const r = await fetch('/api/live-houdini-readings', { cache: 'no-store' });
-        if (r.ok) return await r.json();
-      } catch (_) {}
-      return fetchLiveReadingsDirect();
+        j = await r.json();
+      } catch (e) {
+        throw new Error('Zero-Dish response not JSON');
+      }
+      return { r, elapsed_ms, j };
+    }
+
+    async function fetchCloudComputeProbe() {
+      const r = await fetch('/api/cloud-compute-probe', { cache: 'no-store' });
+      if (!r.ok) throw new Error('cloud probe HTTP ' + r.status);
+      return r.json();
     }
 
     async function verifyLatticeFromOrigin() {
@@ -174,33 +106,6 @@
           json.lattice_sync &&
           json.lattice_sync.frequency_mhz != null,
       };
-    }
-
-    function detectGpu() {
-      try {
-        const canvas = document.createElement('canvas');
-        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-        if (!gl) return { vendor: 'unknown', renderer: 'no-webgl', isNvidia: false, isIntel: false };
-        const ext = gl.getExtension('WEBGL_debug_renderer_info');
-        const vendor = ext ? gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) || '' : '';
-        const renderer = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '' : '';
-        const r = (renderer + ' ' + vendor).toLowerCase();
-        return {
-          vendor,
-          renderer,
-          isNvidia: r.includes('nvidia') || r.includes('geforce') || r.includes('rtx'),
-          isIntel: r.includes('intel'),
-        };
-      } catch {
-        return { vendor: '', renderer: 'error', isNvidia: false, isIntel: false };
-      }
-    }
-
-    function sovereignLatencyMs() {
-      const t0 = performance.now();
-      let x = 0;
-      for (let i = 0; i < 24; i++) x += Math.sin(i) * Math.cos(i ^ 13);
-      return performance.now() - t0;
     }
 
     function StatusCard({ title, subtitle, status, line, detail }) {
@@ -321,7 +226,7 @@
                     h('tr', null, [
                       h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'Power'),
                       h('td', { className: 'py-1.5 pr-2 align-top' }, 'G2 · AR4392'),
-                      h('td', { className: 'py-1.5 align-top' }, 'NOAA Kp + AR4392 in regions list'),
+                      h('td', { className: 'py-1.5 align-top' }, 'Equinox-window Kp_max + AR4392 on 2026-03-20 + RTSW Bt'),
                     ]),
                     h('tr', null, [
                       h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'Sync'),
@@ -353,93 +258,176 @@
     }
 
     function App() {
-      const idle = { status: 'idle', line: 'Run diagnostic for live NOAA / NASA / lattice reads.', detail: '' };
+      const idle = {
+        status: 'idle',
+        line: 'Run diagnostic: equinox-window NOAA, cloud node probe, timed Zero-Dish ping, lattice + Bragg.',
+        detail: '',
+      };
       const [running, setRunning] = useState(false);
       const [solar, setSolar] = useState(idle);
-      const [gpu, setGpu] = useState(idle);
+      const [cloud, setCloud] = useState(idle);
       const [seahawk, setSeahawk] = useState(idle);
       const [vol, setVol] = useState(idle);
 
       const runDiagnostic = useCallback(async () => {
         setRunning(true);
-        const scanning = { status: 'scanning', line: 'Fetching live upstreams…', detail: '' };
+        const scanning = { status: 'scanning', line: 'Pulling equinox + cloud + Space Cloud cycle…', detail: '' };
         setSolar(scanning);
-        setGpu(scanning);
+        setCloud(scanning);
         setSeahawk(scanning);
         setVol(scanning);
 
-        const live = await fetchLiveReadings();
-
-        const kpVal = live.kp && live.kp.kp;
-        const kpOk = kpVal != null && Number.isFinite(kpVal);
-        const g2 = kpOk && kpVal > 5;
-        const ar = live.ar4392;
-        const rtsw = live.rtsw;
-        const solarPass = kpOk && g2 && ar != null && rtsw != null;
-
-        let solarLine = '';
-        if (!kpOk) solarLine = 'K-index: unavailable (NOAA fetch/parse failed)';
-        else if (!g2) solarLine = 'Kp ' + kpVal + ' — below G2 gate (need Kp > 5)';
-        else solarLine = 'Kp ' + kpVal + ' — G2+ window (live)';
-
-        let solarDetail =
-          (live.kp && live.kp.time_tag ? 'Kp time_tag: ' + live.kp.time_tag + ' · ' : '') +
-          (ar ? 'AR4392 in NOAA solar_regions · ' : 'AR4392 not in current NOAA solar_regions · ') +
-          (rtsw ? 'IMF Bt ' + rtsw.bt_nT + ' nT · ' + rtsw.source + ' @ ' + rtsw.time_tag : 'RTSW IMF unavailable');
-        if (live.errors && live.errors.length) {
-          solarDetail += ' · errors: ' + live.errors.map((e) => e.step).join(', ');
+        let bundle = null;
+        try {
+          bundle = await fetchEquinoxBundle();
+        } catch (e) {
+          setSolar({
+            status: 'fail',
+            line: 'Equinox bundle failed (need deployed /api/live-houdini-readings?equinox=1)',
+            detail: e.message || String(e),
+          });
         }
 
-        setSolar({
-          status: solarPass ? 'pass' : 'fail',
-          line: solarLine,
-          detail: solarDetail,
-        });
+        if (bundle) {
+          const ex = bundle.equinox || {};
+          const kpMax = ex.kp_max != null ? ex.kp_max : bundle.kp && bundle.kp.kp;
+          const kpOk = kpMax != null && Number.isFinite(Number(kpMax));
+          const g2 = kpOk && Number(kpMax) > 5;
+          const solarPass = ex.found === true && g2;
 
-        const g = detectGpu();
-        const lat = sovereignLatencyMs();
-        const sovereign = (g.isNvidia || g.isIntel) && lat < 1;
-        setGpu({
-          status: sovereign ? 'pass' : 'fail',
-          line: sovereign
-            ? 'Sovereign render path · ' + lat.toFixed(3) + ' ms (< 1 ms)'
-            : 'Measured ' + lat.toFixed(3) + ' ms · ' + (g.isNvidia || g.isIntel ? '≥ 1 ms gate' : 'not NVIDIA/Intel'),
-          detail: g.renderer || 'No WEBGL_debug_renderer_info',
-        });
+          let solarLine = '';
+          if (!ex.found) {
+            solarLine =
+              'Equinox window 2026-03-20 06–18 UTC: incomplete in NOAA feed' +
+              (ex.snapshot_used ? ' (used /data snapshot)' : ' — add /data/equinox-2026-03-20-noaa-snapshot.json');
+          } else if (!kpOk) solarLine = 'Kp samples missing in equinox window';
+          else if (!g2) solarLine = 'Kp_max ' + kpMax + ' in window — below G2 gate (need > 5)';
+          else solarLine = 'Kp_max ' + kpMax + ' @ equinox window · G2+';
 
-        const atl = live.atlas;
-        const atlasOk = atl && atl.fullname;
-        const jplErr =
-          live.errors && live.errors.filter((e) => e.step === 'jpl_sbdb_atlas').map((e) => e.message).join(' · ');
-        setSeahawk({
-          status: atlasOk ? 'pass' : 'fail',
-          line: atlasOk
-            ? atl.fullname + ' · q≈' + (atl.q_au != null ? atl.q_au : '?') + ' au · last_obs ' + (atl.last_obs || '—')
-            : 'JPL SBDB live read failed or incomplete',
-          detail: atlasOk
-            ? 'Rest H I line: ' + HYDROGEN_REST_MHZ + ' MHz (CODATA). Ephemeris: NASA/JPL SBDB. No simulated RF ping.'
-            : (jplErr || 'Check network / CORS / NASA JPL availability'),
-        });
+          const ar = bundle.ar4392;
+          const rtsw = bundle.rtsw;
+          let solarDetail =
+            (ex.kp_closest_to_instant
+              ? 'Closest-to-equinox sample: Kp ' + ex.kp_closest_to_instant.kp_index + ' @ ' + ex.kp_closest_to_instant.time_tag + ' · '
+              : '') +
+            (ex.kp_sample_count != null ? ex.kp_sample_count + ' Kp rows in window · ' : '') +
+            (ar ? 'AR4392 on 2026-03-20 · ' : 'AR4392 absent for equinox date · ') +
+            (rtsw ? 'RTSW Bt ' + rtsw.bt_nT + ' nT · ' + rtsw.source + ' @ ' + rtsw.time_tag : 'RTSW sample missing') +
+            (bundle.atlas && bundle.atlas.fullname ? ' · JPL: ' + bundle.atlas.fullname : '');
+          if (bundle.errors && bundle.errors.length) {
+            solarDetail += ' · API errors: ' + bundle.errors.map((err) => err.step).join(', ');
+          }
+          setSolar({ status: solarPass ? 'pass' : 'fail', line: solarLine, detail: solarDetail });
+        }
 
         try {
-          const L = await verifyLatticeFromOrigin();
-          setVol({
-            status: L.ok ? 'pass' : 'fail',
-            line: L.ok
-              ? 'Lattice manifest OK · SHA-256 ' + L.sha256_prefix + '…'
-              : 'Lattice JSON or lattice_sync.signature failed checks',
+          const probe = await fetchCloudComputeProbe();
+          const cryptoOk = probe.firmware_sha256_throughput_ms != null && probe.firmware_sha256_throughput_ms < 20000;
+          const remoteGpuOk =
+            !probe.remote_gpu_hook ||
+            !probe.remote_gpu_hook.attempted ||
+            probe.remote_gpu_hook.ok === true ||
+            (probe.remote_gpu_hook.json && probe.remote_gpu_hook.json.ok === true);
+          const pass = probe.ok === true && cryptoOk && remoteGpuOk;
+          setCloud({
+            status: pass ? 'pass' : 'fail',
+            line:
+              (probe.cpu_model || 'CPU') +
+              ' · ' +
+              (probe.cpu_count || '?') +
+              ' vCPU · SHA-256 bench ' +
+              probe.firmware_sha256_throughput_ms +
+              ' ms',
             detail:
-              'GET ' +
-              L.url +
-              ' · sig ' +
-              (L.signature ? L.signature.slice(0, 24) + '…' : 'missing') +
-              (L.hydrogen_line_mhz != null ? ' · hydrogen_line_mhz ' + L.hydrogen_line_mhz : ''),
+              (probe.vercel_region ? 'Region ' + probe.vercel_region + ' · ' : '') +
+              probe.platform +
+              '/' +
+              probe.arch +
+              ' · Node ' +
+              probe.node_version +
+              (probe.remote_gpu_hook && probe.remote_gpu_hook.attempted
+                ? ' · GPU_REMOTE_PROBE_URL: ' + (probe.remote_gpu_hook.ok ? 'OK' : 'fail')
+                : ' · Set GPU_REMOTE_PROBE_URL to hit a GPU endpoint'),
           });
+        } catch (e) {
+          setCloud({
+            status: 'fail',
+            line: 'Cloud compute probe unreachable',
+            detail: e.message || String(e),
+          });
+        }
+
+        let zd = null;
+        try {
+          zd = await fetchZeroDishTimed();
+        } catch (e) {
+          setSeahawk({
+            status: 'fail',
+            line: 'Zero-Dish API ping failed',
+            detail: e.message || String(e),
+          });
+        }
+
+        if (zd) {
+          const j = zd.j;
+          const pingOk =
+            zd.r.ok &&
+            j.success === true &&
+            j.outputs &&
+            j.outputs.lattice_sync &&
+            j.outputs.lattice_sync.frequency_mhz === 1420.405751 &&
+            zd.elapsed_ms < 60000;
+          setSeahawk({
+            status: pingOk ? 'pass' : 'fail',
+            line:
+              'HTTP round-trip ' +
+              zd.elapsed_ms +
+              ' ms · cycle ' +
+              (j.receipt && j.receipt.space_cloud_cycle_id ? j.receipt.space_cloud_cycle_id.slice(0, 22) + '…' : '—'),
+            detail:
+              (j.success ? 'Zero-Dish PASS · ' : 'Zero-Dish FAIL · ') +
+              '1420.405751 MHz lattice_sync · live NOAA in receipt when feeds up',
+          });
+        }
+
+        let L = null;
+        try {
+          L = await verifyLatticeFromOrigin();
         } catch (e) {
           setVol({
             status: 'fail',
             line: 'lattice-status.json unreachable',
             detail: e.message || String(e),
+          });
+        }
+
+        if (L && zd && zd.j) {
+          const br = zd.j.outputs && zd.j.outputs.bragg_archive;
+          const braggOk =
+            br &&
+            br.version === 'bragg_volumetric_1' &&
+            br.hydrogen_line_mhz === 1420.405751 &&
+            Array.isArray(br.layers) &&
+            br.layers.length >= 2;
+          const volPass = L.ok === true && zd.j.success === true && braggOk;
+          setVol({
+            status: volPass ? 'pass' : 'fail',
+            line: volPass
+              ? 'Lattice SHA + Bragg volumetric lift confirmed'
+              : 'Lattice file and/or Bragg archive checks failed',
+            detail:
+              'Static lattice SHA-256 ' +
+              L.sha256_prefix +
+              '… · Bragg ' +
+              (br && br.version ? br.version : 'missing') +
+              ' · layers ' +
+              (br && br.layers ? br.layers.length : 0),
+          });
+        } else if (L && !zd) {
+          setVol({
+            status: L.ok ? 'pass' : 'fail',
+            line: L.ok ? 'Lattice manifest only (Zero-Dish unavailable)' : 'Lattice checks failed',
+            detail: L.url + ' · sig ' + (L.signature ? L.signature.slice(0, 20) + '…' : '—'),
           });
         }
 
@@ -479,12 +467,12 @@
             [
               h('div', { className: 'flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-6' }, [
                 h('div', { className: 'min-w-0' }, [
-                  h('p', { className: 'text-[0.65rem] uppercase tracking-[0.28em] text-phoenix/90' }, 'Live terminal · No mock telemetry'),
+                  h('p', { className: 'text-[0.65rem] uppercase tracking-[0.28em] text-phoenix/90' }, 'Equinox + cloud + live Space Cloud cycle'),
                   h('h1', { className: 'mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl crt-glow' }, 'Houdini’s March 20 Ultimate Magic Trick'),
                   h(
                     'p',
                     { className: 'mt-2 max-w-xl text-xs text-slate-400' },
-                    'Narrative below. Diagnostic pulls NOAA SWPC, NASA/JPL SBDB, and this deployment’s lattice-status.json — only real responses.'
+                    'Diagnostics: NOAA samples in the Mar 20 2026 equinox UTC window (optional /data snapshot), Vercel cloud CPU/crypto probe, timed Zero-Dish API ping (Seahawk cycle), lattice manifest + Bragg volumetric proof.'
                   ),
                 ]),
                 h(
@@ -537,8 +525,8 @@
                     motion.div,
                     { key: 's', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Solar/Ionosphere Flux (AR4392)',
-                      subtitle: 'NOAA SWPC live',
+                      title: 'Equinox solar + ionosphere (AR4392)',
+                      subtitle: 'NOAA · 2026-03-20 06–18 UTC window',
                       status: solar.status,
                       line: solar.line,
                       detail: solar.detail,
@@ -548,19 +536,19 @@
                     motion.div,
                     { key: 'g', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'GPU Firmware Integrity (V.1.420)',
-                      subtitle: 'This device · WebGL',
-                      status: gpu.status,
-                      line: gpu.line,
-                      detail: gpu.detail,
+                      title: 'Cloud firmware / compute probe',
+                      subtitle: 'Deployed Node · CPU + crypto (optional GPU_REMOTE_PROBE_URL)',
+                      status: cloud.status,
+                      line: cloud.line,
+                      detail: cloud.detail,
                     })
                   ),
                   h(
                     motion.div,
                     { key: 'h', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Seahawk Hydrogen Ping (1420.4 MHz)',
-                      subtitle: 'NASA/JPL SBDB live',
+                      title: 'Seahawk live ping · Zero-Dish cycle',
+                      subtitle: 'Timed /api/run-zero-dish-test',
                       status: seahawk.status,
                       line: seahawk.line,
                       detail: seahawk.detail,
@@ -570,8 +558,8 @@
                     motion.div,
                     { key: 'v', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Volumetric Data Access (Interference Architecture)',
-                      subtitle: 'Same-origin lattice manifest',
+                      title: 'Volumetric access · lattice + Bragg',
+                      subtitle: 'lattice-status.json + bragg_volumetric_1',
                       status: vol.status,
                       line: vol.line,
                       detail: vol.detail,
@@ -583,7 +571,7 @@
               h(
                 'p',
                 { className: 'mt-10 text-center text-[0.65rem] text-slate-600' },
-                'Live third-party data only · No simulated Kp, RF ping, or packet relay · NSPFRNP → ∞⁹ · SING 9'
+                'Equinox-window NOAA + live cloud probe + timed Zero-Dish ping + lattice/Bragg · NSPFRNP → ∞⁹ · SING 9'
               ),
             ]
           ),

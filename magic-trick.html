@@ -78,6 +78,157 @@
       return { r, elapsed_ms, j };
     }
 
+    /**
+     * Passive listener: no outbound network. Uses microphone + FFT.
+     * RF 1420.4 MHz cannot be received in a browser; we test the acoustic band at 1420.4 Hz
+     * for a narrow line-like peak vs local noise (SNR + Gaussian line-profile match).
+     */
+    async function passiveListenSeahawkHydrogen1420() {
+      const TARGET_HZ = 1420.4;
+      const LINE_HALF_BINS = 4;
+      const GUARD_BINS = 24;
+      const FRAMES = 28;
+      const FRAME_MS = 45;
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        return {
+          ok: false,
+          snr_db: null,
+          profile_score: null,
+          peak_hz: null,
+          line: 'getUserMedia not available',
+          detail: 'Need a secure context (HTTPS) and microphone for passive listen.',
+        };
+      }
+
+      let stream = null;
+      let ctx = null;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+          video: false,
+        });
+      } catch (e) {
+        return {
+          ok: false,
+          snr_db: null,
+          profile_score: null,
+          peak_hz: null,
+          line: 'Microphone not granted — passive listen blocked',
+          detail: e.message || String(e),
+        };
+      }
+
+      try {
+        ctx = new AudioContext();
+        await ctx.resume();
+        const source = ctx.createMediaStreamSource(stream);
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 8192;
+        analyser.smoothingTimeConstant = 0.15;
+        source.connect(analyser);
+
+        const binCount = analyser.frequencyBinCount;
+        const nyquist = ctx.sampleRate / 2;
+        const binHz = nyquist / binCount;
+        const centerBin = Math.min(binCount - 1, Math.max(0, Math.round(TARGET_HZ / binHz)));
+        const templateLen = LINE_HALF_BINS * 2 + 1;
+        const template = new Float32Array(templateLen);
+        const sigma = LINE_HALF_BINS / 2;
+        const mid = LINE_HALF_BINS;
+        let tsum = 0;
+        for (let i = 0; i < templateLen; i++) {
+          const x = i - mid;
+          template[i] = Math.exp(-(x * x) / (2 * sigma * sigma));
+          tsum += template[i];
+        }
+        for (let i = 0; i < templateLen; i++) template[i] /= tsum;
+
+        const acc = new Float32Array(binCount);
+        const dbf = new Float32Array(binCount);
+
+        for (let f = 0; f < FRAMES; f++) {
+          analyser.getFloatFrequencyData(dbf);
+          for (let i = 0; i < binCount; i++) acc[i] += dbf[i];
+          await new Promise((r) => setTimeout(r, FRAME_MS));
+        }
+
+        for (let i = 0; i < binCount; i++) acc[i] /= FRAMES;
+
+        const lo = Math.max(0, centerBin - GUARD_BINS);
+        const hi = Math.min(binCount - 1, centerBin + GUARD_BINS);
+        const noiseBins = [];
+        for (let i = 0; i < binCount; i++) {
+          if (i >= lo && i <= hi) continue;
+          noiseBins.push(acc[i]);
+        }
+        noiseBins.sort((a, b) => a - b);
+        const noiseMed = noiseBins.length ? noiseBins[Math.floor(noiseBins.length * 0.5)] : -100;
+
+        const s0 = Math.max(0, centerBin - LINE_HALF_BINS);
+        let peakDb = -200;
+        let peakBin = centerBin;
+        for (let i = 0; i < templateLen && s0 + i < binCount; i++) {
+          const b = s0 + i;
+          if (acc[b] > peakDb) {
+            peakDb = acc[b];
+            peakBin = b;
+          }
+        }
+        const snr_db = peakDb - noiseMed;
+
+        const slice = new Float32Array(templateLen);
+        for (let i = 0; i < templateLen; i++) slice[i] = Math.max(0, acc[s0 + i] + 100);
+
+        let smin = slice[0],
+          smax = slice[0];
+        for (let i = 1; i < templateLen; i++) {
+          smin = Math.min(smin, slice[i]);
+          smax = Math.max(smax, slice[i]);
+        }
+        const sden = smax - smin + 1e-9;
+        let sn = 0,
+          sd = 0,
+          tn = 0,
+          td = 0;
+        for (let i = 0; i < templateLen; i++) {
+          const sv = (slice[i] - smin) / sden;
+          sn += sv * template[i];
+          sd += sv * sv;
+          tn += template[i];
+          td += template[i] * template[i];
+        }
+        const profile_score = sn / (Math.sqrt(sd) * Math.sqrt(td) + 1e-9);
+
+        const ok = snr_db >= 3 && profile_score >= 0.58;
+        const peak_hz = peakBin * binHz;
+
+        return {
+          ok,
+          snr_db: Math.round(snr_db * 10) / 10,
+          profile_score: Math.round(profile_score * 1000) / 1000,
+          peak_hz: Math.round(peak_hz * 10) / 10,
+          target_hz: TARGET_HZ,
+          line: ok
+            ? 'SNR ' + Math.round(snr_db * 10) / 10 + ' dB · profile ' + Math.round(profile_score * 1000) / 1000 + ' · LOCK'
+            : 'No narrow 1420.4 Hz-class line lock (SNR or profile low)',
+          detail:
+            'Passive FFT · peak @ ~' +
+            Math.round(peak_hz * 10) / 10 +
+            ' Hz · acoustic proxy (RF ' +
+            HYDROGEN_REST_MHZ +
+            ' MHz not available in-browser)',
+        };
+      } finally {
+        try {
+          if (stream) stream.getTracks().forEach((t) => t.stop());
+        } catch (_) {}
+        try {
+          if (ctx && ctx.state !== 'closed') await ctx.close();
+        } catch (_) {}
+      }
+    }
+
     async function fetchCloudComputeProbe() {
       const r = await fetch('/api/cloud-compute-probe', { cache: 'no-store' });
       if (!r.ok) throw new Error('cloud probe HTTP ' + r.status);
@@ -260,7 +411,7 @@
     function App() {
       const idle = {
         status: 'idle',
-        line: 'Run diagnostic: equinox-window NOAA, cloud node probe, timed Zero-Dish ping, lattice + Bragg.',
+        line: 'Run diagnostic: equinox NOAA, cloud probe, passive 1420.4 Hz-band listen, lattice + Bragg (Zero-Dish).',
         detail: '',
       };
       const [running, setRunning] = useState(false);
@@ -271,7 +422,7 @@
 
       const runDiagnostic = useCallback(async () => {
         setRunning(true);
-        const scanning = { status: 'scanning', line: 'Pulling equinox + cloud + Space Cloud cycle…', detail: '' };
+        const scanning = { status: 'scanning', line: 'Equinox + cloud + passive listen + volumetric…', detail: '' };
         setSolar(scanning);
         setCloud(scanning);
         setSeahawk(scanning);
@@ -357,37 +508,29 @@
           });
         }
 
-        let zd = null;
+        let listen = null;
         try {
-          zd = await fetchZeroDishTimed();
+          listen = await passiveListenSeahawkHydrogen1420();
         } catch (e) {
           setSeahawk({
             status: 'fail',
-            line: 'Zero-Dish API ping failed',
+            line: 'Passive Seahawk listen failed',
             detail: e.message || String(e),
           });
         }
-
-        if (zd) {
-          const j = zd.j;
-          const pingOk =
-            zd.r.ok &&
-            j.success === true &&
-            j.outputs &&
-            j.outputs.lattice_sync &&
-            j.outputs.lattice_sync.frequency_mhz === 1420.405751 &&
-            zd.elapsed_ms < 60000;
+        if (listen) {
           setSeahawk({
-            status: pingOk ? 'pass' : 'fail',
-            line:
-              'HTTP round-trip ' +
-              zd.elapsed_ms +
-              ' ms · cycle ' +
-              (j.receipt && j.receipt.space_cloud_cycle_id ? j.receipt.space_cloud_cycle_id.slice(0, 22) + '…' : '—'),
-            detail:
-              (j.success ? 'Zero-Dish PASS · ' : 'Zero-Dish FAIL · ') +
-              '1420.405751 MHz lattice_sync · live NOAA in receipt when feeds up',
+            status: listen.ok ? 'pass' : 'fail',
+            line: listen.line,
+            detail: listen.detail,
           });
+        }
+
+        let zd = null;
+        try {
+          zd = await fetchZeroDishTimed();
+        } catch (_) {
+          /* volumetric card handles missing Zero-Dish */
         }
 
         let L = null;
@@ -571,7 +714,7 @@
               h(
                 'p',
                 { className: 'mt-10 text-center text-[0.65rem] text-slate-600' },
-                'Equinox-window NOAA + live cloud probe + timed Zero-Dish ping + lattice/Bragg · NSPFRNP → ∞⁹ · SING 9'
+                'Equinox NOAA + cloud probe + passive 1420.4 Hz-band listen + lattice/Bragg · NSPFRNP → ∞⁹ · SING 9'
               ),
             ]
           ),

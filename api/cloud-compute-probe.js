@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
+  const handlerWallT0 = Date.now();
   const t0 = Date.now();
   const buf = Buffer.alloc(256 * 1024, 0x5a);
   const hashHex = crypto.createHash('sha256').update(buf).digest('hex');
@@ -39,6 +40,7 @@ module.exports = async (req, res) => {
     }
   }
 
+  const mem = process.memoryUsage();
   return res.status(200).json({
     ok: true,
     service: 'cloud-compute-probe',
@@ -51,6 +53,11 @@ module.exports = async (req, res) => {
     cpu_model: cpus[0] && cpus[0].model,
     firmware_sha256_throughput_ms: t1 - t0,
     firmware_sha256_prefix: hashHex.slice(0, 24),
+    /** Wall time for this handler (crypto + optional GPU hook) — physical latency proxy on edge. */
+    probe_handler_wall_ms: Date.now() - handlerWallT0,
+    /** Resident set size at probe time (MB) — senior-review physical footprint. */
+    memory_rss_mb: Math.round((mem.rss / 1048576) * 1000) / 1000,
+    memory_heap_used_mb: Math.round((mem.heapUsed / 1048576) * 1000) / 1000,
     note:
       'Default Vercel Node has no datacenter GPU; this proves live CPU + OpenSSL/crypto path. ' +
       'Point GPU_REMOTE_PROBE_URL at your GPU Lambda/RunPod/colab bridge to merge GPU telemetry.',

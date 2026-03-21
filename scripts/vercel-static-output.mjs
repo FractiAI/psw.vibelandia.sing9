@@ -73,9 +73,11 @@ if (fs.existsSync(apiConfigPath)) {
   fs.writeFileSync(apiConfigPath, cfg, 'utf8');
 }
 
-// data/, protocols/, assets/
+// data/, protocols/, docs/, lib/ (singularity kernel for magic-trick.html), assets/
 copyDir(path.join(root, 'data'),      path.join(distDir, 'data'));
 copyDir(path.join(root, 'protocols'), path.join(distDir, 'protocols'));
+copyDir(path.join(root, 'docs'),      path.join(distDir, 'docs'));
+copyDir(path.join(root, 'lib'),       path.join(distDir, 'lib'));
 copyDir(path.join(root, 'assets'),    path.join(distDir, 'assets'));
 
 // Root *.md and *.js files (ticker, nav-strip, etc.)

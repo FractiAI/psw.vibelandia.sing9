@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#050508" />
   <title>Houdini’s March 20 Ultimate Magic Trick · Live Terminal · SING 9</title>
-  <meta name="description" content="March 20 theater narrative + live NOAA / NASA / lattice readings. Verify the 180 — real data only. NSPFRNP → ∞⁹" />
+  <meta name="description" content="March 20 theater + live Kp ionosphere gate, edge probes, H I narrative spectral proxy, Blank Stone packet. 180 Locked = four stack checks; see docs for science vs theater. NSPFRNP → ∞⁹" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -54,13 +54,28 @@
     import React, { useState, useCallback } from 'https://esm.sh/react@18.3.1';
     import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1';
     import { motion } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
+    import {
+      SINGULARITY_INTENT_ID,
+      HYDROGEN_REST_MHZ,
+      KP_STORM_GATE_MIN,
+      SPECTRAL_SINGULARITY,
+      evaluateIonosphereStormGate,
+      evaluateEquinoxNarrativeSingularity,
+      evaluateAtlasCatalogSingularity,
+      evaluateBlankStoneSingularity,
+      evaluateLiveFirmwareLatticeSingularity,
+      evaluateEdgeHydrogenChannel,
+      evaluateHydrogenBridgeProxySingularity,
+      evaluateCloudComputeSingularity,
+      composeT180LockedSingularity,
+    } from '/lib/houdini-singularity.mjs';
 
     const { createElement: h } = React;
 
-    const HYDROGEN_REST_MHZ = 1420.405751;
-
-    /** Latest planetary K-index only (no equinox / AR4392 gate). Falls back to NOAA JSON if API unavailable. */
+    /** LIVE each run: latest planetary K-index (T_IONOSPHERE gate). RTT in fetch_ms. */
     async function fetchSolarKpBundle() {
+      const t0 = performance.now();
+      const ms = () => Math.round(performance.now() - t0);
       try {
         const r = await fetch('/api/live-houdini-readings', { cache: 'no-store' });
         if (r.ok) {
@@ -68,7 +83,7 @@
           const kpRow = j.kp || {};
           const kp = kpRow.kp != null ? Number(kpRow.kp) : null;
           if (Number.isFinite(kp)) {
-            return { kp, time_tag: kpRow.time_tag || null, source: 'houdini-api', raw: j };
+            return { kp, time_tag: kpRow.time_tag || null, source: 'houdini-api', raw: j, fetch_ms: ms() };
           }
         }
       } catch (_) {}
@@ -84,7 +99,60 @@
         time_tag: last.time_tag || null,
         source: 'noaa-direct',
         raw: null,
+        fetch_ms: ms(),
       };
+    }
+
+    /** LIVE each run: equinox API bundle + RTT. Pass/fail still uses latest Kp only. */
+    async function fetchEquinoxWindowBundle() {
+      const t0 = performance.now();
+      const fetch_ms = () => Math.round(performance.now() - t0);
+      try {
+        const r = await fetch('/api/live-houdini-readings?equinox=1', { cache: 'no-store' });
+        if (!r.ok) return { bundle: null, fetch_ms: fetch_ms() };
+        const bundle = await r.json();
+        return { bundle, fetch_ms: fetch_ms() };
+      } catch (_) {
+        return { bundle: null, fetch_ms: fetch_ms() };
+      }
+    }
+
+    /** STATIC reference file (actual-data archival baseline for theater window — not the live storm gate). */
+    async function fetchStaticIonosphereReference() {
+      const t0 = performance.now();
+      try {
+        const r = await fetch('/data/houdini-static-ionosphere-reference.json', { cache: 'no-store' });
+        const fetch_ms = Math.round(performance.now() - t0);
+        if (!r.ok) return { json: null, fetch_ms, ok: false };
+        return { json: await r.json(), fetch_ms, ok: true };
+      } catch (_) {
+        return { json: null, fetch_ms: Math.round(performance.now() - t0), ok: false };
+      }
+    }
+
+    /** LIVE each run: lattice-status.json + sing9-firmware-verify.json (3I/ATLAS / H-line firmware library check). */
+    async function fetchLatticeFirmwarePackage() {
+      const tLat0 = performance.now();
+      let latticeJson = null;
+      let lattice_ok = false;
+      try {
+        const r = await fetch('/lattice-status.json', { cache: 'no-store' });
+        lattice_ok = r.ok;
+        if (r.ok) latticeJson = await r.json();
+      } catch (_) {}
+      const lattice_rtt_ms = Math.round(performance.now() - tLat0);
+
+      const tMan0 = performance.now();
+      let manifestJson = null;
+      let manifest_ok = false;
+      try {
+        const r = await fetch('/sing9-firmware-verify.json', { cache: 'no-store' });
+        manifest_ok = r.ok;
+        if (r.ok) manifestJson = await r.json();
+      } catch (_) {}
+      const manifest_rtt_ms = Math.round(performance.now() - tMan0);
+
+      return { latticeJson, manifestJson, lattice_rtt_ms, manifest_rtt_ms, lattice_ok, manifest_ok };
     }
 
     function analyzeSpectralChunk(acc, binCount, nyquist, centerBin, LINE_HALF_BINS, GUARD_BINS, template) {
@@ -148,17 +216,18 @@
      * Chunked aggregation resists single-frame drift from real-time noise shifts.
      */
     async function spectralScanHydrogen1420() {
+      const S = SPECTRAL_SINGULARITY;
       const TARGET_HZ = 1420.4;
       const LINE_HALF_BINS = 4;
       const GUARD_BINS = 24;
-      const CHUNKS = 4;
+      const CHUNKS = S.CHUNKS;
       const FRAMES_PER_CHUNK = 7;
       const FRAME_MS = 45;
-      const CHUNK_SNR_MIN = 2;
-      const CHUNK_PROF_MIN = 0.5;
-      const MEDIAN_SNR_MIN = 2.2;
-      const MEDIAN_PROF_MIN = 0.52;
-      const MIN_CHUNKS_PASS = 2;
+      const CHUNK_SNR_MIN = S.CHUNK_SNR_MIN;
+      const CHUNK_PROF_MIN = S.CHUNK_PROF_MIN;
+      const MEDIAN_SNR_MIN = S.MEDIAN_SNR_MIN;
+      const MEDIAN_PROF_MIN = S.MEDIAN_PROF_MIN;
+      const MIN_CHUNKS_PASS = S.MIN_CHUNKS_PASS;
 
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         return {
@@ -166,6 +235,7 @@
           snr_db: null,
           profile_score: null,
           peak_hz: null,
+          spectral_wall_ms: null,
           line: 'Spectral scan unavailable (no getUserMedia)',
           detail: 'HTTPS + microphone required for 1420.4 Hz-band scan.',
         };
@@ -184,6 +254,7 @@
           snr_db: null,
           profile_score: null,
           peak_hz: null,
+          spectral_wall_ms: null,
           line: 'Microphone not granted — spectral scan blocked',
           detail: e.message || String(e),
         };
@@ -231,8 +302,14 @@
         const medSnr = medianNum(chunkMetrics.map((x) => x.snr_db));
         const medProf = medianNum(chunkMetrics.map((x) => x.profile_score));
         const passChunks = chunkMetrics.filter((x) => x.snr_db >= CHUNK_SNR_MIN && x.profile_score >= CHUNK_PROF_MIN).length;
-        const ok = passChunks >= MIN_CHUNKS_PASS || (medSnr >= MEDIAN_SNR_MIN && medProf >= MEDIAN_PROF_MIN);
+        const bridgeEv = evaluateHydrogenBridgeProxySingularity({
+          medianSnr: medSnr,
+          medianProf: medProf,
+          passChunks,
+        });
+        const ok = bridgeEv.pass === true;
         const lastPeak = chunkMetrics[chunkMetrics.length - 1].peak_hz;
+        const spectral_wall_ms = Math.round(performance.now() - spectralWallT0);
 
         return {
           ok,
@@ -241,19 +318,23 @@
           peak_hz: Math.round(lastPeak * 10) / 10,
           target_hz: TARGET_HZ,
           pass_chunks: passChunks,
+          spectral_wall_ms,
           line: ok ? 'Hydrogen Bridge: COHERENT' : 'Spectral scan: no coherence at 1420.4 Hz band',
           detail:
-            'Spectral scan · ' +
+            'Spectral scan · wall ' +
+            spectral_wall_ms +
+            ' ms · ' +
             passChunks +
             '/' +
             CHUNKS +
-            ' chunks above threshold · median SNR ' +
+            ' chunks · median SNR ' +
             Math.round(medSnr * 10) / 10 +
             ' dB · profile ' +
             Math.round(medProf * 1000) / 1000 +
             ' · acoustic proxy for RF ' +
             HYDROGEN_REST_MHZ +
-            ' MHz',
+            ' MHz · ' +
+            SINGULARITY_INTENT_ID,
         };
       } finally {
         try {
@@ -284,19 +365,6 @@
         throw new Error('Blank Stone response not JSON');
       }
       return { r, j, elapsed_ms, headerMhz, headerBlank };
-    }
-
-    function validateBlankStonePacket({ r, j, headerMhz }) {
-      if (!r.ok) return { ok: false, reason: 'HTTP ' + r.status };
-      if (j.blank_stone !== true || j.legacy_operating_system !== false) return { ok: false, reason: 'blank_stone / no_legacy_os' };
-      const hz = Number(j.hydrogen_line_mhz);
-      if (!Number.isFinite(hz) || Math.abs(hz - HYDROGEN_REST_MHZ) > 0.05) return { ok: false, reason: 'hydrogen_line_mhz' };
-      if (typeof j.packet_hex !== 'string' || j.packet_hex.length < 32) return { ok: false, reason: 'raw_packet' };
-      if (headerMhz != null && headerMhz !== '') {
-        const hm = Number(headerMhz);
-        if (Number.isFinite(hm) && Math.abs(hm - HYDROGEN_REST_MHZ) > 0.05) return { ok: false, reason: 'header_mhz_mismatch' };
-      }
-      return { ok: true };
     }
 
     function StatusCard({ title, subtitle, status, line, detail }) {
@@ -358,10 +426,90 @@
             h(
               'div',
               { className: 'mt-1 text-[0.65rem] font-bold uppercase tracking-[0.4em] text-amber-900/85' },
-              'All channels · ∞⁹'
+              'T180_PRODUCT · SINGULARITY_180_LOCKED'
+            ),
+            h(
+              'p',
+              { className: 'mt-2 text-[0.62rem] font-normal normal-case tracking-normal text-amber-950/90' },
+              'T1 — kernel-aligned four gates. Not T4 RF comet proof. See methodology doc.'
             ),
           ]
         )
+      );
+    }
+
+    function ResearchMethodologyBlock() {
+      return h(
+        'details',
+        {
+          className:
+            'mb-8 rounded-xl border border-cyan-900/40 bg-slate-950/80 px-4 py-3 text-[0.72rem] text-slate-400 open:border-cyan-700/50',
+        },
+        [
+          h(
+            'summary',
+            { className: 'cursor-pointer font-bold uppercase tracking-widest text-cyan-400/95 hover:text-cyan-300' },
+            'Research · What “success” means (theater vs evidence)'
+          ),
+          h('div', { className: 'mt-3 space-y-2 border-t border-slate-800 pt-3 text-slate-400' }, [
+            h(
+              'p',
+              null,
+              'This page imports ',
+              h('code', { className: 'text-cyan-500/90' }, '/lib/houdini-singularity.mjs'),
+              ' — same kernel as ',
+              h('code', { className: 'text-cyan-500/90' }, 'npm test'),
+              '. ',
+              h('strong', { className: 'text-slate-300' }, '180 Locked'),
+              ' = ',
+              h('strong', { className: 'text-slate-300' }, 'composeT180LockedSingularity'),
+              ' → ',
+              h('strong', { className: 'text-slate-300' }, 'T180_PRODUCT'),
+              ' (all four gates): ',
+              h('strong', { className: 'text-slate-300' }, 'T_IONOSPHERE'),
+              ' (Kp ≥ ',
+              String(KP_STORM_GATE_MIN),
+              '), ',
+              h('strong', { className: 'text-slate-300' }, 'T_CLOUD_EDGE'),
+              ', ',
+              h('strong', { className: 'text-slate-300' }, 'T_BRIDGE_PROXY'),
+              ' (local 1420.4 Hz proxy → “Hydrogen Bridge”), ',
+              h('strong', { className: 'text-slate-300' }, 'T_EDGE_HYDROGEN'),
+              '. ',
+              h('strong', { className: 'text-slate-300' }, 'T1'),
+              ' demo — not C/2025 N1 at 1420 ',
+              h('strong', { className: 'text-slate-300' }, 'MHz'),
+              '.'
+            ),
+            h(
+              'p',
+              null,
+              'Equinox ',
+              h('strong', { className: 'text-slate-300' }, 'Mar 20 · 06–18 UTC'),
+              ' appears in the solar card as ',
+              h('strong', { className: 'text-slate-300' }, 'context'),
+              ' (Kp_max in window). JPL SBDB lines, when present, ',
+              h('strong', { className: 'text-slate-300' }, 'anchor the comet in catalog'),
+              ' only.'
+            ),
+            h(
+              'p',
+              { className: 'text-slate-500' },
+              'Full rubric: ',
+              h(
+                'a',
+                {
+                  href: '/docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md',
+                  className: 'text-cyan-400 underline hover:text-cyan-300',
+                },
+                'HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md'
+              ),
+              ' (also in repo ',
+              h('code', { className: 'text-slate-500' }, 'docs/'),
+              ').'
+            ),
+          ]),
+        ]
       );
     }
 
@@ -439,8 +587,8 @@
                     ]),
                     h('tr', null, [
                       h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'Broadcast'),
-                      h('td', { className: 'py-1.5 pr-2 align-top' }, '1420.4 MHz'),
-                      h('td', { className: 'py-1.5 align-top' }, 'JPL ephemeris + H I rest frequency'),
+                      h('td', { className: 'py-1.5 pr-2 align-top' }, '1420.4 MHz narrative'),
+                      h('td', { className: 'py-1.5 align-top' }, 'JPL SBDB = catalog anchor; terminal = local Hz proxy + Blank Stone packet — not sky MHz without a dish'),
                     ]),
                     h('tr', null, [
                       h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'Ground'),
@@ -476,14 +624,54 @@
       );
     }
 
+    function PhysicalMetricsStrip({ metrics }) {
+      if (!metrics) return null;
+      const rows = [
+        ['LIVE Kp / bundle RTT', metrics.live_kp_rtt_ms != null ? metrics.live_kp_rtt_ms + ' ms' : '—'],
+        ['LIVE equinox API RTT', metrics.equinox_api_rtt_ms != null ? metrics.equinox_api_rtt_ms + ' ms' : '—'],
+        ['STATIC ionosphere ref RTT', metrics.static_ref_rtt_ms != null ? metrics.static_ref_rtt_ms + ' ms' : '—'],
+        ['LIVE cloud probe RTT', metrics.cloud_probe_rtt_ms != null ? metrics.cloud_probe_rtt_ms + ' ms' : '—'],
+        ['Probe handler wall (edge)', metrics.probe_handler_wall_ms != null ? metrics.probe_handler_wall_ms + ' ms' : '—'],
+        ['Node RSS (probe)', metrics.memory_rss_mb != null ? metrics.memory_rss_mb + ' MB' : '—'],
+        ['T_BRIDGE_PROXY wall', metrics.spectral_wall_ms != null ? metrics.spectral_wall_ms + ' ms' : '—'],
+        ['LIVE Blank Stone RTT', metrics.blank_stone_rtt_ms != null ? metrics.blank_stone_rtt_ms + ' ms' : '—'],
+        ['LIVE lattice-status RTT', metrics.lattice_rtt_ms != null ? metrics.lattice_rtt_ms + ' ms' : '—'],
+        ['LIVE firmware manifest RTT', metrics.manifest_rtt_ms != null ? metrics.manifest_rtt_ms + ' ms' : '—'],
+      ];
+      return h(
+        motion.div,
+        {
+          className: 'mt-8 rounded-xl border border-slate-700 bg-black/50 p-4 font-mono text-[0.65rem] text-slate-400',
+          initial: { opacity: 0, y: 6 },
+          animate: { opacity: 1, y: 0 },
+        },
+        [
+          h('div', { className: 'mb-2 text-[0.6rem] font-bold uppercase tracking-widest text-cyan-500/90' }, 'Physical metrics · latency (senior review)'),
+          h(
+            'div',
+            { className: 'grid gap-1 sm:grid-cols-2' },
+            rows.map(([k, v], i) =>
+              h('div', { key: i, className: 'flex justify-between gap-2 border-b border-slate-800/80 py-1' }, [
+                h('span', { className: 'text-slate-500' }, k),
+                h('span', { className: 'text-slate-300' }, v),
+              ])
+            )
+          ),
+          h('p', { className: 'mt-2 text-[0.58rem] text-slate-600' }, 'STATIC = archival reference JSON only. LIVE = fetched again every Verify (Kp gate, APIs, lattice, manifest, spectral).'),
+        ]
+      );
+    }
+
     function App() {
       const idle = {
         status: 'idle',
-        line: 'Run diagnostic: live Kp (ground storm gate), cloud probe, 1420.4 Hz spectral scan, Blank Stone hydrogen packet.',
-        detail: '',
+        line:
+          'Verify the 180: LIVE Kp gate + LIVE equinox API + STATIC ionosphere reference; LIVE cloud, spectral, Blank Stone + lattice firmware vs /sing9-firmware-verify.json.',
+        detail: SINGULARITY_INTENT_ID,
       };
       const [running, setRunning] = useState(false);
       const [locked180, setLocked180] = useState(false);
+      const [physMetrics, setPhysMetrics] = useState(null);
       const [solar, setSolar] = useState(idle);
       const [cloud, setCloud] = useState(idle);
       const [seahawk, setSeahawk] = useState(idle);
@@ -492,66 +680,160 @@
       const runDiagnostic = useCallback(async () => {
         setRunning(true);
         setLocked180(false);
-        let solarPass = false;
-        let cloudPass = false;
-        let seahawkPass = false;
-        let volPass = false;
+        setPhysMetrics(null);
 
-        const scanning = { status: 'scanning', line: 'Kp + cloud + spectral scan + Blank Stone…', detail: '' };
+        let ion = {
+          pass: false,
+          tier: 'T_IONOSPHERE',
+          code: 'KP_MISSING',
+          detail: 'Planetary K-index not evaluated',
+        };
+        let cloudEv = { pass: false, tier: 'T_CLOUD_EDGE', violations: ['probe_not_run'] };
+        let bridgeEv = { pass: false, tier: 'T_BRIDGE_PROXY', code: 'NOT_RUN' };
+        let blankEv = { pass: false, tier: 'T_EDGE_LIVE', violations: ['not_run'] };
+        let sk = null;
+        let eqPack = { bundle: null, fetch_ms: null };
+        let staticRef = { ok: false, fetch_ms: null, json: null };
+        let probe = null;
+        let cloud_probe_rtt_ms = null;
+
+        const scanning = {
+          status: 'scanning',
+          line: 'LIVE: Kp, equinox API, cloud, spectral, Blank Stone + lattice… · STATIC: ionosphere ref JSON',
+          detail: SINGULARITY_INTENT_ID,
+        };
         setSolar(scanning);
         setCloud(scanning);
         setSeahawk(scanning);
         setVol(scanning);
 
         try {
-          const sk = await fetchSolarKpBundle();
-          const kp = sk.kp;
-          const kpOk = kp != null && Number.isFinite(Number(kp));
-          solarPass = kpOk && Number(kp) >= 5;
+          const triple = await Promise.all([
+            fetchSolarKpBundle(),
+            fetchEquinoxWindowBundle(),
+            fetchStaticIonosphereReference(),
+          ]);
+          sk = triple[0];
+          eqPack = triple[1];
+          staticRef = triple[2];
+          ion = evaluateIonosphereStormGate(sk.kp);
 
           let solarLine = '';
-          if (!kpOk) solarLine = 'Planetary K-index unavailable from live feeds';
-          else if (!solarPass) solarLine = 'Kp ' + kp + ' — below storm gate (need Kp ≥ 5, G2/G3-class)';
-          else solarLine = 'Kp ' + kp + ' · ground-coupled storm energy (G2/G3 gate)';
+          if (!ion.pass) {
+            solarLine = ion.detail || ion.code || 'T_IONOSPHERE fail';
+          } else {
+            solarLine =
+              'Kp ' + ion.kp + ' · T_IONOSPHERE pass · storm gate (Kp ≥ ' + KP_STORM_GATE_MIN + ', ground–ionosphere)';
+          }
 
-          const solarDetail =
-            (sk.time_tag ? 'Sample @ ' + sk.time_tag + ' · ' : '') +
-            'Source: ' +
+          let solarDetail =
+            'LIVE Kp RTT ' +
+            (sk.fetch_ms != null ? sk.fetch_ms + ' ms' : '—') +
+            ' · ' +
+            (sk.time_tag ? 'Live Kp @ ' + sk.time_tag + ' · ' : '') +
+            'evaluateIonosphereStormGate(latest Kp only) · Source: ' +
             sk.source +
-            ' · narrative: ionospheric/ground driver, not AR flare latch' +
             (sk.raw && sk.raw.errors && sk.raw.errors.length
               ? ' · API notes: ' + sk.raw.errors.map((err) => err.step).join(', ')
               : '');
 
-          setSolar({ status: solarPass ? 'pass' : 'fail', line: solarLine, detail: solarDetail });
+          solarDetail +=
+            ' · LIVE equinox API RTT ' + (eqPack.fetch_ms != null ? eqPack.fetch_ms + ' ms' : '—');
+          const eqWin = eqPack.bundle;
+          if (eqWin) {
+            const eqNarr = evaluateEquinoxNarrativeSingularity(eqWin);
+            if (eqNarr.pass && eqWin.equinox) {
+              const ex = eqWin.equinox;
+              solarDetail +=
+                ' · T_EQUINOX_NARRATIVE ✓ · Mar 20 06–18 UTC: Kp_max=' +
+                (ex.kp_max != null ? ex.kp_max : '—') +
+                (ex.kp_sample_count != null ? ' · ' + ex.kp_sample_count + ' samples' : '') +
+                (ex.found ? ' · window complete' : ' · window partial');
+            } else if (eqWin.equinox) {
+              const ex = eqWin.equinox;
+              solarDetail +=
+                ' · Equinox raw: Kp_max=' +
+                (ex.kp_max != null ? ex.kp_max : '—') +
+                ' · T_EQUINOX_NARRATIVE: ' +
+                (eqNarr.violations || []).join(', ');
+            } else {
+              solarDetail += ' · Equinox response missing equinox block';
+            }
+          } else {
+            solarDetail += ' · Equinox API bundle null';
+          }
+
+          solarDetail +=
+            ' · STATIC ionosphere ref RTT ' +
+            (staticRef.fetch_ms != null ? staticRef.fetch_ms + ' ms' : '—');
+          if (staticRef.ok && staticRef.json) {
+            const ref = staticRef.json;
+            solarDetail +=
+              ' · STATIC_REF (' +
+              (ref.schema || 'ref') +
+              '): ' +
+              (ref.provenance ? ref.provenance.slice(0, 100) + '…' : '') +
+              ' · companion ' +
+              (ref.companion_noaa_snapshot || '—');
+            if (ref.ionosphere_archival && ref.ionosphere_archival.kp_max_in_window != null) {
+              solarDetail += ' · archival Kp_max=' + ref.ionosphere_archival.kp_max_in_window;
+            }
+          } else {
+            solarDetail += ' · STATIC_REF missing (/data/houdini-static-ionosphere-reference.json)';
+          }
+
+          const atlas = sk.raw && sk.raw.atlas;
+          const atlasEv = evaluateAtlasCatalogSingularity(atlas != null ? atlas : null);
+          if (atlas && atlas.fullname) {
+            solarDetail +=
+              ' · T_CATALOG_ANCHOR ' +
+              (atlasEv.pass ? '✓' : '✗ ' + (atlasEv.violations || []).join(',')) +
+              ': ' +
+              atlas.fullname +
+              (atlas.last_obs ? ' · last_obs ' + atlas.last_obs : '') +
+              (atlas.q_au != null ? ' · q≈' + atlas.q_au + ' AU' : '') +
+              ' — LIVE bundle · not 1420 MHz proof';
+          } else if (sk.source === 'noaa-direct') {
+            solarDetail += ' · JPL ATLAS: not bundled on NOAA-only path';
+          }
+
+          solarDetail += ' · ' + SINGULARITY_INTENT_ID;
+
+          setSolar({ status: ion.pass ? 'pass' : 'fail', line: solarLine, detail: solarDetail });
         } catch (e) {
+          ion = evaluateIonosphereStormGate(null);
           setSolar({
             status: 'fail',
-            line: 'Planetary K-index fetch failed',
-            detail: e.message || String(e),
+            line: ion.detail || 'Planetary K-index fetch failed',
+            detail: (e.message || String(e)) + ' · ' + SINGULARITY_INTENT_ID,
           });
-          solarPass = false;
         }
 
         try {
-          const probe = await fetchCloudComputeProbe();
-          const cryptoOk = probe.firmware_sha256_throughput_ms != null && probe.firmware_sha256_throughput_ms < 20000;
-          const remoteGpuOk =
-            !probe.remote_gpu_hook ||
-            !probe.remote_gpu_hook.attempted ||
-            probe.remote_gpu_hook.ok === true ||
-            (probe.remote_gpu_hook.json && probe.remote_gpu_hook.json.ok === true);
-          cloudPass = probe.ok === true && cryptoOk && remoteGpuOk;
+          const tProbe = performance.now();
+          probe = await fetchCloudComputeProbe();
+          cloud_probe_rtt_ms = Math.round(performance.now() - tProbe);
+          cloudEv = evaluateCloudComputeSingularity(probe);
           setCloud({
-            status: cloudPass ? 'pass' : 'fail',
+            status: cloudEv.pass ? 'pass' : 'fail',
             line:
               (probe.cpu_model || 'CPU') +
               ' · ' +
               (probe.cpu_count || '?') +
-              ' vCPU · SHA-256 bench ' +
+              ' vCPU · SHA-256 ' +
               probe.firmware_sha256_throughput_ms +
-              ' ms',
+              ' ms · T_CLOUD_EDGE',
             detail:
+              (cloudEv.pass ? '' : 'Violations: ' + (cloudEv.violations || []).join(', ') + ' · ') +
+              'LIVE RTT ' +
+              cloud_probe_rtt_ms +
+              ' ms · handler_wall ' +
+              (probe.probe_handler_wall_ms != null ? probe.probe_handler_wall_ms + ' ms' : '—') +
+              ' · RSS ' +
+              (probe.memory_rss_mb != null ? probe.memory_rss_mb + ' MB' : '—') +
+              ' · heap ' +
+              (probe.memory_heap_used_mb != null ? probe.memory_heap_used_mb + ' MB' : '—') +
+              ' · ' +
               (probe.vercel_region ? 'Region ' + probe.vercel_region + ' · ' : '') +
               probe.platform +
               '/' +
@@ -560,14 +842,16 @@
               probe.node_version +
               (probe.remote_gpu_hook && probe.remote_gpu_hook.attempted
                 ? ' · GPU_REMOTE_PROBE_URL: ' + (probe.remote_gpu_hook.ok ? 'OK' : 'fail')
-                : ' · Set GPU_REMOTE_PROBE_URL to hit a GPU endpoint'),
+                : '') +
+              ' · ' +
+              SINGULARITY_INTENT_ID,
           });
         } catch (e) {
-          cloudPass = false;
+          cloudEv = { pass: false, tier: 'T_CLOUD_EDGE', violations: ['unreachable'] };
           setCloud({
             status: 'fail',
             line: 'Cloud compute probe unreachable',
-            detail: e.message || String(e),
+            detail: (e.message || String(e)) + ' · ' + SINGULARITY_INTENT_ID,
           });
         }
 
@@ -575,51 +859,110 @@
         try {
           listen = await spectralScanHydrogen1420();
         } catch (e) {
-          seahawkPass = false;
+          bridgeEv = { pass: false, tier: 'T_BRIDGE_PROXY', code: 'EXCEPTION' };
           setSeahawk({
             status: 'fail',
             line: 'Spectral scan failed',
-            detail: e.message || String(e),
+            detail: (e.message || String(e)) + ' · ' + SINGULARITY_INTENT_ID,
           });
         }
         if (listen) {
-          seahawkPass = !!listen.ok;
+          bridgeEv = evaluateHydrogenBridgeProxySingularity({
+            medianSnr: listen.snr_db,
+            medianProf: listen.profile_score,
+            passChunks: listen.pass_chunks != null ? listen.pass_chunks : 0,
+          });
           setSeahawk({
             status: listen.ok ? 'pass' : 'fail',
-            line: listen.line,
+            line:
+              listen.line +
+              ' · ' +
+              bridgeEv.tier +
+              (bridgeEv.code ? ' · ' + bridgeEv.code : ''),
             detail: listen.detail,
           });
         }
 
+        let bs = null;
+        let fw = { lattice_rtt_ms: null, manifest_rtt_ms: null, lattice_ok: false, manifest_ok: false };
         try {
-          const bs = await fetchBlankStoneHydrogen();
-          const v = validateBlankStonePacket(bs);
-          volPass = v.ok === true;
+          const pair = await Promise.all([fetchBlankStoneHydrogen(), fetchLatticeFirmwarePackage()]);
+          bs = pair[0];
+          fw = pair[1];
+          const hdrObj = {};
+          if (bs.headerMhz != null && bs.headerMhz !== '') hdrObj['x-hydrogen-line-mhz'] = String(bs.headerMhz);
+          let blankPart;
+          if (!bs.r.ok) {
+            blankPart = { pass: false, tier: 'T_EDGE_HYDROGEN', violations: ['http_' + bs.r.status] };
+          } else {
+            blankPart = evaluateBlankStoneSingularity(bs.j, hdrObj);
+          }
+          const latticePart = evaluateLiveFirmwareLatticeSingularity(fw.latticeJson, fw.manifestJson);
+          blankEv = evaluateEdgeHydrogenChannel(blankPart, latticePart);
+
+          const lat = fw.latticeJson && fw.latticeJson.lattice_sync;
+          const volDetailPass =
+            'T_EDGE_LIVE ✓ · Blank Stone + lattice firmware (3I/ATLAS node) · manifest v' +
+            (fw.manifestJson && fw.manifestJson.manifest_version ? fw.manifestJson.manifest_version : '?') +
+            ' · Blank RTT ' +
+            bs.elapsed_ms +
+            ' ms · lattice RTT ' +
+            fw.lattice_rtt_ms +
+            ' ms · manifest RTT ' +
+            fw.manifest_rtt_ms +
+            ' ms · ' +
+            (lat && lat.node ? lat.node : '—') +
+            ' · sig ' +
+            (lat && lat.signature ? lat.signature.slice(0, 12) + '…' : '—') +
+            ' · ' +
+            SINGULARITY_INTENT_ID;
+
+          const volDetailFail =
+            (blankEv.violations || []).join(' · ') +
+            ' · lattice_ok=' +
+            fw.lattice_ok +
+            ' manifest_ok=' +
+            fw.manifest_ok +
+            ' · /lattice-status.json · /sing9-firmware-verify.json · ' +
+            SINGULARITY_INTENT_ID;
+
           setVol({
-            status: volPass ? 'pass' : 'fail',
-            line: volPass
-              ? 'Blank Stone node · raw hydrogen-line packet OK'
-              : 'Blank Stone / hydrogen packet check failed' + (v.reason ? ' (' + v.reason + ')' : ''),
-            detail: volPass
-              ? (bs.j.node_class || 'edge') +
-                ' · ' +
-                bs.elapsed_ms +
-                ' ms · packet ' +
-                (bs.j.packet_hex ? bs.j.packet_hex.slice(0, 16) + '…' : '—') +
-                ' · MHz ' +
-                bs.j.hydrogen_line_mhz
-              : (bs.j && bs.j.note) || 'Deploy /api/blank-stone-hydrogen on this origin.',
+            status: blankEv.pass ? 'pass' : 'fail',
+            line: blankEv.pass
+              ? 'T_EDGE_LIVE ✓ · Blank Stone + lattice (LIVE)'
+              : 'T_EDGE_LIVE ✗ · ' + (blankEv.violations || []).join(', '),
+            detail: blankEv.pass ? volDetailPass : volDetailFail,
           });
         } catch (e) {
-          volPass = false;
+          blankEv = { pass: false, tier: 'T_EDGE_LIVE', violations: ['fetch_error'] };
           setVol({
             status: 'fail',
-            line: 'Blank Stone endpoint unreachable',
-            detail: e.message || String(e),
+            line: 'Edge LIVE channel failed',
+            detail: (e.message || String(e)) + ' · ' + SINGULARITY_INTENT_ID,
           });
         }
 
-        setLocked180(solarPass && cloudPass && seahawkPass && volPass);
+        const t180 = composeT180LockedSingularity({
+          ionosphere: ion,
+          cloud: cloudEv,
+          bridgeProxy: bridgeEv,
+          blankStone: blankEv,
+        });
+        setLocked180(t180.pass === true);
+
+        setPhysMetrics({
+          live_kp_rtt_ms: sk && sk.fetch_ms != null ? sk.fetch_ms : null,
+          equinox_api_rtt_ms: eqPack && eqPack.fetch_ms != null ? eqPack.fetch_ms : null,
+          static_ref_rtt_ms: staticRef && staticRef.fetch_ms != null ? staticRef.fetch_ms : null,
+          cloud_probe_rtt_ms,
+          probe_handler_wall_ms: probe && probe.probe_handler_wall_ms != null ? probe.probe_handler_wall_ms : null,
+          memory_rss_mb: probe && probe.memory_rss_mb != null ? probe.memory_rss_mb : null,
+          spectral_wall_ms: listen && listen.spectral_wall_ms != null ? listen.spectral_wall_ms : null,
+          blank_stone_rtt_ms: bs ? bs.elapsed_ms : null,
+          lattice_rtt_ms: fw.lattice_rtt_ms,
+          manifest_rtt_ms: fw.manifest_rtt_ms,
+        });
+
         setRunning(false);
       }, []);
 
@@ -656,12 +999,14 @@
             [
               h('div', { className: 'flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-6' }, [
                 h('div', { className: 'min-w-0' }, [
-                  h('p', { className: 'text-[0.65rem] uppercase tracking-[0.28em] text-phoenix/90' }, 'Equinox + cloud + live Space Cloud cycle'),
+                  h('p', { className: 'text-[0.65rem] uppercase tracking-[0.28em] text-phoenix/90' }, 'Equinox theater · live ionosphere · Space Cloud edge'),
                   h('h1', { className: 'mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl crt-glow' }, 'Houdini’s March 20 Ultimate Magic Trick'),
                   h(
                     'p',
                     { className: 'mt-2 max-w-xl text-xs text-slate-400' },
-                    'Diagnostics: live planetary K-index (Kp ≥ 5 storm gate — ground energy), Vercel cloud CPU/crypto probe, 1420.4 Hz-band spectral scan (hydrogen bridge proxy), Blank Stone edge node + hydrogen-line packet.'
+                    'T_IONOSPHERE = LIVE Kp ≥ ' +
+                      KP_STORM_GATE_MIN +
+                      ' + LIVE equinox API + STATIC ionosphere reference JSON. T_CLOUD_EDGE / T_BRIDGE_PROXY / T_EDGE_LIVE = all LIVE on each button press (probe, spectral, Blank Stone + /lattice-status.json vs /sing9-firmware-verify.json).'
                   ),
                 ]),
                 h(
@@ -714,8 +1059,8 @@
                     motion.div,
                     { key: 's', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Equinox solar + ionosphere (AR4392)',
-                      subtitle: 'NOAA · 2026-03-20 06–18 UTC window',
+                      title: 'T_IONOSPHERE · Planetary Kp + equinox context',
+                      subtitle: 'evaluateIonosphereStormGate(live Kp) + T_EQUINOX_NARRATIVE + T_CATALOG_ANCHOR',
                       status: solar.status,
                       line: solar.line,
                       detail: solar.detail,
@@ -725,8 +1070,8 @@
                     motion.div,
                     { key: 'g', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Cloud firmware / compute probe',
-                      subtitle: 'Deployed Node · CPU + crypto (optional GPU_REMOTE_PROBE_URL)',
+                      title: 'T_CLOUD_EDGE · Compute probe',
+                      subtitle: 'evaluateCloudComputeSingularity — CPU + SHA-256 bench (optional GPU_REMOTE_PROBE_URL)',
                       status: cloud.status,
                       line: cloud.line,
                       detail: cloud.detail,
@@ -736,8 +1081,8 @@
                     motion.div,
                     { key: 'h', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Seahawk · Spectral scan (1420.4 MHz narrative)',
-                      subtitle: 'Mic FFT · 1420.4 Hz acoustic proxy — no network ping',
+                      title: 'T_BRIDGE_PROXY · Hydrogen bridge (Hz)',
+                      subtitle: 'LIVE each Verify · evaluateHydrogenBridgeProxySingularity',
                       status: seahawk.status,
                       line: seahawk.line,
                       detail: seahawk.detail,
@@ -747,8 +1092,8 @@
                     motion.div,
                     { key: 'v', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
                     h(StatusCard, {
-                      title: 'Volumetric · Blank Stone hydrogen relay',
-                      subtitle: '/api/blank-stone-hydrogen · no legacy OS path',
+                      title: 'T_EDGE_LIVE · Blank Stone + lattice firmware',
+                      subtitle: 'LIVE: evaluateBlankStoneSingularity + lattice vs /sing9-firmware-verify.json',
                       status: vol.status,
                       line: vol.line,
                       detail: vol.detail,
@@ -757,10 +1102,12 @@
                 ]
               ),
 
+              h(PhysicalMetricsStrip, { metrics: physMetrics }),
+
               h(
                 'p',
                 { className: 'mt-10 text-center text-[0.65rem] text-slate-600' },
-                'Live Kp + cloud probe + spectral scan + Blank Stone packet · NSPFRNP → ∞⁹ · SING 9'
+                'STATIC = archival JSON only · LIVE = refetched every Verify (Kp gate, APIs, lattice, manifest, spectral) · T_EDGE_LIVE = Blank Stone + /lattice-status.json · NSPFRNP → ∞⁹'
               ),
             ]
           ),

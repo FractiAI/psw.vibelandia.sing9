@@ -1,0 +1,27 @@
+{
+  "manifest_version": "1",
+  "singularity_intent_id": "houdini-singularity-2026-03",
+  "description": "Canonical expectations for LIVE firmware verification each Verify-the-180 run. Compare to /lattice-status.json at runtime.",
+  "expected": {
+    "lattice_spec_version": "zero_dish_hyperscale_1",
+    "lattice_hydrogen_line_mhz": 1420.405751,
+    "lattice_sync_frequency_must_match_constants": true,
+    "min_lattice_signature_length": 8
+  },
+  "library_paths": {
+    "lattice_status": "/lattice-status.json",
+    "this_manifest": "/sing9-firmware-verify.json",
+    "static_ionosphere_reference": "/data/houdini-static-ionosphere-reference.json",
+    "singularity_kernel": "/lib/houdini-singularity.mjs"
+  },
+  "live_on_each_verify": [
+    "GET /api/cloud-compute-probe",
+    "GET /api/blank-stone-hydrogen",
+    "GET /lattice-status.json vs this manifest",
+    "Browser mic spectral scan (T_BRIDGE_PROXY)"
+  ],
+  "static_reference_only": [
+    "/data/houdini-static-ionosphere-reference.json",
+    "Optional /data/equinox-2026-03-20-noaa-snapshot.json"
+  ]
+}

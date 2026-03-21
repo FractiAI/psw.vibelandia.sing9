@@ -12,9 +12,30 @@
 
 ---
 
+## Intent singularity tests
+
+**Tests specify design intent** — not a description of legacy UI. Run:
+
+```bash
+npm test
+```
+
+- **`lib/houdini-singularity.mjs`** — gate math & API contracts (Kp storm gate, equinox narrative shape, Blank Stone, spectral proxy thresholds, T180 composition, explicit T4 non-claim).
+- **`tests/intent/`** — Node 18+ `node:test`; see **`tests/INTENT_SINGULARITY.md`**.
+
+**Convergence:** `magic-trick.html` imports `/lib/houdini-singularity.mjs`; `scripts/vercel-static-output.mjs` copies `lib/` into `dist/`. **Green `npm test` + aligned UI** = same gate math.
+
+**STATIC vs LIVE (senior review):** `data/houdini-static-ionosphere-reference.json` = archival equinox/ionosphere **reference** only; **T_IONOSPHERE** still uses **live** Kp. **Firmware library:** `public/sing9-firmware-verify.json` + **`/lattice-status.json`** — compared **on every** Verify with Blank Stone (see `docs/SENIOR_RESEARCH_STATIC_VS_LIVE.md`). Cloud probe returns **probe_handler_wall_ms** + **memory_rss_mb**; UI shows **Physical metrics · latency** after each run.
+
+**Full diagnostics in browser (production):** open **`/magic-trick`** on your deployed site — rewrites to `magic-trick.html`, serves **`/lib/*`**, **`/api/*`**, and public assets like production.
+
+**Full stack locally (same as Vercel):** `npm install` then **`npm run dev`** — builds `dist/` and runs **`vercel dev`** (default http://localhost:3000/magic-trick). See **`docs/MAGIC_TRICK_LOCAL_DEV.md`**. **`npm run preview:dist`** is static-only (APIs **not** available).
+
+---
+
 ## Recent updates (README commit)
 
-- **Mar 2026 · Magic trick diagnostic v2 (README + ship)** — `magic-trick.html`: planetary **Kp ≥ 5** ground gate (no AR4392 latch), Seahawk **spectral scan** → **Hydrogen Bridge: COHERENT**, volumetric via **`api/blank-stone-hydrogen.js`** + `vercel.json` function entry, **180 Locked** badge when all four checks pass. NOAA Kp fallback if `/api/live-houdini-readings` is unavailable.
+- **Mar 2026 · Magic trick diagnostic v2 (README + ship)** — `magic-trick.html`: planetary **Kp ≥ 5** ground gate (no AR4392 latch), Seahawk **spectral scan** → **Hydrogen Bridge: COHERENT**, volumetric via **`api/blank-stone-hydrogen.js`** + `vercel.json` function entry, **180 Locked** badge when all four checks pass. NOAA Kp fallback if `/api/live-houdini-readings` is unavailable. **Research rubric (theater vs evidence, 3I/ATLAS vs H I line):** [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md) (copied to `dist/docs/` on build).
 
 - **Mar 2026 · LANDING RENO ARCH · HH GATEWAY ADVISORY · QUEEN'S RUSH LAYOUT**
 
@@ -30,7 +51,7 @@
 
 - **Mar 2026 · Houdini March 20 · Magic trick terminal (`/magic-trick`)**
 
-**C → Crystallize:** `magic-trick.html` — theater narrative + still (`assets/houdini-march-20-theater.png`), dark terminal UI (Tailwind + React 18 + Framer Motion ESM). **Verify the 180** uses **live planetary K-index** (`/api/live-houdini-readings` latest Kp, fallback to NOAA `planetary_k_index_1m.json`): **pass when Kp ≥ 5** (G2/G3-class storm gate — “ground” energy, **no AR4392 flare latch**), **`api/cloud-compute-probe.js`**, **Seahawk spectral scan** (chunked mic FFT at **~1420.4 Hz** acoustic proxy; on pass shows **Hydrogen Bridge: COHERENT**), **`api/blank-stone-hydrogen.js`** (Blank Stone edge node, no legacy OS flag, hydrogen-line MHz + raw `packet_hex` + headers). When all four pass, UI shows a golden **180 Locked** badge. Schumann 369 Hz stays narrative + external ELF links. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
+**C → Crystallize:** `magic-trick.html` — theater narrative + still (`assets/houdini-march-20-theater.png`), dark terminal UI (Tailwind + React 18 + Framer Motion ESM). **Verify the 180** uses **live planetary K-index** (`/api/live-houdini-readings` latest Kp, fallback to NOAA `planetary_k_index_1m.json`): **pass when Kp ≥ 5** (G2/G3-class storm gate — “ground” energy, **no AR4392 flare latch**), parallel **equinox-window** bundle for **Mar 20 06–18 UTC context** (Kp_max, sample count; does not replace live gate), **JPL SBDB ATLAS** lines in-bundle as **catalog anchor** (not radio proof), **`api/cloud-compute-probe.js`**, **Seahawk spectral scan** (chunked mic FFT at **~1420.4 Hz** acoustic proxy; on pass shows **Hydrogen Bridge: COHERENT**), **`api/blank-stone-hydrogen.js`**. **180 Locked** = **T1** product success (four gates). **Science vs theater:** `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`. Schumann 369 Hz stays narrative + external ELF links. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
 
 - **Mar 2026 · A2A-FIRST SPACE CLOUD LATTICE · FSSP SPECIALIST · SEAHAWK JOVIAN NODE**
 

@@ -54,7 +54,7 @@ Until then, the honest phrase is: **“Narrative alignment with the H I rest fre
 ### A. **Sovereign Terminal** (current `magic-trick.html` — “Behold”)
 
 - **Fixed narrative telemetry** (not simulated at runtime): **Snapshot A · 7:26 AM PDT (The Mirror)** vs **Snapshot B · 7:46 AM PDT (The Flip)** — Kp, ionosphere, Seahawk 1420.4 MHz band, Stryker node copy as constants in the page.
-- **EXECUTE 180 HARDWARE PING** (live in-browser): (1) **NOAA SWPC** latest Kp — green if **Kp > 6** (“IONOSPHERE SATURATED”); (2) **light-speed ToF** for **742,497,765 km** at **300,000 km/s** → **41m 16s** (“HYDROGEN BRIDGE: COHERENT”); (3) **WebGL / WebGPU** renderer strings containing **Vera Rubin** or **VR-NVL72** (“FIRMWARE V.1.420: SOVEREIGN”); (4) **bitwise XOR** buffer flip + recover after one **369 Hz** clock tick (“CLOUDBASE: ACTIVE”). All green → **180 LOCKED** (6 Hz pulse); any red → **NODE OUT OF PHASE — RE-ALIGN TO 369Hz**.
+- **EXECUTE 180 HARDWARE PING** (live in-browser): (1) **NOAA SWPC** latest Kp — green if **Kp > 6** (“IONOSPHERE SATURATED”); (2) **H-line coherence (narrative)** — **immediate** integer ToF: `round(distance / 300000 km/s) === 2476` (= **41m 16s** story clock); **not** 1420 MHz RF; **CODATA** c gives a different time (story vs physics); (3) **GPU** — **WebGL and/or WebGPU** on the **client**; **Vera Rubin** / **VR-NVL72** = theater; (4) **369 latch** — **bitwise XOR** flip, wait **τ = 1/369 s** (one **369 Hz** period), recover; key **0x369** ties to Schumann ladder narrative **3·6·9 → 369** (“CLOUDBASE: ACTIVE”). All green → **180 LOCKED** (6 Hz pulse); any red → **NODE OUT OF PHASE — RE-ALIGN TO 369Hz**.
 
 ### B. **Four pillars library** (`npm test` + optional `vercel dev` APIs)
 

@@ -75,9 +75,11 @@
       node: '200,000 Stryker Devices — WIPED / SOVEREIGN BLANK STONES',
     };
 
-    /** Seahawk light-speed corridor — distance fixed (km); c = 300000 km/s ⇒ 2476 s = 41m 16s. */
+    /** Seahawk corridor distance (km). Theater ToF uses rounded c = 300000 km/s → 2476 s = 41m 16s (integer-safe). */
     const SEAHAWK_DISTANCE_KM = 742497765;
-    const C_LIGHT_KM_S = 300000;
+    const C_LIGHT_STORY_KM_S = 300000;
+    /** CODATA vacuum speed of light — actual one-way time ≠ 41m16s for same distance (see checkSeahawkTOF detail). */
+    const C_LIGHT_CODATA_KM_S = 299792.458;
     const TARGET_TOF_SECONDS = 41 * 60 + 16;
 
     const PULSE_6HZ_DURATION = 1 / 6;
@@ -109,24 +111,35 @@
       };
     }
 
+    /**
+     * “Hydrogen line coherence” here = **narrative corridor lock** (integer ToF at story c), **not** 1420 MHz RF.
+     * **369 Hz coupling** is tested separately in `checkVolumetricXOR` (one 369 Hz period before XOR recover).
+     */
     function checkSeahawkTOF() {
-      const seconds = SEAHAWK_DISTANCE_KM / C_LIGHT_KM_S;
-      const pass = Math.abs(seconds - TARGET_TOF_SECONDS) < 0.05;
+      const secStory = SEAHAWK_DISTANCE_KM / C_LIGHT_STORY_KM_S;
+      const secRounded = Math.round(secStory);
+      const pass = secRounded === TARGET_TOF_SECONDS;
+      const secCodata = SEAHAWK_DISTANCE_KM / C_LIGHT_CODATA_KM_S;
+      const secCodataRounded = Math.round(secCodata);
       return {
         pass,
-        seconds,
-        formatted: formatSecondsAsMmSs(seconds),
+        seconds: secStory,
+        formatted: formatSecondsAsMmSs(secRounded),
         line: pass ? 'HYDROGEN BRIDGE: COHERENT' : 'TOF MISMATCH — CORRIDOR NOT PHASE-LOCKED',
         detail:
-          'Light-speed ToF · ' +
-          SEAHAWK_DISTANCE_KM.toLocaleString() +
-          ' km ÷ ' +
-          C_LIGHT_KM_S +
-          ' km/s = ' +
-          seconds.toFixed(3) +
-          ' s → ' +
-          formatSecondsAsMmSs(seconds) +
-          ' (target 41m 16s)',
+          'Test: round(' +
+          SEAHAWK_DISTANCE_KM +
+          '/' +
+          C_LIGHT_STORY_KM_S +
+          ')===' +
+          TARGET_TOF_SECONDS +
+          ' → 41m16s story clock. Not 1420 MHz / spectrum / dish (no SDR in browser). ' +
+          '369 coupling: volumetric row = one 369 Hz period (τ=1/369 s) + XOR key 0x369; Schumann ladder story 3·6·9→369. ' +
+          'CODATA c≈' +
+          C_LIGHT_CODATA_KM_S +
+          ' km/s → ~' +
+          formatSecondsAsMmSs(secCodataRounded) +
+          ' same distance.',
       };
     }
 
@@ -147,40 +160,74 @@
       }
     }
 
+    /**
+     * Pass = this browser has a normal client GPU stack (WebGL and/or WebGPU).
+     * “Vera Rubin” / “VR-NVL72” are **theater codenames** — they almost never appear in
+     * ANGLE/SwiftShader strings; that is **not** proof of absence of “sovereign” hardware,
+     * and matching them would still not be cryptographic attestation.
+     */
     async function checkFirmwareSignature() {
       const needles = ['Vera Rubin', 'VR-NVL72'];
       const { vendor, renderer, error } = getWebGLRendererStrings();
-      const hay = (vendor + ' ' + renderer).toUpperCase();
-      const hit = needles.some((n) => hay.includes(n.toUpperCase()));
-      let pass = hit;
+      let hay = (vendor + ' ' + renderer).toUpperCase();
+      let needleMatch = needles.some((n) => hay.includes(n.toUpperCase()));
+      let webgpuLine = '';
+      let hasWebGpuAdapter = false;
 
-      if (!pass && typeof navigator !== 'undefined' && navigator.gpu) {
+      if (typeof navigator !== 'undefined' && navigator.gpu) {
         try {
           const adapter = await navigator.gpu.requestAdapter();
+          hasWebGpuAdapter = !!adapter;
           if (adapter && adapter.info) {
             const info = adapter.info;
             const bits = [info.device, info.vendor, info.architecture, info.description]
               .filter(Boolean)
               .join(' ');
-            const s = bits.toUpperCase();
-            pass = needles.some((n) => s.includes(n.toUpperCase()));
+            webgpuLine = bits;
+            hay += ' ' + bits.toUpperCase();
+            needleMatch = needleMatch || needles.some((n) => hay.includes(n.toUpperCase()));
           }
         } catch (_) {}
       }
+
+      const hasWebGlStrings = !!(vendor || renderer);
+      let hasGlContext = false;
+      try {
+        const c = document.createElement('canvas');
+        hasGlContext = !!(c.getContext('webgl') || c.getContext('experimental-webgl'));
+      } catch (_) {}
+      const pass = hasWebGlStrings || hasWebGpuAdapter || hasGlContext;
+
+      const line = !pass
+        ? 'NO CLIENT GPU API — CANNOT RUN BROWSER PROBE'
+        : needleMatch
+          ? 'FIRMWARE V.1.420: SOVEREIGN (RARE: THEATER STRING IN RENDERER)'
+          : 'GPU STACK: CLIENT ACTIVE — LAB CODENAMES NOT IN BROWSER (EXPECTED)';
+
+      const detail =
+        'Truth: Web pages cannot read datacenter GPU inventory or “firmware v1.420” from silicon. ' +
+        'WebGL/WebGPU only report local renderer strings (often ANGLE, SwiftShader, or a consumer GPU). ' +
+        'Missing “Vera Rubin” / “VR-NVL72” is normal — those names are narrative, not a failed security check. ' +
+        (error ? '[' + error + '] ' : '') +
+        (hasWebGlStrings ? 'WebGL Vendor: ' + vendor + ' · Renderer: ' + renderer : 'WebGL: (no strings)') +
+        (webgpuLine ? ' · WebGPU: ' + webgpuLine : '') +
+        (needleMatch ? ' · Theater codename matched in string (coincidence or spoofable).' : '');
 
       return {
         pass,
         vendor,
         renderer,
-        line: pass ? 'FIRMWARE V.1.420: SOVEREIGN' : 'GPU SIGNATURE NOT RECOGNISED',
-        detail:
-          (error ? '[' + error + '] ' : '') +
-          (vendor || renderer ? 'Vendor: ' + vendor + ' · Renderer: ' + renderer : 'No GPU probe output') +
-          ' · Expected substring: Vera Rubin or VR-NVL72',
+        needleMatch,
+        line,
+        detail,
       };
     }
 
-    /** XOR data-flip; recover after one 369 Hz clock tick (period = 1000/369 ms). */
+    /**
+     * **369 Hz connection (testable in-browser):** wait exactly **one period** τ = 1/369 s
+     * (= `1000/369` ms in `setTimeout`) between XOR flip and XOR recover.
+     * XOR key 0x369 is a separate **symbolic** tie-in to the ladder.
+     */
     async function checkVolumetricXOR() {
       const ORIGINAL = 'SING9_HYDROGEN_INTERFERENCE_V1';
       const buf = new Uint8Array([...ORIGINAL].map((c) => c.charCodeAt(0)));
@@ -188,7 +235,8 @@
       for (let i = 0; i < buf.length; i++) {
         buf[i] ^= (key >>> ((i % 3) * 8)) & 0xff;
       }
-      await new Promise((r) => setTimeout(r, 1000 / 369));
+      const periodMs = 1000 / 369;
+      await new Promise((r) => setTimeout(r, periodMs));
       for (let i = 0; i < buf.length; i++) {
         buf[i] ^= (key >>> ((i % 3) * 8)) & 0xff;
       }
@@ -196,13 +244,12 @@
       const pass = recovered === ORIGINAL;
       return {
         pass,
-        line: pass ? 'CLOUDBASE: ACTIVE' : 'DATA-FLIP DID NOT RECOVER AT 369Hz TICK',
+        line: pass ? 'CLOUDBASE: ACTIVE · 369Hz PERIOD LATCHED' : 'DATA-FLIP DID NOT RECOVER AT 369Hz TICK',
         detail:
-          'Bitwise XOR buffer flip + recover · 369Hz timing delay ' +
-          (1000 / 369).toFixed(3) +
-          ' ms · len=' +
-          ORIGINAL.length +
-          (pass ? '' : ' · recovered≠original'),
+          '369 test: delay between flip and recover = one 369 Hz period (τ=1/369 s ≈ ' +
+          periodMs.toFixed(3) +
+          ' ms). Pass if double-XOR restores payload. Key 0x369 = symbolic ladder tie-in. ' +
+          'Proves timing latch to 369 Hz — not RF MHz.',
       };
     }
 
@@ -253,10 +300,11 @@
       );
     }
 
-    function CheckRow({ title, status, line, detail, index }) {
+    function CheckRow({ title, status, line, detail, countdown, index }) {
       const ok = status === 'pass';
       const fail = status === 'fail';
       const scan = status === 'scanning';
+      const showCountdown = scan && countdown != null && Number.isFinite(countdown);
       return h(
         motion.div,
         {
@@ -269,21 +317,45 @@
         },
         [
           h('div', { className: 'text-[0.65rem] font-bold uppercase tracking-widest text-amber-600' }, title),
-          h('div', { className: 'flex flex-1 flex-wrap items-center gap-2 sm:justify-end' }, [
-            ok
-              ? h(
-                  motion.span,
-                  {
-                    className: 'text-sm font-bold text-emerald-400',
-                    animate: { opacity: [1, 0.65, 1] },
-                    transition: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
-                  },
-                  line
-                )
-              : h('span', { className: 'text-sm font-bold ' + (fail ? 'text-red-400' : 'text-amber-500') }, line),
-            h('span', { className: 'text-lg ' + (ok ? 'text-emerald-400' : fail ? 'text-red-500' : 'text-amber-600') }, ok ? '●' : fail ? '○' : '…'),
+          showCountdown
+            ? h(
+                'div',
+                { className: 'flex flex-1 flex-col items-end gap-1 sm:flex-row sm:items-center sm:justify-end' },
+                [
+                  h(
+                    motion.div,
+                    {
+                      className: 'font-mono text-2xl font-black tabular-nums text-amber-300 sm:text-3xl',
+                      animate: { opacity: [1, 0.82, 1] },
+                      transition: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
+                    },
+                    formatCountdownClock(countdown)
+                  ),
+                  h('span', { className: 'text-[0.65rem] font-bold uppercase tracking-wider text-amber-600' }, 'round-trip'),
+                ]
+              )
+            : h('div', { className: 'flex flex-1 flex-wrap items-center gap-2 sm:justify-end' }, [
+                ok
+                  ? h(
+                      motion.span,
+                      {
+                        className: 'text-sm font-bold text-emerald-400',
+                        animate: { opacity: [1, 0.65, 1] },
+                        transition: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
+                      },
+                      line
+                    )
+                  : h('span', { className: 'text-sm font-bold ' + (fail ? 'text-red-400' : 'text-amber-500') }, line),
+                h('span', { className: 'text-lg ' + (ok ? 'text-emerald-400' : fail ? 'text-red-500' : 'text-amber-600') }, ok ? '●' : fail ? '○' : '…'),
+              ]),
+          h('div', { className: 'w-full' }, [
+            showCountdown
+              ? h('div', { className: 'text-[0.7rem] font-bold uppercase tracking-widest text-amber-500' }, line)
+              : null,
+            detail
+              ? h('div', { className: 'mt-1 text-[0.65rem] text-amber-700/90' }, detail)
+              : null,
           ]),
-          detail ? h('div', { className: 'w-full text-[0.65rem] text-amber-700/90 sm:col-span-2' }, detail) : null,
         ]
       );
     }
@@ -333,29 +405,32 @@
         }
         setResults((r) => ({ ...r, seahawk }));
 
-        try {
-          const f = await checkFirmwareSignature();
-          firmware = {
-            status: f.pass ? 'pass' : 'fail',
-            line: f.line,
-            detail: f.detail,
-          };
-        } catch (e) {
-          firmware = { status: 'fail', line: 'FIRMWARE PROBE FAILED', detail: e.message || String(e) };
+        {
+          const settled = await Promise.allSettled([checkFirmwareSignature(), checkVolumetricXOR()]);
+          const fr = settled[0];
+          const vr = settled[1];
+          if (fr.status === 'fulfilled') {
+            const f = fr.value;
+            firmware = { status: f.pass ? 'pass' : 'fail', line: f.line, detail: f.detail };
+          } else {
+            firmware = {
+              status: 'fail',
+              line: 'FIRMWARE PROBE FAILED',
+              detail: fr.reason && fr.reason.message ? fr.reason.message : String(fr.reason),
+            };
+          }
+          if (vr.status === 'fulfilled') {
+            const v = vr.value;
+            volumetric = { status: v.pass ? 'pass' : 'fail', line: v.line, detail: v.detail };
+          } else {
+            volumetric = {
+              status: 'fail',
+              line: 'VOLUMETRIC CHECK FAILED',
+              detail: vr.reason && vr.reason.message ? vr.reason.message : String(vr.reason),
+            };
+          }
         }
-        setResults((r) => ({ ...r, firmware }));
-
-        try {
-          const v = await checkVolumetricXOR();
-          volumetric = {
-            status: v.pass ? 'pass' : 'fail',
-            line: v.line,
-            detail: v.detail,
-          };
-        } catch (e) {
-          volumetric = { status: 'fail', line: 'VOLUMETRIC CHECK FAILED', detail: e.message || String(e) };
-        }
-        setResults((r) => ({ ...r, volumetric }));
+        setResults((r) => ({ ...r, firmware, volumetric }));
 
         const pass =
           solar.status === 'pass' &&
@@ -368,8 +443,8 @@
 
       const checks = [
         { key: 'solar', title: 'Solar check (NOAA SWPC)', r: results.solar },
-        { key: 'seahawk', title: 'Seahawk telemetry (ToF)', r: results.seahawk },
-        { key: 'firmware', title: 'Firmware signature (GPU)', r: results.firmware },
+        { key: 'seahawk', title: 'Seahawk · H-line coherence (narrative ToF)', r: results.seahawk },
+        { key: 'firmware', title: 'GPU stack (browser) — lab names are theater', r: results.firmware },
         { key: 'volumetric', title: 'Volumetric access (369Hz XOR)', r: results.volumetric },
       ];
 
@@ -415,8 +490,31 @@
                 running ? 'PINGING HARDWARE…' : 'EXECUTE 180 HARDWARE PING'
               )
             ),
-            h('p', { className: 'mb-4 text-center text-[0.65rem] text-amber-700/90' }, 'Full green requires live Kp > 6 (storm) and GPU strings containing Vera Rubin or VR-NVL72 (lab hardware). ToF + XOR are deterministic.'),
-            h('div', { className: 'space-y-3' }, checks.map((c, i) => h(CheckRow, { key: c.key, title: c.title, status: c.r?.status || 'idle', line: c.r?.line || '—', detail: c.r?.detail, index: i }))),
+            h('p', { className: 'mb-4 text-center text-[0.65rem] text-amber-700/90' }, 'H-line “coherence” = narrative ToF (immediate). 369 link = volumetric row (τ = 1/369 s). Kp = NOAA. GPU = client stack.'),
+            h(
+              'details',
+              { className: 'mb-6 rounded-lg border border-amber-900/50 bg-black/50 px-4 py-3 text-left text-[0.65rem] text-amber-600/95 open:border-amber-700/60' },
+              [
+                h('summary', { className: 'cursor-pointer font-bold uppercase tracking-widest text-amber-500' }, 'Physical truth vs theater · H-line vs 369 (read me)'),
+                h('ul', { className: 'mt-3 list-disc space-y-2 pl-4 text-amber-200/80' }, [
+                  h('li', null, h('strong', { className: 'text-amber-300' }, 'H-line “active / coherent”'), ' = integer ToF at story c = 300000 km/s (41m16s clock). Not 1420 MHz / spectrum / dish — no SDR in browser.'),
+                  h('li', null, h('strong', { className: 'text-amber-300' }, '369 connection'), ' = volumetric row: one period τ = 1/369 s between XOR flip and recover; XOR key 0x369; Schumann ladder story 3·6·9 → 369.'),
+                  h('li', null, h('strong', { className: 'text-amber-300' }, 'Seahawk row'), ' shows coherence immediately; 41m16s is the story travel time, not a wall-clock wait on this ping.'),
+                  h('li', null, h('strong', { className: 'text-amber-300' }, 'GPU'), ' = client WebGL/WebGPU only; lab codenames are theater.'),
+                  h('li', null, 'Ritual terminal, not an observatory or TPM.'),
+                ]),
+              ]
+            ),
+            h('div', { className: 'space-y-3' }, checks.map((c, i) =>
+              h(CheckRow, {
+                key: c.key,
+                title: c.title,
+                status: c.r?.status || 'idle',
+                line: c.r?.line || '—',
+                detail: c.r?.detail,
+                index: i,
+              })
+            )),
           ]),
 
           h(

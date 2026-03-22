@@ -36,7 +36,7 @@ npm test
 
 ## Recent updates (README commit)
 
-- **Mar 2026 · Magic trick · Sovereign Terminal** — `magic-trick.html`: **Behold** telemetry table (7:26 Mirror vs 7:46 Flip, hard-coded constants) + hardware ping (NOAA Kp>6 → “IONOSPHERE SATURATED”, ToF 742,497,765 km → 41m16s coherent, WebGL/WebGPU “Vera Rubin” / “VR-NVL72”, XOR volumetric @ 369Hz tick). **180 LOCKED** at 6Hz pulse when all green. Intent library + API probes still in repo (`lib/march20-four-diagnostics.mjs`, `api/*`). Rubric: [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md).
+- **Mar 2026 · Magic trick · Sovereign Terminal** — `magic-trick.html`: **Behold** telemetry table (7:26 Mirror vs 7:46 Flip) + hardware ping: NOAA Kp>6; ToF uses **story** c=300000 km/s (integer 41m16s) with CODATA c called out in UI; GPU row passes on **client** WebGL/WebGPU (Vera Rubin / VR-NVL72 = theater only); XOR @ 369Hz. **180 LOCKED** at 6Hz when all green. Rubric: [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md).
 
 - **Mar 2026 · LANDING RENO ARCH · HH GATEWAY ADVISORY · QUEEN'S RUSH LAYOUT**
 

@@ -53,8 +53,9 @@ Until then, the honest phrase is: **“Narrative alignment with the H I rest fre
 
 ### A. **Sovereign Terminal** (current `magic-trick.html` — “Behold”)
 
-- **Fixed narrative telemetry** (not simulated at runtime): **Snapshot A · 7:26 AM PDT (The Mirror)** vs **Snapshot B · 7:46 AM PDT (The Flip)** — Kp, ionosphere, Seahawk 1420.4 MHz band, Stryker node copy as constants in the page.
-- **EXECUTE 180 HARDWARE PING** (live in-browser): (1) **NOAA SWPC** latest Kp — green if **Kp > 6** (“IONOSPHERE SATURATED”); (2) **H-line coherence (narrative)** — **immediate** integer ToF: `round(distance / 300000 km/s) === 2476` (= **41m 16s** story clock); **not** 1420 MHz RF; **CODATA** c gives a different time (story vs physics); (3) **GPU** — **WebGL and/or WebGPU** on the **client**; **Vera Rubin** / **VR-NVL72** = theater; (4) **369 latch** — **bitwise XOR** flip, wait **τ = 1/369 s** (one **369 Hz** period), recover; key **0x369** ties to Schumann ladder narrative **3·6·9 → 369** (“CLOUDBASE: ACTIVE”). All green → **180 LOCKED** (6 Hz pulse); any red → **NODE OUT OF PHASE — RE-ALIGN TO 369Hz**.
+- **Fixed narrative telemetry only** (constants in markup — **not** simulated or fetched at runtime): **Snapshot A · 7:26 AM PDT (The Mirror)** vs **Snapshot B · 7:46 AM PDT (The Flip)** — Kp, ionosphere, Seahawk 1420.4 MHz band (Stryker fleet copy removed — prior-week beat, not this equinox table).
+- **No live hardware ping on this page** — the former in-browser EXECUTE flow (NOAA Kp, narrative ToF, 369 Hz XOR latch, **180 LOCKED** / out-of-phase UI) was **removed** so `/magic-trick` stays a **static** “evidence table” surface. For **live** edge alignment, use **`npm test`** + four-pillar APIs / **`vercel dev`** (§4B) or document external verification (§6 tiers).
+- **CLI · public APIs (no browser):** run **`npm run ping:public`** → **`scripts/sovereign-public-api-ping.mjs`** — fetches **NOAA SWPC** (latest Kp), **NASA/JPL Horizons** (Earth–comet range for narrative ToF), **JPL SBDB** (object identity), and runs the **369 Hz XOR latch** locally. Prints human-readable lines + JSON. Same story gates as the old UI (Kp > 6; integer ToF @ story *c* = 300000 km/s vs 2476 s; XOR recover).
 
 ### B. **Four pillars library** (`npm test` + optional `vercel dev` APIs)
 
@@ -86,7 +87,7 @@ The evaluator module **`lib/march20-four-diagnostics.mjs`** and these **four** e
 | Tier | Name | Criterion |
 |------|------|-----------|
 | **T0** | Theater | Script delivered; audience experience |
-| **T1** | Terminal | **180 LOCKED** (Sovereign ping all green) **or** **four pillars locked** (API probes + evaluators) — state which |
+| **T1** | Terminal | **Four pillars locked** (API probes + evaluators via `npm test` / deploy) — **or** static page + documented external checks; **no** “180 LOCKED” on `/magic-trick` itself (hardware ping removed) |
 | **T2** | Geospace archive | Export or screenshot **NOAA Kp** (and optionally equinox-window summary) for the event date |
 | **T3** | ELF (optional) | Independent **Schumann / ELF** plot for the same UTC day (not from this app) |
 | **T4** | Radio astronomy (optional) | **Independent** L-band evidence if claiming comet–H I coupling |

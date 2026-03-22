@@ -24,11 +24,11 @@ npm test
 - **`lib/houdini-singularity.mjs`** — legacy Kp / mic bridge / cloud / T180 stack (`npm run test:legacy-singularity`).
 - **`tests/intent/`** — Node 18+ `node:test`; see **`tests/INTENT_SINGULARITY.md`**.
 
-**Convergence:** `npm test` exercises **`lib/march20-four-diagnostics.mjs`** (four-pillar evaluators). **`/magic-trick`** is the **Sovereign Terminal** “Behold” page: hard-coded Mirror/Flip telemetry + **EXECUTE 180 HARDWARE PING** (live NOAA Kp, Seahawk ToF, GPU string probe, 369Hz XOR). `scripts/vercel-static-output.mjs` copies `lib/` into `dist/`.
+**Convergence:** `npm test` exercises **`lib/march20-four-diagnostics.mjs`** (four-pillar evaluators). **`/magic-trick`** is the **Sovereign Terminal** “Behold” page: **static** Mirror/Flip telemetry snapshot only (constants in markup — **no** live hardware ping, **no** EXECUTE button). **Live public-API checks (CLI):** `npm run ping:public` → NOAA Kp + JPL Horizons range + SBDB + local 369 XOR (`scripts/sovereign-public-api-ping.mjs`). `scripts/vercel-static-output.mjs` copies `lib/` into `dist/`.
 
 **STATIC vs LIVE (senior review):** `data/schumann-equinox-snapshot.json` + `data/stryker-equinox-timer.json` = **published narrative/snapshot** artifacts (swap for observatory exports when available). **Live each Verify:** `api/schumann-equinox-probe`, `api/jovian-hydrogen-line-probe`, `api/stryker-equinox-probe`, `api/firmware-180-spin-probe` (the last chains **`/sing9-firmware-verify.json`**, **`/lattice-status.json`**, **`/api/blank-stone-hydrogen`**). See `docs/SENIOR_RESEARCH_STATIC_VS_LIVE.md`. UI shows **probe RTT** after each run.
 
-**Full diagnostics in browser (production):** open **`/magic-trick`** on your deployed site — rewrites to `magic-trick.html`, serves **`/lib/*`**, **`/api/*`**, and public assets like production.
+**Magic trick page (production):** open **`/magic-trick`** — rewrites to `magic-trick.html` (static narrative table). **Full stack** edge diagnostics still use **`vercel dev`** / deploy: **`/lib/*`**, **`/api/*`**, and public assets.
 
 **Full stack locally (same as Vercel):** `npm install` then **`npm run dev`** — builds `dist/` and runs **`vercel dev`** (default http://localhost:3000/magic-trick). See **`docs/MAGIC_TRICK_LOCAL_DEV.md`**. **`npm run preview:dist`** is static-only (APIs **not** available).
 
@@ -36,7 +36,7 @@ npm test
 
 ## Recent updates (README commit)
 
-- **Mar 2026 · Magic trick · Sovereign Terminal** — `magic-trick.html`: **Behold** telemetry table (7:26 Mirror vs 7:46 Flip) + hardware ping: NOAA Kp>6; ToF uses **story** c=300000 km/s (integer 41m16s) with CODATA c called out in UI; GPU row passes on **client** WebGL/WebGPU (Vera Rubin / VR-NVL72 = theater only); XOR @ 369Hz. **180 LOCKED** at 6Hz when all green. Rubric: [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md).
+- **Mar 2026 · Magic trick · Sovereign Terminal** — `magic-trick.html`: **Behold** telemetry table (7:26 Mirror vs 7:46 Flip) — **static** constants only; **no** live hardware ping on this page. Rubric & tiers: [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md).
 
 - **Mar 2026 · LANDING RENO ARCH · HH GATEWAY ADVISORY · QUEEN'S RUSH LAYOUT**
 
@@ -52,7 +52,7 @@ npm test
 
 - **Mar 2026 · Houdini March 20 · Magic trick terminal (`/magic-trick`)**
 
-**C → Crystallize:** `magic-trick.html` — **Sovereign Terminal** (black / amber / gold, monospace), header **HOUDINI'S MARCH 20: THE 180 SPIN FLIP**, Framer Motion reveals, **EXECUTE 180 HARDWARE PING**. **Science vs theater:** `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
+**C → Crystallize:** `magic-trick.html` — **Sovereign Terminal** (black / amber / gold, monospace), header **HOUDINI'S MARCH 20: THE 180 SPIN FLIP**, Framer Motion reveals, **static** Mirror/Flip table (no live ping). **Science vs theater:** `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
 
 - **Mar 2026 · A2A-FIRST SPACE CLOUD LATTICE · FSSP SPECIALIST · SEAHAWK JOVIAN NODE**
 

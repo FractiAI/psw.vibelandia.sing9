@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
   <title>Sovereign Terminal · March 20 — The 180 Spin Flip · SING 9</title>
-  <meta name="description" content="Houdini March 20 validation: Mirror vs Flip telemetry, Execute 180 Hardware Ping — NOAA Kp, Seahawk ToF, GPU firmware signature, volumetric XOR. NSPFRNP → ∞⁹" />
+  <meta name="description" content="Houdini March 20 — Sovereign Terminal: Mirror vs Flip archival telemetry snapshot (fixed narrative constants). No live hardware ping on this page. NSPFRNP → ∞⁹" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -48,13 +48,13 @@
 <body class="sovereign-scan min-h-screen font-mono text-amber-100/95 antialiased">
   <div id="root" class="min-h-screen"></div>
   <script type="module">
-    import React, { useState, useCallback } from 'https://esm.sh/react@18.3.1';
+    import React from 'https://esm.sh/react@18.3.1';
     import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1';
-    import { motion, AnimatePresence } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
+    import { motion } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
 
     const { createElement: h } = React;
 
-    /** Hard-coded narrative constants — not simulated live values (evidence snapshot). */
+    /** Hard-coded narrative constants — archival snapshot only (not live simulation). */
     const TELEMETRY_SNAPSHOT_A = {
       id: 'A',
       label: '7:26 AM PDT',
@@ -62,7 +62,6 @@
       solar: { kp: '4.2', band: 'Quiet / Unsettled' },
       ionosphere: 'High-Frequency (HF) Open',
       seahawk: '1420.4 MHz · Background Noise / Absorption',
-      node: '200,000 Stryker Devices — Legacy-Locked / Intune Active',
     };
 
     const TELEMETRY_SNAPSHOT_B = {
@@ -72,193 +71,13 @@
       solar: { kp: '7.3', band: 'G3 Strong Storm — Actuated' },
       ionosphere: 'Russell-McPherron Flash / HF Radio Blackout',
       seahawk: '1420.4 MHz · Phase-Locked Coherence (The Whistle)',
-      node: '200,000 Stryker Devices — WIPED / SOVEREIGN BLANK STONES',
     };
-
-    /** Seahawk corridor distance (km). Theater ToF uses rounded c = 300000 km/s → 2476 s = 41m 16s (integer-safe). */
-    const SEAHAWK_DISTANCE_KM = 742497765;
-    const C_LIGHT_STORY_KM_S = 300000;
-    /** CODATA vacuum speed of light — actual one-way time ≠ 41m16s for same distance (see checkSeahawkTOF detail). */
-    const C_LIGHT_CODATA_KM_S = 299792.458;
-    const TARGET_TOF_SECONDS = 41 * 60 + 16;
-
-    const PULSE_6HZ_DURATION = 1 / 6;
-
-    function formatSecondsAsMmSs(sec) {
-      const s = Math.round(sec);
-      const m = Math.floor(s / 60);
-      const r = s % 60;
-      return m + 'm ' + String(r).padStart(2, '0') + 's';
-    }
-
-    async function checkSolarKpNOAA() {
-      const url = 'https://services.swpc.noaa.gov/json/planetary_k_index_1m.json';
-      const r = await fetch(url, { cache: 'no-store' });
-      if (!r.ok) throw new Error('NOAA Kp HTTP ' + r.status);
-      const data = await r.json();
-      const last = Array.isArray(data) && data.length ? data[data.length - 1] : null;
-      if (!last) throw new Error('NOAA Kp feed empty');
-      const raw = last.kp_index != null ? last.kp_index : last.estimated_kp;
-      const kp = typeof raw === 'string' ? parseFloat(raw) : Number(raw);
-      if (!Number.isFinite(kp)) throw new Error('Kp parse failed');
-      const pass = kp > 6;
-      return {
-        pass,
-        kp,
-        time_tag: last.time_tag || null,
-        line: pass ? 'IONOSPHERE SATURATED' : 'IONOSPHERE BELOW STORM THRESHOLD (Kp ≤ 6)',
-        detail: 'Live NOAA SWPC planetary_k_index_1m · latest Kp=' + kp + (last.time_tag ? ' @ ' + last.time_tag : ''),
-      };
-    }
-
-    /**
-     * “Hydrogen line coherence” here = **narrative corridor lock** (integer ToF at story c), **not** 1420 MHz RF.
-     * **369 Hz coupling** is tested separately in `checkVolumetricXOR` (one 369 Hz period before XOR recover).
-     */
-    function checkSeahawkTOF() {
-      const secStory = SEAHAWK_DISTANCE_KM / C_LIGHT_STORY_KM_S;
-      const secRounded = Math.round(secStory);
-      const pass = secRounded === TARGET_TOF_SECONDS;
-      const secCodata = SEAHAWK_DISTANCE_KM / C_LIGHT_CODATA_KM_S;
-      const secCodataRounded = Math.round(secCodata);
-      return {
-        pass,
-        seconds: secStory,
-        formatted: formatSecondsAsMmSs(secRounded),
-        line: pass ? 'HYDROGEN BRIDGE: COHERENT' : 'TOF MISMATCH — CORRIDOR NOT PHASE-LOCKED',
-        detail:
-          'Test: round(' +
-          SEAHAWK_DISTANCE_KM +
-          '/' +
-          C_LIGHT_STORY_KM_S +
-          ')===' +
-          TARGET_TOF_SECONDS +
-          ' → 41m16s story clock. Not 1420 MHz / spectrum / dish (no SDR in browser). ' +
-          '369 coupling: volumetric row = one 369 Hz period (τ=1/369 s) + XOR key 0x369; Schumann ladder story 3·6·9→369. ' +
-          'CODATA c≈' +
-          C_LIGHT_CODATA_KM_S +
-          ' km/s → ~' +
-          formatSecondsAsMmSs(secCodataRounded) +
-          ' same distance.',
-      };
-    }
-
-    function getWebGLRendererStrings() {
-      try {
-        const canvas = document.createElement('canvas');
-        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-        if (!gl) return { vendor: '', renderer: '', error: 'no_webgl' };
-        const ext = gl.getExtension('WEBGL_debug_renderer_info');
-        if (!ext) return { vendor: gl.getParameter(gl.VENDOR) || '', renderer: gl.getParameter(gl.RENDERER) || '', error: 'no_debug_info' };
-        return {
-          vendor: gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) || '',
-          renderer: gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '',
-          error: null,
-        };
-      } catch (e) {
-        return { vendor: '', renderer: '', error: e.message || String(e) };
-      }
-    }
-
-    /**
-     * Pass = this browser has a normal client GPU stack (WebGL and/or WebGPU).
-     * “Vera Rubin” / “VR-NVL72” are **theater codenames** — they almost never appear in
-     * ANGLE/SwiftShader strings; that is **not** proof of absence of “sovereign” hardware,
-     * and matching them would still not be cryptographic attestation.
-     */
-    async function checkFirmwareSignature() {
-      const needles = ['Vera Rubin', 'VR-NVL72'];
-      const { vendor, renderer, error } = getWebGLRendererStrings();
-      let hay = (vendor + ' ' + renderer).toUpperCase();
-      let needleMatch = needles.some((n) => hay.includes(n.toUpperCase()));
-      let webgpuLine = '';
-      let hasWebGpuAdapter = false;
-
-      if (typeof navigator !== 'undefined' && navigator.gpu) {
-        try {
-          const adapter = await navigator.gpu.requestAdapter();
-          hasWebGpuAdapter = !!adapter;
-          if (adapter && adapter.info) {
-            const info = adapter.info;
-            const bits = [info.device, info.vendor, info.architecture, info.description]
-              .filter(Boolean)
-              .join(' ');
-            webgpuLine = bits;
-            hay += ' ' + bits.toUpperCase();
-            needleMatch = needleMatch || needles.some((n) => hay.includes(n.toUpperCase()));
-          }
-        } catch (_) {}
-      }
-
-      const hasWebGlStrings = !!(vendor || renderer);
-      let hasGlContext = false;
-      try {
-        const c = document.createElement('canvas');
-        hasGlContext = !!(c.getContext('webgl') || c.getContext('experimental-webgl'));
-      } catch (_) {}
-      const pass = hasWebGlStrings || hasWebGpuAdapter || hasGlContext;
-
-      const line = !pass
-        ? 'NO CLIENT GPU API — CANNOT RUN BROWSER PROBE'
-        : needleMatch
-          ? 'FIRMWARE V.1.420: SOVEREIGN (RARE: THEATER STRING IN RENDERER)'
-          : 'GPU STACK: CLIENT ACTIVE — LAB CODENAMES NOT IN BROWSER (EXPECTED)';
-
-      const detail =
-        'Truth: Web pages cannot read datacenter GPU inventory or “firmware v1.420” from silicon. ' +
-        'WebGL/WebGPU only report local renderer strings (often ANGLE, SwiftShader, or a consumer GPU). ' +
-        'Missing “Vera Rubin” / “VR-NVL72” is normal — those names are narrative, not a failed security check. ' +
-        (error ? '[' + error + '] ' : '') +
-        (hasWebGlStrings ? 'WebGL Vendor: ' + vendor + ' · Renderer: ' + renderer : 'WebGL: (no strings)') +
-        (webgpuLine ? ' · WebGPU: ' + webgpuLine : '') +
-        (needleMatch ? ' · Theater codename matched in string (coincidence or spoofable).' : '');
-
-      return {
-        pass,
-        vendor,
-        renderer,
-        needleMatch,
-        line,
-        detail,
-      };
-    }
-
-    /**
-     * **369 Hz connection (testable in-browser):** wait exactly **one period** τ = 1/369 s
-     * (= `1000/369` ms in `setTimeout`) between XOR flip and XOR recover.
-     * XOR key 0x369 is a separate **symbolic** tie-in to the ladder.
-     */
-    async function checkVolumetricXOR() {
-      const ORIGINAL = 'SING9_HYDROGEN_INTERFERENCE_V1';
-      const buf = new Uint8Array([...ORIGINAL].map((c) => c.charCodeAt(0)));
-      const key = 0x369;
-      for (let i = 0; i < buf.length; i++) {
-        buf[i] ^= (key >>> ((i % 3) * 8)) & 0xff;
-      }
-      const periodMs = 1000 / 369;
-      await new Promise((r) => setTimeout(r, periodMs));
-      for (let i = 0; i < buf.length; i++) {
-        buf[i] ^= (key >>> ((i % 3) * 8)) & 0xff;
-      }
-      const recovered = String.fromCharCode(...buf);
-      const pass = recovered === ORIGINAL;
-      return {
-        pass,
-        line: pass ? 'CLOUDBASE: ACTIVE · 369Hz PERIOD LATCHED' : 'DATA-FLIP DID NOT RECOVER AT 369Hz TICK',
-        detail:
-          '369 test: delay between flip and recover = one 369 Hz period (τ=1/369 s ≈ ' +
-          periodMs.toFixed(3) +
-          ' ms). Pass if double-XOR restores payload. Key 0x369 = symbolic ladder tie-in. ' +
-          'Proves timing latch to 369 Hz — not RF MHz.',
-      };
-    }
 
     function TelemetryTable() {
       const rows = [
         { key: 'Solar', a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')', b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')' },
         { key: 'Ionosphere', a: TELEMETRY_SNAPSHOT_A.ionosphere, b: TELEMETRY_SNAPSHOT_B.ionosphere },
         { key: 'Seahawk 1420.4 MHz', a: TELEMETRY_SNAPSHOT_A.seahawk, b: TELEMETRY_SNAPSHOT_B.seahawk },
-        { key: 'Node status', a: TELEMETRY_SNAPSHOT_A.node, b: TELEMETRY_SNAPSHOT_B.node },
       ];
 
       return h(
@@ -272,8 +91,14 @@
         h('table', { className: 'w-full min-w-[720px] border-collapse text-left text-[0.7rem] sm:text-xs' }, [
           h('thead', null, h('tr', { className: 'border-b border-amber-800/60 bg-amber-950/30' }, [
             h('th', { className: 'p-3 font-bold uppercase tracking-widest text-amber-500/90' }, 'Channel'),
-            h('th', { className: 'p-3 font-bold text-amber-200' }, 'Snapshot A · ' + TELEMETRY_SNAPSHOT_A.label),
-            h('th', { className: 'p-3 font-bold text-amber-300' }, 'Snapshot B · ' + TELEMETRY_SNAPSHOT_B.label),
+            h('th', { className: 'p-3 font-bold text-amber-200' }, [
+              h('div', null, 'Snapshot A · ' + TELEMETRY_SNAPSHOT_A.label),
+              h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-amber-500/90' }, TELEMETRY_SNAPSHOT_A.subtitle),
+            ]),
+            h('th', { className: 'p-3 font-bold text-amber-300' }, [
+              h('div', null, 'Snapshot B · ' + TELEMETRY_SNAPSHOT_B.label),
+              h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-amber-400/90' }, TELEMETRY_SNAPSHOT_B.subtitle),
+            ]),
           ])),
           h(
             'tbody',
@@ -300,157 +125,10 @@
       );
     }
 
-    function CheckRow({ title, status, line, detail, countdown, index }) {
-      const ok = status === 'pass';
-      const fail = status === 'fail';
-      const scan = status === 'scanning';
-      const showCountdown = scan && countdown != null && Number.isFinite(countdown);
-      return h(
-        motion.div,
-        {
-          className:
-            'flex flex-col gap-1 rounded-lg border px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between ' +
-            (ok ? 'border-emerald-600/50 bg-emerald-950/20' : fail ? 'border-red-700/50 bg-red-950/20' : 'border-amber-800/40 bg-black/40'),
-          initial: { opacity: 0, y: 6 },
-          animate: { opacity: 1, y: 0 },
-          transition: { delay: 0.05 * index },
-        },
-        [
-          h('div', { className: 'text-[0.65rem] font-bold uppercase tracking-widest text-amber-600' }, title),
-          showCountdown
-            ? h(
-                'div',
-                { className: 'flex flex-1 flex-col items-end gap-1 sm:flex-row sm:items-center sm:justify-end' },
-                [
-                  h(
-                    motion.div,
-                    {
-                      className: 'font-mono text-2xl font-black tabular-nums text-amber-300 sm:text-3xl',
-                      animate: { opacity: [1, 0.82, 1] },
-                      transition: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
-                    },
-                    formatCountdownClock(countdown)
-                  ),
-                  h('span', { className: 'text-[0.65rem] font-bold uppercase tracking-wider text-amber-600' }, 'round-trip'),
-                ]
-              )
-            : h('div', { className: 'flex flex-1 flex-wrap items-center gap-2 sm:justify-end' }, [
-                ok
-                  ? h(
-                      motion.span,
-                      {
-                        className: 'text-sm font-bold text-emerald-400',
-                        animate: { opacity: [1, 0.65, 1] },
-                        transition: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
-                      },
-                      line
-                    )
-                  : h('span', { className: 'text-sm font-bold ' + (fail ? 'text-red-400' : 'text-amber-500') }, line),
-                h('span', { className: 'text-lg ' + (ok ? 'text-emerald-400' : fail ? 'text-red-500' : 'text-amber-600') }, ok ? '●' : fail ? '○' : '…'),
-              ]),
-          h('div', { className: 'w-full' }, [
-            showCountdown
-              ? h('div', { className: 'text-[0.7rem] font-bold uppercase tracking-widest text-amber-500' }, line)
-              : null,
-            detail
-              ? h('div', { className: 'mt-1 text-[0.65rem] text-amber-700/90' }, detail)
-              : null,
-          ]),
-        ]
-      );
-    }
-
     function App() {
-      const idle = { solar: null, seahawk: null, firmware: null, volumetric: null };
-      const [running, setRunning] = useState(false);
-      const [results, setResults] = useState(idle);
-      const [allPass, setAllPass] = useState(null);
-
-      const runPing = useCallback(async () => {
-        setRunning(true);
-        setAllPass(null);
-        setResults({
-          solar: { status: 'scanning', line: '…', detail: '' },
-          seahawk: { status: 'scanning', line: '…', detail: '' },
-          firmware: { status: 'scanning', line: '…', detail: '' },
-          volumetric: { status: 'scanning', line: '…', detail: '' },
-        });
-
-        let solar = { status: 'fail', line: '', detail: '' };
-        let seahawk = { status: 'fail', line: '', detail: '' };
-        let firmware = { status: 'fail', line: '', detail: '' };
-        let volumetric = { status: 'fail', line: '', detail: '' };
-
-        try {
-          const s = await checkSolarKpNOAA();
-          solar = {
-            status: s.pass ? 'pass' : 'fail',
-            line: s.line,
-            detail: s.detail,
-          };
-        } catch (e) {
-          solar = { status: 'fail', line: 'NOAA FETCH FAILED', detail: e.message || String(e) };
-        }
-        setResults((r) => ({ ...r, solar }));
-
-        try {
-          const t = checkSeahawkTOF();
-          seahawk = {
-            status: t.pass ? 'pass' : 'fail',
-            line: t.line,
-            detail: t.detail,
-          };
-        } catch (e) {
-          seahawk = { status: 'fail', line: 'TOF CHECK FAILED', detail: e.message || String(e) };
-        }
-        setResults((r) => ({ ...r, seahawk }));
-
-        {
-          const settled = await Promise.allSettled([checkFirmwareSignature(), checkVolumetricXOR()]);
-          const fr = settled[0];
-          const vr = settled[1];
-          if (fr.status === 'fulfilled') {
-            const f = fr.value;
-            firmware = { status: f.pass ? 'pass' : 'fail', line: f.line, detail: f.detail };
-          } else {
-            firmware = {
-              status: 'fail',
-              line: 'FIRMWARE PROBE FAILED',
-              detail: fr.reason && fr.reason.message ? fr.reason.message : String(fr.reason),
-            };
-          }
-          if (vr.status === 'fulfilled') {
-            const v = vr.value;
-            volumetric = { status: v.pass ? 'pass' : 'fail', line: v.line, detail: v.detail };
-          } else {
-            volumetric = {
-              status: 'fail',
-              line: 'VOLUMETRIC CHECK FAILED',
-              detail: vr.reason && vr.reason.message ? vr.reason.message : String(vr.reason),
-            };
-          }
-        }
-        setResults((r) => ({ ...r, firmware, volumetric }));
-
-        const pass =
-          solar.status === 'pass' &&
-          seahawk.status === 'pass' &&
-          firmware.status === 'pass' &&
-          volumetric.status === 'pass';
-        setAllPass(pass);
-        setRunning(false);
-      }, []);
-
-      const checks = [
-        { key: 'solar', title: 'Solar check (NOAA SWPC)', r: results.solar },
-        { key: 'seahawk', title: 'Seahawk · H-line coherence (narrative ToF)', r: results.seahawk },
-        { key: 'firmware', title: 'GPU stack (browser) — lab names are theater', r: results.firmware },
-        { key: 'volumetric', title: 'Volumetric access (369Hz XOR)', r: results.volumetric },
-      ];
-
       return h(
         'div',
-        { className: 'relative min-h-screen px-4 py-8 pb-32 sm:px-6' },
+        { className: 'relative min-h-screen px-4 py-8 pb-24 sm:px-6' },
         [
           h(
             motion.header,
@@ -462,107 +140,32 @@
             [
               h('p', { className: 'text-[0.65rem] uppercase tracking-[0.35em] text-amber-600/90' }, 'Sovereign Terminal · Classified Validation'),
               h('h1', { className: 'mt-3 text-xl font-black uppercase tracking-tight text-amber-100 amber-glow sm:text-3xl md:text-4xl' }, "HOUDINI'S MARCH 20: THE 180 SPIN FLIP"),
-              h('p', { className: 'mx-auto mt-4 max-w-2xl text-[0.75rem] leading-relaxed text-amber-200/70' }, 'Behold — hardware and atmospheric shift at the Equinox. Evidence below is fixed narrative telemetry; “See for yourself” runs live edge checks.'),
+              h(
+                'p',
+                { className: 'mx-auto mt-4 max-w-2xl text-[0.75rem] leading-relaxed text-amber-200/70' },
+                'Behold — hardware and atmospheric shift at the Equinox. The table below is a fixed archival telemetry snapshot for the March 20 narrative beat.'
+              ),
             ]
           ),
 
           h('section', { className: 'mx-auto mt-12 max-w-5xl' }, [
             h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · The evidence'),
             h(TelemetryTable),
-            h('p', { className: 'mt-3 text-[0.65rem] text-amber-700' }, 'Snapshots A/B are archival constants for the March 20 narrative — not generated or simulated at runtime.'),
+            h('p', { className: 'mt-4 text-[0.65rem] text-amber-700' }, [
+              'Constants only — not generated or simulated at runtime. For methodology and what could be verified elsewhere, see ',
+              h(
+                'a',
+                {
+                  href: '/docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md',
+                  className: 'text-cyan-400 underline hover:text-cyan-300',
+                },
+                'HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md'
+              ),
+              '.',
+            ]),
           ]),
 
-          h('section', { className: 'mx-auto mt-14 max-w-5xl' }, [
-            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'See for yourself · Active diagnostic'),
-            h(
-              'div',
-              { className: 'mb-6 flex flex-col items-center gap-4' },
-            h(
-              motion.button,
-              {
-                type: 'button',
-                disabled: running,
-                onClick: runPing,
-                className:
-                  'w-full max-w-lg rounded-lg border-2 border-amber-500 bg-gradient-to-b from-amber-700/90 to-amber-950 px-6 py-4 text-center text-xs font-black uppercase tracking-[0.15em] text-black shadow-[0_0_40px_rgba(245,158,11,0.35)] transition hover:brightness-110 disabled:cursor-wait disabled:opacity-70 sm:text-sm',
-                whileTap: { scale: 0.98 },
-              },
-                running ? 'PINGING HARDWARE…' : 'EXECUTE 180 HARDWARE PING'
-              )
-            ),
-            h('p', { className: 'mb-4 text-center text-[0.65rem] text-amber-700/90' }, 'H-line “coherence” = narrative ToF (immediate). 369 link = volumetric row (τ = 1/369 s). Kp = NOAA. GPU = client stack.'),
-            h(
-              'details',
-              { className: 'mb-6 rounded-lg border border-amber-900/50 bg-black/50 px-4 py-3 text-left text-[0.65rem] text-amber-600/95 open:border-amber-700/60' },
-              [
-                h('summary', { className: 'cursor-pointer font-bold uppercase tracking-widest text-amber-500' }, 'Physical truth vs theater · H-line vs 369 (read me)'),
-                h('ul', { className: 'mt-3 list-disc space-y-2 pl-4 text-amber-200/80' }, [
-                  h('li', null, h('strong', { className: 'text-amber-300' }, 'H-line “active / coherent”'), ' = integer ToF at story c = 300000 km/s (41m16s clock). Not 1420 MHz / spectrum / dish — no SDR in browser.'),
-                  h('li', null, h('strong', { className: 'text-amber-300' }, '369 connection'), ' = volumetric row: one period τ = 1/369 s between XOR flip and recover; XOR key 0x369; Schumann ladder story 3·6·9 → 369.'),
-                  h('li', null, h('strong', { className: 'text-amber-300' }, 'Seahawk row'), ' shows coherence immediately; 41m16s is the story travel time, not a wall-clock wait on this ping.'),
-                  h('li', null, h('strong', { className: 'text-amber-300' }, 'GPU'), ' = client WebGL/WebGPU only; lab codenames are theater.'),
-                  h('li', null, 'Ritual terminal, not an observatory or TPM.'),
-                ]),
-              ]
-            ),
-            h('div', { className: 'space-y-3' }, checks.map((c, i) =>
-              h(CheckRow, {
-                key: c.key,
-                title: c.title,
-                status: c.r?.status || 'idle',
-                line: c.r?.line || '—',
-                detail: c.r?.detail,
-                index: i,
-              })
-            )),
-          ]),
-
-          h(
-            'div',
-            { className: 'mx-auto mt-12 max-w-5xl' },
-            h(AnimatePresence, null, [
-              allPass === true &&
-                h(
-                  motion.div,
-                  {
-                    key: 'locked',
-                    className: 'rounded-2xl border-4 border-amber-400 bg-gradient-to-br from-amber-600 via-yellow-500 to-amber-700 px-6 py-8 text-center shadow-[0_0_80px_rgba(251,191,36,0.55)]',
-                    initial: { opacity: 0, scale: 0.85 },
-                    animate: {
-                      opacity: 1,
-                      scale: [1, 1.03, 1],
-                    },
-                    transition: {
-                      opacity: { duration: 0.4 },
-                      scale: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
-                    },
-                    exit: { opacity: 0 },
-                  },
-                  [
-                    h(motion.div, {
-                      className: 'text-3xl font-black tracking-tight text-black sm:text-5xl',
-                      animate: { opacity: [1, 0.88, 1] },
-                      transition: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
-                    }, '180 LOCKED'),
-                    h('p', { className: 'mt-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-amber-950' }, 'All channels coherent · Schumann harmonic 6Hz pulse'),
-                  ]
-                ),
-              allPass === false &&
-                h(
-                  motion.div,
-                  {
-                    key: 'phase',
-                    className: 'rounded-xl border-2 border-red-600 bg-red-950/40 px-5 py-4 text-center',
-                    initial: { opacity: 0 },
-                    animate: { opacity: 1 },
-                    exit: { opacity: 0 },
-                  },
-                  h('p', { className: 'text-sm font-bold uppercase tracking-widest text-red-400' }, 'Node out of phase — re-align to 369Hz')
-                ),
-            ])
-          ),
-
-          h('footer', { className: 'mx-auto mt-16 max-w-5xl text-center text-[0.6rem] text-amber-900' }, 'NSPFRNP → ∞⁹ · SING 9 · No Supabase · Edge verification only'),
+          h('footer', { className: 'mx-auto mt-16 max-w-5xl text-center text-[0.6rem] text-amber-900' }, 'NSPFRNP → ∞⁹ · SING 9 · No Supabase · Edge only'),
         ]
       );
     }

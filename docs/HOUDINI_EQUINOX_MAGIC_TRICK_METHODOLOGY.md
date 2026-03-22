@@ -49,9 +49,16 @@ Until then, the honest phrase is: **“Narrative alignment with the H I rest fre
 
 ---
 
-## 4. What the `/magic-trick` terminal actually tests (**four pillars only**)
+## 4. What `/magic-trick` covers
 
-The diagnostics grid and `npm test` are aligned to **`lib/march20-four-diagnostics.mjs`** and these **four** edge probes (HTTPS deploy or `vercel dev`):
+### A. **Sovereign Terminal** (current `magic-trick.html` — “Behold”)
+
+- **Fixed narrative telemetry** (not simulated at runtime): **Snapshot A · 7:26 AM PDT (The Mirror)** vs **Snapshot B · 7:46 AM PDT (The Flip)** — Kp, ionosphere, Seahawk 1420.4 MHz band, Stryker node copy as constants in the page.
+- **EXECUTE 180 HARDWARE PING** (live in-browser): (1) **NOAA SWPC** latest Kp — green if **Kp > 6** (“IONOSPHERE SATURATED”); (2) **light-speed ToF** for **742,497,765 km** at **300,000 km/s** → **41m 16s** (“HYDROGEN BRIDGE: COHERENT”); (3) **WebGL / WebGPU** renderer strings containing **Vera Rubin** or **VR-NVL72** (“FIRMWARE V.1.420: SOVEREIGN”); (4) **bitwise XOR** buffer flip + recover after one **369 Hz** clock tick (“CLOUDBASE: ACTIVE”). All green → **180 LOCKED** (6 Hz pulse); any red → **NODE OUT OF PHASE — RE-ALIGN TO 369Hz**.
+
+### B. **Four pillars library** (`npm test` + optional `vercel dev` APIs)
+
+The evaluator module **`lib/march20-four-diagnostics.mjs`** and these **four** edge probes (HTTPS deploy or `vercel dev`) remain the **contract tests** for stack alignment:
 
 | Pillar | API | Pass means | Does *not* mean |
 |--------|-----|------------|-----------------|
@@ -79,7 +86,7 @@ The diagnostics grid and `npm test` are aligned to **`lib/march20-four-diagnosti
 | Tier | Name | Criterion |
 |------|------|-----------|
 | **T0** | Theater | Script delivered; audience experience |
-| **T1** | Terminal | **Four pillars locked** on deployed `/magic-trick` (four `/api/*` probes) |
+| **T1** | Terminal | **180 LOCKED** (Sovereign ping all green) **or** **four pillars locked** (API probes + evaluators) — state which |
 | **T2** | Geospace archive | Export or screenshot **NOAA Kp** (and optionally equinox-window summary) for the event date |
 | **T3** | ELF (optional) | Independent **Schumann / ELF** plot for the same UTC day (not from this app) |
 | **T4** | Radio astronomy (optional) | **Independent** L-band evidence if claiming comet–H I coupling |

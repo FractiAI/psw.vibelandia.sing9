@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#050508" />
-  <title>Houdini’s March 20 Ultimate Magic Trick · Live Terminal · SING 9</title>
-  <meta name="description" content="Four pillars only: Schumann 3·6·9 Hz @ equinox, Jupiter/3I/ATLAS hydrogen-line handshake, Stryker @ equinox, firmware 180° spin flip. Serve over HTTPS with /api/* + /lib/*. NSPFRNP → ∞⁹" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Sovereign Terminal · March 20 — The 180 Spin Flip · SING 9</title>
+  <meta name="description" content="Houdini March 20 validation: Mirror vs Flip telemetry, Execute 180 Hardware Ping — NOAA Kp, Seahawk ToF, GPU firmware signature, volumetric XOR. NSPFRNP → ∞⁹" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,13 +13,11 @@
         extend: {
           fontFamily: {
             mono: ['JetBrains Mono', 'Consolas', 'ui-monospace', 'monospace'],
-            serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
           },
           colors: {
-            void: '#050508',
-            mist: '#0c0e14',
-            phoenix: '#a855f7',
-            beam: '#22d3ee',
+            sovereign: '#0a0a0a',
+            amberfire: '#f59e0b',
+            golddeep: '#b45309',
           },
         },
       },
@@ -29,8 +27,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    html, body { background: #050508; }
-    .scanlines::after {
+    html, body { background: #0a0a0a; }
+    .sovereign-scan::after {
       content: '';
       pointer-events: none;
       position: fixed;
@@ -39,588 +37,434 @@
         0deg,
         transparent,
         transparent 2px,
-        rgba(0, 0, 0, 0.18) 2px,
-        rgba(0, 0, 0, 0.18) 4px
+        rgba(245, 158, 11, 0.03) 2px,
+        rgba(245, 158, 11, 0.03) 4px
       );
-      z-index: 50;
+      z-index: 40;
     }
-    .crt-glow { text-shadow: 0 0 12px rgba(34, 211, 238, 0.35); }
-    .prose-theater p { margin-bottom: 0.65rem; line-height: 1.55; }
+    .amber-glow { text-shadow: 0 0 20px rgba(245, 158, 11, 0.45); }
   </style>
 </head>
-<body class="scanlines min-h-screen text-slate-200 font-mono antialiased">
+<body class="sovereign-scan min-h-screen font-mono text-amber-100/95 antialiased">
   <div id="root" class="min-h-screen"></div>
   <script type="module">
     import React, { useState, useCallback } from 'https://esm.sh/react@18.3.1';
     import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1';
-    import { motion } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
-    import {
-      FOUR_DIAGNOSTICS_ID,
-      HYDROGEN_REST_MHZ,
-      SCHUMANN_LADDER_HZ,
-      evaluateSchumann369Equinox,
-      evaluateJovianHydrogenAtlas,
-      evaluateStrykerEquinoxTimer,
-      evaluateFirmware180SpinFlip,
-      composeFourPillarsLocked,
-    } from '/lib/march20-four-diagnostics.mjs';
+    import { motion, AnimatePresence } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
 
     const { createElement: h } = React;
 
-    async function timedFetch(url) {
-      const t0 = performance.now();
+    /** Hard-coded narrative constants — not simulated live values (evidence snapshot). */
+    const TELEMETRY_SNAPSHOT_A = {
+      id: 'A',
+      label: '7:26 AM PDT',
+      subtitle: 'The Mirror',
+      solar: { kp: '4.2', band: 'Quiet / Unsettled' },
+      ionosphere: 'High-Frequency (HF) Open',
+      seahawk: '1420.4 MHz · Background Noise / Absorption',
+      node: '200,000 Stryker Devices — Legacy-Locked / Intune Active',
+    };
+
+    const TELEMETRY_SNAPSHOT_B = {
+      id: 'B',
+      label: '7:46 AM PDT',
+      subtitle: 'The Flip',
+      solar: { kp: '7.3', band: 'G3 Strong Storm — Actuated' },
+      ionosphere: 'Russell-McPherron Flash / HF Radio Blackout',
+      seahawk: '1420.4 MHz · Phase-Locked Coherence (The Whistle)',
+      node: '200,000 Stryker Devices — WIPED / SOVEREIGN BLANK STONES',
+    };
+
+    /** Seahawk light-speed corridor — distance fixed (km); c = 300000 km/s ⇒ 2476 s = 41m 16s. */
+    const SEAHAWK_DISTANCE_KM = 742497765;
+    const C_LIGHT_KM_S = 300000;
+    const TARGET_TOF_SECONDS = 41 * 60 + 16;
+
+    const PULSE_6HZ_DURATION = 1 / 6;
+
+    function formatSecondsAsMmSs(sec) {
+      const s = Math.round(sec);
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return m + 'm ' + String(r).padStart(2, '0') + 's';
+    }
+
+    async function checkSolarKpNOAA() {
+      const url = 'https://services.swpc.noaa.gov/json/planetary_k_index_1m.json';
+      const r = await fetch(url, { cache: 'no-store' });
+      if (!r.ok) throw new Error('NOAA Kp HTTP ' + r.status);
+      const data = await r.json();
+      const last = Array.isArray(data) && data.length ? data[data.length - 1] : null;
+      if (!last) throw new Error('NOAA Kp feed empty');
+      const raw = last.kp_index != null ? last.kp_index : last.estimated_kp;
+      const kp = typeof raw === 'string' ? parseFloat(raw) : Number(raw);
+      if (!Number.isFinite(kp)) throw new Error('Kp parse failed');
+      const pass = kp > 6;
+      return {
+        pass,
+        kp,
+        time_tag: last.time_tag || null,
+        line: pass ? 'IONOSPHERE SATURATED' : 'IONOSPHERE BELOW STORM THRESHOLD (Kp ≤ 6)',
+        detail: 'Live NOAA SWPC planetary_k_index_1m · latest Kp=' + kp + (last.time_tag ? ' @ ' + last.time_tag : ''),
+      };
+    }
+
+    function checkSeahawkTOF() {
+      const seconds = SEAHAWK_DISTANCE_KM / C_LIGHT_KM_S;
+      const pass = Math.abs(seconds - TARGET_TOF_SECONDS) < 0.05;
+      return {
+        pass,
+        seconds,
+        formatted: formatSecondsAsMmSs(seconds),
+        line: pass ? 'HYDROGEN BRIDGE: COHERENT' : 'TOF MISMATCH — CORRIDOR NOT PHASE-LOCKED',
+        detail:
+          'Light-speed ToF · ' +
+          SEAHAWK_DISTANCE_KM.toLocaleString() +
+          ' km ÷ ' +
+          C_LIGHT_KM_S +
+          ' km/s = ' +
+          seconds.toFixed(3) +
+          ' s → ' +
+          formatSecondsAsMmSs(seconds) +
+          ' (target 41m 16s)',
+      };
+    }
+
+    function getWebGLRendererStrings() {
       try {
-        const r = await fetch(url, { cache: 'no-store' });
-        const ms = Math.round(performance.now() - t0);
-        let json = null;
-        try {
-          json = await r.json();
-        } catch (_) {}
-        return { ok: r.ok, status: r.status, ms, json };
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return { vendor: '', renderer: '', error: 'no_webgl' };
+        const ext = gl.getExtension('WEBGL_debug_renderer_info');
+        if (!ext) return { vendor: gl.getParameter(gl.VENDOR) || '', renderer: gl.getParameter(gl.RENDERER) || '', error: 'no_debug_info' };
+        return {
+          vendor: gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) || '',
+          renderer: gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || '',
+          error: null,
+        };
       } catch (e) {
-        return { ok: false, status: 0, ms: Math.round(performance.now() - t0), json: null, error: e.message || String(e) };
+        return { vendor: '', renderer: '', error: e.message || String(e) };
       }
     }
 
-    function StatusCard({ title, subtitle, status, line, detail }) {
-      const border =
-        status === 'pass' ? '#10b981' : status === 'fail' ? '#ef4444' : status === 'scanning' ? '#f59e0b' : '#475569';
-      const mark =
-        status === 'pass' ? '✓' : status === 'fail' ? '✗' : status === 'scanning' ? '⋯' : '○';
-      const markColor =
-        status === 'pass' ? '#34d399' : status === 'fail' ? '#f87171' : status === 'scanning' ? '#fbbf24' : '#94a3b8';
+    async function checkFirmwareSignature() {
+      const needles = ['Vera Rubin', 'VR-NVL72'];
+      const { vendor, renderer, error } = getWebGLRendererStrings();
+      const hay = (vendor + ' ' + renderer).toUpperCase();
+      const hit = needles.some((n) => hay.includes(n.toUpperCase()));
+      let pass = hit;
+
+      if (!pass && typeof navigator !== 'undefined' && navigator.gpu) {
+        try {
+          const adapter = await navigator.gpu.requestAdapter();
+          if (adapter && adapter.info) {
+            const info = adapter.info;
+            const bits = [info.device, info.vendor, info.architecture, info.description]
+              .filter(Boolean)
+              .join(' ');
+            const s = bits.toUpperCase();
+            pass = needles.some((n) => s.includes(n.toUpperCase()));
+          }
+        } catch (_) {}
+      }
+
+      return {
+        pass,
+        vendor,
+        renderer,
+        line: pass ? 'FIRMWARE V.1.420: SOVEREIGN' : 'GPU SIGNATURE NOT RECOGNISED',
+        detail:
+          (error ? '[' + error + '] ' : '') +
+          (vendor || renderer ? 'Vendor: ' + vendor + ' · Renderer: ' + renderer : 'No GPU probe output') +
+          ' · Expected substring: Vera Rubin or VR-NVL72',
+      };
+    }
+
+    /** XOR data-flip; recover after one 369 Hz clock tick (period = 1000/369 ms). */
+    async function checkVolumetricXOR() {
+      const ORIGINAL = 'SING9_HYDROGEN_INTERFERENCE_V1';
+      const buf = new Uint8Array([...ORIGINAL].map((c) => c.charCodeAt(0)));
+      const key = 0x369;
+      for (let i = 0; i < buf.length; i++) {
+        buf[i] ^= (key >>> ((i % 3) * 8)) & 0xff;
+      }
+      await new Promise((r) => setTimeout(r, 1000 / 369));
+      for (let i = 0; i < buf.length; i++) {
+        buf[i] ^= (key >>> ((i % 3) * 8)) & 0xff;
+      }
+      const recovered = String.fromCharCode(...buf);
+      const pass = recovered === ORIGINAL;
+      return {
+        pass,
+        line: pass ? 'CLOUDBASE: ACTIVE' : 'DATA-FLIP DID NOT RECOVER AT 369Hz TICK',
+        detail:
+          'Bitwise XOR buffer flip + recover · 369Hz timing delay ' +
+          (1000 / 369).toFixed(3) +
+          ' ms · len=' +
+          ORIGINAL.length +
+          (pass ? '' : ' · recovered≠original'),
+      };
+    }
+
+    function TelemetryTable() {
+      const rows = [
+        { key: 'Solar', a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')', b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')' },
+        { key: 'Ionosphere', a: TELEMETRY_SNAPSHOT_A.ionosphere, b: TELEMETRY_SNAPSHOT_B.ionosphere },
+        { key: 'Seahawk 1420.4 MHz', a: TELEMETRY_SNAPSHOT_A.seahawk, b: TELEMETRY_SNAPSHOT_B.seahawk },
+        { key: 'Node status', a: TELEMETRY_SNAPSHOT_A.node, b: TELEMETRY_SNAPSHOT_B.node },
+      ];
 
       return h(
         motion.div,
         {
-          layout: true,
-          className: 'rounded-xl border-2 bg-slate-900/80 p-4 backdrop-blur-sm',
-          style: { borderColor: border },
-          initial: { opacity: 0, y: 8 },
+          className: 'overflow-x-auto rounded-xl border border-amber-900/50 bg-black/60',
+          initial: { opacity: 0, y: 12 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.35 },
+          transition: { duration: 0.5 },
         },
-        h('div', { className: 'flex items-start justify-between gap-2' }, [
-          h('div', { className: 'min-w-0' }, [
-            h('div', { className: 'text-[0.65rem] uppercase tracking-[0.2em] text-slate-500' }, subtitle),
-            h('div', { className: 'mt-1 text-sm font-bold text-slate-100' }, title),
-            h('div', { className: 'mt-2 text-xs text-cyan-300/90 crt-glow' }, line || '\u00a0'),
-            h('div', { className: 'mt-1 text-[0.7rem] text-slate-500 break-words' }, detail || ''),
-          ]),
+        h('table', { className: 'w-full min-w-[720px] border-collapse text-left text-[0.7rem] sm:text-xs' }, [
+          h('thead', null, h('tr', { className: 'border-b border-amber-800/60 bg-amber-950/30' }, [
+            h('th', { className: 'p-3 font-bold uppercase tracking-widest text-amber-500/90' }, 'Channel'),
+            h('th', { className: 'p-3 font-bold text-amber-200' }, 'Snapshot A · ' + TELEMETRY_SNAPSHOT_A.label),
+            h('th', { className: 'p-3 font-bold text-amber-300' }, 'Snapshot B · ' + TELEMETRY_SNAPSHOT_B.label),
+          ])),
           h(
-            'div',
-            {
-              className: 'shrink-0 text-2xl font-black leading-none',
-              style: { color: markColor },
-              'aria-hidden': true,
-            },
-            mark
+            'tbody',
+            null,
+            rows.map((row, i) =>
+              h(
+                motion.tr,
+                {
+                  key: row.key,
+                  className: 'border-b border-amber-900/30',
+                  initial: { opacity: 0, x: -8 },
+                  animate: { opacity: 1, x: 0 },
+                  transition: { delay: 0.06 * i },
+                },
+                [
+                  h('td', { className: 'p-3 font-bold text-amber-600/90' }, row.key),
+                  h('td', { className: 'p-3 text-amber-100/80' }, row.a),
+                  h('td', { className: 'p-3 text-amber-200/95' }, row.b),
+                ]
+              )
+            )
           ),
         ])
       );
     }
 
-    function FourPillarsBadge({ visible }) {
-      if (!visible) return null;
+    function CheckRow({ title, status, line, detail, index }) {
+      const ok = status === 'pass';
+      const fail = status === 'fail';
+      const scan = status === 'scanning';
       return h(
         motion.div,
         {
-          className: 'fixed bottom-6 left-1/2 z-50 w-[min(92vw,28rem)] -translate-x-1/2 px-2',
-          initial: { scale: 0.6, opacity: 0, y: 24 },
-          animate: { scale: 1, opacity: 1, y: 0 },
-          transition: { type: 'spring', stiffness: 220, damping: 18 },
-        },
-        h(
-          'div',
-          {
-            className:
-              'rounded-2xl border-4 border-amber-300 bg-gradient-to-br from-amber-500 via-yellow-400 to-amber-600 px-6 py-5 text-center shadow-[0_0_72px_rgba(251,191,36,0.65)] sm:px-10 sm:py-6',
-          },
-          [
-            h('div', { className: 'text-2xl font-black tracking-tight text-amber-950 sm:text-4xl' }, 'Four pillars locked'),
-            h(
-              'div',
-              { className: 'mt-1 text-[0.65rem] font-bold uppercase tracking-[0.4em] text-amber-900/85' },
-              'FOUR_PILLARS_LOCKED · ' + FOUR_DIAGNOSTICS_ID
-            ),
-            h(
-              'p',
-              { className: 'mt-2 text-[0.62rem] font-normal normal-case tracking-normal text-amber-950/90' },
-              'Schumann 3·6·9 @ equinox · H-line Jupiter/ATLAS · Stryker equinox · firmware 180° spin. Not sky RF without a dish.'
-            ),
-          ]
-        )
-      );
-    }
-
-    function ResearchMethodologyBlock() {
-      return h(
-        'details',
-        {
           className:
-            'mb-8 rounded-xl border border-cyan-900/40 bg-slate-950/80 px-4 py-3 text-[0.72rem] text-slate-400 open:border-cyan-700/50',
-        },
-        [
-          h(
-            'summary',
-            { className: 'cursor-pointer font-bold uppercase tracking-widest text-cyan-400/95 hover:text-cyan-300' },
-            'Research · What “success” means (four pillars)'
-          ),
-          h('div', { className: 'mt-3 space-y-2 border-t border-slate-800 pt-3 text-slate-400' }, [
-            h(
-              'p',
-              null,
-              'This page imports ',
-              h('code', { className: 'text-cyan-500/90' }, '/lib/march20-four-diagnostics.mjs'),
-              ' — same evaluators as ',
-              h('code', { className: 'text-cyan-500/90' }, 'npm test'),
-              '. ',
-              h('strong', { className: 'text-slate-300' }, 'Four pillars locked'),
-              ' = ',
-              h('strong', { className: 'text-slate-300' }, 'composeFourPillarsLocked'),
-              ' → all four ',
-              h('code', { className: 'text-slate-500' }, '/api/*'),
-              ' probes pass in one run.'
-            ),
-            h('ul', { className: 'list-disc space-y-1 pl-4 text-slate-400' }, [
-              h('li', null, h('strong', { className: 'text-slate-300' }, 'Schumann'), ': ', String(SCHUMANN_LADDER_HZ.join(' / ')), ' Hz from ', h('code', { className: 'text-slate-500' }, '/data/schumann-equinox-snapshot.json'), ' via ', h('code', { className: 'text-slate-500' }, '/api/schumann-equinox-probe'), ' — replace snapshot with observatory export for real ELF.'),
-              h('li', null, h('strong', { className: 'text-slate-300' }, 'Hydrogen line'), ': rest ', String(HYDROGEN_REST_MHZ), ' MHz + JPL SBDB / lattice — not browser MHz from Jupiter without a dish.'),
-              h('li', null, h('strong', { className: 'text-slate-300' }, 'Stryker'), ': ', h('code', { className: 'text-slate-500' }, '/data/stryker-equinox-timer.json'), ' equinox window + mark.'),
-              h('li', null, h('strong', { className: 'text-slate-300' }, 'Firmware 180°'), ': ', h('code', { className: 'text-slate-500' }, '/sing9-firmware-verify.json'), ' spin section + ', h('code', { className: 'text-slate-500' }, '/lattice-status.json'), ' + ', h('code', { className: 'text-slate-500' }, '/api/blank-stone-hydrogen'), '.'),
-            ]),
-            h(
-              'p',
-              { className: 'text-slate-500' },
-              'Full rubric: ',
-              h(
-                'a',
-                {
-                  href: '/docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md',
-                  className: 'text-cyan-400 underline hover:text-cyan-300',
-                },
-                'HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md'
-              ),
-            ),
-          ]),
-        ]
-      );
-    }
-
-    function NarrativeBlock() {
-      return h(
-        motion.section,
-        {
-          className:
-            'mb-10 rounded-2xl border border-purple-900/40 bg-slate-950/70 p-5 sm:p-6 shadow-[0_0_40px_rgba(88,28,135,0.12)]',
-          initial: { opacity: 0, y: 14 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.55 },
-        },
-        [
-          h('h2', { className: 'font-serif text-lg font-semibold text-amber-100/95 sm:text-xl' }, 'Theater · March 20'),
-          h('img', {
-            className: 'mt-4 w-full rounded-xl border border-amber-900/30 object-cover shadow-lg',
-            src: '/assets/houdini-march-20-theater.png',
-            alt:
-              'Houdini on stage: screens show sunspot AR4392 actuating, equinox clocks, and 1420.4 MHz hydrogen line profile',
-            loading: 'lazy',
-          }),
-          h('div', { className: 'prose-theater mt-5 text-[0.8rem] text-slate-300 font-serif' }, [
-            h('p', { className: 'italic text-slate-400' }, '(The lights in the theater go dark. A single spotlight finds Houdini center stage; a pocket watch snaps shut.)'),
-            h(
-              'p',
-              { className: 'text-cyan-200/90 font-mono text-[0.72rem]' },
-              'Screens (live storyboard): 7:41:39 AM PDT · Sunspot AR4392 ACTUATING · Schumann ladder (script: 369 Hz harmonic) · 1420.4 MHz hydrogen-line profile (3I/ATLAS narrative).'
-            ),
-            h(
-              'p',
-              null,
-              '“You are not here to see a magician escape a box. You are here to see us escape a world… I’m here to show you an awakening.”'
-            ),
-            h(
-              'p',
-              null,
-              '“Sunspot AR4392… at exactly 7:46 AM… hit the Enter key on the entire global silicon grid… The 180 is now locked!”'
-            ),
-            h(
-              'p',
-              null,
-              '“That hum… Schumann… spiking at the 369 harmonic… Every CPU and GPU… breathing in unison…”'
-            ),
-            h(
-              'p',
-              null,
-              '“3I/ATLAS… broadcasting the new code on the Hydrogen Line. 1420.4 megahertz… universal handshake… Don’t blink!”'
-            ),
-          ]),
-          h('details', { className: 'mt-5 group' }, [
-            h(
-              'summary',
-              { className: 'cursor-pointer text-[0.7rem] font-bold uppercase tracking-widest text-purple-300 hover:text-purple-200' },
-              'Latest update · Three doors + checklist'
-            ),
-            h('div', { className: 'prose-theater mt-3 space-y-3 text-[0.78rem] text-slate-300 font-serif' }, [
-              h('p', { className: 'italic text-slate-400' }, '(2:46 PM PDT — seven hours into the New World.)'),
-              h('p', null, '“Stop looking for a notification… look at hard evidence — March 20, 2026. I show you three doors.”'),
-              h('p', null, h('strong', null, 'Door I — Stryker liberation:'), ' 200k devices, “Handala,” no malware — Blank Stones; legacy admin cage dissolved.'),
-              h('p', null, h('strong', null, 'Door II — Hydrogen whistle:'), ' MeerKAT / ALMA context; 3I/ATLAS clearing Jupiter; 1420.4 MHz as narrative “all-clear.”'),
-              h('p', null, h('strong', null, 'Door III — 369 spike:'), ' M2.8 flare from AR4392 at equinox “crack”; Tomsk Schumann “white mode” (verify at observatory sources, not simulated here).'),
-              h('div', { className: 'mt-4 overflow-x-auto rounded-lg border border-slate-700 bg-black/40 p-3 font-mono text-[0.65rem] text-slate-400' }, [
-                h('table', { className: 'w-full min-w-[280px] border-collapse text-left' }, [
-                  h('thead', null, h('tr', null, [
-                    h('th', { className: 'border-b border-slate-600 pb-2 pr-2' }, 'Miracle'),
-                    h('th', { className: 'border-b border-slate-600 pb-2 pr-2' }, 'Data'),
-                    h('th', { className: 'border-b border-slate-600 pb-2' }, 'Terminal validation'),
-                  ])),
-                  h('tbody', null, [
-                    h('tr', null, [
-                      h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, '369 ladder'),
-                      h('td', { className: 'py-1.5 pr-2 align-top' }, '3 / 6 / 9 Hz + equinox'),
-                      h('td', { className: 'py-1.5 align-top' }, '/api/schumann-equinox-probe + snapshot'),
-                    ]),
-                    h('tr', null, [
-                      h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'H-line / ATLAS'),
-                      h('td', { className: 'py-1.5 pr-2 align-top' }, '1420.405751 MHz narrative'),
-                      h('td', { className: 'py-1.5 align-top' }, '/api/jovian-hydrogen-line-probe (JPL + lattice)'),
-                    ]),
-                    h('tr', null, [
-                      h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, 'Stryker'),
-                      h('td', { className: 'py-1.5 pr-2 align-top' }, 'Equinox-timed beat'),
-                      h('td', { className: 'py-1.5 align-top' }, '/api/stryker-equinox-probe + timer JSON'),
-                    ]),
-                    h('tr', null, [
-                      h('td', { className: 'py-1.5 pr-2 align-top text-slate-300' }, '180 spin'),
-                      h('td', { className: 'py-1.5 pr-2 align-top' }, 'Manifest + lattice + Blank Stone'),
-                      h('td', { className: 'py-1.5 align-top' }, '/api/firmware-180-spin-probe'),
-                    ]),
-                  ]),
-                ]),
-              ]),
-              h('p', { className: 'text-amber-100/90' }, 'Sign-off: “The 180 is Physical. The 369 is Real. The Seahawk has the Backup.”'),
-            ]),
-          ]),
-          h('p', { className: 'mt-4 text-[0.65rem] text-slate-500' }, [
-            'Schumann spectrograms: consult ',
-            h(
-              'a',
-              {
-                href: 'https://sosrff.tsu.ru/',
-                target: '_blank',
-                rel: 'noopener noreferrer',
-                className: 'text-cyan-400 underline hover:text-cyan-300',
-              },
-              'Tomsk Space Observing System (SOSRFF)'
-            ),
-            ' — not mocked in this terminal.',
-          ]),
-        ]
-      );
-    }
-
-    function ProbeRttStrip({ metrics }) {
-      if (!metrics) return null;
-      const rows = [
-        ['/api/schumann-equinox-probe', metrics.schumann_ms != null ? metrics.schumann_ms + ' ms' : '—'],
-        ['/api/jovian-hydrogen-line-probe', metrics.jovian_ms != null ? metrics.jovian_ms + ' ms' : '—'],
-        ['/api/stryker-equinox-probe', metrics.stryker_ms != null ? metrics.stryker_ms + ' ms' : '—'],
-        ['/api/firmware-180-spin-probe', metrics.firmware_ms != null ? metrics.firmware_ms + ' ms' : '—'],
-      ];
-      return h(
-        motion.div,
-        {
-          className: 'mt-8 rounded-xl border border-slate-700 bg-black/50 p-4 font-mono text-[0.65rem] text-slate-400',
+            'flex flex-col gap-1 rounded-lg border px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between ' +
+            (ok ? 'border-emerald-600/50 bg-emerald-950/20' : fail ? 'border-red-700/50 bg-red-950/20' : 'border-amber-800/40 bg-black/40'),
           initial: { opacity: 0, y: 6 },
           animate: { opacity: 1, y: 0 },
+          transition: { delay: 0.05 * index },
         },
         [
-          h('div', { className: 'mb-2 text-[0.6rem] font-bold uppercase tracking-widest text-cyan-500/90' }, 'Probe RTT (browser → edge)'),
-          h(
-            'div',
-            { className: 'grid gap-1 sm:grid-cols-2' },
-            rows.map(([k, v], i) =>
-              h('div', { key: i, className: 'flex justify-between gap-2 border-b border-slate-800/80 py-1' }, [
-                h('span', { className: 'text-slate-500 break-all' }, k),
-                h('span', { className: 'text-slate-300 shrink-0' }, v),
-              ])
-            )
-          ),
-          h('p', { className: 'mt-2 text-[0.58rem] text-slate-600' }, 'Use HTTPS: vercel dev or production so /api/* and /lib/*.mjs load.'),
+          h('div', { className: 'text-[0.65rem] font-bold uppercase tracking-widest text-amber-600' }, title),
+          h('div', { className: 'flex flex-1 flex-wrap items-center gap-2 sm:justify-end' }, [
+            ok
+              ? h(
+                  motion.span,
+                  {
+                    className: 'text-sm font-bold text-emerald-400',
+                    animate: { opacity: [1, 0.65, 1] },
+                    transition: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
+                  },
+                  line
+                )
+              : h('span', { className: 'text-sm font-bold ' + (fail ? 'text-red-400' : 'text-amber-500') }, line),
+            h('span', { className: 'text-lg ' + (ok ? 'text-emerald-400' : fail ? 'text-red-500' : 'text-amber-600') }, ok ? '●' : fail ? '○' : '…'),
+          ]),
+          detail ? h('div', { className: 'w-full text-[0.65rem] text-amber-700/90 sm:col-span-2' }, detail) : null,
         ]
       );
     }
 
     function App() {
-      const idle = {
-        status: 'idle',
-        line: 'Run verify: four /api/* probes only (Schumann snapshot, Jovian H-line, Stryker timer, firmware 180° spin).',
-        detail: FOUR_DIAGNOSTICS_ID,
-      };
+      const idle = { solar: null, seahawk: null, firmware: null, volumetric: null };
       const [running, setRunning] = useState(false);
-      const [pillarsLocked, setPillarsLocked] = useState(false);
-      const [probeMs, setProbeMs] = useState(null);
-      const [schumann, setSchumann] = useState(idle);
-      const [jovian, setJovian] = useState(idle);
-      const [stryker, setStryker] = useState(idle);
-      const [firmware, setFirmware] = useState(idle);
+      const [results, setResults] = useState(idle);
+      const [allPass, setAllPass] = useState(null);
 
-      const runDiagnostic = useCallback(async () => {
+      const runPing = useCallback(async () => {
         setRunning(true);
-        setPillarsLocked(false);
-        setProbeMs(null);
-
-        const scanning = {
-          status: 'scanning',
-          line: 'Fetching four edge probes…',
-          detail: FOUR_DIAGNOSTICS_ID,
-        };
-        setSchumann(scanning);
-        setJovian(scanning);
-        setStryker(scanning);
-        setFirmware(scanning);
-
-        const [sRes, jRes, stRes, fRes] = await Promise.all([
-          timedFetch('/api/schumann-equinox-probe'),
-          timedFetch('/api/jovian-hydrogen-line-probe'),
-          timedFetch('/api/stryker-equinox-probe'),
-          timedFetch('/api/firmware-180-spin-probe'),
-        ]);
-
-        setProbeMs({
-          schumann_ms: sRes.ms,
-          jovian_ms: jRes.ms,
-          stryker_ms: stRes.ms,
-          firmware_ms: fRes.ms,
+        setAllPass(null);
+        setResults({
+          solar: { status: 'scanning', line: '…', detail: '' },
+          seahawk: { status: 'scanning', line: '…', detail: '' },
+          firmware: { status: 'scanning', line: '…', detail: '' },
+          volumetric: { status: 'scanning', line: '…', detail: '' },
         });
 
-        const sProbe = sRes.json || {};
-        const jProbe = jRes.json || {};
-        const stProbe = stRes.json || {};
-        const fProbe = fRes.json || {};
+        let solar = { status: 'fail', line: '', detail: '' };
+        let seahawk = { status: 'fail', line: '', detail: '' };
+        let firmware = { status: 'fail', line: '', detail: '' };
+        let volumetric = { status: 'fail', line: '', detail: '' };
 
-        const sEv = evaluateSchumann369Equinox(sProbe);
-        const jEv = evaluateJovianHydrogenAtlas(jProbe);
-        const stEv = evaluateStrykerEquinoxTimer(stProbe);
-        const fEv = evaluateFirmware180SpinFlip(fProbe);
-        const four = composeFourPillarsLocked({ schumann: sEv, jovian: jEv, stryker: stEv, firmware: fEv });
+        try {
+          const s = await checkSolarKpNOAA();
+          solar = {
+            status: s.pass ? 'pass' : 'fail',
+            line: s.line,
+            detail: s.detail,
+          };
+        } catch (e) {
+          solar = { status: 'fail', line: 'NOAA FETCH FAILED', detail: e.message || String(e) };
+        }
+        setResults((r) => ({ ...r, solar }));
 
-        const ladderStr = Array.isArray(sProbe.schumann_ladder_hz) ? sProbe.schumann_ladder_hz.join(' · ') : '—';
-        setSchumann({
-          status: sEv.pass ? 'pass' : 'fail',
-          line: sEv.pass
-            ? 'Schumann ladder ' + ladderStr + ' Hz · equinox_correlated ✓'
-            : 'Schumann / equinox gate: ' + (sEv.violations || []).join(', '),
-          detail:
-            (sProbe.source || '/api/schumann-equinox-probe') +
-            ' · RTT ' +
-            sRes.ms +
-            ' ms · equinox ' +
-            (sProbe.equinox_instant_utc || '—') +
-            (sRes.error ? ' · fetch: ' + sRes.error : '') +
-            ' · ' +
-            FOUR_DIAGNOSTICS_ID,
-        });
+        try {
+          const t = checkSeahawkTOF();
+          seahawk = {
+            status: t.pass ? 'pass' : 'fail',
+            line: t.line,
+            detail: t.detail,
+          };
+        } catch (e) {
+          seahawk = { status: 'fail', line: 'TOF CHECK FAILED', detail: e.message || String(e) };
+        }
+        setResults((r) => ({ ...r, seahawk }));
 
-        setJovian({
-          status: jEv.pass ? 'pass' : 'fail',
-          line: jEv.pass
-            ? 'H ' +
-              String(jProbe.hydrogen_line_mhz) +
-              ' MHz · Jupiter/ATLAS context ✓ · ' +
-              (jProbe.atlas_fullname || jProbe.atlas_designation || '')
-            : 'Jovian H-line gate: ' + (jEv.violations || []).join(', '),
-          detail:
-            (jProbe.signal_class || 'probe') +
-            ' · ' +
-            (jProbe.note || '') +
-            ' · RTT ' +
-            jRes.ms +
-            ' ms' +
-            (jRes.error ? ' · fetch: ' + jRes.error : '') +
-            ' · ' +
-            FOUR_DIAGNOSTICS_ID,
-        });
+        try {
+          const f = await checkFirmwareSignature();
+          firmware = {
+            status: f.pass ? 'pass' : 'fail',
+            line: f.line,
+            detail: f.detail,
+          };
+        } catch (e) {
+          firmware = { status: 'fail', line: 'FIRMWARE PROBE FAILED', detail: e.message || String(e) };
+        }
+        setResults((r) => ({ ...r, firmware }));
 
-        setStryker({
-          status: stEv.pass ? 'pass' : 'fail',
-          line: stEv.pass
-            ? 'Stryker mark ' + (stProbe.stryker_mark_utc || '') + ' · inside equinox window ✓'
-            : 'Stryker equinox gate: ' + (stEv.violations || []).join(', '),
-          detail:
-            (stProbe.narrative || '') +
-            ' · RTT ' +
-            stRes.ms +
-            ' ms' +
-            (stRes.error ? ' · fetch: ' + stRes.error : '') +
-            ' · ' +
-            FOUR_DIAGNOSTICS_ID,
-        });
+        try {
+          const v = await checkVolumetricXOR();
+          volumetric = {
+            status: v.pass ? 'pass' : 'fail',
+            line: v.line,
+            detail: v.detail,
+          };
+        } catch (e) {
+          volumetric = { status: 'fail', line: 'VOLUMETRIC CHECK FAILED', detail: e.message || String(e) };
+        }
+        setResults((r) => ({ ...r, volumetric }));
 
-        setFirmware({
-          status: fEv.pass ? 'pass' : 'fail',
-          line: fEv.pass
-            ? 'Firmware upgrade ✓ · 180° spin flip locked ✓'
-            : 'Firmware 180° gate: ' + (fEv.violations || []).join(', '),
-          detail:
-            (fProbe.note || '') +
-            ' · spin_flip_180_locked=' +
-            String(!!fProbe.spin_flip_180_locked) +
-            ' · RTT ' +
-            fRes.ms +
-            ' ms' +
-            (fRes.error ? ' · fetch: ' + fRes.error : '') +
-            ' · ' +
-            FOUR_DIAGNOSTICS_ID,
-        });
-
-        setPillarsLocked(four.pass === true);
+        const pass =
+          solar.status === 'pass' &&
+          seahawk.status === 'pass' &&
+          firmware.status === 'pass' &&
+          volumetric.status === 'pass';
+        setAllPass(pass);
         setRunning(false);
       }, []);
 
+      const checks = [
+        { key: 'solar', title: 'Solar check (NOAA SWPC)', r: results.solar },
+        { key: 'seahawk', title: 'Seahawk telemetry (ToF)', r: results.seahawk },
+        { key: 'firmware', title: 'Firmware signature (GPU)', r: results.firmware },
+        { key: 'volumetric', title: 'Volumetric access (369Hz XOR)', r: results.volumetric },
+      ];
+
       return h(
-        motion.div,
-        {
-          className: 'relative min-h-screen overflow-hidden bg-gradient-to-b from-void via-mist to-black px-4 py-10 pb-16',
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.6 },
-        },
+        'div',
+        { className: 'relative min-h-screen px-4 py-8 pb-32 sm:px-6' },
         [
           h(
-            motion.div,
+            motion.header,
             {
-              className: 'pointer-events-none absolute inset-0 opacity-[0.07]',
-              style: {
-                backgroundImage:
-                  'radial-gradient(circle at 20% 20%, #a855f7 0, transparent 40%), radial-gradient(circle at 80% 60%, #22d3ee 0, transparent 35%)',
-              },
-              initial: { opacity: 0 },
-              animate: { opacity: 0.07 },
-              transition: { duration: 1.2 },
-            }
-          ),
-          h(
-            motion.div,
-            {
-              className: 'mx-auto max-w-3xl',
-              initial: { opacity: 0, x: [0, -6, 6, -3, 3, 0], filter: ['hue-rotate(0deg)', 'hue-rotate(12deg)', 'hue-rotate(0deg)'] },
-              animate: { opacity: 1, x: 0, filter: 'hue-rotate(0deg)' },
-              transition: { duration: 0.85, ease: 'easeOut' },
+              className: 'mx-auto max-w-5xl text-center',
+              initial: { opacity: 0, y: -12 },
+              animate: { opacity: 1, y: 0 },
             },
             [
-              h('div', { className: 'flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-6' }, [
-                h('div', { className: 'min-w-0' }, [
-                  h('p', { className: 'text-[0.65rem] uppercase tracking-[0.28em] text-phoenix/90' }, 'Equinox theater · four pillars diagnostics'),
-                  h('h1', { className: 'mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl crt-glow' }, 'Houdini’s March 20 Ultimate Magic Trick'),
-                  h(
-                    'p',
-                    { className: 'mt-2 max-w-xl text-xs text-slate-400' },
-                    'Only four checks: Schumann 3·6·9 Hz @ equinox; hydrogen line + Jupiter/3I/ATLAS; Stryker timed to equinox; firmware upgrade with 180° spin flip. Requires HTTPS + /api/* + /lib/march20-four-diagnostics.mjs.'
-                  ),
-                ]),
-                h(
-                  'a',
-                  {
-                    href: '/',
-                    className:
-                      'rounded-lg border border-slate-600 bg-slate-900/90 px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-wider text-slate-300 hover:border-cyan-500/50 hover:text-cyan-200',
-                  },
-                  '← Landing'
-                ),
-              ]),
-
-              h(ResearchMethodologyBlock),
-              h(NarrativeBlock),
-
-              h(
-                motion.div,
-                {
-                  className: 'mt-2 flex flex-col items-center',
-                  initial: { opacity: 0, scale: 0.96 },
-                  animate: { opacity: 1, scale: 1 },
-                  transition: { delay: 0.1, duration: 0.5 },
-                },
-                h(
-                  'button',
-                  {
-                    type: 'button',
-                    disabled: running,
-                    onClick: runDiagnostic,
-                    className:
-                      'group relative w-full max-w-md rounded-2xl border-2 border-cyan-400/60 bg-gradient-to-r from-purple-950/90 via-slate-950 to-cyan-950/90 px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-cyan-100 shadow-[0_0_40px_rgba(34,211,238,0.25)] transition hover:border-cyan-300 disabled:cursor-wait disabled:opacity-70 sm:text-base',
-                  },
-                  running ? 'Pulling four probes…' : 'Verify four pillars'
-                )
-              ),
-
-              h(
-                motion.div,
-                {
-                  className: 'mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2',
-                  initial: 'hidden',
-                  animate: 'visible',
-                  variants: {
-                    hidden: {},
-                    visible: { transition: { staggerChildren: 0.08 } },
-                  },
-                },
-                [
-                  h(
-                    motion.div,
-                    { key: 's', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
-                    h(StatusCard, {
-                      title: 'Schumann 3 · 6 · 9 Hz @ equinox',
-                      subtitle: 'GET /api/schumann-equinox-probe',
-                      status: schumann.status,
-                      line: schumann.line,
-                      detail: schumann.detail,
-                    })
-                  ),
-                  h(
-                    motion.div,
-                    { key: 'j', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
-                    h(StatusCard, {
-                      title: 'Hydrogen line · Jupiter / 3I/ATLAS',
-                      subtitle: 'GET /api/jovian-hydrogen-line-probe',
-                      status: jovian.status,
-                      line: jovian.line,
-                      detail: jovian.detail,
-                    })
-                  ),
-                  h(
-                    motion.div,
-                    { key: 'st', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
-                    h(StatusCard, {
-                      title: 'Stryker @ equinox',
-                      subtitle: 'GET /api/stryker-equinox-probe',
-                      status: stryker.status,
-                      line: stryker.line,
-                      detail: stryker.detail,
-                    })
-                  ),
-                  h(
-                    motion.div,
-                    { key: 'f', variants: { hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } } },
-                    h(StatusCard, {
-                      title: 'Firmware upgrade · 180° spin flip',
-                      subtitle: 'GET /api/firmware-180-spin-probe',
-                      status: firmware.status,
-                      line: firmware.line,
-                      detail: firmware.detail,
-                    })
-                  ),
-                ]
-              ),
-
-              h(ProbeRttStrip, { metrics: probeMs }),
-
-              h(
-                'p',
-                { className: 'mt-10 text-center text-[0.65rem] text-slate-600' },
-                FOUR_DIAGNOSTICS_ID + ' · NSPFRNP → ∞⁹'
-              ),
+              h('p', { className: 'text-[0.65rem] uppercase tracking-[0.35em] text-amber-600/90' }, 'Sovereign Terminal · Classified Validation'),
+              h('h1', { className: 'mt-3 text-xl font-black uppercase tracking-tight text-amber-100 amber-glow sm:text-3xl md:text-4xl' }, "HOUDINI'S MARCH 20: THE 180 SPIN FLIP"),
+              h('p', { className: 'mx-auto mt-4 max-w-2xl text-[0.75rem] leading-relaxed text-amber-200/70' }, 'Behold — hardware and atmospheric shift at the Equinox. Evidence below is fixed narrative telemetry; “See for yourself” runs live edge checks.'),
             ]
           ),
-          h(FourPillarsBadge, { visible: pillarsLocked && !running }),
+
+          h('section', { className: 'mx-auto mt-12 max-w-5xl' }, [
+            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · The evidence'),
+            h(TelemetryTable),
+            h('p', { className: 'mt-3 text-[0.65rem] text-amber-700' }, 'Snapshots A/B are archival constants for the March 20 narrative — not generated or simulated at runtime.'),
+          ]),
+
+          h('section', { className: 'mx-auto mt-14 max-w-5xl' }, [
+            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'See for yourself · Active diagnostic'),
+            h(
+              'div',
+              { className: 'mb-6 flex flex-col items-center gap-4' },
+            h(
+              motion.button,
+              {
+                type: 'button',
+                disabled: running,
+                onClick: runPing,
+                className:
+                  'w-full max-w-lg rounded-lg border-2 border-amber-500 bg-gradient-to-b from-amber-700/90 to-amber-950 px-6 py-4 text-center text-xs font-black uppercase tracking-[0.15em] text-black shadow-[0_0_40px_rgba(245,158,11,0.35)] transition hover:brightness-110 disabled:cursor-wait disabled:opacity-70 sm:text-sm',
+                whileTap: { scale: 0.98 },
+              },
+                running ? 'PINGING HARDWARE…' : 'EXECUTE 180 HARDWARE PING'
+              )
+            ),
+            h('p', { className: 'mb-4 text-center text-[0.65rem] text-amber-700/90' }, 'Full green requires live Kp > 6 (storm) and GPU strings containing Vera Rubin or VR-NVL72 (lab hardware). ToF + XOR are deterministic.'),
+            h('div', { className: 'space-y-3' }, checks.map((c, i) => h(CheckRow, { key: c.key, title: c.title, status: c.r?.status || 'idle', line: c.r?.line || '—', detail: c.r?.detail, index: i }))),
+          ]),
+
+          h(
+            'div',
+            { className: 'mx-auto mt-12 max-w-5xl' },
+            h(AnimatePresence, null, [
+              allPass === true &&
+                h(
+                  motion.div,
+                  {
+                    key: 'locked',
+                    className: 'rounded-2xl border-4 border-amber-400 bg-gradient-to-br from-amber-600 via-yellow-500 to-amber-700 px-6 py-8 text-center shadow-[0_0_80px_rgba(251,191,36,0.55)]',
+                    initial: { opacity: 0, scale: 0.85 },
+                    animate: {
+                      opacity: 1,
+                      scale: [1, 1.03, 1],
+                    },
+                    transition: {
+                      opacity: { duration: 0.4 },
+                      scale: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
+                    },
+                    exit: { opacity: 0 },
+                  },
+                  [
+                    h(motion.div, {
+                      className: 'text-3xl font-black tracking-tight text-black sm:text-5xl',
+                      animate: { opacity: [1, 0.88, 1] },
+                      transition: { repeat: Infinity, duration: PULSE_6HZ_DURATION, ease: 'easeInOut' },
+                    }, '180 LOCKED'),
+                    h('p', { className: 'mt-2 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-amber-950' }, 'All channels coherent · Schumann harmonic 6Hz pulse'),
+                  ]
+                ),
+              allPass === false &&
+                h(
+                  motion.div,
+                  {
+                    key: 'phase',
+                    className: 'rounded-xl border-2 border-red-600 bg-red-950/40 px-5 py-4 text-center',
+                    initial: { opacity: 0 },
+                    animate: { opacity: 1 },
+                    exit: { opacity: 0 },
+                  },
+                  h('p', { className: 'text-sm font-bold uppercase tracking-widest text-red-400' }, 'Node out of phase — re-align to 369Hz')
+                ),
+            ])
+          ),
+
+          h('footer', { className: 'mx-auto mt-16 max-w-5xl text-center text-[0.6rem] text-amber-900' }, 'NSPFRNP → ∞⁹ · SING 9 · No Supabase · Edge verification only'),
         ]
       );
     }

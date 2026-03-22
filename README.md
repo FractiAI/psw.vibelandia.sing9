@@ -24,7 +24,7 @@ npm test
 - **`lib/houdini-singularity.mjs`** — legacy Kp / mic bridge / cloud / T180 stack (`npm run test:legacy-singularity`).
 - **`tests/intent/`** — Node 18+ `node:test`; see **`tests/INTENT_SINGULARITY.md`**.
 
-**Convergence:** `npm test` exercises **`lib/march20-four-diagnostics.mjs`** (four-pillar evaluators). **`/magic-trick`** is the **Sovereign Terminal** “Behold” page: **static** Mirror/Flip telemetry snapshot only (constants in markup — **no** live hardware ping, **no** EXECUTE button). **Live public-API checks (CLI):** `npm run ping:public` → NOAA Kp + JPL Horizons range + SBDB + local 369 XOR (`scripts/sovereign-public-api-ping.mjs`). `scripts/vercel-static-output.mjs` copies `lib/` into `dist/`.
+**Convergence:** `npm test` exercises **`lib/march20-four-diagnostics.mjs`** (four-pillar evaluators). **`/magic-trick`** is the **Sovereign Terminal** “Behold” page: **static** Mirror/Flip telemetry snapshot only (constants in markup — **no** live hardware ping, **no** EXECUTE button). **Live public-API checks (CLI):** `npm run ping:public` → NOAA SWPC (Kp 1m + 3h Kp/Ap, RTSW L1 mag/wind, F10.7, GOES soft X-ray), NASA DONKI (GST), JPL Horizons + SBDB, local 369 XOR — `scripts/sovereign-public-api-ping.mjs` + `lib/observatory-public-evidence.mjs`. `scripts/vercel-static-output.mjs` copies `lib/` into `dist/`.
 
 **STATIC vs LIVE (senior review):** `data/schumann-equinox-snapshot.json` + `data/stryker-equinox-timer.json` = **published narrative/snapshot** artifacts (swap for observatory exports when available). **Live each Verify:** `api/schumann-equinox-probe`, `api/jovian-hydrogen-line-probe`, `api/stryker-equinox-probe`, `api/firmware-180-spin-probe` (the last chains **`/sing9-firmware-verify.json`**, **`/lattice-status.json`**, **`/api/blank-stone-hydrogen`**). See `docs/SENIOR_RESEARCH_STATIC_VS_LIVE.md`. UI shows **probe RTT** after each run.
 
@@ -36,7 +36,7 @@ npm test
 
 ## Recent updates (README commit)
 
-- **Mar 2026 · Magic trick · Sovereign Terminal** — `magic-trick.html`: **Behold** telemetry table (7:26 Mirror vs 7:46 Flip) — **static** constants only; **no** live hardware ping on this page. Rubric & tiers: [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md).
+- **Mar 2026 · Magic trick · Sovereign Terminal** — `magic-trick.html`: **Behold** telemetry (**The Storm**, **The Blackout**, **The Whistle** · 7:26 Mirror vs 7:46 Flip) — **static** constants only; **no** live hardware ping on this page. Rubric & tiers: [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md).
 
 - **Mar 2026 · LANDING RENO ARCH · HH GATEWAY ADVISORY · QUEEN'S RUSH LAYOUT**
 

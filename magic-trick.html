@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
   <title>Sovereign Terminal · March 20 — The 180 Spin Flip · SING 9</title>
-  <meta name="description" content="Houdini March 20 — Sovereign Terminal: Mirror vs Flip archival telemetry snapshot (fixed narrative constants). No live hardware ping on this page. NSPFRNP → ∞⁹" />
+  <meta name="description" content="Houdini March 20 Ultimate Magic Show — Sovereign Terminal: poster, three-act narrative, Mirror vs Flip telemetry, observatory proof index. Static page. NSPFRNP → ∞⁹" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -27,7 +27,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    html, body { background: #0a0a0a; }
+    :root {
+      --sovereign-bg: #06080d;
+      --sovereign-panel: rgba(12, 14, 22, 0.72);
+      --amber-hot: #fbbf24;
+      --cyan-proof: #22d3ee;
+    }
+    html, body {
+      background: var(--sovereign-bg);
+      background-image:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(245, 158, 11, 0.12), transparent 50%),
+        radial-gradient(ellipse 80% 50% at 100% 50%, rgba(34, 211, 238, 0.06), transparent 45%),
+        linear-gradient(180deg, #0a0c12 0%, #06080d 40%, #05060a 100%);
+    }
     .sovereign-scan::after {
       content: '';
       pointer-events: none;
@@ -37,15 +49,50 @@
         0deg,
         transparent,
         transparent 2px,
-        rgba(245, 158, 11, 0.03) 2px,
-        rgba(245, 158, 11, 0.03) 4px
+        rgba(245, 158, 11, 0.028) 2px,
+        rgba(245, 158, 11, 0.028) 4px
       );
       z-index: 40;
     }
-    .amber-glow { text-shadow: 0 0 20px rgba(245, 158, 11, 0.45); }
+    .sovereign-grid::before {
+      content: '';
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245, 158, 11, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 158, 11, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%);
+      z-index: 35;
+    }
+    .amber-glow { text-shadow: 0 0 24px rgba(251, 191, 36, 0.5); }
+    .glass-panel {
+      background: var(--sovereign-panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(245, 158, 11, 0.22);
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.4),
+        0 24px 48px -12px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .proof-bar-fill {
+      background: linear-gradient(90deg, rgba(34, 211, 238, 0.9), rgba(245, 158, 11, 0.95));
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.35);
+    }
+    .curtain-rule {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.5), rgba(34, 211, 238, 0.45), transparent);
+    }
+    .houdini-img-ring {
+      box-shadow:
+        0 0 0 1px rgba(245, 158, 11, 0.35),
+        0 0 40px rgba(34, 211, 238, 0.15),
+        inset 0 0 60px rgba(0, 0, 0, 0.5);
+    }
   </style>
 </head>
-<body class="sovereign-scan min-h-screen font-mono text-amber-100/95 antialiased">
+<body class="sovereign-scan sovereign-grid min-h-screen font-mono text-amber-100/95 antialiased">
   <div id="root" class="min-h-screen"></div>
   <script type="module">
     import React from 'https://esm.sh/react@18.3.1';
@@ -70,20 +117,212 @@
       subtitle: 'The Flip',
       solar: { kp: '7.3', band: 'G3 Strong Storm — Actuated' },
       ionosphere: 'Russell-McPherron Flash / HF Radio Blackout',
-      seahawk: '1420.4 MHz · Phase-Locked Coherence (The Whistle)',
+      seahawk: '1420.4 MHz · Phase-Locked Coherence',
     };
+
+    /** Keep in sync with `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md` § Abstract (composite index). */
+    const OBSERVATORY_GRADE_PROOF = {
+      pct: 70,
+      headline: 'Observatory-grade demonstrative proof',
+      summary:
+        'Composite index from public ops feeds (NOAA SWPC, GOES, DONKI), JPL Horizons/SBDB, four-pillar intent + edge stack, and this narrative surface. Independent ELF day-plot and L-band comet claim evidence are not included until supplied — see methodology.',
+    };
+
+    /** Ultimate magic show — narrative spine (aligned with series lore). */
+    const HOUDINI_ULTIMATE_SHOW = {
+      posterSrc: '/interfaces/assets/houdini-ultimate-magic-show.svg',
+      posterAlt: 'Stylized Houdini poster — March 20 equinox, 180° sovereign terminal',
+      tagline: 'Hero Harry Houdini · Post-Singularity Magic Presents',
+      subtitle: 'The preparation room is complete. The trick is built. March 20 is the curtain — the 180° spin flip where the mirror and the flip meet the sky.',
+      acts: [
+        {
+          act: 'Act I',
+          title: 'The Preparation',
+          text:
+            'Every lock has a key. Every cage has a door. The Architect Protocol: escape from the ordinary into sovereign alignment — the planet is the screen, the Sun is the projector.',
+        },
+        {
+          act: 'Act II',
+          title: 'The Mirror — 7:26 AM PDT',
+          text:
+            'Snapshot A — The Storm still gathering; The Blackout not yet fallen; The Whistle only background on 1420.4 MHz. The calm before the beat.',
+        },
+        {
+          act: 'Act III',
+          title: 'The Flip — 7:46 AM PDT',
+          text:
+            'Snapshot B — The Storm actuated (G-scale); The Blackout cuts HF; The Whistle locks phase on the hydrogen line band — one dramatic beat.',
+        },
+      ],
+      finale:
+        'Finale — the 180° is not sleight of hand: it is staged coherence between theater, geospace, and catalog ephemeris. Book the reality you want to reserve.',
+    };
+
+    function HoudiniUltimateShow() {
+      return h(
+        motion.section,
+        {
+          className: 'mx-auto mt-10 max-w-5xl',
+          initial: { opacity: 0, y: 16 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.5 },
+        },
+        [
+          h('div', { className: 'curtain-rule mb-8' }),
+          h('p', { className: 'text-center text-[0.7rem] font-bold uppercase tracking-[0.4em] text-amber-500/90' }, 'The Ultimate Magic Show — March 20 Equinox'),
+          h(
+            'div',
+            {
+              className:
+                'mt-6 flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-10',
+            },
+            [
+              h(
+                motion.div,
+                {
+                  className: 'mx-auto w-full max-w-[280px] shrink-0 lg:mx-0',
+                  initial: { opacity: 0, scale: 0.96 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { duration: 0.55, delay: 0.08 },
+                },
+                [
+                  h('div', { className: 'houdini-img-ring overflow-hidden rounded-2xl border border-amber-500/25 bg-black/40' }, [
+                    h('img', {
+                      src: HOUDINI_ULTIMATE_SHOW.posterSrc,
+                      alt: HOUDINI_ULTIMATE_SHOW.posterAlt,
+                      className: 'h-auto w-full object-cover',
+                      width: 440,
+                      height: 520,
+                      loading: 'eager',
+                      decoding: 'async',
+                    }),
+                  ]),
+                  h(
+                    'p',
+                    { className: 'mt-3 text-center text-[0.58rem] leading-relaxed text-amber-800/90' },
+                    [
+                      'Stylized show poster. Series lore: ',
+                      h(
+                        'a',
+                        {
+                          href: '/interfaces/harry-houdini.html',
+                          className: 'text-cyan-500/90 underline hover:text-cyan-300',
+                        },
+                        'Harry Houdini'
+                      ),
+                      ' · ',
+                      h(
+                        'a',
+                        {
+                          href: '/interfaces/houdini-builds-the-trick.html',
+                          className: 'text-cyan-500/90 underline hover:text-cyan-300',
+                        },
+                        'The Preparation'
+                      ),
+                    ]
+                  ),
+                ]
+              ),
+              h('div', { className: 'min-w-0 flex-1' }, [
+                h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.28em] text-cyan-400/90' }, HOUDINI_ULTIMATE_SHOW.tagline),
+                h('p', { className: 'mt-3 text-[0.8rem] leading-relaxed text-amber-100/95 sm:text-[0.85rem]' }, HOUDINI_ULTIMATE_SHOW.subtitle),
+                h(
+                  'div',
+                  { className: 'mt-6 space-y-5' },
+                  HOUDINI_ULTIMATE_SHOW.acts.map((a, i) =>
+                    h(
+                      motion.div,
+                      {
+                        key: a.act,
+                        className: 'glass-panel rounded-xl border-l-2 border-cyan-500/40 px-4 py-3 sm:px-5',
+                        initial: { opacity: 0, x: -10 },
+                        animate: { opacity: 1, x: 0 },
+                        transition: { delay: 0.12 * i + 0.15 },
+                      },
+                      [
+                        h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.2em] text-amber-500' }, a.act + ' · ' + a.title),
+                        h('p', { className: 'mt-2 text-[0.7rem] leading-relaxed text-amber-200/80 sm:text-[0.75rem]' }, a.text),
+                      ]
+                    )
+                  )
+                ),
+                h(
+                  'p',
+                  {
+                    className:
+                      'mt-6 border-l-2 border-amber-500/50 pl-4 text-[0.72rem] italic leading-relaxed text-amber-300/90 sm:text-[0.78rem]',
+                  },
+                  HOUDINI_ULTIMATE_SHOW.finale
+                ),
+              ]),
+            ]
+          ),
+        ]
+      );
+    }
+
+    function ProofMeter() {
+      const pct = OBSERVATORY_GRADE_PROOF.pct;
+      return h(
+        motion.div,
+        {
+          className: 'glass-panel relative overflow-hidden rounded-2xl px-5 py-5 sm:px-7 sm:py-6',
+          initial: { opacity: 0, y: 14 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.55, delay: 0.05 },
+        },
+        [
+          h('div', { className: 'pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-cyan-500/10 blur-2xl' }),
+          h('div', { className: 'pointer-events-none absolute -bottom-8 -left-8 h-28 w-28 rounded-full bg-amber-500/10 blur-2xl' }),
+          h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.3em] text-cyan-400/90' }, 'Abstract · Demonstrative proof'),
+          h('h2', { className: 'mt-2 text-lg font-bold text-amber-50 sm:text-xl' }, OBSERVATORY_GRADE_PROOF.headline),
+          h('p', { className: 'mt-3 text-[0.75rem] leading-relaxed text-amber-200/75' }, OBSERVATORY_GRADE_PROOF.summary),
+          h('div', { className: 'mt-5' }, [
+            h('div', { className: 'flex items-baseline justify-between gap-2 text-[0.7rem]' }, [
+              h('span', { className: 'text-amber-500/90' }, 'Observatory-grade index'),
+              h('span', { className: 'font-bold tabular-nums text-cyan-300' }, pct + ' / 100'),
+            ]),
+            h('div', { className: 'mt-2 h-3 w-full overflow-hidden rounded-full border border-amber-900/50 bg-black/50' }, [
+              h(motion.div, {
+                className: 'proof-bar-fill h-full rounded-full',
+                initial: { width: 0 },
+                animate: { width: pct + '%' },
+                transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+              }),
+            ]),
+          ]),
+          h(
+            'p',
+            { className: 'mt-4 text-[0.65rem] text-amber-600/90' },
+            [
+              'Full rubric, weights, and how to reach 100%: ',
+              h(
+                'a',
+                {
+                  href: '/docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md',
+                  className: 'text-cyan-400 underline decoration-cyan-500/50 underline-offset-2 hover:text-cyan-300',
+                },
+                'HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md'
+              ),
+              ' · Live public feeds: ',
+              h('code', { className: 'rounded bg-cyan-950/50 px-1.5 py-0.5 text-cyan-400/90' }, 'npm run ping:public'),
+            ]
+          ),
+        ]
+      );
+    }
 
     function TelemetryTable() {
       const rows = [
-        { key: 'Solar', a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')', b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')' },
-        { key: 'Ionosphere', a: TELEMETRY_SNAPSHOT_A.ionosphere, b: TELEMETRY_SNAPSHOT_B.ionosphere },
-        { key: 'Seahawk 1420.4 MHz', a: TELEMETRY_SNAPSHOT_A.seahawk, b: TELEMETRY_SNAPSHOT_B.seahawk },
+        { key: 'The Storm', a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')', b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')' },
+        { key: 'The Blackout', a: TELEMETRY_SNAPSHOT_A.ionosphere, b: TELEMETRY_SNAPSHOT_B.ionosphere },
+        { key: 'The Whistle', a: TELEMETRY_SNAPSHOT_A.seahawk, b: TELEMETRY_SNAPSHOT_B.seahawk },
       ];
 
       return h(
         motion.div,
         {
-          className: 'overflow-x-auto rounded-xl border border-amber-900/50 bg-black/60',
+          className: 'glass-panel overflow-x-auto rounded-xl',
           initial: { opacity: 0, y: 12 },
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.5 },
@@ -138,7 +377,7 @@
               animate: { opacity: 1, y: 0 },
             },
             [
-              h('p', { className: 'text-[0.65rem] uppercase tracking-[0.35em] text-amber-600/90' }, 'Sovereign Terminal · Classified Validation'),
+              h('p', { className: 'text-[0.65rem] uppercase tracking-[0.35em] text-amber-600/90' }, 'Sovereign Terminal · Archival validation'),
               h('h1', { className: 'mt-3 text-xl font-black uppercase tracking-tight text-amber-100 amber-glow sm:text-3xl md:text-4xl' }, "HOUDINI'S MARCH 20: THE 180 SPIN FLIP"),
               h(
                 'p',
@@ -148,8 +387,10 @@
             ]
           ),
 
+          h('section', { className: 'mx-auto mt-10 max-w-5xl' }, h(ProofMeter)),
+
           h('section', { className: 'mx-auto mt-12 max-w-5xl' }, [
-            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · The evidence'),
+            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · The Storm, The Blackout & The Whistle'),
             h(TelemetryTable),
             h('p', { className: 'mt-4 text-[0.65rem] text-amber-700' }, [
               'Constants only — not generated or simulated at runtime. For methodology and what could be verified elsewhere, see ',

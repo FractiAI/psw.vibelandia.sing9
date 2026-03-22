@@ -15,3 +15,7 @@ All six menu buttons and the hero strip use these assets. Put each file in `inte
 6. **Vendors** — vendors-silver-legacy.png (Silver Legacy Resort Casino · Reno)
 
 **Landing page (right half):** vibelandia-reno-magic.png (index.html)
+
+---
+
+**`/magic-trick` (Houdini Ultimate Magic Show):** **houdini-ultimate-magic-show.svg** — stylized poster (local vector). To use a historical photograph instead, add your licensed file and point `HOUDINI_ULTIMATE_SHOW.posterSrc` in `magic-trick.html` (or replace the SVG path).

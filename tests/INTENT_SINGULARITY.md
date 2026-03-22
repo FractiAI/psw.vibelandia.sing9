@@ -8,6 +8,8 @@ These tests **define** what the `/magic-trick` experience **must satisfy** for t
 |------|------|
 | `lib/march20-four-diagnostics.mjs` | Pure evaluators + `composeFourPillarsLocked` |
 | `tests/intent/march20-four-pillars.test.mjs` | **Default `npm test`** — golden probes + compose gate |
+| `lib/observatory-public-evidence.mjs` | NOAA G-scale + GOES class helpers; SWPC/DONKI fetchers for CLI |
+| `tests/intent/observatory-public-evidence.test.mjs` | Pure helpers (`kpToGScale`, `goesSoftXrayClass`) |
 | `api/schumann-equinox-probe.js` | Serves merged **`data/schumann-equinox-snapshot.json`** shape |
 | `api/jovian-hydrogen-line-probe.js` | JPL SBDB + **`lattice-status.json`** (MHz, hill sphere, node) |
 | `api/stryker-equinox-probe.js` | **`data/stryker-equinox-timer.json`** window + mark |

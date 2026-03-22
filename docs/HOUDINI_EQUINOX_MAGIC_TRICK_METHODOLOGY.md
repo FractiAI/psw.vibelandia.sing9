@@ -1,6 +1,36 @@
 # Houdini / March 20 “Magic Trick” — Research Methodology & Success Rubric
 
-**NSPFRNP · Seed:Edge** — This document separates **theater**, **geospace facts**, **orbital catalogs**, and **your edge stack** so the team can say clearly what was verified on the day of the event and what remains narrative or requires instruments this terminal does not replace.
+> **NSPFRNP · Seed:Edge** — This document separates **theater**, **geospace facts**, **orbital catalogs**, and **your edge stack** so the team can say clearly what was verified on the day of the event and what remains narrative or requires instruments this terminal does not replace.
+
+---
+
+## Abstract · Observatory-grade demonstrative proof (0–100%)
+
+**Observatory-grade demonstrative proof** means: *how much of the evidentiary stack is backed by **public operational or catalog-grade sources** (not theater alone), auditable today, without claiming instruments this repo does not operate (e.g. L-band dish on the comet).*
+
+### Composite index (update when tiers advance)
+
+| Weight | Evidence class | What counts | Pts | Achieved |
+|--------|----------------|-------------|-----|----------|
+| **30** | **Geospace & solar (ops feeds)** | NOAA SWPC (Kp, Ap, RTSW L1 mag/wind), F10.7, GOES soft X-ray; NASA DONKI GST — reproducible via `npm run ping:public` | 30 | **30** |
+| **15** | **Orbital catalog & ephemeris** | JPL Horizons (Earth–comet range) + SBDB (identity / orbit metadata) — same public APIs analysts use | 15 | **15** |
+| **15** | **Product / edge alignment** | Four pillars locked in intent tests (`npm test`) + deploy probes when live | 15 | **15** *(intent + stack; set partial if probes red)* |
+| **15** | **ELF / Schumann (independent)** | Observatory-grade ELF plot for the UTC day (e.g. Tomsk / independent monitor) — **not** from this app | 15 | **0** |
+| **15** | **Radio astrophysics (L-band claim)** | Independent L-band data product or notice with time, pointing, calibration if claiming comet ↔ H I coupling | 15 | **0** |
+| **10** | **Theater + narrative surface** | Delivered story, static Sovereign snapshot table (`/magic-trick`) | 10 | **10** |
+| | | **Total** | **100** | **70** |
+
+**Demonstrative proof score (observatory-grade index): `70 / 100` (70%).**
+
+```text
+Observatory-grade index  [████████████████████░░░░░░░░]  70%
+```
+
+- **What this score *is*:** defensible **geospace context** + **JPL catalog ephemeris** + **reproducible CLI** + **intent-locked product kernel** + **published narrative UI**.
+- **What it is *not*:** it does **not** assert ELF Tomsk traces or **L-band detection of the comet** at 1420 MHz — those two bands are **0 / 30** until independently supplied (then revise the table and the percentage).
+- **How to reach 100%:** add **15** pts with an **independent ELF** artifact for the event day and **15** pts with **independent L-band** evidence if that claim is made; keep ops feeds and JPL rows current.
+
+*Revision note: if four-pillar **deploy** probes are failing in production, reduce the “Product / edge alignment” row from 15 to a partial (e.g. 10) until green.*
 
 ---
 
@@ -53,9 +83,10 @@ Until then, the honest phrase is: **“Narrative alignment with the H I rest fre
 
 ### A. **Sovereign Terminal** (current `magic-trick.html` — “Behold”)
 
-- **Fixed narrative telemetry only** (constants in markup — **not** simulated or fetched at runtime): **Snapshot A · 7:26 AM PDT (The Mirror)** vs **Snapshot B · 7:46 AM PDT (The Flip)** — Kp, ionosphere, Seahawk 1420.4 MHz band (Stryker fleet copy removed — prior-week beat, not this equinox table).
+- **Ultimate magic show skin:** hero poster (`interfaces/assets/houdini-ultimate-magic-show.svg`) + **three-act** narrative (Preparation → Mirror 7:26 → Flip 7:46) + links to **`interfaces/harry-houdini.html`** and **`interfaces/houdini-builds-the-trick.html`**. *Optional:* replace the SVG with a licensed portrait asset under the same path if you vendor a photograph.
+- **Fixed narrative telemetry only** (constants in markup — **not** simulated or fetched at runtime): **Snapshot A · 7:26 AM PDT (The Mirror)** vs **Snapshot B · 7:46 AM PDT (The Flip)** — three named evidences: **The Storm** (Kp / solar-geomagnetic beat), **The Blackout** (ionosphere / HF path), **The Whistle** (1420.4 MHz band narrative) (Stryker fleet copy removed — prior-week beat, not this equinox table).
 - **No live hardware ping on this page** — the former in-browser EXECUTE flow (NOAA Kp, narrative ToF, 369 Hz XOR latch, **180 LOCKED** / out-of-phase UI) was **removed** so `/magic-trick` stays a **static** “evidence table” surface. For **live** edge alignment, use **`npm test`** + four-pillar APIs / **`vercel dev`** (§4B) or document external verification (§6 tiers).
-- **CLI · public APIs (no browser):** run **`npm run ping:public`** → **`scripts/sovereign-public-api-ping.mjs`** — fetches **NOAA SWPC** (latest Kp), **NASA/JPL Horizons** (Earth–comet range for narrative ToF), **JPL SBDB** (object identity), and runs the **369 Hz XOR latch** locally. Prints human-readable lines + JSON. Same story gates as the old UI (Kp > 6; integer ToF @ story *c* = 300000 km/s vs 2476 s; XOR recover).
+- **CLI · observatory-context public data (no browser):** run **`npm run ping:public`** → **`scripts/sovereign-public-api-ping.mjs`**, using **`lib/observatory-public-evidence.mjs`** for reproducible pulls from the same **operational** feeds space-weather desks use: **NOAA SWPC** — Kp 1-min, official **3-hour Kp + Ap** table (G-scale uses this when present), **RTSW L1** interplanetary mag + solar wind (ACE/DSCOVR chain), **F10.7**, **GOES** soft X-ray; **NASA DONKI** geomagnetic storm (GST) list (optional `NASA_API_KEY`, else `DEMO_KEY`); plus **JPL Horizons** (Earth–comet range), **SBDB** (catalog identity), and local **369 Hz XOR latch**. Prints human-readable lines + JSON. **Story gates** (theater) unchanged: Kp > 6 on **1-min** Kp; integer ToF @ story *c* = 300000 km/s vs 2476 s; XOR recover. **Honesty:** this is **not** L-band radio proof of the comet on 1420 MHz — only geospace + ephemeris **context**.
 
 ### B. **Four pillars library** (`npm test` + optional `vercel dev` APIs)
 
@@ -89,10 +120,13 @@ The evaluator module **`lib/march20-four-diagnostics.mjs`** and these **four** e
 | **T0** | Theater | Script delivered; audience experience |
 | **T1** | Terminal | **Four pillars locked** (API probes + evaluators via `npm test` / deploy) — **or** static page + documented external checks; **no** “180 LOCKED” on `/magic-trick` itself (hardware ping removed) |
 | **T2** | Geospace archive | Export or screenshot **NOAA Kp** (and optionally equinox-window summary) for the event date |
+| **T2+** | Observational public (ops feeds) | Reproducible **`npm run ping:public`** JSON: **NOAA SWPC** multi-feed + **GOES** X-ray + **NASA DONKI** GST + **JPL** Horizons/SBDB — *not* a substitute for T4 radio claims |
 | **T3** | ELF (optional) | Independent **Schumann / ELF** plot for the same UTC day (not from this app) |
 | **T4** | Radio astronomy (optional) | **Independent** L-band evidence if claiming comet–H I coupling |
 
 Public messaging should state the **highest tier** actually satisfied (e.g. “T1 achieved; T4 not claimed”).
+
+**Composite 0–100% score:** see **§ Abstract · Observatory-grade demonstrative proof** — tiers map onto weighted points; the abstract is the single place to update the headline percentage.
 
 ---
 

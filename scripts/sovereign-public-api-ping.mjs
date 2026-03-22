@@ -3,10 +3,13 @@
  * Sovereign public-API ping (CLI only — not a webpage).
  *
  * Uses free public APIs only:
- *   - NOAA SWPC: planetary K-index (geomagnetic / ionosphere context)
+ *   - NOAA SWPC (observatory-context): Kp 1-min + official Kp/Ap table, RTSW L1 mag + wind, F10.7, GOES soft X-ray
+ *   - NASA DONKI (optional): geomagnetic storm (GST) list — `NASA_API_KEY` or DEMO_KEY
  *   - NASA/JPL Horizons: geocentric range (delta, AU) for C/2025 N1 (3I/ATLAS)
  *   - NASA/JPL SBDB: small-body identity / orbit metadata
  *   - Local: narrative 369 Hz XOR latch (one period τ = 1/369 s), no third-party call
+ *
+ * Shared helpers: `lib/observatory-public-evidence.mjs`
  *
  * Run: node scripts/sovereign-public-api-ping.mjs
  *      npm run ping:public
@@ -18,6 +21,8 @@
  *
  * NSPFRNP → ∞⁹
  */
+
+import { fetchSwpcObservatoryContext, fetchDonkiGst } from '../lib/observatory-public-evidence.mjs';
 
 const FETCH_OPTS = {
   signal: AbortSignal.timeout(25000),
@@ -165,6 +170,10 @@ function gateTof(distanceKm) {
   };
 }
 
+function isoDateUTC(d) {
+  return d.toISOString().slice(0, 10);
+}
+
 async function main() {
   const out = {
     fetched_at_utc: new Date().toISOString(),
@@ -172,9 +181,29 @@ async function main() {
     errors: [],
   };
 
+  const [swpcObs, donkiGst] = await Promise.all([
+    fetchSwpcObservatoryContext(FETCH_OPTS),
+    (async () => {
+      const end = new Date();
+      const start = new Date(end.getTime() - 7 * 24 * 60 * 60 * 1000);
+      try {
+        return await fetchDonkiGst(isoDateUTC(start), isoDateUTC(end), process.env.NASA_API_KEY);
+      } catch (e) {
+        return { error: e.message || String(e), source: 'NASA DONKI GST' };
+      }
+    })(),
+  ]);
+
+  out.observatory_public = swpcObs;
+  out.nasa_donki_gst = donkiGst;
+
   let kpRow = null;
   try {
-    kpRow = await fetchLatestKp();
+    if (swpcObs.kp_1m && swpcObs.kp_1m.kp != null) {
+      kpRow = swpcObs.kp_1m;
+    } else {
+      kpRow = await fetchLatestKp();
+    }
     out.kp = kpRow;
     out.gates.solar_kp_gt_6 = gateKp(kpRow.kp);
   } catch (e) {
@@ -219,7 +248,58 @@ async function main() {
   lines.push('══ Sovereign public API ping ══');
   lines.push(`UTC: ${out.fetched_at_utc}`);
   lines.push('');
-  lines.push('── NOAA SWPC · latest Kp ──');
+  lines.push('── Observatory-grade public data (NOAA SWPC + GOES) ──');
+  if (swpcObs.kp_1m) {
+    lines.push(`  Kp (1-min): ${swpcObs.kp_1m.kp ?? '—'} @ ${swpcObs.kp_1m.time_tag || '—'}`);
+  }
+  if (swpcObs.kp_table_3h) {
+    const t = swpcObs.kp_table_3h;
+    lines.push(`  Kp (3h product): ${t.kp_index ?? '—'} · Ap: ${t.ap_index ?? '—'} · storm: ${t.storm_level ?? '—'} @ ${t.time_tag}`);
+  }
+  if (swpcObs.g_scale_kp?.label) {
+    lines.push(
+      `  NOAA G-scale (${swpcObs.g_scale_from_kp_source || 'Kp'}): ${swpcObs.g_scale_kp.label} — ${swpcObs.g_scale_kp.note}`,
+    );
+  }
+  if (swpcObs.f107) {
+    lines.push(
+      `  F10.7: ${swpcObs.f107.f10_7_sfu ?? '—'} sfu @ ${swpcObs.f107.time_tag || '—'} (90d mean ${swpcObs.f107.ninety_day_mean ?? '—'})`,
+    );
+  }
+  if (swpcObs.rtsw_mag) {
+    const m = swpcObs.rtsw_mag;
+    lines.push(
+      `  RTSW L1 mag (${m.source}): Bt=${m.bt_nT ?? '—'} nT  Bz=${m.bz_gsm ?? '—'} nT @ ${m.time_tag || '—'}`,
+    );
+  }
+  if (swpcObs.rtsw_wind) {
+    const w = swpcObs.rtsw_wind;
+    lines.push(
+      `  RTSW L1 wind: V=${w.proton_speed_km_s ?? '—'} km/s  n=${w.proton_density_cm3 ?? '—'} cm⁻³ @ ${w.time_tag || '—'}`,
+    );
+  }
+  if (swpcObs.goes_xray) {
+    const x = swpcObs.goes_xray;
+    lines.push(
+      `  GOES soft X-ray: ~${x.coarse_class ?? '—'} (${x.coarse_class_detail ?? ''}) flux=${x.flux_w_m2 != null ? x.flux_w_m2.toExponential(3) : '—'} W/m² @ ${x.time_tag || '—'}`,
+    );
+  }
+  if (swpcObs.errors?.length) {
+    for (const er of swpcObs.errors) lines.push(`  [partial] ${er.step}: ${er.message}`);
+  }
+  lines.push('');
+  lines.push('── NASA DONKI · geomagnetic storms (7d) ──');
+  if (donkiGst.error) {
+    lines.push(`  (unavailable) ${donkiGst.error}`);
+  } else {
+    lines.push(`  Events: ${donkiGst.count ?? donkiGst.events?.length ?? 0} · key=${donkiGst.api_key_used ?? '—'}`);
+    const ev = (donkiGst.events || []).slice(-3);
+    for (const g of ev) {
+      lines.push(`  · ${g.gstid ?? '—'} max Kp≈${g.max_kp_in_event ?? '—'} ${g.start_time ? `from ${g.start_time}` : ''}`);
+    }
+  }
+  lines.push('');
+  lines.push('── Story gate · NOAA Kp (same as before) ──');
   if (kpRow) {
     lines.push(`  Kp = ${kpRow.kp ?? 'null'}  (${kpRow.time_tag || 'no time'})`);
     lines.push(`  Gate Kp > ${KP_GREEN_IF_GT}: ${out.gates.solar_kp_gt_6 ? 'GREEN' : 'RED'}`);

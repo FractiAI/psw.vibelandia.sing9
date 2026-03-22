@@ -8,6 +8,12 @@
     "lattice_sync_frequency_must_match_constants": true,
     "min_lattice_signature_length": 8
   },
+  "spin_flip_180": {
+    "required": true,
+    "description": "180° spin-flip latch: manifest FSSP/synthesis expectations must match lattice_sync; Blank Stone hydrogen packet must verify.",
+    "expect_fssp_level": "6.2",
+    "expect_synthesis_target": "9"
+  },
   "library_paths": {
     "lattice_status": "/lattice-status.json",
     "this_manifest": "/sing9-firmware-verify.json",
@@ -15,10 +21,10 @@
     "singularity_kernel": "/lib/houdini-singularity.mjs"
   },
   "live_on_each_verify": [
-    "GET /api/cloud-compute-probe",
-    "GET /api/blank-stone-hydrogen",
-    "GET /lattice-status.json vs this manifest",
-    "Browser mic spectral scan (T_BRIDGE_PROXY)"
+    "GET /api/schumann-equinox-probe",
+    "GET /api/jovian-hydrogen-line-probe",
+    "GET /api/stryker-equinox-probe",
+    "GET /api/firmware-180-spin-probe (manifest spin + lattice + /api/blank-stone-hydrogen)"
   ],
   "static_reference_only": [
     "/data/houdini-static-ionosphere-reference.json",

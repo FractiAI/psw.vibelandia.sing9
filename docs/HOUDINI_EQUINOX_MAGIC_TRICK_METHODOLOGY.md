@@ -49,24 +49,28 @@ Until then, the honest phrase is: **“Narrative alignment with the H I rest fre
 
 ---
 
-## 4. What the `/magic-trick` terminal actually tests (four gates)
+## 4. What the `/magic-trick` terminal actually tests (**four pillars only**)
 
-| Gate | Pass means | Does *not* mean |
-|------|------------|-----------------|
-| **Solar / ionosphere (Kp)** | **LIVE** latest **Kp ≥ 5** (storm gate) + **LIVE** equinox API when available + **STATIC** reference JSON for archival context | STATIC file replaces live Kp gate |
-| **Cloud probe** | **LIVE** CPU/crypto probe + **handler wall ms** + **RSS/heap** telemetry | Global GPU sync |
-| **Seahawk spectral scan** | **LIVE** mic FFT — **“Hydrogen Bridge: COHERENT”** + wall time | 1420 **MHz** from the comet |
-| **T_EDGE_LIVE** | **LIVE** Blank Stone **and** **LIVE** `/lattice-status.json` vs `/sing9-firmware-verify.json` (3I/ATLAS node, MHz, signature) | Either check cached from a prior session |
+The diagnostics grid and `npm test` are aligned to **`lib/march20-four-diagnostics.mjs`** and these **four** edge probes (HTTPS deploy or `vercel dev`):
+
+| Pillar | API | Pass means | Does *not* mean |
+|--------|-----|------------|-----------------|
+| **Schumann 3·6·9 @ equinox** | `GET /api/schumann-equinox-probe` | Snapshot reports **3, 6, 9 Hz** (±0.5 Hz) and **`equinox_correlated: true`** (from `data/schumann-equinox-snapshot.json`) | Tomsk / ELF observatory proof without your own feed export |
+| **Hydrogen line · Jupiter / 3I/ATLAS** | `GET /api/jovian-hydrogen-line-probe` | Rest **1420.405751 MHz** (lattice constants) + **Jupiter / ATLAS narrative context** (hill sphere + node; JPL SBDB when reachable) | L-band RF detection from the browser or “comet on MHz” without a dish pipeline |
+| **Stryker @ equinox** | `GET /api/stryker-equinox-probe` | `stryker_mark_utc` inside **Mar 20 equinox window** and flags `equinox_timed` / `stryker_timed_at_equinox` (`data/stryker-equinox-timer.json`) | Independent verification of device fleet events |
+| **Firmware upgrade · 180° spin flip** | `GET /api/firmware-180-spin-probe` | **`spin_flip_180`** in `/sing9-firmware-verify.json` matches **`lattice_sync`** (e.g. FSSP level, synthesis target) + **`/api/blank-stone-hydrogen`** packet + healthy lattice | Hardware bootloader or physical gyro; this is **manifest + lattice + edge packet** latch |
+
+**Browser requirement:** serve **`/magic-trick`** (or `magic-trick.html`), **`/lib/*.mjs`**, and **`/api/*`** on **HTTPS** (e.g. production Vercel or `vercel dev`).
 
 ---
 
-## 5. **180 Locked** — operational definition of “magic succeeded” (for this product)
+## 5. **Four pillars locked** — operational definition of “magic succeeded” (for this product)
 
-**`180 Locked`** (golden badge) = **all four gates above pass in one run** after deploy.
+**`Four pillars locked`** (golden badge) = **`composeFourPillarsLocked`** → all **four** probes above return **`ok: true`** and evaluators pass in **one** Verify run.
 
-- **Success (product):** The **story, stack, and geospace gate** aligned at run time — suitable for **demo / premiere / community proof-of-work**.
-- **Failure (product):** Any red card — document which gate failed (Kp quiet day, mic denied, API missing, etc.).
-- **Success (science of the comet):** **Not implied** by `180 Locked` alone. Add Tier 2 (below).
+- **Success (product):** Narrative + edge stack + published snapshots/timer align — suitable for **demo / premiere / community proof-of-work**.
+- **Failure (product):** Any red card — note which pillar failed (missing JSON, JPL timeout, manifest drift, Blank Stone down, etc.).
+- **Success (science of the comet):** **Not implied** by four pillars alone. Add Tier 2–4 (below) for geospace archive, ELF plots, or radio data.
 
 ---
 
@@ -75,7 +79,7 @@ Until then, the honest phrase is: **“Narrative alignment with the H I rest fre
 | Tier | Name | Criterion |
 |------|------|-----------|
 | **T0** | Theater | Script delivered; audience experience |
-| **T1** | Terminal | **180 Locked** on deployed `/magic-trick` |
+| **T1** | Terminal | **Four pillars locked** on deployed `/magic-trick` (four `/api/*` probes) |
 | **T2** | Geospace archive | Export or screenshot **NOAA Kp** (and optionally equinox-window summary) for the event date |
 | **T3** | ELF (optional) | Independent **Schumann / ELF** plot for the same UTC day (not from this app) |
 | **T4** | Radio astronomy (optional) | **Independent** L-band evidence if claiming comet–H I coupling |
@@ -89,25 +93,25 @@ Public messaging should state the **highest tier** actually satisfied (e.g. “T
 1. **Conflating AR4392 flare with ionospheric energy** → Mitigated by **Kp-only** storm gate + explicit “ground” copy.
 2. **Conflating browser Hz with sky MHz** → Mitigated by **proxy** language and this doc.
 3. **Conflating JPL SBDB with radio detection** → Mitigated by **catalog anchor** line in the solar detail when the bundle includes `atlas`.
-4. **Equinox window invisible after Kp refactor** → Mitigated by **parallel equinox bundle** for **context** in the solar card (does not change pass logic unless you later choose to).
+4. **Stack drift (Kp / mic / cloud vs story pillars)** → Mitigated by **narrowing the terminal** to the **four pillars** that match the March 20 script beats (Schumann ladder, H-line narrative, Stryker clock, firmware 180° latch).
 
 ---
 
 ## 8. STATIC vs LIVE (senior review)
 
-See **`docs/SENIOR_RESEARCH_STATIC_VS_LIVE.md`**: equinox/ionosphere **reference** JSON may be static archival data; **Kp gate, cloud probe, spectral scan, Blank Stone, lattice-status, and firmware manifest** are verified **LIVE** on every Verify. **`/sing9-firmware-verify.json`** + **`/lattice-status.json`** are the canonical firmware library pair.
+See **`docs/SENIOR_RESEARCH_STATIC_VS_LIVE.md`**: Schumann and Stryker **snapshot/timer JSON** under `data/` are **published artifacts** (replace with observatory exports when available). **Edge probes** (`/api/*`) and **lattice / Blank Stone** are fetched **live** each Verify. **`/sing9-firmware-verify.json`** + **`/lattice-status.json`** remain the canonical firmware library pair for the **180° spin** section.
 
 ---
 
 ## 9. Executable intent (singularity tests)
 
-Product intent is **encoded in tests**, not only prose: run `npm test` from repo root. The kernel is **`lib/houdini-singularity.mjs`**; see **`tests/INTENT_SINGULARITY.md`**. When handlers and UI **converge** on that module, passing tests mean intentions are structurally satisfied.
+Product intent is **encoded in tests**, not only prose: run `npm test` from repo root. The **four-pillars** kernel is **`lib/march20-four-diagnostics.mjs`** (`tests/intent/march20-four-pillars.test.mjs`). Legacy **`lib/houdini-singularity.mjs`** tests remain available via **`npm run test:legacy-singularity`**. See **`tests/INTENT_SINGULARITY.md`**.
 
 ---
 
 ## 10. Closing (team alignment)
 
-- **The trick “works”** when the team agrees **which tier** they are selling: **T1** is honest and strong for **edge + storm + ritual UX**; **T4** requires observatory-grade evidence.
+- **The trick “works”** when the team agrees **which tier** they are selling: **T1** is honest and strong for **edge + four pillars + theater UX**; **T4** requires observatory-grade evidence.
 - **Catalog + Kp + edge checks** = **holographic shell** around the show; they **do not replace** radio physics for the comet.
 
 **NSPFRNP → ∞⁹ · SING 9**

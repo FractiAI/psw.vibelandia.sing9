@@ -20,12 +20,13 @@
 npm test
 ```
 
-- **`lib/houdini-singularity.mjs`** — gate math & API contracts (Kp storm gate, equinox narrative shape, Blank Stone, spectral proxy thresholds, T180 composition, explicit T4 non-claim).
+- **`lib/march20-four-diagnostics.mjs`** — four pillars evaluators + `composeFourPillarsLocked` (Schumann 3·6·9 @ equinox, Jovian H-line/ATLAS, Stryker timer, firmware 180° spin).
+- **`lib/houdini-singularity.mjs`** — legacy Kp / mic bridge / cloud / T180 stack (`npm run test:legacy-singularity`).
 - **`tests/intent/`** — Node 18+ `node:test`; see **`tests/INTENT_SINGULARITY.md`**.
 
-**Convergence:** `magic-trick.html` imports `/lib/houdini-singularity.mjs`; `scripts/vercel-static-output.mjs` copies `lib/` into `dist/`. **Green `npm test` + aligned UI** = same gate math.
+**Convergence:** `magic-trick.html` imports `/lib/march20-four-diagnostics.mjs` and calls four **`/api/*`** probes; `scripts/vercel-static-output.mjs` copies `lib/` into `dist/`. **Green `npm test` + aligned UI** = same evaluator math.
 
-**STATIC vs LIVE (senior review):** `data/houdini-static-ionosphere-reference.json` = archival equinox/ionosphere **reference** only; **T_IONOSPHERE** still uses **live** Kp. **Firmware library:** `public/sing9-firmware-verify.json` + **`/lattice-status.json`** — compared **on every** Verify with Blank Stone (see `docs/SENIOR_RESEARCH_STATIC_VS_LIVE.md`). Cloud probe returns **probe_handler_wall_ms** + **memory_rss_mb**; UI shows **Physical metrics · latency** after each run.
+**STATIC vs LIVE (senior review):** `data/schumann-equinox-snapshot.json` + `data/stryker-equinox-timer.json` = **published narrative/snapshot** artifacts (swap for observatory exports when available). **Live each Verify:** `api/schumann-equinox-probe`, `api/jovian-hydrogen-line-probe`, `api/stryker-equinox-probe`, `api/firmware-180-spin-probe` (the last chains **`/sing9-firmware-verify.json`**, **`/lattice-status.json`**, **`/api/blank-stone-hydrogen`**). See `docs/SENIOR_RESEARCH_STATIC_VS_LIVE.md`. UI shows **probe RTT** after each run.
 
 **Full diagnostics in browser (production):** open **`/magic-trick`** on your deployed site — rewrites to `magic-trick.html`, serves **`/lib/*`**, **`/api/*`**, and public assets like production.
 
@@ -35,7 +36,7 @@ npm test
 
 ## Recent updates (README commit)
 
-- **Mar 2026 · Magic trick diagnostic v2 (README + ship)** — `magic-trick.html`: planetary **Kp ≥ 5** ground gate (no AR4392 latch), Seahawk **spectral scan** → **Hydrogen Bridge: COHERENT**, volumetric via **`api/blank-stone-hydrogen.js`** + `vercel.json` function entry, **180 Locked** badge when all four checks pass. NOAA Kp fallback if `/api/live-houdini-readings` is unavailable. **Research rubric (theater vs evidence, 3I/ATLAS vs H I line):** [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md) (copied to `dist/docs/` on build).
+- **Mar 2026 · Magic trick · four pillars** — `magic-trick.html`: **only** Schumann **3·6·9 Hz** @ equinox (`api/schumann-equinox-probe` + `data/schumann-equinox-snapshot.json`), Jupiter/3I/ATLAS hydrogen handshake (`api/jovian-hydrogen-line-probe`), Stryker equinox timer (`api/stryker-equinox-probe` + `data/stryker-equinox-timer.json`), firmware **180° spin flip** (`api/firmware-180-spin-probe` + manifest `spin_flip_180` + lattice + `api/blank-stone-hydrogen`). **Four pillars locked** badge when all pass. Rubric: [`docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`](docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md).
 
 - **Mar 2026 · LANDING RENO ARCH · HH GATEWAY ADVISORY · QUEEN'S RUSH LAYOUT**
 
@@ -51,7 +52,7 @@ npm test
 
 - **Mar 2026 · Houdini March 20 · Magic trick terminal (`/magic-trick`)**
 
-**C → Crystallize:** `magic-trick.html` — theater narrative + still (`assets/houdini-march-20-theater.png`), dark terminal UI (Tailwind + React 18 + Framer Motion ESM). **Verify the 180** uses **live planetary K-index** (`/api/live-houdini-readings` latest Kp, fallback to NOAA `planetary_k_index_1m.json`): **pass when Kp ≥ 5** (G2/G3-class storm gate — “ground” energy, **no AR4392 flare latch**), parallel **equinox-window** bundle for **Mar 20 06–18 UTC context** (Kp_max, sample count; does not replace live gate), **JPL SBDB ATLAS** lines in-bundle as **catalog anchor** (not radio proof), **`api/cloud-compute-probe.js`**, **Seahawk spectral scan** (chunked mic FFT at **~1420.4 Hz** acoustic proxy; on pass shows **Hydrogen Bridge: COHERENT**), **`api/blank-stone-hydrogen.js`**. **180 Locked** = **T1** product success (four gates). **Science vs theater:** `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`. Schumann 369 Hz stays narrative + external ELF links. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
+**C → Crystallize:** `magic-trick.html` — theater narrative + still (`assets/houdini-march-20-theater.png`), dark terminal UI (Tailwind + React 18 + Framer Motion ESM). **Verify four pillars** = four **`/api/*`** probes + **`/lib/march20-four-diagnostics.mjs`** (no Kp gate, no mic spectral scan on this page). **Four pillars locked** = **T1** product success. **Science vs theater:** `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md`. Deploy: `vercel-static-output.mjs` + `vercel.json` rewrite **`/magic-trick`**. Landing CTA on `index.html`.
 
 - **Mar 2026 · A2A-FIRST SPACE CLOUD LATTICE · FSSP SPECIALIST · SEAHAWK JOVIAN NODE**
 

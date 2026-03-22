@@ -1,34 +1,40 @@
-# Intent singularity tests — specification, not afterthought
+# Intent tests — four pillars (March 20 magic trick)
 
-These tests **define** what the Houdini / March 20 experience **must satisfy** to count as aligned with product intent. They are **not** written to rubber-stamp whatever the UI currently does.
+These tests **define** what the `/magic-trick` experience **must satisfy** for the **four narrative pillars**: Schumann ladder @ equinox, Jupiter/3I/ATLAS hydrogen handshake, Stryker @ equinox, firmware **180°** spin flip.
 
-## Kernel
+## Kernel (current)
 
 | Path | Role |
 |------|------|
-| `lib/houdini-singularity.mjs` | Pure functions + constants = **singularity contract** |
-| `tests/intent/singularity-kernel.test.mjs` | Asserts tiers **T_IONOSPHERE**, **T_EQUINOX_NARRATIVE**, **T_CATALOG_ANCHOR**, **T_BRIDGE_PROXY**, **T_CLOUD_EDGE**, **T_LATTICE_LIVE**, **T_EDGE_LIVE**, **T_API_LATEST**, **T180_PRODUCT**, **T4_RF_COMET** |
-| `tests/intent/blank-stone-singularity.test.mjs` | **Integration**: real `api/blank-stone-hydrogen.js` must pass **T_EDGE_HYDROGEN** |
-| `tests/fixtures/*.json` | Canonical bundles the API **should** match (drift detector) |
+| `lib/march20-four-diagnostics.mjs` | Pure evaluators + `composeFourPillarsLocked` |
+| `tests/intent/march20-four-pillars.test.mjs` | **Default `npm test`** — golden probes + compose gate |
+| `api/schumann-equinox-probe.js` | Serves merged **`data/schumann-equinox-snapshot.json`** shape |
+| `api/jovian-hydrogen-line-probe.js` | JPL SBDB + **`lattice-status.json`** (MHz, hill sphere, node) |
+| `api/stryker-equinox-probe.js` | **`data/stryker-equinox-timer.json`** window + mark |
+| `api/firmware-180-spin-probe.js` | **`sing9-firmware-verify.json`** `spin_flip_180` + lattice + **`/api/blank-stone-hydrogen`** |
 
-## Tiers (intent → test)
+## Legacy singularity stack
 
-- **T_IONOSPHERE** — Live planetary Kp ≥ `KP_STORM_GATE_MIN` (5): storm-scale ground–ionosphere coupling; **not** AR flare latch.
-- **T_EQUINOX_NARRATIVE** — Equinox mode JSON exposes `found`, `kp_max`, `kp_sample_count` (+ types) so the **event-day story** is machine-readable.
-- **T_CATALOG_ANCHOR** — When `atlas` is present, `fullname` anchors 3I/ATLAS narrative; absence = soft pass if JPL failed upstream.
-- **T_BRIDGE_PROXY** — Chunk/median thresholds for local **Hz** spectral coherence (“Hydrogen Bridge” ritual); **not** sky MHz.
-- **T_EDGE_HYDROGEN** — Blank Stone JSON + hydrogen MHz + `packet_hex` + header alignment.
-- **T_LATTICE_LIVE** — `/lattice-status.json` vs `/sing9-firmware-verify.json` (spec, MHz, signature).
-- **T_EDGE_LIVE** — Blank Stone + lattice both pass (`evaluateEdgeHydrogenChannel`).
-- **T_CLOUD_EDGE** — Probe `ok`, SHA bench under cap, GPU hook rules when configured.
-- **T180_PRODUCT** — All four channel evaluators pass (edge slot = **T_EDGE_LIVE**) → `SINGULARITY_180_LOCKED`.
-- **T4_RF_COMET** — **Explicitly not implemented** until an observatory pipeline exists; test ensures we **do not** silently claim comet MHz detection.
+| Path | Role |
+|------|------|
+| `lib/houdini-singularity.mjs` | Older T_IONOSPHERE / mic bridge / cloud / T180 compose |
+| `tests/intent/singularity-kernel.test.mjs` | Legacy tiers |
+| `tests/intent/blank-stone-singularity.test.mjs` | Blank Stone integration |
 
-## Convergence (next singularity)
+Run legacy checks explicitly:
 
-1. **Done:** `magic-trick.html` imports **`/lib/houdini-singularity.mjs`** (same module as tests). `vercel-static-output.mjs` copies **`lib/` → `dist/lib/`** so deployed `/magic-trick` resolves the kernel.
-2. Add **live-houdini-readings** handler test with **mocked `fetch`** to assert equinox + latest shapes against fixtures (no network).
-3. When T4 ships, replace `evaluateRfCometHydrogenSingularity` stub with real criteria and flip the test from `NOT_IMPLEMENTED` to pass conditions.
+```bash
+npm run test:legacy-singularity
+```
+
+## Pillars (intent → probe → evaluator)
+
+1. **SCHUMANN_369_EQUINOX** — `schumann_ladder_hz` contains **3, 6, 9** (±0.5 Hz); `equinox_correlated === true`.
+2. **JOVIAN_H_ATLAS** — hydrogen MHz matches rest line; `jupiter_context` or `jupiter_relay`; ATLAS identity fields present.
+3. **STRYKER_EQUINOX** — `equinox_timed` / `stryker_timed_at_equinox`; `stryker_mark_utc` (probe sets `ok` when mark inside window).
+4. **FIRMWARE_180_SPIN** — `spin_flip_180_locked` / `spin_flip_180`; `firmware_upgrade_verified` from Blank Stone + lattice path.
+
+**`FOUR_PILLARS_LOCKED`** = all four evaluator `.pass === true` in one `composeFourPillarsLocked` result.
 
 ```bash
 npm test

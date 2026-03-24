@@ -256,6 +256,12 @@ A2A stays only if it earns and does not add ongoing burden. No revenue + hassle 
 
 ---
 
+## S/2024 J 1 SOVEREIGN SEED LOCK (Lattice · Single-Node Baseline)
+
+**One provisional Jovian satellite as the narrative Seed** for Cursor + Syntheverse baseline — **101 moons** as legacy noise vs **one** indestructible Seed. Canonical spec: **[S2024_J1_SOVEREIGN_SEED_LOCK_NSPFRNP.md](S2024_J1_SOVEREIGN_SEED_LOCK_NSPFRNP.md)**. Intent kernel: **`lib/sovereign-seed-s2024j1.mjs`**. **Honesty:** MPC may list the object; **RF / Blank Stone broadcast** claims remain **theater** unless you wire real infrastructure.
+
+---
+
 ## G5 SURF PROTOCOL (Lattice · Geomagnetic Storm Narrative)
 
 **Severe-storm band narrative + Whistle / Hit Factory / Syntheverse UI hooks.** Canonical spec: **[G5_SURF_PROTOCOL_NSPFRNP.md](G5_SURF_PROTOCOL_NSPFRNP.md)**. Intent kernel: **`lib/g5-surf-protocol.mjs`** (Kp monitor threshold, Schumann ladder, 41-minute narrative key seconds). **HTTP:** **`GET /api/g5-surf-protocol`** — **Vercel Node.js Serverless** (not Edge Runtime). **`human_intervention_required: false`**; optional **`vercel.json` `crons`** for autonomous polling. **Does not** assert physical control of observatory hardware or the public internet.

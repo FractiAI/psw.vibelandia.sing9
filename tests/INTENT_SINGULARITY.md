@@ -12,6 +12,8 @@ These tests **define** what the `/magic-trick` experience **must satisfy** for t
 | `tests/intent/observatory-public-evidence.test.mjs` | Pure helpers (`kpToGScale`, `goesSoftXrayClass`) |
 | `lib/g5-surf-protocol.mjs` | G5 SURF lattice intent (Kp > 8.5 → Whistle, UI mode) |
 | `tests/intent/g5-surf-protocol.test.mjs` | G5 SURF threshold + Syntheverse mode |
+| `lib/sovereign-seed-s2024j1.mjs` | S/2024 J 1 Seed lock constants + system matrix |
+| `tests/intent/sovereign-seed-s2024j1.test.mjs` | Sovereign Seed compose |
 | `api/schumann-equinox-probe.js` | Serves merged **`data/schumann-equinox-snapshot.json`** shape |
 | `api/jovian-hydrogen-line-probe.js` | JPL SBDB + **`lattice-status.json`** (MHz, hill sphere, node) |
 | `api/stryker-equinox-probe.js` | **`data/stryker-equinox-timer.json`** window + mark |

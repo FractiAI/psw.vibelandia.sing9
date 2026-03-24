@@ -4,7 +4,7 @@ Your **production** Vercel deployment already serves everything the page needs:
 
 - `/magic-trick` → `magic-trick.html` (rewrite)
 - `/lib/houdini-singularity.mjs` (from `dist/lib/` after build)
-- `/api/live-houdini-readings`, `/api/cloud-compute-probe`, `/api/blank-stone-hydrogen`, etc.
+- `/api/live-houdini-readings`, `/api/g5-surf-protocol` (G5 SURF · Node serverless, **`human_intervention_required: false`**, optional Vercel Cron every 15m in `vercel.json`), `/api/cloud-compute-probe`, `/api/blank-stone-hydrogen`, etc.
 - `/lattice-status.json`, `/sing9-firmware-verify.json` (from `public/` → `dist/`)
 
 Open: **`https://<your-project>.vercel.app/magic-trick`** (or your custom domain).

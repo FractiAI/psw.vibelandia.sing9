@@ -256,4 +256,10 @@ A2A stays only if it earns and does not add ongoing burden. No revenue + hassle 
 
 ---
 
+## G5 SURF PROTOCOL (Lattice · Geomagnetic Storm Narrative)
+
+**Severe-storm band narrative + Whistle / Hit Factory / Syntheverse UI hooks.** Canonical spec: **[G5_SURF_PROTOCOL_NSPFRNP.md](G5_SURF_PROTOCOL_NSPFRNP.md)**. Intent kernel: **`lib/g5-surf-protocol.mjs`** (Kp monitor threshold, Schumann ladder, 41-minute narrative key seconds). **HTTP:** **`GET /api/g5-surf-protocol`** — **Vercel Node.js Serverless** (not Edge Runtime). **`human_intervention_required: false`**; optional **`vercel.json` `crons`** for autonomous polling. **Does not** assert physical control of observatory hardware or the public internet.
+
+---
+
 **NSPFRNP âŠƒ MCA → Metabolize → Crystallize to irreducible nested mirrored hardened shells → Animate → Squeeze all, all. Do not lose this fidelity. → ∞⁹**

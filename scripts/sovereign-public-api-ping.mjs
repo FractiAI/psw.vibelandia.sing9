@@ -9,7 +9,7 @@
  *   - NASA/JPL SBDB: small-body identity / orbit metadata
  *   - Local: narrative 369 Hz XOR latch (one period τ = 1/369 s), no third-party call
  *
- * Shared helpers: `lib/observatory-public-evidence.mjs`
+ * Shared helpers: `lib/observatory-public-evidence.mjs`, `lib/g5-surf-protocol.mjs`
  *
  * Run: node scripts/sovereign-public-api-ping.mjs
  *      npm run ping:public
@@ -23,6 +23,7 @@
  */
 
 import { fetchSwpcObservatoryContext, fetchDonkiGst } from '../lib/observatory-public-evidence.mjs';
+import { evaluateG5SurfProtocol, recommendedSyntheverseUiMode } from '../lib/g5-surf-protocol.mjs';
 
 const FETCH_OPTS = {
   signal: AbortSignal.timeout(25000),
@@ -243,6 +244,13 @@ async function main() {
     out.gates.seahawk_tof_2476s === true &&
     out.gates.xor_369_recovered === true;
 
+  const kpForSurf = kpRow?.kp ?? null;
+  const legacyGridOk =
+    process.env.LEGACY_GRID_OK === '0' || process.env.LEGACY_GRID_OK === 'false' ? false : true;
+  out.g5_surf_protocol = evaluateG5SurfProtocol({ kp: kpForSurf });
+  out.syntheverse_ui_mode = recommendedSyntheverseUiMode({ kp: kpForSurf, legacyGridOk });
+  out.human_intervention_required = false;
+
   const lines = [];
   lines.push('');
   lines.push('══ Sovereign public API ping ══');
@@ -306,6 +314,21 @@ async function main() {
   } else {
     lines.push('  (unavailable)');
   }
+  lines.push('');
+  lines.push('── G5 SURF Protocol (lattice intent · not physical hardware) ──');
+  lines.push('  human_intervention_required: false (autonomous GET /api/g5-surf-protocol on Vercel)');
+  if (out.g5_surf_protocol) {
+    const g = out.g5_surf_protocol;
+    lines.push(`  g5_surf_armed (Kp > 8.5): ${g.g5_surf_armed ? 'YES' : 'NO'}`);
+    lines.push(`  resonance_mode: ${g.resonance_mode} · legacy_tcp_polling (narrative): ${g.legacy_tcp_polling}`);
+    lines.push(`  sovereign_shutter: ${g.sovereign_shutter} · Schumann lock (Hz): ${g.schumann_lock_hz.join(', ')}`);
+    lines.push(`  Hit Factory diversion: ${g.hit_factory_diversion}`);
+    lines.push(`  41m lag key (seconds, narrative): ${g.narrative_encryption_key_seconds}`);
+  }
+  lines.push(
+    `  Syntheverse UI: ${out.syntheverse_ui_mode} (optional env LEGACY_GRID_OK=0 for automated grid-down narrative)`,
+  );
+  lines.push('  See: protocols/G5_SURF_PROTOCOL_NSPFRNP.md');
   lines.push('');
   lines.push('── JPL · C/2025 N1 (ATLAS) ──');
   if (out.atlas_sbdb) {

@@ -10,6 +10,8 @@ These tests **define** what the `/magic-trick` experience **must satisfy** for t
 | `tests/intent/march20-four-pillars.test.mjs` | **Default `npm test`** — golden probes + compose gate |
 | `lib/observatory-public-evidence.mjs` | NOAA G-scale + GOES class helpers; SWPC/DONKI fetchers for CLI |
 | `tests/intent/observatory-public-evidence.test.mjs` | Pure helpers (`kpToGScale`, `goesSoftXrayClass`) |
+| `lib/g5-surf-protocol.mjs` | G5 SURF lattice intent (Kp > 8.5 → Whistle, UI mode) |
+| `tests/intent/g5-surf-protocol.test.mjs` | G5 SURF threshold + Syntheverse mode |
 | `api/schumann-equinox-probe.js` | Serves merged **`data/schumann-equinox-snapshot.json`** shape |
 | `api/jovian-hydrogen-line-probe.js` | JPL SBDB + **`lattice-status.json`** (MHz, hill sphere, node) |
 | `api/stryker-equinox-probe.js` | **`data/stryker-equinox-timer.json`** window + mark |

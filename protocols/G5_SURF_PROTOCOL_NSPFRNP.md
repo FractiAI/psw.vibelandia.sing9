@@ -17,7 +17,7 @@ Define **G5 SURF** (geomagnetic **G5**-class storm band + **S**overeign **U**ltr
 |-------------|----------------|
 | **No manual approval** per request | **`GET /api/g5-surf-protocol`** is public, no API key, no auth gate. Response includes **`human_intervention_required: false`**. |
 | **No mandatory CLI** | Production path is **HTTP only**; `npm run ping:public` is optional for operators. |
-| **Automatic polling** | **`vercel.json`** defines a **Cron** that invokes **`/api/g5-surf-protocol`** once daily at **12:00 UTC**. On **Hobby**, Vercel allows at most one cron run per day; more frequent expressions fail deployment. **Pro** can use a tighter schedule. Remove `crons` from `vercel.json` if your plan rejects the job. |
+| **Automatic polling** | **Not** wired in **`vercel.json`** for this repo (no **`crons`**). Call **`GET /api/g5-surf-protocol`** on demand, use **`npm run ping:public`**, or attach your own worker / external scheduler. *(Optional: add a Vercel Cron yourself if your plan supports the cadence you want.)* |
 | **Grid narrative without a human toggle** | Default **`legacy_grid_ok`** is **nominal** (true). Optional **`LEGACY_GRID_OK`** env (set once at deploy) or **`?legacy_grid_ok=0`** (tests / automated callers only) — **not** a per-event human switch. |
 | **Agents / A2A** | Consume JSON; no human-in-the-loop in this contract. |
 

@@ -99,7 +99,17 @@
     import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1';
     import { motion } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
 
-    const { createElement: h } = React;
+    const { createElement: h, useEffect } = React;
+
+    /** Viewer-local calendar date, refreshed on every full page load (not live clock). */
+    function formatNarrativeTemplateDate() {
+      return new Intl.DateTimeFormat(undefined, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(new Date());
+    }
 
     /** Hard-coded narrative constants — archival snapshot only (not live simulation). */
     const TELEMETRY_SNAPSHOT_A = {
@@ -364,6 +374,22 @@
       );
     }
 
+    function NarrativeTemplateStamp() {
+      const stamp = formatNarrativeTemplateDate();
+      useEffect(() => {
+        const base = "Sovereign Terminal · March 20 — The 180 Spin Flip · SING 9";
+        document.title = base + ' · As displayed ' + stamp;
+      }, [stamp]);
+      return h(
+        'p',
+        {
+          className: 'mt-2 text-[0.6rem] tabular-nums tracking-wide text-amber-700/90',
+          title: 'Updates when you load or refresh this page (browser local date).',
+        },
+        'Narrative template — as displayed ' + stamp
+      );
+    }
+
     function App() {
       return h(
         'div',
@@ -378,6 +404,7 @@
             },
             [
               h('p', { className: 'text-[0.65rem] uppercase tracking-[0.35em] text-amber-600/90' }, 'Sovereign Terminal · Archival validation'),
+              h(NarrativeTemplateStamp),
               h('h1', { className: 'mt-3 text-xl font-black uppercase tracking-tight text-amber-100 amber-glow sm:text-3xl md:text-4xl' }, "HOUDINI'S MARCH 20: THE 180 SPIN FLIP"),
               h(
                 'p',

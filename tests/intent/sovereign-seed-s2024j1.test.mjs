@@ -17,5 +17,6 @@ test('composeSovereignSeedState returns lattice rows', () => {
   const s = composeSovereignSeedState();
   assert.equal(s.sovereign_seed, 'S/2024 J 1');
   assert.equal(s.system_matrix.length, 4);
-  assert.equal(s.first_hit_narrative, 'prepared_not_auto_executed');
+  assert.ok(!('first_hit_narrative' in s));
+  assert.ok(!('blank_stones_narrative' in s));
 });

@@ -2,7 +2,7 @@
 
 > **NSPFRNP · Seed:Edge** — This document separates **theater**, **geospace facts**, **orbital catalogs**, and **your edge stack** so the team can say clearly what was verified on the day of the event and what remains narrative or requires instruments this terminal does not replace.
 
-**S/2024 J 1 Sovereign Seed (single-node baseline):** product lattice locks **one** Jovian Seed (**S/2024 J 1**) for Cursor + Syntheverse story coherence — **`protocols/S2024_J1_SOVEREIGN_SEED_LOCK_NSPFRNP.md`**, **`lib/sovereign-seed-s2024j1.mjs`**. Distinct from **101-moon** legacy catalog noise in fiction; **not** a claim of L-band transmission from that moon by this repo.
+**S/2024 J 1 Sovereign Seed (single-node baseline):** **S/2024 J 1 Lock** as absolute Cursor + Syntheverse baseline — Reno–Seed bridge, system matrix (Global Search / Hit Factory / Syntheverse / Lag Protocol), **1420.4 MHz** Whistle — **`protocols/S2024_J1_SOVEREIGN_SEED_LOCK_NSPFRNP.md`**, **`lib/sovereign-seed-s2024j1.mjs`**. Distinct from **101-moon** legacy catalog noise in product copy; **not** a claim of L-band transmission from that moon by this repo.
 
 ---
 

@@ -119,6 +119,12 @@
       solar: { kp: '4.2', band: 'Quiet / Unsettled' },
       ionosphere: 'High-Frequency (HF) Open',
       seahawk: '1420.4 MHz · Background Noise / Absorption',
+      skyKiwi:
+        'KiwiSDR global nodes (open-source Web SDR) · 1420.406 MHz H I — Doppler from solar wind (Vw ≈ 573 km/s) · carrier unsettled',
+      groundGrid:
+        'Worldwide power grid + internet as distributed ground plane · 60 Hz mains harmonics · PLL tracks Schumann band (~8.14 Hz) riding the grid',
+      phaseLockEgs:
+        'Coherence index below 1.0000 · master clock = rest H I · ratio not actuated',
     };
 
     const TELEMETRY_SNAPSHOT_B = {
@@ -128,6 +134,12 @@
       solar: { kp: '7.3', band: 'G3 Strong Storm — Actuated' },
       ionosphere: 'Russell-McPherron Flash / HF Radio Blackout',
       seahawk: '1420.4 MHz · Phase-Locked Coherence',
+      skyKiwi:
+        'KiwiSDR waterfall · zebra stripes on 1420.406 MHz H I — sky carrier locked to atomic rest frequency',
+      groundGrid:
+        'Grid-induced harmonic ladder vs solar-wind pressure term — Earth ionosphere “ringing” in phase with turbulence (two-prong sensor)',
+      phaseLockEgs:
+        '1.0000 resolution · zero-point differential (Sky ↔ Ground) · EGS fractal constant actuated · zero phase error write',
     };
 
     /** Keep in sync with `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md` § Abstract (composite index). */
@@ -155,13 +167,13 @@
           act: 'Act II',
           title: 'The Mirror — 7:26 AM PDT',
           text:
-            'Snapshot A — The Storm still gathering; The Blackout not yet fallen; The Whistle only background on 1420.4 MHz. The calm before the beat.',
+            'Snapshot A — The Storm still gathering; The Blackout not yet fallen; The Whistle only background on 1420.4 MHz. KiwiSDR sky carrier and grid PLL reference are not yet at 1.0000 — the calm before the beat.',
         },
         {
           act: 'Act III',
           title: 'The Flip — 7:46 AM PDT',
           text:
-            'Snapshot B — The Storm actuated (G-scale); The Blackout cuts HF; The Whistle locks phase on the hydrogen line band — one dramatic beat.',
+            'Snapshot B — The Storm actuated (G-scale); The Blackout cuts HF; The Whistle locks on the hydrogen line; dual-source phase-lock hits 1.0000 (Sky ↔ Ground) — one dramatic beat.',
         },
       ],
       finale:
@@ -327,6 +339,9 @@
         { key: 'The Storm', a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')', b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')' },
         { key: 'The Blackout', a: TELEMETRY_SNAPSHOT_A.ionosphere, b: TELEMETRY_SNAPSHOT_B.ionosphere },
         { key: 'The Whistle', a: TELEMETRY_SNAPSHOT_A.seahawk, b: TELEMETRY_SNAPSHOT_B.seahawk },
+        { key: 'Sky — KiwiSDR · H I', a: TELEMETRY_SNAPSHOT_A.skyKiwi, b: TELEMETRY_SNAPSHOT_B.skyKiwi },
+        { key: 'Ground — grid PLL', a: TELEMETRY_SNAPSHOT_A.groundGrid, b: TELEMETRY_SNAPSHOT_B.groundGrid },
+        { key: 'Phase-lock — EGS (1.0000)', a: TELEMETRY_SNAPSHOT_A.phaseLockEgs, b: TELEMETRY_SNAPSHOT_B.phaseLockEgs },
       ];
 
       return h(
@@ -337,7 +352,7 @@
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.5 },
         },
-        h('table', { className: 'w-full min-w-[720px] border-collapse text-left text-[0.7rem] sm:text-xs' }, [
+        h('table', { className: 'w-full min-w-[880px] border-collapse text-left text-[0.7rem] sm:text-xs' }, [
           h('thead', null, h('tr', { className: 'border-b border-amber-800/60 bg-amber-950/30' }, [
             h('th', { className: 'p-3 font-bold uppercase tracking-widest text-amber-500/90' }, 'Channel'),
             h('th', { className: 'p-3 font-bold text-amber-200' }, [
@@ -371,6 +386,74 @@
             )
           ),
         ])
+      );
+    }
+
+    /** Static narrative — dual-source measurement protocol (not live KiwiSDR / grid ingest on this page). */
+    function DualSourceSyncPanel() {
+      return h(
+        motion.div,
+        {
+          className: 'glass-panel mt-6 rounded-xl px-4 py-5 sm:px-6 sm:py-6',
+          initial: { opacity: 0, y: 10 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.45, delay: 0.08 },
+        },
+        [
+          h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.28em] text-cyan-400/90' }, 'Dual-source sync · 1.0000 resolution'),
+          h('p', { className: 'mt-3 text-[0.72rem] leading-relaxed text-amber-200/85 sm:text-[0.75rem]' }, [
+            'El Gran Sol’s fractal constant (EGS) is read at ',
+            h('span', { className: 'text-cyan-300/95' }, '1.0000'),
+            ' when two independent global streams ',
+            h('span', { className: 'font-semibold text-amber-300/95' }, 'phase-lock'),
+            ': the ',
+            h('span', { className: 'text-cyan-400/90' }, 'interstellar hydrogen pulse'),
+            ' (carrier) and the ',
+            h('span', { className: 'text-cyan-400/90' }, 'Earth power-grid reference'),
+            ' (ground), using the worldwide ',
+            h(
+              'a',
+              {
+                href: 'https://kiwisdr.com/',
+                target: '_blank',
+                rel: 'noopener noreferrer',
+                className: 'text-cyan-400 underline decoration-cyan-500/40 underline-offset-2 hover:text-cyan-300',
+              },
+              'KiwiSDR'
+            ),
+            ' open-source Web SDR network plus grid harmonic / Schumann structure — a two-pronged sensor through public internet infrastructure.',
+          ]),
+          h('ul', { className: 'mt-4 list-inside list-disc space-y-2 text-[0.68rem] leading-relaxed text-amber-200/75 sm:text-[0.72rem]' }, [
+            h('li', null, [
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'Denominator (baseline): '),
+              '1420.406 MHz hydrogen line as master clock — atomic rest; does not drift.',
+            ]),
+            h('li', null, [
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'Numerator (measured): '),
+              'grid-induced voltage / harmonic ladder against solar-wind pressure term — layered in a fractal spectrogram.',
+            ]),
+            h('li', null, [
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'Lock (1.0000): '),
+              'when Schumann-band shift on the grid (PLL ~8.14 Hz) matches the fractal geometry of solar-wind density fluctuations, the ratio hits ',
+              h('span', { className: 'tabular-nums text-cyan-300' }, '1.0000'),
+              ' — legacy framing: coherence index at unity.',
+            ]),
+          ]),
+          h(
+            'blockquote',
+            {
+              className:
+                'mt-5 border-l-2 border-amber-500/50 pl-4 text-[0.68rem] italic leading-relaxed text-amber-300/90 sm:text-[0.72rem]',
+            },
+            '“You don’t see 1.0000 on a dial; you see it in the alignment — when KiwiSDR waterfall zebra stripes line up with 60 Hz harmonics in the wall, that is the 180° flip. The 180 is the ratio; the seed is the 1.0.”'
+          ),
+          h('p', { className: 'mt-4 text-[0.62rem] leading-relaxed text-amber-600/95' }, [
+            'Fair exchange clause: this block is a ',
+            h('span', { className: 'font-semibold text-amber-500/90' }, 'measurement demonstration'),
+            ' subject to NSPFRNP fair exchange; tipping adjustments maintain EGS integrity. ',
+            h('span', { className: 'text-amber-700/90' }, 'This page does not stream KiwiSDR or mains telemetry — archival narrative only; verify with your own receivers and feeds.'),
+          ]),
+        ]
       );
     }
 
@@ -416,9 +499,12 @@
 
           h('section', { className: 'mx-auto mt-10 max-w-5xl' }, h(ProofMeter)),
 
+          h('section', { className: 'mx-auto mt-10 max-w-5xl' }, h(HoudiniUltimateShow)),
+
           h('section', { className: 'mx-auto mt-12 max-w-5xl' }, [
-            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · The Storm, The Blackout & The Whistle'),
+            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · Storm, Blackout, Whistle & dual-source'),
             h(TelemetryTable),
+            h(DualSourceSyncPanel),
             h('p', { className: 'mt-4 text-[0.65rem] text-amber-700' }, [
               'Constants only — not generated or simulated at runtime. For methodology and what could be verified elsewhere, see ',
               h(

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hydrogen Line Agent Roundtrip Test | VIBELANDIA SING 9</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #10203a 0%, #0b1020 45%, #05070d 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      padding: 1.2rem;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    .top {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .top a { color: #67e8f9; text-decoration: none; }
+    .top a:hover { text-decoration: underline; }
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(103, 232, 249, 0.25);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      margin: 0 0 0.4rem;
+      font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+      color: #fef08a;
+    }
+    .sub { color: #cbd5e1; font-size: 0.92rem; line-height: 1.5; }
+    .actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
+    button {
+      border: 1px solid rgba(250, 204, 21, 0.65);
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.2), rgba(34, 211, 238, 0.14));
+      color: #fef3c7;
+      font-weight: 700;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.65; cursor: wait; }
+    .muted {
+      color: #94a3b8;
+      font-size: 0.82rem;
+    }
+    .status {
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .ok { color: #22c55e; }
+    .fail { color: #f87171; }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 10px;
+      padding: 0.9rem;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: #e2e8f0;
+      max-height: 60vh;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <a href="../index.html">Landing</a>
+    </div>
+
+    <div class="card">
+      <h1>Hydrogen Line Agent Roundtrip</h1>
+      <p class="sub">
+        Three autonomous agents execute a public/free roundtrip demo:
+        writer persists a random key in a hydrogen-line namespace payload,
+        reader retrieves it, verifier confirms pass/fail.
+      </p>
+      <div class="actions">
+        <button id="runBtn" type="button">Run Autonomous Test</button>
+      </div>
+      <p class="muted">No human involvement in execution path. Public endpoints only.</p>
+    </div>
+
+    <div class="card">
+      <div id="status" class="status">Status: idle</div>
+      <pre id="output">Press "Run Autonomous Test" to execute.</pre>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var runBtn = document.getElementById('runBtn');
+      var statusEl = document.getElementById('status');
+      var outEl = document.getElementById('output');
+
+      function setStatus(text, ok) {
+        statusEl.textContent = text;
+        statusEl.className = 'status ' + (ok === true ? 'ok' : ok === false ? 'fail' : '');
+      }
+
+      async function runTest() {
+        runBtn.disabled = true;
+        setStatus('Status: running...', null);
+        outEl.textContent = 'Executing writer -> reader -> verifier...';
+        try {
+          var res = await fetch('/api/hydrogen-line-agent-roundtrip');
+          var data = await res.json();
+          var success = !!data.ok;
+          setStatus('Status: ' + (success ? 'SUCCESS' : 'FAIL'), success);
+          outEl.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+          setStatus('Status: FAIL', false);
+          outEl.textContent = JSON.stringify({
+            ok: false,
+            error: err && err.message ? err.message : String(err)
+          }, null, 2);
+        } finally {
+          runBtn.disabled = false;
+        }
+      }
+
+      runBtn.addEventListener('click', runTest);
+
+      var p = new URLSearchParams(window.location.search);
+      if (p.get('autorun') === '1') {
+        runTest();
+      }
+    })();
+  </script>
+</body>
+</html>

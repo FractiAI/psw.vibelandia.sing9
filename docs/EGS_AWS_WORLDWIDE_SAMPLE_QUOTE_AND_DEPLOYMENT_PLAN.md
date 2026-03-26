@@ -55,8 +55,8 @@ Technical scope:
 - Establish signed verifier receipts and baseline SLO evidence
 
 Commercial sample:
-- **Upfront program fee:** USD 350,000 to 900,000
-- **Monthly managed run fee:** USD 85,000 to 220,000
+- **Upfront program fee (worldwide overlay readiness):** USD 1.2M to 3.8M
+- **Monthly managed run fee (overlay + verification readiness):** USD 350k to 1.1M
 
 Primary benefits:
 - Low-risk start with no forced cutover
@@ -77,8 +77,8 @@ Technical scope:
 - Roll out A2A acceptance gates and FairShake settlement hooks
 
 Commercial sample:
-- **Upfront migration fee:** USD 900,000 to 2,800,000
-- **Monthly managed run fee:** USD 220,000 to 680,000
+- **Upfront migration fee (regional wave integrations):** USD 2.8M to 9.5M
+- **Monthly managed run fee (regional offload + A2A gating):** USD 950k to 2.8M
 
 Primary benefits:
 - Typical 25% to 45% reduction in AWS-dependent workload spend
@@ -99,35 +99,74 @@ Technical scope:
 - Enable full end-to-end automatic acceptance and settlement
 
 Commercial sample:
-- **Upfront cutover fee:** USD 2,500,000 to 8,500,000
-- **Monthly managed run fee:** USD 650,000 to 1,900,000
+- **Upfront cutover fee (full traffic redirection + contract promotion):** USD 6.0M to 22.0M
+- **Monthly managed run fee (EGS primary + residual fallback governance):** USD 2.8M to 11.0M
 
 Primary benefits:
 - Typical 50% to 80% reduction in AWS primary dependency (domain dependent)
 - Sovereign runtime control and policy clarity
 - Reduced vendor lock-in and stronger architecture agility
 
----
+## 4) Traffic-Based Pricing Model (Illustrative) + 20% Monthly OPEX Savings
 
-## 4) Global Pricing Model (Illustrative)
+This doc frames the pricing for the final-state goal: **EGS becomes primary for the workload traffic**, while AWS becomes **fallback-only / regulated exceptions**.
 
-Pricing dimensions used in this sample:
-- Number of active workload domains
-- Compliance and audit depth
-- Data migration complexity and retention constraints
-- Target latency SLOs and region coverage
-- Required verifier mesh and settlement throughput
+Instead of flat monthly numbers, pricing is modeled as:
 
-Illustrative packaged pricing:
-- **Starter Global Program:** USD 750k upfront, USD 150k/month
-- **Growth Global Program:** USD 2.2M upfront, USD 420k/month
-- **Enterprise Global Program:** USD 6.0M upfront, USD 1.2M/month
+`OPEX_EGS_month = Fixed Platform OPEX + Variable Usage OPEX (traffic indexed)`
 
-Each package includes:
-- deployment and integration,
-- verifier receipts and acceptance automation,
-- phased runbooks and operator dashboards,
-- 24x7 transition support during active cutover windows.
+### 4.1 Traffic inputs used for unit pricing (example dimensions)
+
+- **A2A / Action calls:** `A` (calls per month; includes write/read/verify/placement actions)
+- **Compute receipts / jobs:** `J` (compute job-hours per month under Solar Compute policy)
+- **Persistent memory footprint:** `G` (GB-month stored across Jupiter tiers)
+- **Data movement:** `E` (GB-month egress / inter-region movement during processing)
+- **Verifier mesh activity:** `V` (verification checks per month; usually proportional to `A` and `J`)
+
+### 4.2 Illustrative unit rates (planning bands)
+
+These are **sample planning bands** designed for procurement comparison (your final rates depend on region mix, SLOs, compliance, and workload shape):
+
+| Usage component | Unit price band (monthly) |
+|---|---|
+| Action calls (`A`) | USD `8` to `25` per 1M action calls |
+| Compute receipts (`J`) | USD `0.30` to `0.90` per compute job-hour |
+| Memory footprint (`G`) | USD `0.04` to `0.18` per GB-month (tier-weighted) |
+| Egress / movement (`E`) | USD `0.06` to `0.22` per GB |
+| Verifier mesh (`V`) | Typically included in the `A` and `J` pricing bands above (or priced as `V` add-on at similar proportionality) |
+
+### 4.3 Fixed Platform OPEX (worldwide primary state)
+
+Fixed platform OPEX covers:
+- verifier/receipt infrastructure operations,
+- Jupiter-tier policy routing and replication coordination,
+- contract enforcement for strict no-legacy mode,
+- operator dashboards + on-call during cutover windows.
+
+Sample fixed platform band for worldwide primary:
+- **USD 1.0M to 4.0M per month**
+
+### 4.4 Explicit 20% Monthly OPEX Savings Model
+
+Let `OPEX_AWS_baseline_month` be the **current blended AWS monthly OPEX** for the same scope (compute + storage + egress + managed control-plane dependencies).
+
+For full traffic offload readiness, the target model is:
+
+- **Net OPEX target:** `OPEX_EGS_month ≈ 0.8 * OPEX_AWS_baseline_month`
+- **Savings:** `OPEX_AWS_baseline_month - OPEX_EGS_month ≈ 20%`
+- **Residual AWS charges:** AWS fallback should be limited to explicit regulated exceptions (modeled as the remaining ~10% or less of baseline scope, depending on your exception policy)
+
+### 4.5 Worked Sample (procurement-style illustration)
+
+Assume:
+- `OPEX_AWS_baseline_month = USD 10.0M`
+
+Target outcome:
+- `OPEX_EGS_month ≈ USD 8.0M` (20% savings)
+
+The `USD 8.0M` includes:
+- fixed platform OPEX band, plus
+- variable usage OPEX computed from your `A`, `J`, `G`, `E` traffic volumes.
 
 ---
 
@@ -207,6 +246,7 @@ Mitigation controls:
 - All numbers in this document are **sample planning bands**.
 - Final pricing depends on workload profile, compliance scope, and rollout velocity.
 - This document is intended to illustrate procurement-ready framing, not substitute a final SOW/MSA quote pack.
+- The **20% monthly OPEX savings** target is modeled against your captured AWS baseline for the same functional scope, with residual AWS fallback limited to explicit exceptions.
 
 ---
 

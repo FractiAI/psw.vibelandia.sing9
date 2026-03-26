@@ -13,8 +13,16 @@
     .topnav a { color: var(--cream-dim); text-decoration: none; }
     .topnav a:hover { color: var(--cream); }
     .hero { position: relative; height: 80vh; min-height: 440px; display: flex; align-items: flex-end; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background: linear-gradient(155deg, #0a0800 0%, #1c1400 30%, #000a0a 65%, #030404 100%); }
-    .hero-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,4,4,0.05) 0%, rgba(3,4,4,0.2) 50%, rgba(3,4,4,0.9) 72%, rgba(3,4,4,0.99) 100%); }
+    .hero-bg { position: absolute; inset: 0; background: #0a0800; }
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+    .hero-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,4,4,0.12) 0%, rgba(3,4,4,0.35) 45%, rgba(3,4,4,0.88) 72%, rgba(3,4,4,0.99) 100%); }
     .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 3.5rem; max-width: 680px; }
     .eyebrow { font-size: 0.63rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.65rem; text-shadow: 0 0 12px rgba(212,175,55,0.4); }
     .hero-title { font-size: clamp(2.2rem, 5.5vw, 3.6rem); font-weight: 900; line-height: 1.0; color: #fff; text-shadow: 0 2px 32px rgba(0,0,0,0.9); margin-bottom: 0.55rem; }
@@ -50,8 +58,18 @@
     <a href="catalog.html">Catalog</a>
     <a href="office-hours.html">Office Hours</a>
   </nav>
-  <section class="hero">
-    <div class="hero-bg"></div>
+  <section class="hero" aria-label="Hero">
+    <div class="hero-bg">
+      <img
+        class="hero-bg-img"
+        src="assets/houdini-ultimate-magic-show.svg"
+        width="440"
+        height="520"
+        alt=""
+        decoding="async"
+        fetchpriority="high"
+      />
+    </div>
     <div class="hero-veil"></div>
     <div class="hero-content">
       <p class="eyebrow">Reality Series · Architect Protocol · Pop-Up Style · Just gotta know</p>

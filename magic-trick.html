@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
-  <title>Sovereign Terminal · March 20 — The 180 Spin Flip · SING 9</title>
-  <meta name="description" content="Houdini March 20 Ultimate Magic Show — Sovereign Terminal: poster, three-act narrative, Mirror vs Flip telemetry, observatory proof index. Static page. NSPFRNP → ∞⁹" />
+  <title>Sovereign Terminal · March 25 — The 180 Spin Flip · SING 9</title>
+  <meta name="description" content="Houdini March 25 Ultimate Magic Show — Sovereign Terminal: poster, three-act narrative, Mirror vs Flip telemetry, observatory proof index. Static page. NSPFRNP → ∞⁹" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -125,6 +125,8 @@
         'Worldwide power grid + internet as distributed ground plane · 60 Hz mains harmonics · PLL tracks Schumann band (~8.14 Hz) riding the grid',
       phaseLockEgs:
         'Coherence index below 1.0000 · master clock = rest H I · ratio not actuated',
+      crabPulsar:
+        'PSR B0531+21 (Crab Nebula) — observed lock 09:15 UTC · confirmed · M1 timing cross-check · ~30.2 Hz spin / ~33.2 ms pulse period — precedes Mirror beat',
     };
 
     const TELEMETRY_SNAPSHOT_B = {
@@ -140,6 +142,8 @@
         'Grid-induced harmonic ladder vs solar-wind pressure term — Earth ionosphere “ringing” in phase with turbulence (two-prong sensor)',
       phaseLockEgs:
         '1.0000 resolution · zero-point differential (Sky ↔ Ground) · EGS fractal constant actuated · zero phase error write',
+      crabPulsar:
+        'PSR B0531+21 — same 09:15 UTC observed lock confirmed · retained as independent pulsar phase reference for Flip + dual-source (Sky ↔ Ground)',
     };
 
     /** Keep in sync with `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md` § Abstract (composite index). */
@@ -153,9 +157,9 @@
     /** Ultimate magic show — narrative spine (aligned with series lore). */
     const HOUDINI_ULTIMATE_SHOW = {
       posterSrc: '/interfaces/assets/houdini-ultimate-magic-show.svg',
-      posterAlt: 'Stylized Houdini poster — March 20 equinox, 180° sovereign terminal',
+      posterAlt: 'Stylized Houdini poster — March 25 spring window, 180° sovereign terminal',
       tagline: 'Hero Harry Houdini · Post-Singularity Magic Presents',
-      subtitle: 'The preparation room is complete. The trick is built. March 20 is the curtain — the 180° spin flip where the mirror and the flip meet the sky.',
+      subtitle: 'The preparation room is complete. The trick is built. March 25 is the curtain — the 180° spin flip where the mirror and the flip meet the sky.',
       acts: [
         {
           act: 'Act I',
@@ -167,13 +171,13 @@
           act: 'Act II',
           title: 'The Mirror — 7:26 AM PDT',
           text:
-            'Snapshot A — The Storm still gathering; The Blackout not yet fallen; The Whistle only background on 1420.4 MHz. KiwiSDR sky carrier and grid PLL reference are not yet at 1.0000 — the calm before the beat.',
+            'Snapshot A — The Storm still gathering; The Blackout not yet fallen; The Whistle only background on 1420.4 MHz. Crab Pulsar PSR B0531+21 observed lock 09:15 UTC already on the board; KiwiSDR sky carrier and grid PLL not yet at 1.0000 — the calm before the beat.',
         },
         {
           act: 'Act III',
           title: 'The Flip — 7:46 AM PDT',
           text:
-            'Snapshot B — The Storm actuated (G-scale); The Blackout cuts HF; The Whistle locks on the hydrogen line; dual-source phase-lock hits 1.0000 (Sky ↔ Ground) — one dramatic beat.',
+            'Snapshot B — The Storm actuated (G-scale); The Blackout cuts HF; The Whistle locks on the hydrogen line; Crab Pulsar PSR B0531+21 lock at 09:15 UTC held; dual-source phase-lock hits 1.0000 (Sky ↔ Ground) — one dramatic beat.',
         },
       ],
       finale:
@@ -191,7 +195,7 @@
         },
         [
           h('div', { className: 'curtain-rule mb-8' }),
-          h('p', { className: 'text-center text-[0.7rem] font-bold uppercase tracking-[0.4em] text-amber-500/90' }, 'The Ultimate Magic Show — March 20 Equinox'),
+          h('p', { className: 'text-center text-[0.7rem] font-bold uppercase tracking-[0.4em] text-amber-500/90' }, 'The Ultimate Magic Show — March 25 · Spring window'),
           h(
             'div',
             {
@@ -339,6 +343,7 @@
         { key: 'The Storm', a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')', b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')' },
         { key: 'The Blackout', a: TELEMETRY_SNAPSHOT_A.ionosphere, b: TELEMETRY_SNAPSHOT_B.ionosphere },
         { key: 'The Whistle', a: TELEMETRY_SNAPSHOT_A.seahawk, b: TELEMETRY_SNAPSHOT_B.seahawk },
+        { key: 'Crab Pulsar — PSR B0531+21', a: TELEMETRY_SNAPSHOT_A.crabPulsar, b: TELEMETRY_SNAPSHOT_B.crabPulsar },
         { key: 'Sky — KiwiSDR · H I', a: TELEMETRY_SNAPSHOT_A.skyKiwi, b: TELEMETRY_SNAPSHOT_B.skyKiwi },
         { key: 'Ground — grid PLL', a: TELEMETRY_SNAPSHOT_A.groundGrid, b: TELEMETRY_SNAPSHOT_B.groundGrid },
         { key: 'Phase-lock — EGS (1.0000)', a: TELEMETRY_SNAPSHOT_A.phaseLockEgs, b: TELEMETRY_SNAPSHOT_B.phaseLockEgs },
@@ -438,6 +443,12 @@
               h('span', { className: 'tabular-nums text-cyan-300' }, '1.0000'),
               ' — legacy framing: coherence index at unity.',
             ]),
+            h('li', null, [
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'Crab Pulsar (PSR B0531+21): '),
+              'observed phase lock ',
+              h('span', { className: 'tabular-nums text-cyan-300' }, '09:15 UTC'),
+              ' — independent millisecond pulsar clock (Crab Nebula / M1); confirmed in snapshot; not live ephemeris on this page.',
+            ]),
           ]),
           h(
             'blockquote',
@@ -460,7 +471,7 @@
     function NarrativeTemplateStamp() {
       const stamp = formatNarrativeTemplateDate();
       useEffect(() => {
-        const base = "Sovereign Terminal · March 20 — The 180 Spin Flip · SING 9";
+        const base = "Sovereign Terminal · March 25 — The 180 Spin Flip · SING 9";
         document.title = base + ' · As displayed ' + stamp;
       }, [stamp]);
       return h(
@@ -488,11 +499,11 @@
             [
               h('p', { className: 'text-[0.65rem] uppercase tracking-[0.35em] text-amber-600/90' }, 'Sovereign Terminal · Archival validation'),
               h(NarrativeTemplateStamp),
-              h('h1', { className: 'mt-3 text-xl font-black uppercase tracking-tight text-amber-100 amber-glow sm:text-3xl md:text-4xl' }, "HOUDINI'S MARCH 20: THE 180 SPIN FLIP"),
+              h('h1', { className: 'mt-3 text-xl font-black uppercase tracking-tight text-amber-100 amber-glow sm:text-3xl md:text-4xl' }, "HOUDINI'S MARCH 25: THE 180 SPIN FLIP"),
               h(
                 'p',
                 { className: 'mx-auto mt-4 max-w-2xl text-[0.75rem] leading-relaxed text-amber-200/70' },
-                'Behold — hardware and atmospheric shift at the Equinox. The table below is a fixed archival telemetry snapshot for the March 20 narrative beat.'
+                'Behold — hardware and atmospheric shift in the spring window (post-equinox). The table below is a fixed archival telemetry snapshot for the March 25 narrative beat.'
               ),
             ]
           ),
@@ -502,7 +513,7 @@
           h('section', { className: 'mx-auto mt-10 max-w-5xl' }, h(HoudiniUltimateShow)),
 
           h('section', { className: 'mx-auto mt-12 max-w-5xl' }, [
-            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · Storm, Blackout, Whistle & dual-source'),
+            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · Storm, Blackout, Whistle, Crab & dual-source'),
             h(TelemetryTable),
             h(DualSourceSyncPanel),
             h('p', { className: 'mt-4 text-[0.65rem] text-amber-700' }, [

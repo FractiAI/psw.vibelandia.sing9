@@ -406,28 +406,6 @@
         <span class="icon">★</span> Queen's Rush Novela · 21+ Gold Heart
       </a>
 
-      <button type="button" class="cta-btn" id="workFlowBtn" aria-haspopup="dialog" aria-controls="workFlowModal" aria-label="Holographic Goldilocks Work Flow · SoundCloud">
-        <span class="icon">♪</span> Holographic Goldilocks Work Flow · SoundCloud
-      </button>
-    </div>
-
-    <div class="modal-backdrop" id="workFlowModal" hidden>
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="workFlowTitle">
-        <div class="modal-hdr">
-          <div>
-            <div class="modal-title" id="workFlowTitle">♪ Holographic Goldilocks Work Flow · SoundCloud</div>
-          </div>
-          <button type="button" class="modal-close" id="workFlowClose" aria-label="Close">✕</button>
-        </div>
-        <div class="modal-body">
-          <p>Workflow-vibin Latin set for the build — post-singularity, post-WW3. tribu anchors the arc.</p>
-          <div class="modal-actions">
-            <a class="primary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">Open on SoundCloud →</a>
-            <button type="button" class="secondary" id="workFlowCopy">Copy link</button>
-            <a class="ghost" href="interfaces/golden-backdoor-studios.html">See prompts →</a>
-          </div>
-        </div>
-      </div>
     </div>
 
     <p class="foot-note">
@@ -449,43 +427,5 @@
       NSPFRNP → ∞⁹
     </p>
   </div>
-  <script>
-    (function () {
-      var btn = document.getElementById('workFlowBtn');
-      var modal = document.getElementById('workFlowModal');
-      var closeBtn = document.getElementById('workFlowClose');
-      var copyBtn = document.getElementById('workFlowCopy');
-      var lastFocus = null;
-      var link = 'https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow';
-
-      function openModal() {
-        if (!modal) return;
-        lastFocus = document.activeElement;
-        modal.hidden = false;
-        if (closeBtn) closeBtn.focus();
-      }
-
-      function closeModal() {
-        if (!modal) return;
-        modal.hidden = true;
-        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-      }
-
-      if (btn) btn.addEventListener('click', openModal);
-      if (closeBtn) closeBtn.addEventListener('click', closeModal);
-      if (modal) modal.addEventListener('click', function (e) {
-        if (e.target === modal) closeModal();
-      });
-      document.addEventListener('keydown', function (e) {
-        if (!modal || modal.hidden) return;
-        if (e.key === 'Escape') closeModal();
-      });
-      if (copyBtn) copyBtn.addEventListener('click', function () {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(link).catch(function () {});
-        }
-      });
-    })();
-  </script>
 </body>
 </html>

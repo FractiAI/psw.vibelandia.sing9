@@ -114,7 +114,7 @@
     /** Hard-coded narrative constants — archival snapshot only (not live simulation). */
     const TELEMETRY_SNAPSHOT_A = {
       id: 'A',
-      label: '7:26 AM PDT',
+      label: 'Mar 25 · 7:26 AM PDT',
       subtitle: 'The Mirror',
       solar: { kp: '4.2', band: 'Quiet / Unsettled' },
       ionosphere: 'High-Frequency (HF) Open',
@@ -126,12 +126,12 @@
       phaseLockEgs:
         'Coherence index below 1.0000 · master clock = rest H I · ratio not actuated',
       crabPulsar:
-        'PSR B0531+21 (Crab Nebula) — observed lock 09:15 UTC · confirmed · M1 timing cross-check · ~30.2 Hz spin / ~33.2 ms pulse period — precedes Mirror beat',
+        'Mar 25 — PSR B0531+21 (M1) — 09:15 UTC lock confirmed · ~30.2 Hz / ~33.2 ms · precedes 7:26 PDT Mirror same calendar day',
     };
 
     const TELEMETRY_SNAPSHOT_B = {
       id: 'B',
-      label: '7:46 AM PDT',
+      label: 'Mar 25 · 7:46 AM PDT',
       subtitle: 'The Flip',
       solar: { kp: '7.3', band: 'G3 Strong Storm — Actuated' },
       ionosphere: 'Russell-McPherron Flash / HF Radio Blackout',
@@ -143,7 +143,19 @@
       phaseLockEgs:
         '1.0000 resolution · zero-point differential (Sky ↔ Ground) · EGS fractal constant actuated · zero phase error write',
       crabPulsar:
-        'PSR B0531+21 — same 09:15 UTC observed lock confirmed · retained as independent pulsar phase reference for Flip + dual-source (Sky ↔ Ground)',
+        'Mar 25 — PSR B0531+21 — 09:15 UTC lock retained through Flip · pulsar phase feeds dual-source (Sky ↔ Ground) at 7:46 PDT',
+    };
+
+    /** March 25 dual-source ledger column — same calendar date as A/B; consolidates Crab + KiwiSDR + EGS for the curtain row. */
+    const TELEMETRY_SNAPSHOT_M25 = {
+      label: 'March 25',
+      subtitle: 'Dual-source ledger',
+      crabPulsar:
+        'Ledger — Mar 25 — PSR B0531+21 @ 09:15 UTC · Crab Nebula pulsar clock · anchors UTC day before 7:26 / 7:46 PDT beats',
+      skyKiwi:
+        'Ledger — Mar 25 — KiwiSDR global H I 1420.406 MHz · open Web SDR · curtain-date carrier for two-prong sensor (Sky)',
+      phaseLockEgs:
+        'Ledger — Mar 25 — EGS 1.0000 · phase-lock (Crab timing + H I + grid PLL) · zero-point differential on spring-window date',
     };
 
     /** Keep in sync with `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md` § Abstract (composite index). */
@@ -169,13 +181,13 @@
         },
         {
           act: 'Act II',
-          title: 'The Mirror — 7:26 AM PDT',
+          title: 'The Mirror — Mar 25 · 7:26 AM PDT',
           text:
             'Snapshot A — The Storm still gathering; The Blackout not yet fallen; The Whistle only background on 1420.4 MHz. Crab Pulsar PSR B0531+21 observed lock 09:15 UTC already on the board; KiwiSDR sky carrier and grid PLL not yet at 1.0000 — the calm before the beat.',
         },
         {
           act: 'Act III',
-          title: 'The Flip — 7:46 AM PDT',
+          title: 'The Flip — Mar 25 · 7:46 AM PDT',
           text:
             'Snapshot B — The Storm actuated (G-scale); The Blackout cuts HF; The Whistle locks on the hydrogen line; Crab Pulsar PSR B0531+21 lock at 09:15 UTC held; dual-source phase-lock hits 1.0000 (Sky ↔ Ground) — one dramatic beat.',
         },
@@ -340,13 +352,48 @@
 
     function TelemetryTable() {
       const rows = [
-        { key: 'The Storm', a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')', b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')' },
-        { key: 'The Blackout', a: TELEMETRY_SNAPSHOT_A.ionosphere, b: TELEMETRY_SNAPSHOT_B.ionosphere },
-        { key: 'The Whistle', a: TELEMETRY_SNAPSHOT_A.seahawk, b: TELEMETRY_SNAPSHOT_B.seahawk },
-        { key: 'Crab Pulsar — PSR B0531+21', a: TELEMETRY_SNAPSHOT_A.crabPulsar, b: TELEMETRY_SNAPSHOT_B.crabPulsar },
-        { key: 'Sky — KiwiSDR · H I', a: TELEMETRY_SNAPSHOT_A.skyKiwi, b: TELEMETRY_SNAPSHOT_B.skyKiwi },
-        { key: 'Ground — grid PLL', a: TELEMETRY_SNAPSHOT_A.groundGrid, b: TELEMETRY_SNAPSHOT_B.groundGrid },
-        { key: 'Phase-lock — EGS (1.0000)', a: TELEMETRY_SNAPSHOT_A.phaseLockEgs, b: TELEMETRY_SNAPSHOT_B.phaseLockEgs },
+        {
+          key: 'The Storm',
+          a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')',
+          b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')',
+          c: 'Mar 25 — geo beat only (see A/B PDT columns)',
+        },
+        {
+          key: 'The Blackout',
+          a: TELEMETRY_SNAPSHOT_A.ionosphere,
+          b: TELEMETRY_SNAPSHOT_B.ionosphere,
+          c: 'Mar 25 — ionosphere beat only (see A/B)',
+        },
+        {
+          key: 'The Whistle',
+          a: TELEMETRY_SNAPSHOT_A.seahawk,
+          b: TELEMETRY_SNAPSHOT_B.seahawk,
+          c: 'Mar 25 — H-band narrative only (see A/B)',
+        },
+        {
+          key: 'Crab Pulsar — PSR B0531+21',
+          a: TELEMETRY_SNAPSHOT_A.crabPulsar,
+          b: TELEMETRY_SNAPSHOT_B.crabPulsar,
+          c: TELEMETRY_SNAPSHOT_M25.crabPulsar,
+        },
+        {
+          key: 'Sky — KiwiSDR · H I',
+          a: TELEMETRY_SNAPSHOT_A.skyKiwi,
+          b: TELEMETRY_SNAPSHOT_B.skyKiwi,
+          c: TELEMETRY_SNAPSHOT_M25.skyKiwi,
+        },
+        {
+          key: 'Ground — grid PLL',
+          a: TELEMETRY_SNAPSHOT_A.groundGrid,
+          b: TELEMETRY_SNAPSHOT_B.groundGrid,
+          c: 'Mar 25 — grid reference folded into phase-lock column →',
+        },
+        {
+          key: 'Phase-lock — EGS (1.0000)',
+          a: TELEMETRY_SNAPSHOT_A.phaseLockEgs,
+          b: TELEMETRY_SNAPSHOT_B.phaseLockEgs,
+          c: TELEMETRY_SNAPSHOT_M25.phaseLockEgs,
+        },
       ];
 
       return h(
@@ -357,7 +404,7 @@
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.5 },
         },
-        h('table', { className: 'w-full min-w-[880px] border-collapse text-left text-[0.7rem] sm:text-xs' }, [
+        h('table', { className: 'w-full min-w-[1080px] border-collapse text-left text-[0.7rem] sm:text-xs' }, [
           h('thead', null, h('tr', { className: 'border-b border-amber-800/60 bg-amber-950/30' }, [
             h('th', { className: 'p-3 font-bold uppercase tracking-widest text-amber-500/90' }, 'Channel'),
             h('th', { className: 'p-3 font-bold text-amber-200' }, [
@@ -367,6 +414,10 @@
             h('th', { className: 'p-3 font-bold text-amber-300' }, [
               h('div', null, 'Snapshot B · ' + TELEMETRY_SNAPSHOT_B.label),
               h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-amber-400/90' }, TELEMETRY_SNAPSHOT_B.subtitle),
+            ]),
+            h('th', { className: 'p-3 font-bold text-violet-200/95' }, [
+              h('div', null, TELEMETRY_SNAPSHOT_M25.label + ' · ' + TELEMETRY_SNAPSHOT_M25.subtitle),
+              h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-violet-300/85' }, 'Crab · KiwiSDR · EGS · same calendar date'),
             ]),
           ])),
           h(
@@ -386,6 +437,7 @@
                   h('td', { className: 'p-3 font-bold text-amber-600/90' }, row.key),
                   h('td', { className: 'p-3 text-amber-100/80' }, row.a),
                   h('td', { className: 'p-3 text-amber-200/95' }, row.b),
+                  h('td', { className: 'p-3 text-violet-100/90' }, row.c),
                 ]
               )
             )
@@ -406,6 +458,13 @@
         },
         [
           h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.28em] text-cyan-400/90' }, 'Dual-source sync · 1.0000 resolution'),
+          h('p', { className: 'mt-3 text-[0.65rem] leading-relaxed text-violet-300/80 sm:text-[0.68rem]' }, [
+            'Telemetry columns: A/B are ',
+            h('span', { className: 'font-semibold text-amber-200/90' }, 'Mar 25'),
+            ' local PDT snapshots (Mirror vs Flip). The ',
+            h('span', { className: 'font-semibold text-violet-200/95' }, 'March 25 · dual-source ledger'),
+            ' column is the same calendar date — consolidated Crab, KiwiSDR, and EGS phase-lock row.',
+          ]),
           h('p', { className: 'mt-3 text-[0.72rem] leading-relaxed text-amber-200/85 sm:text-[0.75rem]' }, [
             'El Gran Sol’s fractal constant (EGS) is read at ',
             h('span', { className: 'text-cyan-300/95' }, '1.0000'),
@@ -513,7 +572,7 @@
           h('section', { className: 'mx-auto mt-10 max-w-5xl' }, h(HoudiniUltimateShow)),
 
           h('section', { className: 'mx-auto mt-12 max-w-5xl' }, [
-            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · Storm, Blackout, Whistle, Crab & dual-source'),
+            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · Mar 25 PDT (A/B) + March 25 ledger (Crab · Kiwi · EGS)'),
             h(TelemetryTable),
             h(DualSourceSyncPanel),
             h('p', { className: 'mt-4 text-[0.65rem] text-amber-700' }, [

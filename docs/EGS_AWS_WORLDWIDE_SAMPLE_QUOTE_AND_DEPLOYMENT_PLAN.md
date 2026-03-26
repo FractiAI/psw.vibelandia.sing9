@@ -56,7 +56,7 @@ Technical scope:
 
 Commercial sample:
 - **Upfront program fee (worldwide overlay readiness):** USD 120M to 380M
-- **Monthly managed run fee (overlay + verification readiness):** USD 0.9B to 2.6B
+- **Monthly managed run fee (overlay + verification readiness):** USD 60M to 220M
 
 Primary benefits:
 - Low-risk start with no forced cutover
@@ -78,7 +78,7 @@ Technical scope:
 
 Commercial sample:
 - **Upfront migration fee (regional wave integrations):** USD 280M to 950M
-- **Monthly managed run fee (regional offload + A2A gating):** USD 1.8B to 4.5B
+- **Monthly managed run fee (regional offload + A2A gating):** USD 160M to 520M
 
 Primary benefits:
 - Target 80% to 100% shift of AWS-dependent workload spend off the primary path
@@ -101,7 +101,7 @@ Technical scope:
 
 Commercial sample:
 - **Upfront cutover fee (full traffic redirection + contract promotion):** USD 1.8B to 6.5B
-- **Monthly managed run fee (EGS primary + residual fallback governance):** USD 4.5B to 8.0B
+- **Monthly managed run fee (EGS primary + residual fallback governance):** USD 250M to 650M
 
 Primary benefits:
 - Target 90% to 100% shift of AWS primary dependency off the workload path
@@ -137,18 +137,18 @@ These are **sample planning bands** designed for procurement comparison (your fi
 | Egress / movement (`E`) | USD `0.06` to `0.22` per GB |
 | Verifier mesh (`V`) | Typically included in the `A` and `J` pricing bands above (or priced as `V` add-on at similar proportionality) |
 
-### 4.3 Fixed Platform OPEX (worldwide primary state)
+### 4.3 Fixed Platform Fee Component (worldwide primary state)
 
-Fixed platform OPEX covers:
+Fixed platform fee component covers:
 - verifier/receipt infrastructure operations,
 - Jupiter-tier policy routing and replication coordination,
 - contract enforcement for strict no-legacy mode,
 - operator dashboards + on-call during cutover windows.
 
 Sample fixed platform band for worldwide primary:
-- **USD 2.0B to 4.5B per month**
+- **USD 80M to 250M per month**
 
-### 4.4 Public-Filing Anchored 20% Monthly OPEX Savings Model (AWS segment-level)
+### 4.4 Public-Filing Anchored 20% Monthly OPEX Savings (Legacy Ops) + 20% of Savings Charge
 
 This model uses **public Amazon quarterly filing disclosure** for AWS segment economics (provider-level baseline, not your customer billing).
 
@@ -166,17 +166,26 @@ Then convert to monthly:
 
 `IMPLIED_AWS_OPEX_month ≈ (AWS_net_sales - AWS_operating_income) / 3`
 
-And apply your target monthly savings:
+Then apply your target monthly savings (estimated):
 
-`IMPLIED_OPEX_EGS_month ≈ 0.8 * IMPLIED_AWS_OPEX_month`
+`IMPLIED_OPEX_AFTER_OFFLOAD_month ≈ 0.8 * IMPLIED_AWS_OPEX_month`
+
+Savings:
+
+`IMPLIED_MONTHLY_OPEX_SAVINGS_month ≈ IMPLIED_AWS_OPEX_month - IMPLIED_OPEX_AFTER_OFFLOAD_month ≈ 0.2 * IMPLIED_AWS_OPEX_month`
+
+Share-of-savings charge rule (your requirement):
+
+`IMPLIED_EGS_MONTHLY_CHARGE_month ≈ 0.2 * IMPLIED_MONTHLY_OPEX_SAVINGS_month ≈ 0.04 * IMPLIED_AWS_OPEX_month`
 
 Worked numbers (provider-level, Q4 2025 baseline):
 - `IMPLIED_AWS_OPEX_quarter ≈ 35,579 - 12,465 = 23,114 (USD millions)`
 - `IMPLIED_AWS_OPEX_month ≈ 23,114 / 3 ≈ 7,705 (USD millions) = $7.705B/month`
-- `Target EGS OPEX at 20% savings ≈ 0.8 * 7.705B ≈ $6.164B/month`
+- `IMPLIED_MONTHLY_OPEX_SAVINGS_month ≈ 0.2 * 7.705B ≈ $1.541B/month`
+- `IMPLIED_EGS_MONTHLY_CHARGE_month ≈ 0.2 * 1.541B ≈ $0.308B/month = $307.7M/month`
 
 Interpretation:
-- This anchors pricing to **public AWS segment economics**.
+- This anchors the *savings proxy* to **public AWS segment economics** (provider-level), then applies the share-of-savings pricing rule.
 - It does **not** claim we can reproduce your negotiated, account-specific bill savings from filings alone.
 
 ### 4.5 Worked Sample (procurement-style illustration)
@@ -185,12 +194,13 @@ Assume provider-level AWS segment baseline from filings:
 - `IMPLIED_AWS_OPEX_month ≈ $7.705B/month` (see Section 4.4)
 
 Target outcome:
-- `IMPLIED_OPEX_EGS_month ≈ $6.164B/month` (20% monthly savings)
+- `IMPLIED_MONTHLY_OPEX_SAVINGS_month ≈ $1.541B/month` (20% savings proxy)
+- `IMPLIED_EGS_MONTHLY_CHARGE_month ≈ $307.7M/month` (EGS charges 20% of savings)
 
-The `~$6.164B/month` includes:
-- fixed platform OPEX band,
-- variable usage OPEX computed from your traffic volumes (`A`, `J`, `G`, `E`),
-- and residual fallback governance modeled under the “limited exceptions” contract boundary.
+The `~$307.7M/month` is allocated internally as:
+- fixed platform fee component,
+- variable usage allocation driven by traffic dimensions (`A`, `J`, `G`, `E`),
+- and residual fallback governance handling (within the “limited exceptions” contract boundary).
 
 ---
 
@@ -270,7 +280,7 @@ Mitigation controls:
 - All numbers in this document are **sample planning bands**.
 - Final pricing depends on workload profile, compliance scope, and rollout velocity.
 - This document is intended to illustrate procurement-ready framing, not substitute a final SOW/MSA quote pack.
-- The **20% monthly OPEX savings** target is modeled against a **public AWS segment economics proxy** derived from Amazon’s quarterly filings (provider-level), with residual AWS fallback limited to explicit exceptions.
+- The **20% monthly OPEX savings** target is modeled against a **public AWS segment economics proxy** derived from Amazon’s quarterly filings (provider-level), and the monthly charge follows: **EGS fee = 20% of estimated monthly savings** (share-of-savings pricing), with residual AWS fallback limited to explicit exceptions.
 
 ---
 

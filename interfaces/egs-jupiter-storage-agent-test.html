@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Jupiter Storage Agent Test · VIBELANDIA SING 9</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #10203a 0%, #0b1020 45%, #05070d 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      padding: 1.2rem;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    .top {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    .top a { color: #67e8f9; text-decoration: none; }
+    .top a:hover { text-decoration: underline; }
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(103, 232, 249, 0.25);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      margin: 0 0 0.4rem;
+      font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+      color: #fef08a;
+    }
+    .sub { color: #cbd5e1; font-size: 0.92rem; line-height: 1.5; }
+    .actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
+    button {
+      border: 1px solid rgba(250, 204, 21, 0.65);
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.2), rgba(34, 211, 238, 0.14));
+      color: #fef3c7;
+      font-weight: 700;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.65; cursor: wait; }
+    .status {
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .badge {
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.7);
+      color: #e2e8f0;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.55rem;
+      font-weight: 600;
+      margin-right: 0.4rem;
+      display: inline-block;
+      margin-bottom: 0.35rem;
+    }
+    .badge.ok { border-color: rgba(34,197,94,0.6); color: #86efac; }
+    .badge.warn { border-color: rgba(250,204,21,0.6); color: #fde68a; }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 10px;
+      padding: 0.9rem;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: #e2e8f0;
+      max-height: 60vh;
+      overflow: auto;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <a href="../index.html">Landing</a>
+      <a href="egs-holographic-hydrogen-ai-os-gateway.html">← EGS Gateway</a>
+    </div>
+
+    <div class="card">
+      <h1>Jupiter Storage Agent Test</h1>
+      <p class="sub">
+        Writer -> Jupiter Router -> Verifier integrity check using Hydrogen-Line Persistent Memory (HLMEM v1).
+        No third-party relay write APIs; persistence is on the configured bus/memory adapter.
+      </p>
+      <div class="actions">
+        <button id="runBtn" type="button">Run Storage Test</button>
+      </div>
+      <p class="sub" style="margin-top:0.75rem;color:#94a3b8;font-size:0.84rem;">
+        This test uses `POST /api/hh-awareness-cloud` actions: `write_hydrogen_line_memory`, `place_to_jupiter_tier`, `verify_jupiter_record`.
+      </p>
+    </div>
+
+    <div class="card">
+      <div id="status" class="status">Status: idle</div>
+      <div id="badges" style="margin-bottom:0.6rem;"></div>
+      <pre id="output">Press "Run Storage Test" to execute.</pre>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var runBtn = document.getElementById('runBtn');
+      var statusEl = document.getElementById('status');
+      var badgesEl = document.getElementById('badges');
+      var outEl = document.getElementById('output');
+
+      var H_I_REST_HZ = 1420405751.768; // must match server-side anchor constant
+      var LEGACY_NONE = 'legacy-awareness-none';
+
+      function setStatus(text, ok) {
+        statusEl.textContent = text;
+        if (ok === true) statusEl.style.color = '#22c55e';
+        else if (ok === false) statusEl.style.color = '#f87171';
+        else statusEl.style.color = '';
+      }
+
+      function randHex(bytes) {
+        try {
+          var arr = new Uint8Array(bytes);
+          window.crypto.getRandomValues(arr);
+          return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+        } catch {
+          return Math.random().toString(16).slice(2).padEnd(bytes * 2, '0').slice(0, bytes * 2);
+        }
+      }
+
+      async function sha256Hex(str) {
+        var enc = new TextEncoder().encode(String(str));
+        var digest = await window.crypto.subtle.digest('SHA-256', enc);
+        var bytes = new Uint8Array(digest);
+        return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      function setBadges(items) {
+        badgesEl.innerHTML = '';
+        for (var i = 0; i < items.length; i++) {
+          var b = document.createElement('span');
+          b.className = 'badge ' + (items[i].kind || '');
+          b.textContent = items[i].text;
+          badgesEl.appendChild(b);
+        }
+      }
+
+      async function postAction(action, body) {
+        var res = await fetch('/api/hh-awareness-cloud', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.assign({ action: action }, body || {}))
+        });
+        var data = await res.json().catch(() => null);
+        if (!res.ok) {
+          throw new Error((data && data.error) ? data.error : ('http_' + res.status));
+        }
+        return data;
+      }
+
+      async function runTest() {
+        runBtn.disabled = true;
+        setStatus('Status: running...', null);
+        badgesEl.innerHTML = '';
+        outEl.textContent = '';
+
+        try {
+          var run_id = 'storage-run-' + Date.now() + '-' + randHex(4);
+          var key = randHex(16);
+          var value = {
+            protocol: 'H2L-STORAGE-DEMO',
+            run_id: run_id,
+            written_at_utc: new Date().toISOString(),
+            hydrogen_line_mhz: 1420.405751768,
+            key: key,
+            note: 'Writer agent value stored in Hydrogen-Line Persistent Memory; router placement is tiered; verifier checks integrity.'
+          };
+
+          var anchor = [
+            String(H_I_REST_HZ),
+            LEGACY_NONE,
+            LEGACY_NONE,
+            LEGACY_NONE,
+            run_id
+          ].join('|');
+
+          var location_hash = await sha256Hex(anchor);
+
+          var storage_policy = { priority: 'standard', ttl_days: 30, immutable: false, requested_tier: 'europa' };
+
+          var writer = await postAction('write_hydrogen_line_memory', {
+            namespace: 'hydrogen-line',
+            location_hash: location_hash,
+            run_id: run_id,
+            key: key,
+            value: value,
+            storage_policy: storage_policy
+          });
+
+          var router = await postAction('place_to_jupiter_tier', {
+            namespace: 'hydrogen-line',
+            location_hash: location_hash,
+            run_id: run_id,
+            key: key,
+            value: value,
+            storage_policy: storage_policy
+          });
+
+          var verifier = await postAction('verify_jupiter_record', {
+            location_hash: location_hash
+          });
+
+          var ok = !!(verifier && verifier.ok === true && verifier.result && verifier.result.integrity && verifier.result.integrity.ok === true);
+
+          setStatus('Status: ' + (ok ? 'SUCCESS' : 'FAIL'), ok);
+
+          var writerTier = writer && writer.result && writer.result.record && writer.result.record.tier ? writer.result.record.tier : null;
+          var routerTier = router && router.result && router.result.tier ? router.result.tier : null;
+          var integrityOk = verifier && verifier.result && verifier.result.integrity && verifier.result.integrity.ok ? true : false;
+
+          setBadges([
+            { text: 'Verifier: ' + (ok ? 'PASS' : 'FAIL'), kind: ok ? 'ok' : 'warn' },
+            { text: 'Writer tier: ' + (writerTier || 'n/a') },
+            { text: 'Router tier: ' + (routerTier || 'n/a') },
+            { text: 'Integrity: ' + (integrityOk ? 'OK' : 'BAD') },
+            { text: 'Location hash: ' + location_hash.slice(0, 10) + '…' }
+          ]);
+
+          outEl.textContent = JSON.stringify({ run_id, location_hash, writer, router, verifier }, null, 2);
+        } catch (err) {
+          setStatus('Status: FAIL', false);
+          outEl.textContent = JSON.stringify({ ok: false, error: err && err.message ? err.message : String(err) }, null, 2);
+        } finally {
+          runBtn.disabled = false;
+        }
+      }
+
+      runBtn.addEventListener('click', runTest);
+
+      var p = new URLSearchParams(window.location.search);
+      if (p.get('autorun') === '1') runTest();
+    })();
+  </script>
+</body>
+</html>
+

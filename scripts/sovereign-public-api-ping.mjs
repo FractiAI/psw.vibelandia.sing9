@@ -9,7 +9,7 @@
  *   - NASA/JPL SBDB: small-body identity / orbit metadata
  *   - Local: narrative 369 Hz XOR latch (one period τ = 1/369 s), no third-party call
  *
- * Shared helpers: `lib/observatory-public-evidence.mjs`, `lib/g5-surf-protocol.mjs`
+ * Shared helpers: `lib/observatory-public-evidence.mjs`, `lib/openwebrx-public-evidence.mjs`, `lib/g5-surf-protocol.mjs`
  *
  * Run: node scripts/sovereign-public-api-ping.mjs
  *      npm run ping:public
@@ -23,6 +23,7 @@
  */
 
 import { fetchSwpcObservatoryContext, fetchDonkiGst } from '../lib/observatory-public-evidence.mjs';
+import { fetchOpenWebRxPublicStatus } from '../lib/openwebrx-public-evidence.mjs';
 import { evaluateG5SurfProtocol, recommendedSyntheverseUiMode } from '../lib/g5-surf-protocol.mjs';
 
 const FETCH_OPTS = {
@@ -239,6 +240,13 @@ async function main() {
     out.gates.xor_369_recovered = false;
   }
 
+  try {
+    out.openwebrx = await fetchOpenWebRxPublicStatus({ signal: FETCH_OPTS.signal });
+  } catch (e) {
+    out.errors.push({ step: 'openwebrx_status_json', message: e.message || String(e) });
+    out.openwebrx = { ok: false, error: e.message || String(e) };
+  }
+
   out.gates.all_three_green =
     out.gates.solar_kp_gt_6 === true &&
     out.gates.seahawk_tof_2476s === true &&
@@ -347,6 +355,22 @@ async function main() {
   if (out.xor_369_latch) {
     lines.push(`  τ = 1/369 s, key ${out.xor_369_latch.xor_key_hex}, recovered_ok: ${out.xor_369_latch.recovered_ok}`);
     lines.push(`  Gate: ${out.gates.xor_369_recovered ? 'GREEN' : 'RED'}`);
+  }
+  lines.push('');
+  lines.push('── OpenWebRX (public GET /status.json · AGPL stack) ──');
+  if (out.openwebrx && out.openwebrx.ok) {
+    const ow = out.openwebrx;
+    lines.push(`  ${ow.base} · ${ow.receiver_name || '—'} · ${ow.version || '—'}`);
+    lines.push(`  ${ow.status_json_url}`);
+    if (ow.profile_covering_hi) {
+      lines.push(
+        `  H I rest covered by profile “${ow.profile_covering_hi.profile_name}” (${(ow.profile_covering_hi.center_freq_hz / 1e6).toFixed(6)} MHz center)`,
+      );
+    } else {
+      lines.push('  No profile passband covers H I rest on this receiver (add L-band URL via OPENWEBRX_BASE_URLS)');
+    }
+  } else {
+    lines.push(`  (unavailable) ${out.openwebrx?.error || '—'}`);
   }
   lines.push('');
   lines.push(`── Summary · all three green: ${out.gates.all_three_green ? 'YES' : 'NO'} ──`);

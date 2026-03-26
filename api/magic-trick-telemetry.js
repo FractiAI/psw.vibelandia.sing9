@@ -2,14 +2,15 @@
  * GET /api/magic-trick-telemetry
  * Real public sensor / operational JSON only — NOAA SWPC, GOES (via SWPC), RTSW.
  * Catalog constants: H I rest frequency (IAU), Crab pulsar published period (ATNF-class ephemeris).
- * Does NOT fabricate KiwiSDR aggregate, grid harmonics, or EGS "1.0000" — those are not NOAA products.
+ * Sky row: OpenWebRX public /status.json (open-source Web SDR, AGPL) — machine-readable; KiwiSDR has no equivalent global aggregate API.
+ * Does NOT fabricate grid harmonics or EGS "1.0000" — those are not NOAA products.
  * NSPFRNP → ∞⁹
  */
 
 const FETCH_OPTS = { signal: AbortSignal.timeout(22000) };
 
-/** IAU / radio-astronomy standard H I rest frequency (MHz). */
-const H_I_REST_MHZ = 1420.405751;
+/** IAU / radio-astronomy standard H I rest frequency (MHz) — aligned with lib/openwebrx-public-evidence.mjs. */
+const H_I_REST_MHZ = 1420.405751768;
 
 /** Published Crab pulsar ephemeris (catalog class — not live timing from this endpoint). */
 const CRAB_PERIOD_S = 0.033564095;
@@ -63,6 +64,10 @@ module.exports = async (req, res) => {
   try {
     const mod = await import('../lib/observatory-public-evidence.mjs');
     const { fetchSwpcObservatoryContext, kpToGScale } = mod;
+    const owrxMod = await import('../lib/openwebrx-public-evidence.mjs');
+    const { fetchOpenWebRxPublicStatus } = owrxMod;
+
+    const owrx = await fetchOpenWebRxPublicStatus({ signal: FETCH_OPTS.signal });
 
     const kp1mRes = await fetch(
       'https://services.swpc.noaa.gov/json/planetary_k_index_1m.json',
@@ -154,15 +159,56 @@ module.exports = async (req, res) => {
       CRAB_PSR.period_s +
       ' s — public ephemeris class data';
 
-    const kiwiA =
-      'No public aggregate API for KiwiSDR nodes — open receivers at kiwisdr.com · tune H I near ' +
-      H_I_REST_MHZ +
-      ' MHz manually';
-    const kiwiB = kiwiA;
-    const kiwiC =
-      'No sensor stream here — H I ' +
-      H_I_REST_MHZ +
-      ' MHz rest is standard; KiwiSDR is third-party open Web SDR';
+    let skyA;
+    let skyB;
+    let skyC;
+    if (owrx.ok) {
+      const nm = owrx.receiver_name || 'OpenWebRX receiver';
+      const loc = owrx.location || '—';
+      const ver = owrx.version || '—';
+      const cov = owrx.profile_covering_hi;
+      const covStr = cov
+        ? 'Profile “' +
+          cov.profile_name +
+          '” on ' +
+          cov.sdr_name +
+          ' covers H I rest — center ' +
+          (cov.center_freq_hz / 1e6).toFixed(6) +
+          ' MHz · bw ' +
+          (cov.sample_rate_hz / 1e6).toFixed(3) +
+          ' MHz'
+        : 'No profile in /status.json passband-covers ' +
+          H_I_REST_MHZ.toFixed(6) +
+          ' MHz on this receiver — many public OpenWebRX nodes are HF/VHF; L-band H I needs an operator-tuned profile elsewhere.';
+      skyA =
+        'OpenWebRX ' +
+        ver +
+        ' · ' +
+        owrx.base +
+        ' — ' +
+        nm +
+        ' · ' +
+        loc +
+        ' — ' +
+        covStr;
+      skyB = skyA;
+      skyC =
+        'Ledger · H I ' +
+        H_I_REST_MHZ.toFixed(6) +
+        ' MHz (standard) · JSON ' +
+        owrx.status_json_url +
+        ' · stack AGPL OpenWebRX — https://github.com/jketterl/openwebrx';
+    } else {
+      const fail = 'OpenWebRX /status.json unreachable (' + (owrx.error || 'unknown') + ')';
+      skyA =
+        fail +
+        ' — automated check uses public OpenWebRX endpoints only; extend OPENWEBRX_BASE_URLS on deploy.';
+      skyB = skyA;
+      skyC =
+        'Ledger · H I ' +
+        H_I_REST_MHZ.toFixed(6) +
+        ' MHz rest (catalog) — OpenWebRX evidence failed this request; no Web SDR fabrication';
+    }
 
     const groundA = magStr + ' · ' + windStr;
     const groundB = groundA;
@@ -197,7 +243,7 @@ module.exports = async (req, res) => {
       { key: 'The Blackout', a: blackoutA, b: blackoutB, c: 'Ionosphere context: GOES soft X-ray (operational); HF blackout uses NOAA scales elsewhere' },
       { key: 'The Whistle', a: whistleA, b: whistleB, c: 'H I rest + RTSW solar wind — operational heliophysics JSON' },
       { key: 'Crab Pulsar — PSR B0531+21', a: crabA, b: crabB, c: crabC },
-      { key: 'Sky — KiwiSDR · H I', a: kiwiA, b: kiwiB, c: kiwiC },
+      { key: 'Sky — OpenWebRX · H I', a: skyA, b: skyB, c: skyC },
       { key: 'Ground — RTSW / L1', a: groundA, b: groundB, c: groundC },
       { key: 'Phase delta / EGS', a: phaseA, b: phaseB, c: phaseC },
     ];
@@ -212,6 +258,19 @@ module.exports = async (req, res) => {
         hydrogen_line_mhz: H_I_REST_MHZ,
         hydrogen_line_note: 'Standard H I rest frequency (radio astronomy)',
         crab_pulsar: CRAB_PSR,
+        openwebrx: owrx.ok
+          ? {
+              ok: true,
+              license: 'AGPL-3.0',
+              project: 'https://github.com/jketterl/openwebrx',
+              public_ui_url: owrx.public_ui_url,
+              status_json_url: owrx.status_json_url,
+              receiver_name: owrx.receiver_name,
+              location: owrx.location,
+              version: owrx.version,
+              profile_covering_hi: owrx.profile_covering_hi,
+            }
+          : { ok: false, error: owrx.error || 'unavailable', hi_rest_mhz: H_I_REST_MHZ },
       },
       snapshot_labels: {
         a: 'Prior NOAA 1-min Kp',

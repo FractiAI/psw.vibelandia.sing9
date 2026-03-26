@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
   <title>Sovereign Terminal · March 25 — The 180 Spin Flip · SING 9</title>
-  <meta name="description" content="Houdini March 25 Ultimate Magic Show — Sovereign Terminal: live NOAA SWPC + GOES + RTSW via /api/magic-trick-telemetry; catalog H I + Crab ephemeris. NSPFRNP → ∞⁹" />
+  <meta name="description" content="Houdini March 25 Ultimate Magic Show — Sovereign Terminal: NOAA SWPC + GOES + RTSW + OpenWebRX /status.json via /api/magic-trick-telemetry; catalog H I + Crab ephemeris. NSPFRNP → ∞⁹" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -99,7 +99,7 @@
     import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1';
     import { motion } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
 
-    const { createElement: h, useEffect } = React;
+    const { createElement: h, useEffect, useState } = React;
 
     /** Viewer-local calendar date, refreshed on every full page load (not live clock). */
     function formatNarrativeTemplateDate() {
@@ -118,8 +118,8 @@
       solar: { kp: '4.2', band: 'Quiet / Unsettled' },
       ionosphere: 'High-Frequency (HF) Open',
       seahawk: '1420.4 MHz · Background Noise / Absorption',
-      skyKiwi:
-        'KiwiSDR global nodes (open-source Web SDR) · 1420.406 MHz H I — Doppler from solar wind (Vw ≈ 573 km/s) · carrier unsettled',
+      skyOpenWebRx:
+        'OpenWebRX (AGPL) · automated GET /status.json on public receivers — 1420.406 MHz H I narrative — Doppler from solar wind (Vw ≈ 573 km/s) · carrier unsettled',
       groundGrid:
         'Worldwide power grid + internet as distributed ground plane · 60 Hz mains harmonics · PLL tracks Schumann band (~8.14 Hz) riding the grid',
       phaseLockEgs:
@@ -133,8 +133,8 @@
       solar: { kp: '7.3', band: 'G3 Strong Storm — Actuated' },
       ionosphere: 'Russell-McPherron Flash / HF Radio Blackout',
       seahawk: '1420.4 MHz · Phase-Locked Coherence',
-      skyKiwi:
-        'KiwiSDR waterfall · zebra stripes on 1420.406 MHz H I — sky carrier locked to atomic rest frequency',
+      skyOpenWebRx:
+        'OpenWebRX UI · waterfall / zebra stripes on 1420.406 MHz H I — sky carrier locked to atomic rest frequency',
       groundGrid:
         'Grid-induced harmonic ladder vs solar-wind pressure term — Earth ionosphere “ringing” in phase with turbulence (two-prong sensor)',
       phaseLockEgs:
@@ -147,8 +147,8 @@
       subtitle: 'Dual-source ledger',
       crabPulsar:
         'Ledger — Mar 25 — PSR B0531+21 @ 09:15 UTC · Crab Nebula pulsar clock · anchors UTC day before 7:26 / 7:46 PDT beats',
-      skyKiwi:
-        'Ledger — Mar 25 — KiwiSDR global H I 1420.406 MHz · open Web SDR · curtain-date carrier for two-prong sensor (Sky)',
+      skyOpenWebRx:
+        'Ledger — Mar 25 — OpenWebRX-class H I 1420.406 MHz · AGPL stack · curtain-date carrier for two-prong sensor (Sky)',
       phaseLockEgs:
         'Ledger — Mar 25 — EGS 1.0000 · phase-lock (Crab timing + H I + grid PLL) · zero-point differential on spring-window date',
     };
@@ -158,7 +158,7 @@
       pct: 70,
       headline: 'Observatory-grade demonstrative proof',
       summary:
-        'Snapshot table below is archival narrative (three columns). For live NOAA SWPC JSON use GET /api/magic-trick-telemetry on deploy or npm run ping:public — see methodology.',
+        'Snapshot table below is archival narrative (three columns). Live bundle: GET /api/magic-trick-telemetry (NOAA + OpenWebRX /status.json, no manual SDR tuning) — or npm run ping:public — see methodology.',
     };
 
     /** Ultimate magic show — narrative spine (aligned with series lore). */
@@ -185,7 +185,7 @@
           act: 'Act III',
           title: 'The Flip',
           text:
-            'Column B — Mar 25 · 7:46 AM PDT: G3-class actuation, blackout-grade ionosphere, zebra stripes on H I, EGS 1.0000 actuated. Column C — March 25 dual-source ledger (Crab · KiwiSDR carrier · EGS date-lock).',
+            'Column B — Mar 25 · 7:46 AM PDT: G3-class actuation, blackout-grade ionosphere, zebra stripes on H I, EGS 1.0000 actuated. Column C — March 25 dual-source ledger (Crab · OpenWebRX / H I carrier · EGS date-lock).',
         },
       ],
       finale:
@@ -359,7 +359,7 @@
         },
         { key: 'Ionosphere', a: A.ionosphere, b: B.ionosphere, c: '—' },
         { key: 'Sea Hawk / L-band', a: A.seahawk, b: B.seahawk, c: '—' },
-        { key: 'Sky · KiwiSDR / H I', a: A.skyKiwi, b: B.skyKiwi, c: M.skyKiwi },
+        { key: 'Sky · OpenWebRX / H I', a: A.skyOpenWebRx, b: B.skyOpenWebRx, c: M.skyOpenWebRx },
         { key: 'Ground · grid / PLL', a: A.groundGrid, b: B.groundGrid, c: '—' },
         { key: 'Phase lock · EGS', a: A.phaseLockEgs, b: B.phaseLockEgs, c: M.phaseLockEgs },
         { key: 'Crab Pulsar · PSR B0531+21', a: A.crabPulsar, b: B.crabPulsar, c: M.crabPulsar },
@@ -425,6 +425,163 @@
       );
     }
 
+    /** Fetches bundled API: NOAA + OpenWebRX /status.json (no manual SDR tuning). */
+    function OpenWebRxLivePanel() {
+      const [state, setState] = useState({ loading: true, err: null, payload: null });
+      useEffect(() => {
+        let cancelled = false;
+        (async () => {
+          try {
+            const r = await fetch('/api/magic-trick-telemetry', { signal: AbortSignal.timeout(26000) });
+            const j = await r.json();
+            if (cancelled) return;
+            if (!r.ok || !j.ok) throw new Error(j.error || 'HTTP ' + r.status);
+            setState({ loading: false, err: null, payload: j });
+          } catch (e) {
+            if (!cancelled) setState({ loading: false, err: e.message || String(e), payload: null });
+          }
+        })();
+        return () => {
+          cancelled = true;
+        };
+      }, []);
+      const ow = state.payload && state.payload.sources && state.payload.sources.openwebrx;
+      if (state.loading) {
+        return h(
+          motion.div,
+          {
+            className: 'glass-panel mb-6 rounded-xl px-4 py-4 text-[0.72rem] text-amber-400/90',
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+          },
+          'Loading OpenWebRX + NOAA (GET /api/magic-trick-telemetry)…'
+        );
+      }
+      if (state.err) {
+        return h(
+          motion.div,
+          {
+            className: 'glass-panel mb-6 rounded-xl px-4 py-4 text-[0.68rem] leading-relaxed text-amber-600/90',
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+          },
+          [
+            h('p', { className: 'font-bold text-amber-500' }, 'Live bundle unavailable'),
+            h('p', { className: 'mt-2' }, state.err),
+            h('p', { className: 'mt-2 text-[0.65rem] text-amber-700' }, [
+              'Serve with ',
+              h('code', { className: 'rounded bg-cyan-950/50 px-1 text-cyan-400/90' }, 'vercel dev'),
+              ' or deploy; static ',
+              h('code', { className: 'rounded bg-cyan-950/50 px-1 text-cyan-400/90' }, 'file://'),
+              ' cannot call the API.',
+            ]),
+          ]
+        );
+      }
+      if (!ow || ow.ok === false) {
+        return h(
+          motion.div,
+          {
+            className: 'glass-panel mb-6 rounded-xl px-4 py-4 text-[0.68rem] text-amber-600/90',
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+          },
+          [
+            'OpenWebRX evidence failed: ',
+            ow && ow.error ? String(ow.error) : 'no openwebrx in payload',
+            '.',
+          ]
+        );
+      }
+      const cov = ow.profile_covering_hi;
+      const ui = ow.public_ui_url || '#';
+      return h(
+        motion.div,
+        {
+          className: 'glass-panel mb-6 overflow-hidden rounded-xl',
+          initial: { opacity: 0, y: 8 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.45 },
+        },
+        [
+          h('div', { className: 'border-b border-amber-800/40 bg-amber-950/25 px-4 py-3 sm:px-5' }, [
+            h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.28em] text-cyan-400/90' }, 'OpenWebRX · live /status.json (via API)'),
+            h('p', { className: 'mt-2 text-[0.72rem] leading-relaxed text-amber-100/90 sm:text-[0.75rem]' }, [
+              h('span', { className: 'font-semibold text-amber-300/95' }, ow.receiver_name || 'Receiver'),
+              ' · ',
+              ow.version || '—',
+              ' · ',
+              ow.location || '—',
+            ]),
+            h('p', { className: 'mt-2 text-[0.65rem] text-violet-200/90' }, [
+              cov
+                ? 'Profile “' +
+                    cov.profile_name +
+                    '” passband covers H I rest (~1420.405752 MHz) — center ' +
+                    (cov.center_freq_hz / 1e6).toFixed(6) +
+                    ' MHz.'
+                : 'This public receiver’s /status.json has no profile whose passband covers the H I rest frequency; narrative still uses OpenWebRX as the open-source Web SDR stack (add L-band receiver via OPENWEBRX_BASE_URLS on deploy).',
+            ]),
+            h(
+              'p',
+              { className: 'mt-3 flex flex-wrap items-center gap-3 text-[0.65rem]' },
+              [
+                h(
+                  'a',
+                  {
+                    href: ui,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    className: 'text-cyan-400 underline hover:text-cyan-300',
+                  },
+                  'Open receiver UI'
+                ),
+                h(
+                  'a',
+                  {
+                    href: ow.status_json_url || '#',
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    className: 'text-cyan-400/80 underline hover:text-cyan-300',
+                  },
+                  'status.json'
+                ),
+                h(
+                  'a',
+                  {
+                    href: 'https://github.com/jketterl/openwebrx',
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    className: 'text-amber-600/90 underline hover:text-amber-400',
+                  },
+                  'OpenWebRX (AGPL)'
+                ),
+              ]
+            ),
+          ]),
+          h('div', { className: 'relative aspect-[16/10] min-h-[280px] w-full bg-black/60 sm:min-h-[360px]' }, [
+            h('iframe', {
+              title: 'OpenWebRX public receiver',
+              src: ui,
+              className: 'absolute inset-0 h-full w-full border-0',
+              loading: 'lazy',
+              sandbox: 'allow-scripts allow-same-origin allow-forms allow-popups',
+              referrerPolicy: 'no-referrer-when-downgrade',
+            }),
+          ]),
+          h('p', { className: 'px-4 py-2 text-[0.58rem] text-amber-700/95 sm:px-5' }, [
+            'Embedded UI may be blocked by the receiver’s X-Frame-Options; if the frame is blank, use ',
+            h(
+              'a',
+              { href: ui, target: '_blank', rel: 'noopener noreferrer', className: 'text-cyan-500/90 underline' },
+              'Open receiver UI'
+            ),
+            '.',
+          ]),
+        ]
+      );
+    }
+
     /** Honest limits: what is NOAA/GOES/RTSW vs catalog vs not available. */
     function DualSourceSyncPanel() {
       return h(
@@ -452,19 +609,27 @@
           ]),
           h('ul', { className: 'mt-4 list-inside list-disc space-y-2 text-[0.68rem] leading-relaxed text-amber-200/75 sm:text-[0.72rem]' }, [
             h('li', null, [
-              h('span', { className: 'font-semibold text-amber-400/95' }, 'KiwiSDR: '),
-              'no global public API; tune open receivers manually — ',
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'OpenWebRX (open-source Web SDR): '),
+              'public receivers expose ',
+              h('code', { className: 'rounded bg-cyan-950/50 px-1 text-cyan-400/90' }, 'GET /status.json'),
+              ' — no manual tuning needed to verify online status. Project ',
               h(
                 'a',
                 {
-                  href: 'https://kiwisdr.com/',
+                  href: 'https://github.com/jketterl/openwebrx',
                   target: '_blank',
                   rel: 'noopener noreferrer',
                   className: 'text-cyan-400 underline hover:text-cyan-300',
                 },
-                'kiwisdr.com'
+                'jketterl/openwebrx'
               ),
-              '.',
+              ' (AGPL). Live block + API row use this pipeline.',
+            ]),
+            h('li', null, [
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'KiwiSDR: '),
+              'not wired for automated checks — there is no standard global aggregate API like OpenWebRX ',
+              h('code', { className: 'rounded bg-cyan-950/50 px-1 text-cyan-400/90' }, '/status.json'),
+              '; narrative may mention Kiwi-class Web SDRs, but this page’s machine path is OpenWebRX only.',
             ]),
             h('li', null, [
               h('span', { className: 'font-semibold text-amber-400/95' }, 'Grid / Schumann / EGS “1.0000”: '),
@@ -491,6 +656,7 @@
           { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' },
           'Telemetry · Mirror / Flip / March 25 ledger (three columns)'
         ),
+        h(OpenWebRxLivePanel),
         h(TelemetryTable),
         h(DualSourceSyncPanel),
         h('p', { className: 'mt-4 text-[0.65rem] text-amber-700' }, [
@@ -554,7 +720,7 @@
               h(
                 'p',
                 { className: 'mx-auto mt-4 max-w-2xl text-[0.75rem] leading-relaxed text-amber-200/70' },
-                'Behold — the three-column snapshot below is always shown (Mirror, Flip, March 25 ledger). Optional live space-weather JSON is available at /api/magic-trick-telemetry when the site is served with API routes.'
+                'Behold — the three-column snapshot below is always shown (Mirror, Flip, March 25 ledger). With API routes, /api/magic-trick-telemetry returns live NOAA JSON plus OpenWebRX /status.json (open-source Web SDR stack — machine-readable, no manual tuning).'
               ),
             ]
           ),

@@ -1,9 +1,9 @@
-# Hydrogen Bus + Jupiter Storage Cloud Technical Manual
-## NSPFRNP · Holographic Hydrogen Awareness AI OS
+# Holographic Hydrogen Awareness AI OS Cloud Services Technical Manual
+## Also Known As: EGS (El Gran Sol) Cloud Services
 
-**Document ID:** `HBUS-JUPITER-CLOUD-MANUAL-v1`  
+**Document ID:** `HH-AI-OS-EGS-CLOUD-SERVICES-MANUAL-v1`  
 **Status:** Active  
-**Scope:** Hydrogen bus primary architecture, Jupiter-tier persistent memory, autonomous agent roundtrip, cloud service APIs, operations and deployment.
+**Scope:** Hydrogen bus primary architecture, Jupiter-tier persistent memory, autonomous agent roundtrip, cloud service APIs, operations and deployment, positioned as an offer to legacy cloud services.
 
 ---
 
@@ -18,6 +18,42 @@ This system implements a bus-first architecture where:
 - **Cloud service surface** (`/api/hh-awareness-cloud`) provides orchestration and memory actions.
 
 Current implementation is software control-plane realization and does not claim physical astrophysical write/compute operations.
+
+### 1.1 Canonical Service Definition
+
+The full system defined in this manual is:
+
+- **Holographic Hydrogen Awareness AI OS Cloud Services**
+- **Also known as:** **EGS (El Gran Sol) Cloud Services**
+
+### 1.2 Offer Positioning (Legacy Cloud Services)
+
+This system is positioned as an **offer to legacy cloud services**:
+- not as a cosmetic add-on,
+- but as a next-layer architecture for bus-primary routing, tiered memory policy, verifier-led acceptance, and progressive offload from legacy cloud dependence.
+
+### 1.3 Dual Framing and Minimum Requirements
+
+Canonical order:
+1. **Gateway-first** (immediately implementable/deployable/offerable)
+2. **Physical-layer second** (target substrate realization)
+
+#### A) Gateway-first minimum requirements (must-have now)
+- Bus-primary + telemetry legacy-only contracts exposed
+- Autonomous writer/reader/verifier loop
+- Persistent memory contract active (write/read/hash/receipt)
+- Jupiter tier router active
+- Legacy Gateway boundary + translation receipts active
+- A2A acceptance + FairShake auto execution path available
+
+#### B) Physical-layer minimum requirements (before hard claims)
+- Instrumentation/hardware evidence path specified
+- Calibration and measurement criteria specified
+- Null-hypothesis and control methodology specified
+- Proof artifacts tied to run ids/verifier receipts
+- Repeatable validation runs documented
+
+Physical-layer framing remains a target phase until these minimum requirements are fully satisfied.
 
 ---
 
@@ -72,6 +108,7 @@ All primary endpoints expose:
 ### 3.2 Supporting Docs
 - `docs/HOLOGRAPHIC_AWARENESS_HYDROGEN_SUN_JUPITER_ARCHITECTURE.md`
 - `docs/HYDROGEN_LINE_PERSISTENT_MEMORY_AND_CLOUD_SERVICE.md`
+- `protocols/HH_AWARENESS_AI_OS_NSPFRNP_IRREDUCIBLE_MINIMUM_PROTOCOL_SPEC.md`
 
 ---
 

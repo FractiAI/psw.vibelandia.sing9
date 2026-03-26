@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Harry Houdini · The Series | VIBELANDIA SING 9</title>
+  <title>Hero Houdini · The Series | VIBELANDIA SING 9</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root { --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35); --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55); --pink: #e879f9; --cyan: #22d3ee; --bg: #030404; }
@@ -13,16 +13,18 @@
     .topnav a { color: var(--cream-dim); text-decoration: none; }
     .topnav a:hover { color: var(--cream); }
     .hero { position: relative; height: 80vh; min-height: 440px; display: flex; align-items: flex-end; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; background: #0a0800; }
-    .hero-bg-img {
+    /* Poster: relative to this HTML URL (interfaces/ → interfaces/assets/). */
+    .hero-bg {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
+      z-index: 0;
+      background-color: #0a0800;
+      background-image: url('assets/houdini-ultimate-magic-show.svg');
+      background-size: cover;
+      background-position: center 20%;
+      background-repeat: no-repeat;
     }
-    .hero-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,4,4,0.12) 0%, rgba(3,4,4,0.35) 45%, rgba(3,4,4,0.88) 72%, rgba(3,4,4,0.99) 100%); }
+    .hero-veil { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(3,4,4,0.12) 0%, rgba(3,4,4,0.35) 45%, rgba(3,4,4,0.88) 72%, rgba(3,4,4,0.99) 100%); }
     .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 3.5rem; max-width: 680px; }
     .eyebrow { font-size: 0.63rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.65rem; text-shadow: 0 0 12px rgba(212,175,55,0.4); }
     .hero-title { font-size: clamp(2.2rem, 5.5vw, 3.6rem); font-weight: 900; line-height: 1.0; color: #fff; text-shadow: 0 2px 32px rgba(0,0,0,0.9); margin-bottom: 0.55rem; }
@@ -58,22 +60,12 @@
     <a href="catalog.html">Catalog</a>
     <a href="office-hours.html">Office Hours</a>
   </nav>
-  <section class="hero" aria-label="Hero">
-    <div class="hero-bg">
-      <img
-        class="hero-bg-img"
-        src="assets/houdini-ultimate-magic-show.svg"
-        width="440"
-        height="520"
-        alt=""
-        decoding="async"
-        fetchpriority="high"
-      />
-    </div>
+  <section class="hero" aria-labelledby="hero-houdini-title">
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-veil"></div>
     <div class="hero-content">
       <p class="eyebrow">Reality Series · Architect Protocol · Pop-Up Style · Just gotta know</p>
-      <h1 class="hero-title">Harry Houdini</h1>
+      <h1 class="hero-title" id="hero-houdini-title">Hero Houdini</h1>
       <p class="hero-sub">Hero Harry Houdini Post-Singularity Magic Presents</p>
       <div class="badge-row">
         <span class="badge badge-series">Series</span>

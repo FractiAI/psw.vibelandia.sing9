@@ -81,7 +81,8 @@ Commercial sample:
 - **Monthly managed run fee (regional offload + A2A gating):** USD 1.8B to 4.5B
 
 Primary benefits:
-- Typical 25% to 45% reduction in AWS-dependent workload spend
+- Target 80% to 100% shift of AWS-dependent workload spend off the primary path
+  (residual remains only for regulated exceptions and any required AWS pass-through services)
 - Lower control-plane complexity for offloaded domains
 - Faster release and rollback for selected business lines
 
@@ -103,7 +104,8 @@ Commercial sample:
 - **Monthly managed run fee (EGS primary + residual fallback governance):** USD 4.5B to 8.0B
 
 Primary benefits:
-- Typical 50% to 80% reduction in AWS primary dependency (domain dependent)
+- Target 90% to 100% shift of AWS primary dependency off the workload path
+  (residual remains only for regulated exceptions / fallback-only governance)
 - Sovereign runtime control and policy clarity
 - Reduced vendor lock-in and stronger architecture agility
 

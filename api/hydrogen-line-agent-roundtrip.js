@@ -34,6 +34,18 @@ function makeRunId() {
 }
 
 async function getHydrogenLineContext(signal) {
+  const strictNoLegacy = String(process.env.HLINE_STRICT_NO_LEGACY || '').toLowerCase() === 'true';
+  if (strictNoLegacy) {
+    return {
+      ok: false,
+      error: 'strict_no_legacy_mode',
+      receiver_name: null,
+      status_json_url: null,
+      base: null,
+      profile_covering_hi: null,
+      skipped: true,
+    };
+  }
   const mod = await import('../lib/openwebrx-public-evidence.mjs');
   const { fetchOpenWebRxPublicStatus } = mod;
   try {
@@ -110,7 +122,9 @@ async function writerAgent({ runId, location, context, signal }) {
     persistence_mode_detail: write.mode_detail,
     memory_record_id: write.record.id,
     jupiter_tier: write.record.tier,
+    replication: write.record.replication,
     placement_receipt: write.placement_receipt,
+    storage_policy: write.record.storage_policy,
     key,
     payload,
   };
@@ -190,6 +204,22 @@ module.exports = async (req, res) => {
     const writer = await writerAgent({ runId, location, context, signal });
     const reader = await readerAgent({ location, signal });
     const verifier = verifierAgent({ writer, reader, context });
+    const schedMod = await import('../lib/solar-compute-scheduler.mjs');
+    const compute_receipt = schedMod.createSolarComputeReceipt({
+      run_id: runId,
+      location_hash: location.location_hash,
+      memory_record_id: writer.memory_record_id,
+      memory_value_hash: writer.placement_receipt.value_hash,
+      jupiter_tier: writer.jupiter_tier,
+      storage_policy: writer.storage_policy,
+    });
+    const signer = await import('../lib/verifier-receipts.mjs');
+    const verifier_receipt = await signer.signVerifierReceipt({
+      run_id: runId,
+      verifier,
+      compute_receipt,
+      placement_receipt: writer.placement_receipt,
+    });
 
     const finishedAt = nowIso();
     return res.status(verifier.success ? 200 : 500).json({
@@ -209,6 +239,7 @@ module.exports = async (req, res) => {
         storage_tier: writer.jupiter_tier || 'europa',
       },
       persistence: memCfg,
+      strict_no_legacy_mode: memCfg.strict_no_legacy_mode === true,
       no_cloud_storage: memCfg.cloud_persistent !== true,
       no_external_write_api: true,
       human_intervention_required: false,
@@ -223,10 +254,13 @@ module.exports = async (req, res) => {
         receiver_name: context?.receiver_name || null,
         status_json_url: context?.status_json_url || null,
         profile_covering_hi: context?.profile_covering_hi || null,
+        skipped_in_strict_no_legacy_mode: context?.skipped === true,
       },
       writer,
       reader,
       verifier,
+      compute_receipt,
+      verifier_receipt,
     });
   } catch (e) {
     return res.status(500).json({

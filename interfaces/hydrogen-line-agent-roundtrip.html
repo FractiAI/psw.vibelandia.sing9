@@ -56,6 +56,28 @@
       font-weight: 700;
       margin-bottom: 0.8rem;
     }
+    .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .badge {
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.7);
+      color: #e2e8f0;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.55rem;
+      font-weight: 600;
+    }
+    .badge.ok { border-color: rgba(34,197,94,0.6); color: #86efac; }
+    .badge.warn { border-color: rgba(250,204,21,0.6); color: #fde68a; }
+    .receipt {
+      margin-bottom: 0.8rem;
+      background: rgba(2,6,23,0.55);
+      border: 1px solid rgba(125,211,252,0.24);
+      border-radius: 8px;
+      padding: 0.7rem;
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: #cbd5e1;
+    }
     .ok { color: #22c55e; }
     .fail { color: #f87171; }
     pre {
@@ -96,6 +118,8 @@
 
     <div class="card">
       <div id="status" class="status">Status: idle</div>
+      <div id="badges" class="badges"></div>
+      <div id="receipt" class="receipt" hidden></div>
       <pre id="output">Press "Run Autonomous Test" to execute.</pre>
     </div>
   </div>
@@ -104,6 +128,8 @@
     (function () {
       var runBtn = document.getElementById('runBtn');
       var statusEl = document.getElementById('status');
+      var badgesEl = document.getElementById('badges');
+      var receiptEl = document.getElementById('receipt');
       var outEl = document.getElementById('output');
 
       function setStatus(text, ok) {
@@ -114,12 +140,34 @@
       async function runTest() {
         runBtn.disabled = true;
         setStatus('Status: running...', null);
+        badgesEl.innerHTML = '';
+        receiptEl.hidden = true;
         outEl.textContent = 'Executing writer -> reader -> verifier...';
         try {
           var res = await fetch('/api/hydrogen-line-agent-roundtrip');
           var data = await res.json();
           var success = !!data.ok;
           setStatus('Status: ' + (success ? 'SUCCESS' : 'FAIL'), success);
+          var tier = data && data.writer ? data.writer.jupiter_tier : null;
+          var strict = data && data.strict_no_legacy_mode === true;
+          var repl = data && data.writer && data.writer.replication ? data.writer.replication.replica_set || [] : [];
+          badgesEl.innerHTML = [
+            '<span class="badge ' + (success ? 'ok' : 'warn') + '">Verifier: ' + (success ? 'PASS' : 'FAIL') + '</span>',
+            '<span class="badge ok">Bus Primary</span>',
+            '<span class="badge ' + (strict ? 'ok' : 'warn') + '">Strict No Legacy: ' + (strict ? 'ON' : 'OFF') + '</span>',
+            '<span class="badge">Tier: ' + (tier || 'n/a') + '</span>',
+            '<span class="badge">Replicas: ' + (repl.length || 0) + '</span>'
+          ].join('');
+          if (data && data.writer && data.writer.placement_receipt) {
+            var pr = data.writer.placement_receipt;
+            receiptEl.hidden = false;
+            receiptEl.innerHTML =
+              '<strong>Placement Receipt</strong><br>' +
+              'Record: <code>' + pr.record_id + '</code><br>' +
+              'Tier: <code>' + pr.tier + '</code><br>' +
+              'Value hash: <code>' + pr.value_hash + '</code><br>' +
+              'Persistence: <code>' + pr.persistence_mode + '</code>';
+          }
           outEl.textContent = JSON.stringify(data, null, 2);
         } catch (err) {
           setStatus('Status: FAIL', false);

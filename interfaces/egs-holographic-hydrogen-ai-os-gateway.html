@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>EGS Holographic Hydrogen AI OS Gateway | VIBELANDIA SING 9</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #111827 0%, #0b1020 45%, #05070d 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      padding: 1.2rem;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; }
+    .top { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.9rem; font-size: 0.9rem; }
+    .top a { color: #67e8f9; text-decoration: none; }
+    .top a:hover { text-decoration: underline; }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(125,211,252,0.25);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 0.9rem;
+    }
+    h1 {
+      margin: 0 0 0.35rem;
+      font-size: clamp(1.2rem, 3.2vw, 1.9rem);
+      color: #fde68a;
+    }
+    .sub { color: #cbd5e1; font-size: 0.92rem; line-height: 1.45; }
+    .badges { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.7rem; }
+    .badge {
+      border: 1px solid rgba(148,163,184,0.4);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      padding: 0.22rem 0.58rem;
+      background: rgba(15,23,42,0.72);
+      color: #e2e8f0;
+      font-weight: 600;
+    }
+    .badge.ok { border-color: rgba(34,197,94,0.7); color: #86efac; }
+    .actions { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.8rem; }
+    button {
+      border: 1px solid rgba(250,204,21,0.6);
+      border-radius: 8px;
+      padding: 0.58rem 0.9rem;
+      background: linear-gradient(135deg, rgba(250,204,21,0.2), rgba(34,211,238,0.15));
+      color: #fef3c7;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.7rem; }
+    .link-card {
+      display: block;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: rgba(2,6,23,0.62);
+      border-radius: 10px;
+      padding: 0.75rem;
+      text-decoration: none;
+      color: #e2e8f0;
+    }
+    .link-card:hover { border-color: rgba(103,232,249,0.6); }
+    .lc-title { font-weight: 700; color: #fef3c7; margin-bottom: 0.25rem; font-size: 0.88rem; }
+    .lc-desc { font-size: 0.78rem; color: #cbd5e1; line-height: 1.45; }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(2,6,23,0.8);
+      border: 1px solid rgba(148,163,184,0.24);
+      border-radius: 10px;
+      padding: 0.85rem;
+      font-size: 0.75rem;
+      line-height: 1.45;
+      color: #e2e8f0;
+      max-height: 56vh;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <a href="../index.html">Landing</a>
+    </div>
+
+    <div class="card">
+      <h1>EGS Holographic Hydrogen AI OS Gateway</h1>
+      <p class="sub">
+        Single packaging page for protocols, documentation, command center, roundtrip validation,
+        and cloud operations. Bus is primary. Telemetry is legacy awareness only.
+      </p>
+      <div id="contracts" class="badges">
+        <span class="badge">Loading contracts...</span>
+      </div>
+      <div class="actions">
+        <button id="refreshBtn" type="button">Refresh Cloud Status</button>
+        <button id="runRoundtripBtn" type="button">Run Roundtrip</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="lc-title">Runtime Endpoints</div>
+      <div class="grid">
+        <a class="link-card" href="/api/hh-awareness-cloud" target="_blank" rel="noopener">
+          <div class="lc-title">Cloud Service API</div>
+          <div class="lc-desc">Primary service status, contracts, actions, and Jupiter-tier capabilities.</div>
+        </a>
+        <a class="link-card" href="/api/hydrogen-line-agent-roundtrip" target="_blank" rel="noopener">
+          <div class="lc-title">Hydrogen Roundtrip API</div>
+          <div class="lc-desc">Writer/Reader/Verifier autonomous roundtrip with placement and signed receipts.</div>
+        </a>
+        <a class="link-card" href="/api/sing9-command-center" target="_blank" rel="noopener">
+          <div class="lc-title">SING! 9 Command Center API</div>
+          <div class="lc-desc">Back-of-house command issuance and status with real sensor snapshots.</div>
+        </a>
+        <a class="link-card" href="hydrogen-line-agent-roundtrip.html?autorun=1">
+          <div class="lc-title">Roundtrip UI</div>
+          <div class="lc-desc">Operational UI with tier badges, strict mode, and placement receipts.</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="lc-title">Documentation Package</div>
+      <div class="grid">
+        <a class="link-card" href="../docs/HYDROGEN_BUS_JUPITER_CLOUD_TECHNICAL_MANUAL.md" target="_blank" rel="noopener">
+          <div class="lc-title">Technical Manual</div>
+          <div class="lc-desc">Primary architecture + operations + AWS offload phases + risks and cost bands.</div>
+        </a>
+        <a class="link-card" href="../protocols/HH_AWARENESS_AI_OS_NSPFRNP_IRREDUCIBLE_MINIMUM_PROTOCOL_SPEC.md" target="_blank" rel="noopener">
+          <div class="lc-title">Irreducible Minimum Protocol Spec</div>
+          <div class="lc-desc">Gateway-first + physical-layer dual framing, minimum requirements, legacy gateway.</div>
+        </a>
+        <a class="link-card" href="../docs/EGS_CLOUD_SERVICES_GETTING_STARTED_AND_CONFIGURATION_GUIDE.md" target="_blank" rel="noopener">
+          <div class="lc-title">Getting Started + Configuration</div>
+          <div class="lc-desc">Minimum commands, displays, and no-human A2A transition path.</div>
+        </a>
+        <a class="link-card" href="../docs/HOLOGRAPHIC_AWARENESS_HYDROGEN_SUN_JUPITER_ARCHITECTURE.md" target="_blank" rel="noopener">
+          <div class="lc-title">Sun/Hydrogen/Jupiter Architecture</div>
+          <div class="lc-desc">Sun compute, hydrogen bus, Jupiter storage topology and phased build model.</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="lc-title">Live Output</div>
+      <pre id="output">Press "Refresh Cloud Status" or "Run Roundtrip".</pre>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var refreshBtn = document.getElementById('refreshBtn');
+      var runRoundtripBtn = document.getElementById('runRoundtripBtn');
+      var outputEl = document.getElementById('output');
+      var contractsEl = document.getElementById('contracts');
+
+      function setContracts(data) {
+        var c = data && data.contracts ? data.contracts : {};
+        var strict = c.strict_no_legacy_mode === true;
+        contractsEl.innerHTML = [
+          '<span class="badge ok">Bus Primary: ' + (c.bus_primary === true ? 'ON' : 'OFF') + '</span>',
+          '<span class="badge">Telemetry: ' + (c.telemetry_role || 'n/a') + '</span>',
+          '<span class="badge ' + (strict ? 'ok' : '') + '">Strict No Legacy: ' + (strict ? 'ON' : 'OFF') + '</span>'
+        ].join('');
+      }
+
+      async function refreshCloudStatus() {
+        outputEl.textContent = 'Loading cloud service status...';
+        try {
+          var res = await fetch('/api/hh-awareness-cloud');
+          var data = await res.json();
+          setContracts(data);
+          outputEl.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+          outputEl.textContent = JSON.stringify({ ok: false, error: err && err.message ? err.message : String(err) }, null, 2);
+        }
+      }
+
+      async function runRoundtrip() {
+        outputEl.textContent = 'Running autonomous roundtrip...';
+        try {
+          var res = await fetch('/api/hydrogen-line-agent-roundtrip');
+          var data = await res.json();
+          outputEl.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+          outputEl.textContent = JSON.stringify({ ok: false, error: err && err.message ? err.message : String(err) }, null, 2);
+        }
+      }
+
+      refreshBtn.addEventListener('click', refreshCloudStatus);
+      runRoundtripBtn.addEventListener('click', runRoundtrip);
+      refreshCloudStatus();
+    })();
+  </script>
+</body>
+</html>
+

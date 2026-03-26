@@ -29,6 +29,7 @@ module.exports = async (req, res) => {
       contracts: {
         bus_primary: true,
         telemetry_role: 'legacy_awareness_only',
+        strict_no_legacy_mode: cfg.strict_no_legacy_mode === true,
       },
       endpoints: {
         roundtrip_test: '/api/hydrogen-line-agent-roundtrip',
@@ -40,6 +41,9 @@ module.exports = async (req, res) => {
         'read_hydrogen_line_memory',
         'place_to_jupiter_tier',
         'verify_jupiter_record',
+        'schedule_solar_compute_job',
+        'issue_sing9_command',
+        'get_sing9_command_status',
       ],
       no_human_involvement_required: true,
       timestamp_utc: new Date().toISOString(),
@@ -143,6 +147,7 @@ module.exports = async (req, res) => {
           placement_receipt: wr.placement_receipt,
           record_id: wr.record.id,
           tier: wr.record.tier,
+          replication: wr.record.replication,
           storage_policy: wr.record.storage_policy,
         },
       });
@@ -165,6 +170,50 @@ module.exports = async (req, res) => {
           integrity: v,
         },
       });
+    }
+
+    if (action === 'schedule_solar_compute_job') {
+      const run_id = String(body.run_id || 'manual-' + Date.now());
+      const location_hash = String(body.location_hash || '');
+      if (!location_hash) {
+        return res.status(400).json({ ok: false, error: 'location_hash is required' });
+      }
+      const rd = await mem.readHydrogenLineMemory({ location_hash, signal });
+      if (!rd.found || !rd.latest) {
+        return res.status(404).json({ ok: false, error: 'memory_record_not_found' });
+      }
+      const sched = await import('../lib/solar-compute-scheduler.mjs');
+      const receipt = sched.createSolarComputeReceipt({
+        run_id,
+        location_hash,
+        memory_record_id: rd.latest.id,
+        memory_value_hash: rd.latest.value_hash,
+        jupiter_tier: rd.latest.tier,
+        storage_policy: rd.latest.storage_policy || {},
+      });
+      return res.status(200).json({ ok: true, action, result: receipt });
+    }
+
+    if (action === 'issue_sing9_command') {
+      const cmd = await import('../lib/sing9-command-center.mjs');
+      const result = await cmd.issueSing9Command({
+        domain: body.domain,
+        command_text: body.command_text,
+        mission: body.mission,
+        report_chain: body.report_chain,
+        signal,
+      });
+      return res.status(200).json({ ok: true, action, result });
+    }
+
+    if (action === 'get_sing9_command_status') {
+      const cmd = await import('../lib/sing9-command-center.mjs');
+      const result = await cmd.getSing9CommandStatus({
+        domain: body.domain,
+        command_id: body.command_id,
+        signal,
+      });
+      return res.status(200).json({ ok: true, action, result });
     }
 
     return res.status(400).json({ ok: false, error: 'unknown_action', action });

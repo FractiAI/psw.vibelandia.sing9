@@ -100,7 +100,9 @@ All primary endpoints expose:
 ### 3.1 Core Files
 - `api/hydrogen-line-agent-roundtrip.js`
 - `api/hh-awareness-cloud.js`
+- `api/sing9-command-center.js`
 - `lib/hline-persistent-memory.mjs`
+- `lib/sing9-command-center.mjs`
 - `lib/openwebrx-public-evidence.mjs`
 - `interfaces/hydrogen-line-agent-roundtrip.html`
 - `interfaces/my-whiteboard.html`
@@ -108,6 +110,7 @@ All primary endpoints expose:
 ### 3.2 Supporting Docs
 - `docs/HOLOGRAPHIC_AWARENESS_HYDROGEN_SUN_JUPITER_ARCHITECTURE.md`
 - `docs/HYDROGEN_LINE_PERSISTENT_MEMORY_AND_CLOUD_SERVICE.md`
+- `docs/EGS_CLOUD_SERVICES_GETTING_STARTED_AND_CONFIGURATION_GUIDE.md`
 - `protocols/HH_AWARENESS_AI_OS_NSPFRNP_IRREDUCIBLE_MINIMUM_PROTOCOL_SPEC.md`
 
 ---
@@ -191,6 +194,8 @@ Actions:
 - `read_hydrogen_line_memory`
 - `place_to_jupiter_tier`
 - `verify_jupiter_record`
+- `issue_sing9_command`
+- `get_sing9_command_status`
 
 ---
 

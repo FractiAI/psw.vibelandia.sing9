@@ -15,7 +15,7 @@ These are **actual-data baselines** when populated; they are **not** re-fetched 
 |--------|-------------------|----------|
 | **T_IONOSPHERE gate** | `/api/live-houdini-readings` or NOAA direct | Current **planetary Kp** for storm gate (≥ 5). |
 | **Equinox narrative API** | `/api/live-houdini-readings?equinox=1` | Current machine-readable **Mar 20 window** stats when upstream allows. |
-| **T_CLOUD_EDGE** | `/api/cloud-compute-probe` | Live Node: SHA-256 bench, **handler wall time**, **RSS / heap**, region. |
+| **T_CLOUD_EDGE** | `/api/hydrogen-line-agent-roundtrip` | Live Node orchestration receipt: writer/reader/verifier cycle, roundtrip timing, and signed verifier payload. |
 | **T_BRIDGE_PROXY** | Browser mic + FFT | Live **spectral wall time** + coherence thresholds. |
 | **Blank Stone** | `/api/blank-stone-hydrogen` | Live hydrogen-line **packet** + headers. |
 | **Lattice firmware** | `/lattice-status.json` | Live **3I/ATLAS / Seahawk** node string, `frequency_mhz`, **signature** (firmware handshake surface). |

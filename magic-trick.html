@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
   <title>Sovereign Terminal · March 25 — The 180 Spin Flip · SING 9</title>
-  <meta name="description" content="Houdini March 25 Ultimate Magic Show — Sovereign Terminal: poster, three-act narrative, Mirror vs Flip telemetry, observatory proof index. Static page. NSPFRNP → ∞⁹" />
+  <meta name="description" content="Houdini March 25 Ultimate Magic Show — Sovereign Terminal: live NOAA SWPC + GOES + RTSW via /api/magic-trick-telemetry; catalog H I + Crab ephemeris. NSPFRNP → ∞⁹" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -99,7 +99,7 @@
     import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1';
     import { motion } from 'https://esm.sh/framer-motion@11.11.17?deps=react@18.3.1,react-dom@18.3.1';
 
-    const { createElement: h, useEffect } = React;
+    const { createElement: h, useEffect, useState } = React;
 
     /** Viewer-local calendar date, refreshed on every full page load (not live clock). */
     function formatNarrativeTemplateDate() {
@@ -111,59 +111,14 @@
       }).format(new Date());
     }
 
-    /** Hard-coded narrative constants — archival snapshot only (not live simulation). */
-    const TELEMETRY_SNAPSHOT_A = {
-      id: 'A',
-      label: 'Mar 25 · 7:26 AM PDT',
-      subtitle: 'The Mirror',
-      solar: { kp: '4.2', band: 'Quiet / Unsettled' },
-      ionosphere: 'High-Frequency (HF) Open',
-      seahawk: '1420.4 MHz · Background Noise / Absorption',
-      skyKiwi:
-        'KiwiSDR global nodes (open-source Web SDR) · 1420.406 MHz H I — Doppler from solar wind (Vw ≈ 573 km/s) · carrier unsettled',
-      groundGrid:
-        'Worldwide power grid + internet as distributed ground plane · 60 Hz mains harmonics · PLL tracks Schumann band (~8.14 Hz) riding the grid',
-      phaseLockEgs:
-        'Coherence index below 1.0000 · master clock = rest H I · ratio not actuated',
-      crabPulsar:
-        'Mar 25 — PSR B0531+21 (M1) — 09:15 UTC lock confirmed · ~30.2 Hz / ~33.2 ms · precedes 7:26 PDT Mirror same calendar day',
-    };
-
-    const TELEMETRY_SNAPSHOT_B = {
-      id: 'B',
-      label: 'Mar 25 · 7:46 AM PDT',
-      subtitle: 'The Flip',
-      solar: { kp: '7.3', band: 'G3 Strong Storm — Actuated' },
-      ionosphere: 'Russell-McPherron Flash / HF Radio Blackout',
-      seahawk: '1420.4 MHz · Phase-Locked Coherence',
-      skyKiwi:
-        'KiwiSDR waterfall · zebra stripes on 1420.406 MHz H I — sky carrier locked to atomic rest frequency',
-      groundGrid:
-        'Grid-induced harmonic ladder vs solar-wind pressure term — Earth ionosphere “ringing” in phase with turbulence (two-prong sensor)',
-      phaseLockEgs:
-        '1.0000 resolution · zero-point differential (Sky ↔ Ground) · EGS fractal constant actuated · zero phase error write',
-      crabPulsar:
-        'Mar 25 — PSR B0531+21 — 09:15 UTC lock retained through Flip · pulsar phase feeds dual-source (Sky ↔ Ground) at 7:46 PDT',
-    };
-
-    /** March 25 dual-source ledger column — same calendar date as A/B; consolidates Crab + KiwiSDR + EGS for the curtain row. */
-    const TELEMETRY_SNAPSHOT_M25 = {
-      label: 'March 25',
-      subtitle: 'Dual-source ledger',
-      crabPulsar:
-        'Ledger — Mar 25 — PSR B0531+21 @ 09:15 UTC · Crab Nebula pulsar clock · anchors UTC day before 7:26 / 7:46 PDT beats',
-      skyKiwi:
-        'Ledger — Mar 25 — KiwiSDR global H I 1420.406 MHz · open Web SDR · curtain-date carrier for two-prong sensor (Sky)',
-      phaseLockEgs:
-        'Ledger — Mar 25 — EGS 1.0000 · phase-lock (Crab timing + H I + grid PLL) · zero-point differential on spring-window date',
-    };
+    /** Telemetry rows: loaded from GET /api/magic-trick-telemetry (NOAA SWPC + GOES + RTSW; catalog H I + Crab). */
 
     /** Keep in sync with `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md` § Abstract (composite index). */
     const OBSERVATORY_GRADE_PROOF = {
       pct: 70,
       headline: 'Observatory-grade demonstrative proof',
       summary:
-        'Composite index from public ops feeds (NOAA SWPC, GOES, DONKI), JPL Horizons/SBDB, four-pillar intent + edge stack, and this narrative surface. Independent ELF day-plot and L-band comet claim evidence are not included until supplied — see methodology.',
+        'This table uses live NOAA SWPC / GOES / RTSW JSON when /api/magic-trick-telemetry succeeds. Composite proof index in methodology still includes four-pillar tests and optional ELF/L-band tiers — see doc.',
     };
 
     /** Ultimate magic show — narrative spine (aligned with series lore). */
@@ -181,15 +136,15 @@
         },
         {
           act: 'Act II',
-          title: 'The Mirror — Mar 25 · 7:26 AM PDT',
+          title: 'The Mirror — prior NOAA 1-min Kp',
           text:
-            'Snapshot A — The Storm still gathering; The Blackout not yet fallen; The Whistle only background on 1420.4 MHz. Crab Pulsar PSR B0531+21 observed lock 09:15 UTC already on the board; KiwiSDR sky carrier and grid PLL not yet at 1.0000 — the calm before the beat.',
+            'Column A — prior sample from NOAA SWPC planetary K index (1-minute JSON): the beat before the latest tick. Same public feed space-weather desks use.',
         },
         {
           act: 'Act III',
-          title: 'The Flip — Mar 25 · 7:46 AM PDT',
+          title: 'The Flip — latest NOAA 1-min Kp',
           text:
-            'Snapshot B — The Storm actuated (G-scale); The Blackout cuts HF; The Whistle locks on the hydrogen line; Crab Pulsar PSR B0531+21 lock at 09:15 UTC held; dual-source phase-lock hits 1.0000 (Sky ↔ Ground) — one dramatic beat.',
+            'Column B — latest 1-minute Kp + GOES soft X-ray + RTSW solar wind from operational JSON. Ledger column: H I rest frequency + Crab catalog period + honest limits (no KiwiSDR aggregate API; no EGS sensor from NOAA).',
         },
       ],
       finale:
@@ -350,52 +305,48 @@
       );
     }
 
-    function TelemetryTable() {
-      const rows = [
-        {
-          key: 'The Storm',
-          a: 'Kp-index ' + TELEMETRY_SNAPSHOT_A.solar.kp + ' (' + TELEMETRY_SNAPSHOT_A.solar.band + ')',
-          b: 'Kp-index ' + TELEMETRY_SNAPSHOT_B.solar.kp + ' (' + TELEMETRY_SNAPSHOT_B.solar.band + ')',
-          c: 'Mar 25 — geo beat only (see A/B PDT columns)',
-        },
-        {
-          key: 'The Blackout',
-          a: TELEMETRY_SNAPSHOT_A.ionosphere,
-          b: TELEMETRY_SNAPSHOT_B.ionosphere,
-          c: 'Mar 25 — ionosphere beat only (see A/B)',
-        },
-        {
-          key: 'The Whistle',
-          a: TELEMETRY_SNAPSHOT_A.seahawk,
-          b: TELEMETRY_SNAPSHOT_B.seahawk,
-          c: 'Mar 25 — H-band narrative only (see A/B)',
-        },
-        {
-          key: 'Crab Pulsar — PSR B0531+21',
-          a: TELEMETRY_SNAPSHOT_A.crabPulsar,
-          b: TELEMETRY_SNAPSHOT_B.crabPulsar,
-          c: TELEMETRY_SNAPSHOT_M25.crabPulsar,
-        },
-        {
-          key: 'Sky — KiwiSDR · H I',
-          a: TELEMETRY_SNAPSHOT_A.skyKiwi,
-          b: TELEMETRY_SNAPSHOT_B.skyKiwi,
-          c: TELEMETRY_SNAPSHOT_M25.skyKiwi,
-        },
-        {
-          key: 'Ground — grid PLL',
-          a: TELEMETRY_SNAPSHOT_A.groundGrid,
-          b: TELEMETRY_SNAPSHOT_B.groundGrid,
-          c: 'Mar 25 — grid reference folded into phase-lock column →',
-        },
-        {
-          key: 'Phase-lock — EGS (1.0000)',
-          a: TELEMETRY_SNAPSHOT_A.phaseLockEgs,
-          b: TELEMETRY_SNAPSHOT_B.phaseLockEgs,
-          c: TELEMETRY_SNAPSHOT_M25.phaseLockEgs,
-        },
-      ];
-
+    function TelemetryTable(props) {
+      const loading = props.loading;
+      const err = props.error;
+      const telemetry = props.telemetry;
+      if (loading) {
+        return h(
+          motion.div,
+          {
+            className: 'glass-panel rounded-xl px-5 py-8 text-center text-[0.75rem] text-amber-400/90',
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+          },
+          'Loading NOAA SWPC / GOES / RTSW (public JSON)…'
+        );
+      }
+      if (err) {
+        return h(
+          motion.div,
+          {
+            className: 'glass-panel rounded-xl px-5 py-6 text-[0.72rem] leading-relaxed text-amber-200/90',
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+          },
+          [
+            h('p', { className: 'font-bold text-amber-500' }, 'Telemetry API unavailable'),
+            h('p', { className: 'mt-2 text-amber-600/90' }, String(err)),
+            h('p', { className: 'mt-3 text-[0.65rem] text-amber-700' }, [
+              'Run ',
+              h('code', { className: 'rounded bg-cyan-950/50 px-1 text-cyan-400/90' }, 'vercel dev'),
+              ' or deploy; open ',
+              h('code', { className: 'rounded bg-cyan-950/50 px-1 text-cyan-400/90' }, '/api/magic-trick-telemetry'),
+              '. CLI: ',
+              h('code', { className: 'rounded bg-cyan-950/50 px-1 text-cyan-400/90' }, 'npm run ping:public'),
+            ]),
+          ]
+        );
+      }
+      if (!telemetry || !telemetry.rows || !telemetry.table_headers) {
+        return h('div', { className: 'text-amber-600/80 text-[0.75rem]' }, 'No telemetry payload.');
+      }
+      const th = telemetry.table_headers;
+      const rows = telemetry.rows;
       return h(
         motion.div,
         {
@@ -404,49 +355,58 @@
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.5 },
         },
-        h('table', { className: 'w-full min-w-[1080px] border-collapse text-left text-[0.7rem] sm:text-xs' }, [
-          h('thead', null, h('tr', { className: 'border-b border-amber-800/60 bg-amber-950/30' }, [
-            h('th', { className: 'p-3 font-bold uppercase tracking-widest text-amber-500/90' }, 'Channel'),
-            h('th', { className: 'p-3 font-bold text-amber-200' }, [
-              h('div', null, 'Snapshot A · ' + TELEMETRY_SNAPSHOT_A.label),
-              h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-amber-500/90' }, TELEMETRY_SNAPSHOT_A.subtitle),
-            ]),
-            h('th', { className: 'p-3 font-bold text-amber-300' }, [
-              h('div', null, 'Snapshot B · ' + TELEMETRY_SNAPSHOT_B.label),
-              h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-amber-400/90' }, TELEMETRY_SNAPSHOT_B.subtitle),
-            ]),
-            h('th', { className: 'p-3 font-bold text-violet-200/95' }, [
-              h('div', null, TELEMETRY_SNAPSHOT_M25.label + ' · ' + TELEMETRY_SNAPSHOT_M25.subtitle),
-              h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-violet-300/85' }, 'Crab · KiwiSDR · EGS · same calendar date'),
-            ]),
-          ])),
-          h(
-            'tbody',
-            null,
-            rows.map((row, i) =>
-              h(
-                motion.tr,
-                {
-                  key: row.key,
-                  className: 'border-b border-amber-900/30',
-                  initial: { opacity: 0, x: -8 },
-                  animate: { opacity: 1, x: 0 },
-                  transition: { delay: 0.06 * i },
-                },
-                [
-                  h('td', { className: 'p-3 font-bold text-amber-600/90' }, row.key),
-                  h('td', { className: 'p-3 text-amber-100/80' }, row.a),
-                  h('td', { className: 'p-3 text-amber-200/95' }, row.b),
-                  h('td', { className: 'p-3 text-violet-100/90' }, row.c),
-                ]
+        [
+          telemetry.fetched_at_utc
+            ? h(
+                'p',
+                { className: 'mx-3 mt-3 mb-1 text-[0.62rem] tabular-nums text-cyan-500/90' },
+                'Fetched (UTC) ' + telemetry.fetched_at_utc
               )
-            )
-          ),
-        ])
+            : null,
+          h('table', { className: 'w-full min-w-[1080px] border-collapse text-left text-[0.7rem] sm:text-xs' }, [
+            h('thead', null, h('tr', { className: 'border-b border-amber-800/60 bg-amber-950/30' }, [
+              h('th', { className: 'p-3 font-bold uppercase tracking-widest text-amber-500/90' }, 'Channel'),
+              h('th', { className: 'p-3 font-bold text-amber-200' }, [
+                h('div', null, th.a.line1),
+                h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-amber-500/90' }, th.a.line2),
+              ]),
+              h('th', { className: 'p-3 font-bold text-amber-300' }, [
+                h('div', null, th.b.line1),
+                h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-amber-400/90' }, th.b.line2),
+              ]),
+              h('th', { className: 'p-3 font-bold text-violet-200/95' }, [
+                h('div', null, th.c.line1),
+                h('div', { className: 'mt-1 text-[0.65rem] font-normal normal-case tracking-normal text-violet-300/85' }, th.c.line2),
+              ]),
+            ])),
+            h(
+              'tbody',
+              null,
+              rows.map((row, i) =>
+                h(
+                  motion.tr,
+                  {
+                    key: row.key,
+                    className: 'border-b border-amber-900/30',
+                    initial: { opacity: 0, x: -8 },
+                    animate: { opacity: 1, x: 0 },
+                    transition: { delay: 0.06 * i },
+                  },
+                  [
+                    h('td', { className: 'p-3 font-bold text-amber-600/90' }, row.key),
+                    h('td', { className: 'p-3 text-amber-100/80' }, row.a),
+                    h('td', { className: 'p-3 text-amber-200/95' }, row.b),
+                    h('td', { className: 'p-3 text-violet-100/90' }, row.c),
+                  ]
+                )
+              )
+            ),
+          ]),
+        ]
       );
     }
 
-    /** Static narrative — dual-source measurement protocol (not live KiwiSDR / grid ingest on this page). */
+    /** Honest limits: what is NOAA/GOES/RTSW vs catalog vs not available. */
     function DualSourceSyncPanel() {
       return h(
         motion.div,
@@ -457,74 +417,101 @@
           transition: { duration: 0.45, delay: 0.08 },
         },
         [
-          h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.28em] text-cyan-400/90' }, 'Dual-source sync · 1.0000 resolution'),
-          h('p', { className: 'mt-3 text-[0.65rem] leading-relaxed text-violet-300/80 sm:text-[0.68rem]' }, [
-            'Telemetry columns: A/B are ',
-            h('span', { className: 'font-semibold text-amber-200/90' }, 'Mar 25'),
-            ' local PDT snapshots (Mirror vs Flip). The ',
-            h('span', { className: 'font-semibold text-violet-200/95' }, 'March 25 · dual-source ledger'),
-            ' column is the same calendar date — consolidated Crab, KiwiSDR, and EGS phase-lock row.',
-          ]),
+          h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.28em] text-cyan-400/90' }, 'Public data only — no mock sensors'),
           h('p', { className: 'mt-3 text-[0.72rem] leading-relaxed text-amber-200/85 sm:text-[0.75rem]' }, [
-            'El Gran Sol’s fractal constant (EGS) is read at ',
-            h('span', { className: 'text-cyan-300/95' }, '1.0000'),
-            ' when two independent global streams ',
-            h('span', { className: 'font-semibold text-amber-300/95' }, 'phase-lock'),
-            ': the ',
-            h('span', { className: 'text-cyan-400/90' }, 'interstellar hydrogen pulse'),
-            ' (carrier) and the ',
-            h('span', { className: 'text-cyan-400/90' }, 'Earth power-grid reference'),
-            ' (ground), using the worldwide ',
-            h(
-              'a',
-              {
-                href: 'https://kiwisdr.com/',
-                target: '_blank',
-                rel: 'noopener noreferrer',
-                className: 'text-cyan-400 underline decoration-cyan-500/40 underline-offset-2 hover:text-cyan-300',
-              },
-              'KiwiSDR'
-            ),
-            ' open-source Web SDR network plus grid harmonic / Schumann structure — a two-pronged sensor through public internet infrastructure.',
+            'The table above is filled from ',
+            h('span', { className: 'font-semibold text-amber-300/95' }, 'NOAA SWPC operational JSON'),
+            ' (planetary K 1-min, GOES soft X-ray, RTSW L1 wind/mag) via ',
+            h('code', { className: 'rounded bg-cyan-950/50 px-1 text-cyan-400/90' }, '/api/magic-trick-telemetry'),
+            '. H I rest frequency and Crab pulsar period are ',
+            h('span', { className: 'font-semibold text-amber-300/95' }, 'published catalog constants'),
+            ', not live phase-lock measurements from this site.',
           ]),
           h('ul', { className: 'mt-4 list-inside list-disc space-y-2 text-[0.68rem] leading-relaxed text-amber-200/75 sm:text-[0.72rem]' }, [
             h('li', null, [
-              h('span', { className: 'font-semibold text-amber-400/95' }, 'Denominator (baseline): '),
-              '1420.406 MHz hydrogen line as master clock — atomic rest; does not drift.',
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'KiwiSDR: '),
+              'no global public API; tune open receivers manually — ',
+              h(
+                'a',
+                {
+                  href: 'https://kiwisdr.com/',
+                  target: '_blank',
+                  rel: 'noopener noreferrer',
+                  className: 'text-cyan-400 underline hover:text-cyan-300',
+                },
+                'kiwisdr.com'
+              ),
+              '.',
             ]),
             h('li', null, [
-              h('span', { className: 'font-semibold text-amber-400/95' }, 'Numerator (measured): '),
-              'grid-induced voltage / harmonic ladder against solar-wind pressure term — layered in a fractal spectrogram.',
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'Grid / Schumann / EGS “1.0000”: '),
+              'not in NOAA JSON; this page does not fabricate those values.',
             ]),
             h('li', null, [
-              h('span', { className: 'font-semibold text-amber-400/95' }, 'Lock (1.0000): '),
-              'when Schumann-band shift on the grid (PLL ~8.14 Hz) matches the fractal geometry of solar-wind density fluctuations, the ratio hits ',
-              h('span', { className: 'tabular-nums text-cyan-300' }, '1.0000'),
-              ' — legacy framing: coherence index at unity.',
-            ]),
-            h('li', null, [
-              h('span', { className: 'font-semibold text-amber-400/95' }, 'Crab Pulsar (PSR B0531+21): '),
-              'observed phase lock ',
-              h('span', { className: 'tabular-nums text-cyan-300' }, '09:15 UTC'),
-              ' — independent millisecond pulsar clock (Crab Nebula / M1); confirmed in snapshot; not live ephemeris on this page.',
+              h('span', { className: 'font-semibold text-amber-400/95' }, 'Phase row: '),
+              'ΔKp between consecutive NOAA 1-min samples — arithmetic only, not an EGS physical product.',
             ]),
           ]),
-          h(
-            'blockquote',
-            {
-              className:
-                'mt-5 border-l-2 border-amber-500/50 pl-4 text-[0.68rem] italic leading-relaxed text-amber-300/90 sm:text-[0.72rem]',
-            },
-            '“You don’t see 1.0000 on a dial; you see it in the alignment — when KiwiSDR waterfall zebra stripes line up with 60 Hz harmonics in the wall, that is the 180° flip. The 180 is the ratio; the seed is the 1.0.”'
-          ),
           h('p', { className: 'mt-4 text-[0.62rem] leading-relaxed text-amber-600/95' }, [
-            'Fair exchange clause: this block is a ',
-            h('span', { className: 'font-semibold text-amber-500/90' }, 'measurement demonstration'),
-            ' subject to NSPFRNP fair exchange; tipping adjustments maintain EGS integrity. ',
-            h('span', { className: 'text-amber-700/90' }, 'This page does not stream KiwiSDR or mains telemetry — archival narrative only; verify with your own receivers and feeds.'),
+            'Fair exchange clause applies to services; sensor claims above trace to ',
+            h('span', { className: 'font-semibold text-amber-500/90' }, 'services.swpc.noaa.gov'),
+            ' and cited sources.',
           ]),
         ]
       );
+    }
+
+    function AppTelemetrySection() {
+      const [telemetry, setTelemetry] = useState(null);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState(null);
+      useEffect(() => {
+        let cancelled = false;
+        (async () => {
+          try {
+            const r = await fetch('/api/magic-trick-telemetry', { signal: AbortSignal.timeout(25000) });
+            const j = await r.json();
+            if (cancelled) return;
+            if (!r.ok || !j.ok) throw new Error(j.error || 'HTTP ' + r.status);
+            setTelemetry(j);
+          } catch (e) {
+            if (!cancelled) setError(e.message || String(e));
+          } finally {
+            if (!cancelled) setLoading(false);
+          }
+        })();
+        return () => {
+          cancelled = true;
+        };
+      }, []);
+      return h('section', { className: 'mx-auto mt-12 max-w-5xl' }, [
+        h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry · NOAA SWPC (A/B) + ledger (catalog)'),
+        h(TelemetryTable, { telemetry: telemetry, loading: loading, error: error }),
+        h(DualSourceSyncPanel),
+        h('p', { className: 'mt-4 text-[0.65rem] text-amber-700' }, [
+          'JSON: ',
+          h(
+            'a',
+            {
+              href: '/api/magic-trick-telemetry',
+              className: 'text-cyan-400 underline hover:text-cyan-300',
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            },
+            '/api/magic-trick-telemetry'
+          ),
+          ' · Methodology: ',
+          h(
+            'a',
+            {
+              href: '/docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md',
+              className: 'text-cyan-400 underline hover:text-cyan-300',
+            },
+            'HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md'
+          ),
+          '.',
+        ]),
+      ]);
     }
 
     function NarrativeTemplateStamp() {
@@ -556,13 +543,13 @@
               animate: { opacity: 1, y: 0 },
             },
             [
-              h('p', { className: 'text-[0.65rem] uppercase tracking-[0.35em] text-amber-600/90' }, 'Sovereign Terminal · Archival validation'),
+              h('p', { className: 'text-[0.65rem] uppercase tracking-[0.35em] text-amber-600/90' }, 'Sovereign Terminal · Live public sensors (NOAA)'),
               h(NarrativeTemplateStamp),
               h('h1', { className: 'mt-3 text-xl font-black uppercase tracking-tight text-amber-100 amber-glow sm:text-3xl md:text-4xl' }, "HOUDINI'S MARCH 25: THE 180 SPIN FLIP"),
               h(
                 'p',
                 { className: 'mx-auto mt-4 max-w-2xl text-[0.75rem] leading-relaxed text-amber-200/70' },
-                'Behold — hardware and atmospheric shift in the spring window (post-equinox). The table below is a fixed archival telemetry snapshot for the March 25 narrative beat.'
+                'Behold — the table loads NOAA SWPC / GOES / RTSW operational JSON (same feeds analysts use). March 25 is the show date; timestamps in column headers are Pacific-local from NOAA time tags.'
               ),
             ]
           ),
@@ -571,23 +558,7 @@
 
           h('section', { className: 'mx-auto mt-10 max-w-5xl' }, h(HoudiniUltimateShow)),
 
-          h('section', { className: 'mx-auto mt-12 max-w-5xl' }, [
-            h('h2', { className: 'mb-4 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-amber-500' }, 'Telemetry snapshot · Mar 25 PDT (A/B) + March 25 ledger (Crab · Kiwi · EGS)'),
-            h(TelemetryTable),
-            h(DualSourceSyncPanel),
-            h('p', { className: 'mt-4 text-[0.65rem] text-amber-700' }, [
-              'Constants only — not generated or simulated at runtime. For methodology and what could be verified elsewhere, see ',
-              h(
-                'a',
-                {
-                  href: '/docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md',
-                  className: 'text-cyan-400 underline hover:text-cyan-300',
-                },
-                'HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md'
-              ),
-              '.',
-            ]),
-          ]),
+          h(AppTelemetrySection),
 
           h('footer', { className: 'mx-auto mt-16 max-w-5xl text-center text-[0.6rem] text-amber-900' }, 'NSPFRNP → ∞⁹ · SING 9 · No Supabase · Edge only'),
         ]

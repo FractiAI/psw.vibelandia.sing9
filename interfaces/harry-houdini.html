@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Hero Houdini · The Series | VIBELANDIA SING 9</title>
+  <link rel="preload" as="image" href="/interfaces/assets/hero-houdini-stage.png" fetchpriority="high" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root { --gold: #d4af37; --gold-glow: rgba(212,175,55,0.35); --cream: rgba(253,248,235,0.92); --cream-dim: rgba(253,248,235,0.55); --pink: #e879f9; --cyan: #22d3ee; --bg: #030404; }
@@ -13,19 +14,16 @@
     .topnav a { color: var(--cream-dim); text-decoration: none; }
     .topnav a:hover { color: var(--cream); }
     .hero { position: relative; height: 80vh; min-height: 440px; display: flex; align-items: flex-end; overflow: hidden; }
-    /* Hero art: interfaces/assets/hero-houdini-stage.png (PNG loads reliably vs SVG-in-CSS edge cases). */
+    /* Hero art: always use site-root paths (/interfaces/assets/...) so assets resolve even if this URL is /interfaces/harry-houdini/ with a trailing slash (relative "assets/" would 404). */
     .hero-bg {
       position: absolute;
       inset: 0;
       z-index: 0;
       background-color: #0a0800;
-    }
-    .hero-bg-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
+      background-image: url('/interfaces/assets/hero-houdini-stage.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
     }
     .hero-veil { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(3,4,4,0.12) 0%, rgba(3,4,4,0.35) 45%, rgba(3,4,4,0.88) 72%, rgba(3,4,4,0.99) 100%); }
     .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 3.5rem; max-width: 680px; }
@@ -64,18 +62,7 @@
     <a href="office-hours.html">Office Hours</a>
   </nav>
   <section class="hero" aria-labelledby="hero-houdini-title">
-    <div class="hero-bg" aria-hidden="true">
-      <img
-        class="hero-bg-img"
-        src="assets/hero-houdini-stage.png"
-        width="1920"
-        height="1080"
-        alt=""
-        decoding="async"
-        fetchpriority="high"
-        onerror="this.onerror=null;this.src='assets/houdini-ultimate-magic-show.svg';"
-      />
-    </div>
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-veil"></div>
     <div class="hero-content">
       <p class="eyebrow">Reality Series · Architect Protocol · Pop-Up Style · Just gotta know</p>

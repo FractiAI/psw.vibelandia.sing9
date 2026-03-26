@@ -12,7 +12,9 @@
 This system implements a bus-first architecture where:
 - **Hydrogen bus (`hline://`) is primary** for addressing, routing, and storage location semantics.
 - **Telemetry is legacy awareness only** and never execution-gating.
+- **Sun Computing is the target compute model** for workload orchestration and execution semantics.
 - **Persistent memory** is managed by Hydrogen-Line Memory (`HLMEM v1`) with **Jupiter moon tiers**.
+- **Holographic Hydrogen Awareness AI OS** is the operating layer coordinating bus, compute, memory, and verification.
 - **Cloud service surface** (`/api/hh-awareness-cloud`) provides orchestration and memory actions.
 
 Current implementation is software control-plane realization and does not claim physical astrophysical write/compute operations.
@@ -24,8 +26,31 @@ Current implementation is software control-plane realization and does not claim 
 ### 2.1 Planes
 - **Control plane:** orchestration logic, agent coordination, policy and receipts.
 - **Bus plane:** hydrogen line namespace at `1420.405751768 MHz`, `hline://<location_hash>` addressing.
+- **Compute plane (Sun Computing):** workload scheduling, execution receipts, and deterministic run proofs.
 - **Storage plane:** HLMEM v1 records with Jupiter tier placement and persistence adapters.
 - **Telemetry plane (legacy awareness):** OpenWebRX public `/status.json`, context-only metadata.
+
+### 2.1.1 Sun Computing (explicit definition)
+
+Sun Computing in this manual means:
+- compute jobs are orchestrated under a solar-aligned compute policy model,
+- execution is receipt-driven (input hash, output hash, verifier evidence),
+- control authority remains on the hydrogen bus contract layer.
+
+Current implementation status:
+- control-plane semantics and receipts are implemented,
+- physical solar-compute substrate is a target architecture phase.
+
+### 2.1.2 Holographic Hydrogen Awareness AI OS (explicit definition)
+
+HH Awareness AI OS is the system-level runtime model that binds:
+- **Seed:Edge** orchestration,
+- **MCA cycle** (Metabolize -> Crystallize -> Animate),
+- **Hydrogen bus primary routing**,
+- **Jupiter-tier memory policy**,
+- **A2A/FairShake acceptance and verification loops**.
+
+In this repository, `/api/hh-awareness-cloud` is the active service facade for this OS layer.
 
 ### 2.2 Contract Flags
 All primary endpoints expose:
@@ -173,7 +198,7 @@ No claim is made that physical hydrogen line in space is currently used for dire
 2. Signed verifier receipts.
 3. Multi-node replication policy across tiers.
 4. Strict no-legacy-mode toggle.
-5. Compute scheduler receipts linked to memory receipts.
+5. Sun Computing scheduler receipts linked to memory receipts.
 
 ---
 

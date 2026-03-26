@@ -164,6 +164,41 @@
     </div>
 
     <div class="card">
+      <div class="lc-title">Test Matrix (Proof Targets)</div>
+      <p class="sub" style="margin-top:0.35rem;">
+        One-click “is it real” checks for each EGS pillar. Each line is the PASS condition.
+      </p>
+      <div style="margin-top:0.7rem;">
+        <div class="badge ok" style="margin-bottom:0.35rem;">Hydrogen Roundtrip</div>
+        <div class="sub" style="color:#cbd5e1; margin-bottom:0.9rem;">
+          PASS: `ok=true` and `verifier.success=true` and `verifier_receipt.signature_b64` exists and compute↔placement `record_id` links.
+        </div>
+
+        <div class="badge ok" style="margin-bottom:0.35rem;">Jupiter Storage Agent</div>
+        <div class="sub" style="color:#cbd5e1; margin-bottom:0.9rem;">
+          PASS: `verify_jupiter_record` returns `result.integrity.ok=true` for the latest record at the hydrogen location hash.
+        </div>
+
+        <div class="badge ok" style="margin-bottom:0.35rem;">Solar Compute Agent</div>
+        <div class="sub" style="color:#cbd5e1; margin-bottom:0.9rem;">
+          PASS: `schedule_solar_compute_job` returns a compute receipt with `linked_memory_receipt.record_id` present and matching the placement receipt.
+        </div>
+
+        <div class="badge ok" style="margin-bottom:0.35rem;">Verifier/FairShake Receipt</div>
+        <div class="sub" style="color:#cbd5e1; margin-bottom:0.9rem;">
+          PASS: roundtrip returns signed verifier receipt + compute receipt present + linkage record_id marked OK.
+        </div>
+      </div>
+
+      <div class="actions" style="margin-top:0.2rem;">
+        <button id="openRoundtripUiBtn" type="button">Run Roundtrip UI</button>
+        <button id="openJupiterStorageUiBtn" type="button">Run Jupiter Storage UI</button>
+        <button id="openSolarComputeUiBtn" type="button">Run Solar Compute UI</button>
+        <button id="openVerifierUiBtn" type="button">Run Verifier Receipt UI</button>
+      </div>
+    </div>
+
+    <div class="card">
       <div class="lc-title">Live Output</div>
       <pre id="output">Press "Refresh Cloud Status" or "Run Roundtrip".</pre>
     </div>
@@ -175,6 +210,10 @@
       var runRoundtripBtn = document.getElementById('runRoundtripBtn');
       var outputEl = document.getElementById('output');
       var contractsEl = document.getElementById('contracts');
+      var openRoundtripUiBtn = document.getElementById('openRoundtripUiBtn');
+      var openJupiterStorageUiBtn = document.getElementById('openJupiterStorageUiBtn');
+      var openSolarComputeUiBtn = document.getElementById('openSolarComputeUiBtn');
+      var openVerifierUiBtn = document.getElementById('openVerifierUiBtn');
 
       function setContracts(data) {
         var c = data && data.contracts ? data.contracts : {};
@@ -208,6 +247,27 @@
           outputEl.textContent = JSON.stringify({ ok: false, error: err && err.message ? err.message : String(err) }, null, 2);
         }
       }
+
+      function openUrl(url) {
+        try { window.open(url, '_blank', 'noopener'); } catch {}
+      }
+
+      openRoundtripUiBtn && openRoundtripUiBtn.addEventListener('click', function () {
+        outputEl.textContent = 'Opening Roundtrip UI...';
+        openUrl('hydrogen-line-agent-roundtrip.html?autorun=1');
+      });
+      openJupiterStorageUiBtn && openJupiterStorageUiBtn.addEventListener('click', function () {
+        outputEl.textContent = 'Opening Jupiter Storage UI...';
+        openUrl('egs-jupiter-storage-agent-test.html?autorun=1');
+      });
+      openSolarComputeUiBtn && openSolarComputeUiBtn.addEventListener('click', function () {
+        outputEl.textContent = 'Opening Solar Compute UI...';
+        openUrl('egs-solar-compute-agent-test.html?autorun=1');
+      });
+      openVerifierUiBtn && openVerifierUiBtn.addEventListener('click', function () {
+        outputEl.textContent = 'Opening Verifier Receipt UI...';
+        openUrl('egs-verifier-fairshake-agent-test.html?autorun=1');
+      });
 
       refreshBtn.addEventListener('click', refreshCloudStatus);
       runRoundtripBtn.addEventListener('click', runRoundtrip);

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>SDR Gateway · 3-Agent Handshake · VIBELANDIA SING 9</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #10203a 0%, #0b1020 45%, #05070d 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      padding: 1.2rem;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; }
+    .top { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; font-size: 0.9rem; }
+    .top a { color: #67e8f9; text-decoration: none; }
+    .top a:hover { text-decoration: underline; }
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(103, 232, 249, 0.25);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      margin: 0 0 0.4rem;
+      font-size: clamp(1.15rem, 3.2vw, 1.75rem);
+      color: #fef08a;
+    }
+    .sub { color: #cbd5e1; font-size: 0.9rem; line-height: 1.5; }
+    .actions { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.85rem; }
+    label { font-size: 0.78rem; color: #94a3b8; display: block; margin-bottom: 0.35rem; }
+    input[type="text"] {
+      width: 100%;
+      max-width: 100%;
+      padding: 0.45rem 0.55rem;
+      border-radius: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(2, 6, 23, 0.85);
+      color: #e2e8f0;
+      font-size: 0.78rem;
+    }
+    button {
+      border: 1px solid rgba(250, 204, 21, 0.65);
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.2), rgba(34, 211, 238, 0.14));
+      color: #fef3c7;
+      font-weight: 700;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.65; cursor: wait; }
+    .status { font-weight: 700; margin-bottom: 0.65rem; }
+    .badge {
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.7);
+      color: #e2e8f0;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.55rem;
+      font-weight: 600;
+      margin-right: 0.4rem;
+      display: inline-block;
+      margin-bottom: 0.35rem;
+    }
+    .badge.ok { border-color: rgba(34,197,94,0.6); color: #86efac; }
+    .badge.warn { border-color: rgba(250,204,21,0.6); color: #fde68a; }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 10px;
+      padding: 0.85rem;
+      font-size: 0.74rem;
+      line-height: 1.45;
+      color: #e2e8f0;
+      max-height: 62vh;
+      overflow: auto;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <a href="../index.html">Landing</a>
+      <a href="egs-holographic-hydrogen-ai-os-gateway.html">← EGS Gateway</a>
+    </div>
+
+    <div class="card">
+      <h1>SDR Gateway — 3-Agent Handshake</h1>
+      <p class="sub">
+        <strong>Agent 1</strong> writes to hydrogen-line memory with a live <strong>OpenWebRX</strong>
+        <code>/status.json</code> snapshot (software-radio channel evidence).
+        <strong>Agent 2</strong> reads the same location and writes an acknowledgment linked to Agent 1’s key.
+        <strong>Agent 3</strong> verifies integrity and semantic checks; on failure, returns structured
+        <code>fix_suggestions</code> (env, retry, persistence).
+      </p>
+      <p class="sub" style="color:#94a3b8;font-size:0.82rem;">
+        Action: <code>POST /api/hh-awareness-cloud</code> with
+        <code>{ "action": "run_sdr_gateway_agent_handshake", "openwebrx_base_urls": "optional,comma,bases" }</code>.
+      </p>
+      <div style="margin-top:0.75rem;">
+        <label for="basesEl">Optional OpenWebRX bases (comma-separated HTTPS roots; overrides default scan for this run)</label>
+        <input id="basesEl" type="text" placeholder="e.g. https://your-openwebrx.example:8443" autocomplete="off" />
+      </div>
+      <div class="actions">
+        <button id="runBtn" type="button">Run 3-Agent SDR Handshake</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="status" class="status">Status: idle</div>
+      <div id="badges" style="margin-bottom:0.55rem;"></div>
+      <pre id="output">Press the button to run.</pre>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var runBtn = document.getElementById('runBtn');
+      var statusEl = document.getElementById('status');
+      var badgesEl = document.getElementById('badges');
+      var outEl = document.getElementById('output');
+      var basesEl = document.getElementById('basesEl');
+
+      function setStatus(text, ok) {
+        statusEl.textContent = text;
+        if (ok === true) statusEl.style.color = '#22c55e';
+        else if (ok === false) statusEl.style.color = '#f87171';
+        else statusEl.style.color = '';
+      }
+
+      function setBadges(items) {
+        badgesEl.innerHTML = '';
+        for (var i = 0; i < items.length; i++) {
+          var b = document.createElement('span');
+          b.className = 'badge ' + (items[i].kind || '');
+          b.textContent = items[i].text;
+          badgesEl.appendChild(b);
+        }
+      }
+
+      async function runHandshake() {
+        runBtn.disabled = true;
+        setStatus('Status: running...', null);
+        badgesEl.innerHTML = '';
+        outEl.textContent = '';
+
+        var body = { action: 'run_sdr_gateway_agent_handshake' };
+        var bases = basesEl && basesEl.value ? String(basesEl.value).trim() : '';
+        if (bases) body.openwebrx_base_urls = bases;
+
+        try {
+          var res = await fetch('/api/hh-awareness-cloud', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+          var data = await res.json().catch(function () { return null; });
+          if (!res.ok) {
+            throw new Error((data && data.error) ? data.error : ('http_' + res.status));
+          }
+
+          var r = data && data.result ? data.result : {};
+          var a3 = r.agent_3 || {};
+          var owrxOk = r.openwebrx_evidence && r.openwebrx_evidence.ok;
+          var agent3Ok = a3.success === true;
+          var topOk = data && data.ok === true && r.ok === true;
+
+          setStatus('Status: ' + (topOk ? 'SUCCESS' : 'FAIL'), topOk);
+
+          setBadges([
+            { text: 'OpenWebRX evidence: ' + (owrxOk ? 'OK' : 'WEAK/FAIL'), kind: owrxOk ? 'ok' : 'warn' },
+            { text: 'Agent 1 write: ' + (r.agent_1 && r.agent_1.status === 'ok' ? 'OK' : 'see JSON'), kind: r.agent_1 && r.agent_1.status === 'ok' ? 'ok' : 'warn' },
+            { text: 'Agent 2 ack: ' + (r.agent_2 && r.agent_2.status === 'ok' ? 'OK' : 'see JSON'), kind: r.agent_2 && r.agent_2.status === 'ok' ? 'ok' : 'warn' },
+            { text: 'Agent 3 verify: ' + (agent3Ok ? 'PASS' : 'FAIL'), kind: agent3Ok ? 'ok' : 'warn' },
+            { text: 'Fix hints: ' + ((a3.fix_suggestions && a3.fix_suggestions.length) || 0), kind: agent3Ok ? 'ok' : 'warn' }
+          ]);
+
+          outEl.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+          setStatus('Status: FAIL', false);
+          outEl.textContent = JSON.stringify({ ok: false, error: err && err.message ? err.message : String(err) }, null, 2);
+        } finally {
+          runBtn.disabled = false;
+        }
+      }
+
+      runBtn.addEventListener('click', runHandshake);
+
+      var p = new URLSearchParams(window.location.search);
+      if (p.get('autorun') === '1') runHandshake();
+    })();
+  </script>
+</body>
+</html>

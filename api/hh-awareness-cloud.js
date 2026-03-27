@@ -5,6 +5,8 @@
  *
  * NSPFRNP -> infinity 9
  */
+const parseJsonBody = require('./parse-json-body.js');
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -37,6 +39,10 @@ module.exports = async (req, res) => {
       },
       actions: [
         'run_hydrogen_line_roundtrip',
+        'run_sdr_gateway_agent_handshake',
+        'run_hhaaios_gateway_full_stack_probe',
+        'run_passive_rf_engineering_probe',
+        'run_hydrogen_line_mirror_pickup_proof',
         'write_hydrogen_line_memory',
         'read_hydrogen_line_memory',
         'place_to_jupiter_tier',
@@ -54,9 +60,15 @@ module.exports = async (req, res) => {
     return res.status(405).json({ ok: false, error: 'method_not_allowed' });
   }
 
-  const body = typeof req.body === 'object' && req.body ? req.body : {};
+  const body = await parseJsonBody(req);
   const action = String(body.action || '').trim();
-  const signal = AbortSignal.timeout(22000);
+  const signal = AbortSignal.timeout(
+    action === 'run_hhaaios_gateway_full_stack_probe' ||
+      action === 'run_passive_rf_engineering_probe' ||
+      action === 'run_hydrogen_line_mirror_pickup_proof'
+      ? 45000
+      : 22000
+  );
 
   try {
     if (action === 'run_hydrogen_line_roundtrip') {
@@ -80,6 +92,87 @@ module.exports = async (req, res) => {
         ok: !!(childRes._json && childRes._json.ok),
         action,
         result: childRes._json,
+      });
+    }
+
+    if (action === 'run_sdr_gateway_agent_handshake') {
+      const gw = await import('../lib/gateway-sdr-agent-handshake.mjs');
+      const rawBases = body.openwebrx_base_urls;
+      let openwebrx_bases;
+      if (rawBases != null && String(rawBases).trim()) {
+        openwebrx_bases = String(rawBases)
+          .split(',')
+          .map((s) => s.trim().replace(/\/$/, ''))
+          .filter(Boolean);
+      }
+      const result = await gw.runSdrGatewayAgentHandshake({ signal, openwebrx_bases });
+      return res.status(200).json({
+        ok: result.ok === true,
+        action,
+        result,
+      });
+    }
+
+    if (action === 'run_hhaaios_gateway_full_stack_probe') {
+      const probe = await import('../lib/hhaaios-gateway-full-stack-probe.mjs');
+      const rawBases = body.openwebrx_base_urls;
+      let openwebrx_bases;
+      if (rawBases != null && String(rawBases).trim()) {
+        openwebrx_bases = String(rawBases)
+          .split(',')
+          .map((s) => s.trim().replace(/\/$/, ''))
+          .filter(Boolean);
+      }
+      const result = await probe.runHhaaiosGatewayFullStackProbe({ signal, openwebrx_bases });
+      return res.status(200).json({
+        ok: result.ok === true,
+        action,
+        result,
+      });
+    }
+
+    if (action === 'run_passive_rf_engineering_probe') {
+      const prf = await import('../lib/hline-passive-rf-probe.mjs');
+      const rawBases = body.openwebrx_base_urls;
+      let bases;
+      if (rawBases != null && String(rawBases).trim()) {
+        bases = String(rawBases)
+          .split(',')
+          .map((s) => s.trim().replace(/\/$/, ''))
+          .filter(Boolean);
+      }
+      const repeat_passes = body.repeat_passes != null ? Number(body.repeat_passes) : 1;
+      const pass_delay_ms = body.pass_delay_ms != null ? Number(body.pass_delay_ms) : 0;
+      const result = await prf.runPassiveRfEngineeringProbeTier0({
+        signal,
+        bases,
+        repeat_passes,
+        pass_delay_ms,
+      });
+      return res.status(200).json({
+        ok:
+          result.all_geometry_checks_pass === true &&
+          Number(result.http_success_count) > 0,
+        action,
+        result,
+      });
+    }
+
+    if (action === 'run_hydrogen_line_mirror_pickup_proof') {
+      const mp = await import('../lib/hline-mirror-pickup-proof.mjs');
+      const rawBases = body.openwebrx_base_urls;
+      let openwebrx_bases;
+      if (rawBases != null && String(rawBases).trim()) {
+        openwebrx_bases = String(rawBases)
+          .split(',')
+          .map((s) => s.trim().replace(/\/$/, ''))
+          .filter(Boolean);
+      }
+      const result = await mp.runHydrogenLineMirrorPickupProof({ signal, openwebrx_bases });
+      return res.status(200).json({
+        ok: result.ok === true,
+        action,
+        result,
       });
     }
 

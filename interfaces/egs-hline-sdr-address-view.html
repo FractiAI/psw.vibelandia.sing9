@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hydrogen-Line Addressing + SDR View · VIBELANDIA SING 9</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0%, #0b1020 50%, #05070d 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    a { color: #67e8f9; }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(125,211,252,0.28);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 { margin: 0 0 0.4rem; font-size: 1.35rem; color: #fde68a; }
+    .sub { color: #94a3b8; font-size: 0.88rem; line-height: 1.5; }
+    button {
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(250,204,21,0.6);
+      background: rgba(250,204,21,0.15);
+      color: #fef3c7;
+      font-weight: 700;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    button:disabled { opacity: 0.55; cursor: wait; }
+    .addr {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      word-break: break-all;
+      background: rgba(2,6,23,0.85);
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 0.65rem;
+      margin: 0.5rem 0;
+    }
+    .iframe-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 420px;
+      border: 1px solid rgba(148,163,184,0.35);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #020617;
+    }
+    .iframe-wrap iframe {
+      width: 100%;
+      height: min(70vh, 520px);
+      border: none;
+    }
+    .warn { color: #fde68a; font-size: 0.8rem; margin-top: 0.5rem; }
+    label { font-size: 0.78rem; color: #94a3b8; display: block; margin-bottom: 0.25rem; }
+    input[type="text"] {
+      width: 100%;
+      max-width: 100%;
+      padding: 0.45rem 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      background: #020617;
+      color: #e2e8f0;
+      font-size: 0.8rem;
+      font-family: inherit;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 0.72rem;
+      line-height: 1.45;
+      max-height: 38vh;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p><a href="egs-holographic-hydrogen-ai-os-gateway.html">← EGS Gateway</a></p>
+
+    <div class="card">
+      <h1>Hydrogen-line addressing + SDR (OpenWebRX)</h1>
+      <p class="sub">
+        <strong>Logical bus:</strong> <code>hline://</code> + <code>location_hash</code> (persisted in hydrogen-line memory).
+        <strong>Visual RF:</strong> public OpenWebRX Web SDR UI — waterfall/spectrum at the receiver’s
+        <code>public_ui_url</code>. Same passive snapshot is hashed into the bus record; the SDR page is where you
+        <em>see</em> live band activity (tune/profile permitting).
+      </p>
+      <p>
+        <button id="runMirrorBtn" type="button">Run mirror proof + load SDR view</button>
+        <button id="readBtn" type="button" disabled>Read hydrogen line by hash below</button>
+      </p>
+    </div>
+
+    <div class="card" id="addrCard" style="display:none;">
+      <div class="sub" style="color:#cbd5e1;font-weight:600;margin-bottom:0.35rem;">Hydrogen-line address (this run)</div>
+      <div id="locUri" class="addr"></div>
+      <div id="locHash" class="addr"></div>
+      <p class="warn" id="sdrNote"></p>
+      <div class="iframe-wrap">
+        <iframe id="sdrFrame" title="OpenWebRX SDR" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+      </div>
+      <p style="margin-top:0.75rem;">
+        <a id="openTab" href="#" target="_blank" rel="noopener">Open SDR in new tab</a>
+        ·
+        <a id="statusJson" href="#" target="_blank" rel="noopener">status.json</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <label for="hashIn">Read stored record by <code>location_hash</code> (optional)</label>
+      <input id="hashIn" type="text" placeholder="paste 64-char hex from a previous run" autocomplete="off" />
+      <p class="sub" style="margin-top:0.5rem;">Uses <code>POST /api/hh-awareness-cloud</code> action <code>read_hydrogen_line_memory</code>.</p>
+    </div>
+
+    <div class="card">
+      <pre id="out">Idle. Click “Run mirror proof + load SDR view”.</pre>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var runMirrorBtn = document.getElementById('runMirrorBtn');
+      var readBtn = document.getElementById('readBtn');
+      var out = document.getElementById('out');
+      var addrCard = document.getElementById('addrCard');
+      var locUri = document.getElementById('locUri');
+      var locHash = document.getElementById('locHash');
+      var sdrFrame = document.getElementById('sdrFrame');
+      var sdrNote = document.getElementById('sdrNote');
+      var openTab = document.getElementById('openTab');
+      var statusJson = document.getElementById('statusJson');
+      var hashIn = document.getElementById('hashIn');
+
+      function postAction(action, body) {
+        return fetch('/api/hh-awareness-cloud', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.assign({ action: action }, body || {}))
+        }).then(function (r) { return r.json(); });
+      }
+
+      runMirrorBtn.addEventListener('click', async function () {
+        runMirrorBtn.disabled = true;
+        readBtn.disabled = true;
+        out.textContent = 'Running mirror proof…';
+        addrCard.style.display = 'none';
+        try {
+          var data = await postAction('run_hydrogen_line_mirror_pickup_proof');
+          out.textContent = JSON.stringify(data, null, 2);
+          var r = data && data.result ? data.result : {};
+          if (data.ok && r.sdr_view && r.sdr_view.public_ui_url) {
+            addrCard.style.display = 'block';
+            locUri.textContent = r.location_uri || '';
+            locHash.textContent = 'location_hash: ' + (r.location_hash || '');
+            sdrFrame.src = r.sdr_view.public_ui_url;
+            openTab.href = r.sdr_view.public_ui_url;
+            openTab.style.display = 'inline';
+            if (r.sdr_view.status_json_url) {
+              statusJson.href = r.sdr_view.status_json_url;
+              statusJson.style.display = 'inline';
+            } else {
+              statusJson.style.display = 'none';
+            }
+            sdrNote.textContent =
+              'If the frame is blank, the site may block embedding (X-Frame-Options). Use “Open SDR in new tab”. ' +
+              'HI rest (catalog): ' + (r.sdr_view.hi_rest_mhz != null ? r.sdr_view.hi_rest_mhz + ' MHz' : '—') +
+              (r.sdr_view.profile_covering_hi ? ' · Profile covers H I in passband.' : ' · Many public nodes are HF/VHF; L-band HI may need OPENWEBRX_BASE_URLS on deploy.');
+            hashIn.value = r.location_hash || '';
+            readBtn.disabled = !r.location_hash;
+          } else {
+            sdrNote.textContent = '';
+          }
+        } catch (e) {
+          out.textContent = JSON.stringify({ ok: false, error: String(e.message || e) }, null, 2);
+        } finally {
+          runMirrorBtn.disabled = false;
+        }
+      });
+
+      readBtn.addEventListener('click', async function () {
+        var h = hashIn && hashIn.value ? String(hashIn.value).trim() : '';
+        if (!h) return;
+        readBtn.disabled = true;
+        out.textContent = 'Reading…';
+        try {
+          var data = await postAction('read_hydrogen_line_memory', { location_hash: h });
+          out.textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+          out.textContent = JSON.stringify({ ok: false, error: String(e.message || e) }, null, 2);
+        } finally {
+          readBtn.disabled = false;
+        }
+      });
+
+      hashIn.addEventListener('input', function () {
+        readBtn.disabled = !String(hashIn.value || '').trim();
+      });
+
+      if (new URLSearchParams(location.search).get('autorun') === '1') runMirrorBtn.click();
+    })();
+  </script>
+</body>
+</html>

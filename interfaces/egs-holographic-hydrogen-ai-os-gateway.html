@@ -134,6 +134,26 @@
           <div class="lc-title">Verifier Receipt UI</div>
           <div class="lc-desc">Signed verifier receipt + compute/placement record_id linkage.</div>
         </a>
+        <a class="link-card" href="egs-gateway-sdr-agent-handshake.html?autorun=1">
+          <div class="lc-title">SDR Gateway · 3-Agent Handshake</div>
+          <div class="lc-desc">Agent 1 &amp; 2 on hydrogen-line bus with OpenWebRX evidence; Agent 3 verifies + fix hints.</div>
+        </a>
+        <a class="link-card" href="egs-hhaaios-gateway-full-stack-test.html?autorun=1">
+          <div class="lc-title">HHAAIOS Full-Stack Probe</div>
+          <div class="lc-desc">Live HTTP telemetry + real memory integrity + compute receipt; see verification_summary and honesty_boundary in JSON.</div>
+        </a>
+        <a class="link-card" href="egs-passive-rf-engineering-test.html?autorun=1">
+          <div class="lc-title">Passive RF Engineering (Tier 0)</div>
+          <div class="lc-desc">Falsifiable OpenWebRX passband geometry vs H I rest; no IQ. See protocol doc.</div>
+        </a>
+        <a class="link-card" href="egs-hline-mirror-proof-test.html?autorun=1">
+          <div class="lc-title">Hydrogen-Line Mirror Proof</div>
+          <div class="lc-desc">Hash passive /status.json, write hline, read back — proves capture on mirrored bus.</div>
+        </a>
+        <a class="link-card" href="egs-hline-sdr-address-view.html?autorun=1">
+          <div class="lc-title">H-Line Address + SDR View</div>
+          <div class="lc-desc"><code>hline://</code> + OpenWebRX waterfall/spectrum; same snapshot mirrored to the bus.</div>
+        </a>
       </div>
     </div>
 
@@ -148,6 +168,10 @@
           <div class="lc-title">Irreducible Minimum Protocol Spec</div>
           <div class="lc-desc">Gateway-first + physical-layer dual framing, minimum requirements, legacy gateway.</div>
         </a>
+        <a class="link-card" href="../protocols/EGS_HYDROGEN_LINE_EDGE_SUN_PROTOCOL_NSPFRNP.md" target="_blank" rel="noopener">
+          <div class="lc-title">EGS Hydrogen-Line Edge ↔ Sun</div>
+          <div class="lc-desc">Normative: EGS constant, same-line TX/RX at edges, Sun/HHAAIOS ingest on the hydrogen line; maps to gateway APIs.</div>
+        </a>
         <a class="link-card" href="../docs/EGS_CLOUD_SERVICES_GETTING_STARTED_AND_CONFIGURATION_GUIDE.md" target="_blank" rel="noopener">
           <div class="lc-title">Getting Started + Configuration</div>
           <div class="lc-desc">Minimum commands, displays, and no-human A2A transition path.</div>
@@ -155,6 +179,14 @@
         <a class="link-card" href="../docs/HOLOGRAPHIC_AWARENESS_HYDROGEN_SUN_JUPITER_ARCHITECTURE.md" target="_blank" rel="noopener">
           <div class="lc-title">Sun/Hydrogen/Jupiter Architecture</div>
           <div class="lc-desc">Sun compute, hydrogen bus, Jupiter storage topology and phased build model.</div>
+        </a>
+        <a class="link-card" href="../data/hline-gateway-prompts/README.md" target="_blank" rel="noopener">
+          <div class="lc-title">H-Line Gateway Prompts</div>
+          <div class="lc-desc">Self-recursive NSPFRNP prompt + JSON manifest of the gateway test package; GitHub ↔ gateway confirmation path.</div>
+        </a>
+        <a class="link-card" href="../data/hline-gateway-prompts/NSPFRNP_SELF_RECURSIVE_GATEWAY_PROMPT.md" target="_blank" rel="noopener">
+          <div class="lc-title">NSPFRNP Recursive Gateway Prompt</div>
+          <div class="lc-desc">Full prompt: own path, addressing, embedded manifest, EGS / 180° framing, hydrogen-line visibility.</div>
         </a>
         <a class="link-card" href="../docs/EGS_AWS_WORLDWIDE_SAMPLE_QUOTE_AND_DEPLOYMENT_PLAN.md" target="_blank" rel="noopener">
           <div class="lc-title">AWS Worldwide Sample Quote + Deployment Plan</div>
@@ -188,6 +220,18 @@
         <div class="sub" style="color:#cbd5e1; margin-bottom:0.9rem;">
           PASS: roundtrip returns signed verifier receipt + compute receipt present + linkage record_id marked OK.
         </div>
+
+        <div class="badge ok" style="margin-bottom:0.35rem;">SDR Gateway 3-Agent Handshake</div>
+        <div class="sub" style="color:#cbd5e1; margin-bottom:0.9rem;">
+          PASS: <code>run_sdr_gateway_agent_handshake</code> returns <code>result.ok=true</code>, Agent 3 <code>success=true</code>,
+          integrity + ack checks; optional <code>openwebrx_base_urls</code> for L-band receivers.
+        </div>
+
+        <div class="badge ok" style="margin-bottom:0.35rem;">HHAAIOS Full-Stack Gateway Probe</div>
+        <div class="sub" style="color:#cbd5e1; margin-bottom:0.9rem;">
+          PASS: <code>run_hhaaios_gateway_full_stack_probe</code> returns <code>ok=true</code> and all <code>gates</code> true
+          (memory, Jupiter integrity, Sun compute link, SDR, ionosphere, grid ring). Read <code>verification_summary</code> and <code>honesty_boundary</code> in JSON.
+        </div>
       </div>
 
       <div class="actions" style="margin-top:0.2rem;">
@@ -195,6 +239,8 @@
         <button id="openJupiterStorageUiBtn" type="button">Run Jupiter Storage UI</button>
         <button id="openSolarComputeUiBtn" type="button">Run Solar Compute UI</button>
         <button id="openVerifierUiBtn" type="button">Run Verifier Receipt UI</button>
+        <button id="openSdrHandshakeUiBtn" type="button">Run SDR Handshake UI</button>
+        <button id="openFullStackProbeUiBtn" type="button">Run Full-Stack Probe UI</button>
       </div>
     </div>
 
@@ -214,6 +260,8 @@
       var openJupiterStorageUiBtn = document.getElementById('openJupiterStorageUiBtn');
       var openSolarComputeUiBtn = document.getElementById('openSolarComputeUiBtn');
       var openVerifierUiBtn = document.getElementById('openVerifierUiBtn');
+      var openSdrHandshakeUiBtn = document.getElementById('openSdrHandshakeUiBtn');
+      var openFullStackProbeUiBtn = document.getElementById('openFullStackProbeUiBtn');
 
       function setContracts(data) {
         var c = data && data.contracts ? data.contracts : {};
@@ -267,6 +315,14 @@
       openVerifierUiBtn && openVerifierUiBtn.addEventListener('click', function () {
         outputEl.textContent = 'Opening Verifier Receipt UI...';
         openUrl('egs-verifier-fairshake-agent-test.html?autorun=1');
+      });
+      openSdrHandshakeUiBtn && openSdrHandshakeUiBtn.addEventListener('click', function () {
+        outputEl.textContent = 'Opening SDR Gateway Handshake UI...';
+        openUrl('egs-gateway-sdr-agent-handshake.html?autorun=1');
+      });
+      openFullStackProbeUiBtn && openFullStackProbeUiBtn.addEventListener('click', function () {
+        outputEl.textContent = 'Opening HHAAIOS Full-Stack Probe UI...';
+        openUrl('egs-hhaaios-gateway-full-stack-test.html?autorun=1');
       });
 
       refreshBtn.addEventListener('click', refreshCloudStatus);

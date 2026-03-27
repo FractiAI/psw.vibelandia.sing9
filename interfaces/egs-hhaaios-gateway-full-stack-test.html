@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>HHAAIOS Gateway Full-Stack Probe · VIBELANDIA SING 9</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0%, #0b1020 50%, #05070d 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      padding: 1.2rem;
+    }
+    .wrap { max-width: 940px; margin: 0 auto; }
+    .top { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; font-size: 0.9rem; }
+    .top a { color: #67e8f9; text-decoration: none; }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(125,211,252,0.28);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 { margin: 0 0 0.4rem; font-size: clamp(1.1rem, 3vw, 1.65rem); color: #fde68a; }
+    .sub { color: #cbd5e1; font-size: 0.88rem; line-height: 1.5; }
+    label { font-size: 0.76rem; color: #94a3b8; display: block; margin-bottom: 0.35rem; }
+    input[type="text"] {
+      width: 100%; padding: 0.45rem 0.55rem; border-radius: 6px;
+      border: 1px solid rgba(148,163,184,0.35); background: rgba(2,6,23,0.85); color: #e2e8f0; font-size: 0.78rem;
+    }
+    .actions { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.75rem; }
+    button {
+      border: 1px solid rgba(250,204,21,0.65);
+      border-radius: 8px; padding: 0.58rem 1rem;
+      background: linear-gradient(135deg, rgba(250,204,21,0.2), rgba(34,211,238,0.14));
+      color: #fef3c7; font-weight: 700; cursor: pointer;
+    }
+    button:disabled { opacity: 0.65; cursor: wait; }
+    .status { font-weight: 700; margin-bottom: 0.6rem; }
+    .badge {
+      display: inline-block; margin: 0.2rem 0.35rem 0.2rem 0; padding: 0.22rem 0.55rem;
+      border-radius: 999px; font-size: 0.7rem; font-weight: 600;
+      border: 1px solid rgba(148,163,184,0.4); background: rgba(15,23,42,0.72); color: #e2e8f0;
+    }
+    .badge.ok { border-color: rgba(34,197,94,0.55); color: #86efac; }
+    .badge.warn { border-color: rgba(250,204,21,0.55); color: #fde68a; }
+    pre {
+      margin: 0; white-space: pre-wrap; word-break: break-word;
+      background: rgba(2,6,23,0.82); border: 1px solid rgba(148,163,184,0.22);
+      border-radius: 10px; padding: 0.85rem; font-size: 0.72rem; line-height: 1.42; max-height: 58vh; overflow: auto;
+    }
+    code { font-family: ui-monospace, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <a href="../index.html">Landing</a>
+      <a href="egs-holographic-hydrogen-ai-os-gateway.html">← EGS Gateway</a>
+    </div>
+
+    <div class="card">
+      <h1>HHAAIOS / NSPFRNP — Full-Stack Gateway Probe</h1>
+      <p class="sub">
+        One POST runs <strong>live HTTP fetches</strong> (OpenWebRX, NOAA), <strong>real memory commits</strong> with
+        SHA-256 integrity checks, and a <strong>real compute receipt</strong> linked to the stored record.
+        The JSON includes <code>verification_summary</code> (what was measured) and <code>honesty_boundary</code>
+        (TLS/JSON vs RF-on-the-air).
+      </p>
+      <label for="basesEl">Optional OpenWebRX bases (comma-separated)</label>
+      <input id="basesEl" type="text" placeholder="https://your-openwebrx…" autocomplete="off" />
+      <div class="actions">
+        <button id="runBtn" type="button">Run Full-Stack Probe</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="status" class="status">Status: idle</div>
+      <div id="badges"></div>
+      <pre id="output">Press the button.</pre>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var runBtn = document.getElementById('runBtn');
+      var statusEl = document.getElementById('status');
+      var badgesEl = document.getElementById('badges');
+      var outEl = document.getElementById('output');
+      var basesEl = document.getElementById('basesEl');
+
+      function setStatus(t, ok) {
+        statusEl.textContent = t;
+        statusEl.style.color = ok === true ? '#22c55e' : ok === false ? '#f87171' : '';
+      }
+
+      async function runProbe() {
+        runBtn.disabled = true;
+        setStatus('Status: running...', null);
+        badgesEl.innerHTML = '';
+        outEl.textContent = '';
+
+        var body = { action: 'run_hhaaios_gateway_full_stack_probe' };
+        var b = basesEl && basesEl.value ? String(basesEl.value).trim() : '';
+        if (b) body.openwebrx_base_urls = b;
+
+        try {
+          var res = await fetch('/api/hh-awareness-cloud', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+          var data = await res.json().catch(function () { return null; });
+          if (!res.ok) throw new Error((data && data.error) ? data.error : 'http_' + res.status);
+
+          var r = data && data.result ? data.result : {};
+          var g = r.gates || {};
+          var topOk = data && data.ok === true;
+
+          setStatus('Status: ' + (topOk ? 'SUCCESS' : 'FAIL'), topOk);
+
+          function badge(ok, text) {
+            var s = document.createElement('span');
+            s.className = 'badge ' + (ok ? 'ok' : 'warn');
+            s.textContent = text + ': ' + (ok ? 'OK' : 'NO');
+            badgesEl.appendChild(s);
+          }
+          badge(!!g.memory_write, 'Memory');
+          badge(!!g.jupiter_integrity, 'Jupiter');
+          badge(!!g.compute_receipt_linked, 'Sun compute');
+          badge(!!g.sdr_sampled, 'SDR');
+          badge(!!g.ionosphere_sampled, 'Ionosphere');
+          badge(!!g.grid_configured, 'Grid ring');
+
+          outEl.textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+          setStatus('Status: FAIL', false);
+          outEl.textContent = JSON.stringify({ ok: false, error: e && e.message ? e.message : String(e) }, null, 2);
+        } finally {
+          runBtn.disabled = false;
+        }
+      }
+
+      runBtn.addEventListener('click', runProbe);
+      if (new URLSearchParams(window.location.search).get('autorun') === '1') runProbe();
+    })();
+  </script>
+</body>
+</html>

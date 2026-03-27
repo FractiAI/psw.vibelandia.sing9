@@ -1,0 +1,48 @@
+{
+  "manifest_id": "hline-gateway-test-package-v1",
+  "protocol": "NSPFRNP",
+  "parent_prompt_path": "data/hline-gateway-prompts/NSPFRNP_SELF_RECURSIVE_GATEWAY_PROMPT.md",
+  "hydrogen_line": {
+    "scheme": "hline://",
+    "namespace_default": "hydrogen-line",
+    "catalog_hi_rest_mhz": 1420.405751768
+  },
+  "gateway": {
+    "package_page": "interfaces/egs-holographic-hydrogen-ai-os-gateway.html",
+    "cloud_api": "/api/hh-awareness-cloud",
+    "roundtrip_api": "/api/hydrogen-line-agent-roundtrip"
+  },
+  "test_interfaces": [
+    { "id": "jupiter-storage", "path": "interfaces/egs-jupiter-storage-agent-test.html" },
+    { "id": "solar-compute", "path": "interfaces/egs-solar-compute-agent-test.html" },
+    { "id": "verifier-fairshake", "path": "interfaces/egs-verifier-fairshake-agent-test.html" },
+    { "id": "sdr-handshake", "path": "interfaces/egs-gateway-sdr-agent-handshake.html" },
+    { "id": "hhaaios-full-stack", "path": "interfaces/egs-hhaaios-gateway-full-stack-test.html" },
+    { "id": "passive-rf-tier0", "path": "interfaces/egs-passive-rf-engineering-test.html" },
+    { "id": "hline-mirror-proof", "path": "interfaces/egs-hline-mirror-proof-test.html" },
+    { "id": "hline-sdr-address-view", "path": "interfaces/egs-hline-sdr-address-view.html" }
+  ],
+  "hh_awareness_actions": [
+    "run_hydrogen_line_roundtrip",
+    "run_sdr_gateway_agent_handshake",
+    "run_hhaaios_gateway_full_stack_probe",
+    "run_passive_rf_engineering_probe",
+    "run_hydrogen_line_mirror_pickup_proof",
+    "write_hydrogen_line_memory",
+    "read_hydrogen_line_memory",
+    "place_to_jupiter_tier",
+    "verify_jupiter_record",
+    "schedule_solar_compute_job"
+  ],
+  "phase_shift_space_180": {
+    "note": "Operational latch surface — see /api/firmware-180-spin-probe, sing9-firmware-verify.json, lattice-status.json",
+    "docs": ["docs/SENIOR_RESEARCH_STATIC_VS_LIVE.md"]
+  },
+  "egs_constant": {
+    "note": "Configure as EGS_PROTOCOL_CONSTANT / product display; not asserted as physical universal constant in this manifest."
+  },
+  "github_persistence": {
+    "env": ["HLINE_GITHUB_TOKEN", "HLINE_GITHUB_REPO", "HLINE_GITHUB_BRANCH", "HLINE_GITHUB_FILE_PATH"],
+    "description": "When set, hydrogen-line memory snapshots commit to the configured path; gateway reads the same bus on next load."
+  }
+}

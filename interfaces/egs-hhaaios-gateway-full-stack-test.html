@@ -98,6 +98,30 @@
         statusEl.style.color = ok === true ? '#22c55e' : ok === false ? '#f87171' : '';
       }
 
+      function formatDemonstrationSummary(ds) {
+        if (!ds) return '';
+        var lines = [
+          '=== Demonstration summary (tested vs not yet shown) ===',
+          '',
+          'Tested and successfully shown:',
+        ];
+        (ds.tested_and_successfully_shown || []).forEach(function (x) {
+          lines.push('  • ' + x);
+        });
+        lines.push('');
+        lines.push('Not yet demonstrated:');
+        (ds.not_yet_demonstrated || []).forEach(function (x) {
+          lines.push('  • ' + x);
+        });
+        if (typeof ds.overall_ok === 'boolean') {
+          lines.push('');
+          lines.push('Overall OK (summary): ' + (ds.overall_ok ? 'yes' : 'no'));
+        }
+        lines.push('');
+        lines.push('--- Full JSON ---');
+        return lines.join('\n');
+      }
+
       async function runProbe() {
         runBtn.disabled = true;
         setStatus('Status: running...', null);
@@ -136,7 +160,8 @@
           badge(!!g.ionosphere_sampled, 'Ionosphere');
           badge(!!g.grid_configured, 'Grid ring');
 
-          outEl.textContent = JSON.stringify(data, null, 2);
+          outEl.textContent =
+            formatDemonstrationSummary(r.demonstration_summary) + '\n' + JSON.stringify(data, null, 2);
         } catch (e) {
           setStatus('Status: FAIL', false);
           outEl.textContent = JSON.stringify({ ok: false, error: e && e.message ? e.message : String(e) }, null, 2);

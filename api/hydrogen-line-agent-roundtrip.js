@@ -222,6 +222,7 @@ module.exports = async (req, res) => {
     });
 
     const finishedAt = nowIso();
+    const demo = await import('../lib/gateway-demonstration-summary.mjs');
     return res.status(verifier.success ? 200 : 500).json({
       ok: verifier.success,
       run_id: runId,
@@ -261,8 +262,10 @@ module.exports = async (req, res) => {
       verifier,
       compute_receipt,
       verifier_receipt,
+      demonstration_summary: demo.roundtripProbe(verifier.success),
     });
   } catch (e) {
+    const demo = await import('../lib/gateway-demonstration-summary.mjs');
     return res.status(500).json({
       ok: false,
       run_id: runId,
@@ -274,6 +277,7 @@ module.exports = async (req, res) => {
       bus_primary: true,
       telemetry_role: 'legacy_awareness_only',
       error: e.message || String(e),
+      demonstration_summary: demo.roundtripProbe(false),
     });
   }
 };

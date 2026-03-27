@@ -33,6 +33,29 @@
     (function () {
       var btn = document.getElementById('runBtn');
       var out = document.getElementById('out');
+      function formatDemonstrationSummary(ds) {
+        if (!ds) return '';
+        var lines = [
+          '=== Demonstration summary (tested vs not yet shown) ===',
+          '',
+          'Tested and successfully shown:',
+        ];
+        (ds.tested_and_successfully_shown || []).forEach(function (x) {
+          lines.push('  • ' + x);
+        });
+        lines.push('');
+        lines.push('Not yet demonstrated:');
+        (ds.not_yet_demonstrated || []).forEach(function (x) {
+          lines.push('  • ' + x);
+        });
+        if (typeof ds.overall_ok === 'boolean') {
+          lines.push('');
+          lines.push('Overall OK (summary): ' + (ds.overall_ok ? 'yes' : 'no'));
+        }
+        lines.push('');
+        lines.push('--- Full JSON ---');
+        return lines.join('\n');
+      }
       btn.addEventListener('click', async function () {
         btn.disabled = true;
         out.textContent = 'Running…';
@@ -42,7 +65,10 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'run_hydrogen_line_mirror_pickup_proof' })
           });
-          out.textContent = JSON.stringify(await res.json(), null, 2);
+          var data = await res.json();
+          var r = data && data.result ? data.result : {};
+          out.textContent =
+            formatDemonstrationSummary(r.demonstration_summary) + '\n' + JSON.stringify(data, null, 2);
         } catch (e) {
           out.textContent = JSON.stringify({ ok: false, error: String(e.message || e) }, null, 2);
         } finally {

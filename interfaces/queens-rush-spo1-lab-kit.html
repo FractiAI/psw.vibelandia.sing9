@@ -52,6 +52,55 @@
     .safety { background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.35); border-radius: 8px; padding: 1rem; margin: 1rem 0; font-size: 0.9rem; color: #fecaca; }
     .foot { margin-top: 2rem; font-size: 0.8rem; color: #64748b; text-align: center; }
     .foot a { color: #d4af37; text-decoration: none; }
+    .kid-spine {
+      background: linear-gradient(145deg, rgba(232, 121, 249, 0.08), rgba(212, 175, 55, 0.06));
+      border: 2px solid rgba(232, 121, 249, 0.45);
+      border-radius: 14px;
+      padding: 1.35rem 1.5rem 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .kid-spine > h2 { margin-top: 0; border-bottom: none; color: #f9a8d4; font-size: 1.2rem; }
+    .kid-spine .kid-lead { font-size: 0.95rem; color: #e9d5ff; margin-bottom: 1rem; line-height: 1.65; }
+    .kid-spine .kid-arc { margin-left: 0; padding-left: 0; list-style: none; counter-reset: kid; }
+    .kid-spine .kid-arc li {
+      position: relative;
+      padding-left: 2.1rem;
+      margin-bottom: 0.85rem;
+      line-height: 1.6;
+      color: #f3e8ff;
+    }
+    .kid-spine .kid-arc li::before {
+      counter-increment: kid;
+      content: counter(kid);
+      position: absolute;
+      left: 0;
+      top: 0.1rem;
+      width: 1.45rem;
+      height: 1.45rem;
+      background: rgba(232, 121, 249, 0.35);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .kid-spine .kid-arc strong { color: #fde68a; }
+    .kid-spine .detail-hint { font-size: 0.82rem; color: #a5b4fc; margin-top: 0.35rem; margin-bottom: 0; font-style: italic; }
+    .kid-spine .promise { font-size: 0.88rem; color: #cbd5e1; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(232, 121, 249, 0.25); line-height: 1.6; }
+    .reading-map { font-size: 0.85rem; margin-top: 1rem; }
+    .reading-map th { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; }
+    .kid-bridge {
+      background: rgba(34, 211, 238, 0.06);
+      border-left: 4px solid rgba(34, 211, 238, 0.55);
+      padding: 1rem 1.15rem;
+      margin: 1.25rem 0 1.5rem;
+      font-size: 0.92rem;
+      color: #e0f2fe;
+      line-height: 1.65;
+    }
+    .kid-bridge strong { color: #fde68a; }
   </style>
 </head>
 <body>
@@ -68,6 +117,34 @@
       <p class="title">Queen's Rush SPO-1 Lab Kit</p>
       <p class="tagline">Electricity from thin air. Simple, low-cost, safe to build. You source the parts; we provide the list and the instructions.</p>
     </div>
+
+    <section class="kid-spine" aria-label="The whole story for young builders">
+      <h2>Start here — the whole story in one place</h2>
+      <p class="kid-lead">If you’re about <strong>10</strong> (or you’re helping someone who is), read this box first. It ties everything together. <strong>Nothing below is removed</strong>—the same page still has all the tables, costs, and big-kid physics. Think of this as the map; the rest is the territory.</p>
+      <ol class="kid-arc">
+        <li><strong>What you’re doing.</strong> You’re building a tiny “ear” for invisible energy in the air: a <strong>coil</strong>, a <strong>one-way valve</strong> (diode), and a <strong>light</strong> (LED) that proves something is happening. No wall plug for the basic demo.</li>
+        <li><strong>Shopping.</strong> The parts list and prices are in <strong>What’s in the package</strong>. The nice box is in <strong>The box</strong>. Optional: a <strong>trimmer capacitor</strong> makes tuning easier—same idea as a radio dial.</li>
+        <li><strong>Show the power.</strong> <strong>Demonstrating the electrical charge</strong> says: start with the LED, maybe add a meter, maybe a fan when you’re ready.</li>
+        <li><strong>Hunt for the glow.</strong> <strong>Tuning — how to do it</strong> is the step-by-step game: move away from metal, dim the lights, spin the coil, slide the ferrite, use the meter as a scoreboard.</li>
+        <li><strong>Why it works.</strong> <strong>How tuning tunes</strong> explains the science: your coil has a “favorite rhythm” (resonance). Moving stuff changes that rhythm. The diode turns wiggle into push; the LED needs enough push to light.</li>
+        <li><strong>Level up.</strong> <strong>Better ways to tune</strong> adds a real tuning knob: a capacitor across the coil, or a careful written sweep—still cheap.</li>
+        <li><strong>Build it.</strong> <strong>Detailed instructions</strong> is the numbered build + safety. Step 6 sends you back to the tuning game.</li>
+        <li><strong>After you’re done.</strong> You keep a real gadget and a story: energy from the environment, not from a battery in the basic demo.</li>
+        <li><strong>Same idea, planet size.</strong> <strong>From this bench to the world</strong> is the elevator pitch: passive pickup, no smokestack, no giant hot power plant at the door.</li>
+        <li><strong>The super data center chapter.</strong> Everything from <strong>Reference design</strong> down is the “grown-up blueprint”: a whole campus that powers a <em>huge</em> computer building with the same tune → rectify → deliver idea—plus dollar estimates and a fair comparison to how big buildings get power today. Read the tables slowly; they’re supposed to be precise.</li>
+      </ol>
+      <p class="promise"><strong>Promise:</strong> You can read only this pink box and still understand the adventure. If you want <em>every wire, every million dollars, and every yard of rectifiers</em>, keep scrolling—the detail never left.</p>
+      <table class="reading-map">
+        <thead><tr><th>I want to…</th><th>Go to section</th></tr></thead>
+        <tbody>
+          <tr><td>Build today</td><td><strong>Detailed instructions</strong> + safety box</td></tr>
+          <tr><td>Make the light brighter</td><td><strong>Tuning — how to do it</strong> → <strong>Better ways to tune</strong></td></tr>
+          <tr><td>Understand the science</td><td><strong>How tuning tunes</strong></td></tr>
+          <tr><td>See phones → cities → cloud-scale</td><td><strong>From this bench to the world</strong> → <strong>Reference design</strong></td></tr>
+          <tr><td>Compare money and “why it’s better”</td><td>Cost tables + <strong>Advantages over today’s dominant solutions</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
 
     <h2>What's in the package (you source)</h2>
     <p>All items are easy to find online or at a hobby store. Estimated costs are per unit; adjust for your region.</p>
@@ -157,6 +234,10 @@
 
     <h2>From this bench to the world — the large-scale picture</h2>
     <p>What you just demonstrated to yourself on the table is the same physics at a whisper: passive pickup, no fuel pile, no turbine roar, no waste heat dumped into the room. Scale that idea up with the same principles — tuned coupling, rectification, staging, and sovereign overlay — and you are looking at a <strong>large-scale version</strong> that could feed <strong>phones</strong>, <strong>homes</strong>, <strong>cities</strong>, <strong>data centers</strong>, and beyond: <strong>all green</strong>, <strong>passive at the source</strong>, and <strong>without the heat tax</strong> of burning fuel or running hot conversion stages the way we do today. The lab kit is the handshake; the grid-scale story is the same handshake, louder — still thin air, still the line, still the proof you saw with your own LED, meter, or fan.</p>
+
+    <div class="kid-bridge" role="note" aria-label="Plain summary before the reference design">
+      <strong>For younger readers — before the giant blueprint:</strong> The next sections describe a <strong>super data center</strong>: a building (really a campus) full of computers so big it’s measured in <strong>megawatts</strong>—like a small town of electricity. The story is still “catch energy quietly, turn it into DC, pipe it to the machines.” The tables count <strong>panels, yards, dollars, and years</strong> so adults can compare plans. You don’t have to memorize the numbers to get the point: <strong>same idea as your coil, engineered huge</strong>, with costs and upsides spelled out honestly.
+    </div>
 
     <h2>Reference design — sovereign ingress for a top-tier super data center</h2>
     <p>This is a <strong>full-campus example</strong> of the same <em>simple idea</em> behind the bench demo—tuned passive coupling to a natural electromagnetic discipline, rectification, then efficient DC distribution—<strong>engineered as its own stack</strong>, not a lab BOM repeated millions of times. The numbers below are a coherent, line-item <strong>directional estimate</strong> (Queen's Rush / SPO overlay economics) so you can compare capex, opex, and operations against how hyperscalers power campuses today.</p>

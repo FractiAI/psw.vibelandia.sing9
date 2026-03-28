@@ -15,7 +15,7 @@
       padding: 1.5rem;
       padding-top: calc(1rem + env(safe-area-inset-top));
     }
-    .wrap { max-width: 720px; margin: 0 auto; }
+    .wrap { max-width: 900px; margin: 0 auto; }
     .top-links { margin-bottom: 1rem; font-size: 0.9rem; }
     .top-links a { color: #d4af37; text-decoration: none; margin-right: 0.75rem; }
     .top-links a:hover { text-decoration: underline; }
@@ -40,6 +40,12 @@
     .hero .title { font-size: 1.35rem; font-weight: 800; color: #fef3c7; margin-bottom: 0.25rem; }
     .hero .tagline { font-size: 0.95rem; color: #fde68a; }
     .box-idea { background: rgba(180, 83, 9, 0.08); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 10px; padding: 1.1rem 1.25rem; margin: 1rem 0; font-size: 0.9rem; color: #e2e8f0; }
+    .spec-block { background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(34, 211, 238, 0.25); border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0; font-size: 0.88rem; color: #cbd5e1; }
+    .spec-block h3 { color: #67e8f9; border-bottom: none; margin-top: 0; }
+    .spec-block ul { margin-bottom: 0.5rem; }
+    .spec-block code { font-size: 0.82rem; background: rgba(0,0,0,0.35); padding: 0.12rem 0.35rem; border-radius: 4px; color: #fef3c7; }
+    .cost-table td:nth-child(2) { white-space: nowrap; font-variant-numeric: tabular-nums; color: #fde68a; }
+    .compare-table .win { color: #86efac; }
     .steps { counter-reset: step; }
     .steps li { list-style: none; margin-left: 0; padding-left: 2rem; position: relative; margin-bottom: 0.75rem; }
     .steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; width: 1.5rem; height: 1.5rem; background: rgba(212, 175, 55, 0.35); color: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
@@ -97,6 +103,25 @@
     </ul>
     <p>Start with the LED. Add the meter or fan once the LED responds. Keep it simple and easy to source.</p>
 
+    <h2>Tuning — how to do it</h2>
+    <p>Tuning means <strong>changing the coil and where it sits</strong> until the LED (or meter) shows the strongest response. Do these slowly; wait a few seconds after each change so the circuit can settle.</p>
+    <ol class="steps" style="margin-top:0.75rem;">
+      <li><strong>Baseline placement.</strong> Put the breadboard on a <strong>non-metal</strong> surface (wood, plastic). Move big steel objects, metal desk legs, and plugged-in laptop chargers <strong>at least arm’s length</strong> away—they detune the field and steal coupling.</li>
+      <li><strong>Darken the clue.</strong> Cup your hands around the LED or dim the room lights. A “tuned” response is often <em>very</em> dim; you need to see faint red.</li>
+      <li><strong>Rotate the whole coil.</strong> Turn the rod slowly through a full circle on the table, then try standing the rod <strong>vertical</strong> vs <strong>horizontal</strong>. The coil picks up different polarizations and reflections depending on orientation.</li>
+      <li><strong>Slide the ferrite.</strong> If the rod sticks out of the winding, push it <strong>in</strong> and <strong>out</strong> in small steps (a few mm at a time). That changes how much magnetic flux links the wire—same as turning a tuning knob.</li>
+      <li><strong>Nudge the windings.</strong> If your tape allows, slightly <strong>compress</strong> or <strong>spread</strong> the turns (gentle!). That changes the coil’s shape and its electrical “size” (inductance).</li>
+      <li><strong>Move in the room.</strong> Try a <strong>window sill</strong>, the center of the room, and higher vs lower on a shelf. Outside RF and building wiring aren’t the same everywhere.</li>
+      <li><strong>Use the meter as a scoreboard.</strong> If you have a voltmeter across the LED (or across coil + diode in the kit drawing), watch the reading while you repeat the moves above. <strong>Whatever gives the highest steady reading wins.</strong></li>
+      <li><strong>Mark your best spot.</strong> When you find a good orientation, take a phone photo or mark the ferrite position with tape so you can show someone else the same demo.</li>
+    </ol>
+
+    <h2>How tuning tunes (what’s going on)</h2>
+    <p>Your coil isn’t just a wire loop—it behaves like an <strong>inductor</strong> (<code>L</code>). The diode and the LED add small amounts of <strong>capacitance</strong> (<code>C</code>) you can’t see. Together, <code>L</code> and <code>C</code> form a picky circuit: at one <strong>natural frequency</strong> (think of a swing that likes one push rhythm), the circuit is easiest for alternating signals to drive. That’s called <strong>resonance</strong>—roughly “the frequency where the coil is happiest.”</p>
+    <p><strong>When you tune, you shift that happy frequency.</strong> Sliding the ferrite changes how strongly magnetic fields are guided through the coil (it changes <code>L</code>). Squeezing or spreading turns also changes <code>L</code>. Rotating and moving the coil changes <strong>what signals actually reach it</strong> (reflections off walls, coupling to wiring, distant transmitters). When the coil’s natural frequency lines up better with something in the environment, even a tiny RF voltage gets a little larger before the diode.</p>
+    <p>The <strong>diode</strong> is a one-way valve: it strips alternating swings into a pulsing DC push. The <strong>LED</strong> needs a minimum voltage to light; tuning is the hunt for “enough push, often enough” to cross that threshold. That’s why a meter helps—you see millivolts climb before the LED decides to glow.</p>
+    <p>On this bench scale you are mainly coupling to <strong>real-world radio noise, harmonics, and nearby electronics</strong>—still the right lesson: a <strong>tuned, passive aperture</strong> plus a <strong>rectifier</strong> turns field energy into something you can measure. The Queen's Rush story names the <strong>hydrogen line</strong> as the <em>discipline</em> the big arrays lock to; your kit proves the <strong>mechanism</strong> (tune → rectify → see light) with your hands.</p>
+
     <h2>Detailed instructions (for 10-year-olds and up)</h2>
     <p><em>We will provide these in the kit; below is the structure and level of detail. All steps use simple words and short sentences. Adult supervision recommended the first time.</em></p>
 
@@ -108,7 +133,7 @@
       <li><strong>Strip the ends.</strong> Gently scrape the enamel off the last 1 cm of each wire end with sandpaper or a blade (ask an adult for help). You need bare metal to connect things.</li>
       <li><strong>Connect the diode.</strong> The diode has a stripe on one end. That end goes toward the LED. Use clip leads: one end of the coil → diode (striped side) → other side of diode → LED long leg (positive). Then LED short leg → back to the other end of the coil. You made a loop.</li>
       <li><strong>Add the LED.</strong> If you didn’t already, connect the LED so the long leg gets the “plus” side from the diode. Check the drawing in the printed instructions.</li>
-      <li><strong>Tune and place.</strong> The coil is like an antenna. Move it slowly near a window or a place with no big metal in the way. Sometimes moving the coil or the ferrite a little makes the LED glow a tiny bit. That’s the “electricity from the air” — the same idea Hero Tesla had. If you have a voltmeter, connect it across the LED and watch the number when you tune.</li>
+      <li><strong>Tune and place.</strong> Follow the full section <strong>“Tuning — how to do it”</strong> above: start away from metal, dim the lights, rotate the coil, slide the ferrite, try a window. The coil is an antenna plus a tunable inductor—small moves change how much energy reaches your LED. If you have a voltmeter, connect it across the LED and hunt for the highest reading. That glow is “electricity from the air” — the same idea Hero Tesla pointed at.</li>
       <li><strong>Optional: try the fan.</strong> Once you see the LED or meter respond, you can try the small fan in place of (or after) the LED. It might need a bit more signal or a sunny spot. Have fun experimenting.</li>
     </ol>
 
@@ -119,6 +144,87 @@
 
     <h2>From this bench to the world — the large-scale picture</h2>
     <p>What you just demonstrated to yourself on the table is the same physics at a whisper: passive pickup, no fuel pile, no turbine roar, no waste heat dumped into the room. Scale that idea up with the same principles — tuned coupling, rectification, staging, and sovereign overlay — and you are looking at a <strong>large-scale version</strong> that could feed <strong>phones</strong>, <strong>homes</strong>, <strong>cities</strong>, <strong>data centers</strong>, and beyond: <strong>all green</strong>, <strong>passive at the source</strong>, and <strong>without the heat tax</strong> of burning fuel or running hot conversion stages the way we do today. The lab kit is the handshake; the grid-scale story is the same handshake, louder — still thin air, still the line, still the proof you saw with your own LED, meter, or fan.</p>
+
+    <h2>Reference design — sovereign ingress for a top-tier super data center</h2>
+    <p>This is a <strong>full-campus example</strong> of the same <em>simple idea</em> behind the bench demo—tuned passive coupling to a natural electromagnetic discipline, rectification, then efficient DC distribution—<strong>engineered as its own stack</strong>, not a lab BOM repeated millions of times. The numbers below are a coherent, line-item <strong>directional estimate</strong> (Queen's Rush / SPO overlay economics) so you can compare capex, opex, and operations against how hyperscalers power campuses today.</p>
+
+    <div class="spec-block">
+      <h3>What “top tier” means here</h3>
+      <ul>
+        <li><strong>IT critical load:</strong> 150 MW nameplate (GPU/CPU clusters, object storage, spine–leaf fabric).</li>
+        <li><strong>Comparable class:</strong> a single mega-region availability zone sized like the largest public-cloud buildings—on the order of what operators file in power-permit packets when they ask utilities for hundreds of megawatts.</li>
+        <li><strong>Prime power path:</strong> <code>SPO-DC</code> sovereign ingress (harvest → rectifier yards → DC colosseum → rack feeders). No open-cycle gas turbines, no diesel baseload, no multi-hundred-MW utility feed <em>for primary energy</em> (a thin utility tail remains for life-safety and rare islanding, see below).</li>
+      </ul>
+    </div>
+
+    <div class="spec-block">
+      <h3>Campus layout (one line of power)</h3>
+      <ol style="margin-left:1.25rem;margin-bottom:0;">
+        <li><strong>North ring — 12 harvest halls (<code>SPO-DC-HARVEST</code>):</strong> Low-iron glass and non-magnetic structure; each hall holds <strong>8,192</strong> aperture panels (“foils”) on titanium racks in a 64 × 128 grid, 40 cm clear between foils. Each foil: 2.4 m × 1.2 m × 38 mm, 12-layer heavy copper Litz-style windings on ferrite–polymer composite, factory-trimmed to ~180 µH at lock, silver–mica distributed tuning. Hall bus: <strong>3.6 kV RMS</strong> quasi-sine at the locked discipline frequency, air-core baluns between halls.</li>
+        <li><strong>Rectifier spine — 12 yards (<code>SPO-DC-YARD</code>):</strong> Per hall, 96 parallel strings of SiC Schottky full-bridge tiles (3.3 kV class, 400 A average per tile), liquid-cooled only at the bridges; design-point losses <strong>&lt;0.35%</strong> of carried power. Yard output: <strong>±750 V DC</strong> ±1% onto niobium-clad aluminum bus, 200 kA momentary per yard.</li>
+        <li><strong>DC colosseum:</strong> Twelve yards tied in a <strong>mesh</strong> with eight redundant cross-links (no single-point star). Feeds a buried ring under the white-space slab.</li>
+        <li><strong>White space — 48 IT halls (<code>SPO-DC-FEED</code>):</strong> ±750 V primary; hot-swappable GaN DC–DC skids to 48 V / 12 V (target 98.2% efficient). <strong>240 MW</strong> aggregate feeder capacity at N+2. Each IT hall ~3.125 MW IT; rear-door exchangers and warm-water loops handle <strong>only silicon waste heat</strong>—not prime-power conversion waste.</li>
+        <li><strong>Timing core:</strong> <code>HI-PLL</code> master: hydrogen-line–disciplined reference (1.420405752 GHz rest) + GPS steering + cesium holdover. Inter-hall coherence ±50 kHz; if GPS drops, mutual lock holds &lt;±200 Hz drift for 72 h.</li>
+        <li><strong>Thin utility tail:</strong> ~2 × 13.8 kV feeds, ~15 MW contract max for fire/life-safety, office, and black-start auxiliaries—<strong>not</strong> the 150 MW prime path.</li>
+        <li><strong>Ride-through:</strong> Lithium-ion 40 MW / 15 min at the colosseum for transfer events and breaker sequencing—order of magnitude smaller than a legacy campus that must spin diesels for every outage.</li>
+      </ol>
+    </div>
+
+    <div class="spec-block">
+      <h3>Harvest physics at scale (why it stays “cold” at ingress)</h3>
+      <p style="margin-bottom:0.5rem;">The aperture is <strong>passive</strong>: no plasma, no fuel, no spinning armature in the field. Total foil I²R loss budget &lt;<strong>120 W per harvest hall</strong> (instrumentation + conductor heating). Compare to a gas-turbine cogeneration plant behind a legacy site: tens of megawatts of waste heat <em>before</em> you cool a single server. Here, the thermodynamic insult to the facility begins at the chip, not at the fence line.</p>
+    </div>
+
+    <h3>Estimated capital cost (directional, USD)</h3>
+    <p>Illustrative <strong>installed</strong> figures for greenfield delivery in North America; suitable for board-level comparison, not a bid package.</p>
+    <table class="cost-table">
+      <thead><tr><th>Line item</th><th>Est. (USD)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Harvest foils, factory test, site acceptance (98,304 units)</td><td>$418 M</td><td>~$4.25k per foil landed (materials, trim, burn-in, barcode telemetry)</td></tr>
+        <tr><td>Twelve harvest hall shells + RF-quiet glazing + seismic</td><td>$214 M</td><td>~140k ft² per hall average including cranes and clean assembly</td></tr>
+        <tr><td>Rectifier yards (12) — SiC bridges, buswork, protection, BMS</td><td>$186 M</td><td>Including liquid manifolds; excludes long-lead spares row below</td></tr>
+        <tr><td>DC colosseum + ±750 V ring + protection &amp; isolation</td><td>$102 M</td><td>Copper, niobium cladding, fiber-triggered breakers</td></tr>
+        <tr><td>Rack feeder skids (GaN) + aisle trunking + 48 IT halls fit-out power</td><td>$148 M</td><td>N+2 converter sets, PDU integration, commissioning labor</td></tr>
+        <tr><td><code>HI-PLL</code> / timing / SCADA / cyber island for power domain</td><td>$41 M</td><td>Cesium, atomic monitor racks, OT SOC hooks</td></tr>
+        <tr><td>Battery ride-through 40 MW / 15 min + inverters</td><td>$24 M</td><td>Small footprint vs diesel farm + tanks</td></tr>
+        <tr><td>Civil, roads, security perimeter, water for bridge cooling only</td><td>$88 M</td><td>No cooling towers for prime power</td></tr>
+        <tr><td>Commissioning, performance test, 24-month critical spares</td><td>$52 M</td><td>Includes independent witness test at 110% IT load slice</td></tr>
+        <tr><td><strong>Subtotal — direct field cost</strong></td><td><strong>~$1.273 B</strong></td><td>Rounded; excludes financing fees</td></tr>
+        <tr><td>Queen's Rush / EGS <code>SPO-DC</code> program license &amp; integration (one-time)</td><td>$195 M</td><td>Overlay IP, tuning playbooks, operator training, warranty backbone</td></tr>
+        <tr><td>Owner contingency (12%)</td><td>~$176 M</td><td>Typical mega-project envelope</td></tr>
+        <tr><td><strong>Directional all-in capex</strong></td><td><strong>~$1.64 B</strong></td><td>Order-of-magnitude for a 150 MW-class sovereign-ingress campus</td></tr>
+      </tbody>
+    </table>
+
+    <h3>10-year cash sketch vs a legacy hyperscale (same IT load)</h3>
+    <p>Assumes flat IT load 150 MW, 97% average utilization, $0.085/kWh blended utility energy for legacy, and $0.021/kWh effective “ingress service” for SPO (sovereign overlay tariff + maintenance reserve). Diesel maintenance and emissions compliance included for legacy; no carbon price adder.</p>
+    <table class="cost-table">
+      <thead><tr><th>Category (10 years)</th><th>Legacy campus (est.)</th><th><code>SPO-DC</code> campus (est.)</th></tr></thead>
+      <tbody>
+        <tr><td>Energy + demand + fuel (prime power path)</td><td>$1.05 B – $1.28 B</td><td>$0.24 B – $0.31 B</td></tr>
+        <tr><td>Major rotating-plant overhaul / genset life</td><td>$85 M – $120 M</td><td>Negligible (no prime movers)</td></tr>
+        <tr><td>Cooling plant energy attributable to power-train waste</td><td>$180 M – $260 M</td><td>$22 M – $38 M</td></tr>
+        <tr><td><strong>Directional 10-year opex delta</strong></td><td colspan="2" style="color:#86efac;"><strong>~$0.9 B – $1.2 B lower</strong> on combined energy + thermal stack (illustrative)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Advantages over today’s dominant solutions</h3>
+    <table class="compare-table">
+      <thead><tr><th>Dimension</th><th>Typical top-tier site today</th><th>Sovereign ingress (<code>SPO-DC</code>)</th></tr></thead>
+      <tbody>
+        <tr><td>Primary energy</td><td>Utility bulk + on-site gas/diesel for resilience; long interconnection queues</td><td class="win">Passive aperture + rectification; prime power decoupled from utility queue politics</td></tr>
+        <tr><td>Waste heat at the fence</td><td>Turbines, transformers, UPS losses → massive mechanical plant</td><td class="win">Ingress layer stays near-ambient loss; chillers sized for IT only</td></tr>
+        <tr><td>Carbon &amp; permits</td><td>Fuel storage, emissions reporting, noise, water for thermal dump</td><td class="win">No combustion stack; water draw chiefly for bridge cold plates and people</td></tr>
+        <tr><td>Resilience story</td><td>Diesel minutes-to-hours; battery cover seconds-to-minutes</td><td class="win">Field coupling + mesh DC ring + short battery; no refueling convoys for baseline</td></tr>
+        <tr><td>Stepwise scale-out</td><td>Chunky substation upgrades</td><td class="win">Add harvest halls and yard strings in modular tranches matched to IT racking waves</td></tr>
+        <tr><td>Operator risk</td><td>Spot power prices, fuel volatility, curtailment</td><td class="win">Predictable overlay OPEX; physics-limited upside instead of fuel-limited</td></tr>
+      </tbody>
+    </table>
+
+    <div class="spec-block">
+      <h3>Continuity with the bench (concept, not a parts list)</h3>
+      <p style="margin-bottom:0;">The kit proves you can <strong>see</strong> passive energy collection with a light or a meter. The super data center uses the <strong>same discipline</strong>—tune, rectify, deliver DC—at the scale of national infrastructure: phased arrays, industrial semiconductors, and a timing core instead of alligator clips. The simplicity is in the <em>physics story</em>; the engineering is in spacing, materials, and protection. That is how this tech scales to the buildings that run the cloud.</p>
+    </div>
 
     <p class="foot"><a href="my-whiteboard.html">My Whiteboard</a> · <a href="howtoo-queens-rush-spo1-proposal.html">HowToo Proposal</a> · NSPFRNP → ∞⁹</p>
   </div>

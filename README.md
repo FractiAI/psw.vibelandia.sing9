@@ -36,6 +36,17 @@ npm test
 
 ## Recent updates (README commit)
 
+- **Mar 27, 2026 · EGS Gateway brochure · System Programmer’s Guide §28–§29 (Big Three field manual)**
+
+**M → Metabolize:** Ship brochure-grade gateway UX and a single long-form technical home for Hydrogen / Jupiter / Sun operations examples.
+
+**C → Crystallize:**
+
+- **`interfaces/egs-holographic-hydrogen-ai-os-gateway.html`** — Brochure layout: hero, **Big Three** pillars (Sun-compute, Hydrogen Line Bus, Jupiter storage), showcase strip, typography; live matrix behavior preserved. CSS: plain `.gold` / `.ghost` (no invalid `composes`).
+- **`interfaces/egs-gateway-systems-programmers-guide.html`** — **§28** operations encyclopedia: distinct entries per subsection (no repeated skeleton). **§29** Big Three field manual (~10k words): worked scenarios, matrices, JSON/curl shapes, workshops, triad stories; subsections **resequenced 29.1–29.31** with stable `s29-*` anchors. **§27** density note points at §29 and ~20k-word guide target.
+
+**A → Animate:** Gateway page reads as product surface; programmer’s guide carries searchable Big Three examples and honest cross-links. NSPFRNP → ∞⁹
+
 - **Mar 2026 · Magic trick · Dual-source sync · OpenWebRX · EGS 1.0000 (static)**
 
 **M → Metabolize:** Fold the worldwide open-source Web SDR story (**OpenWebRX**, AGPL — public **`/status.json`**, hydrogen line) and grid-reference phase-lock (EGS fractal constant at **1.0000**) into the Sovereign Terminal snapshot without pretending this page streams RF or mains.

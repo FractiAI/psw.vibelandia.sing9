@@ -141,7 +141,7 @@
           <tr><td>Make the light brighter</td><td><strong>Tuning — how to do it</strong> → <strong>Better ways to tune</strong></td></tr>
           <tr><td>Understand the science</td><td><strong>How tuning tunes</strong></td></tr>
           <tr><td>See phones → cities → cloud-scale</td><td><strong>From this bench to the world</strong> → <strong>Reference design</strong></td></tr>
-          <tr><td>Compare money and “why it’s better”</td><td>Cost tables + <strong>Advantages over today’s dominant solutions</strong></td></tr>
+          <tr><td>Compare money and “why it’s better”</td><td><strong>Legacy prime electrical plant</strong> + <strong>Side-by-side</strong> + 10-year sketch + <strong>Advantages</strong></td></tr>
         </tbody>
       </table>
     </section>
@@ -287,6 +287,40 @@
         <tr><td>Queen's Rush / EGS <code>SPO-DC</code> program license &amp; integration (one-time)</td><td>$195 M</td><td>Overlay IP, tuning playbooks, operator training, warranty backbone</td></tr>
         <tr><td>Owner contingency (12%)</td><td>~$176 M</td><td>Typical mega-project envelope</td></tr>
         <tr><td><strong>Directional all-in capex</strong></td><td><strong>~$1.64 B</strong></td><td>Order-of-magnitude for a 150 MW-class sovereign-ingress campus</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Legacy prime electrical plant — same campus, same 150 MW IT (directional capex)</h3>
+    <p>For an apples-to-apples story, imagine <strong>the same critical IT load</strong> (150 MW) delivered the way hyperscalers usually do it: <strong>bulk utility</strong> at the fence, <strong>on-site rotating backup</strong> (diesel), <strong>UPS / static transfer / switchgear</strong>, <strong>medium-voltage distribution</strong>, and a <strong>central mechanical plant</strong> (chillers + towers) sized for <em>IT heat plus</em> the waste heat from generators, UPS, and conversion—not passive ingress. Below is a <strong>directional</strong> installed-cost stack for that power path only (white-space shell and servers are shared assumptions; not double-counted vs the SPO table).</p>
+    <table class="cost-table">
+      <thead><tr><th>Line item (legacy power path)</th><th>Est. (USD)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Transmission extension + utility yard / high-voltage substation (≈400–500 MW import capability, redundant feeds)</td><td>$425 M</td><td>Interconnection fees, transformers, relaying, often the long pole on schedule</td></tr>
+        <tr><td>Primary MV distribution (13.8 kV class, redundant loops, ductbank, switchgear lineups)</td><td>$118 M</td><td>Feeds UPS plants and mechanical yards</td></tr>
+        <tr><td>Central diesel plant — N+1 gensets (≈180–220 MW nameplate aggregate), acoustic enclosures, starting air</td><td>$178 M</td><td>Typical Tier III/IV-class requirement for sustained outage ride-through</td></tr>
+        <tr><td>Diesel fuel oil storage (72 h+ at full backup load), polishing, spill containment, fire suppression interface</td><td>$52 M</td><td>Regulatory, dikes, and monitoring</td></tr>
+        <tr><td>Central UPS + static switches + PDU skids to hall boundaries</td><td>$248 M</td><td>Conversion losses become chiller load</td></tr>
+        <tr><td>Chiller plant + cooling towers / mechanical yard (sized for IT + UPS + gen auxiliary heat)</td><td>$362 M</td><td>Large water and electrical auxiliaries; dominant legacy footprint</td></tr>
+        <tr><td>Make-up water, treatment, and thermal discharge compliance</td><td>$68 M</td><td>Tower blowdown, chemistry, permits</td></tr>
+        <tr><td>Electrical commissioning, load banks, integrated systems test, 24-month critical spares (power domain)</td><td>$76 M</td><td>Includes fuel burn during acceptance tests</td></tr>
+        <tr><td><strong>Subtotal — legacy power path (direct)</strong></td><td><strong>~$1.527 B</strong></td><td>Rounded</td></tr>
+        <tr><td>Owner contingency — power &amp; mechanical (12%)</td><td>~$183 M</td><td>Typical for long-lead electrical gear</td></tr>
+        <tr><td><strong>Directional all-in — legacy prime electrical plant</strong></td><td><strong>~$1.71 B</strong></td><td>Same campus class as the SPO reference; excludes sovereign harvest layer entirely</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Side-by-side — what costs what (directional)</h3>
+    <p>Both columns are <strong>power-delivery stacks</strong> for the same 150 MW IT envelope—not the servers themselves. Legacy buys fuel-path equipment and chillers for conversion waste; SPO buys harvest apertures, rectifiers, and a cold ingress story.</p>
+    <table class="cost-table">
+      <thead><tr><th>Bucket</th><th>Legacy prime plant (est.)</th><th><code>SPO-DC</code> sovereign ingress (est.)</th></tr></thead>
+      <tbody>
+        <tr><td>“Energy in” at the fence</td><td>Transmission + substation + fuel storage + diesels</td><td>Harvest foils + harvest hall shells</td></tr>
+        <tr><td>Conversion to usable DC for the campus</td><td>UPS + switchgear (AC-centric)</td><td>Rectifier yards + DC colosseum + GaN rack feeders</td></tr>
+        <tr><td>Thermal plant driven by <em>power conversion</em></td><td>Large chillers + towers for UPS/gen/losses</td><td>Bridge cooling on SiC only; no turbine/UPS waste stack</td></tr>
+        <tr><td>Timing / discipline</td><td>Utility frequency, genset sync</td><td><code>HI-PLL</code> + cesium holdover</td></tr>
+        <tr><td>Ride-through</td><td>Diesel minutes–days; batteries seconds–minutes at UPS</td><td>40 MW / 15 min Li + field coupling (baseline not fuel-limited)</td></tr>
+        <tr><td><strong>All-in directional capex (power path)</strong></td><td><strong>~$1.71 B</strong></td><td><strong>~$1.64 B</strong></td></tr>
+        <tr><td colspan="3" style="font-size:0.88rem;color:#94a3b8;">Legacy stack is often <strong>higher</strong> in opex and thermal burden (see 10-year sketch); SPO trades novel field hardware for avoided fuel-path and chiller scale. Totals are illustrative.</td></tr>
       </tbody>
     </table>
 

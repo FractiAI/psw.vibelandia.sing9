@@ -82,10 +82,11 @@
         <tr><td>Small 5 V DC fan (optional)</td><td>1</td><td>~$2–4</td><td>Optional: watch it spin when you have enough signal.</td></tr>
         <tr><td>Alligator clip leads or thin wire</td><td>4–6</td><td>~$3</td><td>To connect parts without soldering at first.</td></tr>
         <tr><td>Small breadboard or cardboard + tape</td><td>1</td><td>~$2–5</td><td>To hold the parts while you build.</td></tr>
+        <tr><td>Variable capacitor / trimmer (~10–100 pF), optional upgrade</td><td>1</td><td>~$2–6</td><td>Across the coil for finer tuning; see “Better ways to tune.”</td></tr>
         <tr><td>Printed instructions (included in kit)</td><td>1</td><td>—</td><td>Step-by-step, written for 10-year-olds and up.</td></tr>
       </tbody>
     </table>
-    <p><strong>Estimated total (parts only):</strong> about $15–25 depending on options. Kit price $79 includes box, instructions, and margin.</p>
+    <p><strong>Estimated total (parts only):</strong> about $15–25 base, or ~$18–30 with an optional trimmer cap for easier tuning. Kit price $79 includes box, instructions, and margin.</p>
 
     <h2>The box</h2>
     <p>Old school, not disposable. Something you keep and reuse.</p>
@@ -121,6 +122,18 @@
     <p><strong>When you tune, you shift that happy frequency.</strong> Sliding the ferrite changes how strongly magnetic fields are guided through the coil (it changes <code>L</code>). Squeezing or spreading turns also changes <code>L</code>. Rotating and moving the coil changes <strong>what signals actually reach it</strong> (reflections off walls, coupling to wiring, distant transmitters). When the coil’s natural frequency lines up better with something in the environment, even a tiny RF voltage gets a little larger before the diode.</p>
     <p>The <strong>diode</strong> is a one-way valve: it strips alternating swings into a pulsing DC push. The <strong>LED</strong> needs a minimum voltage to light; tuning is the hunt for “enough push, often enough” to cross that threshold. That’s why a meter helps—you see millivolts climb before the LED decides to glow.</p>
     <p>On this bench scale you are mainly coupling to <strong>real-world radio noise, harmonics, and nearby electronics</strong>—still the right lesson: a <strong>tuned, passive aperture</strong> plus a <strong>rectifier</strong> turns field energy into something you can measure. The Queen's Rush story names the <strong>hydrogen line</strong> as the <em>discipline</em> the big arrays lock to; your kit proves the <strong>mechanism</strong> (tune → rectify → see light) with your hands.</p>
+
+    <h2>Better ways to tune (optional upgrades)</h2>
+    <p>Moving the coil and ferrite works, but it’s <strong>coarse</strong>: you’re mostly changing <code>L</code> and hoping stray <code>C</code> lands on something loud. Here are <strong>better</strong> approaches—still cheap—if you want a sharper demo or less guesswork.</p>
+    <ul>
+      <li><strong>Add a variable capacitor across the coil</strong> (best bang for buck). Wire a small <strong>trimmer capacitor</strong> or polyvaricon (~10–100 pF class) in parallel with the coil, then adjust the cap <em>while</em> watching the meter or LED. You are directly steering the <strong>resonant frequency</strong> (<code>f ≈ 1 / (2π√(LC))</code>) instead of only nudging <code>L</code>. This is how classic crystal radios tune AM stations—same physics as the sovereign arrays, just with a plastic screwdriver instead of a PLL.</li>
+      <li><strong>Two knobs beat one.</strong> Combine <strong>ferrite in/out</strong> (coarse <code>L</code>) with a <strong>trim cap</strong> (fine frequency). Hunt peak brightness in two dimensions; you’ll find a peak much faster than wandering the room alone.</li>
+      <li><strong>Systematic sweep (no new parts).</strong> Mark ferrite positions A/B/C on tape, write down the voltmeter reading for each, and repeat at two coil orientations. Pick the winner. It’s “better tuning” as a <em>method</em>: less random, easier to teach.</li>
+      <li><strong>Lower threshold diode (optional swap).</strong> A <strong>Germanium</strong> diode (e.g. 1N34A-style) or a very low-forward Schottky can rectify weaker RF; the LED may glow a little easier. Stay with parts rated for small-signal use; an adult picks the substitute.</li>
+      <li><strong>See the spectrum (advanced).</strong> A cheap <strong>RTL-SDR</strong> USB stick and free software show <em>where</em> energy is in your room (broadcast bands, harmonics). You still tune the coil/cap by ear and meter—but you’re not guessing whether anything is there.</li>
+      <li><strong>Short counterpoise (sometimes helps).</strong> A ~1 m wire clipped to the circuit “cold” side (ask an adult which node in your layout) can act like a counterpoise, the way longwire antennas need a return path. Results vary; if it gets worse, remove it.</li>
+    </ul>
+    <p><strong>Big-site parallel:</strong> Hyperscale harvest uses the same idea—<strong>adjust both the aperture (L / geometry) and the electrical trim (C / PLL)</strong> so the array locks where the discipline says. Your bench version is that story in miniature; the variable cap is the honest upgrade from “hunt in the dark” to “dial the peak.”</p>
 
     <h2>Detailed instructions (for 10-year-olds and up)</h2>
     <p><em>We will provide these in the kit; below is the structure and level of detail. All steps use simple words and short sentences. Adult supervision recommended the first time.</em></p>

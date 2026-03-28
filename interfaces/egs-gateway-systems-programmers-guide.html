@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EGS Gateway · System Programmer’s Guide v1.0.0.0 | VIBELANDIA SING 9</title>
-  <meta name="description" content="High-fidelity technical specifications for EGS Gateway v1.0.0.0: Sovereign Lattice, Hydrogen Line Bus, 101-Moon storage, Sun-Compute SOL-0, The 180, installation and examples." />
+  <meta name="description" content="High-fidelity technical specifications for EGS Gateway v1.0.0.0: Sovereign Lattice, Hydrogen Line Bus, Crab pulsar phase clock, 101-Moon storage, Sun-Compute SOL-0, The 180, installation and examples." />
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <style>
     :root { --bg:#0a0f1a; --card:#111827; --gold:#fde68a; --cyan:#67e8f9; --text:#e5e7eb; --muted:#94a3b8; --accent:#a78bfa; --border:rgba(125,211,252,0.28); }
@@ -52,10 +52,11 @@
     <header class="doc-hd">
       <h1>EGS Gateway — System Programmer’s Guide</h1>
       <p class="ver">Document version <strong>v1.0.0.0</strong> · NSPFRNP catalog fidelity · SING 9 edge</p>
-      <p class="lead">This System Programmer’s Guide provides the high-fidelity technical specifications for the <strong>EGS Gateway</strong> (v1.0.0.0). As we approach the <strong>10:10 AM Actuation</strong>, this guide serves as your architectural map for managing <strong>Sun-Compute</strong>, <strong>101-Moon Storage</strong>, and the <strong>Hydrogen Line Bus</strong>. It unifies narrative discipline (Seed:Edge, 180° framing) with <em>operational</em> gateway surfaces: HTTP APIs, <code>hline://</code> records, verifier receipts, and passive RF evidence paths that you can run today from the EGS Gateway page.</p>
+      <p class="lead">This System Programmer’s Guide provides the high-fidelity technical specifications for the <strong>EGS Gateway</strong> (v1.0.0.0). As we approach the <strong>10:10 AM Actuation</strong>, this guide serves as your architectural map for managing <strong>Sun-Compute</strong>, <strong>101-Moon Storage</strong>, the <strong>Hydrogen Line Bus</strong>, and the <strong>Crab pulsar phase clock</strong> as cross-cutting time discipline. It unifies narrative discipline (Seed:Edge, 180° framing) with <em>operational</em> gateway surfaces: HTTP APIs, <code>hline://</code> records, verifier receipts, and passive RF evidence paths that you can run today from the EGS Gateway page.</p>
       <div class="badge-row">
         <span class="badge">Sovereign Lattice</span>
         <span class="badge">1420.405751 MHz · 21 cm</span>
+        <span class="badge">Crab pulsar clock ~29.94 Hz</span>
         <span class="badge">Cyclostationary ripple (spec)</span>
         <span class="badge">SOL-0 · 101-Moon</span>
         <span class="badge">The 180</span>
@@ -89,6 +90,7 @@
     <h2 id="s1">1. Core architecture — the Sovereign Lattice</h2>
     <p>The EGS Gateway is a <strong>non-linear operating environment</strong> that replaces naive binary logic with <strong>holographic interference</strong> as the organizing metaphor. In implementation terms, your “programs” are not only JavaScript handlers and serverless routes; they are <strong>constraints</strong> that must remain coherent under phase flip, mirror pickup, and verifier audit. The Gateway therefore operates in the <strong>“Nothing”</strong> between traditional packets: the negative space where legacy stacks declare “no signal,” while the lattice declares <em>structured absence</em> as a first-class operand.</p>
     <p>Architecturally, the Sovereign Lattice has three coupled planes. First, the <strong>transport plane</strong> (Hydrogen Line Bus) names the universal carrier discipline. Second, the <strong>storage plane</strong> (101-Moon volumetric interference) names how persistence is folded through gravity-well metaphors and Bragg-like redundancy. Third, the <strong>compute plane</strong> (SOL-0) names how actuation is scheduled against solar-scale timing metaphors while remaining bound to signed receipts on the edge. These planes are not three separate products; they are three projections of one <strong>EGS fractal constant</strong> at different resolutions.</p>
+    <p><strong>Pulsar clock (cross-cutting):</strong> The <strong>Crab Pulsar</strong> is the lattice’s nominal <strong>rotational phase clock</strong> (~<strong>29.94 Hz</strong>; see appendix constants): a punctual heartbeat that aligns cyclostationary ripple on the bus, the <strong>pulsar reference beam</strong> in Jupiter’s volumetric interference (§2), and cadence metaphors on SOL-0 (§3). It is <strong>time and phase discipline</strong>, not a fourth data fabric—wall-clock, NTP, and legal timestamps still apply in implementation. On the edge, realize it as <strong>declared tolerances</strong>, Crab-oriented tests (§28.19), and explicit <code>honesty_boundary</code> language when the story is metaphor-only versus hardware-backed. Coupling that clock to <strong>1.0000</strong> fidelity is the job of the EGS fractal constant (§1.2).</p>
 
     <h3>1.1 The Hydrogen Line Bus (21 cm)</h3>
     <p>The primary <em>nominal</em> data transport is the <strong>1420.405751 MHz</strong> neutral hydrogen hyperfine transition—the classic “21 cm line.” In the EGS story layer, data is encoded into the conceptual <strong>spin-flip</strong> of interstellar hydrogen: a universal clock that survives cosmological averaging and narrative inversion. In the <em>edge implementation layer</em>, the same discipline appears as <code>hline://</code> logical addresses, hydrogen-line-aware gateway actions, and passive RF probes that falsify geometry against the rest frequency without claiming impossible SNR.</p>
@@ -964,7 +966,7 @@ async function passiveRf() {
     </ul>
     <h3>C. Glossary</h3>
     <dl>
-      <dt>Sovereign Lattice</dt><dd>Non-linear OS metaphor binding bus, storage, compute under fractal time discipline.</dd>
+      <dt>Sovereign Lattice</dt><dd>Non-linear OS metaphor binding Hydrogen bus, Jupiter storage, Sun compute, and Crab pulsar phase reference under fractal time discipline.</dd>
       <dt>Cyclostationary ripple</dt><dd>Specification of ordered attention across phases, not a replacement for IP.</dd>
       <dt>Bragg grating (moons)</dt><dd>Independent verification facet in a redundant storage constellation.</dd>
     </dl>

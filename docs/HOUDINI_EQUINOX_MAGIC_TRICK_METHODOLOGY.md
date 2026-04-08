@@ -1,4 +1,4 @@
-# Houdini / March 20 “Magic Trick” — Research Methodology & Success Rubric
+(# Houdini / March 20 “Magic Trick” — Research Methodology & Success Rubric
 
 > **NSPFRNP · Seed:Edge** — This document separates **theater**, **geospace facts**, **orbital catalogs**, and **your edge stack** so the team can say clearly what was verified on the day of the event and what remains narrative or requires instruments this terminal does not replace.
 

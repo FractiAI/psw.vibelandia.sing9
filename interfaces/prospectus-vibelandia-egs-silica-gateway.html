@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Vibelandia Prospectus · Microsoft Silica EGS Gateway Simulation | SING!9</title>
+  <meta name="description" content="Vibelandia-facing prospectus for the Microsoft Silica EGS Gateway Simulation repository: K_EGS, layer stack, verification, and links to upstream paper and programmer guide." />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #050208; --gold: #d4af37; --gold2: #fde68a; --beam: #22d3ee;
+      --text: #e8e8e8; --sub: #94a3b8; --muted: #64748b;
+    }
+    html, body { background: var(--void); color: var(--text); min-height: 100vh; font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.65; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; padding-top: calc(1rem + env(safe-area-inset-top)); }
+    .topnav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; align-items: center; justify-content: space-between; }
+    .topnav a { color: var(--gold); text-decoration: none; font-size: 0.78rem; padding: 4px 12px; border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; }
+    .topnav a:hover { background: rgba(212,175,55,0.08); }
+    .prosps { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .prosps a { font-size: 0.68rem; color: var(--sub); padding: 2px 10px; border: 1px solid rgba(212,175,55,0.12); border-radius: 20px; text-decoration: none; }
+    .prosps a:hover { color: var(--gold2); border-color: rgba(212,175,55,0.35); }
+    h1 { font-size: clamp(1.35rem, 4vw, 1.75rem); color: var(--gold2); margin-bottom: 0.5rem; font-weight: 800; line-height: 1.2; }
+    .tag { display: inline-block; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--beam); margin-bottom: 1rem; }
+    .sub { font-size: 0.9rem; color: var(--sub); margin-bottom: 1.5rem; }
+    .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 1.25rem 1.35rem; margin-bottom: 1.25rem; }
+    .card h2 { font-size: 0.95rem; color: var(--gold); margin-bottom: 0.65rem; font-weight: 700; }
+    .card p, .card li { font-size: 0.88rem; color: var(--sub); margin-bottom: 0.75rem; }
+    .card p:last-child, .card li:last-child { margin-bottom: 0; }
+    .card ul { margin: 0 0 0 1.1rem; }
+    pre { background: rgba(0,0,0,0.35); border: 1px solid rgba(212,175,55,0.2); border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.78rem; overflow-x: auto; color: #e2e8f0; margin: 0.5rem 0 0; white-space: pre-wrap; }
+    .links a { color: var(--beam); text-decoration: none; font-weight: 600; }
+    .links a:hover { text-decoration: underline; }
+    .links li { margin-bottom: 0.35rem; }
+    .foot { margin-top: 2rem; font-size: 0.78rem; color: var(--muted); text-align: center; }
+    .foot a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topnav">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <div class="prosps">
+        <a href="prospectus-fractiai.html">FractiAI</a>
+        <a href="prospectus-vibeland-park.html">Park</a>
+        <a href="prospectus-vibeland-studio.html">Studio</a>
+        <a href="../index.html">Landing</a>
+      </div>
+    </nav>
+
+    <p class="tag">Vibelandia SING 9 · Upstream mirror prospectus</p>
+    <h1>Microsoft Silica EGS Gateway Simulation</h1>
+    <p class="sub">Prospectus for the <a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation" style="color:var(--beam);text-decoration:none;font-weight:600;">FractiAI/Microsoft-Silica-EGS-Gateway-Simulation</a> repository. Full technical depth lives upstream in the whitepaper and programmer guide; this page is the Vibelandia entry.</p>
+
+    <div class="card">
+      <h2>Executive summary</h2>
+      <p>The upstream project turns a Project Silica–style fused-silica simulation into an <strong>EGS Gateway</strong>: a bridge between solar–hydrogen–cosmic signals and digital AI logic, with FDTD verification, an EGS OS kernel, and HHAAIOS writer/reader/verifier flows.</p>
+    </div>
+
+    <div class="card">
+      <h2>K_EGS (from upstream README)</h2>
+<pre>K_EGS = φ × (λ_laser / λ_H-alpha)
+      = 1.6180 × (1030 nm / 656.28 nm)
+      = 2.5436  (dimensionless, scale-invariant)</pre>
+      <p style="margin-top:0.75rem;">The whitepaper authors the work as <strong>EGS Gateway Project — Vibelandia SING 9</strong>.</p>
+    </div>
+
+    <div class="card">
+      <h2>Stack (layers 0–4)</h2>
+      <p><strong>0</strong> Cosmos · <strong>1</strong> Silica FDTD · <strong>2</strong> EGS OS · <strong>3</strong> HHAAIOS + GenAI · <strong>4</strong> External LLMs. See upstream README for the full ASCII architecture diagram.</p>
+    </div>
+
+    <div class="card">
+      <h2>Verification</h2>
+      <p>Upstream runs <strong>34 tests</strong> across three suites (five-pillar FDTD, EGS OS, HHAAIOS). The README includes an explicit honesty boundary: numerical FDTD results, phase-space coupling, no physical Silica hardware required for the open simulation.</p>
+    </div>
+
+    <div class="card links">
+      <h2>Canonical upstream links</h2>
+      <ul>
+        <li><a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation" target="_blank" rel="noopener">Repository home</a></li>
+        <li><a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/README.md" target="_blank" rel="noopener">README.md</a></li>
+        <li><a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/EGS_GATEWAY_PAPER.md" target="_blank" rel="noopener">EGS_GATEWAY_PAPER.md</a> (full paper)</li>
+        <li><a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/EGS_SYSTEM_PROGRAMMER_GUIDE.md" target="_blank" rel="noopener">EGS_SYSTEM_PROGRAMMER_GUIDE.md</a></li>
+        <li><a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/egs_architecture_canvas.html" target="_blank" rel="noopener">egs_architecture_canvas.html</a></li>
+      </ul>
+    </div>
+
+    <div class="card links">
+      <h2>SING 9 surfaces</h2>
+      <ul>
+        <li><a href="../docs/VIBELANDIA_EGS_SILICA_GATEWAY_PROSPECTUS.md">Markdown prospectus (this repo)</a></li>
+        <li><a href="egs-gateway-systems-programmers-guide.html">EGS Gateway Programmer’s Guide (surface)</a></li>
+        <li><a href="egs-holographic-hydrogen-ai-os-gateway.html">EGS Holographic Hydrogen AI OS Gateway · package page</a></li>
+      </ul>
+    </div>
+
+    <p class="foot"><a href="my-whiteboard.html">My Whiteboard</a> · NSPFRNP → ∞⁹</p>
+  </div>
+</body>
+</html>

@@ -12,6 +12,21 @@
 
 ---
 
+## Microsoft Silica EGS Gateway (upstream Vibelandia prospectus)
+
+Prospectus for **[FractiAI/Microsoft-Silica-EGS-Gateway-Simulation](https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation)** — Project Silica–style fused-silica FDTD verification, EGS OS kernel, and HHAAIOS writer/reader/verifier stack, authored in the upstream whitepaper as **EGS Gateway Project — Vibelandia SING 9**.
+
+| Surface | Link |
+| --- | --- |
+| Markdown (canonical in this repo) | [docs/VIBELANDIA_EGS_SILICA_GATEWAY_PROSPECTUS.md](docs/VIBELANDIA_EGS_SILICA_GATEWAY_PROSPECTUS.md) |
+| HTML page | [interfaces/prospectus-vibelandia-egs-silica-gateway.html](interfaces/prospectus-vibelandia-egs-silica-gateway.html) |
+| My Whiteboard | Pin opens the HTML prospectus · [interfaces/my-whiteboard.html](interfaces/my-whiteboard.html) |
+| Related SING 9 surfaces | [interfaces/egs-holographic-hydrogen-ai-os-gateway.html](interfaces/egs-holographic-hydrogen-ai-os-gateway.html) · [interfaces/egs-gateway-systems-programmers-guide.html](interfaces/egs-gateway-systems-programmers-guide.html) |
+
+Upstream full paper and programmer guide: [EGS_GATEWAY_PAPER.md](https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/EGS_GATEWAY_PAPER.md) · [EGS_SYSTEM_PROGRAMMER_GUIDE.md](https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/EGS_SYSTEM_PROGRAMMER_GUIDE.md)
+
+---
+
 ## Intent singularity tests
 
 **Tests specify design intent** — not a description of legacy UI. Run:
@@ -35,6 +50,14 @@ npm test
 ---
 
 ## Recent updates (README commit)
+
+- **Apr 2026 · Vibelandia prospectus · Microsoft Silica EGS Gateway Simulation**
+
+**M → Metabolize:** Bring the upstream Silica simulation repository into the Vibelandia narrative as a first-class prospectus surface (K_EGS, layer stack, 34-test posture, honesty boundary).
+
+**C → Crystallize:** `docs/VIBELANDIA_EGS_SILICA_GATEWAY_PROSPECTUS.md`, `interfaces/prospectus-vibelandia-egs-silica-gateway.html`, My Whiteboard pin, **Silica EGS** link in prospectus nav (Park, Studio, A2A, FractiAI).
+
+**A → Animate:** README documents entry points and upstream links. NSPFRNP → ∞⁹
 
 - **Mar 27, 2026 · EGS Gateway brochure · System Programmer’s Guide §28–§29 (Big Three field manual)**
 

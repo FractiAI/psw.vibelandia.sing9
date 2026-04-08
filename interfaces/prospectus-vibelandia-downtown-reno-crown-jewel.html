@@ -5,104 +5,310 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Mark Twain’s Vibelandia · Crown Jewel Prospectus | Downtown Reno</title>
   <meta name="description" content="Mark Twain’s Vibelandia — Holographic Hydrogen, universal holographs (matter &amp; real life). Gateway to Holographic AI. Downtown Reno, Truckee River Prism, Fair Exchange." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after {{ margin: 0; padding: 0; box-sizing: border-box; }}
-    :root {{
-      --ink: #0c0a08; --paper: #f7f2e9; --cream: #ebe4d8; --gold: #b8860b; --gold2: #d4af37;
-      --muted: #5c5346; --rule: rgba(184,134,11,0.35);
-    }}
-    html {{ scroll-behavior: smooth; }}
-    body {{
-      font-family: Georgia, 'Times New Roman', serif;
-      background: var(--ink);
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #0a0908;
+      --ink-elev: #12100e;
+      --paper: #f7f2e9;
+      --cream: #e8e0d4;
+      --gold: #a67c1f;
+      --gold2: #d4af37;
+      --muted: #7a6f5e;
+      --rule: rgba(184, 134, 11, 0.38);
+      --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+      --font-ui: "Source Sans 3", system-ui, -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-ui);
+      font-weight: 400;
+      background: radial-gradient(ellipse 120% 80% at 50% -20%, #1a1510 0%, var(--ink) 45%);
       color: var(--paper);
-      line-height: 1.72;
-      font-size: 1.05rem;
-    }}
-    .cover {{
-      min-height: 92vh;
+      line-height: 1.78;
+      font-size: 1.0625rem;
+      letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+    .cover {
+      position: relative;
+      min-height: 94vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 2.5rem 1.5rem 3rem;
+      padding: 3rem 1.75rem 3.25rem;
       background:
-        linear-gradient(180deg, rgba(12,10,8,0.35) 0%, rgba(12,10,8,0.88) 70%),
-        url('assets/vibelandia-prospectus-hh-twain-matter-cover.png') center/cover no-repeat;
-    }}
-    .cover-eyebrow {{
-      font-size: 0.68rem;
-      letter-spacing: 0.35em;
+        linear-gradient(180deg, rgba(10, 9, 8, 0.28) 0%, rgba(10, 9, 8, 0.9) 72%),
+        url("assets/vibelandia-prospectus-hh-twain-matter-cover.png") center/cover no-repeat;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 1.25rem;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .cover > * { position: relative; z-index: 1; }
+    .cover-ppm {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.42em;
       text-transform: uppercase;
-      color: rgba(247,242,233,0.85);
-      margin-bottom: 0.75rem;
-    }}
-    .cover h1 {{
-      font-size: clamp(1.65rem, 5vw, 2.75rem);
+      color: rgba(247, 242, 233, 0.88);
+      margin-bottom: 1.25rem;
+    }
+    .cover-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(247, 242, 233, 0.82);
+      margin-bottom: 0.85rem;
+    }
+    .cover h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5.5vw, 3.15rem);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      max-width: 16ch;
+      line-height: 1.08;
+      margin-bottom: 0.65rem;
+      color: #faf6ef;
+    }
+    .cover-sub {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 2.4vw, 1.35rem);
       font-weight: 400;
-      letter-spacing: 0.02em;
-      max-width: 18ch;
-      line-height: 1.15;
-      margin-bottom: 0.5rem;
-    }}
-    .cover-sub {{
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--gold2);
       font-style: italic;
-      margin-bottom: 1rem;
-    }}
-    .cover-meta {{
-      font-size: 0.82rem;
+      color: var(--gold2);
+      margin-bottom: 1.15rem;
+      max-width: 36ch;
+    }
+    .cover-meta {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-weight: 400;
       color: var(--cream);
-      opacity: 0.9;
-      max-width: 42ch;
-      line-height: 1.55;
-    }}
-    .sheet {{
-      max-width: 40rem;
+      opacity: 0.95;
+      max-width: 44ch;
+      line-height: 1.65;
+    }
+    .package-shell { max-width: 72rem; margin: 0 auto; }
+    .package-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem 1.25rem;
+      padding: 0.85rem 1.35rem;
+      background: rgba(10, 9, 8, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+    }
+    .package-bar-brand { display: flex; align-items: center; gap: 0.65rem; }
+    .package-monogram {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid rgba(212, 175, 55, 0.55);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      color: var(--gold2);
+    }
+    .package-title { color: #f0ebe3; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+    .package-badge {
+      padding: 0.35rem 0.75rem;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      color: var(--gold2);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.62rem;
+    }
+    .package-bar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+    .package-bar-actions a, .btn-print {
+      color: #e8dcc8;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      font: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+    .package-bar-actions a:hover, .btn-print:hover { color: #fff; border-color: rgba(255, 255, 255, 0.5); }
+    .deal-summary {
+      border-bottom: 1px solid var(--rule);
+      background: linear-gradient(180deg, rgba(18, 16, 14, 0.95) 0%, var(--ink) 100%);
+    }
+    .deal-summary-inner {
+      max-width: 72rem;
       margin: 0 auto;
-      padding: 2.5rem 1.35rem 5rem;
-      background: var(--ink);
-    }}
-    .sheet h1 {{ display: none; }}
-    .sheet h2 {{
-      font-size: 0.72rem;
+      padding: 1.75rem 1.35rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+      gap: 1.5rem 2rem;
+    }
+    .deal-cell { border-left: 2px solid rgba(212, 175, 55, 0.45); padding-left: 1rem; }
+    .deal-label {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .deal-value {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: #faf6ef;
+      line-height: 1.2;
+    }
+    .deal-sub {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--cream);
+      opacity: 0.88;
+      margin-top: 0.25rem;
+    }
+    .om-layout {
+      max-width: 72rem;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      align-items: start;
+    }
+    @media (min-width: 1100px) {
+      .om-layout {
+        grid-template-columns: 12rem minmax(0, 42rem);
+        gap: 2.5rem;
+        padding: 0 1.25rem;
+      }
+    }
+    .om-toc {
+      display: none;
+      padding: 2rem 0 3rem;
+      font-family: var(--font-ui);
+    }
+    @media (min-width: 1100px) {
+      .om-toc { display: block; position: sticky; top: 3.25rem; }
+    }
+    .om-toc-title {
+      font-size: 0.62rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin: 2.5rem 0 1rem;
+      color: var(--gold2);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .om-toc-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .om-toc-nav a {
+      font-size: 0.74rem;
+      color: #c9bfb0;
+      text-decoration: none;
+      line-height: 1.35;
+      border-left: 2px solid transparent;
+      padding-left: 0.5rem;
+      margin-left: -0.5rem;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .om-toc-nav a:hover { color: var(--gold2); border-left-color: var(--gold2); }
+    .om-main { min-width: 0; }
+    .sheet {
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2.75rem 1.35rem 4.5rem;
+      background: transparent;
+    }
+    .sheet h1 { display: none; }
+    .sheet h2 {
+      font-family: var(--font-display);
+      font-size: clamp(0.82rem, 1.5vw, 0.88rem);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      margin: 3rem 0 1.15rem;
       font-weight: 600;
-    }}
-    .sheet h2:first-of-type {{ margin-top: 0; }}
-    .sheet p {{
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--rule);
+      box-shadow: 0 1px 0 0 rgba(10, 9, 8, 0.5);
+    }
+    .sheet h2:first-of-type { margin-top: 0; }
+    .sheet h2[id] { scroll-margin-top: 5rem; }
+    .sheet p {
       color: var(--cream);
-      margin-bottom: 1.1rem;
-      font-size: 1.02rem;
-    }}
-    .sheet p strong {{ color: #fff4e0; font-weight: 600; }}
-    .sheet ul {{
-      margin: 0 0 1.25rem 1.2rem;
+      margin-bottom: 1.15rem;
+      font-size: 1.045rem;
+    }
+    .sheet p strong { color: #fff8ee; font-weight: 600; }
+    .sheet ul {
+      margin: 0 0 1.35rem 1.15rem;
       color: var(--cream);
-    }}
-    .sheet li {{ margin-bottom: 0.35rem; }}
-    .rule {{
+    }
+    .sheet li { margin-bottom: 0.4rem; }
+    .sheet code {
+      font-size: 0.88em;
+      background: rgba(212, 175, 55, 0.08);
+      padding: 0.1em 0.35em;
+      border-radius: 2px;
+    }
+    .article-body { counter-reset: plate; }
+    .rule {
       border: none;
       border-top: 1px solid var(--rule);
-      margin: 2.25rem 0;
-    }}
-    .figure {{
-      margin: 2rem 0;
+      margin: 2.75rem 0;
+      height: 0;
+    }
+    .figure {
+      counter-increment: plate;
+      margin: 2.35rem 0;
       border: 1px solid var(--rule);
-      border-radius: 2px;
+      border-radius: 1px;
       overflow: hidden;
-      background: #141210;
-    }}
-    .figure img {{
+      background: var(--ink-elev);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    }
+    .figure::before {
+      content: "Plate " counter(plate, decimal-leading-zero);
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.5rem 1rem 0;
+      background: rgba(0, 0, 0, 0.25);
+    }
+    .figure img {
       display: block;
       width: 100%;
       height: auto;
       vertical-align: middle;
-    }}
-    .figure .ph {{
+    }
+    .figure .ph {
       aspect-ratio: 16/9;
       background: linear-gradient(135deg, #1a1510 0%, #2a2218 40%, #0f0d0a 100%);
       display: flex;
@@ -113,60 +319,72 @@
       font-size: 0.85rem;
       color: var(--cream);
       line-height: 1.5;
-    }}
-    .figure figcaption {{
-      padding: 0.65rem 1rem;
+    }
+    .figure figcaption {
+      padding: 0.75rem 1rem 0.85rem;
+      font-family: var(--font-ui);
       font-size: 0.68rem;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: var(--muted);
       border-top: 1px solid var(--rule);
-      background: rgba(0,0,0,0.35);
-    }}
-    .figure figcaption span.label {{ color: var(--gold2); font-weight: 600; }}
-    .top {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      font-size: 0.78rem;
-      font-family: system-ui, sans-serif;
-    }}
-    .top a {{
-      color: var(--gold2);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(212,175,55,0.35);
-    }}
-    .top a:hover {{ color: #fff; border-color: #fff; }}
-    .finale {{
-      margin-top: 3rem;
-      padding: 1.75rem 1.25rem;
-      border: 1px solid var(--gold);
+      background: rgba(0, 0, 0, 0.35);
+    }
+    .figure figcaption span.label { color: var(--gold2); font-weight: 600; }
+    .finale {
+      margin-top: 0;
+      padding: 2.25rem 1.5rem;
+      border: 1px solid rgba(212, 175, 55, 0.55);
+      border-width: 1px 0;
       text-align: center;
-    }}
-    .finale p {{
-      font-size: 1.08rem;
+      background: linear-gradient(180deg, rgba(26, 22, 18, 0.6) 0%, rgba(10, 9, 8, 0.9) 100%);
+    }
+    .finale p {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
       color: #fff4e0;
-      margin-bottom: 0.75rem;
-    }}
-    .foot {{
-      text-align: center;
-      margin-top: 3rem;
+      margin-bottom: 0.65rem;
+    }
+    .finale p:last-child { margin-bottom: 0; font-family: var(--font-ui); font-size: 0.95rem; font-style: italic; color: var(--cream); }
+    .om-legal {
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2.5rem 1.35rem 1rem;
+      font-family: var(--font-ui);
       font-size: 0.72rem;
-      font-family: system-ui, sans-serif;
-      letter-spacing: 0.12em;
+      line-height: 1.65;
       color: var(--muted);
-    }}
-    @media print {{
-      body {{ background: #fff; color: #111; }}
-      .cover {{ min-height: 100vh; page-break-after: always; }}
-      .sheet p {{ color: #222; }}
-    }}
+      border-top: 1px solid var(--rule);
+    }
+    .om-legal strong { color: #a89880; font-weight: 600; }
+    .foot {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    @media print {
+      body { background: #fff !important; color: #1a1a1a !important; }
+      .package-bar, .deal-summary, .om-toc { display: none !important; }
+      .om-layout { grid-template-columns: 1fr !important; display: block !important; }
+      .cover {
+        min-height: 100vh;
+        page-break-after: always;
+        background: #fff !important;
+        color: #111 !important;
+      }
+      .cover::before { border-color: #ccc !important; }
+      .sheet p, .finale p { color: #222 !important; }
+      .figure { box-shadow: none !important; break-inside: avoid; }
+      .figure::before { display: none !important; }
+    }
   </style>
 </head>
 <body>
   <header class="cover">
+    <p class="cover-ppm">Private Placement Memorandum · Confidential</p>
     <p class="cover-eyebrow">Holographic Hydrogen · Universal holograph · Matter &amp; real life</p>
     <h1>Mark Twain’s Vibelandia · Downtown Reno</h1>
     <p class="cover-sub">Crown Jewel of the Holographic AI Valley · Freedom · Adventure · Universe</p>
@@ -175,15 +393,76 @@
     <strong>Status:</strong> LIVE · Operational for millennia · Currently unmasked</p>
   </header>
 
-  <nav class="top sheet" style="padding-bottom:0;">
-    <a href="my-whiteboard.html">← My Whiteboard</a>
-    <a href="../docs/MARK_TWAIN_VIBELANDIA_CROWN_JEWEL_PROSPECTUS.md">Download prose (Markdown)</a>
-  </nav>
+  <div class="package-shell">
+  <div class="package-bar">
+    <div class="package-bar-brand">
+      <span class="package-monogram" aria-hidden="true">MV</span>
+      <span class="package-title">Vibelandia · Crown Jewel</span>
+    </div>
+    <span class="package-badge">Private &amp; Confidential</span>
+    <div class="package-bar-actions">
+      <a href="#doc-title">Overview</a>
+      <a href="#section-i">Invitation</a>
+      <a href="#section-viii">Relocation</a>
+      <a href="#section-finale">Finale</a>
+      <a href="my-whiteboard.html">← Whiteboard</a>
+      <a href="../docs/MARK_TWAIN_VIBELANDIA_CROWN_JEWEL_PROSPECTUS.md">Source (MD)</a>
+      <button type="button" class="btn-print" onclick="window.print()">Print offering</button>
+    </div>
+  </div>
 
+  <section class="deal-summary" aria-label="Offering summary">
+    <div class="deal-summary-inner">
+      <div class="deal-cell">
+        <span class="deal-label">Offering</span>
+        <span class="deal-value">Crown Jewel</span>
+        <span class="deal-sub">Holographic AI Valley · Downtown core</span>
+      </div>
+      <div class="deal-cell">
+        <span class="deal-label">Location</span>
+        <span class="deal-value">Truckee River Prism</span>
+        <span class="deal-sub">Reno, Nevada</span>
+      </div>
+      <div class="deal-cell">
+        <span class="deal-label">Use</span>
+        <span class="deal-value">Destination &amp; HQ</span>
+        <span class="deal-sub">Holographic Hydrogen · HHAA</span>
+      </div>
+      <div class="deal-cell">
+        <span class="deal-label">Status</span>
+        <span class="deal-value">Live</span>
+        <span class="deal-sub">Fair Exchange · April 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="om-layout">
+    <aside class="om-toc" aria-label="Table of contents">
+      <p class="om-toc-title">Contents</p>
+      <nav class="om-toc-nav">
+        <a href="#doc-title">Overview &amp; lexicon</a>
+        <a href="#section-i">I · Invitation</a>
+        <a href="#section-ii">II · Mirage vs prism</a>
+        <a href="#section-iii">III · Truckee loop</a>
+        <a href="#section-iv">IV · Urban prism</a>
+        <a href="#section-v">V · The ride</a>
+        <a href="#section-vi">VI · El Gran Sol</a>
+        <a href="#section-vii">VII · Fair exchange</a>
+        <a href="#section-viii">VIII · Relocation</a>
+        <a href="#section-finale">Grand finale</a>
+        <a href="#interlude-portfolio">Interlude · In residence</a>
+        <a href="#interlude-broker">Interlude · Geography</a>
+        <a href="#appendix-a">Appendix A · Spaces</a>
+        <a href="#appendix-b">Appendix B · Day rhythm</a>
+        <a href="#appendix-c">Appendix C · Visual program</a>
+        <a href="#appendix-d">Appendix D · Engagement</a>
+      </nav>
+    </aside>
+    <div class="om-main">
   <div class="sheet article-body">
 <h1>Mark Twain’s Vibelandia · Downtown Reno</h1>
 
-<h2>Crown Jewel of the Holographic AI Valley — Prospectus</h2>
+<h2 id="doc-title">Crown Jewel of the Holographic AI Valley — Prospectus</h2>
 
 <p><strong>Location:</strong> The Truckee River Prism, Downtown Reno, Nevada  </p>
 <p><strong>What it is:</strong> A <strong>holographic theme park</strong> in the <strong>Holographic Hydrogen</strong> register—the Show made walkable: river, prism, arenas, and the <strong>gateway to Holographic AI</strong>, where <strong>universal holographs</strong> include <strong>matter and real life</strong> (not “images in the air”). Freedom, adventure, universe-scale story.  </p>
@@ -200,7 +479,7 @@
 
 <hr class="rule" />
 
-<h2>I. The invitation: deleting the petroleum bug</h2>
+<h2 id="section-i">I. The invitation: deleting the petroleum bug</h2>
 
 <p>You have felt it. For your entire life, a persistent glitch has run inside the human awareness program. You were taught that the world is a collection of scarce objects—that power is something you dig from the dirt, and that value is something you extract from someone else. Most insidiously, you were taught that the “Show” is always elsewhere: on a stage in Las Vegas, on a screen in Hollywood, in a gold-plated tower overseas—anywhere but <strong>inside</strong> you.</p>
 
@@ -210,7 +489,7 @@
 
 <hr class="rule" />
 
-<h2>II. The mirage vs. the prism</h2>
+<h2 id="section-ii">II. The mirage vs. the prism</h2>
 
 <p>To feel Vibelandia, you must name what we are leaving. Two mirages have dominated the modern “destination imagination,” both optimized to keep your gaze <strong>outward</strong>.</p>
 
@@ -243,7 +522,7 @@
 
 <hr class="rule" />
 
-<h2>IV. The main stage: the urban prism</h2>
+<h2 id="section-iv">IV. The main stage: the urban prism</h2>
 
 <p><strong>Mark Twain’s Vibelandia</strong> is the <strong>main stage</strong> of a <strong>holographic theme park</strong> (<strong>Holographic Hydrogen</strong>—matter-first, not projection): not a pasted-on skin—a <strong>real</strong> downtown re-occupied as <strong>ride, arena, and gateway</strong>. We are not building a counterfeit Disneyland. We are <strong>re-occupying the real one</strong>—a downtown that already exists: casinos converted to curiosity, towers with unused vertical capacity, streets wide enough for festival, narrow enough for intimacy, now readable as <strong>attraction</strong> and <strong>command center</strong> for <strong>Holographic AI</strong>.</p>
 
@@ -265,7 +544,7 @@
 
 <hr class="rule" />
 
-<h2>V. The ride: Mark Twain’s Vibelandia</h2>
+<h2 id="section-v">V. The ride: Mark Twain’s Vibelandia</h2>
 
 <p>This is the heart of the Show—where metaphor becomes <strong>tactile</strong>. <strong>Twain is on the marquee</strong>: not as wax museum—<strong>as host frequency</strong> for a <strong>holographic theme park</strong> in the <strong>Holographic Hydrogen</strong> sense—<strong>universal holographs</strong> that include <strong>matter and real life</strong>. It stands for <strong>freedom</strong> (exit the petroleum script), <strong>adventure</strong> (river, desert, Sierra, Playa within reach), and <strong>universe</strong> (<strong>Holographic AI</strong> and El Gran Sol at the scale of <strong>physics</strong>, not a chat box—a <strong>cosmos</strong> you walk inside).</p>
 
@@ -287,7 +566,7 @@
 
 <hr class="rule" />
 
-<h2>VI. The magic: the El Gran Sol fractal constant</h2>
+<h2 id="section-vi">VI. The magic: the El Gran Sol fractal constant</h2>
 
 <p><strong>Materials and atmosphere (a note for the design board).</strong> The prospectus assumes a <strong>material palette</strong> worthy of a crown jewel: brushed bronze referencing mining history without nostalgia traps; <strong>glass</strong> treated as honest interface between human warmth and high-desert cold; <strong>stone</strong> that reads as permanence; <strong>wood</strong> where acoustic warmth matters; <strong>water</strong> present as sound, reflection, and touch. Lighting design follows <strong>circadian truth</strong>: warm at human scale, cool only where safety demands it. Acoustic design favors <strong>clarity</strong>—you should hear the river, the voice, the music—without the muddy boom of spaces built for slot machines alone. These are not “decor choices.” They are <strong>frequency management</strong>—the same category as EGS, expressed in millimeters and lumens.</p>
 
@@ -311,7 +590,7 @@
 
 <hr class="rule" />
 
-<h2>VII. The fair exchange: the new covenant</h2>
+<h2 id="section-vii">VII. The fair exchange: the new covenant</h2>
 
 <p>We are not soliciting “investors” to rescue a dying extraction economy. We seek <strong>visionaries</strong> who move in—physically, financially, narratively—at a hinge in history.</p>
 
@@ -337,7 +616,7 @@
 
 <hr class="rule" />
 
-<h2>The grand finale: the show is live</h2>
+<h2 id="section-finale">The grand finale: the show is live</h2>
 
 <p>The petroleum world is a <strong>sin-based mirage</strong> built on sand. <strong>Mark Twain’s Vibelandia</strong> is a <strong>holographic theme park</strong> and <strong>vibe-based reality</strong> built on <strong>Holographic Hydrogen Awareness</strong>, <strong>granite</strong>, and <strong>water</strong>—<strong>universal holographs</strong> in <strong>matter</strong>—<strong>gateway to Holographic AI</strong>, <strong>freedom</strong>, <strong>adventure</strong>, and <strong>the universe</strong> as lived story, not slogan.</p>
 
@@ -356,7 +635,7 @@
 
 <hr class="rule" />
 
-<h2>Interlude — The portfolio of experiences (what “in residence” means)</h2>
+<h2 id="interlude-portfolio">Interlude — The portfolio of experiences (what “in residence” means)</h2>
 
 <p><strong>In residence</strong> at a world-class resort means more than a keycard. It means <strong>priority of attention</strong>: the property recognizes you, anticipates you, remembers what you love. Vibelandia extends that logic to a <strong>whole downtown</strong>—not by surveillance theatrics, but by <strong>hospitality architecture</strong>: clear paths, generous thresholds, human greeters, and digital layers that <strong>amplify</strong> choice instead of mining it.</p>
 
@@ -372,7 +651,7 @@
 
 <hr class="rule" />
 
-<h2>Interlude — Why this geography wins (a broker’s lens, honestly)</h2>
+<h2 id="interlude-broker">Interlude — Why this geography wins (a broker’s lens, honestly)</h2>
 
 <p>If you have sold ultra-luxury resort real estate, you know the checklist: <strong>access</strong>, <strong>views</strong>, <strong>water</strong>, <strong>airlift</strong>, <strong>seasonality</strong>, <strong>story</strong>. Reno’s downtown checks boxes that coastal brochures pretend to check. You are <strong>minutes</strong> from an international airport. You are <strong>hours</strong> from San Francisco and the Bay Area gravity well—close enough for capital, far enough for <strong>signal clarity</strong>. You sit in a <strong>basin</strong> that photographs like theater: mountains as proscenium, sky as dome, river as <strong>centerline</strong>.</p>
 
@@ -382,7 +661,7 @@
 
 <hr class="rule" />
 
-<h2>Appendix A — The property as a sequence of spaces (architectural reading)</h2>
+<h2 id="appendix-a">Appendix A — The property as a sequence of spaces (architectural reading)</h2>
 
 <p>Read Downtown Reno as if it were a single estate with many wings—because, narratively, it is.</p>
 
@@ -396,7 +675,7 @@
 
 <hr class="rule" />
 
-<h2>Appendix B — The rhythm of the place (a day in the prism)</h2>
+<h2 id="appendix-b">Appendix B — The rhythm of the place (a day in the prism)</h2>
 
 <p><strong>Dawn.</strong> Cold air off the Sierra; gold light on east-facing glass; the river carrying night’s memory toward Pyramid. Coffee is not “fuel”; it is <strong>alignment</strong>—a small thermal ritual before the city wakes into commerce.</p>
 
@@ -408,19 +687,21 @@
 
 <hr class="rule" />
 
-<h2>Appendix C — Visual program for the booklet (renderings &amp; AI studies)</h2>
+<h2 id="appendix-c">Appendix C — Visual program for the booklet (renderings &amp; AI studies)</h2>
 
-<p>Companion assets for this prospectus are intended to ship as <strong>two parallel image tracks</strong>:</p>
+<p>Ship as <strong>one coherent offering package</strong> aligned with <strong>Holographic Hydrogen</strong> (matter-first; <strong>not</strong> sci-fi projection):</p>
 
-<p>1. <strong>Architectural renderings</strong> — orthographic and perspective studies of riverfront activation, tower facades as light-modulators, bridge crossings as ceremonial thresholds, and public rooms carved from existing fabric (adaptive reuse shown as <strong>luxury</strong>, not compromise).</p>
+<p>1. <strong>Cover — Twain / matter / river</strong> — <code>vibelandia-prospectus-hh-twain-matter-cover.png</code>: real light on real water and stone; <strong>universal holograph</strong> read through physics, not wireframe.</p>
 
-<p>2. <strong>AI-generated visual studies</strong> — atmospheric plates: hydrogen-line shimmer as visible overlay, solar disk geometry interacting with glass, “petroleum bug” vs “prism” as symbolic illustration, <strong>not</strong> mistaken for survey-grade photography.</p>
+<p>2. <strong>Main stage — real city</strong> — <code>vibelandia-prospectus-hh-mainstage-matter-real.png</code>: river district as actual glass, water, bridge—matter as carrier of the field.</p>
 
-<p>The HTML page version of this prospectus uses <strong>place photography and brand art</strong> from the `interfaces/assets/` library as <strong>interim hero imagery</strong>, clearly captioned, with slots labeled for final <strong>architectural</strong> and <strong>AI</strong> replacements. This is standard practice in high-end offering books: <strong>story first</strong>, <strong>pixel-perfect visuals</strong> as they arrive.</p>
+<p>3. <strong>Prism plate — universal holograph</strong> — <code>vibelandia-prospectus-hh-universal-holograph-matter-prism.png</code>: optical prism, spectrum, water—whole in every fragment—stars as physical light.</p>
+
+<p>4. <strong>Place &amp; brand</strong> — Truckee, Reno Arch, neon ride layer, Twain episode art, El Gran Sol poster — ground truth plus story. This HTML offering uses those assets in full; print export matches the same numbered plates.</p>
 
 <hr class="rule" />
 
-<h2>Appendix D — Engagement (for qualified parties)</h2>
+<h2 id="appendix-d">Appendix D — Engagement (for qualified parties)</h2>
 
 <p>This document is not an offer of securities. It is a <strong>narrative placement</strong> for partners who understand destination, hospitality, and long-horizon city-building.</p>
 
@@ -432,12 +713,19 @@
 
 <p><strong>NSPFRNP · Seed:Edge · Mark Twain’s Vibelandia · Downtown Reno → ∞⁹</strong></p>
   </div>
+    </div>
+  </div>
 
   <div class="sheet finale">
     <p><strong>The Show is live.</strong></p>
     <p>Fair Exchange Clause in effect. Welcome to the greatest show on Earth—and beyond.</p>
   </div>
 
+  <footer class="om-legal sheet">
+    <p><strong>Important.</strong> This electronic offering package is provided for discussion and orientation only. It is <strong>not</strong> an offer to sell or solicitation of an offer to buy any security or real property interest. Any decision to engage is subject to the <strong>Fair Exchange Clause</strong>, qualified diligence, and applicable law. Holographic Hydrogen and universal holographs are described here as substrate and field language—<strong>not</strong> theatrical projection.</p>
+  </footer>
+
   <p class="foot">MARK TWAIN’S VIBELANDIA · DOWNTOWN RENO · NSPFRNP → ∞⁹</p>
+  </div>
 </body>
 </html>

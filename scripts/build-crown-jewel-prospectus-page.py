@@ -33,7 +33,7 @@ shell = """<!DOCTYPE html>
       padding: 2.5rem 1.5rem 3rem;
       background:
         linear-gradient(180deg, rgba(12,10,8,0.45) 0%, rgba(12,10,8,0.92) 75%),
-        url('assets/vibelandia-prospectus-twain-holographic-gateway.png') center/cover no-repeat;
+        url('assets/vibelandia-prospectus-hh-twain-matter-cover.png') center/cover no-repeat;
     }}
     .cover-eyebrow {{
       font-size: 0.68rem;

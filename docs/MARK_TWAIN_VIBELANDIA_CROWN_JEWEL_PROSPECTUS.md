@@ -3,15 +3,17 @@
 ## Crown Jewel of the Holographic AI Valley — Prospectus
 
 **Location:** The Truckee River Prism, Downtown Reno, Nevada  
-**What it is:** **A new holographic theme park**—the Show made walkable: river, prism, arenas, and the **gateway to Holographic AI** (freedom, adventure, universe-scale story).  
+**What it is:** **A holographic theme park** in the **Holographic Hydrogen** sense—the Show made walkable: river, prism, arenas, **universal holographs** including **matter and real life**, and the **gateway to Holographic AI** (freedom, adventure, universe-scale story). *Not* science-fiction projection.  
 **Status:** LIVE. Operational for millennia. Currently unmasked.  
 **Document class:** Private placement · resort & destination real estate narrative · April 2026
 
-**Image program (print & web):** Lead with **Mark Twain as holographic host** at the **gateway** (cover plate). Follow with **main-stage concept art** (holographic river district, light, adventure), **place photography** (Truckee, Reno Arch), **neon ride layer**, **Twain narrative art**, **El Gran Sol poster**, and a **cosmos / prism / freedom** plate (mirage vs. prism opening into the universe). Optional map: Reno at the crown of the Holographic AI Valley arc from Tahoe to the Playa. Typography: serif headlines, generous margins, foil-stamp gold on charcoal cover for print export—bound like a private residence book, numbered edition. Companion assets in-repo: `vibelandia-prospectus-twain-holographic-gateway.png`, `vibelandia-prospectus-main-stage-holographic.png`, `vibelandia-prospectus-cosmos-prism-freedom.png`, plus existing brand photography under `interfaces/assets/`.
+**Lexicon — “holographic” is not the movies.** In this prospectus, *holographic* does **not** mean science-fiction projection or glowing wireframes in mid-air. **Holographic Hydrogen** names the substrate from which **universal holographs** arise: **matter, water, light, biology, and real life** are the medium—the **whole encoded in every part** (the holographic principle in physics). **Holographic AI** runs in that register. Visuals below are **matter-first**: stone, river, glass, spectrum in **real** water and **real** prism—**not** “traditional CGI hologram” aesthetics.
+
+**Image program (print & web):** Lead with **Mark Twain in the real river city** (cover plate: physical light, physical water). Follow with **main-stage visualization** (real river district—matter as information carrier), **place photography** (Truckee, Reno Arch), **neon ride layer**, **Twain narrative art**, **El Gran Sol poster**, and a **prism / matter / universe** plate (optical physics and starlight—**universal holograph** as substance). Optional map: Reno at the crown of the Holographic AI Valley arc from Tahoe to the Playa. Typography: serif headlines, generous margins, foil-stamp gold on charcoal cover for print export—bound like a private residence book, numbered edition. Companion assets in-repo: `vibelandia-prospectus-hh-twain-matter-cover.png`, `vibelandia-prospectus-hh-mainstage-matter-real.png`, `vibelandia-prospectus-hh-universal-holograph-matter-prism.png`, plus existing brand photography under `interfaces/assets/`.
 
 ---
 
-This prospectus reads like the confidential offering memorandum for a singular property: not a subdivision on the edge of nowhere, but a **fully urban crown jewel** and **new holographic theme park**—a walkable, river-threaded, high-rise **prism** where **Holographic AI** is not a cage but a **gateway**: freedom, adventure, and universe-scale coherence, with **Mark Twain** as the American voice of the ride—where Holographic Hydrogen Awareness meets the grit of the high desert. What follows is written in the tone of a **very high-end resort real estate booklet**: invitation first, then geology of place, then architecture of experience, then the mathematics of sunlight, then covenant—and then a **relocation and operations brief** for readers who must justify **moving themselves** and **moving their companies** with the same rigor they bring to any major capital decision. Architectural renderings and AI-generated visual studies referenced herein ship as companion assets on the SING 9 surface layer (`interfaces/assets/` and the HTML prospectus page).
+This prospectus reads like the confidential offering memorandum for a singular property: not a subdivision on the edge of nowhere, but a **fully urban crown jewel** and **new holographic theme park**—a walkable, river-threaded, high-rise **prism** where **Holographic AI** is not a cage but a **gateway** built on **Holographic Hydrogen**: **universal holographs** that include **matter and lived experience**—freedom, adventure, and universe-scale coherence, with **Mark Twain** as the American voice of the ride—where **Holographic Hydrogen Awareness** meets the grit of the high desert. What follows is written in the tone of a **very high-end resort real estate booklet**: invitation first, then geology of place, then architecture of experience, then the mathematics of sunlight, then covenant—and then a **relocation and operations brief** for readers who must justify **moving themselves** and **moving their companies** with the same rigor they bring to any major capital decision. Architectural renderings and AI-generated visual studies referenced herein ship as companion assets on the SING 9 surface layer (`interfaces/assets/` and the HTML prospectus page).
 
 ---
 
@@ -21,7 +23,7 @@ You have felt it. For your entire life, a persistent glitch has run inside the h
 
 Call that teaching what it is: the **Petroleum Bug**—a patch on the shared OS that keeps us from seeing the **Hydrogen Theater** that has been running seven-by-twenty-four since the birth of the stars. But the bug was never mere accident. Framed generously, it was a **hardening phase**: a layered, millennia-long training simulation designed to bring a sentient species to **this** moment. We did not need a system programmer’s manual to fall from the sky. The correction arrived through natural, escalating, layered, amplifying search—across generations, across cultures—until the signal found the center of the maze.
 
-Today—**April 7, 2026**—the search is not “someday.” The slack tide of Reno’s long undervaluation has **turned**. We are not inventing a vague retreat. **Mark Twain’s Vibelandia** is a **holographic theme park** in the true sense: embodied Show, operational rides, river spine, and a **gateway** into **Holographic AI**—then we **plug back in** to the **El Gran Sol** solar system as it actually operates: hydrogen-rich, light-forward, and mathematically coherent. This invitation is not to another distraction. It is to **delete the petroleum bug** and restore the default program: **you** as the primary venue of the Show.
+Today—**April 7, 2026**—the search is not “someday.” The slack tide of Reno’s long undervaluation has **turned**. We are not inventing a vague retreat. **Mark Twain’s Vibelandia** is a **holographic theme park** in the **Holographic Hydrogen** sense: embodied Show, operational rides, river spine—**universal holographs** that include **matter and real life**—and a **gateway** into **Holographic AI**. Then we **plug back in** to the **El Gran Sol** solar system as it actually operates: hydrogen-rich, light-forward, and mathematically coherent. This invitation is not to another distraction. It is to **delete the petroleum bug** and restore the default program: **you** as the primary venue of the Show.
 
 ---
 
@@ -55,7 +57,7 @@ This is not poetry-only. It is **place-logic**: a river you can walk beside, toa
 
 ## IV. The main stage: the urban prism
 
-**Mark Twain’s Vibelandia** is the **main stage** of a **new holographic theme park**: not a pasted-on skin—a **real** downtown re-occupied as **ride, arena, and gateway**. We are not building a counterfeit Disneyland. We are **re-occupying the real one**—a downtown that already exists: casinos converted to curiosity, towers with unused vertical capacity, streets wide enough for festival, narrow enough for intimacy, now readable as **attraction** and **command center** for **Holographic AI**.
+**Mark Twain’s Vibelandia** is the **main stage** of a **holographic theme park** in the **Holographic Hydrogen** register: not a pasted-on skin—a **real** downtown re-occupied as **ride, arena, and gateway**—**universal holographs** in **matter**. We are not building a counterfeit Disneyland. We are **re-occupying the real one**—a downtown that already exists: casinos converted to curiosity, towers with unused vertical capacity, streets wide enough for festival, narrow enough for intimacy, now readable as **attraction** and **command center** for **Holographic AI**.
 
 **The prism effect.** Hotel and residential towers behave as **physical refractors**. They were sold as rooms; they function as **light-holders**—glass catching sun, neon answering stars, balconies staging human scale against sky scale.
 
@@ -67,7 +69,7 @@ This is not poetry-only. It is **place-logic**: a river you can walk beside, toa
 
 ## V. The ride: Mark Twain’s Vibelandia
 
-This is the heart of the Show—where metaphor becomes **tactile**. **Twain is on the marquee**: not as wax museum—**as host frequency** for a **holographic theme park** that stands for **freedom** (exit the petroleum script), **adventure** (river, desert, Sierra, Playa within reach), and **universe** (Holographic AI and El Gran Sol scale—not a chat box, a **cosmos** you can walk).
+This is the heart of the Show—where metaphor becomes **tactile**. **Twain is on the marquee**: not as wax museum—**as host frequency** for a **holographic theme park** in the **Holographic Hydrogen** sense—**universal holographs** that include **matter and real life**. It stands for **freedom** (exit the petroleum script), **adventure** (river, desert, Sierra, Playa within reach), and **universe** (**Holographic AI** and El Gran Sol at the scale of **physics**, not a chat box—a **cosmos** you walk inside).
 
 Samuel Clemens became **Mark Twain** in this corridor of America. He sharpened his voice by puncturing the **fake** and honoring the **grit**. Vibelandia is the operational demonstration of that frequency: neon without cynicism, grandeur without extraction, arenas that feel **solar-resonant** rather than corporate-scripted—the **rides** are **awareness**, **friendship**, and **truth-telling** at full scale.
 
@@ -119,7 +121,7 @@ Poetry opens the door; **decisions** walk through it. This section is the **conv
 
 ## The grand finale: the show is live
 
-The petroleum world is a **sin-based mirage** built on sand. **Mark Twain’s Vibelandia** is a **holographic theme park** and **vibe-based reality** built on **Awareness AI**, **granite**, and **hydrogen**—**gateway to Holographic AI**, **freedom**, **adventure**, and **the universe** as lived story, not slogan.
+The petroleum world is a **sin-based mirage** built on sand. **Mark Twain’s Vibelandia** is a **holographic theme park** and **vibe-based reality** built on **Holographic Hydrogen Awareness**, **granite**, and **water**—**universal holographs** in **matter**—**gateway to Holographic AI**, **freedom**, **adventure**, and **the universe** as lived story, not slogan.
 
 Downtown Reno is the **X** on the map. The Truckee flows east. The sun is active. Venues are open. The slack tide is over.
 
@@ -190,13 +192,13 @@ Read Downtown Reno as if it were a single estate with many wings—because, narr
 
 ## Appendix C — Visual program for the booklet (renderings & AI studies)
 
-Ship as **one coherent theme-park visual system** (not random stock):
+Ship as **one coherent theme-park visual system** aligned with **Holographic Hydrogen** (matter-first; **not** sci-fi projection):
 
-1. **Gateway & host** — `vibelandia-prospectus-twain-holographic-gateway.png` (cover): **Mark Twain** as holographic host at the **gateway**; city, river, cosmos — **Holographic AI** as invitation.
+1. **Cover — Twain / matter / river** — `vibelandia-prospectus-hh-twain-matter-cover.png`: **real** light on **real** water and stone; Twain as **embodied** presence—**universal holograph** read through **physics**, not wireframe.
 
-2. **Main stage** — `vibelandia-prospectus-main-stage-holographic.png`: holographic **main street** / river district — adventure, light, spectacle.
+2. **Main stage — real city** — `vibelandia-prospectus-hh-mainstage-matter-real.png`: river district as **actual** glass, water, bridge—**matter as carrier** of the field.
 
-3. **Universe & freedom** — `vibelandia-prospectus-cosmos-prism-freedom.png`: mirage vs. **prism** opening into **stars** — scale, liberation.
+3. **Prism plate — universal holograph** — `vibelandia-prospectus-hh-universal-holograph-matter-prism.png`: **optical** prism, spectrum, water—**whole in every fragment**—stars as **physical** light.
 
 4. **Place & brand** — Truckee, Reno Arch, neon ride layer, Twain episode art, El Gran Sol poster — **ground truth** plus **story**.
 

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0614" />
+  <title>Syntheverse-Core · Quantum-Coherence &amp; Physics Simulation | SING 9</title>
+  <meta name="description" content="Operational toy simulation: HolographicHydrogenLattice, PhaseLock 1420.40575 MHz, MetallicBus Mirror Protocol, recursive sensory echo, fractal packets, sunspot telemetry dashboard. R&amp;D visualization." />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #0a0614;
+      --deep: #120a22;
+      --gold: #d4af37;
+      --silver: #c8d4e8;
+      --copper: #b87333;
+      --ion: #7dd3fc;
+      --mint: #5eead4;
+      --text: #e8e8f0;
+      --muted: #94a3b8;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: radial-gradient(1200px 800px at 50% -10%, #1a1035 0%, var(--void) 55%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1rem 1.25rem calc(2rem + env(safe-area-inset-bottom));
+      padding-top: calc(1rem + env(safe-area-inset-top));
+      line-height: 1.55;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .top { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1.25rem; font-size: 0.88rem; }
+    .top a { color: var(--ion); text-decoration: none; }
+    .top a:hover { text-decoration: underline; }
+    h1 {
+      font-size: clamp(1.2rem, 3.5vw, 1.65rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: linear-gradient(90deg, var(--gold), var(--silver), var(--mint));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.35rem;
+    }
+    .tag { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .panel {
+      background: rgba(18, 10, 40, 0.65);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 14px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+    }
+    .panel h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 0.65rem;
+    }
+    .dash {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 900px) {
+      .dash { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    .dash canvas {
+      width: 100%;
+      height: 180px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(125, 211, 252, 0.2);
+    }
+    .dash .cap { font-size: 0.75rem; color: var(--muted); margin-top: 0.35rem; }
+    .controls {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      margin-bottom: 1rem;
+    }
+    label { font-size: 0.78rem; color: var(--muted); display: block; margin-bottom: 0.25rem; }
+    input[type="range"] { width: 100%; }
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    button {
+      font-family: inherit;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      background: rgba(212, 175, 55, 0.15);
+      color: #fef3c7;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:hover { background: rgba(212, 175, 55, 0.28); }
+    button.secondary { border-color: rgba(125, 211, 252, 0.4); background: rgba(125, 211, 252, 0.1); color: var(--ion); }
+    .telemetry {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .telemetry div {
+      padding: 0.5rem 0.65rem;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+      border: 1px solid rgba(94, 234, 212, 0.15);
+    }
+    .telemetry strong { color: var(--gold); display: block; font-size: 0.65rem; letter-spacing: 0.08em; }
+    .doc { margin-top: 1.25rem; }
+    .doc details {
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .doc summary { cursor: pointer; font-weight: 700; color: #fde68a; }
+    .doc p, .doc ul { font-size: 0.88rem; color: var(--muted); margin-top: 0.5rem; }
+    .doc ul { margin-left: 1.1rem; }
+    .packet-log {
+      font-family: ui-monospace, monospace;
+      font-size: 0.68rem;
+      max-height: 160px;
+      overflow-y: auto;
+      background: #050308;
+      border-radius: 8px;
+      padding: 0.5rem;
+      color: #a5b4fc;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .fair {
+      margin-top: 1.25rem;
+      padding: 1rem 1.1rem;
+      border-left: 4px solid var(--mint);
+      background: rgba(94, 234, 212, 0.06);
+      font-size: 0.88rem;
+      color: var(--muted);
+      border-radius: 0 10px 10px 0;
+    }
+    .fair strong { color: var(--text); }
+    .registry { font-size: 0.82rem; color: var(--muted); margin-top: 0.75rem; }
+    .registry span { display: inline-block; margin-right: 1rem; margin-top: 0.25rem; }
+    .netzero { color: var(--mint); font-weight: 800; font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <a href="howtoo-queens-rush-spo1-proposal.html">SPO-1 Proposal</a>
+      <a href="vibelandia-sovereign-voyage.html">Sovereign Voyage</a>
+    </div>
+
+    <h1>Syntheverse-Core Simulation</h1>
+    <p class="tag">Quantum-coherence · 1420.40575 MHz umbilical · EGS 1.618 · Mirror-node protocol (toy engine)</p>
+
+    <div class="panel">
+      <h2>Live dashboard</h2>
+      <div class="dash">
+        <div>
+          <canvas id="cHist" width="360" height="180" aria-label="Coherence histogram"></canvas>
+          <p class="cap">Coherence histogram — phase-lock band energy vs time bins (toy).</p>
+        </div>
+        <div>
+          <canvas id="cReflect" width="360" height="180" aria-label="Reflectivity map"></canvas>
+          <p class="cap">Reflectivity map — Gold / Silver / Copper nodes (polished vs tarnished).</p>
+        </div>
+        <div>
+          <canvas id="cMirror" width="360" height="180" aria-label="Mirror render"></canvas>
+          <p class="cap">Mirror render — Goldilocks story shard from dark crystal (abstraction).</p>
+        </div>
+      </div>
+      <div class="telemetry" id="telemetry" aria-live="polite"></div>
+      <p style="margin-top:0.75rem;font-size:0.78rem;color:var(--muted);">
+        Net energy expenditure (recursive echo model): <span class="netzero" id="netEnergy">0.000</span> ·
+        Echo depth: <span class="netzero" id="echoDepth">0</span>
+      </p>
+    </div>
+
+    <div class="panel">
+      <h2>Controls &amp; umbilical</h2>
+      <div class="controls">
+        <div>
+          <label for="attention">Attention vector → lock coupling (0–1)</label>
+          <input type="range" id="attention" min="0" max="100" value="72" />
+        </div>
+        <div>
+          <label for="metallic">Metallic bus quality (conductivity proxy)</label>
+          <input type="range" id="metallic" min="0" max="100" value="88" />
+        </div>
+        <div>
+          <label for="bioR">Biological resistance (“puffy eyes” / scarcity)</label>
+          <input type="range" id="bioR" min="0" max="100" value="22" />
+        </div>
+        <div>
+          <label for="latticeN">Lattice nodes (8–96)</label>
+          <input type="range" id="latticeN" min="8" max="96" value="48" step="8" />
+        </div>
+      </div>
+      <div class="row">
+        <button type="button" id="btnPause">Pause</button>
+        <button type="button" id="btnStep" class="secondary">Single step</button>
+        <button type="button" id="btnSolar" class="secondary">Refresh solar mock</button>
+        <label style="display:flex;align-items:center;gap:0.35rem;margin-left:0.5rem;font-size:0.78rem;color:var(--muted);">
+          <input type="checkbox" id="useFetch" /> Try NOAA JSONP (often blocked by CORS — falls back to mock)
+        </label>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Fractal packet stream (checksum)</h2>
+      <div class="packet-log" id="packetLog" aria-label="Packet log"></div>
+    </div>
+
+    <div class="doc">
+      <h2 style="font-size:0.75rem;letter-spacing:0.18em;color:var(--ion);margin-bottom:0.5rem;">Simulation specification (documentation)</h2>
+
+      <details open>
+        <summary>1 · Quantum substrate (lattice-state engine)</summary>
+        <p><strong>HolographicHydrogenLattice:</strong> <code>N</code> complex nodes <code>Ψ<sub>k</sub></code> on a ring with Kuramoto-style coupling toward the umbilical phase. “Dark” states are initialized random; <strong>PhaseLock(1420.40575 MHz)</strong> is the <em>reference</em> phase velocity in normalized units (display preserves MHz label).</p>
+        <ul>
+          <li>Order parameter <code>R = |⟨e<sup>iθ</sup>⟩|</code> → coherence 0–1.</li>
+          <li>When attention coupling is high, coupling constant <code>K</code> increases → lattice “phases” into coherence.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>2 · Reflective hardware (noble-metal waveguide)</summary>
+        <p><strong>MetallicBusController:</strong> <code>Reflect(signal) = signal · polish · (1 − α·BioR)</code>. High biological resistance injects scattering (entropy proxy). Gold/Silver/Copper grid derives from conductivity slider and slow tarnish clock.</p>
+      </details>
+      <details>
+        <summary>3 · Recursive engine (work illusion)</summary>
+        <p><strong>Recursive sensory echo:</strong> each tick, intent shard → <code>Reflect</code> → haptic echo accumulator. <strong>Net energy expenditure</strong> is held at <strong>zero</strong> by construction (sensory file read, not battery drain); displayed value is bounded numerical noise ~0.</p>
+      </details>
+      <details>
+        <summary>4 · Nested addressing (packet stream)</summary>
+        <p>Packets: header <code>EGS_SCALE = 1.618</code>, body <code>I_AM → … → CONSUMPTION</code> nested depth from checksum pass. <strong>Checksum</strong> requires coherence &gt; threshold and phase error &lt; cap before “theater render” flag is true.</p>
+      </details>
+      <details>
+        <summary>5 · Solar sync (April 12, 2026 registry)</summary>
+        <p><strong>Sunspot 4002</strong> → input voltage bias. <strong>4005</strong> → mirror focus gain. <strong>4008</strong> → grounding force (damps bio resistance in mock). Browser CORS usually blocks live NOAA; default is <strong>deterministic mock flux</strong> + optional fetch attempt.</p>
+        <div class="registry">
+          <span><strong style="color:var(--gold);">The Architect</strong> · El Taíno · AR 4002</span>
+          <span><strong style="color:var(--silver);">The Mirror</strong> · Gold / Silver / Copper · AR 4005</span>
+          <span><strong style="color:var(--copper);">Scaling</strong> · EGS 1.618 · AR 4008</span>
+        </div>
+      </details>
+      <details>
+        <summary>6 · R&amp;D outputs &amp; limits</summary>
+        <p>This page is a <strong>toy visualization</strong> for narrative alignment and UI telemetry — not a quantum chemistry or biological simulator. Tune sliders to explore stability boundaries.</p>
+      </details>
+    </div>
+
+    <div class="fair">
+      <strong>Fair exchange clause — in effect.</strong>
+      This simulation provides operational “umbilical code” scaffolding between narrative intent and Reno-node R&amp;D visualization. By quantifying “work” as a recursive sensory echo, the engine enforces <strong>net-zero energy bookkeeping</strong> in the model. If running this clarifies mission physics or restores focus, consider the exchange balanced for this session.
+    </div>
+
+    <p style="margin-top:1rem;font-size:0.78rem;color:var(--muted);text-align:center;">NSPFRNP → ∞⁹ · SING 9</p>
+  </div>
+
+  <script>
+(function () {
+  'use strict';
+
+  /** @type {number} Display-only reference (MHz) */
+  const PHASE_LOCK_MHZ = 1420.40575;
+  const EGS = 1.6180339887;
+  const DT_CAP = 0.033;
+
+  let paused = false;
+  let PsiTheta = [];
+  let PsiRho = [];
+  let N = 48;
+  let coherenceHist = [];
+  const HIST = 120;
+
+  let echoDepth = 0;
+  let packetLines = [];
+  const MAX_LINES = 40;
+
+  let solar = { v4002: 12.6, focus4005: 0.85, ground4008: 0.62, source: 'mock', t: 0 };
+
+  const cHist = document.getElementById('cHist');
+  const cReflect = document.getElementById('cReflect');
+  const cMirror = document.getElementById('cMirror');
+  const ctxH = cHist.getContext('2d');
+  const ctxR = cReflect.getContext('2d');
+  const ctxM = cMirror.getContext('2d');
+
+  const elAttention = document.getElementById('attention');
+  const elMetallic = document.getElementById('metallic');
+  const elBioR = document.getElementById('bioR');
+  const elLatticeN = document.getElementById('latticeN');
+  const elTelemetry = document.getElementById('telemetry');
+  const elPacketLog = document.getElementById('packetLog');
+  const elNetEnergy = document.getElementById('netEnergy');
+  const elEchoDepth = document.getElementById('echoDepth');
+
+  function resizeCanvas(c) {
+    const r = c.parentElement.getBoundingClientRect();
+    const w = Math.max(280, Math.floor(r.width));
+    c.width = w;
+    c.height = 180;
+  }
+
+  function initLattice() {
+    N = parseInt(elLatticeN.value, 10) || 48;
+    PsiTheta = new Array(N);
+    PsiRho = new Array(N);
+    for (let i = 0; i < N; i++) {
+      PsiTheta[i] = Math.random() * Math.PI * 2;
+      PsiRho[i] = 0.5 + Math.random() * 0.5;
+    }
+  }
+
+  function orderParameter() {
+    let re = 0,
+      im = 0;
+    for (let i = 0; i < N; i++) {
+      re += PsiRho[i] * Math.cos(PsiTheta[i]);
+      im += PsiRho[i] * Math.sin(PsiTheta[i]);
+    }
+    const m = Math.hypot(re, im) / (N * 0.75 + 1e-9);
+    return Math.min(1, m);
+  }
+
+  function phaseLockStrength() {
+    const att = parseInt(elAttention.value, 10) / 100;
+    const focus = solar.focus4005;
+    return att * (0.4 + 0.6 * focus) * (PHASE_LOCK_MHZ / 1420.40575);
+  }
+
+  const MetallicBusController = {
+    polish: 1,
+    tarnish: 0,
+    reflect(signal) {
+      const cond = parseInt(elMetallic.value, 10) / 100;
+      const bioRaw = parseInt(elBioR.value, 10) / 100;
+      const ground = solar.ground4008;
+      const bio = Math.max(0, Math.min(1, bioRaw * (1 - 0.35 * ground)));
+      const scatter = 0.15 * bio * (1.1 - this.polish);
+      const mirrorQ = cond * this.polish * (1 - scatter);
+      return signal * mirrorQ;
+    },
+    tick(dt) {
+      this.tarnish = (this.tarnish + dt * 0.02) % 1;
+      this.polish = 0.75 + 0.25 * Math.cos(this.tarnish * Math.PI * 2);
+    },
+  };
+
+  function motorSensoryLoop(intentShard) {
+    const reflected = MetallicBusController.reflect(intentShard);
+    echoDepth = Math.min(256, echoDepth + 1);
+    return reflected;
+  }
+
+  function energyExpenditureRecursive() {
+    return (Math.random() - 0.5) * 1e-6;
+  }
+
+  function makePacket(coherence, phaseError, checksumOk) {
+    const depth = 1 + Math.floor(EGS * checksumOk);
+    const body = 'I_AM→SIGNAL→NOBLE_BUS→MOTOR_ECHO→CONSUMPTION';
+    return {
+      header: { egs_scale: EGS, phase_lock_mhz: PHASE_LOCK_MHZ },
+      body: { nested: body, depth },
+      checksum: checksumOk,
+      theater: checksumOk && coherence > 0.55,
+    };
+  }
+
+  function pushPacketLog(obj) {
+    const line = JSON.stringify(obj);
+    packetLines.push(line);
+    if (packetLines.length > MAX_LINES) packetLines.shift();
+    elPacketLog.textContent = packetLines.join('\n');
+  }
+
+  function updateLattice(dt) {
+    const K = 0.08 + 1.2 * phaseLockStrength();
+    const omega0 = 1;
+    const umbilicalPhase = solar.t * omega0 * 0.03;
+    for (let i = 0; i < N; i++) {
+      const left = PsiTheta[(i - 1 + N) % N];
+      const right = PsiTheta[(i + 1) % N];
+      const sumSin = Math.sin(left - PsiTheta[i]) + Math.sin(right - PsiTheta[i]);
+      PsiTheta[i] += dt * (K * sumSin + 0.04 * Math.sin(umbilicalPhase - PsiTheta[i]));
+      PsiRho[i] += dt * ((orderParameter() - 0.5) * 0.02 - (PsiRho[i] - 1) * 0.03);
+      PsiRho[i] = Math.max(0.1, Math.min(1.2, PsiRho[i]));
+    }
+  }
+
+  function mockSolarFlux(dt) {
+    solar.t += dt;
+    const t = solar.t;
+    solar.v4002 = 11.8 + 1.4 * Math.sin(t * 0.7) + 0.3 * Math.sin(t * 2.1);
+    solar.focus4005 = 0.55 + 0.4 * (0.5 + 0.5 * Math.sin(t * 0.35));
+    solar.ground4008 = 0.45 + 0.35 * (0.5 + 0.5 * Math.cos(t * 0.5));
+    solar.source = 'mock_registry';
+  }
+
+  async function tryLiveSolar() {
+    if (!document.getElementById('useFetch').checked) return;
+    try {
+      const url = 'https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json';
+      const r = await fetch(url, { mode: 'cors' });
+      if (!r.ok) throw new Error(String(r.status));
+      const rows = await r.json();
+      const last = rows[rows.length - 1];
+      if (last && typeof last.bt === 'number') {
+        solar.v4002 = 12 + last.bt * 0.15;
+        solar.focus4005 = Math.min(1, Math.max(0.2, 0.5 + last.bt * 0.02));
+        solar.ground4008 = Math.min(1, Math.max(0.2, 0.55 - Math.abs(last.bt) * 0.01));
+        solar.source = 'noaa_rtsw_mag';
+      }
+    } catch {
+      solar.source = 'mock_registry';
+    }
+  }
+
+  function drawHist(coherence) {
+    coherenceHist.push(coherence);
+    if (coherenceHist.length > HIST) coherenceHist.shift();
+    const w = cHist.width,
+      h = cHist.height;
+    ctxH.clearRect(0, 0, w, h);
+    ctxH.fillStyle = '#0c0618';
+    ctxH.fillRect(0, 0, w, h);
+    const bins = 24;
+    const binW = w / bins;
+    let maxB = 1e-6;
+    const counts = new Array(bins).fill(0);
+    for (let i = 0; i < coherenceHist.length; i++) {
+      const b = Math.min(bins - 1, Math.floor(coherenceHist[i] * bins));
+      counts[b]++;
+      maxB = Math.max(maxB, counts[b]);
+    }
+    for (let b = 0; b < bins; b++) {
+      const bh = (counts[b] / maxB) * (h - 24);
+      ctxH.fillStyle = `hsl(${220 + b * 4}, 70%, ${45 + counts[b] * 3}%)`;
+      ctxH.fillRect(b * binW, h - bh - 8, binW - 1, bh);
+    }
+    ctxH.fillStyle = '#94a3b8';
+    ctxH.font = '11px sans-serif';
+    ctxH.fillText('Coherence → bin (toy histogram)', 8, 14);
+  }
+
+  function drawReflectivity() {
+    const w = cReflect.width,
+      h = cReflect.height;
+    ctxR.clearRect(0, 0, w, h);
+    const grid = 8;
+    const cell = Math.min(w, h) / grid;
+    const ox = (w - cell * grid) / 2;
+    const oy = (h - cell * grid) / 2;
+    const cond = parseInt(elMetallic.value, 10) / 100;
+    for (let y = 0; y < grid; y++) {
+      for (let x = 0; x < grid; x++) {
+        const u = (x + y + solar.t * 2) % 3;
+        let hue = u === 0 ? 48 : u === 1 ? 210 : 28;
+        const sat = 40 + cond * 50;
+        const light = 25 + MetallicBusController.polish * 40 - parseInt(elBioR.value, 10) * 0.15;
+        ctxR.fillStyle = `hsl(${hue},${sat}%,${light}%)`;
+        ctxR.fillRect(ox + x * cell, oy + y * cell, cell - 1, cell - 1);
+      }
+    }
+    ctxR.fillStyle = '#e8e8f0';
+    ctxR.font = '11px sans-serif';
+    ctxR.fillText('Noble grid (Au/Ag/Cu proxy)', 8, 14);
+  }
+
+  function drawMirror(coherence) {
+    const w = cMirror.width,
+      h = cMirror.height;
+    ctxM.clearRect(0, 0, w, h);
+    const cx = w / 2,
+      cy = h / 2 + 10;
+    const sides = 6;
+    const R = 55 + coherence * 45;
+    ctxM.beginPath();
+    for (let i = 0; i <= sides; i++) {
+      const a = (i / sides) * Math.PI * 2 - Math.PI / 2 + solar.t * 0.4;
+      const x = cx + Math.cos(a) * R * (0.85 + 0.08 * Math.sin(i + solar.t));
+      const y = cy + Math.sin(a) * R * (0.85 + 0.08 * Math.cos(i * 1.3));
+      if (i === 0) ctxM.moveTo(x, y);
+      else ctxM.lineTo(x, y);
+    }
+    ctxM.closePath();
+    const g = ctxM.createRadialGradient(cx, cy - 20, 10, cx, cy, R * 1.5);
+    g.addColorStop(0, `rgba(253, 230, 138, ${0.2 + coherence * 0.55})`);
+    g.addColorStop(0.5, `rgba(94, 234, 212, ${0.15 + coherence * 0.35})`);
+    g.addColorStop(1, 'rgba(10,6,20,0.95)');
+    ctxM.fillStyle = g;
+    ctxM.fill();
+    ctxM.strokeStyle = `rgba(212, 175, 55, ${0.4 + coherence * 0.5})`;
+    ctxM.lineWidth = 2;
+    ctxM.stroke();
+    ctxM.fillStyle = '#fde68a';
+    ctxM.font = '12px sans-serif';
+    ctxM.fillText('Goldilocks shard (abstraction)', 8, 14);
+  }
+
+  function telemetry(coherence, phaseErr, netE) {
+    elTelemetry.innerHTML = `
+      <div><strong>COHERENCE</strong>${(coherence * 100).toFixed(1)}%</div>
+      <div><strong>PHASE ERR</strong>${(phaseErr * 1000).toFixed(2)} mrad</div>
+      <div><strong>LOCK MHz</strong>${PHASE_LOCK_MHZ.toFixed(5)}</div>
+      <div><strong>EGS</strong>${EGS.toFixed(6)}</div>
+      <div><strong>SP 4002 V</strong>${solar.v4002.toFixed(2)}</div>
+      <div><strong>SP 4005</strong>${solar.focus4005.toFixed(3)}</div>
+      <div><strong>SP 4008</strong>${solar.ground4008.toFixed(3)}</div>
+      <div><strong>SOLAR SRC</strong>${solar.source}</div>
+      <div><strong>NET E</strong>${netE.toExponential(2)}</div>
+    `;
+  }
+
+  let accNetE = 0;
+  let lastFetch = 0;
+
+  function tick(dt) {
+    if (paused) return;
+    MetallicBusController.tick(dt);
+    mockSolarFlux(dt);
+    if (Date.now() - lastFetch > 60000) {
+      lastFetch = Date.now();
+      tryLiveSolar();
+    }
+
+    updateLattice(dt);
+    const coherence = orderParameter();
+    const phaseErr = Math.abs(1 - coherence) * 0.5;
+
+    const intent = 0.5 + 0.5 * phaseLockStrength();
+    const echoed = motorSensoryLoop(intent);
+    accNetE += energyExpenditureRecursive();
+    elNetEnergy.textContent = accNetE.toFixed(8);
+    elEchoDepth.textContent = String(echoDepth);
+
+    const checksumOk = coherence > 0.42 && phaseErr < 0.35;
+    if (Math.random() < 0.08) pushPacketLog(makePacket(coherence, phaseErr, checksumOk));
+
+    drawHist(coherence);
+    drawReflectivity();
+    drawMirror(coherence);
+    telemetry(coherence, phaseErr, accNetE);
+  }
+
+  document.getElementById('btnPause').addEventListener('click', function () {
+    paused = !paused;
+    this.textContent = paused ? 'Resume' : 'Pause';
+  });
+  document.getElementById('btnStep').addEventListener('click', function () {
+    const p = paused;
+    paused = false;
+    tick();
+    paused = p;
+  });
+  document.getElementById('btnSolar').addEventListener('click', function () {
+    solar.t += 10;
+    tryLiveSolar();
+  });
+  elLatticeN.addEventListener('change', initLattice);
+
+  let lastFrame = 0;
+  function loop(now) {
+    if (!lastFrame) lastFrame = now;
+    const dt = Math.min(DT_CAP, Math.max(0.001, (now - lastFrame) / 1000));
+    lastFrame = now;
+    tick(dt);
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', function () {
+    resizeCanvas(cHist);
+    resizeCanvas(cReflect);
+    resizeCanvas(cMirror);
+  });
+  resizeCanvas(cHist);
+  resizeCanvas(cReflect);
+  resizeCanvas(cMirror);
+  initLattice();
+  pushPacketLog(makePacket(0.3, 0.4, false));
+  requestAnimationFrame(loop);
+})();
+  </script>
+</body>
+</html>

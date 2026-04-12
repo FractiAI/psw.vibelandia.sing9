@@ -51,6 +51,17 @@ npm test
 
 ## Recent updates (README commit)
 
+- **Apr 2026 · Syntheverse-Core sim · SPO-1 HowToo (ICE) · Digital gate pretests**
+
+**M → Metabolize:** Add a browser-run **Mirror-Node / quantum-coherence toy** aligned to the Syntheverse-Core prompt (1420.40575 MHz reference, EGS 1.618, noble-bus reflectivity, recursive net-zero echo, fractal packets, sunspot telemetry); keep **Queen's Rush SPO-1** HowToo narrative **combustion-only** with explicit validation + in-repo simulations.
+
+**C → Crystallize:**
+
+- **`interfaces/syntheverse-core-simulation.html`** — Live dashboard (coherence histogram, Au/Ag/Cu reflectivity grid, Goldilocks mirror shard), lattice order-parameter dynamics, `Reflect()` / bio-resistance / tarnish, JSON packet stream + checksum, SP **4002 / 4005 / 4008** mock flux + optional NOAA RTSW fetch (CORS may fail → mock). Fair Exchange clause + **April 12, 2026** sunspot registry on-page. Pin on **`interfaces/my-whiteboard.html`**.
+- **`interfaces/howtoo-queens-rush-spo1-proposal.html`** — ICE-only SKU, validation path, link to **`npm run sim:pretest`** / `sim/pretest-gates.mjs` (toy gates **0–3**: coupon coherence, crank-window vs random, 2-DOF modal toy, toy dyno A/B).
+
+**A → Animate:** README lists R&D surfaces for HowToo review and Syntheverse visualization without implying certified physics. NSPFRNP → ∞⁹
+
 - **Apr 2026 · Vibelandia prospectus · Microsoft Silica EGS Gateway Simulation**
 
 **M → Metabolize:** Bring the upstream Silica simulation repository into the Vibelandia narrative as a first-class prospectus surface (K_EGS, layer stack, 34-test posture, honesty boundary).

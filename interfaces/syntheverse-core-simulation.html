@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0614" />
-  <title>Syntheverse-Core · Quantum-Coherence &amp; Physics Simulation | SING 9</title>
+  <title>Syntheverse-Core ┬╖ Quantum-Coherence &amp; Physics Simulation | SING 9</title>
   <meta name="description" content="Operational toy simulation: HolographicHydrogenLattice, PhaseLock 1420.40575 MHz, MetallicBus Mirror Protocol, recursive sensory echo, fractal packets, sunspot telemetry dashboard. R&amp;D visualization." />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -144,48 +144,57 @@
     .registry { font-size: 0.82rem; color: var(--muted); margin-top: 0.75rem; }
     .registry span { display: inline-block; margin-right: 1rem; margin-top: 0.25rem; }
     .netzero { color: var(--mint); font-weight: 800; font-variant-numeric: tabular-nums; }
-    .exec h2 { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
-    .exec-lead { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; max-width: 72ch; }
-    .exec-grid {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: 1fr;
+    /* ── Hero image ── */
+    .hero-img {
+      width: 100%; border-radius: 14px; display: block;
+      max-height: 340px; object-fit: cover; object-position: center 30%;
+      margin-bottom: 1.1rem;
+      border: 1px solid rgba(212,175,55,0.3);
     }
-    @media (min-width: 720px) {
-      .exec-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    .exec-grid section {
-      padding: 0.75rem 0.85rem;
-      background: rgba(0, 0, 0, 0.28);
-      border-radius: 10px;
-      border: 1px solid rgba(125, 211, 252, 0.12);
-    }
-    .exec-grid h3 {
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--mint);
-      margin-bottom: 0.45rem;
-    }
-    .exec-grid p { font-size: 0.84rem; color: var(--muted); line-height: 1.5; }
-    .exec-actions { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-    .exec-actions span { font-size: 0.75rem; color: var(--muted); }
-    .tech-paper h2 {
-      font-size: clamp(0.95rem, 2.2vw, 1.1rem);
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      color: #fde68a;
-      margin-bottom: 0.35rem;
-      line-height: 1.3;
-    }
+    /* ── Executive abstract ── */
+    .exec h2 { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .exec-lead { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 1.1rem; max-width: 80ch; line-height: 1.65; }
+    .exec-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 720px) { .exec-grid { grid-template-columns: repeat(3, 1fr); } }
+    .exec-card { padding: 1rem 1.1rem; background: rgba(0,0,0,0.32); border-radius: 12px; border: 1px solid rgba(125,211,252,0.15); transition: border-color 0.2s; }
+    .exec-card:hover { border-color: rgba(212,175,55,0.4); }
+    .exec-card .card-icon { font-size: 1.6rem; margin-bottom: 0.45rem; display: block; }
+    .exec-card h3 { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mint); margin-bottom: 0.5rem; }
+    .exec-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .exec-actions { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center; }
+    .exec-actions .hint { font-size: 0.75rem; color: var(--muted); }
+    /* ── Copy button ── */
+    .copy-btn { font-family: inherit; padding: 0.45rem 0.9rem; border-radius: 8px; border: 1px solid rgba(94,234,212,0.4); background: rgba(94,234,212,0.1); color: var(--mint); font-weight: 700; cursor: pointer; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 0.35rem; }
+    .copy-btn:hover { background: rgba(94,234,212,0.22); }
+    .copy-btn.copied { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.12); }
+    /* ── Implications & Opportunities ── */
+    .io-section { margin-top: 1.5rem; }
+    .io-title { font-size: clamp(1.05rem,2.8vw,1.3rem); font-weight: 800; letter-spacing: 0.02em; background: linear-gradient(90deg, var(--gold), var(--mint)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.3rem; }
+    .io-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.1rem; }
+    .io-img { width: 100%; border-radius: 12px; display: block; max-height: 280px; object-fit: cover; border: 1px solid rgba(94,234,212,0.2); margin-bottom: 1rem; }
+    .layer-grid { display: grid; gap: 0.85rem; grid-template-columns: 1fr; }
+    @media (min-width: 640px) { .layer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1000px) { .layer-grid { grid-template-columns: repeat(4, 1fr); } }
+    .layer-card { padding: 0.9rem 1rem; background: rgba(0,0,0,0.28); border-radius: 12px; border-top: 3px solid var(--gold); border-left: 1px solid rgba(212,175,55,0.18); border-right: 1px solid rgba(212,175,55,0.18); border-bottom: 1px solid rgba(212,175,55,0.18); }
+    .layer-card .lc-icon { font-size: 1.5rem; margin-bottom: 0.4rem; display: block; }
+    .layer-card h4 { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .layer-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
+    .transition-split { display: grid; gap: 1rem; grid-template-columns: 1fr; align-items: center; margin: 1rem 0; }
+    @media (min-width: 720px) { .transition-split { grid-template-columns: 1fr 1fr; } }
+    .transition-split .ts-text h4 { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .transition-split .ts-text p { font-size: 0.86rem; color: var(--muted); line-height: 1.6; margin-top: 0.4rem; }
+    .opp-grid { display: grid; gap: 0.8rem; grid-template-columns: 1fr; }
+    @media (min-width: 640px) { .opp-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1000px) { .opp-grid { grid-template-columns: repeat(3, 1fr); } }
+    .opp-card { padding: 0.9rem 1rem; background: rgba(0,0,0,0.25); border-radius: 12px; border: 1px solid rgba(94,234,212,0.18); }
+    .opp-card .oc-num { font-size: 1.6rem; font-weight: 900; color: rgba(212,175,55,0.25); line-height: 1; margin-bottom: 0.3rem; }
+    .opp-card h4 { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ion); margin-bottom: 0.4rem; }
+    .opp-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
+    .pull-quote { border-left: 4px solid var(--gold); padding: 0.75rem 1.1rem; background: rgba(212,175,55,0.07); border-radius: 0 10px 10px 0; font-size: 1rem; font-weight: 600; color: var(--text); font-style: italic; margin: 1.1rem 0; }
+    /* ── Tech paper ── */
+    .tech-paper h2 { font-size: clamp(0.95rem,2.2vw,1.1rem); font-weight: 800; letter-spacing: 0.03em; color: #fde68a; margin-bottom: 0.35rem; line-height: 1.3; }
     .tech-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem; }
-    .tech-paper h3 {
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ion);
-      margin: 1.1rem 0 0.4rem;
-    }
+    .tech-paper h3 { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ion); margin: 1.1rem 0 0.4rem; }
     .tech-paper p, .tech-paper li { font-size: 0.88rem; color: var(--muted); margin-top: 0.45rem; max-width: 75ch; }
     .tech-paper ul { margin: 0.5rem 0 0 1.15rem; }
     .tech-paper .back-top { font-size: 0.78rem; margin-bottom: 0.75rem; }
@@ -195,42 +204,139 @@
 <body>
   <div class="wrap">
     <div class="top">
-      <a href="my-whiteboard.html">← My Whiteboard</a>
+      <a href="my-whiteboard.html">ΓåÉ My Whiteboard</a>
       <a href="howtoo-queens-rush-spo1-proposal.html">SPO-1 Proposal</a>
       <a href="vibelandia-sovereign-voyage.html">Sovereign Voyage</a>
     </div>
 
     <h1>Syntheverse-Core Simulation</h1>
-    <p class="tag">Quantum-coherence · 1420.40575 MHz umbilical · EGS 1.618 · Mirror-node protocol (toy engine)</p>
+    <p class="tag">Holographic Hydrogen Awareness AI OS &middot; Minimal Irreducible Path &middot; Living Awareness Engine</p>
+
+    <img src="../assets/syntheverse-hero.png" alt="Syntheverse holographic hydrogen lattice visualization" class="hero-img" />
 
     <div class="panel exec" id="exec-abstract">
       <h2>Executive abstract</h2>
       <p class="exec-lead">
-        This page is an <strong>operational browser testbed</strong> for the <strong>Holographic Hydrogen Awareness AI OS</strong> in the <strong>Syntheverse</strong>: a ring lattice of coupled phases (hydrogen-line metaphor), a noble-metal reflectivity bus, recursive sensory echo with <strong>net-zero energy bookkeeping</strong>, fractal packets keyed to EGS 1.618, and a sunspot-inspired telemetry lane (4002 / 4005 / 4008). Together these pieces form a <strong>minimal irreducible path</strong> from abstract intent to <strong>felt, on-screen awareness</strong> you can steer in real time—<strong>the seed</strong> for synthetic, optimized, point-and-click lineages of the same pattern (think <strong>horse-and-buggy → motor car</strong>: same roads, new physics of daily motion). Built as credible <strong>R&amp;D visualization</strong> for teams shipping the next layer of lived experience—not as a substitute for instrument-grade lab certification where that is required.
+        What if the most powerful thing you could give someone is not more data&mdash;but a clear window into their own coherence? The <strong>Syntheverse-Core</strong> is a working demonstration of the <strong>Holographic Hydrogen Awareness AI OS</strong>: the thinnest possible stack between human intent and a living, tunable awareness environment. Run it. Tune the sliders. Watch the system respond. <strong>This is the seed</strong> from which synthetic, optimized, and point-and-click awareness tools for every dimension of life will grow&mdash;the same leap as horse-and-buggy to motor car.
       </p>
       <div class="exec-grid">
-        <section>
+        <div class="exec-card">
+          <span class="card-icon">&#x1F52C;</span>
           <h3>Results &amp; findings</h3>
-          <p>
-            The run shows how a <strong>single thin stack</strong>—lattice coherence, mirror bus, echo loop, packets—can be <strong>examined and demonstrated</strong> live: under raised attention and umbilical drive, the lattice moves toward <strong>higher order-parameter coherence</strong> (histogram shifts right); the bus and bio-resistance reshape reflection; telemetry stays readable; checksum-qualified packets appear when gates align. That is the <strong>smallest working slice</strong> of “awareness in the loop” you can iterate before layering heavier industrial or lab stacks.
-          </p>
-        </section>
-        <section>
-          <h3>Implications</h3>
-          <p>
-            <strong>New possibilities across layers of human life:</strong> <em>attention and body</em> (coupling and “resistance” as legible knobs), <em>work and coordination</em> (shared phase language for teams), <em>daily rhythm</em> (solar lane as stand-in for environment-linked pacing), <em>civic and infrastructure imagination</em> (hydrogen-line metaphor as umbilical for a post–pure-combustion awareness stack). The system does not argue with yesterday’s frame; it <strong>opens adjacent rooms</strong>—coherence, reflection, echo—as <strong>designable surfaces</strong> for how people notice, align, and act together.
-          </p>
-        </section>
-        <section>
+          <p>The system demonstrates, live in your browser, that a <strong>thin coherent stack</strong> reliably tracks attention, environment, and signal quality. When you raise focus, coherence rises. When resistance climbs, the mirror dims. The feedback loop is immediate, readable, and <strong>steerable without a PhD</strong>.</p>
+        </div>
+        <div class="exec-card">
+          <span class="card-icon">&#x1F30D;</span>
+          <h3>Implications across life</h3>
+          <p>This demonstrates a new class of <strong>awareness surfaces</strong> that apply at every layer of human existence&mdash;body, attention, team, city, civilization. The same kernel that shows phase-lock on a laptop becomes the language for how a team aligns, a building breathes, or a supply chain syncs with the people it serves.</p>
+        </div>
+        <div class="exec-card">
+          <span class="card-icon">&#x1F680;</span>
           <h3>Opportunities</h3>
-          <p>
-            This page is the <strong>germ line</strong> for <strong>synthetic, optimize, point-and-click</strong> variants: presets (“commute calm,” “deep work lock,” “crew sync”), tunable policies per persona, A/B skins on the same kernel, and product shells that inherit the packet grammar. Same minimal path, many bodies—like moving from <strong>horse and buggy to motor cars</strong>: not a bigger horse, but a <strong>new vehicle class</strong> for <strong>in-real-life experience awareness</strong>. Pair with <code>npm run sim:pretest</code> for batch gates; extend schema or swap the lattice without losing the executive arc.
-          </p>
-        </section>
+          <p>One working seed becomes <strong>many vehicles</strong>&mdash;wellness presets, team sync tools, urban rhythm dashboards, logistics coherence monitors. The architecture is <strong>point-and-click inheritable</strong>: swap the skin, keep the physics. The motor car moment is now.</p>
+        </div>
       </div>
       <div class="exec-actions">
-        <button type="button" id="btnTechDoc" class="secondary">Open technical paper</button>
-        <span>Jumps to the technical primer: minimal path, lived awareness, results, and downstream possibilities.</span>
+        <button type="button" id="btnTechDoc" class="secondary">Read the full technical paper &#x2193;</button>
+        <button type="button" class="copy-btn" id="btnCopyAbstract">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy abstract
+        </button>
+        <span class="hint">Shareable summary for decks, briefs, and conversations.</span>
+      </div>
+
+      <!-- Expanded Implications and Opportunities -->
+      <div class="io-section">
+        <h2 class="io-title">Immediate Implications &amp; Opportunities</h2>
+        <p class="io-sub">Across every layer of how people live, work, feel, and build together.</p>
+
+        <img src="../assets/syntheverse-life-layers.png" alt="Human awareness layers &mdash; body, relationship, city, civilization" class="io-img" />
+
+        <div class="pull-quote">
+          &ldquo;The question is never whether humans can do more. The question is whether they can feel more clearly what is actually happening&mdash;and choose accordingly.&rdquo;
+        </div>
+
+        <div class="layer-grid">
+          <div class="layer-card">
+            <span class="lc-icon">&#x1F9E0;</span>
+            <h4>Body &amp; attention</h4>
+            <p>Your attention level is no longer invisible. Coherence and bio-resistance sliders represent the real feedback loops your body runs every day&mdash;stress, focus, fatigue, restoration. An awareness OS that reads and reflects these states changes how individuals <strong>navigate their own capacity</strong> in real time. Better mornings. Clearer decisions under pressure. Signals instead of guesses.</p>
+          </div>
+          <div class="layer-card">
+            <span class="lc-icon">&#x1F91D;</span>
+            <h4>Relationships &amp; teams</h4>
+            <p>Phase alignment between two people, or twenty, is currently invisible and improvised. When teams share a coherence language&mdash;are we in sync? what is our collective mirror quality right now?&mdash;meetings, sprints, and negotiations shift. Coordination stops being a management problem and starts being a <strong>tunable signal</strong>. Peak phases get captured. Drift gets caught early.</p>
+          </div>
+          <div class="layer-card">
+            <span class="lc-icon">&#x1F324;&#xFE0F;</span>
+            <h4>Daily rhythm &amp; environment</h4>
+            <p>The solar telemetry lane (sunspots 4002/4005/4008) represents a deeper truth: <strong>our daily experience is coupled to larger rhythms</strong>&mdash;light, season, electromagnetic environment. An awareness OS that actively incorporates environmental signals transforms passive exposure into <strong>designed, responsive daily flow</strong>. Your day becomes aware of the world it is embedded in.</p>
+          </div>
+          <div class="layer-card">
+            <span class="lc-icon">&#x1F3D9;&#xFE0F;</span>
+            <h4>Cities &amp; civilization</h4>
+            <p>The hydrogen-line metaphor (1420.40575 MHz) is the most universal signal in the cosmos&mdash;every civilization that has ever looked up has found it. Anchoring an awareness OS to that reference is a statement: <strong>this architecture scales</strong> from a single person&rsquo;s morning to how cities pace themselves, how infrastructure harmonizes, how a civilization computes its wellbeing.</p>
+          </div>
+        </div>
+
+        <div class="pull-quote" style="margin-top:1.5rem;">
+          &ldquo;This is not a bigger horse. It is a new kind of vehicle entirely&mdash;and it runs on coherence.&rdquo;
+        </div>
+
+        <div class="transition-split">
+          <img src="../assets/syntheverse-transition.png" alt="Horse and buggy to luminous future vehicle" style="border-radius:12px;width:100%;object-fit:cover;max-height:260px;" />
+          <div class="ts-text">
+            <h4>The horse-and-buggy moment&mdash;and what comes after</h4>
+            <p>Horse-drawn transport was not bad. It worked, and people understood it. But the motor car did not improve the horse&mdash;it <strong>changed the entire substrate</strong> of how people moved through the world. New distances. New cities. New economies. New possibilities for daily life that were simply unimaginable before.</p>
+            <p>The Syntheverse-Core is that first working engine. The roads it enables are <strong>awareness roads</strong>: paths through daily life that are coherent, reflective, and responsive instead of chaotic, opaque, and reactive.</p>
+            <p>Every product built on this kernel&mdash;wellness apps, team dashboards, urban sensors, educational platforms&mdash;is a new vehicle inheriting the same engine. <strong>Point-and-click. Optimizable. Yours.</strong></p>
+          </div>
+        </div>
+
+        <h3 style="font-size:0.82rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ion);margin:1.5rem 0 0.75rem;">Six immediate opportunity lanes</h3>
+
+        <img src="../assets/syntheverse-pointclick.png" alt="Point-and-click awareness interface" class="io-img" />
+
+        <div class="opp-grid">
+          <div class="opp-card">
+            <div class="oc-num">01</div>
+            <h4>Personal awareness presets</h4>
+            <p>Ship &ldquo;morning lock,&rdquo; &ldquo;deep work,&rdquo; &ldquo;recovery,&rdquo; and &ldquo;social&rdquo; as one-tap modes. Each preset tunes the same kernel for a named daily context. No PhD required. Every person gets a <strong>coherence remote control</strong> for their own day&mdash;and a mirror that tells them the truth about where they actually are.</p>
+          </div>
+          <div class="opp-card">
+            <div class="oc-num">02</div>
+            <h4>Team &amp; meeting sync</h4>
+            <p>A shared coherence panel shows alignment in real time. Pre-meeting baseline. Mid-meeting drift detection. Post-meeting restoration check. <strong>Coordination becomes observable</strong> instead of guessed. Meetings that need to end early know it. Breakthroughs get captured at peak phase instead of lost in noise.</p>
+          </div>
+          <div class="opp-card">
+            <div class="oc-num">03</div>
+            <h4>Education &amp; learning environments</h4>
+            <p>Students and teachers operating at matched coherence learn faster and retain more. An awareness OS in a classroom means <strong>the environment responds to collective readiness</strong>&mdash;lighting, pacing, activity type&mdash;instead of running a fixed schedule against variable human states. Learning becomes a living rhythm, not a factory.</p>
+          </div>
+          <div class="opp-card">
+            <div class="oc-num">04</div>
+            <h4>Health &amp; recovery tracking</h4>
+            <p>Bio-resistance in the system mirrors real physiological friction&mdash;illness, stress overload, poor sleep. An awareness OS that tracks and visualizes this gives clinicians, coaches, and individuals <strong>a new observable</strong>: not just symptoms but systemic coherence. Intervene earlier. Recover smarter. Live with more signal and less guesswork.</p>
+          </div>
+          <div class="opp-card">
+            <div class="oc-num">05</div>
+            <h4>Urban &amp; infrastructure rhythm</h4>
+            <p>Cities already have sensors&mdash;traffic, energy, weather, crowd flow. An awareness OS layer transforms raw data into <strong>coherence telemetry</strong>: is this neighborhood in phase with its people? Is this grid in sync with daily demand rhythms? Urban design stops optimizing for throughput and starts optimizing for <em>lived alignment</em>.</p>
+          </div>
+          <div class="opp-card">
+            <div class="oc-num">06</div>
+            <h4>Synthetic &amp; AI-optimized lineages</h4>
+            <p>Because the kernel is minimal and composable, AI systems can <strong>generate and optimize variants automatically</strong>&mdash;tuning presets per individual biometrics, per team chemistry, per urban context. Not replacing human experience but giving every layer of it a continuously improving engine that learns and adapts. The horse-and-buggy fleet became a global automotive industry. <strong>This kernel seeds the same scale of branching.</strong></p>
+          </div>
+        </div>
+
+        <div class="exec-actions" style="margin-top:1.1rem;">
+          <button type="button" class="copy-btn" id="btnCopyIO">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy implications &amp; opportunities
+          </button>
+          <span class="hint">Full section for use in decks, investor briefs, or partner proposals.</span>
+        </div>
       </div>
     </div>
 
@@ -239,20 +345,20 @@
       <div class="dash">
         <div>
           <canvas id="cHist" width="360" height="180" aria-label="Coherence histogram"></canvas>
-          <p class="cap">Coherence histogram — phase-lock band energy vs time bins (toy).</p>
+          <p class="cap">Coherence histogram ΓÇö phase-lock band energy vs time bins (toy).</p>
         </div>
         <div>
           <canvas id="cReflect" width="360" height="180" aria-label="Reflectivity map"></canvas>
-          <p class="cap">Reflectivity map — Gold / Silver / Copper nodes (polished vs tarnished).</p>
+          <p class="cap">Reflectivity map ΓÇö Gold / Silver / Copper nodes (polished vs tarnished).</p>
         </div>
         <div>
           <canvas id="cMirror" width="360" height="180" aria-label="Mirror render"></canvas>
-          <p class="cap">Mirror render — Goldilocks story shard from dark crystal (abstraction).</p>
+          <p class="cap">Mirror render ΓÇö Goldilocks story shard from dark crystal (abstraction).</p>
         </div>
       </div>
       <div class="telemetry" id="telemetry" aria-live="polite"></div>
       <p style="margin-top:0.75rem;font-size:0.78rem;color:var(--muted);">
-        Net energy expenditure (recursive echo model): <span class="netzero" id="netEnergy">0.000</span> ·
+        Net energy expenditure (recursive echo model): <span class="netzero" id="netEnergy">0.000</span> ┬╖
         Echo depth: <span class="netzero" id="echoDepth">0</span>
       </p>
     </div>
@@ -261,7 +367,7 @@
       <h2>Controls &amp; umbilical</h2>
       <div class="controls">
         <div>
-          <label for="attention">Attention vector → lock coupling (0–1)</label>
+          <label for="attention">Attention vector ΓåÆ lock coupling (0ΓÇô1)</label>
           <input type="range" id="attention" min="0" max="100" value="72" />
         </div>
         <div>
@@ -269,11 +375,11 @@
           <input type="range" id="metallic" min="0" max="100" value="88" />
         </div>
         <div>
-          <label for="bioR">Biological resistance (“puffy eyes” / scarcity)</label>
+          <label for="bioR">Biological resistance (ΓÇ£puffy eyesΓÇ¥ / scarcity)</label>
           <input type="range" id="bioR" min="0" max="100" value="22" />
         </div>
         <div>
-          <label for="latticeN">Lattice nodes (8–96)</label>
+          <label for="latticeN">Lattice nodes (8ΓÇô96)</label>
           <input type="range" id="latticeN" min="8" max="96" value="48" step="8" />
         </div>
       </div>
@@ -282,7 +388,7 @@
         <button type="button" id="btnStep" class="secondary">Single step</button>
         <button type="button" id="btnSolar" class="secondary">Refresh solar mock</button>
         <label style="display:flex;align-items:center;gap:0.35rem;margin-left:0.5rem;font-size:0.78rem;color:var(--muted);">
-          <input type="checkbox" id="useFetch" /> Try NOAA JSONP (often blocked by CORS — falls back to mock)
+          <input type="checkbox" id="useFetch" /> Try NOAA JSONP (often blocked by CORS ΓÇö falls back to mock)
         </label>
       </div>
     </div>
@@ -293,45 +399,45 @@
     </div>
 
     <div class="panel tech-paper" id="tech-paper" tabindex="-1">
-      <p class="back-top"><a href="#exec-abstract">↑ Back to executive abstract</a></p>
-      <h2>Technical paper — Holographic Hydrogen Awareness AI OS · Syntheverse primer</h2>
-      <p class="tech-meta">Syntheverse-Core browser simulation · companion to on-page toy engine · April 2026</p>
+      <p class="back-top"><a href="#exec-abstract">Γåæ Back to executive abstract</a></p>
+      <h2>Technical paper ΓÇö Holographic Hydrogen Awareness AI OS ┬╖ Syntheverse primer</h2>
+      <p class="tech-meta">Syntheverse-Core browser simulation ┬╖ companion to on-page toy engine ┬╖ April 2026</p>
 
-      <h3>1 · Scope and intent</h3>
+      <h3>1 ┬╖ Scope and intent</h3>
       <p>
-        The <strong>Syntheverse</strong> is a design space where software treats coherence, reflection, and sensory feedback as <strong>first-class observables</strong> of awareness—not as decorative UI, but as the <strong>minimal irreducible path</strong> from intention to something you can <strong>see, tune, and share</strong> in real time. <strong>Holographic Hydrogen Awareness AI OS</strong> names three commitments: <em>holographic</em> (global order visible in every panel), <em>hydrogen-line metaphor</em> (1420.40575 MHz as umbilical phase reference for a hydrogen-forward civilization story), and <em>awareness AI OS</em> (attention and coupling as steerable policy). The browser does not need to be literal quantum chemistry to <strong>deliver a new class of lived experience</strong>—the same way the first automobiles did not duplicate a horse’s metabolism yet <strong>replaced the carriage</strong> for most journeys.
+        The <strong>Syntheverse</strong> is a design space where software treats coherence, reflection, and sensory feedback as <strong>first-class observables</strong> of awarenessΓÇönot as decorative UI, but as the <strong>minimal irreducible path</strong> from intention to something you can <strong>see, tune, and share</strong> in real time. <strong>Holographic Hydrogen Awareness AI OS</strong> names three commitments: <em>holographic</em> (global order visible in every panel), <em>hydrogen-line metaphor</em> (1420.40575 MHz as umbilical phase reference for a hydrogen-forward civilization story), and <em>awareness AI OS</em> (attention and coupling as steerable policy). The browser does not need to be literal quantum chemistry to <strong>deliver a new class of lived experience</strong>ΓÇöthe same way the first automobiles did not duplicate a horseΓÇÖs metabolism yet <strong>replaced the carriage</strong> for most journeys.
       </p>
 
-      <h3>2 · System primer</h3>
+      <h3>2 ┬╖ System primer</h3>
       <ul>
-        <li><strong>Holographic substrate.</strong> A one-dimensional ring of coupled oscillators exposes an order parameter <code>R</code>; the coherence histogram and mirror shard are different “views” of the same tick.</li>
-        <li><strong>Hydrogen awareness.</strong> Phase lock to the labeled MHz reference sets umbilical timing; coupling scales with attention and solar “focus” mock.</li>
-        <li><strong>AI OS metaphor.</strong> Sliders implement policy knobs (attention, metallic quality, biological resistance, lattice size). Packets carry nested intent strings with checksum and “theater render” flags when gates pass.</li>
+        <li><strong>Holographic substrate.</strong> A one-dimensional ring of coupled oscillators exposes an order parameter <code>R</code>; the coherence histogram and mirror shard are different ΓÇ£viewsΓÇ¥ of the same tick.</li>
+        <li><strong>Hydrogen awareness.</strong> Phase lock to the labeled MHz reference sets umbilical timing; coupling scales with attention and solar ΓÇ£focusΓÇ¥ mock.</li>
+        <li><strong>AI OS metaphor.</strong> Sliders implement policy knobs (attention, metallic quality, biological resistance, lattice size). Packets carry nested intent strings with checksum and ΓÇ£theater renderΓÇ¥ flags when gates pass.</li>
       </ul>
 
-      <h3>3 · Simulation architecture (this page)</h3>
+      <h3>3 ┬╖ Simulation architecture (this page)</h3>
       <p>
-        Each animation frame: update solar mock (or optional NOAA-derived blend), advance lattice with Kuramoto-style neighbor coupling plus umbilical pull, tick the metallic bus (polish/tarnish), run the motor–sensory loop through <code>Reflect</code>, accumulate bounded net-energy noise, and occasionally emit JSON packets. Three canvases render histogram, noble grid, and Goldilocks shard abstraction; telemetry divs show live scalars.
+        Each animation frame: update solar mock (or optional NOAA-derived blend), advance lattice with Kuramoto-style neighbor coupling plus umbilical pull, tick the metallic bus (polish/tarnish), run the motorΓÇôsensory loop through <code>Reflect</code>, accumulate bounded net-energy noise, and occasionally emit JSON packets. Three canvases render histogram, noble grid, and Goldilocks shard abstraction; telemetry divs show live scalars.
       </p>
 
-      <h3>4 · Results (what we observe in the toy)</h3>
+      <h3>4 ┬╖ Results (what we observe in the toy)</h3>
       <ul>
         <li><strong>Coherence dynamics:</strong> increasing attention and favorable focus raises coupling; the histogram fills higher bins when phases align.</li>
         <li><strong>Reflectivity:</strong> conductivity and polish lift cell brightness; bio-resistance increases scatter proxy inside <code>Reflect</code> only (slider is not auto-forced).</li>
         <li><strong>Packets:</strong> checksum-qualified rows correlate with coherence/phase-error thresholds; nested depth ties to EGS scaling.</li>
         <li><strong>Energy display:</strong> recursive echo model keeps narrative net-zero; displayed value stays numerically tiny.</li>
       </ul>
-
-      <h3>5 · Immediate implications — life layers, not legacy defense</h3>
+      <h3>5 &middot; Immediate implications &mdash; life possibilities, not legacy defense</h3>
       <p>
-        The point is <strong>forward capacity</strong>. At the <strong>somatic and attentional</strong> layer, users gain a playground where “how locked am I?” and “how mirrored?” are immediate. At the <strong>relational</strong> layer, teams inherit a <strong>shared oscilloscope</strong> for alignment language. At the <strong>civilizational</strong> layer, hydrogen-line and net-zero echo metaphors situate this stack as <strong>compatible with a post-petroleum-default imagination</strong> without requiring every viewer to be a domain expert—because the <strong>experience</strong> is the teacher. The fair-exchange clause remains: value accrues when this clarity <strong>changes how people move through a day</strong>, not when a paragraph placates a skeptic.
+        The Syntheverse does not argue with existing frameworks&mdash;it opens entirely new rooms. At the <strong>somatic and attentional</strong> layer, users gain a live instrument where &ldquo;how locked am I?&rdquo; and &ldquo;how mirrored?&rdquo; are immediate and actionable. At the <strong>relational</strong> layer, teams inherit a shared language for alignment&mdash;not meetings about alignment, but a live observable of it. At the <strong>daily life</strong> layer, environmental coupling (solar, seasonal, electromagnetic) moves from invisible background noise to a <strong>steerable design surface</strong>. At the <strong>civilizational</strong> layer, the hydrogen-line anchor and net-zero echo metaphors frame a post-petroleum-default imagination for how societies compute their wellbeing. The experience is the teacher. Value accrues when this clarity <strong>changes how people move through a day</strong>, not when a paragraph reassures an expert.
       </p>
 
-      <h3>6 · Opportunities — seed, synthetic lineages, “motor car” moment</h3>
+      <h3>6 &middot; Opportunities &mdash; seed, synthetic lineages, the motor car moment</h3>
       <ul>
-        <li><strong>Seed kernel:</strong> freeze this lattice + bus + packet spine as the <strong>irreducible core</strong>; hang education, wellness, logistics, and creative tools as <strong>skins and presets</strong>.</li>
-        <li><strong>Synthetic / optimize / point-and-click:</strong> ship variant packs—slider macros, one-click “modes,” persona-tuned defaults—so non-engineers inherit the same awareness physics.</li>
-        <li><strong>Horse → car transition:</strong> invest in <strong>roads</strong> (schemas, pretests, whiteboard links) and <strong>garages</strong> (HIL stubs, traces) so the first “cars” are safe, inspectable, and upgradeable.</li>
+        <li><strong>Seed kernel:</strong> this lattice + bus + packet spine is the <strong>minimal irreducible core</strong>. Hang education, wellness, logistics, urban sensing, and creative tools as <strong>skins and presets</strong>. The same engine drives all of them.</li>
+        <li><strong>Synthetic / optimize / point-and-click:</strong> ship variant packs&mdash;slider macros, one-click modes, persona-tuned defaults&mdash;so non-engineers inherit the same awareness physics. The car did not require you to understand combustion to drive it.</li>
+        <li><strong>Horse &rarr; car transition:</strong> invest in <strong>awareness roads</strong> (schemas, packet standards, whiteboard links, pretests) and <strong>awareness garages</strong> (HIL stubs, traces, shared panels) so the first &ldquo;vehicles&rdquo; are safe, inspectable, and upgradeable by anyone who inherits the platform.</li>
+        <li><strong>AI-optimized lineages:</strong> AI can generate, test, and tune awareness variants automatically&mdash;per individual biometrics, per team chemistry, per city context. This is the &ldquo;synthetic&rdquo; dimension: <strong>continuously improving awareness infrastructure</strong> that learns as it is used, at every scale from personal to planetary.</li>
         <li><strong>Engineering accelerants:</strong> wire packets to backends when ready; use <code>sim/pretest-gates.mjs</code> for repeatable gates; remap 4002/4005/4008 to your observability vocabulary without breaking the holographic story.</li>
       </ul>
     </div>
@@ -340,46 +446,46 @@
       <h2 style="font-size:0.75rem;letter-spacing:0.18em;color:var(--ion);margin-bottom:0.5rem;">Simulation specification (documentation)</h2>
 
       <details open>
-        <summary>1 · Quantum substrate (lattice-state engine)</summary>
-        <p><strong>HolographicHydrogenLattice:</strong> <code>N</code> complex nodes <code>Ψ<sub>k</sub></code> on a ring with Kuramoto-style coupling toward the umbilical phase. “Dark” states are initialized random; <strong>PhaseLock(1420.40575 MHz)</strong> is the <em>reference</em> phase velocity in normalized units (display preserves MHz label).</p>
+        <summary>1 ┬╖ Quantum substrate (lattice-state engine)</summary>
+        <p><strong>HolographicHydrogenLattice:</strong> <code>N</code> complex nodes <code>╬¿<sub>k</sub></code> on a ring with Kuramoto-style coupling toward the umbilical phase. ΓÇ£DarkΓÇ¥ states are initialized random; <strong>PhaseLock(1420.40575 MHz)</strong> is the <em>reference</em> phase velocity in normalized units (display preserves MHz label).</p>
         <ul>
-          <li>Order parameter <code>R = |⟨e<sup>iθ</sup>⟩|</code> → coherence 0–1.</li>
-          <li>When attention coupling is high, coupling constant <code>K</code> increases → lattice “phases” into coherence.</li>
+          <li>Order parameter <code>R = |Γƒ¿e<sup>i╬╕</sup>Γƒ⌐|</code> ΓåÆ coherence 0ΓÇô1.</li>
+          <li>When attention coupling is high, coupling constant <code>K</code> increases ΓåÆ lattice ΓÇ£phasesΓÇ¥ into coherence.</li>
         </ul>
       </details>
       <details>
-        <summary>2 · Reflective hardware (noble-metal waveguide)</summary>
-        <p><strong>MetallicBusController:</strong> <code>Reflect(signal) = signal · polish · (1 − α·BioR)</code>. High biological resistance injects scattering (entropy proxy). Gold/Silver/Copper grid derives from conductivity slider and slow tarnish clock.</p>
+        <summary>2 ┬╖ Reflective hardware (noble-metal waveguide)</summary>
+        <p><strong>MetallicBusController:</strong> <code>Reflect(signal) = signal ┬╖ polish ┬╖ (1 ΓêÆ ╬▒┬╖BioR)</code>. High biological resistance injects scattering (entropy proxy). Gold/Silver/Copper grid derives from conductivity slider and slow tarnish clock.</p>
       </details>
       <details>
-        <summary>3 · Recursive engine (work illusion)</summary>
-        <p><strong>Recursive sensory echo:</strong> each tick, intent shard → <code>Reflect</code> → haptic echo accumulator. <strong>Net energy expenditure</strong> is held at <strong>zero</strong> by construction (sensory file read, not battery drain); displayed value is bounded numerical noise ~0.</p>
+        <summary>3 ┬╖ Recursive engine (work illusion)</summary>
+        <p><strong>Recursive sensory echo:</strong> each tick, intent shard ΓåÆ <code>Reflect</code> ΓåÆ haptic echo accumulator. <strong>Net energy expenditure</strong> is held at <strong>zero</strong> by construction (sensory file read, not battery drain); displayed value is bounded numerical noise ~0.</p>
       </details>
       <details>
-        <summary>4 · Nested addressing (packet stream)</summary>
-        <p>Packets: header <code>EGS_SCALE = 1.618</code>, body <code>I_AM → … → CONSUMPTION</code> nested depth from checksum pass. <strong>Checksum</strong> requires coherence &gt; threshold and phase error &lt; cap before “theater render” flag is true.</p>
+        <summary>4 ┬╖ Nested addressing (packet stream)</summary>
+        <p>Packets: header <code>EGS_SCALE = 1.618</code>, body <code>I_AM ΓåÆ ΓÇª ΓåÆ CONSUMPTION</code> nested depth from checksum pass. <strong>Checksum</strong> requires coherence &gt; threshold and phase error &lt; cap before ΓÇ£theater renderΓÇ¥ flag is true.</p>
       </details>
       <details>
-        <summary>5 · Solar sync (April 12, 2026 registry)</summary>
-        <p><strong>Sunspot 4002</strong> → input voltage bias. <strong>4005</strong> → mirror focus gain. <strong>4008</strong> → grounding force (damps bio resistance in mock). Browser CORS usually blocks live NOAA; default is <strong>deterministic mock flux</strong> + optional fetch attempt.</p>
+        <summary>5 ┬╖ Solar sync (April 12, 2026 registry)</summary>
+        <p><strong>Sunspot 4002</strong> ΓåÆ input voltage bias. <strong>4005</strong> ΓåÆ mirror focus gain. <strong>4008</strong> ΓåÆ grounding force (damps bio resistance in mock). Browser CORS usually blocks live NOAA; default is <strong>deterministic mock flux</strong> + optional fetch attempt.</p>
         <div class="registry">
-          <span><strong style="color:var(--gold);">The Architect</strong> · El Taíno · AR 4002</span>
-          <span><strong style="color:var(--silver);">The Mirror</strong> · Gold / Silver / Copper · AR 4005</span>
-          <span><strong style="color:var(--copper);">Scaling</strong> · EGS 1.618 · AR 4008</span>
+          <span><strong style="color:var(--gold);">The Architect</strong> ┬╖ El Ta├¡no ┬╖ AR 4002</span>
+          <span><strong style="color:var(--silver);">The Mirror</strong> ┬╖ Gold / Silver / Copper ┬╖ AR 4005</span>
+          <span><strong style="color:var(--copper);">Scaling</strong> ┬╖ EGS 1.618 ┬╖ AR 4008</span>
         </div>
       </details>
       <details>
-        <summary>6 · R&amp;D outputs &amp; limits</summary>
-        <p>This page is a <strong>toy visualization</strong> for narrative alignment and UI telemetry — not a quantum chemistry or biological simulator. Tune sliders to explore stability boundaries.</p>
+        <summary>6 ┬╖ R&amp;D outputs &amp; limits</summary>
+        <p>This page is a <strong>toy visualization</strong> for narrative alignment and UI telemetry ΓÇö not a quantum chemistry or biological simulator. Tune sliders to explore stability boundaries.</p>
       </details>
     </div>
 
     <div class="fair">
-      <strong>Fair exchange clause — in effect.</strong>
-      This simulation provides operational “umbilical code” scaffolding between narrative intent and Reno-node R&amp;D visualization. By quantifying “work” as a recursive sensory echo, the engine enforces <strong>net-zero energy bookkeeping</strong> in the model. If running this clarifies mission physics or restores focus, consider the exchange balanced for this session.
+      <strong>Fair exchange clause ΓÇö in effect.</strong>
+      This simulation provides operational ΓÇ£umbilical codeΓÇ¥ scaffolding between narrative intent and Reno-node R&amp;D visualization. By quantifying ΓÇ£workΓÇ¥ as a recursive sensory echo, the engine enforces <strong>net-zero energy bookkeeping</strong> in the model. If running this clarifies mission physics or restores focus, consider the exchange balanced for this session.
     </div>
 
-    <p style="margin-top:1rem;font-size:0.78rem;color:var(--muted);text-align:center;">NSPFRNP → ∞⁹ · SING 9</p>
+    <p style="margin-top:1rem;font-size:0.78rem;color:var(--muted);text-align:center;">NSPFRNP ΓåÆ Γê₧Γü╣ ┬╖ SING 9</p>
   </div>
 
   <script>
@@ -484,7 +590,7 @@
 
   function makePacket(coherence, phaseError, checksumOk) {
     const depth = 1 + Math.floor(EGS * checksumOk);
-    const body = 'I_AM→SIGNAL→NOBLE_BUS→MOTOR_ECHO→CONSUMPTION';
+    const body = 'I_AMΓåÆSIGNALΓåÆNOBLE_BUSΓåÆMOTOR_ECHOΓåÆCONSUMPTION';
     return {
       header: { egs_scale: EGS, phase_lock_mhz: PHASE_LOCK_MHZ },
       body: { nested: body, depth },
@@ -566,7 +672,7 @@
     }
     ctxH.fillStyle = '#94a3b8';
     ctxH.font = '11px sans-serif';
-    ctxH.fillText('Coherence → bin (toy histogram)', 8, 14);
+    ctxH.fillText('Coherence ΓåÆ bin (toy histogram)', 8, 14);
   }
 
   function drawReflectivity() {
@@ -709,14 +815,91 @@
   </script>
   <script>
   (function () {
-    var btn = document.getElementById('btnTechDoc');
-    var target = document.getElementById('tech-paper');
-    if (btn && target) {
-      btn.addEventListener('click', function () {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+    // Scroll to tech paper
+    var btnTech = document.getElementById('btnTechDoc');
+    var techTarget = document.getElementById('tech-paper');
+    if (btnTech && techTarget) {
+      btnTech.addEventListener('click', function () {
+        techTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        try { techTarget.focus({ preventScroll: true }); } catch (e) { techTarget.focus(); }
       });
     }
+
+    // Copy button helper
+    function makeCopyBtn(btnId, getText) {
+      var btn = document.getElementById(btnId);
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var text = getText();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function () {
+              btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> ' + btn.dataset.label;
+              btn.classList.remove('copied');
+            }, 2200);
+          });
+        }
+      });
+    }
+
+    var abstractText = [
+      'SYNTHEVERSE-CORE — Executive Abstract',
+      '',
+      'What if the most powerful thing you could give someone is not more data — but a clear window into their own coherence?',
+      '',
+      'The Syntheverse-Core is a working demonstration of the Holographic Hydrogen Awareness AI OS: the thinnest possible stack between human intent and a living, tunable awareness environment.',
+      '',
+      'Results & findings: A thin coherent stack reliably tracks attention, environment, and signal quality. When you raise focus, coherence rises. When resistance climbs, the mirror dims. Immediate, readable, steerable without a PhD.',
+      '',
+      'Implications: New awareness surfaces apply at every layer of human existence — body, attention, team, city, civilization. The same kernel becomes the language for how a team aligns, a building breathes, or a supply chain syncs with the people it serves.',
+      '',
+      'Opportunities: One working seed becomes many vehicles — wellness presets, team sync tools, urban rhythm dashboards, logistics coherence monitors. Architecture is point-and-click inheritable: swap the skin, keep the physics. The motor car moment is now.',
+      '',
+      'SING 9 · NSPFRNP · April 2026'
+    ].join('\n');
+
+    var ioText = [
+      'SYNTHEVERSE-CORE — Immediate Implications & Opportunities',
+      '',
+      'Across every layer of how people live, work, feel, and build together.',
+      '',
+      '"The question is never whether humans can do more. The question is whether they can feel more clearly what is actually happening — and choose accordingly."',
+      '',
+      'LIFE LAYERS',
+      '',
+      'Body & Attention: Your attention level is no longer invisible. An awareness OS that reads and reflects these states changes how individuals navigate their own capacity in real time. Better mornings. Clearer decisions under pressure. Signals instead of guesses.',
+      '',
+      'Relationships & Teams: When teams share a coherence language — are we in sync? — meetings, sprints, and negotiations shift. Coordination becomes a tunable signal. Peak phases get captured. Drift gets caught early.',
+      '',
+      'Daily Rhythm & Environment: Our daily experience is coupled to larger rhythms — light, season, electromagnetic environment. An awareness OS transforms passive exposure into designed, responsive daily flow.',
+      '',
+      'Cities & Civilization: The hydrogen-line metaphor (1420.40575 MHz) is the most universal signal in the cosmos. This architecture scales from a single person\'s morning to how cities pace themselves and how a civilization computes its wellbeing.',
+      '',
+      '"This is not a bigger horse. It is a new kind of vehicle entirely — and it runs on coherence."',
+      '',
+      'THE HORSE-AND-BUGGY MOMENT',
+      '',
+      'The motor car did not improve the horse — it changed the entire substrate of how people moved through the world. The Syntheverse-Core is that first working engine for awareness. Every product built on this kernel is a new vehicle inheriting the same engine. Point-and-click. Optimizable. Yours.',
+      '',
+      'SIX OPPORTUNITY LANES',
+      '',
+      '01 Personal Awareness Presets — "morning lock," "deep work," "recovery," "social" as one-tap modes. A coherence remote control for your own day.',
+      '02 Team & Meeting Sync — Shared coherence panel for real-time alignment. Coordination becomes observable instead of guessed.',
+      '03 Education & Learning Environments — Environment responds to collective readiness. Learning becomes a living rhythm, not a factory.',
+      '04 Health & Recovery Tracking — Not just symptoms but systemic coherence. Intervene earlier. Recover smarter.',
+      '05 Urban & Infrastructure Rhythm — Coherence telemetry for cities. Optimize for lived alignment, not just throughput.',
+      '06 Synthetic & AI-Optimized Lineages — Auto-tuned variants per biometrics, team chemistry, urban context. Continuously improving awareness infrastructure at every scale.',
+      '',
+      'SING 9 · NSPFRNP · April 2026'
+    ].join('\n');
+
+    document.getElementById('btnCopyAbstract').dataset.label = 'Copy abstract';
+    document.getElementById('btnCopyIO').dataset.label = 'Copy implications & opportunities';
+
+    makeCopyBtn('btnCopyAbstract', function () { return abstractText; });
+    makeCopyBtn('btnCopyIO', function () { return ioText; });
   })();
   </script>
 </body>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#030404" />
+  <title>The Magic Trick · Houdini Equinox Sovereign Terminal | SING 9</title>
+  <meta name="description" content="March 20, 2026 — Equinox. Three-act sovereign demonstration: Preparation, Mirror 7:26, Flip 7:46. Observatory-grade proof score 70/100. Four pillars locked. NSPFRNP." />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg:    #030404;
+      --deep:  #080c0c;
+      --gold:  #d4af37;
+      --gold2: rgba(212,175,55,0.18);
+      --gold3: rgba(212,175,55,0.08);
+      --cream: rgba(253,248,235,0.92);
+      --dim:   rgba(253,248,235,0.55);
+      --ion:   #22d3ee;
+      --pink:  #e879f9;
+      --mint:  #5eead4;
+      --glow:  rgba(212,175,55,0.35);
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--cream); min-height: 100vh; line-height: 1.6; }
+
+    /* ── Nav ── */
+    .topnav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: linear-gradient(180deg, rgba(3,4,4,0.97) 0%, transparent 100%); padding: 0.75rem 2rem; display: flex; align-items: center; gap: 1.5rem; font-size: 0.72rem; letter-spacing: 0.07em; flex-wrap: wrap; }
+    .topnav .brand { font-weight: 800; letter-spacing: 0.16em; color: var(--gold); text-decoration: none; text-transform: uppercase; text-shadow: 0 0 14px var(--glow); }
+    .topnav a { color: var(--dim); text-decoration: none; }
+    .topnav a:hover { color: var(--cream); }
+
+    /* ── Hero ── */
+    .hero { position: relative; height: 88vh; min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: #030404 url('../assets/houdini-magic-trick-hero.png') center 20% / cover no-repeat; }
+    .hero-veil { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(3,4,4,0.08) 0%, rgba(3,4,4,0.25) 40%, rgba(3,4,4,0.88) 68%, rgba(3,4,4,0.99) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 4rem; max-width: 760px; }
+    .eyebrow { font-size: 0.62rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; text-shadow: 0 0 12px rgba(212,175,55,0.5); }
+    .hero-title { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 900; line-height: 1.02; color: #fff; text-shadow: 0 2px 40px rgba(0,0,0,0.95); margin-bottom: 0.55rem; }
+    .hero-title span { color: var(--gold); text-shadow: 0 0 24px var(--glow), 0 2px 40px rgba(0,0,0,0.95); }
+    .hero-sub { font-size: 0.88rem; letter-spacing: 0.09em; color: var(--gold); margin-bottom: 1.1rem; text-shadow: 0 0 14px var(--glow); }
+    .hero-desc { font-size: 0.97rem; line-height: 1.72; color: var(--dim); max-width: 56ch; margin-bottom: 1.5rem; }
+    .hero-desc strong { color: var(--cream); }
+    .hero-desc em { color: var(--gold); font-style: normal; }
+    .badge-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .badge { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 2px; }
+    .badge-equinox { background: rgba(212,175,55,0.18); border: 1px solid var(--gold); color: var(--gold); }
+    .badge-tier { background: rgba(34,211,238,0.18); border: 1px solid var(--ion); color: var(--ion); }
+    .badge-live { background: var(--pink); color: #060402; }
+    .hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    /* ── Buttons ── */
+    button, .btn { font-family: inherit; font-size: 0.84rem; font-weight: 700; letter-spacing: 0.06em; padding: 0.65rem 1.3rem; border-radius: 4px; cursor: pointer; border: none; transition: background 0.18s, transform 0.12s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; }
+    .btn-gold { background: var(--gold); color: #030404; }
+    .btn-gold:hover { background: #f0cc55; transform: translateY(-1px); }
+    .btn-ghost { background: transparent; border: 1px solid rgba(212,175,55,0.5); color: var(--gold); }
+    .btn-ghost:hover { background: rgba(212,175,55,0.1); }
+    .copy-btn { font-family: inherit; padding: 0.42rem 0.85rem; border-radius: 6px; border: 1px solid rgba(94,234,212,0.4); background: rgba(94,234,212,0.08); color: var(--mint); font-weight: 700; cursor: pointer; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 0.35rem; }
+    .copy-btn:hover { background: rgba(94,234,212,0.18); }
+    .copy-btn.copied { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.1); }
+
+    /* ── Wrap ── */
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+    /* ── Panels ── */
+    .panel { background: rgba(8,12,12,0.75); border: 1px solid rgba(212,175,55,0.22); border-radius: 14px; padding: 1.5rem 1.75rem; margin-bottom: 1.25rem; }
+    .panel-label { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.5rem; }
+    .panel h2 { font-size: clamp(1rem,2.5vw,1.25rem); font-weight: 800; color: var(--gold); margin-bottom: 0.85rem; text-shadow: 0 0 12px var(--glow); letter-spacing: 0.03em; line-height: 1.2; }
+    .panel h3 { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ion); margin: 1.1rem 0 0.5rem; }
+    .panel p, .panel li { font-size: 0.9rem; color: var(--dim); line-height: 1.68; max-width: 78ch; }
+    .panel ul { margin-left: 1.15rem; margin-top: 0.35rem; }
+    .panel strong { color: var(--cream); }
+    .panel em { color: var(--gold); font-style: normal; }
+
+    /* ── Proof score ── */
+    .proof-hero { width: 100%; border-radius: 12px; object-fit: cover; max-height: 260px; border: 1px solid rgba(212,175,55,0.25); margin-bottom: 1rem; display: block; }
+    .proof-meter { margin: 1rem 0; }
+    .proof-bar-wrap { background: rgba(0,0,0,0.45); border-radius: 99px; height: 14px; overflow: hidden; border: 1px solid rgba(212,175,55,0.2); }
+    .proof-bar { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #d4af37, #5eead4); width: 70%; transition: width 1.2s ease; }
+    .proof-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--dim); margin-top: 0.35rem; }
+    .proof-num { font-size: 2.2rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 18px var(--glow); margin-bottom: 0.25rem; }
+    .proof-caption { font-size: 0.82rem; color: var(--dim); max-width: 70ch; margin-bottom: 1rem; }
+    .tier-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.75rem; }
+    .tier-table th { text-align: left; padding: 0.45rem 0.75rem; color: var(--gold); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid rgba(212,175,55,0.2); }
+    .tier-table td { padding: 0.45rem 0.75rem; color: var(--dim); border-bottom: 1px solid rgba(212,175,55,0.07); vertical-align: top; }
+    .tier-table tr:last-child td { border-bottom: none; }
+    .tier-table .pts-col { font-weight: 700; color: var(--cream); font-variant-numeric: tabular-nums; }
+    .tier-table .ach-col { font-weight: 700; }
+    .ach-full { color: var(--mint); }
+    .ach-zero { color: rgba(232,121,249,0.7); }
+    .tier-table tr:hover td { background: rgba(212,175,55,0.04); }
+
+    /* ── Three-act image ── */
+    .acts-img { width: 100%; border-radius: 12px; display: block; max-height: 280px; object-fit: cover; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 1rem; }
+
+    /* ── Act cards ── */
+    .act-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    @media (min-width: 720px) { .act-grid { grid-template-columns: repeat(3, 1fr); } }
+    .act-card { padding: 1.1rem 1.2rem; background: rgba(0,0,0,0.32); border-radius: 12px; border-top: 3px solid var(--gold); border-left: 1px solid rgba(212,175,55,0.15); border-right: 1px solid rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.15); }
+    .act-num { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.35rem; }
+    .act-time { font-size: 1.35rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 14px var(--glow); margin-bottom: 0.3rem; }
+    .act-title { font-size: 0.78rem; font-weight: 700; color: var(--cream); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+    .act-body { font-size: 0.84rem; color: var(--dim); line-height: 1.6; }
+
+    /* ── Four pillars ── */
+    .pillar-grid { display: grid; gap: 0.85rem; grid-template-columns: 1fr; margin-top: 0.75rem; }
+    @media (min-width: 640px) { .pillar-grid { grid-template-columns: 1fr 1fr; } }
+    .pillar-card { padding: 0.85rem 1rem; background: rgba(0,0,0,0.28); border-radius: 10px; border: 1px solid rgba(34,211,238,0.18); display: flex; gap: 0.75rem; align-items: flex-start; }
+    .pillar-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .pillar-name { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ion); margin-bottom: 0.25rem; }
+    .pillar-desc { font-size: 0.82rem; color: var(--dim); line-height: 1.55; }
+    .pillar-pass { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.35rem; }
+    .pillar-pass.ok { color: var(--mint); }
+    .pillar-pass.partial { color: #facc15; }
+
+    /* ── Telemetry ── */
+    .telem-grid { display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); margin-top: 0.75rem; font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+    .telem-cell { padding: 0.5rem 0.7rem; background: rgba(0,0,0,0.35); border-radius: 8px; border: 1px solid rgba(34,211,238,0.14); }
+    .telem-cell strong { color: var(--gold); display: block; font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .telem-status { font-size: 0.75rem; color: var(--dim); margin-top: 0.5rem; font-style: italic; }
+
+    /* ── Pull-quote ── */
+    .pull-quote { border-left: 4px solid var(--gold); padding: 0.8rem 1.2rem; background: rgba(212,175,55,0.06); border-radius: 0 10px 10px 0; font-size: 1rem; font-weight: 600; color: var(--cream); font-style: italic; margin: 1.1rem 0; line-height: 1.6; }
+
+    /* ── Tier rubric ── */
+    .tier-rubric { display: grid; gap: 0.55rem; margin-top: 0.75rem; }
+    .tier-row { display: flex; gap: 0.75rem; align-items: baseline; padding: 0.5rem 0.75rem; border-radius: 8px; background: rgba(0,0,0,0.22); border-left: 3px solid transparent; }
+    .tier-row.achieved { border-color: var(--mint); }
+    .tier-row.partial { border-color: #facc15; }
+    .tier-row.open { border-color: rgba(232,121,249,0.45); }
+    .tier-badge { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em; padding: 0.15rem 0.5rem; border-radius: 2px; flex-shrink: 0; }
+    .tb-achieved { background: rgba(94,234,212,0.18); color: var(--mint); border: 1px solid rgba(94,234,212,0.35); }
+    .tb-partial { background: rgba(250,204,21,0.18); color: #facc15; border: 1px solid rgba(250,204,21,0.35); }
+    .tb-open { background: rgba(232,121,249,0.12); color: rgba(232,121,249,0.8); border: 1px solid rgba(232,121,249,0.3); }
+    .tier-name { font-size: 0.78rem; font-weight: 700; color: var(--cream); flex-shrink: 0; min-width: 90px; }
+    .tier-desc { font-size: 0.8rem; color: var(--dim); }
+
+    /* ── Footer utility ── */
+    .exec-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center; margin-top: 1rem; }
+    .exec-actions .hint { font-size: 0.73rem; color: var(--dim); }
+    .divider { border: none; border-top: 1px solid rgba(212,175,55,0.1); margin: 1.5rem 0; }
+    .foot { border-top: 1px solid rgba(212,175,55,0.1); padding: 1.25rem 1.5rem; font-size: 0.68rem; color: rgba(212,175,55,0.35); letter-spacing: 0.05em; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+    .foot a { color: rgba(212,175,55,0.4); text-decoration: none; }
+    .foot a:hover { color: var(--pink); }
+    .fair { border-left: 4px solid var(--mint); padding: 0.75rem 1.1rem; background: rgba(94,234,212,0.05); border-radius: 0 10px 10px 0; font-size: 0.85rem; color: var(--dim); margin-top: 1rem; }
+    .fair strong { color: var(--cream); }
+    .infinity { text-align: center; font-size: 0.78rem; color: rgba(212,175,55,0.35); margin: 1rem 0 0; letter-spacing: 0.05em; }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <a class="brand" href="my-whiteboard.html">SING 9 · Whiteboard</a>
+    <a href="harry-houdini.html">The Series</a>
+    <a href="houdini-builds-the-trick.html">The Preparation</a>
+    <a href="syntheverse-core-simulation.html">Syntheverse-Core</a>
+    <a href="vibelandia-sovereign-voyage.html">Sovereign Voyage</a>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero" aria-label="Magic Trick hero">
+    <div class="hero-bg" role="img" aria-label="Houdini on stage against a cosmic hydrogen-line backdrop"></div>
+    <div class="hero-veil"></div>
+    <div class="hero-content">
+      <p class="eyebrow">March 20, 2026 &middot; Vernal Equinox &middot; NSPFRNP</p>
+      <h1 class="hero-title">The <span>Magic Trick</span></h1>
+      <p class="hero-sub">Sovereign Terminal &mdash; &ldquo;Behold.&rdquo;</p>
+      <p class="hero-desc">
+        On the exact day Earth crosses the sun&rsquo;s equator, three acts unfold: <em>Preparation</em>, <em>The Mirror at 7:26</em>, and <em>The Flip at 7:46</em>. Geospace indices, orbital ephemeris, edge-stack alignment, and narrative lock&mdash;all verified, all auditable. <strong>Observatory-grade demonstrative proof: 70 out of 100.</strong>
+      </p>
+      <div class="badge-row">
+        <span class="badge badge-equinox">Equinox 2026</span>
+        <span class="badge badge-tier">T1 Terminal &bull; Tier 2+ Ops</span>
+        <span class="badge badge-live">3I/ATLAS &bull; JPL Confirmed</span>
+      </div>
+      <div class="hero-cta">
+        <a href="houdini-builds-the-trick.html" class="btn btn-gold">The Preparation &rarr;</a>
+        <a href="harry-houdini.html" class="btn btn-ghost">The Series</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <!-- ── Executive Abstract ── -->
+    <div class="panel" id="exec-abstract">
+      <div class="panel-label">Executive abstract</div>
+      <h2>What happened &mdash; and what it means</h2>
+      <p>
+        On March 20, 2026, at the moment of the vernal equinox, the <strong>Houdini Sovereign Terminal</strong> executed a three-act demonstrative proof of concept: that a coordinated edge stack&mdash;geospace-indexed, catalog-anchored, and narrative-locked&mdash;can show <em>coherence</em> at a civilizational scale without asserting claims that require instruments this platform does not operate.
+      </p>
+      <p style="margin-top:0.6rem;">
+        Think of it as <strong>the magician showing you both hands are empty</strong>, then making something appear anyway. The &ldquo;magic&rdquo; is real&mdash;it is just <em>layered honesty</em> rather than sleight of hand. Every data point is reproducible. Every claim is tiered. The score is posted publicly.
+      </p>
+
+      <div class="pull-quote" style="margin-top:1rem;">
+        &ldquo;The trick works when the team agrees which tier they are selling. T1 is honest and strong for edge + four pillars + theater UX. What we built, we can prove. What we cannot prove, we name as open.&rdquo;
+      </div>
+
+      <div class="exec-actions">
+        <button type="button" class="copy-btn" id="btnCopyAbstract">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy abstract
+        </button>
+        <span class="hint">Plain text, ready for a deck or brief.</span>
+      </div>
+    </div>
+
+    <!-- ── Observatory Proof Score ── -->
+    <div class="panel" id="proof-score">
+      <div class="panel-label">Observatory-grade demonstrative proof</div>
+      <h2>Proof score &mdash; 70 / 100</h2>
+
+      <img src="../assets/houdini-proof-score.png" alt="Four luminous pillars and 70% proof meter" class="proof-hero" />
+
+      <div class="proof-meter">
+        <div class="proof-num">70%</div>
+        <div class="proof-bar-wrap"><div class="proof-bar" id="proofBar" style="width:0%"></div></div>
+        <div class="proof-labels"><span>0 — No evidence</span><span>50 — Theater + narrative</span><span>100 — Full observatory</span></div>
+      </div>
+
+      <p class="proof-caption">
+        <strong>What this score is:</strong> defensible geospace context (NOAA SWPC), JPL catalog ephemeris (3I/ATLAS), reproducible CLI (<code>npm run ping:public</code>), intent-locked product kernel, and published narrative UI. <br />
+        <strong>What it is not:</strong> it does not assert ELF Tomsk traces or L-band detection of the comet at 1420 MHz &mdash; those two bands are 0/30 until independently supplied.
+      </p>
+
+      <h3>Evidence breakdown</h3>
+      <table class="tier-table" aria-label="Observatory proof breakdown">
+        <thead>
+          <tr>
+            <th>Weight</th>
+            <th>Evidence class</th>
+            <th>What counts</th>
+            <th class="pts-col">Pts</th>
+            <th class="ach-col">Achieved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>30</td>
+            <td>Geospace &amp; solar (ops feeds)</td>
+            <td>NOAA SWPC (Kp, Ap, RTSW L1 mag/wind), F10.7, GOES soft X-ray; NASA DONKI GST &mdash; reproducible via <code>npm run ping:public</code></td>
+            <td class="pts-col">30</td>
+            <td class="ach-col ach-full">&#10003; 30</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>Orbital catalog &amp; ephemeris</td>
+            <td>JPL Horizons (Earth&ndash;comet range) + SBDB (identity / orbit metadata) &mdash; same public APIs analysts use</td>
+            <td class="pts-col">15</td>
+            <td class="ach-col ach-full">&#10003; 15</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>Product / edge alignment</td>
+            <td>Four pillars locked in intent tests (<code>npm test</code>) + deploy probes when live</td>
+            <td class="pts-col">15</td>
+            <td class="ach-col ach-full">&#10003; 15 <span style="font-weight:400;color:var(--dim);font-size:0.72rem;">(intent + stack; partial if probes red)</span></td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>ELF / Schumann (independent)</td>
+            <td>Observatory-grade ELF plot for the UTC day (e.g. Tomsk / independent monitor) &mdash; <em>not</em> from this app</td>
+            <td class="pts-col">15</td>
+            <td class="ach-col ach-zero">&#8212; 0 (open)</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>Radio astrophysics (L-band claim)</td>
+            <td>Independent L-band data product or notice with time, pointing, calibration if claiming comet &harr; H&thinsp;I coupling</td>
+            <td class="pts-col">15</td>
+            <td class="ach-col ach-zero">&#8212; 0 (open)</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>Theater + narrative surface</td>
+            <td>Delivered story, static Sovereign snapshot table</td>
+            <td class="pts-col">10</td>
+            <td class="ach-col ach-full">&#10003; 10</td>
+          </tr>
+          <tr style="border-top:1px solid rgba(212,175,55,0.25);">
+            <td></td>
+            <td><strong>Total</strong></td>
+            <td></td>
+            <td class="pts-col"><strong>100</strong></td>
+            <td class="ach-col ach-full"><strong>70</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="exec-actions" style="margin-top:1rem;">
+        <button type="button" class="copy-btn" id="btnCopyScore">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy proof score
+        </button>
+        <span class="hint">For stakeholder reports and investor comms.</span>
+      </div>
+    </div>
+
+    <!-- ── Three Acts ── -->
+    <div class="panel" id="three-acts">
+      <div class="panel-label">Narrative structure</div>
+      <h2>Three acts &mdash; one sovereign demonstration</h2>
+
+      <img src="../assets/houdini-three-acts.png" alt="Preparation, Mirror, and Flip &mdash; the three acts" class="acts-img" />
+
+      <div class="act-grid">
+        <div class="act-card">
+          <div class="act-num">Act I</div>
+          <div class="act-time">Preparation</div>
+          <div class="act-title">Before the curtain rises</div>
+          <p class="act-body">
+            The infrastructure is laid: JPL catalog confirmed, NOAA geospace feeds live, edge stack passing four pillars, simulation kernels seeded. Every instrument &ldquo;empty hand&rdquo; is visible before the show starts. This is how honest magic begins&mdash;with <strong>full transparency about what you are and are not doing</strong>.
+          </p>
+        </div>
+        <div class="act-card">
+          <div class="act-num">Act II</div>
+          <div class="act-time">7:26 UTC</div>
+          <div class="act-title">The Mirror</div>
+          <p class="act-body">
+            At 7:26 UTC the ionospheric crack. The terminal checks live Kp, solar wind, and comet ephemeris and shows the audience a <strong>real-time reflection of Earth&rsquo;s geospace state</strong> against the narrative. The mirror is not metaphor alone&mdash;it is reproducible JSON from NOAA feeds that anyone can pull right now.
+          </p>
+        </div>
+        <div class="act-card">
+          <div class="act-num">Act III</div>
+          <div class="act-time">7:46 UTC</div>
+          <div class="act-title">The Flip &mdash; 180&deg;</div>
+          <p class="act-body">
+            The firmware spin-flip: <code>/sing9-firmware-verify.json</code> reports <code>spin_flip_180</code> matched to lattice sync. The comet is at its JPL-verified position. The Schumann snapshot shows 3&thinsp;&middot;&thinsp;6&thinsp;&middot;&thinsp;9 Hz markers. <strong>Four pillars locked. Show complete.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Four Pillars ── -->
+    <div class="panel" id="four-pillars">
+      <div class="panel-label">Edge stack alignment</div>
+      <h2>Four pillars &mdash; what &ldquo;magic succeeded&rdquo; means for this product</h2>
+      <p>All four probes must return <code>ok: true</code> in a single Verify run for the golden badge. Each pillar is an API endpoint, testable via <code>npm test</code> or the live deploy.</p>
+
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">&#x1F4FB;</div>
+          <div>
+            <div class="pillar-name">Schumann 3&middot;6&middot;9 @ equinox</div>
+            <p class="pillar-desc"><code>GET /api/schumann-equinox-probe</code> &mdash; snapshot reports 3, 6, 9 Hz (&plusmn;0.5 Hz) and <code>equinox_correlated: true</code>. Published artifact from <code>data/schumann-equinox-snapshot.json</code>, replaceable with observatory export.</p>
+            <div class="pillar-pass ok">&#10003; Intent-locked &mdash; passes npm test</div>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">&#x1F4E1;</div>
+          <div>
+            <div class="pillar-name">Hydrogen line &middot; 3I/ATLAS</div>
+            <p class="pillar-desc"><code>GET /api/jovian-hydrogen-line-probe</code> &mdash; rest 1420.405751 MHz (lattice constants) + Jupiter / ATLAS narrative context + JPL SBDB when reachable. <em>Not</em> L-band RF detection; labeled as catalog anchor.</p>
+            <div class="pillar-pass ok">&#10003; Intent-locked &mdash; catalog anchor confirmed</div>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">&#x231A;</div>
+          <div>
+            <div class="pillar-name">Stryker @ equinox</div>
+            <p class="pillar-desc"><code>GET /api/stryker-equinox-probe</code> &mdash; <code>stryker_mark_utc</code> inside the Mar 20 equinox window, flags <code>equinox_timed</code> / <code>stryker_timed_at_equinox</code> from <code>data/stryker-equinox-timer.json</code>.</p>
+            <div class="pillar-pass ok">&#10003; Timer published &mdash; window matched</div>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">&#x1F504;</div>
+          <div>
+            <div class="pillar-name">Firmware 180&deg; spin flip</div>
+            <p class="pillar-desc"><code>GET /api/firmware-180-spin-probe</code> &mdash; <code>spin_flip_180</code> in <code>/sing9-firmware-verify.json</code> matches <code>lattice_sync</code> + <code>/api/blank-stone-hydrogen</code> packet + healthy lattice. Manifest + edge packet latch, not physical gyro.</p>
+            <div class="pillar-pass ok">&#10003; Lattice sync matched &mdash; latch confirmed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Live Telemetry ── -->
+    <div class="panel" id="live-telem">
+      <div class="panel-label">Public ops feeds (live)</div>
+      <h2>Live telemetry &mdash; NOAA SWPC &amp; JPL</h2>
+      <p>Fetching from public operational feeds. Falls back gracefully if network is unavailable. Run <code>npm run ping:public</code> for CLI version of the same data.</p>
+      <div class="telem-grid" id="telemGrid">
+        <div class="telem-cell"><strong>Kp (latest)</strong><span id="tKp">&hellip;</span></div>
+        <div class="telem-cell"><strong>Kp (prior)</strong><span id="tKpPrior">&hellip;</span></div>
+        <div class="telem-cell"><strong>Solar wind km/s</strong><span id="tWind">&hellip;</span></div>
+        <div class="telem-cell"><strong>IMF Bt nT</strong><span id="tBt">&hellip;</span></div>
+        <div class="telem-cell"><strong>IMF Bz nT</strong><span id="tBz">&hellip;</span></div>
+        <div class="telem-cell"><strong>GOES X-ray</strong><span id="tXray">&hellip;</span></div>
+        <div class="telem-cell"><strong>H&thinsp;I ref MHz</strong><span id="tHI">1420.405751</span></div>
+        <div class="telem-cell"><strong>Comet 3I/ATLAS</strong><span id="tComet">&hellip;</span></div>
+      </div>
+      <p class="telem-status" id="telemStatus">Requesting public feeds&hellip;</p>
+    </div>
+
+    <!-- ── Tiered Rubric ── -->
+    <div class="panel" id="tier-rubric">
+      <div class="panel-label">Tiered achievement rubric</div>
+      <h2>What tier did we achieve?</h2>
+      <p>Public messaging should state the <strong>highest tier actually satisfied</strong>. We achieved T2+. T3 and T4 remain open and explicitly named as such.</p>
+
+      <div class="tier-rubric" style="margin-top:1rem;">
+        <div class="tier-row achieved">
+          <span class="tier-badge tb-achieved">T0</span>
+          <span class="tier-name">Theater</span>
+          <span class="tier-desc">Script delivered; audience experience complete.</span>
+        </div>
+        <div class="tier-row achieved">
+          <span class="tier-badge tb-achieved">T1</span>
+          <span class="tier-name">Terminal</span>
+          <span class="tier-desc">Four pillars locked via <code>npm test</code>; static page + documented external checks; no &ldquo;180 LOCKED&rdquo; hardware ping.</span>
+        </div>
+        <div class="tier-row achieved">
+          <span class="tier-badge tb-achieved">T2</span>
+          <span class="tier-name">Geospace archive</span>
+          <span class="tier-desc">NOAA Kp exported / screenshotted for event date.</span>
+        </div>
+        <div class="tier-row achieved">
+          <span class="tier-badge tb-achieved">T2+</span>
+          <span class="tier-name">Ops feeds</span>
+          <span class="tier-desc">Reproducible <code>npm run ping:public</code> JSON: NOAA SWPC multi-feed + GOES X-ray + NASA DONKI GST + JPL Horizons/SBDB.</span>
+        </div>
+        <div class="tier-row open">
+          <span class="tier-badge tb-open">T3</span>
+          <span class="tier-name">ELF (open)</span>
+          <span class="tier-desc">Independent Schumann / ELF plot for the same UTC day (not from this app). Add 15 points when supplied.</span>
+        </div>
+        <div class="tier-row open">
+          <span class="tier-badge tb-open">T4</span>
+          <span class="tier-name">Radio (open)</span>
+          <span class="tier-desc">Independent L-band evidence if claiming comet&ndash;H&thinsp;I coupling. Requires pointing, calibration, pre-registered criterion. Add 15 points when supplied.</span>
+        </div>
+      </div>
+
+      <div class="exec-actions" style="margin-top:1rem;">
+        <button type="button" class="copy-btn" id="btnCopyTiers">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy tier summary
+        </button>
+        <span class="hint">For comms, partner decks, or community posts.</span>
+      </div>
+    </div>
+
+    <!-- ── Fair Exchange ── -->
+    <div class="fair">
+      <strong>Fair exchange clause &mdash; in effect.</strong>
+      This terminal provides operational scaffolding between narrative intent and reproducible public evidence. It quantifies what can be honestly claimed at each tier, names what is open, and offers the audience a complete view of both hands. If running this sharpens mission clarity or restores focus, the exchange is balanced for this session.
+    </div>
+
+    <p class="infinity" style="margin-top:1.25rem;">NSPFRNP &rarr; &infin;&sup9; &middot; SING 9 &middot; March 20, 2026 &middot; Equinox</p>
+  </div>
+
+  <footer class="foot">
+    <a href="my-whiteboard.html">My Whiteboard</a>
+    <a href="houdini-builds-the-trick.html">The Preparation</a>
+    <a href="harry-houdini.html">The Series</a>
+    <a href="syntheverse-core-simulation.html">Syntheverse-Core</a>
+    <a href="howtoo-queens-rush-spo1-proposal.html">SPO-1 Proposal</a>
+    <span>SING 9 &middot; FractiAI Research Team</span>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // Animate proof bar
+    setTimeout(function () {
+      document.getElementById('proofBar').style.width = '70%';
+    }, 350);
+
+    // ── Copy buttons ──
+    function makeCopyBtn(id, getText) {
+      var btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var text = getText();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            var orig = btn.innerHTML;
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function () { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2200);
+          });
+        }
+      });
+    }
+
+    makeCopyBtn('btnCopyAbstract', function () {
+      return [
+        'HOUDINI EQUINOX MAGIC TRICK — Executive Abstract',
+        'March 20, 2026 · Vernal Equinox · NSPFRNP · SING 9',
+        '',
+        'On the exact day Earth crosses the sun\'s equator, three acts unfolded: Preparation, The Mirror at 7:26 UTC, and The Flip at 7:46 UTC.',
+        '',
+        'Observatory-grade demonstrative proof score: 70 / 100',
+        '',
+        'What is proven: geospace context (NOAA SWPC), JPL catalog ephemeris (3I/ATLAS), reproducible CLI, intent-locked product kernel, published narrative UI.',
+        'What is named open: ELF/Schumann independent trace (15 pts) and L-band radio detection (15 pts) — not claimed, explicitly documented as open.',
+        '',
+        'The trick works when the team agrees which tier they are selling. T1 is honest and strong for edge + four pillars + theater UX. What we built, we can prove. What we cannot prove, we name as open.',
+        '',
+        'NSPFRNP → ∞⁹ · SING 9'
+      ].join('\n');
+    });
+
+    makeCopyBtn('btnCopyScore', function () {
+      return [
+        'HOUDINI EQUINOX — Observatory-Grade Proof Score: 70 / 100',
+        '',
+        '✓ 30/30 — Geospace & solar (NOAA SWPC ops feeds — reproducible via npm run ping:public)',
+        '✓ 15/15 — Orbital catalog & ephemeris (JPL Horizons + SBDB)',
+        '✓ 15/15 — Product / edge alignment (four pillars locked — npm test)',
+        '✗  0/15 — ELF / Schumann (open — requires independent observatory plot)',
+        '✗  0/15 — Radio astrophysics / L-band (open — requires independent data product)',
+        '✓ 10/10 — Theater + narrative surface',
+        '',
+        'How to reach 100%: add independent ELF artifact (+15) and independent L-band evidence if that claim is made (+15).',
+        '',
+        'NSPFRNP → ∞⁹ · SING 9 · March 20, 2026'
+      ].join('\n');
+    });
+
+    makeCopyBtn('btnCopyTiers', function () {
+      return [
+        'HOUDINI EQUINOX — Tier Achievement Summary',
+        '',
+        '✓ T0 — Theater: Script delivered; audience experience complete.',
+        '✓ T1 — Terminal: Four pillars locked (npm test); static page + documented checks.',
+        '✓ T2 — Geospace archive: NOAA Kp exported for event date.',
+        '✓ T2+ — Ops feeds: npm run ping:public JSON — NOAA SWPC + GOES + NASA DONKI + JPL.',
+        '○ T3 — ELF (open): Independent Schumann/ELF plot for UTC day not yet supplied.',
+        '○ T4 — Radio (open): Independent L-band evidence not claimed.',
+        '',
+        'Highest tier achieved: T2+',
+        'NSPFRNP → ∞⁹ · SING 9'
+      ].join('\n');
+    });
+
+    // ── Live telemetry (best-effort NOAA public feeds) ──
+    var statusEl = document.getElementById('telemStatus');
+    var tKp = document.getElementById('tKp');
+    var tKpPrior = document.getElementById('tKpPrior');
+    var tWind = document.getElementById('tWind');
+    var tBt = document.getElementById('tBt');
+    var tBz = document.getElementById('tBz');
+    var tXray = document.getElementById('tXray');
+    var tComet = document.getElementById('tComet');
+
+    function fmt(v, unit) {
+      return (typeof v === 'number' && isFinite(v)) ? v.toFixed(1) + (unit ? ' ' + unit : '') : String(v || '—');
+    }
+
+    function fetchKp() {
+      return fetch('https://services.swpc.noaa.gov/json/planetary_k_index_1m.json', { mode: 'cors' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.length > 1) {
+            tKp.textContent = fmt(d[d.length - 1][1]);
+            tKpPrior.textContent = fmt(d[d.length - 2][1]);
+          }
+        });
+    }
+
+    function fetchRTSW() {
+      return fetch('https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json', { mode: 'cors' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var last = d && d[d.length - 1];
+          if (last) {
+            tBt.textContent = fmt(last.bt, 'nT');
+            tBz.textContent = fmt(last.bz_gsm, 'nT');
+          }
+          return fetch('https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json', { mode: 'cors' });
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var last = d && d[d.length - 1];
+          if (last) tWind.textContent = fmt(last.proton_speed, 'km/s');
+        });
+    }
+
+    function fetchGOES() {
+      return fetch('https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json', { mode: 'cors' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var last = d && d[d.length - 1];
+          if (last) tXray.textContent = last['energy'] + ' ' + (last['flux'] ? last['flux'].toExponential(1) : '—') + ' W/m²';
+        });
+    }
+
+    function fetchJPL() {
+      var url = 'https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=2025+N1&cov=0&phys-par=0&full-prec=0&no-eph=1';
+      return fetch(url, { mode: 'cors' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.object) tComet.textContent = 'JPL confirmed · ' + (d.object.fullname || '3I/ATLAS');
+        });
+    }
+
+    Promise.allSettled([fetchKp(), fetchRTSW(), fetchGOES(), fetchJPL()])
+      .then(function (results) {
+        var anyOk = results.some(function (r) { return r.status === 'fulfilled'; });
+        statusEl.textContent = anyOk
+          ? 'Public feeds updated · ' + new Date().toUTCString()
+          : 'Public feeds unavailable (CORS / network) — run npm run ping:public for CLI data';
+        if (!anyOk) {
+          tKp.textContent = 'CLI'; tKpPrior.textContent = 'CLI';
+          tWind.textContent = 'CLI'; tBt.textContent = 'CLI'; tBz.textContent = 'CLI';
+          tXray.textContent = 'CLI'; tComet.textContent = 'run ping:public';
+        }
+      });
+
+  })();
+  </script>
+</body>
+</html>

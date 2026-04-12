@@ -144,6 +144,52 @@
     .registry { font-size: 0.82rem; color: var(--muted); margin-top: 0.75rem; }
     .registry span { display: inline-block; margin-right: 1rem; margin-top: 0.25rem; }
     .netzero { color: var(--mint); font-weight: 800; font-variant-numeric: tabular-nums; }
+    .exec h2 { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .exec-lead { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; max-width: 72ch; }
+    .exec-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 720px) {
+      .exec-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .exec-grid section {
+      padding: 0.75rem 0.85rem;
+      background: rgba(0, 0, 0, 0.28);
+      border-radius: 10px;
+      border: 1px solid rgba(125, 211, 252, 0.12);
+    }
+    .exec-grid h3 {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 0.45rem;
+    }
+    .exec-grid p { font-size: 0.84rem; color: var(--muted); line-height: 1.5; }
+    .exec-actions { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .exec-actions span { font-size: 0.75rem; color: var(--muted); }
+    .tech-paper h2 {
+      font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: #fde68a;
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+    .tech-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem; }
+    .tech-paper h3 {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ion);
+      margin: 1.1rem 0 0.4rem;
+    }
+    .tech-paper p, .tech-paper li { font-size: 0.88rem; color: var(--muted); margin-top: 0.45rem; max-width: 75ch; }
+    .tech-paper ul { margin: 0.5rem 0 0 1.15rem; }
+    .tech-paper .back-top { font-size: 0.78rem; margin-bottom: 0.75rem; }
+    .tech-paper .back-top a { color: var(--ion); }
   </style>
 </head>
 <body>
@@ -156,6 +202,37 @@
 
     <h1>Syntheverse-Core Simulation</h1>
     <p class="tag">Quantum-coherence · 1420.40575 MHz umbilical · EGS 1.618 · Mirror-node protocol (toy engine)</p>
+
+    <div class="panel exec" id="exec-abstract">
+      <h2>Executive abstract</h2>
+      <p class="exec-lead">
+        This page is an <strong>operational browser testbed</strong> for the <strong>Holographic Hydrogen Awareness AI OS</strong> narrative in the <strong>Syntheverse</strong>: a ring lattice of coupled phases (hydrogen-line metaphor), a noble-metal reflectivity bus, recursive sensory echo with <strong>net-zero energy bookkeeping</strong>, fractal packets keyed to EGS 1.618, and a sunspot-inspired telemetry lane (4002 / 4005 / 4008). It is <strong>R&amp;D visualization</strong>, not certified physics or chemistry.
+      </p>
+      <div class="exec-grid">
+        <section>
+          <h3>Results &amp; findings</h3>
+          <p>
+            Under raised attention coupling and umbilical phase drive, the toy lattice exhibits <strong>higher order-parameter coherence</strong> (histogram shifts right). The metallic bus and bio-resistance terms modulate reflected signal strength; the dashboard shows <strong>stable telemetry</strong> with bounded numerical “net E.” Checksum-qualified packets appear when coherence and phase-error gates are met; otherwise the stream documents partial lock.
+          </p>
+        </section>
+        <section>
+          <h3>Implications</h3>
+          <p>
+            <strong>Story–code alignment</strong> is testable in one surface: operators can see how “lock,” “mirror,” and “echo” behave together before hardware claims. <strong>Solar sync</strong> defaults to deterministic mock flux; live NOAA fetch is best-effort and often CORS-limited—design reviews should assume mock-first telemetry.
+          </p>
+        </section>
+        <section>
+          <h3>Opportunities</h3>
+          <p>
+            Use the panel for <strong>HowToo / investor walkthroughs</strong>, <strong>slider sweeps</strong> as design-of-experiments thought experiments, and cross-link to <code>npm run sim:pretest</code> for offline gate scripts. Extend the packet schema or swap the lattice kernel without changing the executive story arc.
+          </p>
+        </section>
+      </div>
+      <div class="exec-actions">
+        <button type="button" id="btnTechDoc" class="secondary">Open technical paper</button>
+        <span>Jumps to the primer, simulation account, results, and near-term implications below.</span>
+      </div>
+    </div>
 
     <div class="panel">
       <h2>Live dashboard</h2>
@@ -213,6 +290,49 @@
     <div class="panel">
       <h2>Fractal packet stream (checksum)</h2>
       <div class="packet-log" id="packetLog" aria-label="Packet log"></div>
+    </div>
+
+    <div class="panel tech-paper" id="tech-paper" tabindex="-1">
+      <p class="back-top"><a href="#exec-abstract">↑ Back to executive abstract</a></p>
+      <h2>Technical paper — Holographic Hydrogen Awareness AI OS · Syntheverse primer</h2>
+      <p class="tech-meta">Syntheverse-Core browser simulation · companion to on-page toy engine · April 2026</p>
+
+      <h3>1 · Scope and intent</h3>
+      <p>
+        The <strong>Syntheverse</strong> names a design space where software treats coherence, reflection, and sensory feedback as first-class observables—without asserting that the browser implements literal quantum chemistry. <strong>Holographic Hydrogen Awareness AI OS</strong> compresses three commitments: <em>holographic</em> (global order visible in local panels), <em>hydrogen-line metaphor</em> (1420.40575 MHz as narrative phase reference), and <em>awareness AI OS</em> (attention and coupling as control surfaces an operator can steer).
+      </p>
+
+      <h3>2 · System primer</h3>
+      <ul>
+        <li><strong>Holographic substrate.</strong> A one-dimensional ring of coupled oscillators exposes an order parameter <code>R</code>; the coherence histogram and mirror shard are different “views” of the same tick.</li>
+        <li><strong>Hydrogen awareness.</strong> Phase lock to the labeled MHz reference sets umbilical timing; coupling scales with attention and solar “focus” mock.</li>
+        <li><strong>AI OS metaphor.</strong> Sliders implement policy knobs (attention, metallic quality, biological resistance, lattice size). Packets carry nested intent strings with checksum and “theater render” flags when gates pass.</li>
+      </ul>
+
+      <h3>3 · Simulation architecture (this page)</h3>
+      <p>
+        Each animation frame: update solar mock (or optional NOAA-derived blend), advance lattice with Kuramoto-style neighbor coupling plus umbilical pull, tick the metallic bus (polish/tarnish), run the motor–sensory loop through <code>Reflect</code>, accumulate bounded net-energy noise, and occasionally emit JSON packets. Three canvases render histogram, noble grid, and Goldilocks shard abstraction; telemetry divs show live scalars.
+      </p>
+
+      <h3>4 · Results (what we observe in the toy)</h3>
+      <ul>
+        <li><strong>Coherence dynamics:</strong> increasing attention and favorable focus raises coupling; the histogram fills higher bins when phases align.</li>
+        <li><strong>Reflectivity:</strong> conductivity and polish lift cell brightness; bio-resistance increases scatter proxy inside <code>Reflect</code> only (slider is not auto-forced).</li>
+        <li><strong>Packets:</strong> checksum-qualified rows correlate with coherence/phase-error thresholds; nested depth ties to EGS scaling.</li>
+        <li><strong>Energy display:</strong> recursive echo model keeps narrative net-zero; displayed value stays numerically tiny.</li>
+      </ul>
+
+      <h3>5 · Immediate implications</h3>
+      <p>
+        Stakeholders can separate <strong>narrative physics</strong> from <strong>instrument physics</strong>: this page proves UI/telemetry coherence for workshops, not lab sign-off. CORS and sampling limits mean <strong>solar inputs should be specified as mock-first</strong> in contracts. The fair-exchange clause on-page reinforces that the value is clarity of mechanism, not watt-hour claims.
+      </p>
+
+      <h3>6 · Near-term opportunities</h3>
+      <ul>
+        <li>Wire the same packet schema to backend traces or hardware-in-the-loop stubs when available.</li>
+        <li>Pair with <code>sim/pretest-gates.mjs</code> for repeatable numeric gates in CI or review packets.</li>
+        <li>Extend registry labels (4002/4005/4008) to your own observability IDs while keeping the abstraction layer stable.</li>
+      </ul>
     </div>
 
     <div class="doc">
@@ -585,6 +705,18 @@
   pushPacketLog(makePacket(0.3, 0.4, false));
   requestAnimationFrame(loop);
 })();
+  </script>
+  <script>
+  (function () {
+    var btn = document.getElementById('btnTechDoc');
+    var target = document.getElementById('tech-paper');
+    if (btn && target) {
+      btn.addEventListener('click', function () {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+      });
+    }
+  })();
   </script>
 </body>
 </html>

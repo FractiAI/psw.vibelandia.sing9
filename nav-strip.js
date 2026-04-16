@@ -48,6 +48,7 @@
     '\u2726 Prospectus': '\u2726 Prospectus',
     'My Whiteboard': 'Mi Whiteboard',
     "Pru's Whiteboard": "Whiteboard de Pru",
+    '\uD83D\uDCE1 Digital Pru': '\uD83D\uDCE1 Digital Pru',
     'Learning': 'Aprendizaje'
   };
   function navLabel(enLabel) {
@@ -80,6 +81,8 @@
     { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
+    /* Jump to #digital-pru-root — match never fires so “Whiteboard” stays the active tab on that page */
+    { label: '\uD83D\uDCE1 Digital Pru', href: '/interfaces/my-whiteboard.html#digital-pru-root', match: /my-whiteboard-digital-pru-anchor-only/ },
     { label: 'Shop',              href: '/interfaces/machote-catalog.html',                   match: /machote-catalog/ },
     { label: 'Advertise',         href: '/interfaces/advertise.html',                         match: /advertise/ },
     { label: '\u2726 Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },

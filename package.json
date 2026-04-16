@@ -3,10 +3,11 @@
   "private": true,
   "description": "SING 9 edge — intent tests define March 20 four pillars (lib/march20-four-diagnostics.mjs).",
   "scripts": {
-    "test": "node --test tests/intent/march20-four-pillars.test.mjs tests/intent/observatory-public-evidence.test.mjs tests/intent/openwebrx-public-evidence.test.mjs tests/intent/hline-passive-rf-probe.test.mjs tests/intent/g5-surf-protocol.test.mjs tests/intent/sovereign-seed-s2024j1.test.mjs",
+    "test": "node --test tests/intent/march20-four-pillars.test.mjs tests/intent/observatory-public-evidence.test.mjs tests/intent/openwebrx-public-evidence.test.mjs tests/intent/hline-passive-rf-probe.test.mjs tests/intent/g5-surf-protocol.test.mjs tests/intent/sovereign-seed-s2024j1.test.mjs tests/intent/egs-fractal-engine.test.mjs",
     "test:intent": "node --test tests/intent/march20-four-pillars.test.mjs",
     "test:legacy-singularity": "node --test tests/intent/singularity-kernel.test.mjs tests/intent/blank-stone-singularity.test.mjs",
-    "build:static": "node scripts/vercel-static-output.mjs",
+    "build:whiteboard": "node scripts/build-digital-pru-whiteboard.mjs",
+    "build:static": "node scripts/build-digital-pru-whiteboard.mjs && node scripts/vercel-static-output.mjs",
     "dev": "npm run build:static && vercel dev",
     "dev:vercel": "vercel dev",
     "preview:dist": "npm run build:static && npx --yes serve@14 dist -p 4173",
@@ -17,7 +18,17 @@
   "engines": {
     "node": ">=18.18.0"
   },
+  "dependencies": {
+    "framer-motion": "^11.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
   "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "esbuild": "^0.24.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2",
     "vercel": "^41.4.1"
   }
 }

@@ -1,0 +1,98 @@
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { DigitalPruViewport } from './DigitalPruViewport';
+import { useAwarenessStream } from './useAwarenessStream';
+
+/**
+ * Whiteboard toolbar + Digital Pru PIP (Picture-in-Picture style overlay).
+ * Holographic Hydrogen shimmer via Framer Motion (opacity 0.8, cyan glow).
+ */
+export function MainCanvas() {
+  const [pipOpen, setPipOpen] = useState(false);
+  const { nav, generativeSeed, transitioning, transitionEpoch, shiftTowardConcept } =
+    useAwarenessStream();
+  const bootedRef = useRef(false);
+
+  useEffect(() => {
+    if (!pipOpen) {
+      bootedRef.current = false;
+      return;
+    }
+    if (bootedRef.current) return;
+    bootedRef.current = true;
+    void shiftTowardConcept('digital-pru-go-pro');
+  }, [pipOpen, shiftTowardConcept]);
+
+  return (
+    <div className="mb-4 rounded-xl border border-amber-400/25 bg-slate-900/40 p-3 backdrop-blur-sm">
+      <div className="flex flex-wrap items-center gap-2 border-b border-cyan-500/10 pb-3">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+          Whiteboard
+        </span>
+        <button
+          type="button"
+          onClick={() => setPipOpen(true)}
+          className="rounded-lg border border-cyan-400/30 bg-gradient-to-r from-cyan-950/80 to-slate-900/90 px-3 py-2 text-sm font-semibold text-cyan-100 shadow-[0_0_16px_rgba(34,211,238,0.2)] transition hover:border-cyan-300/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.35)]"
+        >
+          📡 INVOKE DIGITAL PRU
+        </button>
+        {transitioning && (
+          <span className="text-xs text-cyan-300/80">φ · aligning NAV…</span>
+        )}
+      </div>
+
+      <AnimatePresence>
+        {pipOpen && (
+          <motion.div
+            key="digital-pru-pip"
+            initial={{ opacity: 0, scale: 0.92, y: 12 }}
+            animate={{ opacity: 0.8, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 8 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 28 }}
+            className="fixed bottom-6 right-6 z-[9999] flex w-[min(92vw,380px)] flex-col gap-2 rounded-xl border-2 border-cyan-300/40 p-1 shadow-[0_0_40px_rgba(34,211,238,0.45),inset_0_0_30px_rgba(125,211,252,0.12)]"
+            style={{
+              boxShadow:
+                '0 0 40px rgba(34, 211, 238, 0.45), inset 0 0 30px rgba(125, 211, 252, 0.15), 0 0 80px rgba(6, 182, 212, 0.2)',
+            }}
+          >
+            <div className="flex items-center justify-between rounded-t-lg bg-slate-950/90 px-2 py-1.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wide text-cyan-200/90">
+                Digital Pru · Awareness
+              </span>
+              <button
+                type="button"
+                onClick={() => setPipOpen(false)}
+                className="rounded px-2 py-0.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-white"
+              >
+                Close
+              </button>
+            </div>
+            <div className="h-[220px] w-full px-1 pb-2">
+              <DigitalPruViewport
+                nav={nav}
+                generativeSeed={generativeSeed}
+                transitionEpoch={transitionEpoch}
+              />
+            </div>
+            <div className="flex flex-wrap gap-2 px-2 pb-2">
+              <button
+                type="button"
+                onClick={() => void shiftTowardConcept('truckee-river')}
+                className="rounded border border-cyan-500/10 bg-slate-900/80 px-2 py-1 text-[11px] text-cyan-100/90 hover:border-cyan-400/40"
+              >
+                External
+              </button>
+              <button
+                type="button"
+                onClick={() => void shiftTowardConcept('inner-hologram')}
+                className="rounded border border-violet-500/10 bg-slate-900/80 px-2 py-1 text-[11px] text-violet-100/90 hover:border-violet-400/40"
+              >
+                Internal
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

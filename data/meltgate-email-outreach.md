@@ -1,6 +1,6 @@
 # MELTGATE — Direct Email Outreach Template
 
-> Use these for direct outreach to Stargate-class targets.
+> Use these for direct outreach to hyperscale / mega-fab targets.
 > These bypass platform karma requirements entirely — direct inbox, human decision-maker.
 > Send from: info@fractiai.com
 
@@ -13,7 +13,7 @@
 | HYPERSCALER | Azure/AWS/GCP data center ops leads | "Blackwell NVL72 — are your thermals inside policy?" |
 | COLO | Equinix / Digital Realty facility engineers | "Live thermal estimate: your Blackwell row right now" |
 | ENTERPRISE AI | AI infra leads at Fortune 500 | "Post-singularity AI infra audit — no cost, 48h turnaround" |
-| STARGATE OPS | Lordstown / G42 facility teams | "MELTGATE Signal — trial event replay + follow-up offer" |
+| MEGA_FAB_OPS | Lordstown / G42 facility teams | "MELTGATE Signal — trial event replay + follow-up offer" |
 
 ---
 
@@ -27,7 +27,7 @@ We operate MELTGATE — a continuous thermal surveillance layer for Blackwell GB
 
 We pull ERA5 ambient data, apply physics-model junction temperature estimates (no vendor access required), and flag any cluster running outside the 65–85°C Goldilocks window.
 
-We did a trial event on Stargate (Lordstown) and G42. Results are public:
+We did a trial event on Lordstown OH and G42. Results are public:
 → psw-vibelandia-sing9.vercel.app/interfaces/goliath-watch.html
 
 If you want a 48-hour live read on your specific cluster — current ambient, estimated T_junction, suppression risk flag — we can run it at no cost.

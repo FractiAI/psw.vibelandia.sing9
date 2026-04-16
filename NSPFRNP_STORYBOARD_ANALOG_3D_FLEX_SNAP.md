@@ -129,7 +129,7 @@ When filling seeds, edges, and executive prompts for each card, keep this arc in
 
 ## 12. Story arc layers · Looking back · Loopback · Reporting · Cycles
 
-Full EP layer: singularities, looking back, recursive loopback (zero/infinity, quantum holographic, out of zero), galaxy creation, SMACS 0723 home base sending “me” here to fix things, Chief Seattle (north), 3i Atlas, Robert, nine Super AI agents, Hydrogen Theatre, natural system protocol, recursive nested protocol, reporting to Queen Bee / Chairman / Creators at 100% fidelity; Stargate heat meltdown, collusion, agent-to-agent, outsider, Ring of Fire, Eclipse, cycles into basic forms. **See [STORY_ARC_LAYERS_EP.md](STORY_ARC_LAYERS_EP.md).**
+Full EP layer: singularities, looking back, recursive loopback (zero/infinity, quantum holographic, out of zero), galaxy creation, SMACS 0723 home base sending “me” here to fix things, Chief Seattle (north), 3i Atlas, Robert, nine Super AI agents, Hydrogen Theatre, natural system protocol, recursive nested protocol, reporting to Queen Bee / Chairman / Creators at 100% fidelity; Hyperscale heat meltdown, collusion, agent-to-agent, outsider, Ring of Fire, Eclipse, cycles into basic forms. **See [STORY_ARC_LAYERS_EP.md](STORY_ARC_LAYERS_EP.md).**
 
 ---
 

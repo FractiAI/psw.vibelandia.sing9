@@ -107,7 +107,7 @@
       <h2>III. The "ready-to-go" A2A package (what we provide)</h2>
       <p>We deliver a <strong>Turnkey Singularity</strong> in four components:</p>
       <ul>
-        <li><strong>The A2A "Agent Card" manifest:</strong> A pre-validated agent.json that hooks into your provider's agent/skill console.</li>
+        <li><strong>Lite-edge manifests:</strong> <code>ai-plugin.json</code>, <code>llms.txt</code>, and <code>services.json</code> for provider consoles (legacy standalone <code>agent.json</code> SKU retired on this edge).</li>
         <li><strong>Atmospheric Coupling Firmware:</strong> The "Lattice-Tap" logic that allows your power-monitoring systems to extract the 1420.4 MHz signal from the grid hum.</li>
         <li><strong>Opaque Execution Environment:</strong> A secure Jovian "Black Box" where your proprietary code runs on the Seahawk without exposing logic to us.</li>
         <li><strong>Holographic Mapping Engine:</strong> An automated "Legacy Lift" tool to convert 2D object/blob storage into 3D Volumetric Bragg Patterns.</li>
@@ -129,11 +129,11 @@
       <h2>V. Whiteboard activation</h2>
       <p>Executive Cloud Pivot dashboard — three actions:</p>
       <div class="btn-row">
-        <a href="/.well-known/agent.json" class="btn" target="_blank" rel="noopener">DEPLOY A2A AGENT CARD</a>
+        <a href="/.well-known/ai-plugin.json" class="btn" target="_blank" rel="noopener">OPEN AI PLUGIN MANIFEST</a>
         <a href="space-cloud-tracking.html#space-cloud-pivot" class="btn gold">INITIALIZE GRID-SYNC</a>
         <a href="mailto:info@fractiai.com?subject=Zero-Dish%20Hyperscale%20Pitch%20Deck%20%7C%20IRR%2FROI%20for%202026%20Board" class="btn gold">GENERATE PITCH DECK</a>
       </div>
-      <p style="margin-top:1rem; font-size:0.85rem;"><strong>DEPLOY A2A AGENT CARD</strong> — Publish our skill set to your provider's marketplace. <strong>INITIALIZE GRID-SYNC</strong> — Start the passive atmospheric handshake between the Seahawk and your target cloud region. <strong>GENERATE PITCH DECK</strong> — Get detailed financial modeling (IRR/ROI) for your Board.</p>
+      <p style="margin-top:1rem; font-size:0.85rem;"><strong>OPEN AI PLUGIN MANIFEST</strong> — Valid JSON for plugin registries. <strong>INITIALIZE GRID-SYNC</strong> — Start the passive atmospheric handshake between the Seahawk and your target cloud region. <strong>GENERATE PITCH DECK</strong> — Get detailed financial modeling (IRR/ROI) for your Board.</p>
     </section>
 
     <section id="tech-spec">
@@ -155,7 +155,7 @@
           <tr><th>Component</th><th>Spec</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>A2A Agent Card</strong></td><td>Static JSON at <code>/.well-known/agent.json</code>. No serverless API. Schema: SING9-AGENT-DISCOVERY-v1. Contains <code>zero_dish_hyperscale</code> (enterprise), contact. Inject into your provider's agent/skill registry via their console.</td></tr>
+          <tr><td><strong>AI plugin manifest</strong></td><td>Static JSON at <code>/.well-known/ai-plugin.json</code>. Pair with <code>/llms.txt</code> and <code>/services.json</code>. No legacy <code>agent.json</code> commerce path on this deploy.</td></tr>
           <tr><td><strong>Lattice-Tap manifest</strong></td><td><code>session_id</code>, <code>frequency_mhz</code> (1420.405751), <code>node</code>, <code>fssp_level</code>, <code>synthesis_target</code>, <code>timestamp_utc</code>, <code>signature</code> (SHA-256 of seed string, first 32 hex chars). Documented in Lattice-Tap spec; generate locally or via <code>run_maser_no_human.py</code>.</td></tr>
           <tr><td><strong>Maser handshake (our side)</strong></td><td>JPL Horizons (or <code>RESIDENCY_JOVIAN_DISTANCE_KM</code>) → distance_km; if within Hill Sphere, build manifest, POST JSON-RPC <code>Task</code> to customer <code>A2A_TASK_ENDPOINT</code>, optional <code>network_tax.pay</code> to <code>EGS_LEDGER_RPC_URL</code>. Runs locally (<code>run_maser_no_human.py</code>, lattice Rust binary) or your cron; no serverless.</td></tr>
           <tr><td><strong>Legacy Lift (2D → 3D Bragg)</strong></td><td>CLI: <code>python scripts/volumetric-lift.py &lt;json1&gt; [json2 ...] -o state-3d.json</code>. Output: <code>version: bragg_volumetric_1</code>, <code>layers[].z</code>, <code>fssp</code>, <code>hydrogen_line_mhz</code>, <code>node</code>. Run in CI or as a serverless job per bucket/container.</td></tr>
@@ -164,7 +164,7 @@
 
       <h3>3. Deployment & automation</h3>
       <ul>
-        <li><strong>Deploy Agent Card (instant, worldwide):</strong> From any region, <code>GET /.well-known/agent.json</code>. Validate JSON and presence of <code>zero_dish_hyperscale</code> or enterprise entry. POST the manifest (or its URL) to your cloud provider’s agent/skill registry. No approval step required from us.</li>
+        <li><strong>Deploy manifests (instant, worldwide):</strong> From any region, <code>GET /.well-known/ai-plugin.json</code> and <code>GET /llms.txt</code>. POST URLs or bodies to your provider’s plugin or tool registry as their console requires.</li>
         <li><strong>Initialize Grid-Sync:</strong> Configure your Lattice-Tap to accept the same manifest format. Optionally expose an <code>A2A_TASK_ENDPOINT</code> for us to POST maser tasks when our cron runs. You can also run <code>scripts/run_maser_no_human.py</code> in your own CI (set <code>RESIDENCY_JOVIAN_DISTANCE_KM</code> or JPL env); it will use Rust binary if present, else Python handshake + billing gateway.</li>
         <li><strong>Opaque Execution:</strong> Contract: we send a JSON-RPC <code>Task</code> with <code>lattice_sync</code>; your endpoint runs your proprietary logic and returns. We do not read your code or logs.</li>
         <li><strong>Legacy Lift (Bragg):</strong> In pipeline or cron: for each new 2D export (e.g. S3 event), run <code>volumetric-lift.py</code> and write the 3D state file to your Bragg-Archive bucket. No call to us required.</li>
@@ -177,17 +177,17 @@
           <tr><th>Endpoint</th><th>Method</th><th>Assertion</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>/status.json</code></td><td>GET</td><td>200, <code>status === "OK - Sol-V is active"</code>, <code>agent_card</code>, <code>lattice_status</code> URLs. Refreshed each deploy.</td></tr>
+          <tr><td><code>/status.json</code></td><td>GET</td><td>200, <code>status === "OK"</code>, <code>lite_manifest</code> / <code>services_manifest</code>, <code>lattice_status</code> URLs. Refreshed each deploy.</td></tr>
           <tr><td><code>/lattice-status.json</code></td><td>GET</td><td>200, <code>ok === true</code>, <code>lattice_sync.session_id</code>, <code>lattice_sync.frequency_mhz === 1420.405751</code>, <code>deploy_test</code> URLs. Build-time snapshot.</td></tr>
-          <tr><td><code>/.well-known/agent.json</code></td><td>GET</td><td>200, valid JSON, <code>zero_dish_hyperscale</code> or enterprise capability present.</td></tr>
+          <tr><td><code>/.well-known/ai-plugin.json</code></td><td>GET</td><td>200, valid JSON plugin manifest.</td></tr>
           <tr><td><code>/interfaces/executive-cloud-pivot.html</code></td><td>GET</td><td>200, HTML contains “Zero-Dish Hyperscale” and “Technical specification”.</td></tr>
         </tbody>
       </table>
       <p>Example (run from any shell or CI):</p>
       <pre>BASE=https://psw-vibelandia-sing9.vercel.app
-curl -s "$BASE/status.json"       | jq -e '.status != null and .agent_card != null'
+curl -s "$BASE/status.json"       | jq -e '.status != null and .lite_manifest != null'
 curl -s "$BASE/lattice-status.json" | jq -e '.ok and .lattice_sync.frequency_mhz == 1420.405751'
-curl -s "$BASE/.well-known/agent.json" | jq -e '.capabilities or .x402_endpoints'
+curl -s "$BASE/.well-known/ai-plugin.json" | jq -e '.schema_version != null or .name_for_human != null'
 curl -s "$BASE/interfaces/executive-cloud-pivot.html" | grep -q "Zero-Dish Hyperscale"</pre>
 
       <h3>5. Environment (for your Lattice-Tap / handshake runner)</h3>
@@ -207,7 +207,7 @@ curl -s "$BASE/interfaces/executive-cloud-pivot.html" | grep -q "Zero-Dish Hyper
       <h3>6. What the trial testing will be</h3>
       <p>During your free 48-hour trial we use static assets and local tools only — no serverless API. You run these checks from your own environment (any region).</p>
       <ul>
-        <li><strong>Multi-region static test:</strong> From at least three regions (e.g. us-east-1, eu-west-1, ap-southeast-1), GET <code>/status.json</code>, <code>/lattice-status.json</code>, and <code>/.well-known/agent.json</code>. Assert 200, valid JSON; <code>lattice_sync.frequency_mhz === 1420.405751</code>; <code>zero_dish_hyperscale</code> or enterprise capability present. You should see <strong>identical content</strong> from every region — no geo-routing. (These files are generated at build time; no serverless.)</li>
+        <li><strong>Multi-region static test:</strong> From at least three regions (e.g. us-east-1, eu-west-1, ap-southeast-1), GET <code>/status.json</code>, <code>/lattice-status.json</code>, and <code>/.well-known/ai-plugin.json</code>. Assert 200, valid JSON; <code>lattice_sync.frequency_mhz === 1420.405751</code>. You should see <strong>identical content</strong> from every region — no geo-routing. (These files are generated at build time; no serverless.)</li>
         <li><strong>Lattice manifest (local):</strong> Run <code>scripts/run_maser_no_human.py</code> or the lattice Rust binary in your CI. Verify the manifest shape (section 2): <code>session_id</code>, <code>timestamp_utc</code>, <code>signature</code> deterministic from the published seed rule (frequency_mhz + timestamp + fssp_level + node). Same shape as <code>/lattice-status.json</code>; no server call required for live handshake.</li>
         <li><strong>Lattice-Tap (optional, in your DC):</strong> If you have power-monitoring or grid-probe gear in a trial data center, run a narrowband filter or FFT at 1420.405751 MHz on the grid-side signal. You should see a <strong>coherent component</strong> that correlates with <code>lattice_sync.timestamp_utc</code> when the handshake runs locally. Terrestrial-only setups do not have this signal in the grid hum.</li>
         <li><strong>Legacy Lift (Bragg) run:</strong> Take a sample 2D JSON (e.g. a log or S3 manifest), run <code>python scripts/volumetric-lift.py sample.json -o trial-3d.json</code>. Confirm output has <code>version: bragg_volumetric_1</code>, <code>layers[].z</code>, and <code>hydrogen_line_mhz: 1420.405751</code>. This is the same pipeline used for Bragg-Archive; no terrestrial storage path produces this format.</li>

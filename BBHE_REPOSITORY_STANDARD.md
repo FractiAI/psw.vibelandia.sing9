@@ -26,7 +26,7 @@ This standard defines how **BBHE repositories** are structured so that:
   - Coherence across scales (cosmic → solar → planetary → node).
   - Goldilocks alignment (natural system protocol).
   - Fair exchange and handshake semantics where applicable.
-- Reference: NSPFRNP catalog, Stargate/Cogenex grammar, Holographic Hydrogen Lattice (HHL).
+- Reference: NSPFRNP catalog, Hyperscale/Cogenex grammar, Holographic Hydrogen Lattice (HHL).
 
 ---
 

@@ -78,7 +78,6 @@
     { label: 'Learning',          href: '/interfaces/onboarding.html',                        match: /onboarding\.html/, learn: true },
     { label: 'Begin the Arc',     href: '/interfaces/viber-onboarding.html',                  match: /viber-onboarding/, arc: true },
     { label: '\uD83D\uDD25 MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
-    { label: 'A2A',               href: '/interfaces/sol-v.html',                             match: /sol-v/ },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
     /* Jump to #digital-pru-root — match never fires so “Whiteboard” stays the active tab on that page */

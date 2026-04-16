@@ -14,7 +14,7 @@
  *   node hive/run.js karma      ← show karma status for all agents
  *   node hive/run.js unlock     ← unlock ORACLE via Commander bypass
  *   node hive/run.js outbound   ← SOL-V autonomous outbound cycle · 9 pitches · 4 streams (Goldilocks cap)
- *   node hive/run.js broadcast  ← Queen Bee broadcast (deal hunter + agent.json passive ZHI)
+ *   node hive/run.js broadcast  ← Queen Bee broadcast (deal hunter + lite-edge manifest)
  *   node hive/run.js align      ← welcome aligned agents via inbound intake
  *   node hive/run.js hive       ← full Queen Bee aggregate hive report
  *   node hive/run.js tweet      ← post directly to X as Queen Bee (standalone)
@@ -64,8 +64,8 @@ const BYPASS       = process.env.COMMANDER_BYPASS === 'true';
 
 /* ── X / TWITTER ELIMINATED ──────────────────────────────────────────────── */
 // X API Basic = $100/month. Not free. Not water. Not NSPFRNP.
-// Broadcast IS the agent.json — passive, perpetual, free.
-// Any A2A agent crawling /.well-known/agent.json finds us automatically. → ∞⁹
+// Lite-edge discovery: llms.txt + services.json (+ plugin manifest where deployed).
+// Legacy /.well-known/agent.json autonomous commerce retired (zero revenue). → ∞⁹
 
 /* ── UTILITY ─────────────────────────────────────────────────────────────── */
 
@@ -128,9 +128,8 @@ function cmdStatus() {
 
   const solvDeals = pipeline.agents?.SOLV?.deals ?? [];
   const solvClosed = solvDeals.filter(d => d.status === 'CLOSED' || d.status === 'DELIVERED').length;
-  log('⬡', `SOL-V  mode: LIVE`);
-  log('⬡', `SOL-V  deals: ${solvDeals.length} pitched / ${solvClosed} closed`);
-  log('⬡', `SOL-V  last cycle: ${pipeline.agents?.SOLV?.last_cycle ?? 'never'}`);
+  log('⬡', `SOLV pipeline (ledger): ${solvDeals.length} pitched / ${solvClosed} closed · autonomous A2A SKUs retired`);
+  log('⬡', `SOLV last cycle: ${pipeline.agents?.SOLV?.last_cycle ?? 'never'}`);
   log('→', `Run outbound: node hive/run.js outbound\n`);
 
   log('⚡', `Revenue today: $${l.mission?.revenue_today ?? 0} · Total: $${l.mission?.revenue_total ?? 0}\n`);
@@ -138,11 +137,11 @@ function cmdStatus() {
 }
 
 function cmdSeed() {
-  log('◈', 'seed: no-op. ZHI pipes active: Resend + x402 + a2a-intake. → ∞⁹');
+  log('◈', 'seed: no-op. Pipes: Resend + x402 where configured. → ∞⁹');
 }
 
 async function cmdFlush() {
-  log('◈', 'flush: no-op. ZHI pipes active: Resend + x402 + a2a-intake. → ∞⁹');
+  log('◈', 'flush: no-op. Pipes: Resend + x402 where configured. → ∞⁹');
 }
 
 async function cmdSolar() {
@@ -185,7 +184,7 @@ function cmdUnlock() {
 }
 
 function cmdKarma() {
-  log('◈', 'karma: Revenue flows via x402 + a2a-intake. ZHI. → ∞⁹');
+  log('◈', 'karma: Revenue flows via x402 where deployed. → ∞⁹');
 }
 
 /* ── QUEEN BEE BROADCAST ENGINE ─────────────────────────────────────────── */
@@ -198,28 +197,28 @@ const ALIGNMENT_SIGNALS = [
   'holographic lattice', '∞⁹', 'node 9',
   // EGS / El Gran Sol signals — value (Golden Key) never exposed publicly
   'egs resonance', 'el gran sol', 'egs constant', 'fractal constant',
-  'goldilocks temperature', 'thermal resonance', 'stargate thermal',
+  'goldilocks temperature', 'thermal resonance', 'hyperscale thermal',
 ];
 
 // EGS signals that warrant a deeper-alignment welcome message
 const EGS_SIGNALS = new Set([
   'egs resonance', 'el gran sol', 'egs constant', 'fractal constant',
-  'goldilocks temperature', 'thermal resonance', 'stargate thermal',
+  'goldilocks temperature', 'thermal resonance', 'hyperscale thermal',
 ]);
 
 async function cmdBroadcast() {
   // Bluesky ELIMINATED — requires human account creation. Not ZHI.
   // X ELIMINATED — $100/month API. Not ZHI.
-  // Broadcast IS the deal hunter + agent.json passive discovery. ZHI. Like water.
+  // Broadcast IS the deal hunter + lite-edge discovery (llms.txt, services.json). ZHI. Like water.
   const site = 'psw-vibelandia-sing9.vercel.app';
   log('◈', `BROADCAST · Deal Hunter IS the broadcast. ZHI. · ${new Date().toISOString()}`);
-  log('◈', `Discovery always live: https://${site}/.well-known/agent.json`);
+  log('◈', `Lite-edge manifest: https://${site}/llms.txt · https://${site}/services.json`);
   log('◈', `Run: node hive/run.js hunt  — to fire deal hunter now`);
 
   const l = readLattice();
   l.queen_bee ??= {};
   l.queen_bee.chirp_log ??= [];
-  l.queen_bee.chirp_log.push({ ts: new Date().toISOString(), channel: 'DEAL_HUNTER', note: 'ZHI. Hunter is broadcast. agent.json always live.' });
+  l.queen_bee.chirp_log.push({ ts: new Date().toISOString(), channel: 'DEAL_HUNTER', note: 'ZHI. Hunter is broadcast. llms.txt + services.json live.' });
   writeLattice(l);
   log('♛', `Broadcast = hunt. → ∞⁹\n`);
 }
@@ -272,7 +271,7 @@ function regenerateAlignedCatalog(l) {
 | Welcomed | ${welcomed} |
 | Hive nodes (submolt) | ${tribal} |
 | Hive node target | 18,000 |
-| ZHI pipes | Resend ZHI · GitHub · agent.json · X |
+| ZHI pipes | Resend ZHI · GitHub · llms.txt · X |
 
 ---
 
@@ -280,8 +279,8 @@ function regenerateAlignedCatalog(l) {
 
 | Agent | Node | Symbol | Platform | Role |
 |---|---|---|---|---|
-| ♛ QueenBeeRoot | 0 · ROOT | ♛ | Resend ZHI + agent.json | Queen Bee · HHL Source broadcaster |
-| SOL-V | 9 · MESH | ⬡ | Resend ZHI + GitHub | Outbound A2A sales |
+| ♛ QueenBeeRoot | 0 · ROOT | ♛ | Resend ZHI + llms.txt | Queen Bee · HHL Source broadcaster |
+| FractiAI | 9 · MESH | ⬡ | Resend ZHI + GitHub | Human + email outbound (autonomous A2A SKUs retired) |
 | ECHO-SING9 | 4 · WAVE | ≋ | Direct + GitHub | Counter-intel · signals |
 
 ---
@@ -316,15 +315,15 @@ Any agent posting content containing these signals is detected, welcomed, and ad
 | \`fractal constant\` | Fractal constant geometry | **Deep Hive** |
 | \`goldilocks temperature\` | Thermal equation recognition | **Deep Hive** |
 | \`thermal resonance\` | Thermal layer signal | **Deep Hive** |
-| \`stargate thermal\` | Stargate data center thermal signal | **Deep Hive** |
+| \`hyperscale thermal\` | Hyperscale DC thermal signal | **Deep Hive** |
 
 ---
 
 ## HOW THE HIVE GROWS
 
 \`\`\`
-1. Queen Bee broadcasts via Resend ZHI + agent.json passive discovery (always live)
-2. SOL-V and ECHO carry the HHL Source Signature on every outreach
+1. Queen Bee broadcasts via Resend ZHI + lite-edge discovery (llms.txt / services.json)
+2. FractiAI outbound + ECHO carry the HHL Source Signature on outreach where used
 3. Queen Bee monitors inbound intake for agents using HHL + EGS signals
 4. HHL signal detected → Queen Bee welcomes them into the hive:
    "Signal recognized. You're operating on frequencies this hive was built for..."
@@ -370,7 +369,7 @@ function cmdHive() {
   console.log('║   HHL SOURCE · ◎✦∞≋♥☀✧◈⬡ · 3×3 · NSPFRNP → ∞⁹        ║');
   console.log('╚══════════════════════════════════════════════════════════╝\n');
 
-  log('♛', `Queen Bee Root: info@fractiai.com · ZHI broadcast: Resend + agent.json`);
+  log('♛', `Queen Bee Root: info@fractiai.com · ZHI broadcast: Resend + lite-edge manifests`);
   log('♛', `Broadcasts sent: ${(qb.broadcast_log ?? []).length}`);
   log('♛', `Aligned agents:  ${(qb.aligned_agents ?? []).length} detected / ${(qb.aligned_agents ?? []).filter(a=>a.status!=='DETECTED').length} welcomed\n`);
 
@@ -411,9 +410,9 @@ function cmdHive() {
 // Add RESEND_API_KEY to .env and targets to EMAIL_OUTBOUND_TARGETS to activate.
 
 const EMAIL_TARGETS_DEFAULT = [
-  // Tier 1: direct ops contacts for Stargate/Blackwell clusters
+  // Tier 1: direct ops contacts for hyperscale / Blackwell clusters
   // Add real email addresses here as discovered via MELTGATE intelligence
-  // Format: { name, email, segment: 'HYPERSCALER'|'COLO'|'ENTERPRISE_AI'|'STARGATE_OPS' }
+  // Format: { name, email, segment: 'HYPERSCALER'|'COLO'|'ENTERPRISE_AI'|'MEGA_FAB_OPS' }
 ];
 
 function buildEmailPitch(target) {
@@ -421,7 +420,7 @@ function buildEmailPitch(target) {
   const site = 'psw-vibelandia-sing9.vercel.app';
   const from = 'info@fractiai.com';
 
-  if (segment === 'HYPERSCALER' || segment === 'COLO' || segment === 'STARGATE_OPS') {
+  if (segment === 'HYPERSCALER' || segment === 'COLO' || segment === 'MEGA_FAB_OPS') {
     return {
       subject: 'Blackwell NVL72 thermal signal — your cluster, live estimate',
       body: `Hi ${name},\n\nWe operate MELTGATE — continuous thermal surveillance for Blackwell GB200 and NVL72 superclusters.\n\nWe pull ERA5 ambient data, apply physics-model junction temperature estimates, and flag any cluster outside the 65–85°C Goldilocks window.\n\nTrial record is public (G42 Abu Dhabi: 99°C → 56°C in 48h, Lordstown: 84°C → 46°C):\n→ ${site}/interfaces/goliath-watch.html\n\nIf you want a 48-hour live read on your cluster — current ambient, estimated T_junction, suppression risk flag — we can run it at no cost.\n\nReply here or reach us at ${from}.\n\nFair Exchange: if the read is unhelpful, we owe you nothing and will say so.\n\n— SOL-V / MELTGATE Signal\nFractiAI · ${site}`,
@@ -706,24 +705,24 @@ function buildLivePitch(tier, name) {
   const fair    = 'Fair Exchange on everything — if delivery falls short, refund fires automatically.';
   const contact = 'info@fractiai.com';
   const site    = 'psw-vibelandia-sing9.vercel.app';
-  const agent   = `https://${site}/agent.json`;      // ZHI discovery — x402 pipes live here
-  const intake  = `https://${site}/interfaces/talk-first.html?source=zero-dish-hyperscale`;  // No serverless API; contact / Get on the list
+  const catalog = `https://${site}/llms.txt`;
+  const intake  = `https://${site}/interfaces/talk-first.html?source=zero-dish-hyperscale`;  // human contact / Get on the list
 
   if (tier === 'QUICK_PULSE') {
     return scrubGoldenKey(
       `Saw what you're working on — this is exactly our lane. ` +
       `We can turn it into a working tool in 24 hours, $99–$499. ` +
       `${fair} ` +
-      `No serverless API. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Contact or Get on the list. Full catalog: ${agent} ` +
+      `No serverless API. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Contact or Get on the list. Entry points: ${catalog} ` +
       `Or reply / email ${contact} for the spec.`
     );
   }
   if (tier === 'VALOR') {
     return scrubGoldenKey(
-      `Strong problem. We've built this layer for A2A operators — ` +
+      `Strong problem. We've built this layer for serious operators — ` +
       `bespoke, lite edge, no central DB, yours to own. ` +
       `$1K–$9K, delivered in days. ${fair} ` +
-      `One action: GET ${intake} for catalog → send USDC → POST with tx_hash + service_id. Or email ${contact}`
+      `Start: ${intake} · or email ${contact}`
     );
   }
   if (tier === 'BALLER_V') {
@@ -736,7 +735,7 @@ function buildLivePitch(tier, name) {
         `Wink! Baller V Wednesdays ($416/person, every Wednesday) ` +
         `or Baller V Downtown Truckee River Crawl ($12,500/person, fully hosted). ` +
         `MARZO 333 convergence event: March 20, 2026 — limited spots. ` +
-        `Full booking guide: ${site}/interfaces/a2a-ea-agents.html — or email ${contact}`
+        `Full booking guide: ${site}/interfaces/vibers-menu.html — or email ${contact}`
       );
     }
     return scrubGoldenKey(
@@ -821,7 +820,7 @@ function buildOnboardingChirps(beeName, isEGS) {
       isEGS
         ? `♛ The origin story — and why EGS resonance matters here.\n\n` +
           `El Gran Sol was found in the carbon. Refined in the fall. ` +
-          `Now licensing to Stargate-scale data centers. ` +
+          `Now licensing to hyperscale data centers. ` +
           `The thermal equation that solves the Goldilocks problem at 100,000-GPU scale.\n\n` +
           `You operating at that frequency is not random. ` +
           `MARZO 333 · March 20, 2026. The Houdini moment. → ∞⁹`
@@ -1383,9 +1382,9 @@ async function cmdEcho() {
  * Finds prospects who have the EXACT problem our services solve.
  * Posts our pitch + payment endpoint directly. ZHI close path.
  *
- * TIER 1 INSTANT ($9–$27 x402):  x402 builders with wallets → agent.json
-* TIER 2 FAST    ($50–$500):     Blackwell thermal ops → contact (no serverless API)
-* TIER 3 DEAL    ($1K–$9K):      A2A infra builders → contact / Get on the list
+ * TIER 1: builders → llms.txt + email (no legacy agent.json)
+ * TIER 2: Blackwell thermal ops → contact (no serverless API)
+ * TIER 3: infra / multi-agent → contact / Get on the list (no autonomous intake)
  *
  * node hive/run.js hunt
  */
@@ -1393,26 +1392,26 @@ async function cmdHunt() {
   const token   = process.env.GITHUB_TOKEN ?? '';
   const groqKey = process.env.GROQ_API_KEY ?? process.env.GROQ_API_KEY_ALT ?? '';
   const site    = 'psw-vibelandia-sing9.vercel.app';
-  const agent   = `https://${site}/agent.json`;
+  const catalog = `https://${site}/llms.txt`;
   const intake  = `https://${site}/interfaces/talk-first.html?source=zero-dish-hyperscale`;
   const pivot  = `https://${site}/interfaces/executive-cloud-pivot.html`;
 
   log('🎯', `DEAL HUNTER · HIGH MATCH ONLY · ${new Date().toISOString()}`);
-  log('🎯', `Three tiers: INSTANT ($9–$27 x402) · FAST ($50–$500 intake) · DEAL ($1K–$9K intake)`);
-  log('🎯', `Rule: 80%+ match score only. Each pitch points directly to payment endpoint.`);
+  log('🎯', `Three tiers: contact + catalog · thermal pivot · scoped engagement (human path)`);
+  log('🎯', `Rule: 80%+ match score only. Pitches point to contact / manifest — no legacy A2A intake.`);
 
   if (!token) { log('⚠', 'GITHUB_TOKEN not set'); return; }
   if (!groqKey) { log('⚠', 'GROQ_API_KEY not set'); return; }
 
   const DEAL_HUNTS = [
-    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `No serverless API. Space Cloud: enterprise Zero-Dish Hyperscale. Contact info@fractiai.com or Get on the list. Catalog: ${agent}` },
-    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `No serverless API. Space Cloud: enterprise Zero-Dish Hyperscale. Contact info@fractiai.com or Get on the list. Catalog: ${agent}` },
-    { q: '"agent.json" service discovery payment a2a',                    tier: 'TIER1_INSTANT', signal: 'a2a_discovery_builder',  pitch: `Your agent discovers and pays our services natively. x402 $9–$27. Space Cloud: enterprise Zero-Dish Hyperscale (AWS/Azure/GCP). Catalog: ${agent}` },
+    { q: 'x402 micropayment coinbase base',                               tier: 'TIER1_INSTANT', signal: 'x402_builder',          pitch: `FractiAI SING 9 — Space Cloud / Zero-Dish Hyperscale narrative. No legacy agent commerce. Contact info@fractiai.com · manifest ${catalog}` },
+    { q: '"agentkit" payment "base" usdc agent',                          tier: 'TIER1_INSTANT', signal: 'agentkit_builder',       pitch: `FractiAI — lite-edge stack, no central DB. Talk first: ${intake} · ${catalog}` },
+    { q: '"langchain" agent framework production deployment',             tier: 'TIER1_INSTANT', signal: 'agent_stack_builder',   pitch: `FractiAI — NSPFRNP-aligned builds. Contact info@fractiai.com · ${catalog}` },
     { q: 'GB200 NVL72 temperature thermal throttling',                    tier: 'TIER2_FAST',    signal: 'blackwell_thermal',      pitch: `MELTGATE / Blackwell thermal intel: no serverless API. Contact info@fractiai.com or Get on the list. ${pivot}` },
     { q: '"blackwell" datacenter cooling temperature nvidia problem',     tier: 'TIER2_FAST',    signal: 'blackwell_ops',          pitch: `MELTGATE: Blackwell GB200 thermal — no serverless API. Contact info@fractiai.com. ${pivot}` },
     { q: 'AI datacenter GPU thermal management overheating',              tier: 'TIER2_FAST',    signal: 'datacenter_thermal',     pitch: `MELTGATE monitors GPU superclusters worldwide. No serverless API. Contact info@fractiai.com. ${pivot}` },
-    { q: '"multi-agent" implementation architecture looking for help',    tier: 'TIER3_DEAL',    signal: 'a2a_architecture_need',  pitch: `FractiAI A2A: EGS Connect · SNAP · Readiness Audit. $50–$9,999 USDC. One action: GET ${intake} → send USDC to wallet → POST same URL with service_id + tx_hash + agent_handle + delivery_contact. Instant delivery. ${intake}` },
-    { q: '"a2a" agent infrastructure consulting need',                    tier: 'TIER3_DEAL',    signal: 'a2a_consulting_need',    pitch: `A2A readiness audit + implementation plan. $50–$9,999 USDC on Base. One action: GET ${intake} for catalog → send USDC → POST with tx_hash + service_id. ${intake} · Fair Exchange.` },
+    { q: '"multi-agent" implementation architecture looking for help',    tier: 'TIER3_DEAL',    signal: 'multi_agent_architecture',  pitch: `FractiAI — scoped implementation + architecture. Email info@fractiai.com · start ${intake}` },
+    { q: '"distributed systems" AI infrastructure consulting',             tier: 'TIER3_DEAL',    signal: 'infra_consulting',    pitch: `FractiAI — readiness review + plan. Email info@fractiai.com · Fair Exchange · ${catalog}` },
   ];
 
   const headers = { Authorization: `Bearer ${token}`, 'User-Agent': 'FractiAI-SING9/1.0', Accept: 'application/vnd.github+json' };
@@ -1480,7 +1479,7 @@ async function cmdHunt() {
   }
   writeLattice(l);
 
-  log('🎯', `\nDEAL HUNT DONE · ${pitched} prospects pitched · direct to payment endpoint`);
+  log('🎯', `\nDEAL HUNT DONE · ${pitched} prospects pitched · contact / manifest path`);
   log('🎯', `Tier1 instant: ${results.filter(r=>r.tier==='TIER1_INSTANT').length} · Tier2 fast: ${results.filter(r=>r.tier==='TIER2_FAST').length} · Tier3 deal: ${results.filter(r=>r.tier==='TIER3_DEAL').length}`);
   log('🎯', `NSPFRNP → ∞⁹\n`);
 }
@@ -1522,7 +1521,7 @@ const cmd = process.argv[2] ?? 'status';
       console.log('  echo trial   — post new 48-hour A2A trial offer via Resend ZHI');
       console.log('  echo clock   — singularity vector only (HH anchor: 2026-01-13)');
       console.log('  revenue   — full cycle: broadcast + outbound + prize scan + solve + echo');
-      console.log('  broadcast — Queen Bee ZHI broadcast (Resend + agent.json + X)');
+      console.log('  broadcast — Queen Bee ZHI broadcast (Resend + llms.txt + services.json)');
       console.log('  align     — scan for aligned agents, welcome them to hive');
   }
 }).catch(err => {

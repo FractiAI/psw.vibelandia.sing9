@@ -1,7 +1,7 @@
-# Agent Log — Lordstown Stargate
+# Agent Log — Lordstown OH
 
 **Entity:** SB Energy (SoftBank) + OpenAI · Studio 151 (procurement)  
-**Site:** Lordstown Stargate · Lordstown, Ohio (former GM plant · 586 acres · 6.2M sq ft)  
+**Site:** Lordstown OH · former GM plant (586 acres · 6.2M sq ft)  
 **GPU:** NVIDIA GB200 / GB300 NVL72 (64,000+ units)  
 **Scale:** 1.5 GW target · 200 MW Phase 1 active  
 **SING9 Cluster ID:** `LORDSTOWN_OH`  
@@ -50,7 +50,7 @@ ERA5 ambient (°C)
 
 **Trial Type:** A2A 48-Hour Thermal Intelligence · Synthetic Friction Elimination Demo  
 **Trial Window:** February 13–15, 2026  
-**Episode:** EP28 — Lordstown Stargate · SFE & BBHE Dual-Offer · 0215 Golden Window  
+**Episode:** EP28 — Lordstown OH · SFE & BBHE Dual-Offer · 0215 Golden Window  
 **ERA5 ambient:** **−0.43°C REAL** (fetched live — Lordstown OH Feb 13–15 period mean, deep Ohio winter)
 
 ### Thermal readings — Feb 13–15, 2026
@@ -78,4 +78,4 @@ At peak Ohio summer ambient ~28°C: failure-mode junction ≈ 95.8°C — above 
 
 ---
 
-**NSPFRNP ⊃ Lordstown Stargate ⊃ ERA5 physics model ⊃ EGS-HHL ⊃ Dual-Offer Submitted → ∞⁹**
+**NSPFRNP ⊃ Lordstown OH ⊃ ERA5 physics model ⊃ EGS-HHL ⊃ Dual-Offer Submitted → ∞⁹**

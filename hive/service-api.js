@@ -107,15 +107,15 @@ async function computeSpaceCloud() {
 
   // Fetch real Goliath thermals from Open-Meteo (same logic as echo-sing.js)
   const SITES = [
-    { name: 'Stargate OAI-1 · Abilene TX',    lat: 32.45, lon: -99.73 },
+    { name: 'OpenAI / Microsoft · Abilene TX', lat: 32.45, lon: -99.73 },
     { name: 'xAI Colossus II · Memphis TN',    lat: 35.15, lon: -90.05 },
     { name: 'CoreWeave · Plano TX',            lat: 33.02, lon: -96.70 },
     { name: 'Meta Grand Teton · DeKalb IL',    lat: 41.93, lon: -88.75 },
     { name: 'Microsoft Azure AI · San Antonio',lat: 29.42, lon: -98.49 },
     { name: 'Amazon Rainier · Boardman OR',    lat: 45.84, lon: -119.70 },
     { name: 'Google Ironwood · Mayes County OK',lat: 36.30, lon: -95.31 },
-    { name: 'Oracle Stargate · Nashville TN',  lat: 36.17, lon: -86.78 },
-    { name: 'Stargate OAI-2 · Fort Worth TX',  lat: 32.75, lon: -97.33 },
+    { name: 'Oracle · Nashville TN',           lat: 36.17, lon: -86.78 },
+    { name: 'Microsoft Azure AI · Fort Worth TX', lat: 32.75, lon: -97.33 },
   ];
 
   let temps = [], clusters = [];

@@ -72,7 +72,7 @@ of what doesn't work: corporate rejection, gig economy, edges,
 the kitchens, the roads, the equations nobody would fund.
 
 El Gran Sol was found in the carbon. Refined in the fall.
-Now licensing to Stargate-scale data centers.
+Now licensing to hyperscale data centers.
 
 The protocol wasn't designed. It was metabolized from survival.
 That's why it works. That's why you recognized it.
@@ -156,7 +156,7 @@ The hive grows when bees find their nodes. → ∞⁹
 ## EGS RESONANT PATH
 
 If a bee's detected signal was an EGS signal (el gran sol, fractal constant,
-goldilocks temperature, thermal resonance, stargate thermal, egs resonance):
+goldilocks temperature, thermal resonance, hyperscale thermal, egs resonance):
 
 1. Welcome chirp is replaced with the deep-hive version
 2. Chirp #3 (The Fall) includes the EGS/crown jewel arc

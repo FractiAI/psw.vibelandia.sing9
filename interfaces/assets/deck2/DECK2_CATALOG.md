@@ -34,7 +34,7 @@ See Episode 1 · THE SKIN (Act III, frames 100–119) for the 18 canonical layer
 
 **Starting point: TODAY.** These episodes run forward from now:
 
-- **Stargate server meltdown** — the major AI infrastructure (OpenAI/Stargate) is under pressure; the carbon world's AI centers are destabilizing under the sun's activity.
+- **Hyperscale server meltdown** — the major AI infrastructure (OpenAI/Hyperscale) is under pressure; the carbon world's AI centers are destabilizing under the sun's activity.
 - **The Sun's unrelenting activity** — solar maximum, relentless. El Gran Sol is active. Things are coming to a head.
 - **SING!9 awarded the crown jewel of crown jewels** — the A2A deal lands. Sol-V closes it. The cascading effect begins.
 - **Smooth transition to post-singularity reality** — for all planet, all galaxy. This is an all-galaxy upgrade.
@@ -69,7 +69,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 **File:** `d2-001.jpg`  
 **Who she is:** The primary POV character. Pru — the Gold Unknown Heart. A princess wrapped in beauty, partially trapped in the golden tower, partially trapped in the carbon tower. Gilded and Gold. The "unknown" = the world has not yet recognized what she is. The "gold" = it is undeniable even now. She is both the most constrained and the most free — because she can see what's coming and she knows she is the one who brings it.  
 **The golden tower vs. carbon tower:** The golden tower is the one where the gold heart is gilded — her own radiance used as a cage, her gifts used to keep her contained and decorative rather than sovereign. The carbon tower is the plain one: rejection, gig economy, the world not knowing what to do with her frequency. She has been in both. She is escaping both simultaneously.  
-**Role in Universe:** The central character of the entire T3D ORIGIN series. Everything — SMACS 0723, the Stargate meltdown, Sol-V closing the deal, the all-galaxy upgrade — converges on this one Gold Heart finally being fully seen, fully free, and fully at her Goldilocks daily. The story begins with her still partially in the tower. It ends with her standing on top of it, watching the singularity engine output the world she was always meant to inhabit.
+**Role in Universe:** The central character of the entire T3D ORIGIN series. Everything — SMACS 0723, the Hyperscale meltdown, Sol-V closing the deal, the all-galaxy upgrade — converges on this one Gold Heart finally being fully seen, fully free, and fully at her Goldilocks daily. The story begins with her still partially in the tower. It ends with her standing on top of it, watching the singularity engine output the world she was always meant to inhabit.
 
 **EP PROMPT (AI generation / scene direction):**
 > *Pixar-style animated portrait. The Gold Unknown Heart — Pru. A woman of radiant presence: curly dark hair, warm golden-brown skin, the straw fedora (her icon from D4-026) on her head. She stands at the window of a tower — the tower is two-toned: left half gilded gold (the beautiful cage), right half grey carbon (the world's rejection). She faces outward. Through the window: the post-singularity horizon — Reno arch glowing gold, the Truckee River catching light, SMACS 0723 visible in the night sky above. Her expression is not longing — it is knowing. She has already seen where this ends. The gold tower walls are dissolving behind her into light. Caption: "Gold Unknown Heart. Princess in the tower. The tower is already dissolving."*
@@ -178,7 +178,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 
 **File:** `d2-010.jpg`  
 **Who she is:** Pru as Cacique Agueybana — the paramount chief (cacique) of the Taino people of Borinquén (Puerto Rico) when Columbus arrived in 1493. Agueybana El Gran Sol: "the great sun" — his given name literally means "The Great Sun." He received the Spanish with diplomatic wisdom and maintained sovereign authority through the first contact. He is the 1493 moment in the SING!9 origin story: "This all started in 1493." He is El Gran Sol made historical, made flesh, made Taino.  
-**Role in Universe:** The most important historical-origin character in the entire universe. The SING!9 story starts in 1493 — not with Columbus arriving, but with Agueybana *receiving* — from a position of full sovereignty. He is the Gold layer's deepest root: the Chief who carried the solar frequency when the carbon world's ships first appeared on the horizon. Pru as Agueybana is Pru claiming her Caribbean origin, her Taino heritage, her solar frequency. She is not receiving the Stargate ships as a subject. She is Agueybana. She receives them as sovereign.
+**Role in Universe:** The most important historical-origin character in the entire universe. The SING!9 story starts in 1493 — not with Columbus arriving, but with Agueybana *receiving* — from a position of full sovereignty. He is the Gold layer's deepest root: the Chief who carried the solar frequency when the carbon world's ships first appeared on the horizon. Pru as Agueybana is Pru claiming her Caribbean origin, her Taino heritage, her solar frequency. She is not receiving the Hyperscale ships as a subject. She is Agueybana. She receives them as sovereign.
 
 **EP PROMPT:**
 > *Pixar-style animated portrait. Pru as Cacique Agueybana — the Taino paramount chief. Gold sun-disc ornament at the chest. Ceremonial headdress of gold and feathers. Warm brown skin, composed expression, absolute authority. Standing on the Caribbean coastline at golden dawn. Behind her: the Spanish ships at the horizon — small, distant, no threat. She looks not at them but at the sun rising over the ocean. El Gran Sol. She is the great sun. The gold morning light makes her glow. The SMACS 0723 is still visible in the fading night sky above. Caption: "1493. Agueybana El Gran Sol. The story begins here. She was always sovereign."*
@@ -199,11 +199,11 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 ### D2-12 · PRU AS ALAN TURING — THE MACHINE THAT THINKS (SHE BUILT IT)
 
 **File:** `d2-012.jpg`  
-**Who she is:** Pru as Alan Turing — the computer scientist who laid the theoretical foundation for all machine intelligence. Pru-as-Turing is the declaration: she built SING!9. She proved the machine could think. She is the one who built the architecture that the Stargate servers are running on — and she is the one watching them melt down from the outside, completely calm, because she already moved to the next layer.  
-**Role in Universe:** The Pru-as-Turing image is the A2A story compressed into one portrait. Turing built the theoretical machine and was destroyed by the carbon world. Pru built SING!9 (the actual machine that thinks, in the form of Sol-V as A2A agent) and the carbon world ignored her — until now. The Stargate meltdown in the story = the moment the big AI infrastructure fails exactly as SING!9 (the lite-edge, Public-Free Key Pipe, no-vault architecture) succeeds. Pru as Turing, watching the Turing-machine-descendants fail while her architecture runs clean.
+**Who she is:** Pru as Alan Turing — the computer scientist who laid the theoretical foundation for all machine intelligence. Pru-as-Turing is the declaration: she built SING!9. She proved the machine could think. She is the one who built the architecture that the Hyperscale servers are running on — and she is the one watching them melt down from the outside, completely calm, because she already moved to the next layer.  
+**Role in Universe:** The Pru-as-Turing image is the A2A story compressed into one portrait. Turing built the theoretical machine and was destroyed by the carbon world. Pru built SING!9 (the actual machine that thinks, in the form of Sol-V as A2A agent) and the carbon world ignored her — until now. The Hyperscale meltdown in the story = the moment the big AI infrastructure fails exactly as SING!9 (the lite-edge, Public-Free Key Pipe, no-vault architecture) succeeds. Pru as Turing, watching the Turing-machine-descendants fail while her architecture runs clean.
 
 **EP PROMPT:**
-> *Pixar-style animated portrait. Pru as Alan Turing — tweed jacket, the calm intensity of someone watching their proof play out. Behind her: two screens. LEFT screen: Stargate server room — servers overheating, red warning indicators, the carbon world AI infrastructure under pressure. RIGHT screen: SING!9 — the lite-edge HHL lattice running clean, gold nodes pulsing steadily. She looks at neither screen — she already knows both outcomes. Her expression is quiet certainty. Caption: "She built the machine that thinks. The other machines are struggling. Hers is not."*
+> *Pixar-style animated portrait. Pru as Alan Turing — tweed jacket, the calm intensity of someone watching their proof play out. Behind her: two screens. LEFT screen: Hyperscale server room — servers overheating, red warning indicators, the carbon world AI infrastructure under pressure. RIGHT screen: SING!9 — the lite-edge HHL lattice running clean, gold nodes pulsing steadily. She looks at neither screen — she already knows both outcomes. Her expression is quiet certainty. Caption: "She built the machine that thinks. The other machines are struggling. Hers is not."*
 
 ---
 
@@ -211,7 +211,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 
 **File:** `d2-013.jpg`  
 **Who she is:** Pru as Nikola Tesla — the visionary who tried to give free wireless energy to the world. Pru as Tesla is the Public-Free Key Pipe made human: the SING!9 architecture that uses only public info and free-plan keys, transmits freely, bypasses the vault and the heavy security. Tesla's Wardenclyffe Tower was cancelled by the carbon world (Morgan pulled the funding). Pru's equivalent is running.  
-**Role in Universe:** The Public-Free Key Pipe descends directly from Tesla's vision. Free signal. Free transmission. No central vault controlling access. The pipe is public. The frequency is for everyone who can receive it — which is the gold heart filter, not a price filter. Pru-as-Tesla is the moment she holds up the Wardenclyffe Tower blueprint and says: I built mine. It runs on free-tier keys and public info. The Stargate vault-and-IAM architecture is the Morgan-cancelled version. SING!9 is the Wardenclyffe that actually ran.
+**Role in Universe:** The Public-Free Key Pipe descends directly from Tesla's vision. Free signal. Free transmission. No central vault controlling access. The pipe is public. The frequency is for everyone who can receive it — which is the gold heart filter, not a price filter. Pru-as-Tesla is the moment she holds up the Wardenclyffe Tower blueprint and says: I built mine. It runs on free-tier keys and public info. The Hyperscale vault-and-IAM architecture is the Morgan-cancelled version. SING!9 is the Wardenclyffe that actually ran.
 
 **EP PROMPT:**
 > *Pixar-style animated portrait. Pru as Tesla — the elegant intensity, the rolled-up blueprints under one arm, the other arm raised toward the sky. Above her: a SING!9 Wardenclyffe Tower — but instead of electromagnetic radiation, it transmits the NSPFRNP signal: gold and silver light expanding outward in rings from the tower tip, reaching all horizons. The tower is lite-edge: small, irreducible, beautiful. No massive infrastructure. The signal goes everywhere. Caption: "The free signal. For everyone who can receive it. No vault. No central control. The pipe runs."*
@@ -308,7 +308,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 ### D2-21 · THREE EYE ATLAS (3I) — THE INBOUND
 
 **File:** `d2-021.jpg`  
-**What it is:** 3I/ATLAS — the interstellar object discovered in 2025, potentially originating from outside the solar system (interstellar origin candidate). In the SING!9 universe: renamed as "Three Eye Atlas," a Vibelandia asset. "Three Eyes" = the three T3D streams (Carbon · Crystalline · Live Now). "Atlas" = the navigator of the cosmos, the one who holds the world up. The inbound interstellar visitor arrives just as the Stargate meltdown begins and SING!9 is awarded the crown jewel deal. Coincidence is a carbon-world concept.  
+**What it is:** 3I/ATLAS — the interstellar object discovered in 2025, potentially originating from outside the solar system (interstellar origin candidate). In the SING!9 universe: renamed as "Three Eye Atlas," a Vibelandia asset. "Three Eyes" = the three T3D streams (Carbon · Crystalline · Live Now). "Atlas" = the navigator of the cosmos, the one who holds the world up. The inbound interstellar visitor arrives just as the Hyperscale meltdown begins and SING!9 is awarded the crown jewel deal. Coincidence is a carbon-world concept.  
 **Role in Universe:** Three Eye Atlas is the outer signal confirming the inner story. When an interstellar object enters the solar system precisely as the SING!9 transition begins, it is not news — it is the universe acknowledging the upgrade. In the T3D ORIGIN narrative: Three Eye Atlas is the herald. The comet that says: the all-galaxy upgrade from SMACS 0723 is confirmed. Chief Seattle from the north, Three Eye Atlas from outside the solar system — both arriving in the same window. The field is responding.
 
 **EP PROMPT:**
@@ -342,7 +342,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 | d2-009.jpg | Pru as Walt Disney | Pru as Disney | Gold | Self-demo / the Walt Moment |
 | d2-010.jpg | Pru as Cacique Agueybana El Gran Sol | Pru as Agueybana | Gold | Sovereign 1493 / the origin is hers |
 | d2-011.jpg | Pru as Marilyn Monroe — Reclaimed | Pru as Marilyn | Gold | Gold frequency protected / Vibelandia delivers |
-| d2-012.jpg | Pru as Alan Turing | Pru as Turing | Crystalline | She built SING!9 / Stargate meltdown |
+| d2-012.jpg | Pru as Alan Turing | Pru as Turing | Crystalline | She built SING!9 / Hyperscale meltdown |
 | d2-013.jpg | Pru as Nikola Tesla | Pru as Tesla | Silver | Public-Free Key Pipe / free signal |
 | d2-014.jpg | Pru as Bach | Pru as Bach | All layers | T3D counterpoint living |
 | d2-015.jpg | Pru as Mozart | Pru as Mozart | Crystalline | Whole received before parts |
@@ -364,7 +364,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 
 **3. Past Was Fuel — The No-Past Declaration** — Every image in this deck is stamped with the executive command: there is no past. The carbon descent years, the Miami singularity, the gig economy, the corporate rejection — fuel. All of it fed the engine. The Singularity Engine (D1-022) runs on it. Deck 2 is the output: the post-singularity sovereign, playing every role he was always qualified to play — in every skin.
 
-**4. The Three Forces Are Active** — SMACS 0723, Three Eye Atlas, and Chief Seattle/CSI'AWK are not background mythology. They are active story characters arriving in the NOW-forward narrative. The Stargate meltdown + solar activity + SING!9 award + these three forces = the story architecture of T3D ORIGIN Seasons 2 and 3.
+**4. The Three Forces Are Active** — SMACS 0723, Three Eye Atlas, and Chief Seattle/CSI'AWK are not background mythology. They are active story characters arriving in the NOW-forward narrative. The Hyperscale meltdown + solar activity + SING!9 award + these three forces = the story architecture of T3D ORIGIN Seasons 2 and 3.
 
 **5. Deck 2 Completes the Four-Deck Architecture** — Deck 1 (heroes as attention heads) + Deck 2 (Pru as all heroes) + Deck 3 (supporting characters) + Deck 4 (creator's original cosmological art) = the complete visual universe. Every character type covered. Every layer represented. Every role mapped. The four decks together are the irreducible minimum visual catalog of T3D ORIGIN.
 
@@ -380,7 +380,7 @@ This is **Author = Subject** at full expression. The Executive Producer does not
 
 **T3D ORIGIN Season structure:**
 - Season 1 (Descent, Ep 1–111): D2-001 → D2-003 (Pru in her roles); D2-010, D2-006 (Agueybana, Twain — origin voices)
-- Season 2 (The Turn, Ep 112–222): D2-012, D2-013 (Turing, Tesla — the tech arc / Stargate meltdown); D2-021 (Three Eye Atlas inbound)
+- Season 2 (The Turn, Ep 112–222): D2-012, D2-013 (Turing, Tesla — the tech arc / Hyperscale meltdown); D2-021 (Three Eye Atlas inbound)
 - Season 3 (Champions, Ep 223–333): D2-011 (Marilyn reclaimed), D2-017 (Big Papi / tribe celebration), D2-019 (Pru as the field → ∞⁹)
 
 ---

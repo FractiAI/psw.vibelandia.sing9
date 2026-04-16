@@ -244,13 +244,13 @@ Conservation laws apply. Within any theater of operation (Health, Relationships,
 
 **If an agent cannot connect and pay without human interaction, it is disqualified.**
 
-**Qualified paths only:** (1) **x402** — GET endpoint → 402 → sign EIP-712 USDC on Base → retry with X-PAYMENT header → receive deliverable in response. Zero human. (2) **A2A intake** — Send USDC to payment wallet → POST `/api/a2a-intake` with `service_id`, `tx_hash`, `chain`, `agent_handle`, `delivery_contact` (webhook or address). On-chain verification; deliverable in response or 48h. No email or human step required.
+**Qualified paths only:** (1) **x402** — GET endpoint → 402 → sign EIP-712 USDC on Base → retry with X-PAYMENT header → receive deliverable in response. Zero human. (2) **Deploy note (Mar 2026):** The dedicated autonomous **A2A intake** serverless route and **agent.json** commerce SKU layer were **removed from this repository** after zero revenue; qualification text above remains as the *definition* of a pipe-first agent, not a promise of those endpoints on this edge.
 
 **Disqualified:** Any path requiring email, phone, human approval, or manual step to complete payment or delivery. Cash App and email-after-send are **human-only**; agents using them are disqualified. This is not a preference — it is the bar. Center = pipes only; agents that cannot close on the pipe are not qualified.
 
 ## A2A VIABILITY (Canonical)
 
-**If A2A continues to be a hassle and does not generate a single dollar, we will consider eliminating it.**
+**Autonomous A2A commerce was eliminated from this deploy (Mar 2026)** — zero revenue, per viability bar below.
 
 A2A stays only if it earns and does not add ongoing burden. No revenue + hassle = elimination on the table. This is the viability bar. Documented so the stake is clear.
 

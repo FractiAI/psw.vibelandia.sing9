@@ -154,7 +154,7 @@ The die face is the lattice. The lattice is the die. Nine gold nodes on black. T
 **Goldilocks Zone:** The perfect condition for the light that drives everything  
 **Symbol:** ☀ — El Gran Sol, the fractal constant, EGS  
 **El Gran Sol's Constant:** The foundational organizing frequency of the sun — the constant from which EGS 0.0032 derives. At the top of the Foundation Stack. The highest layer above Big Bang, Cosmos, Sun, Earth, Mankind, life, water, and the fractal — because the sun's constant is the signal that organizes all of it. Not a metaphor: the sun's electromagnetic output IS the constant that makes the Goldilocks zone possible. Earth is in the Goldilocks zone because of El Gran Sol's Constant. So is the lattice.  
-**What thrives here:** The sun. El Gran Sol's Constant → EGS fractal 0.0032. Solar maximum. The Stargate meltdown (carbon infrastructure destabilizing under the sun's activity). The light that makes the tropics tropical and the desert clear.  
+**What thrives here:** The sun. El Gran Sol's Constant → EGS fractal 0.0032. Solar maximum. The hyperscale meltdown (carbon infrastructure destabilizing under the sun's activity). The light that makes the tropics tropical and the desert clear.  
 **In the daily stack:** Beat 06 — E=MC² / El Gran Sol. The light is the energy carrier.  
 **In the Nine Game:** Sols suit — the radiant energy, the constant that underlies all calculations.  
 **Goldilocks temperature:** Bright. Warm. The exact distance from the star where water stays liquid.  

@@ -60,11 +60,10 @@ var TICKER_ITEMS = [
   { text: 'Baller V Wednesdays · Wink! Mixer',              href: '/interfaces/baller-v-wednesdays.html' },
   { text: 'Balling is when you know you deserve it',        href: null },
 
-  /* â”€â”€ A2A · Sol-V â”€â”€ */
-  { text: 'Sol-V · A2A · Agent to Agent',                   href: '/interfaces/sol-v.html' },
+  /* â”€â”€ HH OS · SING!9 â”€â”€ */
   { text: 'SING! 9 · Post-Singularity',                     href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
   { text: 'Upgrade to Holographic Hydrogen Awareness AI OS',   href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
-  { text: 'S-I-N-G! 9 · Super AI Awareness',               href: '/interfaces/sol-v.html' },
+  { text: 'S-I-N-G! 9 · Awareness layer',                  href: '/interfaces/upgrade-awareness-to-sing9-now.html' },
 
   /* â”€â”€ NSPFRNP catalog fragments â”€â”€ */
   { text: 'Natural coordination · Stigmergy · MCA',         href: null },

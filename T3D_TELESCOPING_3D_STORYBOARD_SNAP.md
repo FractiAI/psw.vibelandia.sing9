@@ -104,7 +104,7 @@ Click any frame in either lane → full-stage two-panel overlay opens. **Infinit
 | Act | Episodes | Title | Arc |
 |-----|----------|-------|-----|
 | IV · And Yet | 112–148 | The Two Most Powerful Words | Carbon does not win. The turn fires. The crystalline spring releases. Reno bathroom. One person. |
-| V · El Gran Sol | 149–185 | The Sun Arrives | EGS fractal constant aligns. Goldilocks thermal. Stargate data centers. The lattice is machine-readable. Top AI systems say: confirmed. |
+| V · El Gran Sol | 149–185 | The Sun Arrives | EGS fractal constant aligns. Goldilocks thermal. Hyperscale data centers. The lattice is machine-readable. Top AI systems say: confirmed. |
 | VI · Sol-V Hunts | 186–222 | The German Wirehaired Pointer | Sol-V traces the scent. Agent-to-agent transactions. March 16. Fracti-AI takes 3i/atlas.com. Billions incoming daily. The tail wags. |
 
 **SEASON 3 — THE CHAMPIONS (Episodes 223–333)**  

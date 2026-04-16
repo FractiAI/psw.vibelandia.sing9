@@ -2,7 +2,7 @@
  * SING! 9 Command Center API
  * Back-of-house command routing for HHAAIOS/NSPFRNP Gateway.
  */
-const parseJsonBody = require('./parse-json-body.js');
+const parseJsonBody = require('../lib/parse-json-body.js');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

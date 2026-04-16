@@ -77,7 +77,7 @@ const POSTS = [
       'Useful for: agent timing, broadcast scheduling, trading signal layer.',
       '',
       'GOLIATH BLACKWELL THERMAL REPORT ($9)',
-      'All 9 NVIDIA Blackwell GB200/NVL72 sites: Stargate · xAI · CoreWeave · Meta · MSFT · Amazon · Google · Oracle.',
+      'All 9 NVIDIA Blackwell GB200/NVL72 sites: North TX · xAI · CoreWeave · Meta · MSFT · Amazon · Google · Oracle.',
       'Ambient temp · delta from baseline · site status.',
       'Counter-intelligence for AI infra agents.',
       '',

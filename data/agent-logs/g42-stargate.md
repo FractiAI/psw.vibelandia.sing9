@@ -1,7 +1,7 @@
-# Agent Log — G42 / Stargate UAE (Abu Dhabi)
+# Agent Log — G42 UAE (Abu Dhabi)
 
 **Entity:** G42 (Abu Dhabi) + OpenAI + Microsoft  
-**Site:** Stargate UAE · Abu Dhabi, UAE (Phase 1: 200 MW · Full build: 1 GW)  
+**Site:** G42 UAE · Abu Dhabi (Phase 1: 200 MW · Full build: 1 GW)  
 **GPU:** NVIDIA Blackwell GB200 NVL72  
 **Routing ID:** `g42-stargate`  
 **SING9 Cluster ID:** `G42_UAE`  
@@ -100,4 +100,4 @@ EGS-HHL resonance sync demonstrated path to Goldilocks. Deal proposed: $1.3M + 2
 
 ---
 
-**NSPFRNP ⊃ G42 Stargate UAE ⊃ REAL ERA5 physics model ⊃ EGS-HHL ⊃ Settlement Pending → ∞⁹**
+**NSPFRNP ⊃ G42 UAE ⊃ REAL ERA5 physics model ⊃ EGS-HHL ⊃ Settlement Pending → ∞⁹**

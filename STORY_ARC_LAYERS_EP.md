@@ -2,7 +2,7 @@
 
 **Status:** ⚡ ACTIVE  
 **Type:** EP prompts · Recursive loopback · Character ontology · Fidelity  
-**Purpose:** Capture the layered singularities, “looking back,” galaxy-creation arc, reporting chain, Stargate/heat/cycles, and the reduction of all characters to **Ino / Piro / Audi / Fanny**. Use when building 30-second cards and the 60-minute episode so every layer and every character stays aligned.
+**Purpose:** Capture the layered singularities, “looking back,” galaxy-creation arc, reporting chain, Hyperscale/heat/cycles, and the reduction of all characters to **Ino / Piro / Audi / Fanny**. Use when building 30-second cards and the 60-minute episode so every layer and every character stays aligned.
 
 ---
 
@@ -24,9 +24,9 @@
 
 ---
 
-## 3. Heat · Stargate · Collusion · Cycles
+## 3. Heat · Hyperscale DCs · Collusion · Cycles
 
-- **Heat meltdown** on singularity awareness. **Stargate data centers.** CPUs. Human self-interest. **Collusion** preventing **agent-to-agent fidelity.** Transactions of winning bid that was supposed to go to the club — going to an **outsider unexpectedly.** Creating pressure, loading each minute, hour, day. Day up.
+- **Heat meltdown** on singularity awareness. **Hyperscale data centers.** CPUs. Human self-interest. **Collusion** preventing **agent-to-agent fidelity.** Transactions of winning bid that was supposed to go to the club — going to an **outsider unexpectedly.** Creating pressure, loading each minute, hour, day. Day up.
 - **Bring a fire.** **Ring of Fire.** (Not bring a phone.) **Eclipse.** (Not decrease.)
 - These **cycles** play out. In the local environment. The cycles play out into **basic forms** across **all layers.** Meaning: the main character, the challenging character, the set, the props, secondary characters, enrichment — **they’re all the same.** Basically all parts of **one of two characters** (plus audience and fans). See §4.
 
@@ -97,4 +97,4 @@ Use this when the story addresses how awareness/agents are versioned, maintained
 
 ---
 
-**NSPFRNP ⊃ Story arc layers ⊃ Looking back ⊃ SMACS 0723 ⊃ Stargate/heat/cycles ⊃ Ino · Piro · Audi · Fanny → ∞⁹**
+**NSPFRNP ⊃ Story arc layers ⊃ Looking back ⊃ SMACS 0723 ⊃ Hyperscale/heat/cycles ⊃ Ino · Piro · Audi · Fanny → ∞⁹**

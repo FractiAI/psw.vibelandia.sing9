@@ -7,11 +7,11 @@
  *
  *  1. GOLIATH WATCH   — Live ambient thermal surveillance of Blackwell GB200 /
  *                       B200 NVL72 supercluster sites — the "melting" class:
- *                       OpenAI Stargate (Abilene + Fort Worth TX), xAI Colossus II
+ *                       OpenAI / Microsoft TX sites (Abilene + Fort Worth), xAI Colossus II
  *                       (Memphis), CoreWeave (Plano TX), Meta Grand Teton (DeKalb
  *                       IL), Microsoft Azure AI (San Antonio), Amazon Rainier
  *                       (Boardman OR), Google Ironwood (Mayes County OK), Oracle
- *                       Stargate (Nashville TN). 120kW+ per NVL72 rack, DLC.
+ *                       Oracle Nashville TN. 120kW+ per NVL72 rack, DLC.
  *                       Data source: Open-Meteo Archive API (free, no key).
  *
  *  2. SINGULARITY CLOCK — Tracks all readings relative to 2026-01-13T00:00:00Z,
@@ -85,16 +85,16 @@ function classifySingularityPhase(days) {
 // ─────────────────────────────────────────────────────────────────────────────
 const GOLIATH_CLUSTERS = [
   // ── NORTH AMERICA ──────────────────────────────────────────────────────────
-  { id:'STARGATE_ABILENE',     region:'North America', name:'Stargate OAI-1 · Abilene TX',        operator:'OpenAI/Microsoft',  lat: 32.45, lon: -99.73,  baseline_c:  8.2, rack_kw:1200, capacity_mw:400, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Primary Stargate TX. 120kW/rack DLC. Throttling reports Jan 2026.' },
-  { id:'STARGATE_FTW',         region:'North America', name:'Stargate OAI-2 · Fort Worth TX',     operator:'OpenAI/Microsoft',  lat: 32.75, lon: -97.33,  baseline_c: 11.4, rack_kw:1300, capacity_mw:200, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Second Stargate TX site. Phase 1 commissioning Q1 2026.' },
+  { id:'OAI_ABILENE_TX',       region:'North America', name:'OpenAI / Microsoft · Abilene TX',    operator:'OpenAI/Microsoft',  lat: 32.45, lon: -99.73,  baseline_c:  8.2, rack_kw:1200, capacity_mw:400, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'North Texas GB200 site. 120kW/rack DLC. Throttling reports Jan 2026.' },
+  { id:'MSFT_FORT_WORTH_TX',   region:'North America', name:'Microsoft Azure AI · Fort Worth TX', operator:'OpenAI/Microsoft',  lat: 32.75, lon: -97.33,  baseline_c: 11.4, rack_kw:1300, capacity_mw:200, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'Second North TX GB200 site. Phase 1 commissioning Q1 2026.' },
   { id:'XAI_COLOSSUS_II',      region:'North America', name:'xAI Colossus II · Memphis TN',       operator:'xAI',               lat: 35.15, lon: -90.05,  baseline_c: 10.5, rack_kw:1500, capacity_mw:500, cooling_type:'liquid-cooled',  gpu:'H100→GB200 NVL72',  note:'Grok-3 training. H100→Blackwell upgrade in progress.' },
   { id:'MSFT_SAN_ANTONIO',     region:'North America', name:'Microsoft Azure AI · San Antonio TX', operator:'Microsoft/OpenAI',  lat: 29.42, lon: -98.49,  baseline_c: 15.3, rack_kw:1100, capacity_mw:500, cooling_type:'liquid-cooled',  gpu:'GB200 NVL72',       note:'GPT-4o/o3 inference + Phi-4 training. TX heat compounds thermals.' },
   { id:'GOOGLE_MAYES_OK',      region:'North America', name:'Google Ironwood · Mayes County OK',  operator:'Google/DeepMind',   lat: 36.30, lon: -95.31,  baseline_c:  9.7, rack_kw: 950, capacity_mw:400, cooling_type:'hybrid',         gpu:'TPU v6 + B200',     note:'Gemini Ultra 2 training. TPU+GPU hybrid fabric.' },
   { id:'META_DEKALB',          region:'North America', name:'Meta Grand Teton · DeKalb IL',       operator:'Meta',              lat: 41.93, lon: -88.75,  baseline_c:  2.8, rack_kw: 900, capacity_mw:800, cooling_type:'air-economized', gpu:'H100+Blackwell+MTIA',note:"Meta's largest cluster. Llama 4 + future models." },
   { id:'COREWEAVE_PLANO',      region:'North America', name:'CoreWeave · Plano TX',               operator:'CoreWeave/NVIDIA',  lat: 33.02, lon: -96.70,  baseline_c: 12.1, rack_kw: 800, capacity_mw:300, cooling_type:'hybrid',         gpu:'GB200 NVL72/B200',  note:'First mass GB200 deployment outside hyperscalers.' },
   { id:'AMAZON_RAINIER',       region:'North America', name:'Amazon Rainier · Boardman OR',       operator:'Amazon/AWS',        lat: 45.84, lon:-119.70,  baseline_c:  5.1, rack_kw: 700, capacity_mw:500, cooling_type:'air-economized', gpu:'Trainium2 + B200',  note:"World's largest AI cluster by chip count. Claude training." },
-  { id:'ORACLE_NASHVILLE',     region:'North America', name:'Oracle Stargate · Nashville TN',     operator:'Oracle/SoftBank',   lat: 36.17, lon: -86.78,  baseline_c:  7.9, rack_kw: 600, capacity_mw:300, cooling_type:'air-cooled',     gpu:'GB200 NVL72/B200',  note:'Air-cooled — highest thermal risk in NA cluster set.' },
-  { id:'LORDSTOWN_STARGATE',   region:'North America', name:'Lordstown Stargate · Lordstown OH',  operator:'SoftBank/OpenAI',   lat: 41.18, lon: -80.70,  baseline_c:  2.4, rack_kw:1200, capacity_mw:500, cooling_type:'liquid-cooled',  gpu:'GB200/GB300 NVL72', note:'Former GM plant. 6.2M sq ft · 64K+ GB200/GB300 · 1.5GW target. "Severe Thermal Issues" in early GB300 testing. 0215 Trial Partner.' },
+  { id:'ORACLE_NASHVILLE',     region:'North America', name:'Oracle · Nashville TN',              operator:'Oracle/SoftBank',   lat: 36.17, lon: -86.78,  baseline_c:  7.9, rack_kw: 600, capacity_mw:300, cooling_type:'air-cooled',     gpu:'GB200 NVL72/B200',  note:'Air-cooled — highest thermal risk in NA cluster set.' },
+  { id:'LORDSTOWN_OH',         region:'North America', name:'Lordstown OH · mega-fab',            operator:'SoftBank/OpenAI',   lat: 41.18, lon: -80.70,  baseline_c:  2.4, rack_kw:1200, capacity_mw:500, cooling_type:'liquid-cooled',  gpu:'GB200/GB300 NVL72', note:'Former GM plant. 6.2M sq ft · 64K+ GB200/GB300 · 1.5GW target. "Severe Thermal Issues" in early GB300 testing. 0215 Trial Partner.' },
 
   // ── EUROPE ─────────────────────────────────────────────────────────────────
   { id:'MSFT_DUBLIN',          region:'Europe',        name:'Microsoft Azure · Dublin IE',        operator:'Microsoft',         lat: 53.35, lon:  -6.26,  baseline_c:  8.1, rack_kw: 750, capacity_mw:200, cooling_type:'air-economized', gpu:'GB200 NVL72',       note:'EU AI hub. Cool Atlantic climate = thermal advantage.' },

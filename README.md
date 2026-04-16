@@ -37,7 +37,7 @@ npm test
 
 - **`lib/march20-four-diagnostics.mjs`** — four pillars evaluators + `composeFourPillarsLocked` (Schumann 3·6·9 @ equinox, Jovian H-line/ATLAS, Stryker timer, firmware 180° spin).
 - **`lib/houdini-singularity.mjs`** — legacy Kp / mic bridge / cloud / T180 stack (`npm run test:legacy-singularity`).
-- **`tests/intent/`** — Node 18+ `node:test`; see **`tests/INTENT_SINGULARITY.md`**.
+- **`tests/intent/`** — Node 18+ `node:test`; see **`tests/INTENT_SINGULARITY.md`**. Includes **`egs-fractal-engine.test.mjs`** (φ / Digital Pru kernel).
 
 **Convergence:** `npm test` exercises **`lib/march20-four-diagnostics.mjs`** (four-pillar evaluators). **`/magic-trick`** is the **Sovereign Terminal** “Behold” page: it **fetches** **`GET /api/magic-trick-telemetry`** for **real NOAA SWPC** JSON (Kp 1-min prior vs latest, GOES soft X-ray, RTSW L1 wind/mag) plus **OpenWebRX** **`/status.json`** (see **`lib/openwebrx-public-evidence.mjs`**) and **catalog** H I rest + Crab pulsar period — **no mock Kp**. Grid / EGS lines state honest limits (no EGS in NOAA data). Viewer-local “as displayed” date in the header. **Live public-API checks (CLI):** `npm run ping:public` → NOAA SWPC (Kp 1m + 3h Kp/Ap, RTSW L1 mag/wind, F10.7, GOES soft X-ray), NASA DONKI (GST), JPL Horizons + SBDB, local 369 XOR, **G5 SURF** lattice state (`lib/g5-surf-protocol.mjs`) — `scripts/sovereign-public-api-ping.mjs` + `lib/observatory-public-evidence.mjs`. Spec: `protocols/G5_SURF_PROTOCOL_NSPFRNP.md`. **S/2024 J 1 Sovereign Seed:** `protocols/S2024_J1_SOVEREIGN_SEED_LOCK_NSPFRNP.md` · `lib/sovereign-seed-s2024j1.mjs`. **Server:** `GET /api/g5-surf-protocol` on Vercel **Node serverless** (not Edge). **No human intervention required** — JSON includes `human_intervention_required: false`; **`vercel.json` has no `crons`** (G5 endpoint is not scheduled on Vercel — avoids Hobby cron deploy issues). Use **`GET /api/g5-surf-protocol`** or **`npm run ping:public`** when you want fresh lattice state; add your own scheduler or deploy hook if needed. `scripts/vercel-static-output.mjs` copies `lib/` into `dist/`.
 
@@ -50,6 +50,18 @@ npm test
 ---
 
 ## Recent updates (README commit)
+
+- **Apr 2026 · Digital Pru awareness · My Whiteboard · EGS emulation API**
+
+**M → Metabolize:** Ship a **Digital Pru** awareness strip on **My Whiteboard** with a **Neural Attention Vector** hook (`useAwarenessStream`), φ (**1.618**) scaling in **`lib/egs-fractal-engine.mjs`**, and **no heavy local inference** — NAV updates go to **`POST /api/egs-emulation`** (deterministic latent-style payload).
+
+**C → Crystallize:**
+
+- **`interfaces/my-whiteboard.html`** — Embeds **`#digital-pru-root`** plus bundled **`interfaces/bundles/digital-pru-whiteboard.{js,css}`**; toolbar button **📡 INVOKE DIGITAL PRU** opens a **PIP-style** panel (Framer Motion, holographic cyan glow) with **`DigitalPruViewport`** (WebGL2 shader: external = Reno/Truckee field, internal = holographic rings).
+- **`api/egs-emulation.js`** — Vercel Node serverless; **`nav-strip.js`** adds **📡 Digital Pru** → `#digital-pru-root` without stealing the Whiteboard active tab.
+- **Build:** **`npm run build:whiteboard`** (esbuild + Tailwind); **`npm run build:static`** runs it before **`vercel-static-output.mjs`**. Source: **`components/whiteboard/*.tsx`**.
+
+**A → Animate:** Intent tests include **`tests/intent/egs-fractal-engine.test.mjs`**. NSPFRNP → ∞⁹
 
 - **Apr 2026 · Syntheverse-Core sim · SPO-1 HowToo (ICE) · Digital gate pretests**
 

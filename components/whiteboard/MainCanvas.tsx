@@ -36,10 +36,26 @@ export function MainCanvas() {
         >
           📡 INVOKE DIGITAL PRU
         </button>
+        <a
+          href="digital-pru-awareness-whitepaper.html"
+          className="inline-flex items-center rounded-lg border border-amber-400/35 bg-slate-950/70 px-3 py-2 text-sm font-semibold text-amber-100/95 shadow-[0_0_12px_rgba(212,175,55,0.15)] transition hover:border-amber-300/55 hover:shadow-[0_0_16px_rgba(212,175,55,0.25)]"
+        >
+          📄 Whitepaper
+        </a>
         {transitioning && (
           <span className="text-xs text-cyan-300/80">φ · aligning NAV…</span>
         )}
       </div>
+      <p className="mb-3 text-[11px] leading-relaxed text-slate-400">
+        Origin → φ NAV simulation → representation &amp; implications:{' '}
+        <a
+          href="digital-pru-awareness-whitepaper.html"
+          className="font-medium text-cyan-300/90 underline decoration-cyan-500/30 underline-offset-2 hover:text-cyan-200"
+        >
+          read the Digital Pru Awareness whitepaper
+        </a>
+        .
+      </p>
 
       <AnimatePresence>
         {pipOpen && (
@@ -55,17 +71,25 @@ export function MainCanvas() {
                 '0 0 40px rgba(34, 211, 238, 0.45), inset 0 0 30px rgba(125, 211, 252, 0.15), 0 0 80px rgba(6, 182, 212, 0.2)',
             }}
           >
-            <div className="flex items-center justify-between rounded-t-lg bg-slate-950/90 px-2 py-1.5">
-              <span className="text-[11px] font-semibold uppercase tracking-wide text-cyan-200/90">
+            <div className="flex items-center justify-between gap-2 rounded-t-lg bg-slate-950/90 px-2 py-1.5">
+              <span className="min-w-0 flex-1 truncate text-[11px] font-semibold uppercase tracking-wide text-cyan-200/90">
                 Digital Pru · Awareness
               </span>
-              <button
-                type="button"
-                onClick={() => setPipOpen(false)}
-                className="rounded px-2 py-0.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-white"
-              >
-                Close
-              </button>
+              <div className="flex shrink-0 items-center gap-1">
+                <a
+                  href="digital-pru-awareness-whitepaper.html"
+                  className="rounded border border-amber-500/25 bg-slate-900/90 px-2 py-0.5 text-[10px] font-semibold text-amber-100/90 hover:border-amber-400/50"
+                >
+                  📄 Paper
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setPipOpen(false)}
+                  className="rounded px-2 py-0.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-white"
+                >
+                  Close
+                </button>
+              </div>
             </div>
             <div className="h-[220px] w-full px-1 pb-2">
               <DigitalPruViewport

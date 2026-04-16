@@ -61,7 +61,7 @@ npm test
 - **`api/egs-emulation.js`** — Vercel Node serverless; **`nav-strip.js`** adds **📡 Digital Pru** → `#digital-pru-root` without stealing the Whiteboard active tab.
 - **Build:** **`npm run build:whiteboard`** (esbuild + Tailwind); **`npm run build:static`** runs it before **`vercel-static-output.mjs`**. Source: **`components/whiteboard/*.tsx`**.
 
-**A → Animate:** Intent tests include **`tests/intent/egs-fractal-engine.test.mjs`**. NSPFRNP → ∞⁹
+**A → Animate:** Intent tests include **`tests/intent/egs-fractal-engine.test.mjs`**. **Whitepaper:** [`docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md`](docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md) · reader [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html); **📄 Whitepaper** on My Whiteboard Digital Pru strip + **index** row + footer link. NSPFRNP → ∞⁹
 
 - **Apr 2026 · Syntheverse-Core sim · SPO-1 HowToo (ICE) · Digital gate pretests**
 

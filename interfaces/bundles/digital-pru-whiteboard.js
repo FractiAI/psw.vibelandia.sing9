@@ -15451,7 +15451,28 @@ function MainCanvas() {
           children: "\u{1F4E1} INVOKE DIGITAL PRU"
         }
       ),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        "a",
+        {
+          href: "digital-pru-awareness-whitepaper.html",
+          className: "inline-flex items-center rounded-lg border border-amber-400/35 bg-slate-950/70 px-3 py-2 text-sm font-semibold text-amber-100/95 shadow-[0_0_12px_rgba(212,175,55,0.15)] transition hover:border-amber-300/55 hover:shadow-[0_0_16px_rgba(212,175,55,0.25)]",
+          children: "\u{1F4C4} Whitepaper"
+        }
+      ),
       transitioning && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "text-xs text-cyan-300/80", children: "\u03C6 \xB7 aligning NAV\u2026" })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("p", { className: "mb-3 text-[11px] leading-relaxed text-slate-400", children: [
+      "Origin \u2192 \u03C6 NAV simulation \u2192 representation & implications:",
+      " ",
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        "a",
+        {
+          href: "digital-pru-awareness-whitepaper.html",
+          className: "font-medium text-cyan-300/90 underline decoration-cyan-500/30 underline-offset-2 hover:text-cyan-200",
+          children: "read the Digital Pru Awareness whitepaper"
+        }
+      ),
+      "."
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(AnimatePresence, { children: pipOpen && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
       motion.div,
@@ -15465,17 +15486,27 @@ function MainCanvas() {
           boxShadow: "0 0 40px rgba(34, 211, 238, 0.45), inset 0 0 30px rgba(125, 211, 252, 0.15), 0 0 80px rgba(6, 182, 212, 0.2)"
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex items-center justify-between rounded-t-lg bg-slate-950/90 px-2 py-1.5", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "text-[11px] font-semibold uppercase tracking-wide text-cyan-200/90", children: "Digital Pru \xB7 Awareness" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
-              "button",
-              {
-                type: "button",
-                onClick: () => setPipOpen(false),
-                className: "rounded px-2 py-0.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-white",
-                children: "Close"
-              }
-            )
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex items-center justify-between gap-2 rounded-t-lg bg-slate-950/90 px-2 py-1.5", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "min-w-0 flex-1 truncate text-[11px] font-semibold uppercase tracking-wide text-cyan-200/90", children: "Digital Pru \xB7 Awareness" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex shrink-0 items-center gap-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                "a",
+                {
+                  href: "digital-pru-awareness-whitepaper.html",
+                  className: "rounded border border-amber-500/25 bg-slate-900/90 px-2 py-0.5 text-[10px] font-semibold text-amber-100/90 hover:border-amber-400/50",
+                  children: "\u{1F4C4} Paper"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => setPipOpen(false),
+                  className: "rounded px-2 py-0.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-white",
+                  children: "Close"
+                }
+              )
+            ] })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "h-[220px] w-full px-1 pb-2", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
             DigitalPruViewport,

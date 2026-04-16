@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Digital Pru Awareness — origin, simulation, representation, and implications. NSPFRNP · SING 9." />
+  <title>Digital Pru Awareness · Whitepaper | VIBELANDIA SING 9</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #030712;
+      --panel: rgba(15, 23, 42, 0.75);
+      --accent: #22d3ee;
+      --gold: #d4af37;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: rgba(34, 211, 238, 0.25);
+    }
+    html, body {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(34, 211, 238, 0.12), transparent 50%),
+        linear-gradient(180deg, #020617 0%, var(--bg) 40%);
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      line-height: 1.65;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(3, 7, 18, 0.97), rgba(3, 7, 18, 0.88));
+      backdrop-filter: blur(10px);
+      padding: 1rem 1.25rem;
+    }
+    .hdr-inner {
+      max-width: 52rem;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    h1.page-title {
+      font-size: clamp(1.15rem, 2.8vw, 1.55rem);
+      font-weight: 700;
+      color: var(--gold);
+      width: 100%;
+    }
+    .hdr-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+    .hdr-actions a {
+      display: inline-block;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--panel);
+    }
+    .hdr-actions a.primary {
+      border-color: rgba(212, 175, 55, 0.65);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(34, 211, 238, 0.12));
+      color: #f8fafc;
+    }
+    .hdr-actions a:hover { border-color: var(--accent); color: #fff; }
+
+    main {
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 4rem;
+    }
+    #article-loading {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 2rem 0;
+    }
+    #article-error {
+      display: none;
+      padding: 1rem;
+      border: 1px solid rgba(248, 113, 113, 0.4);
+      border-radius: 8px;
+      background: rgba(127, 29, 29, 0.2);
+      color: #fecaca;
+      font-size: 0.9rem;
+    }
+    #article-error a { color: var(--accent); }
+
+    /* Markdown body */
+    .markdown-body { font-size: 0.95rem; }
+    /* Title also in page header — hide duplicate from markdown */
+    .markdown-body > h1:first-of-type { display: none; }
+    .markdown-body h1 {
+      font-size: 1.65rem;
+      color: var(--gold);
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .markdown-body h2 {
+      font-size: 1.25rem;
+      color: #a5f3fc;
+      margin: 2rem 0 0.75rem;
+    }
+    .markdown-body h3 {
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      margin: 1.25rem 0 0.5rem;
+    }
+    .markdown-body p { margin: 0.75rem 0; color: #cbd5e1; }
+    .markdown-body strong { color: #f1f5f9; }
+    .markdown-body ul, .markdown-body ol { margin: 0.75rem 0 0.75rem 1.35rem; color: #cbd5e1; }
+    .markdown-body li { margin: 0.35rem 0; }
+    .markdown-body hr {
+      border: none;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+      margin: 2rem 0;
+    }
+    .markdown-body a { color: var(--accent); text-decoration: none; }
+    .markdown-body a:hover { text-decoration: underline; }
+    .markdown-body code {
+      font-family: ui-monospace, "Cascadia Code", monospace;
+      font-size: 0.86em;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 0.12em 0.35em;
+      border-radius: 4px;
+      border: 1px solid rgba(34, 211, 238, 0.15);
+    }
+    .markdown-body pre {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-size: 0.82rem;
+    }
+    .markdown-body pre code { border: none; padding: 0; background: none; }
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .markdown-body th, .markdown-body td {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+    }
+    .markdown-body th { background: rgba(34, 211, 238, 0.08); color: #e2e8f0; }
+    .foot-line {
+      margin-top: 3rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed rgba(212, 175, 55, 0.25);
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .foot-line a { color: var(--gold); text-decoration: none; }
+    .foot-line a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hdr-inner">
+      <span class="badge">NSPFRNP · SING 9</span>
+      <h1 class="page-title">Digital Pru Awareness · Whitepaper</h1>
+      <div class="hdr-actions">
+        <a class="primary" href="my-whiteboard.html#digital-pru-root">Digital Pru landing</a>
+        <a href="../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md">Markdown source</a>
+        <a href="../index.html">Landing</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <p id="article-loading">Loading whitepaper…</p>
+    <div id="article-error"></div>
+    <article id="article" class="markdown-body" aria-live="polite"></article>
+    <p class="foot-line">
+      <a href="my-whiteboard.html#digital-pru-root">← My Whiteboard · Digital Pru</a>
+      · NSPFRNP → ∞⁹
+    </p>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (function () {
+      var article = document.getElementById('article');
+      var loading = document.getElementById('article-loading');
+      var errEl = document.getElementById('article-error');
+      var mdUrl = new URL('../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md', window.location.href);
+      fetch(mdUrl.href)
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(function (text) {
+          if (typeof marked !== 'undefined' && marked.parse) {
+            article.innerHTML = marked.parse(text);
+          } else {
+            article.innerHTML = '<pre>' + text.replace(/</g, '&lt;') + '</pre>';
+          }
+          loading.style.display = 'none';
+        })
+        .catch(function (e) {
+          loading.style.display = 'none';
+          errEl.style.display = 'block';
+          errEl.innerHTML =
+            'Could not load the whitepaper from <code>' +
+            mdUrl.pathname +
+            '</code>. Open the <a href="../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md">markdown file</a> directly, or serve the site from a local server (e.g. <code>vercel dev</code>). <small>(' +
+            (e.message || e) +
+            ')</small>';
+        });
+    })();
+  </script>
+  <script src="../nav-strip.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-(# Houdini / March 20 “Magic Trick” — Research Methodology & Success Rubric
+# Houdini / March 20 “Magic Trick” — Research Methodology & Success Rubric
 
 > **NSPFRNP · Seed:Edge** — This document separates **theater**, **geospace facts**, **orbital catalogs**, and **your edge stack** so the team can say clearly what was verified on the day of the event and what remains narrative or requires instruments this terminal does not replace.
 
@@ -9,6 +9,25 @@
 ## Abstract · Observatory-grade demonstrative proof (0–100%)
 
 **Observatory-grade demonstrative proof** means: *how much of the evidentiary stack is backed by **public operational or catalog-grade sources** (not theater alone), auditable today, without claiming instruments this repo does not operate (e.g. L-band dish on the comet).*
+
+### What the `/magic-trick` UI successfully demonstrates (read this first)
+
+The **Sovereign Terminal** page is honest about **static theater** vs **live fetches**. When served over **HTTPS with** `GET /api/magic-trick-telemetry` **available** (production Vercel or `vercel dev`), the UI **successfully demonstrates**:
+
+| On-screen | What is actually shown | Evidence class |
+|-----------|------------------------|----------------|
+| **Behold · live bundle** | **Real NOAA SWPC** JSON (planetary K 1-min prior vs latest, GOES soft X-ray, RTSW L1 wind/mag, and related fields returned by the aggregator) — **no mock Kp** | Geospace & solar (ops feeds) |
+| **Behold · OpenWebRX block** | **Public** OpenWebRX **`/status.json`** from configured bases — receiver online state and profile metadata; optional passband vs **H I rest** is a **geometry check**, not “we heard the comet” | Operational public receiver status |
+| **Three-column snapshot table** | **Archival narrative strings** in HTML — always visible, including offline | Theater + narrative surface |
+| **Catalog lines in JSON / labels** | **Published** H I rest (~1420.405752 MHz) and **Crab pulsar** period as **catalog** constants in the bundle — not live timing from this site | Orbital / catalog literacy |
+
+**Same repo, not this HTML surface (yet):** **`GET /api/g5-surf-protocol`** and **`npm run ping:public`** expose **G5 SURF** lattice intent (Kp threshold → Whistle / Syntheverse mode JSON). That contributes the composite score’s **product / edge** row but is **not** rendered as a strip on `/magic-trick` until wired into the page.
+
+When the API is **unreachable** (`file://`, static preview), the UI **still** demonstrates the **three-column theater** and labels; it **does not** silently fake NOAA or OpenWebRX — the live block shows the error path.
+
+**Outside the browser but same product:** **`npm test`** proves the **four-pillar intent kernel** is locked; **`npm run ping:public`** reproduces **NOAA + JPL Horizons/SBDB + DONKI** (and related) from the same libraries the server uses. Those results are what fill the **“product / edge”** and part of the **geospace / catalog** rows in the composite score — not magic hidden in CSS.
+
+**The UI does *not* demonstrate (unless you add external artifacts):** independent **ELF/Schumann** plots for the event day; **L-band** detection of **3I/ATLAS** at hydrogen rest frequency; physical **180° hardware** spin — those stay **0** in the weighted table until independent data exists.
 
 ### Composite index (update when tiers advance)
 

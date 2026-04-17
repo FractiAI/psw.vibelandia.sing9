@@ -153,12 +153,23 @@
         'Ledger — Mar 25 — EGS 1.0000 · phase-lock (Crab timing + H I + grid PLL) · zero-point differential on spring-window date',
     };
 
-    /** Keep in sync with `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md` § Abstract (composite index). */
+    /** Keep in sync with `docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md` § Abstract (composite index + “What the UI demonstrates”). */
     const OBSERVATORY_GRADE_PROOF = {
       pct: 70,
-      headline: 'Observatory-grade demonstrative proof',
+      headline: 'Observatory-grade demonstrative proof — 70 / 100',
       summary:
-        'Snapshot table below is archival narrative (three columns). Live bundle: GET /api/magic-trick-telemetry (NOAA + OpenWebRX /status.json, no manual SDR tuning) — or npm run ping:public — see methodology.',
+        'This score weights public ops feeds, JPL catalog, intent-locked edge tests, theater UI, and honest zeros for ELF + L-band comet claims. The checklist below is what this HTML surface actually demonstrates; G5 SURF JSON is in the same repo (`GET /api/g5-surf-protocol` / `npm run ping:public`) but is not rendered here until wired in.',
+      demonstrated: [
+        'Live NOAA SWPC bundle in Behold when GET /api/magic-trick-telemetry succeeds — real Kp / GOES / RTSW fields, not mock.',
+        'OpenWebRX /status.json from public receivers — online state + profiles; H I passband check is receiver metadata, not “comet on the line.”',
+        'Three-column Mirror / Flip / ledger — always-on archival theater (honest when API is down).',
+        'Catalog constants in the bundle — H I rest and Crab period as published references, not live observatory timing from here.',
+        'Same stack as CLI: npm test locks four pillars; npm run ping:public reproduces NOAA + JPL/SBDB for auditors.',
+      ],
+      notDemonstratedHere: [
+        'Independent ELF/Schumann plot for the event day (0 pts until you attach a feed).',
+        'L-band proof that 3I/ATLAS responds at 1420 MHz (0 pts without observatory data).',
+      ],
     };
 
     /** Ultimate magic show — narrative spine (aligned with series lore). */
@@ -308,9 +319,27 @@
         [
           h('div', { className: 'pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-cyan-500/10 blur-2xl' }),
           h('div', { className: 'pointer-events-none absolute -bottom-8 -left-8 h-28 w-28 rounded-full bg-amber-500/10 blur-2xl' }),
-          h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.3em] text-cyan-400/90' }, 'Abstract · Demonstrative proof'),
+          h('p', { className: 'text-[0.65rem] font-bold uppercase tracking-[0.3em] text-cyan-400/90' }, 'Abstract · What this UI demonstrates'),
           h('h2', { className: 'mt-2 text-lg font-bold text-amber-50 sm:text-xl' }, OBSERVATORY_GRADE_PROOF.headline),
           h('p', { className: 'mt-3 text-[0.75rem] leading-relaxed text-amber-200/75' }, OBSERVATORY_GRADE_PROOF.summary),
+          h(
+            'ul',
+            { className: 'mt-4 list-none space-y-2 border-l-2 border-cyan-600/40 pl-4 text-[0.7rem] leading-relaxed text-amber-100/90' },
+            OBSERVATORY_GRADE_PROOF.demonstrated.map((line, i) =>
+              h('li', { key: 'demo-' + i }, [
+                h('span', { className: 'mr-2 text-cyan-400' }, '✓'),
+                line,
+              ])
+            )
+          ),
+          h('p', { className: 'mt-4 text-[0.62rem] font-bold uppercase tracking-[0.2em] text-amber-600/95' }, 'Not claimed on this page'),
+          h(
+            'ul',
+            { className: 'mt-2 list-none space-y-1.5 pl-1 text-[0.65rem] leading-relaxed text-amber-500/80' },
+            OBSERVATORY_GRADE_PROOF.notDemonstratedHere.map((line, i) =>
+              h('li', { key: 'not-' + i }, ['— ', line])
+            )
+          ),
           h('div', { className: 'mt-5' }, [
             h('div', { className: 'flex items-baseline justify-between gap-2 text-[0.7rem]' }, [
               h('span', { className: 'text-amber-500/90' }, 'Observatory-grade index'),

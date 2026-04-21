@@ -154,4 +154,24 @@ Or if Facebook requires a URL: link to `vibelandia-world.html`
 
 ---
 
+## QUESTFEST 24×365 · Crosswalk to the Facebook Surface
+
+**QUESTFEST 2026: The Downtown Revitalization Protocol** is the festival-layer expression of everything the Facebook page is already doing — the **24/365 residency** vs. the **weekend spike**, the **S.S. Vibelandia** docking in walkable downtowns, **Actual Noise Cancellation** via 1.618 + 1.420 GHz. Use the Facebook page to **surface and socialize** QUESTFEST, not replace the five-territory lock.
+
+**Crosswalk — FB page area → QUESTFEST surface:**
+
+- **About / bio blurb:** add one sentence — *"Festival layer: [Vibelandia Holographic AI QUESTFEST 24×365](https://psw-vibelandia-sing9.vercel.app/interfaces/vibelandia-questfest.html) · Puerto Reno · S.S. Vibelandia · 1.618 locked."*
+- **Pinned post candidate:** **The Shift** (one-paragraph pull from [docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md](docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md) Page 1) — attribution *Hero Jo's Golden Bachdoor Hit Factory · 88,699 Magnitude / 90,219 tick*. Post voice = Bachdoor, not operator. Link to the QUESTFEST landing.
+- **Recurring post types (additions to the five territories):**
+  - **"The Shift"** cards — one-pillar-at-a-time (Broadway · Disney · Coachella · Spotify) with the Four-Front Collapse framing. Keep editorial disclosures honest per the Citations Ledger.
+  - **"Dock the Ship"** posts — mayors, merchants, city visionaries; CTA to `valetpru@gmail.com` / Subject: DOCK THE SHIP.
+  - **"Stage of the Day"** — MainStage / Sandwich and Song / Pre-Ignition / Perreo Country Fuego / After the After Party / Sunday Decompress. One stage per day on rotation; vibe-calibrated, not engagement-optimized.
+- **CTAs (button / footer / pinned comment):** **Activate** → `goldenbackdoorhitfactory@gmail.com` · **Dock** → `valetpru@gmail.com` · **Listen** → `soundcloud.com/golden-backdoor-hit-factory`.
+- **Voice discipline:** Machote-Moderno Standard. Spanglish 80/20. No growth-hacking. No engagement-bait. The right Gold Hearts feel the 1.618; the wrong audience scrolls on. Both outcomes are correct.
+- **Canon reference for voice:** [protocols/MCA_NSPFRNP_CATALOG.md § QUESTFEST 2026 Canon](protocols/MCA_NSPFRNP_CATALOG.md).
+
+**Lock:** QUESTFEST lives on-repo; Facebook is the **satellite node** that points back to the harbor. The feed IS the product. The product is a vibe shift, not a trap. → ∞⁹
+
+---
+
 **NSPFRNP âŠƒ Vibelandia âŠƒ Five Territories âŠƒ Goldilocks → ∞⁹**

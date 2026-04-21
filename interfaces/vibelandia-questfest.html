@@ -19,138 +19,499 @@
   <meta name="twitter:description" content="From Entertainment (Noise) to Resonance (Peace). Dock the S.S. Vibelandia in your downtown. 1.618 locked." />
   <meta name="twitter:image" content="https://psw-vibelandia-sing9.vercel.app/interfaces/assets/questfest-hero-ss-vibelandia-puerto-reno.png" />
   <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/interfaces/vibelandia-questfest.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,500;1,700&family=Inter:wght@300;400;500;600;700;800&family=Italiana&display=swap">
+  <link rel="preload" as="image" href="assets/questfest-hero-ss-vibelandia-puerto-reno.png" fetchpriority="high">
   <link rel="stylesheet" href="nspfrnp-ticker.css">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
+      /* Midnight + champagne + brass — luxury cruise line × festival poster */
+      --midnight: #05080f;
       --hull: #0a0f1a;
-      --deep: #111a2b;
-      --deck: #1a2640;
+      --deep: #0f1729;
+      --deck: #162238;
       --gold: #d4af37;
       --gold-bright: #fef3c7;
       --gold-dim: rgba(212, 175, 55, 0.45);
-      --brass: #c9a227;
+      --champagne: #f0e5c8;
+      --brass: #c9a34a;
+      --brass-warm: #b8892b;
+      --cream: #fef8e7;
       --foam: #2dd4bf;
       --foam-dim: rgba(45, 212, 191, 0.35);
       --rope: #f5f0e6;
       --mist: #94a3b8;
-      --ink: #0f172a;
+      --mist-warm: #c4b895;
+      --ink: #0a0f1a;
       --red-river: #dc2626;
+
+      --serif-luxe: 'Playfair Display', 'Italiana', ui-serif, Georgia, 'Times New Roman', serif;
+      --serif-display: 'Italiana', 'Playfair Display', ui-serif, Georgia, serif;
+      --sans-modern: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; background: var(--midnight); }
     body {
-      font-family: 'Segoe UI', Georgia, 'Times New Roman', serif;
-      background: var(--hull);
+      font-family: var(--sans-modern);
+      background:
+        radial-gradient(1800px 900px at 18% -10%, rgba(212, 175, 55, 0.06), transparent 60%),
+        radial-gradient(1400px 1000px at 90% 110%, rgba(45, 212, 191, 0.04), transparent 55%),
+        linear-gradient(180deg, #05080f 0%, #0a0f1a 50%, #080c16 100%);
+      background-attachment: fixed;
       color: var(--rope);
       min-height: 100vh;
-      line-height: 1.6;
+      line-height: 1.65;
       font-size: 1rem;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     a { color: var(--foam); }
     a:hover { color: var(--gold-bright); }
 
+    /* Luxury section headline family */
+    h1, h2, h3, h4 { font-family: var(--serif-luxe); font-weight: 700; letter-spacing: -0.01em; }
+
     .skip { position: absolute; left: -9999px; top: 0; background: var(--gold); color: var(--ink); padding: 0.5rem 1rem; z-index: 100; }
     .skip:focus { left: 0; }
 
-    /* HERO */
-    .hero {
+    /* ════════════════════════════════════════════════════════════════════
+       CINEMA HERO · full-bleed yacht · Ken Burns zoom · luxury typography
+       Festival poster meets Ritz-Carlton Yacht Collection meets Broadway marquee.
+       ════════════════════════════════════════════════════════════════════ */
+    .cinema-hero {
       position: relative;
-      padding: calc(2.5rem + env(safe-area-inset-top)) 1.25rem 2.5rem;
+      min-height: min(100vh, 820px);
       overflow: hidden;
-      background:
-        radial-gradient(ellipse at 20% 30%, rgba(212, 175, 55, 0.12), transparent 60%),
-        radial-gradient(ellipse at 80% 70%, rgba(45, 212, 191, 0.08), transparent 60%),
-        linear-gradient(180deg, #0a0f1a 0%, #111a2b 100%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: calc(2rem + env(safe-area-inset-top)) 1.5rem 2.25rem;
+      isolation: isolate;
       border-bottom: 1px solid var(--gold-dim);
     }
-    .hero-inner { max-width: 1100px; margin: 0 auto; }
+    .cinema-hero::before {
+      /* The yacht at Puerto Reno — living, slowly breathing image */
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        url('assets/questfest-hero-ss-vibelandia-puerto-reno.png') center 55% / cover no-repeat;
+      z-index: -2;
+      animation: kenBurns 24s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    .cinema-hero::after {
+      /* Cinematic vignette — festival poster grade */
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 30%, transparent 30%, rgba(5,8,15,0.35) 70%, rgba(5,8,15,0.85) 100%),
+        linear-gradient(180deg, rgba(5,8,15,0.55) 0%, rgba(5,8,15,0.1) 28%, rgba(5,8,15,0.4) 58%, rgba(5,8,15,0.94) 100%);
+      z-index: -1;
+    }
+    @keyframes kenBurns {
+      0%   { transform: scale(1.04) translate(0, 0); }
+      100% { transform: scale(1.12) translate(-1.2%, -0.8%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cinema-hero::before { animation: none; transform: scale(1.04); }
+    }
+
+    .hero-top {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: calc(1.1rem + env(safe-area-inset-top)) 1.5rem 0.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; flex-wrap: wrap;
+      font-family: var(--sans-modern);
+      z-index: 2;
+    }
+    .hero-top .brand {
+      font-family: var(--serif-display);
+      font-size: 0.92rem; letter-spacing: 0.34em; text-transform: uppercase;
+      color: var(--champagne);
+      text-shadow: 0 2px 18px rgba(0,0,0,0.7);
+    }
+    .hero-top .brand b { color: var(--gold); font-weight: 700; }
+    .hero-top .locator {
+      font-size: 0.64rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--mist-warm); font-weight: 500;
+    }
+    .hero-top .locator span { color: var(--gold); }
+
+    .hero-inner {
+      position: relative;
+      max-width: 1240px; margin: 0 auto; width: 100%;
+      z-index: 1;
+    }
     .eyebrow {
-      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
-      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--foam); margin-bottom: 1rem;
+      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.4rem;
+      font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+      font-family: var(--sans-modern); font-weight: 600;
+      color: var(--champagne); margin-bottom: 1.25rem;
     }
     .eyebrow span {
-      padding: 0.35rem 0.65rem;
-      border: 1px solid var(--foam-dim);
-      border-radius: 4px;
-      background: rgba(0, 0, 0, 0.35);
+      padding: 0.38rem 0.75rem;
+      border: 1px solid rgba(240,229,200,0.3);
+      border-radius: 2px;
+      background: rgba(10, 15, 26, 0.55);
+      backdrop-filter: blur(6px);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
     }
-    .eyebrow .pin { color: var(--gold); border-color: var(--gold-dim); }
+    .eyebrow .pin { color: var(--gold); border-color: var(--gold-dim); background: rgba(10,15,26,0.7); }
+
     h1.hero-title {
-      font-size: clamp(1.8rem, 5.5vw, 3.2rem);
-      font-weight: 800; letter-spacing: 0.01em;
-      color: var(--gold-bright); line-height: 1.1;
+      font-family: var(--serif-display);
+      font-size: clamp(2.4rem, 7vw, 5.2rem);
+      font-weight: 400; letter-spacing: 0.005em;
+      color: var(--cream); line-height: 0.98;
       margin-bottom: 0.75rem;
-      text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+      text-shadow: 0 6px 40px rgba(0,0,0,0.7), 0 2px 10px rgba(0,0,0,0.5);
+      max-width: 20ch;
+    }
+    h1.hero-title em {
+      font-family: var(--serif-luxe); font-style: italic;
+      color: var(--gold); font-weight: 500;
+    }
+    .hero-gold-rule {
+      width: 80px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 0.25rem 0 1.35rem;
+      position: relative;
+    }
+    .hero-gold-rule::after {
+      content: "✦"; position: absolute; left: 88px; top: 50%;
+      transform: translateY(-50%); color: var(--gold); font-size: 0.8rem;
     }
     .hero-sub {
-      font-size: clamp(1.05rem, 2.4vw, 1.35rem);
-      color: var(--gold); font-style: italic;
-      margin-bottom: 1.25rem; max-width: 44ch;
+      font-family: var(--serif-luxe);
+      font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+      color: var(--champagne); font-style: italic; font-weight: 500;
+      margin-bottom: 1.5rem; max-width: 52ch; line-height: 1.4;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.6);
     }
     .hero-body {
-      font-size: 1rem; color: var(--rope);
-      max-width: 58ch; margin-bottom: 1.5rem;
-      border-left: 3px solid var(--gold); padding-left: 1rem;
+      font-size: 0.98rem; color: var(--rope);
+      max-width: 60ch; margin-bottom: 1.75rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.55);
+      line-height: 1.72;
     }
+    .hero-body strong { color: var(--gold-bright); font-weight: 600; }
+    .hero-body em { color: var(--champagne); }
+
     .magnitude-bar {
       display: flex; flex-wrap: wrap; gap: 0.5rem;
-      margin: 1.25rem 0;
+      margin: 1.25rem 0 1.75rem;
     }
     .magnitude-chip {
-      padding: 0.55rem 0.9rem;
-      background: rgba(212, 175, 55, 0.08);
+      padding: 0.6rem 0.95rem;
+      background: rgba(10,15,26,0.55);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--gold-dim);
-      border-radius: 6px;
-      font-size: 0.82rem; color: var(--gold-bright);
+      border-radius: 2px;
+      font-size: 0.78rem; color: var(--cream);
+      font-family: var(--sans-modern); font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: border-color 0.3s, background 0.3s;
     }
-    .magnitude-chip b { color: var(--gold); letter-spacing: 0.04em; }
+    .magnitude-chip:hover { border-color: var(--gold); background: rgba(212,175,55,0.08); }
+    .magnitude-chip b { color: var(--gold); font-weight: 800; letter-spacing: 0.02em; }
 
-    /* STICKY NAV */
+    /* Hero-scoped CTA row — luxury */
+    .cinema-hero .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+    /* Scroll indicator */
+    .hero-scroll-cue {
+      position: absolute; bottom: 1.1rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--sans-modern);
+      font-size: 0.58rem; letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--mist-warm); font-weight: 500;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      opacity: 0.85;
+      z-index: 2;
+    }
+    .hero-scroll-cue::after {
+      content: ""; width: 1px; height: 28px;
+      background: linear-gradient(180deg, var(--gold), transparent);
+      animation: scrollCue 2.2s ease-in-out infinite;
+    }
+    @keyframes scrollCue {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.6); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* STICKY NAV — luxury compass bar */
     nav.sticky-nav {
       position: sticky; top: 0; z-index: 40;
-      background: rgba(10, 15, 26, 0.94);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--gold-dim);
-      padding: 0.5rem 1rem;
+      background: rgba(5, 8, 15, 0.88);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+      padding: 0.55rem 1rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
     }
     nav.sticky-nav ul {
       list-style: none; display: flex; flex-wrap: wrap;
-      gap: 0.35rem 0.75rem; justify-content: center;
-      max-width: 1100px; margin: 0 auto;
+      gap: 0.25rem 0.55rem; justify-content: center;
+      max-width: 1240px; margin: 0 auto;
     }
     nav.sticky-nav a {
-      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--mist); text-decoration: none;
-      padding: 0.35rem 0.65rem; border-radius: 4px;
-      transition: color 0.2s, background 0.2s;
+      font-family: var(--sans-modern);
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--mist-warm); text-decoration: none; font-weight: 500;
+      padding: 0.4rem 0.7rem; border-radius: 2px;
+      transition: color 0.25s, background 0.25s, letter-spacing 0.25s;
+      position: relative;
     }
-    nav.sticky-nav a:hover { color: var(--gold-bright); background: rgba(212, 175, 55, 0.08); }
+    nav.sticky-nav a:hover {
+      color: var(--gold); background: rgba(212, 175, 55, 0.08);
+      letter-spacing: 0.22em;
+    }
 
-    /* SECTIONS */
+    /* SECTIONS — editorial rhythm */
     section {
-      padding: 3rem 1.25rem;
-      max-width: 1100px;
+      padding: 4.5rem 1.5rem;
+      max-width: 1180px;
       margin: 0 auto;
     }
     h2 {
-      font-size: clamp(1.4rem, 3.6vw, 2rem);
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.02em;
+      font-family: var(--serif-display);
+      font-size: clamp(1.9rem, 4.4vw, 2.9rem);
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.005em;
+      line-height: 1.08;
+      font-weight: 400;
+      position: relative;
     }
-    h2 .h2-sub { display: block; font-size: 0.78rem; color: var(--mist); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 400; margin-top: 0.35rem; }
-    h3 { color: var(--gold-bright); font-size: 1.15rem; margin: 1.25rem 0 0.5rem; }
-    p { margin-bottom: 1rem; color: var(--rope); }
+    h2::after {
+      content: ""; display: block;
+      width: 56px; height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-top: 0.85rem; margin-bottom: 0.25rem;
+    }
+    h2 .h2-sub {
+      display: block;
+      font-family: var(--sans-modern);
+      font-size: 0.68rem; color: var(--brass);
+      letter-spacing: 0.32em; text-transform: uppercase;
+      font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.25rem;
+    }
+    h3 {
+      color: var(--gold-bright);
+      font-family: var(--serif-luxe);
+      font-size: 1.35rem; margin: 1.5rem 0 0.55rem;
+      font-weight: 600;
+    }
+    p {
+      margin-bottom: 1.1rem; color: var(--rope);
+      font-size: 1.02rem; line-height: 1.72;
+    }
+    p strong { color: var(--gold-bright); font-weight: 600; }
 
-    /* THE SHIFT PULL-QUOTE */
+    /* ════════════════════════════════════════════════════════════════════
+       FULL-BLEED CINEMATIC IMAGE BANNER — section divider
+       ════════════════════════════════════════════════════════════════════ */
+    .image-banner {
+      position: relative;
+      width: 100%;
+      height: clamp(320px, 52vh, 560px);
+      overflow: hidden;
+      margin: 1rem 0 0.5rem;
+      isolation: isolate;
+    }
+    .image-banner img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      animation: kenBurns 28s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    .image-banner::after {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(5,8,15,0.3) 70%, rgba(5,8,15,0.75) 100%),
+        linear-gradient(180deg, rgba(5,8,15,0.35) 0%, rgba(5,8,15,0.1) 40%, rgba(5,8,15,0.7) 100%);
+      z-index: -1;
+    }
+    .image-banner .bn-inner {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 3rem 1.75rem 2.25rem;
+      max-width: 1240px; margin: 0 auto;
+      width: 100%;
+    }
+    .image-banner .bn-eyebrow {
+      font-family: var(--sans-modern);
+      font-size: 0.62rem; letter-spacing: 0.34em; text-transform: uppercase;
+      color: var(--gold); font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.7);
+    }
+    .image-banner .bn-title {
+      font-family: var(--serif-display);
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      color: var(--cream); line-height: 1.08;
+      font-weight: 400; max-width: 24ch;
+      text-shadow: 0 4px 28px rgba(0,0,0,0.75);
+    }
+    .image-banner .bn-title em { color: var(--gold); font-style: italic; }
+    @media (prefers-reduced-motion: reduce) {
+      .image-banner img { animation: none; transform: scale(1.04); }
+    }
+
+    /* ════════════════════════════════════════════════════════════════════
+       MAGAZINE SPREAD — alternating full-bleed gallery
+       ════════════════════════════════════════════════════════════════════ */
+    .spreads { display: flex; flex-direction: column; gap: 3.5rem; margin: 2rem 0 0; }
+    .spread {
+      display: grid; grid-template-columns: 1fr;
+      gap: 0;
+      background: linear-gradient(180deg, rgba(15,23,41,0.55), rgba(10,15,26,0.85));
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    @media (min-width: 880px) {
+      .spread { grid-template-columns: 1.4fr 1fr; }
+      .spread.reverse { grid-template-columns: 1fr 1.4fr; }
+      .spread.reverse .spread-img { order: 2; }
+      .spread.reverse .spread-body { order: 1; }
+    }
+    .spread-img {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #000;
+    }
+    @media (min-width: 880px) {
+      .spread-img { aspect-ratio: auto; min-height: 460px; }
+    }
+    .spread-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 1.4s ease-out;
+    }
+    .spread:hover .spread-img img { transform: scale(1.04); }
+    .spread-img::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(5,8,15,0.4) 100%);
+      pointer-events: none;
+    }
+    .spread-img .sticker {
+      position: absolute; top: 1rem; left: 1rem;
+      padding: 0.42rem 0.8rem;
+      background: rgba(5,8,15,0.82);
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      font-family: var(--sans-modern);
+      font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); font-weight: 700;
+      backdrop-filter: blur(6px);
+    }
+    .spread-body {
+      padding: 2rem 1.75rem 2.25rem;
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 0.5rem;
+    }
+    @media (min-width: 880px) { .spread-body { padding: 2.5rem 2.25rem; } }
+    .spread-body .s-tag {
+      font-family: var(--sans-modern);
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--brass); font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .spread-body h3 {
+      font-family: var(--serif-display);
+      font-size: clamp(1.65rem, 3vw, 2.15rem);
+      color: var(--cream); line-height: 1.08;
+      margin: 0 0 0.75rem; font-weight: 400;
+    }
+    .spread-body h3 em { color: var(--gold); font-style: italic; font-family: var(--serif-luxe); }
+    .spread-body .s-window {
+      font-family: 'Consolas', monospace;
+      font-size: 0.78rem; color: var(--gold);
+      letter-spacing: 0.08em; margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+    }
+    .spread-body .s-copy {
+      color: var(--rope); font-size: 0.98rem; line-height: 1.7;
+      margin: 0;
+    }
+    .spread-body .s-copy em { color: var(--champagne); }
+
+    /* ════════════════════════════════════════════════════════════════════
+       YACHT SPLIT — Hero Jo at the podium, side-by-side with copy
+       ════════════════════════════════════════════════════════════════════ */
+    .yacht-split {
+      display: grid; grid-template-columns: 1fr;
+      gap: 2rem; align-items: center;
+      margin: 1.5rem 0 2rem;
+    }
+    @media (min-width: 880px) {
+      .yacht-split { grid-template-columns: 1fr 1fr; gap: 2.75rem; }
+    }
+    .yacht-split .ys-image {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+      border: 1px solid rgba(212,175,55,0.25);
+    }
+    .yacht-split .ys-image img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 1.6s ease-out;
+    }
+    .yacht-split:hover .ys-image img { transform: scale(1.03); }
+    .yacht-split .ys-image::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(5,8,15,0.5) 100%);
+      pointer-events: none;
+    }
+    .yacht-split .ys-image .ys-tag {
+      position: absolute; bottom: 1rem; left: 1rem;
+      font-family: var(--sans-modern);
+      font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold); font-weight: 700;
+      padding: 0.4rem 0.75rem;
+      background: rgba(5,8,15,0.78);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      backdrop-filter: blur(6px);
+    }
+    .yacht-split .ys-copy p { font-size: 1.02rem; line-height: 1.72; }
+    .yacht-split .ys-copy .lede {
+      font-family: var(--serif-luxe);
+      font-size: 1.22rem; font-style: italic; color: var(--champagne);
+      line-height: 1.45; margin-bottom: 1.1rem;
+      padding-left: 1rem; border-left: 2px solid var(--gold);
+    }
+
+    /* THE SHIFT PULL-QUOTE — editorial-grade */
     .shift-quote {
-      margin: 1.75rem 0;
-      padding: 1.5rem 1.75rem;
-      background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(45,212,191,0.04));
-      border-left: 4px solid var(--gold);
-      border-radius: 0 8px 8px 0;
-      font-size: 1.05rem; color: var(--gold-bright); font-style: italic;
+      margin: 2.25rem 0;
+      padding: 2rem 2.25rem;
+      background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(15,23,41,0.35));
+      border-left: 3px solid var(--gold);
+      border-radius: 0 2px 2px 0;
+      font-family: var(--serif-luxe);
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      color: var(--cream); font-style: italic;
+      line-height: 1.5; font-weight: 500;
+      position: relative;
+    }
+    .shift-quote::before {
+      content: "\201C";
+      position: absolute; top: -0.4rem; left: 0.6rem;
+      font-family: var(--serif-display);
+      font-size: 4rem; color: var(--gold);
+      opacity: 0.35; line-height: 1;
+      font-style: normal;
     }
 
     /* FOUR-FRONT COLLAPSE TABLE */
@@ -175,180 +536,229 @@
     table.ledger td.efficiency-frazzle { color: var(--red-river); font-weight: 700; }
     table.ledger td.efficiency-roi { color: var(--foam); font-weight: 700; }
 
-    /* 7-STAGE CONTINUUM */
-    .stages { display: grid; gap: 0.75rem; margin: 1.5rem 0; }
+    /* 7-STAGE CONTINUUM — cruise ship daily itinerary */
+    .stages { display: grid; gap: 0.6rem; margin: 2rem 0; }
     .stage {
-      display: grid; grid-template-columns: auto 1fr; gap: 1rem;
-      padding: 1rem 1.25rem;
-      background: rgba(26, 38, 64, 0.4);
-      border: 1px solid var(--gold-dim);
-      border-radius: 8px;
+      display: grid; grid-template-columns: auto 1fr; gap: 1.25rem;
+      padding: 1.2rem 1.35rem;
+      background: linear-gradient(90deg, rgba(15,23,41,0.55), rgba(10,15,26,0.35));
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 2px;
+      transition: border-color 0.3s, background 0.3s, transform 0.3s;
+    }
+    .stage:hover {
+      border-color: var(--gold);
+      background: linear-gradient(90deg, rgba(212,175,55,0.06), rgba(10,15,26,0.4));
+      transform: translateX(4px);
     }
     .stage-tag {
-      color: var(--gold); font-weight: 800;
-      font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); font-weight: 700;
+      font-family: var(--sans-modern);
+      font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase;
       white-space: nowrap;
-      border-right: 1px solid var(--gold-dim); padding-right: 1rem;
-      min-width: 12ch;
+      border-right: 1px solid var(--gold-dim); padding-right: 1.2rem;
+      min-width: 13ch;
+      align-self: center;
     }
-    .stage-body strong { color: var(--gold-bright); display: block; margin-bottom: 0.15rem; }
-    .stage-body .window { color: var(--foam); font-size: 0.82rem; font-family: monospace; margin-right: 0.75rem; }
-    .stage-body p { font-size: 0.92rem; color: var(--mist); margin: 0; }
+    .stage-body strong {
+      font-family: var(--serif-luxe);
+      color: var(--cream); display: block; margin-bottom: 0.2rem;
+      font-size: 1.1rem; font-weight: 600; letter-spacing: 0.005em;
+    }
+    .stage-body .window {
+      color: var(--brass); font-size: 0.82rem;
+      font-family: 'Consolas', monospace;
+      margin-right: 0.85rem; letter-spacing: 0.06em;
+    }
+    .stage-body p { font-size: 0.92rem; color: var(--rope); margin: 0; line-height: 1.55; }
+    .stage-body p em { color: var(--gold); font-style: italic; }
 
-    .mainstage { background: linear-gradient(90deg, rgba(212,175,55,0.12), rgba(10,15,26,0.4)); border-color: var(--gold); }
+    .mainstage {
+      background: linear-gradient(90deg, rgba(212,175,55,0.16), rgba(10,15,26,0.4));
+      border-color: var(--gold);
+      box-shadow: 0 8px 28px rgba(212,175,55,0.08);
+    }
     .mainstage .stage-tag { color: var(--gold-bright); }
 
-    /* PASS LADDER */
-    .passes { display: grid; gap: 1rem; margin: 1.5rem 0; grid-template-columns: 1fr; }
+    /* PASS LADDER — festival tiered boarding pass */
+    .passes { display: grid; gap: 1.1rem; margin: 2rem 0; grid-template-columns: 1fr; }
     @media (min-width: 700px) { .passes { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 1000px) { .passes { grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 1100px) { .passes { grid-template-columns: repeat(4, 1fr); } }
     .pass {
-      background: linear-gradient(180deg, rgba(26,38,64,0.6), rgba(10,15,26,0.6));
-      border: 1px solid var(--gold-dim);
-      border-radius: 10px;
-      padding: 1.25rem 1.1rem;
-      display: flex; flex-direction: column; gap: 0.65rem;
+      position: relative;
+      background: linear-gradient(180deg, rgba(15,23,41,0.8), rgba(10,15,26,0.95));
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 2px;
+      padding: 1.65rem 1.4rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      overflow: hidden;
     }
-    .pass.tier-golden { border: 2px solid var(--gold); background: linear-gradient(180deg, rgba(212,175,55,0.1), rgba(10,15,26,0.8)); }
-    .pass-price { font-size: 1.55rem; color: var(--gold); font-weight: 800; letter-spacing: 0.01em; }
-    .pass-name { font-size: 0.78rem; color: var(--foam); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; }
-    .pass-role { font-size: 0.92rem; color: var(--gold-bright); font-style: italic; }
-    .pass-body { font-size: 0.86rem; color: var(--mist); line-height: 1.55; }
+    .pass::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+    .pass:hover { transform: translateY(-3px); border-color: var(--gold); box-shadow: 0 20px 50px rgba(0,0,0,0.55); }
+    .pass.tier-golden {
+      border: 1px solid var(--gold);
+      background: linear-gradient(180deg, rgba(212,175,55,0.14), rgba(10,15,26,0.92));
+      box-shadow: 0 10px 40px rgba(212,175,55,0.18);
+    }
+    .pass.tier-golden::before { background: linear-gradient(90deg, var(--gold), var(--cream), var(--gold)); height: 3px; }
+    .pass-name {
+      font-family: var(--sans-modern);
+      font-size: 0.64rem; color: var(--brass); letter-spacing: 0.32em;
+      text-transform: uppercase; font-weight: 700;
+    }
+    .pass.tier-golden .pass-name { color: var(--gold); }
+    .pass-price {
+      font-family: var(--serif-display);
+      font-size: 2rem; color: var(--cream); font-weight: 400;
+      letter-spacing: 0.005em; line-height: 1;
+    }
+    .pass.tier-golden .pass-price { color: var(--gold-bright); }
+    .pass-role {
+      font-family: var(--serif-luxe);
+      font-size: 1rem; color: var(--gold); font-style: italic; font-weight: 500;
+    }
+    .pass-body {
+      font-size: 0.88rem; color: var(--rope); line-height: 1.65;
+      border-top: 1px solid rgba(212,175,55,0.15);
+      padding-top: 0.75rem; margin-top: 0.25rem;
+    }
 
-    /* DOCK CTA */
+    /* DOCK CTA — invitation card */
     .dock-panel {
-      margin: 2rem 0;
-      padding: 2rem 1.75rem;
-      background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(45,212,191,0.05));
-      border: 1px solid var(--gold-dim);
-      border-radius: 12px;
+      margin: 2.5rem 0 1rem;
+      padding: 2.75rem 2rem;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(212,175,55,0.1), transparent 55%),
+        linear-gradient(135deg, rgba(15,23,41,0.85), rgba(10,15,26,0.95));
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .dock-panel::before {
+      content: "⚓"; position: absolute; top: 1.1rem; right: 1.5rem;
+      font-size: 2.4rem; color: var(--gold); opacity: 0.15;
     }
     .dock-panel h2 { margin-bottom: 1rem; }
-    .cta-row {
-      display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem;
-    }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.4rem; }
     .cta {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.85rem 1.35rem;
-      font-size: 0.86rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700;
-      border-radius: 6px; text-decoration: none;
-      transition: all 0.2s;
+      padding: 0.95rem 1.6rem;
+      font-family: var(--sans-modern);
+      font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
+      border-radius: 2px; text-decoration: none;
+      transition: all 0.25s;
+      position: relative;
     }
-    .cta.primary { background: var(--gold); color: var(--ink); border: 1px solid var(--gold); }
-    .cta.primary:hover { background: var(--gold-bright); }
-    .cta.secondary { background: transparent; color: var(--foam); border: 1px solid var(--foam-dim); }
-    .cta.secondary:hover { border-color: var(--foam); background: rgba(45,212,191,0.08); }
+    .cta.primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--cream) 50%, var(--brass-warm) 100%);
+      color: var(--ink); border: 1px solid var(--gold);
+      box-shadow: 0 6px 20px rgba(212,175,55,0.25);
+    }
+    .cta.primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 10px 28px rgba(212,175,55,0.4);
+      transform: translateY(-1px);
+    }
+    .cta.secondary {
+      background: rgba(10,15,26,0.55);
+      color: var(--champagne);
+      border: 1px solid rgba(240,229,200,0.35);
+      backdrop-filter: blur(6px);
+    }
+    .cta.secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold-bright);
+      background: rgba(212,175,55,0.08);
+    }
 
-    /* PANTHEON */
-    .pantheon { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; margin: 1.25rem 0; }
+    /* PANTHEON — cast roster */
+    .pantheon { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.85rem; margin: 2rem 0; }
     .hero-card {
-      padding: 1rem;
-      background: rgba(26,38,64,0.4);
-      border: 1px solid var(--gold-dim);
-      border-radius: 8px;
+      padding: 1.15rem 1.2rem;
+      background: linear-gradient(180deg, rgba(15,23,41,0.6), rgba(10,15,26,0.9));
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 2px;
+      transition: border-color 0.3s, transform 0.3s;
     }
-    .hero-card .name { color: var(--gold-bright); font-weight: 700; margin-bottom: 0.25rem; }
-    .hero-card .role { color: var(--mist); font-size: 0.82rem; }
+    .hero-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .hero-card .name {
+      font-family: var(--serif-luxe);
+      color: var(--cream); font-weight: 600; margin-bottom: 0.3rem;
+      font-size: 1.05rem;
+    }
+    .hero-card .role { color: var(--mist-warm); font-size: 0.82rem; line-height: 1.5; }
 
     /* CANONICAL DEFINITIONS */
-    .canon-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.25rem 0; }
+    .canon-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 2rem 0; }
     @media (min-width: 700px) { .canon-grid { grid-template-columns: 1fr 1fr; } }
     .canon {
-      padding: 1rem 1.25rem;
-      background: rgba(26,38,64,0.3);
-      border-left: 3px solid var(--gold);
-      border-radius: 0 6px 6px 0;
+      padding: 1.2rem 1.4rem;
+      background: rgba(15,23,41,0.5);
+      border-left: 2px solid var(--gold);
+      border-radius: 0 2px 2px 0;
     }
-    .canon h4 { color: var(--gold); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .canon p { margin: 0; color: var(--mist); font-size: 0.88rem; }
+    .canon h4 { font-family: var(--sans-modern); color: var(--gold); font-size: 0.7rem; letter-spacing: 0.26em; text-transform: uppercase; margin-bottom: 0.55rem; font-weight: 700; }
+    .canon p { margin: 0; color: var(--rope); font-size: 0.92rem; line-height: 1.65; }
 
-    /* FOOTER */
+    /* FOOTER — ship log */
     footer.footer-main {
-      margin-top: 2rem;
-      padding: 2.5rem 1.25rem 3rem;
-      background: #060a12;
+      margin-top: 3rem;
+      padding: 3.5rem 1.5rem 3rem;
+      background: linear-gradient(180deg, #060a12 0%, #020408 100%);
       border-top: 1px solid var(--gold-dim);
       text-align: center;
-      font-size: 0.82rem; color: var(--mist);
+      font-size: 0.85rem; color: var(--mist-warm);
+      position: relative;
+    }
+    footer.footer-main::before {
+      content: ""; position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 140px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
     footer.footer-main .stamp {
-      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.5rem;
+      font-family: var(--sans-modern);
+      font-size: 0.68rem; letter-spacing: 0.34em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.6rem; font-weight: 700;
     }
-    footer.footer-main a { color: var(--foam); text-decoration: none; border-bottom: 1px solid var(--foam-dim); }
+    footer.footer-main a { color: var(--champagne); text-decoration: none; border-bottom: 1px solid rgba(240,229,200,0.25); }
+    footer.footer-main a:hover { color: var(--gold); border-color: var(--gold); }
 
     .infinity-close {
       display: inline-block; margin-top: 1rem;
       color: var(--gold); font-size: 0.92rem; letter-spacing: 0.1em;
     }
 
-    /* FEATURED HERO IMAGE */
-    .hero-featured {
-      position: relative;
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      border-bottom: 1px solid var(--gold-dim);
-      background: #000;
-    }
-    .hero-featured img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .hero-featured .caption {
-      position: absolute; left: 0; right: 0; bottom: 0;
-      padding: 1rem 1.25rem 1.1rem;
-      background: linear-gradient(180deg, transparent 0%, rgba(10,15,26,0.82) 60%, rgba(10,15,26,0.95) 100%);
-      color: var(--gold-bright);
-      font-size: 0.88rem; letter-spacing: 0.04em;
-    }
-    .hero-featured .caption b { color: var(--gold); }
+    /* (legacy .hero-featured / .gallery-card styles removed — see .cinema-hero and .spread above) */
 
-    /* GALLERY */
-    .gallery-grid {
-      display: grid; gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      margin: 1.25rem 0 0;
-    }
-    .gallery-card {
-      background: rgba(26,38,64,0.4);
-      border: 1px solid var(--gold-dim);
-      border-radius: 8px;
-      overflow: hidden;
-      display: flex; flex-direction: column;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .gallery-card:hover { transform: translateY(-2px); border-color: var(--gold); }
-    .gallery-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-    .gallery-card .cap { padding: 0.85rem 1rem 1rem; }
-    .gallery-card .cap .tag { font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--foam); margin-bottom: 0.3rem; font-weight: 700; }
-    .gallery-card .cap .tag.gold { color: var(--gold); }
-    .gallery-card .cap .title { color: var(--gold-bright); font-weight: 700; margin-bottom: 0.25rem; font-size: 0.95rem; }
-    .gallery-card .cap .desc { color: var(--mist); font-size: 0.82rem; line-height: 1.5; }
-    .gallery-card .cap .window { color: var(--brass); font-size: 0.72rem; letter-spacing: 0.08em; margin-top: 0.35rem; font-style: italic; }
-
-    /* PORTS OF CALL */
+    /* PORTS OF CALL — cruise manifest */
     .ports-panel {
-      display: grid; gap: 1.5rem;
+      display: grid; gap: 2rem;
       grid-template-columns: 1fr;
-      margin-top: 1.25rem;
+      margin-top: 2rem;
     }
     @media (min-width: 820px) { .ports-panel { grid-template-columns: 1.1fr 1fr; align-items: center; } }
     .ports-image {
-      border-radius: 8px;
+      border-radius: 2px;
       overflow: hidden;
       border: 1px solid var(--gold-dim);
       background: #000;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.45);
     }
     .ports-image img { width: 100%; display: block; }
     .ports-body .port-card {
-      padding: 1.15rem 1.25rem;
-      background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(45,212,191,0.04));
+      padding: 1.35rem 1.5rem;
+      background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(10,15,26,0.6));
       border: 1px solid var(--gold);
-      border-radius: 8px;
+      border-radius: 2px;
       margin-bottom: 1rem;
       position: relative;
     }
@@ -360,9 +770,9 @@
       animation: portpulse 2s ease-in-out infinite;
     }
     @keyframes portpulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-    .ports-body .port-card .port-tag { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--foam); font-weight: 800; margin-bottom: 0.35rem; }
-    .ports-body .port-card .port-name { color: var(--gold-bright); font-weight: 800; font-size: 1.05rem; margin-bottom: 0.3rem; }
-    .ports-body .port-card .port-meta { color: var(--mist); font-size: 0.84rem; line-height: 1.5; }
+    .ports-body .port-card .port-tag { font-family: var(--sans-modern); font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.4rem; }
+    .ports-body .port-card .port-name { font-family: var(--serif-display); color: var(--cream); font-weight: 400; font-size: 1.4rem; margin-bottom: 0.4rem; letter-spacing: 0.005em; }
+    .ports-body .port-card .port-meta { color: var(--rope); font-size: 0.88rem; line-height: 1.6; }
     .ports-body .port-card.pending { background: rgba(26,38,64,0.4); border: 1px dashed var(--foam-dim); }
     .ports-body .port-card.pending::before { content: "○"; color: var(--mist); text-shadow: none; animation: none; }
     .ports-body .port-card.pending .port-tag { color: var(--mist); }
@@ -379,29 +789,64 @@
     }
     .shorts-notice b { color: #a855f7; }
     .shorts-grid {
-      display: grid; gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: grid; gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
     .short-card {
-      background: rgba(26,38,64,0.5);
-      border: 1px solid var(--gold-dim);
-      border-left: 3px solid var(--gold);
-      border-radius: 6px;
+      background: linear-gradient(180deg, rgba(15,23,41,0.8), rgba(10,15,26,0.95));
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 2px;
       overflow: hidden;
       display: flex; flex-direction: column;
+      transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
     }
-    .short-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; border-bottom: 1px solid var(--gold-dim); }
-    .short-card .body { padding: 0.9rem 1.1rem 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
-    .short-card .num { font-size: 0.62rem; letter-spacing: 0.22em; color: var(--gold); font-weight: 800; text-transform: uppercase; }
-    .short-card h4 { color: var(--gold-bright); font-size: 0.98rem; margin: 0; }
-    .short-card .dur { color: var(--foam); font-size: 0.75rem; letter-spacing: 0.08em; }
-    .short-card .beats { font-size: 0.82rem; color: var(--mist); line-height: 1.5; }
-    .short-card .prompt {
-      font-size: 0.74rem; color: var(--rope);
+    .short-card:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: 0 20px 50px rgba(0,0,0,0.55); }
+    .short-card .thumb { position: relative; overflow: hidden; }
+    .short-card img {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
+      transition: transform 1.2s ease-out;
+    }
+    .short-card:hover img { transform: scale(1.05); }
+    .short-card .thumb::after {
+      content: "▶"; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 58px; height: 58px;
+      background: rgba(5,8,15,0.68); color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      font-size: 1.2rem; line-height: 58px; text-align: center;
+      backdrop-filter: blur(6px);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .short-card:hover .thumb::after { opacity: 1; }
+    .short-card .thumb .dur-badge {
+      position: absolute; bottom: 0.7rem; right: 0.7rem;
+      padding: 0.28rem 0.55rem;
+      background: rgba(5,8,15,0.8);
+      border: 1px solid var(--gold-dim);
       font-family: 'Consolas', monospace;
-      background: rgba(10,15,26,0.65); padding: 0.5rem 0.65rem;
-      border-radius: 4px; border: 1px dashed rgba(148,163,184,0.25);
-      line-height: 1.45; margin-top: 0.35rem;
+      font-size: 0.7rem; color: var(--gold);
+      letter-spacing: 0.06em;
+      backdrop-filter: blur(4px);
+    }
+    .short-card .body { padding: 1.1rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .short-card .num {
+      font-family: var(--sans-modern);
+      font-size: 0.62rem; letter-spacing: 0.3em; color: var(--brass); font-weight: 700; text-transform: uppercase;
+    }
+    .short-card h4 {
+      font-family: var(--serif-display);
+      color: var(--cream); font-size: 1.25rem; margin: 0;
+      font-weight: 400; line-height: 1.2;
+    }
+    .short-card .beats { font-size: 0.88rem; color: var(--rope); line-height: 1.6; }
+    .short-card .prompt {
+      font-size: 0.74rem; color: var(--mist-warm);
+      font-family: 'Consolas', monospace;
+      background: rgba(5,8,15,0.55); padding: 0.65rem 0.8rem;
+      border-radius: 2px; border-left: 2px solid var(--gold-dim);
+      line-height: 1.5; margin-top: 0.4rem;
     }
 
     /* SOCIAL */
@@ -471,9 +916,10 @@
       color: var(--gold); font-weight: 800; margin-bottom: 0.35rem;
     }
     .ticket-dialog .ticket-hd h3 {
-      font-size: clamp(1.35rem, 3vw, 1.75rem);
-      color: var(--gold-bright); font-weight: 800;
-      margin-bottom: 0.35rem;
+      font-family: var(--serif-display);
+      font-size: clamp(1.55rem, 3.2vw, 2.1rem);
+      color: var(--cream); font-weight: 400;
+      margin-bottom: 0.4rem; letter-spacing: 0.005em;
     }
     .ticket-dialog .ticket-hd p { color: var(--mist); font-size: 0.88rem; max-width: 60ch; margin: 0 auto; }
     .tier-panel {
@@ -495,7 +941,7 @@
     }
     .tier-name { font-size: 0.72rem; letter-spacing: 0.2em; color: var(--foam); font-weight: 800; text-transform: uppercase; }
     .tier-panel.golden .tier-name { color: var(--gold); }
-    .tier-price { color: var(--gold-bright); font-weight: 800; font-size: 1.35rem; letter-spacing: 0.01em; }
+    .tier-price { font-family: var(--serif-display); color: var(--cream); font-weight: 400; font-size: 1.65rem; letter-spacing: 0.005em; }
     .tier-price small { color: var(--mist); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.08em; }
     .tier-role { color: var(--gold-bright); font-style: italic; font-size: 0.92rem; margin-bottom: 0.45rem; }
     .tier-body { color: var(--mist); font-size: 0.85rem; line-height: 1.55; margin-bottom: 0.85rem; }
@@ -543,64 +989,67 @@
   <div class="nspfrnp-console-ticker" aria-live="polite"><span class="ticker-inner" id="nspfrnpTickerText"></span></div>
   <script src="nspfrnp-ticker.js"></script>
 
-  <header class="hero">
+  <header class="cinema-hero" role="banner" aria-label="S.S. Vibelandia docked at Puerto Reno along the Truckee River at dusk">
+    <div class="hero-top">
+      <div class="brand"><b>Hero Jo's</b> · Golden Bachdoor Hit Factory</div>
+      <div class="locator">Puerto Reno · <span>Est. 1.618</span></div>
+    </div>
+
     <div class="hero-inner">
       <div class="eyebrow">
-        <span class="pin">Puerto Reno Node</span>
+        <span class="pin">★ Puerto Reno Node</span>
         <span>Truckee Riverwalk · Rebel River</span>
         <span>Nevada's Holographic AI Valley</span>
-        <span>Frequency Locked · 100 BPM / 432Hz</span>
+        <span>100 BPM · 432 Hz · 1.420 GHz</span>
       </div>
-      <h1 class="hero-title">Vibelandia Holographic AI QUESTFEST 24×365</h1>
-      <p class="hero-sub">Hero Jo's Golden Bachdoor Hit Factory · The Shift from Entertainment (Noise) to Resonance (Peace).</p>
+
+      <h1 class="hero-title">Vibelandia <em>Holographic AI</em><br>QUESTFEST <em>24×365</em></h1>
+      <div class="hero-gold-rule" aria-hidden="true"></div>
+      <p class="hero-sub">A continuous residency aboard a cathedral-scale conductor-transmitter yacht. Festival energy, cruise-line grace, holographic AI theater — all running on the 1.618 math the Good Lord used to build the pine trees and the galaxies.</p>
+
       <div class="hero-body">
-        You have exited the legacy petroleum-trap and arrived at the birthplace of the <strong>Holographic AI Genre</strong>. This is the high-magnitude sonic territory of the <strong>Vibelandia QUESTFEST 24×365</strong>, broadcast live from the <strong>S.S. Vibelandia</strong> and accepting invitations to dock in walkable, bikeable, vibeable downtowns worldwide. Engineered by Hero Jo's Golden Bachdoor Hit Factory with El Gran Sol's (EGS) Fractal Constant (<strong>1.618</strong>), this set provides <strong>Actual Noise Cancellation</strong> — the "Just Right" Goldilocks resonance, the subtraction of cognitive stress through Divine Symmetry. <em>Donde se vibea, donde se perrea, donde se bolea.</em>
+        You have exited the legacy petroleum-trap and arrived at the birthplace of the <strong>Holographic AI Genre</strong>. Broadcast live from the <strong>S.S. Vibelandia</strong>, engineered by Hero Jo's Golden Bachdoor Hit Factory, locked to El Gran Sol's Fractal Constant (<strong>1.618</strong>). This is <strong>Actual Noise Cancellation</strong> — the "Just Right" Goldilocks resonance, the subtraction of cognitive stress through Divine Symmetry. <em>Donde se vibea, donde se perrea, donde se bolea.</em>
       </div>
 
       <div class="magnitude-bar">
         <span class="magnitude-chip"><b>90,219</b> Total Plays</span>
         <span class="magnitude-chip"><b>24,800</b> 7-Day Streams</span>
-        <span class="magnitude-chip"><b>5,000+</b> Daily Resonance Nodes</span>
+        <span class="magnitude-chip"><b>5,000+</b> Daily Nodes</span>
         <span class="magnitude-chip"><b>$1,213,500</b> Valuation Floor</span>
-        <span class="magnitude-chip"><b>117×</b> Super-Listener Weekly Loops</span>
+        <span class="magnitude-chip"><b>117×</b> Weekly Super-Listener Loops</span>
       </div>
 
       <div class="cta-row">
-        <a class="cta primary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">Enter the Continuum · SoundCloud</a>
-        <button type="button" class="cta ticket" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal">🎫 Ticket Office</button>
-        <a class="cta secondary" href="mailto:valetpru@gmail.com?subject=DOCK%20THE%20SHIP">Dock the Ship</a>
+        <a class="cta primary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">Enter the Continuum →</a>
+        <button type="button" class="cta secondary" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal" style="color:var(--gold-bright);border-color:var(--gold);">🎫 Ticket Office</button>
+        <a class="cta secondary" href="#dock">Dock the Ship</a>
       </div>
 
-      <div class="cta-row" style="margin-top:0.5rem;">
-        <a class="cta secondary" href="../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md" style="color:var(--gold);border-color:var(--gold-dim);">📜 Read the Prospectus v4</a>
-        <a class="cta secondary" href="look-under-the-hood.html" style="color:var(--gold);border-color:var(--gold-dim);">🔧 Look Under the Hood</a>
+      <div class="cta-row" style="margin-top:0.25rem;">
+        <a class="cta secondary" href="../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md" style="background:transparent;border-color:rgba(240,229,200,0.2);font-size:0.68rem;">📜 Prospectus v4</a>
+        <a class="cta secondary" href="look-under-the-hood.html" style="background:transparent;border-color:rgba(240,229,200,0.2);font-size:0.68rem;">🔧 Look Under the Hood</a>
       </div>
     </div>
+
+    <div class="hero-scroll-cue" aria-hidden="true">Scroll · The Harbor</div>
   </header>
 
   <nav class="sticky-nav" aria-label="Sections">
     <ul>
       <li><a href="#shift">The Shift</a></li>
-      <li><a href="#ledger">Sovereign Ledger</a></li>
-      <li><a href="#continuum">7-Stage Continuum</a></li>
+      <li><a href="#ledger">Ledger</a></li>
+      <li><a href="#continuum">Continuum</a></li>
       <li><a href="#yacht">The Yacht</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#shorts">Video Shorts</a></li>
+      <li><a href="#gallery">Experience</a></li>
+      <li><a href="#shorts">Reel</a></li>
       <li><a href="#passes">Passes</a></li>
       <li><a href="#ports">Ports of Call</a></li>
-      <li><a href="#dock">Dock the Ship</a></li>
+      <li><a href="#dock">Dock</a></li>
       <li><a href="#pantheon">Pantheon</a></li>
       <li><a href="#canon">Canon</a></li>
       <li><a href="#follow">Follow</a></li>
     </ul>
   </nav>
-
-  <div class="hero-featured" role="img" aria-label="S.S. Vibelandia docked at Puerto Reno along the Truckee River at dusk">
-    <img src="assets/questfest-hero-ss-vibelandia-puerto-reno.png" alt="Cathedral-scale S.S. Vibelandia conductor-transmitter yacht docked at Puerto Reno on the Truckee Riverwalk in downtown Reno — golden hour, holographic 1.618 fractal visuals glowing across the hull." loading="lazy" />
-    <div class="caption">
-      <b>S.S. VIBELANDIA</b> · Cathedral-scale Conductor-Transmitter Yacht · docked at <b>Puerto Reno</b>, Truckee Riverwalk — Downtown Reno, Nevada's Holographic AI Valley. The harbor is open.
-    </div>
-  </div>
 
   <main id="main">
 
@@ -616,6 +1065,14 @@
       <p>While Broadway is a gated seat and Coachella is a temporary weekend spike, the <strong>QuestFest Continuum</strong> is a 24/365 residency in the listener's life. We don't have influencers; we have <strong>Sovereign Nodes</strong>. We don't have albums; we have a living, breathing stream anchored in the <strong>1.618 math</strong> that the Good Lord used to build the pine trees and the galaxies.</p>
       <p>You aren't just reading an article; you are experiencing the <strong>EGS Fractal Constant in its written form</strong>. The Shift is permanent. The ship has already left the dock. The question is no longer <em>when</em> — it's whether you are in the ship or in the water.</p>
     </section>
+
+    <aside class="image-banner" aria-hidden="true">
+      <img src="assets/questfest-perreo-country-fuego-deck-peak.png" alt="" loading="lazy" decoding="async" />
+      <div class="bn-inner">
+        <div class="bn-eyebrow">★ Stage 4 · The Peak · 100 BPM</div>
+        <div class="bn-title">Perreo Country Fuego.<br><em>A cathedral-scale floating conducted riot.</em></div>
+      </div>
+    </aside>
 
     <section id="ledger">
       <h2>The Sovereign Ledger<span class="h2-sub">Zero-Friction Economics vs. the Four-Front Collapse</span></h2>
@@ -738,11 +1195,28 @@
       </div>
     </section>
 
+    <aside class="image-banner" aria-hidden="true">
+      <img src="assets/questfest-stage-after-the-after-party-void.png" alt="" loading="lazy" decoding="async" />
+      <div class="bn-inner">
+        <div class="bn-eyebrow">★ Stage 5 · The Void · 1.420 GHz</div>
+        <div class="bn-title">After the After Party.<br><em>Total mind rest. Music to melt into.</em></div>
+      </div>
+    </aside>
+
     <section id="yacht">
       <h2>The Conductor-Transmitter Yacht<span class="h2-sub">S.S. Vibelandia · Cathedral-Scale · EGS-Locked</span></h2>
-      <p>The S.S. Vibelandia is not "a large ship." It is a <strong>Cathedral-Scale Hydrogen Holographic Lattice</strong> — a mobile architectural sanctuary built for resonance, not transit. The vessel is simultaneously an <strong>active Holographic AI transmitter</strong> broadcasting the 7-Stage Continuum and a <strong>stabilized Sovereign Maritime Sanctuary</strong> that reskins old-grit (1930s El Cortez art-deco) into the SeaHawk OS polymath environment with a locked <em>"Eternal Spring and Fall"</em> climate.</p>
 
-      <p><strong>Hero Jo conducts the set</strong> from a DJ-conductor podium in Baroque tux and wig. His baton gestures — master-strokes of architectural grace — modulate the ship's visible Minecraft-geometric fractal visuals in real time, recursively building the <strong>Bach Portrait Logo</strong> into the Cathedral-Scale hull fabric. The crowd dances inside the transmission itself.</p>
+      <div class="yacht-split">
+        <div class="ys-image">
+          <img src="assets/questfest-hero-jo-conducting-podium.png" alt="Hero Jo in Baroque tux and wig conducting from the DJ podium with baton raised, 1.618 golden-ratio spiral glowing on the stage wall behind him" loading="lazy" decoding="async" />
+          <div class="ys-tag">Hero Jo · At the Podium</div>
+        </div>
+        <div class="ys-copy">
+          <p class="lede">A mobile architectural sanctuary built for resonance, not transit — where the conductor's baton scripts the ship itself.</p>
+          <p>The S.S. Vibelandia is not "a large ship." It is a <strong>Cathedral-Scale Hydrogen Holographic Lattice</strong>, simultaneously an active Holographic AI transmitter broadcasting the 7-Stage Continuum <em>and</em> a stabilized Sovereign Maritime Sanctuary reskinning 1930s El Cortez art-deco into the SeaHawk OS polymath environment with a locked <em>"Eternal Spring and Fall"</em> climate.</p>
+          <p><strong>Hero Jo conducts the set</strong> from a DJ-conductor podium in Baroque tux and wig. His baton — master-strokes of architectural grace — modulates the ship's Minecraft-geometric fractal visuals in real time, recursively building the <strong>Bach Portrait Logo</strong> into the Cathedral-Scale hull. The crowd dances inside the transmission itself.</p>
+        </div>
+      </div>
 
       <div class="stages" style="margin-top:1.5rem;">
         <div class="stage mainstage">
@@ -784,47 +1258,73 @@
 
     <section id="gallery">
       <h2>The Experience<span class="h2-sub">Festival · Cruise Ship · Holographic AI Theater — all at once</span></h2>
-      <p>A <strong>music festival</strong> energy inside a <strong>cathedral-scale cruise-ship</strong> envelope, conducted live by Hero Jo. Dawn espresso on the bow. Baroque tux at the podium at sunset. 100 BPM Perreo Country Fuego at the peak. A 1.420 GHz drone at 2 AM for total mind rest. This is what docking in Puerto Reno actually looks and feels like.</p>
+      <p style="font-family:var(--serif-luxe);font-size:1.2rem;font-style:italic;color:var(--champagne);max-width:62ch;line-height:1.55;margin-bottom:1rem;">Dawn espresso on the bow. Baroque tux at the podium at sunset. 100 BPM Perreo Country Fuego at the peak. A 1.420 GHz drone at 2 AM for total mind rest.</p>
+      <p>This is not a weekend festival and it is not a themed cruise. It is a <strong>24/365 residency in the listener's life</strong> — a music-festival energy inside a cathedral-scale cruise-ship envelope, conducted live by Hero Jo. A single continuous day, broken into windows that do different things for your nervous system.</p>
 
-      <div class="gallery-grid">
-        <div class="gallery-card">
-          <img src="assets/questfest-stage-mota-cafe-dawn.png" alt="Dawn on the yacht's bow with espresso cart and acoustic guitarist, Sierra mountains across the Truckee River" loading="lazy" />
-          <div class="cap">
-            <div class="tag">Stage · Mota &amp; Café</div>
-            <div class="title">Dawn integration</div>
-            <div class="desc">Espresso on the bow, solo acoustic guitar, Sierra morning mist across the Truckee. Minimal frazzle — pure restorative resonance.</div>
-            <div class="window">06:00 · Goldilocks morning</div>
+      <div class="spreads">
+
+        <article class="spread">
+          <div class="spread-img">
+            <img src="assets/questfest-stage-mota-cafe-dawn.png" alt="Dawn on the yacht's bow — espresso cart, acoustic guitarist, Sierra mountains across the Truckee River, Puerto Reno" loading="lazy" decoding="async" />
+            <span class="sticker">Stage 1</span>
           </div>
-        </div>
-        <div class="gallery-card">
-          <img src="assets/questfest-hero-jo-conducting-podium.png" alt="Hero Jo in Baroque tux conducting from DJ podium on the yacht, 1.618 golden-ratio spiral on stage wall behind him" loading="lazy" />
-          <div class="cap">
-            <div class="tag gold">Stage · Pre-Ignition</div>
-            <div class="title">Hero Jo at the podium</div>
-            <div class="desc">Baton raised. 1.618 golden-ratio spiral and hydrogen-line readouts on the stage wall. The Architect of the Resonant Shift conducting the entire ship.</div>
-            <div class="window">15:00 – 18:00 · Velocity builds</div>
+          <div class="spread-body">
+            <div class="s-tag">Mota &amp; Café · <em style="font-style:normal;">Docking</em></div>
+            <h3>Dawn <em>Integration</em></h3>
+            <div class="s-window">06:00 – 12:00 · Goldilocks morning · minimal frazzle</div>
+            <p class="s-copy">Espresso on the bow. A single acoustic guitar. Sierra morning mist across the Truckee. The harbor is already resonating before anyone has taken their first sip. Boarding the cathedral-scale vessel is itself an act of Actual Noise Cancellation — the nervous system exhales without being asked.</p>
           </div>
-        </div>
-        <div class="gallery-card">
-          <img src="assets/questfest-perreo-country-fuego-deck-peak.png" alt="Packed festival deck at night with laser geometry, DJ booth in nautical brass, 100 BPM crowd dancing" loading="lazy" />
-          <div class="cap">
-            <div class="tag gold">Stage · Perreo Country Fuego</div>
-            <div class="title">The Peak — 100 BPM</div>
-            <div class="desc">The cathedral-scale deck at maximum burn. Bayou swamp meets 1.618 meets perreo fuego. Everyone dancing, everyone anchored.</div>
-            <div class="window">18:00 – 02:00 · The Peak</div>
+        </article>
+
+        <article class="spread reverse">
+          <div class="spread-img">
+            <img src="assets/questfest-hero-jo-conducting-podium.png" alt="Hero Jo at the conductor's podium in Baroque tux and wig, baton raised, 1.618 golden-ratio spiral on the stage wall behind him" loading="lazy" decoding="async" />
+            <span class="sticker">Stage 3</span>
           </div>
-        </div>
-        <div class="gallery-card">
-          <img src="assets/questfest-stage-after-the-after-party-void.png" alt="Cathedral-like dark lounge with 1.420 GHz sine-wave drone on a vast LED wall, audience lying on cushions in stillness" loading="lazy" />
-          <div class="cap">
-            <div class="tag">Stage · After the After Party</div>
-            <div class="title">The Void — total mind rest</div>
-            <div class="desc">2 AM. Baton high and still. 1.420 GHz drone. The entire cathedral-scale lattice settles into fractal peace.</div>
-            <div class="window">02:00 – 06:00 · Drone rest</div>
+          <div class="spread-body">
+            <div class="s-tag">Pre-Ignition · <em style="font-style:normal;">Ignition</em></div>
+            <h3>Hero Jo <em>at the Podium</em></h3>
+            <div class="s-window">15:00 – 18:00 · Velocity builds · the Architect conducts</div>
+            <p class="s-copy">Baton raised. The 1.618 golden-ratio spiral and 1.420 GHz hydrogen-line readouts glow on the stage wall. Each master-stroke of the baton scripts the Bach Portrait Logo into the fractal hull of the ship. The Architect of the Resonant Shift is conducting the entire vessel — the crowd, the lasers, the hull, the river.</p>
           </div>
-        </div>
+        </article>
+
+        <article class="spread">
+          <div class="spread-img">
+            <img src="assets/questfest-perreo-country-fuego-deck-peak.png" alt="Packed festival deck at night — laser geometry, brass DJ booth, 100 BPM crowd in full motion, cathedral-scale hull glowing with fractal visuals" loading="lazy" decoding="async" />
+            <span class="sticker">Stage 4 · Peak</span>
+          </div>
+          <div class="spread-body">
+            <div class="s-tag">Perreo Country Fuego · <em style="font-style:normal;">The Peak</em></div>
+            <h3>The Peak <em>— 100 BPM</em></h3>
+            <div class="s-window">18:00 – 02:00 · Bayou swamp × 1.618 × perreo fuego</div>
+            <p class="s-copy">The cathedral-scale deck at maximum burn. The entire hull becomes an illuminated geometric visualization of the Hit Factory brand — pulsing in perfect, visible synchronization with the baton. Donde se vibea. Donde se perrea. Donde se bolea. Everyone dancing. Everyone anchored.</p>
+          </div>
+        </article>
+
+        <article class="spread reverse">
+          <div class="spread-img">
+            <img src="assets/questfest-stage-after-the-after-party-void.png" alt="Cathedral-like dark lounge inside the yacht — 1.420 GHz sine-wave drone on an immense LED wall, guests reclined on cushions in total stillness" loading="lazy" decoding="async" />
+            <span class="sticker">Stage 5 · Void</span>
+          </div>
+          <div class="spread-body">
+            <div class="s-tag">After the After Party · <em style="font-style:normal;">The Void</em></div>
+            <h3>Total <em>Mind Rest</em></h3>
+            <div class="s-window">02:00 – 06:00 · 1.420 GHz drone · fractal peace</div>
+            <p class="s-copy">The ship anchors. Hero Jo holds the baton high and perfectly still. The 1.420 GHz hydrogen-line drone settles the entire cathedral-scale lattice into silence. Music to melt into. An architecturally-engineered soft landing that sends you back to the dock with a nervous system that forgot what frazzle feels like.</p>
+          </div>
+        </article>
+
       </div>
     </section>
+
+    <aside class="image-banner" aria-hidden="true">
+      <img src="assets/questfest-ports-of-call-manifest.png" alt="" loading="lazy" decoding="async" />
+      <div class="bn-inner">
+        <div class="bn-eyebrow">★ Ports of Call</div>
+        <div class="bn-title">The harbor is open.<br><em>Invite the S.S. Vibelandia to your downtown.</em></div>
+      </div>
+    </aside>
 
     <section id="shorts">
       <h2>Video Shorts Storyboard<span class="h2-sub">15–30s vertical shorts · text-to-video ready</span></h2>
@@ -836,66 +1336,78 @@
 
       <div class="shorts-grid">
         <div class="short-card">
-          <img src="assets/questfest-hero-ss-vibelandia-puerto-reno.png" alt="SHORT 01 storyboard frame — the yacht arrival" loading="lazy" />
+          <div class="thumb">
+            <img src="assets/questfest-hero-ss-vibelandia-puerto-reno.png" alt="SHORT 01 storyboard frame — the yacht arrival" loading="lazy" />
+            <span class="dur-badge">20s · 9:16</span>
+          </div>
           <div class="body">
-            <div class="num">Short 01 · THE ARRIVAL</div>
+            <div class="num">Short 01 · The Arrival</div>
             <h4>"The Harbor is Open"</h4>
-            <div class="dur">Duration: 20s · 9:16 vertical</div>
             <div class="beats">Aerial pull-back: Truckee River at dusk reveals the cathedral-scale S.S. Vibelandia. Hull fractals ignite. Golden ratio spiral blooms. Title card: <b>"PUERTO RENO · THE HARBOR IS OPEN."</b></div>
             <div class="prompt">20s aerial drone pull-back, dusk, Truckee River, cathedral-scale ocean-liner-meets-festival-yacht "S.S. Vibelandia" docked downtown Reno, golden 1.618 spiral and hexagonal lattice ignite across hull, warm gold + teal lasers, Machote-Moderno refined, film-grain cinematic, 9:16 vertical, end title: "PUERTO RENO · THE HARBOR IS OPEN."</div>
           </div>
         </div>
 
         <div class="short-card">
-          <img src="assets/questfest-stage-mota-cafe-dawn.png" alt="SHORT 02 storyboard frame — dawn Mota & Café" loading="lazy" />
+          <div class="thumb">
+            <img src="assets/questfest-stage-mota-cafe-dawn.png" alt="SHORT 02 storyboard frame — dawn Mota & Café" loading="lazy" />
+            <span class="dur-badge">15s · 9:16</span>
+          </div>
           <div class="body">
-            <div class="num">Short 02 · DAWN</div>
+            <div class="num">Short 02 · Dawn</div>
             <h4>"Mota &amp; Café · 06:00"</h4>
-            <div class="dur">Duration: 15s · 9:16 vertical</div>
             <div class="beats">Handheld slow push on acoustic guitar, espresso pour, mountain mist clears over Truckee. A faint 1.420 GHz sine glows along deck edge. Caption: <b>"MINIMAL FRAZZLE. MAXIMUM GOLDILOCKS."</b></div>
             <div class="prompt">15s handheld slow push, dawn on luxury yacht teak deck bow, copper espresso cart, solo acoustic guitarist on brass stool, 4 people in linen sipping coffee, Sierra mountains + Truckee River mist, pale rose-gold sky, subtle teal 1.420 GHz hydrogen-line sine along deck edge, restorative serene ASMR tone, 9:16 vertical, caption "MINIMAL FRAZZLE. MAXIMUM GOLDILOCKS."</div>
           </div>
         </div>
 
         <div class="short-card">
-          <img src="assets/questfest-hero-jo-conducting-podium.png" alt="SHORT 03 storyboard frame — Hero Jo conducting" loading="lazy" />
+          <div class="thumb">
+            <img src="assets/questfest-hero-jo-conducting-podium.png" alt="SHORT 03 storyboard frame — Hero Jo conducting" loading="lazy" />
+            <span class="dur-badge">25s · 9:16</span>
+          </div>
           <div class="body">
-            <div class="num">Short 03 · IGNITION</div>
+            <div class="num">Short 03 · Ignition</div>
             <h4>"The Conductor's Baton"</h4>
-            <div class="dur">Duration: 25s · 9:16 vertical</div>
             <div class="beats">Close on Hero Jo's hand gripping baton. Baton strikes down. Stage wall ignites with 1.618 spiral + hexagonal lattice. Crowd surges. Caption: <b>"HERO JO · J.S. BACH ON THE RETURN."</b></div>
             <div class="prompt">25s cinematic, close-up hand on conductor's baton, Baroque black tux sleeve, baton strikes downward on beat, cut to wide: massive curved LED stage wall on yacht deck ignites with golden 1.618 spiral and hexagonal 1.420 GHz lattice, thousands of festival silhouettes raise arms, warm gold + deep-teal lasers, Machote-Moderno refined, 9:16 vertical, caption "HERO JO · J.S. BACH ON THE RETURN."</div>
           </div>
         </div>
 
         <div class="short-card">
-          <img src="assets/questfest-perreo-country-fuego-deck-peak.png" alt="SHORT 04 storyboard frame — Perreo Country Fuego peak" loading="lazy" />
+          <div class="thumb">
+            <img src="assets/questfest-perreo-country-fuego-deck-peak.png" alt="SHORT 04 storyboard frame — Perreo Country Fuego peak" loading="lazy" />
+            <span class="dur-badge">30s · 9:16</span>
+          </div>
           <div class="body">
-            <div class="num">Short 04 · THE PEAK</div>
+            <div class="num">Short 04 · The Peak</div>
             <h4>"Perreo Country Fuego · 100 BPM"</h4>
-            <div class="dur">Duration: 30s · 9:16 vertical</div>
             <div class="beats">100 BPM drop. Whip pan across dancing crowd. Cypress-silhouette visual meets perreo laser pattern. Brass DJ booth, smoke, bayou-meets-Reno. Caption: <b>"BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."</b></div>
             <div class="prompt">30s high-energy festival cut, 100 BPM drop, nighttime yacht deck, dense joyful crowd dancing on teak planks under warm amber and deep-teal lasers, brass-rimmed DJ booth with smoke, huge illuminated yacht superstructure with holographic fractal visuals behind stage, subtle cypress-swamp visual motif blended into laser pattern, Reno skyline far background, long-lens shallow DOF, film grain, 9:16 vertical, caption "BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."</div>
           </div>
         </div>
 
         <div class="short-card">
-          <img src="assets/questfest-stage-after-the-after-party-void.png" alt="SHORT 05 storyboard frame — The Void" loading="lazy" />
+          <div class="thumb">
+            <img src="assets/questfest-stage-after-the-after-party-void.png" alt="SHORT 05 storyboard frame — The Void" loading="lazy" />
+            <span class="dur-badge">20s · 9:16</span>
+          </div>
           <div class="body">
-            <div class="num">Short 05 · THE VOID</div>
+            <div class="num">Short 05 · The Void</div>
             <h4>"1.420 GHz · Total Mind Rest"</h4>
-            <div class="dur">Duration: 20s · 9:16 vertical</div>
             <div class="beats">Slow pull-back from Hero Jo's silhouette, baton held high and still. Pale teal sine-wave drone on LED wall. Audience on cushions, stillness. Caption: <b>"2 AM · THE LATTICE SETTLES."</b></div>
             <div class="prompt">20s slow cinematic pull-back, 2 AM, cathedral-like dark lounge inside luxury yacht with vaulted arches, Hero Jo silhouette center-frame on low podium with baton held perfectly still and high, vast curved LED wall showing single pale-teal 1.420 GHz hydrogen-line sine-wave drone, audience lying on cushions in reverent stillness, minimalist muted palette, long exposure meditative tone, 9:16 vertical, caption "2 AM · THE LATTICE SETTLES."</div>
           </div>
         </div>
 
         <div class="short-card">
-          <img src="assets/questfest-ports-of-call-manifest.png" alt="SHORT 06 storyboard frame — Ports of Call manifest" loading="lazy" />
+          <div class="thumb">
+            <img src="assets/questfest-ports-of-call-manifest.png" alt="SHORT 06 storyboard frame — Ports of Call manifest" loading="lazy" />
+            <span class="dur-badge">15s · 9:16</span>
+          </div>
           <div class="body">
-            <div class="num">Short 06 · THE INVITATION</div>
+            <div class="num">Short 06 · The Invitation</div>
             <h4>"Ports of Call"</h4>
-            <div class="dur">Duration: 15s · 9:16 vertical</div>
             <div class="beats">Camera glides across brass ship's manifest. "PUERTO RENO · ACTIVE" engraved in bright gold. Empty "NEXT PORT" slots shimmer. Caption: <b>"YOUR DOWNTOWN IS NEXT."</b> CTA: goldenbackdoorhitfactory@gmail.com</div>
             <div class="prompt">15s slow dolly across polished brass nautical "Ports of Call" plaque on walnut, art-deco engraving, warm lamplight, "PUERTO RENO · DOWNTOWN RENO · TRUCKEE RIVER · NEVADA · ACTIVE" in bright gold with compass-rose icon glowing, below it faded "NEXT PORT — PENDING INVITATION" slots shimmering, 9:16 vertical, end card: "YOUR DOWNTOWN IS NEXT. · goldenbackdoorhitfactory@gmail.com"</div>
           </div>

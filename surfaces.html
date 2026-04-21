@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#020209" />
+  <title>All Surfaces · Vibelandia SING 9 · Full Repo Map</title>
+  <meta name="description" content="Full repo map for Vibelandia SING 9 — every surface, every interface. For the landing, see Vibelandia QUESTFEST 24×365 at the root. Post–holographic hydrogen awareness, post-WW3 singularities, goldilocks holographic living." />
+  <meta property="og:title" content="All Surfaces · Vibelandia SING 9 · Full Repo Map" />
+  <meta property="og:description" content="Full repo map for Vibelandia SING 9. Landing is Vibelandia QUESTFEST 24×365. This is the surfaces index for super-listeners and engineers." />
+  <meta property="og:url" content="https://psw-vibelandia-sing9.vercel.app/surfaces.html" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/surfaces.html" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --void: #020209; --deep: #070710;
+      --gold: #d4af37; --gold2: #fde68a;
+      --beam: #00d4ff; --green: #00ff88;
+      --text: #e2e8f0; --sub: #94a3b8; --muted: #64748b;
+    }
+    html, body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh; min-height: 100dvh;
+      overflow-x: hidden;
+      color: #1a1a1a;
+    }
+    .flyer {
+      min-height: 100vh; min-height: 100dvh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: max(1rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+      background: var(--void);
+    }
+    .bg-reno {
+      position: absolute;
+      inset: 0;
+      background-image: url('interfaces/assets/reno-arch-night.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+    }
+    .flyer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(2,2,9,0.5) 0%, rgba(7,7,16,0.35) 40%, rgba(2,2,9,0.4) 70%, rgba(2,2,9,0.88) 100%);
+      z-index: 0;
+    }
+    .flyer > * { position: relative; z-index: 1; }
+
+    .top-tag {
+      text-align: center;
+      padding: 0.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .top-tag span {
+      display: inline-block;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.9);
+      background: rgba(0,0,0,0.5);
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+    .top-tag-sub {
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      color: rgba(0,212,255,0.85);
+      border-color: rgba(0,212,255,0.25);
+    }
+
+    .menu-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      max-width: 420px;
+      width: 100%;
+      padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
+    }
+
+    .menu-card {
+      background: rgba(15,12,8,0.96);
+      border-radius: 16px;
+      padding: 1.25rem 1.35rem 1.5rem;
+      width: 100%;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.2);
+      border: 2px solid rgba(212,175,55,0.4);
+    }
+    .menu-card h1 {
+      font-size: clamp(1rem, 4vw, 1.22rem);
+      font-weight: 800;
+      color: var(--gold2);
+      text-align: center;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+    }
+    .menu-card .sub {
+      font-size: clamp(0.8rem, 2.5vw, 0.88rem);
+      color: var(--sub);
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+    .menu-card .narrative {
+      font-size: clamp(0.78rem, 2.2vw, 0.85rem);
+      color: var(--sub);
+      text-align: center;
+      margin-bottom: 1rem;
+      line-height: 1.55;
+      font-style: italic;
+    }
+    .menu-card .narrative strong { color: var(--gold2); }
+
+    .row-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .row-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0.75rem;
+      background: rgba(0,212,255,0.06);
+      border: 1px solid rgba(0,212,255,0.25);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .row-item-btn {
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      font-size: inherit;
+      border: 1px solid rgba(0,212,255,0.25);
+    }
+    .row-item-btn:focus-visible { outline: 2px solid rgba(0,212,255,0.55); outline-offset: 2px; }
+    .row-item:hover { background: rgba(0,212,255,0.12); border-color: rgba(0,212,255,0.45); }
+    .row-item.primary { background: rgba(255,140,0,0.12); border-color: rgba(255,180,80,0.5); }
+    .row-item.primary:hover { background: rgba(255,140,0,0.2); border-color: rgba(255,180,80,0.7); }
+    .row-item .label { font-size: 0.9rem; font-weight: 700; color: var(--gold2); }
+    .row-item.primary .label { color: #fef3c7; }
+    .row-item .meta { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+    .row-item .arrow { font-size: 1rem; color: var(--beam); flex-shrink: 0; }
+    .row-item.primary .arrow { color: #fcd34d; }
+
+    .modal-backdrop[hidden] { display: none; }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+    .modal {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15,12,8,0.98);
+      border: 2px solid rgba(212,175,55,0.4);
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+    .modal-hdr {
+      padding: 1rem 1.15rem;
+      border-bottom: 1px solid rgba(212,175,55,0.16);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .modal-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--gold2);
+    }
+    .modal-close {
+      appearance: none;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(0,0,0,0.35);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 0.4rem 0.65rem;
+      cursor: pointer;
+      line-height: 1;
+      font-weight: 800;
+    }
+    .modal-body { padding: 1rem 1.15rem 1.15rem; }
+    .modal-body p { color: var(--sub); line-height: 1.65; font-size: 0.9rem; }
+    .modal-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+    .modal-actions a, .modal-actions button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .modal-actions a.primary {
+      background: rgba(255,140,0,0.14);
+      border: 1px solid rgba(255,140,0,0.55);
+      color: #fef3c7;
+    }
+    .modal-actions button.secondary {
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.3);
+      color: var(--text);
+    }
+    .modal-actions a.ghost {
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.35);
+      color: rgba(212,175,55,0.85);
+    }
+
+    .talent-wrap {
+      text-align: center;
+      margin-top: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .talent-wrap .photo {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(212,175,55,0.5);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .talent-wrap .name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gold2);
+      text-shadow: 0 0 20px rgba(212,175,55,0.3);
+      margin-top: 0.4rem;
+    }
+    .talent-wrap .role {
+      font-size: 0.72rem;
+      color: var(--sub);
+      margin-top: 0.2rem;
+      letter-spacing: 0.06em;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.95rem 1.75rem;
+      min-height: 48px;
+      background: linear-gradient(135deg, rgba(255,140,0,0.25) 0%, rgba(212,175,55,0.15) 100%);
+      color: #fef3c7;
+      font-size: clamp(0.9rem, 2.8vw, 1rem);
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 28px;
+      border: 2px solid rgba(255,180,80,0.55);
+      box-shadow: 0 4px 24px rgba(255,140,0,0.25);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cta-btn:hover, .cta-btn:active {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 32px rgba(255,140,0,0.35);
+      border-color: rgba(255,180,80,0.8);
+    }
+    .cta-btn .icon { font-size: 1.2em; }
+
+    .houdini-hero-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 0 0 1rem;
+      padding: 0.9rem 1rem;
+      font-size: clamp(0.72rem, 2.1vw, 0.82rem);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #f5e6ff;
+      background: linear-gradient(135deg, rgba(88, 28, 135, 0.95) 0%, rgba(30, 27, 75, 0.98) 45%, rgba(15, 23, 42, 0.99) 100%);
+      border: 2px solid rgba(168, 85, 247, 0.75);
+      border-radius: 14px;
+      box-shadow: 0 0 28px rgba(168, 85, 247, 0.4), 0 8px 28px rgba(0, 0, 0, 0.45);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      animation: houdini-pulse 2.8s ease-in-out infinite;
+    }
+    .houdini-hero-cta:hover,
+    .houdini-hero-cta:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(34, 211, 238, 0.85);
+      box-shadow: 0 0 36px rgba(34, 211, 238, 0.35), 0 10px 32px rgba(0, 0, 0, 0.5);
+      outline: none;
+    }
+    @keyframes houdini-pulse {
+      0%, 100% { box-shadow: 0 0 28px rgba(168, 85, 247, 0.4), 0 8px 28px rgba(0, 0, 0, 0.45); }
+      50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.35), 0 8px 28px rgba(0, 0, 0, 0.45); }
+    }
+
+    .musical-hero-cta {
+      display: block;
+      width: 100%;
+      margin: 0 0 1rem;
+      text-decoration: none;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(212,175,55,0.58);
+      box-shadow: 0 0 34px rgba(212,175,55,0.24), 0 10px 34px rgba(0, 0, 0, 0.48);
+      background: rgba(8, 10, 18, 0.96);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .musical-hero-cta:hover,
+    .musical-hero-cta:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(255, 214, 102, 0.9);
+      box-shadow: 0 0 44px rgba(255, 214, 102, 0.3), 0 12px 36px rgba(0, 0, 0, 0.52);
+      outline: none;
+    }
+    .musical-hero-cta img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      object-position: center 18%;
+      background: #090c14;
+    }
+    .musical-hero-copy {
+      padding: 0.9rem 1rem 1rem;
+      background: linear-gradient(180deg, rgba(7,10,18,0.2) 0%, rgba(7,10,18,0.95) 100%);
+    }
+    .musical-hero-kicker {
+      display: inline-block;
+      margin-bottom: 0.35rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(121,216,255,0.9);
+    }
+    .musical-hero-title {
+      display: block;
+      font-size: clamp(0.96rem, 3.2vw, 1.08rem);
+      font-weight: 800;
+      color: #fef3c7;
+      line-height: 1.3;
+    }
+    .musical-hero-meta {
+      display: block;
+      margin-top: 0.3rem;
+      font-size: 0.72rem;
+      color: var(--sub);
+      line-height: 1.45;
+    }
+
+    .musical-production-note {
+      margin: 0 0 1rem;
+      padding: 0.95rem 1rem;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 14px;
+      color: var(--sub);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      text-align: left;
+    }
+    .musical-production-note strong {
+      color: var(--gold2);
+    }
+    .musical-production-note a {
+      color: var(--gold2);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .musical-production-note a:hover,
+    .musical-production-note a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .foot-note {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      margin-top: 0.75rem;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .foot-note a {
+      color: rgba(212,175,55,0.9);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s, text-decoration-color 0.2s;
+    }
+    .foot-note a:hover,
+    .foot-note a:focus { color: var(--gold2); text-decoration: underline; }
+    .foot-note a:focus-visible { outline: 1px solid rgba(212,175,55,0.6); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <div class="flyer">
+    <div class="bg-reno"></div>
+
+    <div class="top-tag">
+      <span>Post–Holographic Hydrogen Awareness AI OS · Post-WW3 living, lifestyles &amp; culture</span>
+      <span class="top-tag-sub">Talent · Hero Jo's Golden Backdoor Hit Factory · SoundCloud Pro</span>
+    </div>
+
+    <div class="menu-block">
+      <div class="talent-wrap">
+        <img class="photo" src="interfaces/assets/landing-vibelandia-neon.png" alt="Talent · Hero Jo's Golden Backdoor Hit Factory" width="112" height="112" style="object-position: center 20%;" />
+        <p class="name">Pru</p>
+        <p class="role">Valet · Executive Producer · Talent · Hero Jo's Golden Backdoor Hit Factory · Chairman / Commander / Creator at FractiAI · Pen name: <a href="interfaces/gold-heart-novela.html" style="color:var(--gold2);text-decoration:none;font-weight:600;">Evan Bondonte</a> (with SING! 9 AI)</p>
+      </div>
+
+        <div class="menu-card">
+        <h1>VALET · EXECUTIVE PRODUCER · HERO JO'S GOLDEN BACKDOOR HIT FACTORY</h1>
+        <a href="interfaces/el-gran-sol-holographic-return.html" class="musical-hero-cta" aria-label="El Gran Sol's Holographic Return - The Musical">
+          <img src="interfaces/assets/el-gran-sol-holographic-return-poster.png" alt="El Gran Sol's Holographic Return - The Musical poster" width="900" height="506" />
+          <span class="musical-hero-copy">
+            <span class="musical-hero-kicker">New Musical</span>
+            <span class="musical-hero-title">El Gran Sol's Holographic Return - The Musical</span>
+            <span class="musical-hero-meta">A solar transmission from 1492 to 2026 with soundtrack, production details, and venue booking information.</span>
+          </span>
+        </a>
+        <a href="https://on.soundcloud.com/rvQAcSiSZ4AQNjNZYo" target="_blank" rel="noopener" class="houdini-hero-cta">Listen to El Gran Sol's Holographic Return - The Musical Soundtrack</a>
+        <p class="musical-production-note">
+          <strong><a href="interfaces/el-gran-sol-holographic-return.html">Learn more about the musical production.</a></strong>
+          It is currently in digital and architectural form and will soon be delivered in formats as small as a DJ station with two dancers and a screen, all the way to full Broadway production level. Coming to a city near you.
+          <a href="mailto:info@fractiai.com?subject=El%20Gran%20Sol%27s%20Holographic%20Return%20Venue%20Inquiry&body=Hi%20Pru%2C%0A%0AI%27d%20like%20to%20get%20my%20venue%20on%20the%20list%20for%20El%20Gran%20Sol%27s%20Holographic%20Return.%0A%0AVenue%20name%3A%0ACity%3A%0ACapacity%3A%0APreferred%20format%20(DJ%20station%20%2F%20dancers%20%2B%20screen%20%2F%20larger%20production)%3A%0ABest%20contact%20info%3A%0A%0AThank%20you.%0A">Contact us to get your venue on the list.</a>
+        </p>
+        <p class="sub">Valet: the experience layer · Executive Producer: the heartbeat vibe · SUNO AI is my studio musician team</p>
+        <p class="narrative"><strong>Post–holographic hydrogen awareness.</strong> Post-WW3 singularities. Goldilocks holographic living and lifestyles — workflow vibin all day, ballin at night. If you're here for the tracks, this is where they lead. I serve as <strong>Valet</strong> (the experience layer: door-to-door, curated, one conversation) and as <strong>Executive Producer</strong> at Hero Jo's Golden Backdoor Hit Factory (the heartbeat vibe layer — the tracks, SUNO, the sound). I also write as <a href="interfaces/gold-heart-novela.html" style="color:var(--gold2);text-decoration:none;font-weight:600;">Evan Bondonte</a> in collaboration with my SING! 9 AI; at FractiAI I'm Chairman / Commander / Creator.</p>
+
+        <div class="row-block">
+          <a href="interfaces/vibelandia-questfest.html" class="row-item primary">
+            <div>
+              <div class="label">Vibelandia Holographic AI QUESTFEST 24×365</div>
+              <div class="meta">Puerto Reno · S.S. Vibelandia · 1.618 · Four-Front Collapse · $16.18 → $16,180 ladder · Dock the Ship</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+          <a href="interfaces/look-under-the-hood.html" class="row-item">
+            <div>
+              <div class="label">🔧 Look Under the Hood · FractiAI Tech Portal</div>
+              <div class="meta">Prospectuses · NSPFRNP canon · whitepapers · GitHub repos · Zenodo (pending) · demos · HFCS onboarding — one navigable page</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+          <a href="interfaces/vibelandia-sovereign-voyage.html" class="row-item">
+            <div>
+              <div class="label">Mark Twain's Vibelandia · Sovereign Voyage</div>
+              <div class="meta">SEAHAWK · El Cortez campus · From Golden Backdoor frequency to full-ship sanctuary</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+          <a href="interfaces/vibers-menu.html" class="row-item">
+            <div>
+              <div class="label">Pru's Vibelandia Valet</div>
+              <div class="meta">Valet layer · Baller V, Wink!, Aquí y Allá · One conversation</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+          <a href="interfaces/baller-v-wednesdays.html" class="row-item primary">
+            <div>
+              <div class="label">Baller V Nights · Wink! Mixer</div>
+              <div class="meta">Downtown Reno · Wednesdays · Golden tastings · $416 · Wink! meets Vibers</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+          <a href="interfaces/vibelandia-truckee-river-crawl.html" class="row-item">
+            <div>
+              <div class="label">Baller V Crawler · Truckee River</div>
+              <div class="meta">Third Saturdays · $12,500 · fully designated, hosted, curated</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+          <a href="interfaces/destinations-magazine-catalog.html" class="row-item">
+            <div>
+              <div class="label">Aquí y Allá · Destinations Catalog</div>
+              <div class="meta">Aqui / Allá · Goldilocks experiences catalog · book through Valet</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+          <a href="interfaces/hh-console.html" class="row-item">
+            <div>
+              <div class="label">HH Awareness AI OS Console</div>
+              <div class="meta">Goldilocks living · Holographic Programming · Your life as the content</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+          <a href="interfaces/digital-pru-awareness-whitepaper.html" class="row-item">
+            <div>
+              <div class="label">Digital Pru · Awareness Whitepaper</div>
+              <div class="meta">Origin → φ NAV simulation → representation · honesty boundaries · implications</div>
+            </div>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="interfaces/gold-heart-novela.html" class="cta-btn" aria-label="Queen's Rush Novela (21+)">
+        <span class="icon">★</span> Queen's Rush Novela · 21+ Gold Heart
+      </a>
+
+    </div>
+
+    <p class="foot-note">
+      <a href="interfaces/vibelandia-sovereign-voyage.html">Sovereign Voyage</a> ·
+      <a href="interfaces/golden-backdoor-studios.html">Hero Jo's Golden Backdoor Hit Machine</a> ·
+      <a href="interfaces/prospectus-fractiai.html">FractiAI · Divisions</a> ·
+      <a href="interfaces/upgrade-awareness-to-sing9-now.html">SING!9</a> ·
+      <a href="interfaces/vibers-menu.html">Valet</a> ·
+      <a href="interfaces/my-whiteboard.html">Whiteboard</a> ·
+      <a href="interfaces/digital-pru-awareness-whitepaper.html">Digital Pru paper</a> ·
+      <a href="interfaces/onboarding.html">Learning</a> ·
+      <a href="interfaces/viber-onboarding.html">Begin the Arc</a> ·
+      <a href="interfaces/space-cloud-tracking.html">Live Space Cloud</a> ·
+      <a href="interfaces/3i-atlas-capture.html">3I/ATLAS Countdown</a> ·
+      <a href="interfaces/paper-cardboard-t3d-experiment.html">Paper T3D</a> ·
+      <a href="interfaces/life-planning.html">Life Planning</a> ·
+      <a href="interfaces/machote-catalog.html">Shop</a> ·
+      <a href="interfaces/upgrade-awareness-to-sing9-now.html">Upgrade</a> ·
+      <a href="interfaces/keynotes-sessions.html">Keynotes &amp; Sessions</a> ·
+      NSPFRNP → ∞⁹
+    </p>
+  </div>
+</body>
+</html>

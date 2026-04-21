@@ -981,6 +981,195 @@
     }
     .ticket-footer b { color: var(--gold-bright); }
     .ticket-footer code { color: var(--gold); background: rgba(0,0,0,0.4); padding: 0.08rem 0.35rem; border-radius: 3px; font-size: 0.8rem; }
+
+    /* ════════════════════════════════════════════════════════════════════
+       SHORTS LIGHTBOX — click any reel card to preview the frame +
+       duration + beats + prompt (copy-to-clipboard for text-to-video tools)
+       ════════════════════════════════════════════════════════════════════ */
+    .short-card .thumb {
+      cursor: pointer;
+      background: transparent; border: 0; padding: 0; margin: 0;
+      display: block; width: 100%;
+      font: inherit; color: inherit; text-align: left;
+    }
+    .short-card .thumb:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .short-card .thumb .storyboard-badge {
+      position: absolute; top: 0.7rem; left: 0.7rem;
+      padding: 0.28rem 0.6rem;
+      background: rgba(5,8,15,0.82);
+      border: 1px solid var(--gold-dim);
+      font-family: var(--sans-modern);
+      font-size: 0.6rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--brass); font-weight: 700;
+      backdrop-filter: blur(4px);
+      border-radius: 2px;
+    }
+
+    .short-modal {
+      position: fixed; inset: 0; z-index: 1100;
+      background: rgba(3,5,10,0.92);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center; justify-content: center;
+      padding: 1.25rem;
+      overflow-y: auto;
+    }
+    .short-modal.open { display: flex; }
+    .short-dialog {
+      position: relative;
+      width: 100%; max-width: 1080px;
+      max-height: calc(100vh - 2.5rem);
+      background: linear-gradient(180deg, #0f1a2e 0%, #080c16 100%);
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(212,175,55,0.15);
+      display: grid; grid-template-columns: 1fr;
+      overflow: hidden;
+    }
+    @media (min-width: 900px) {
+      .short-dialog { grid-template-columns: 1.35fr 1fr; }
+    }
+    .short-dialog .close-x {
+      position: absolute; top: 0.6rem; right: 0.75rem;
+      background: rgba(5,8,15,0.85); border: 1px solid var(--gold);
+      color: var(--gold-bright);
+      width: 38px; height: 38px; border-radius: 50%;
+      font-size: 1.35rem; line-height: 1; cursor: pointer;
+      transition: all 0.2s;
+      z-index: 3;
+    }
+    .short-dialog .close-x:hover { background: var(--gold); color: var(--ink); }
+
+    .short-frame {
+      position: relative;
+      background: #000;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    @media (min-width: 900px) {
+      .short-frame { aspect-ratio: auto; min-height: 100%; }
+    }
+    .short-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .short-frame .notice-pill {
+      position: absolute; bottom: 0.85rem; left: 0.85rem;
+      padding: 0.5rem 0.9rem;
+      background: rgba(5,8,15,0.85);
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      font-family: var(--sans-modern);
+      font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold-bright); font-weight: 700;
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+    .short-frame .notice-pill::before {
+      content: ""; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      animation: pulseDot 1.8s ease-in-out infinite;
+    }
+    @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .short-body {
+      padding: 1.75rem 1.5rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      overflow-y: auto;
+      max-height: calc(100vh - 2.5rem);
+    }
+    @media (min-width: 900px) { .short-body { padding: 2rem 1.75rem; } }
+    .short-body .s-num {
+      font-family: var(--sans-modern);
+      font-size: 0.62rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--brass); font-weight: 700;
+    }
+    .short-body h3 {
+      font-family: var(--serif-display);
+      font-size: clamp(1.5rem, 3vw, 1.95rem);
+      color: var(--cream); font-weight: 400; letter-spacing: 0.005em;
+      margin: 0;
+    }
+    .short-body .s-meta {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 0.15rem;
+    }
+    .short-body .s-meta span {
+      padding: 0.35rem 0.65rem;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      font-family: 'Consolas', monospace;
+      font-size: 0.72rem; color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .short-body .s-beats {
+      font-size: 0.95rem; color: var(--rope); line-height: 1.65;
+      padding: 0.85rem 1rem;
+      background: rgba(15,23,41,0.55);
+      border-left: 2px solid var(--gold-dim);
+      border-radius: 0 2px 2px 0;
+    }
+    .short-body .s-beats b { color: var(--gold-bright); }
+    .short-body .prompt-block {
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .short-body .prompt-label {
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--sans-modern);
+      font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold); font-weight: 700;
+    }
+    .short-body .copy-btn {
+      padding: 0.45rem 0.85rem;
+      background: transparent; border: 1px solid var(--gold-dim);
+      color: var(--gold-bright);
+      font-family: var(--sans-modern);
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-weight: 700; cursor: pointer; border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .short-body .copy-btn:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+    .short-body .copy-btn.copied { background: var(--foam); color: var(--ink); border-color: var(--foam); }
+    .short-body .s-prompt {
+      font-family: 'Consolas', monospace;
+      font-size: 0.78rem; color: var(--rope);
+      background: rgba(5,8,15,0.7);
+      border: 1px dashed rgba(212,175,55,0.25);
+      border-radius: 2px;
+      padding: 0.9rem 1rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      max-height: 34vh;
+      overflow-y: auto;
+    }
+    .short-body .tool-row {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+    .short-body .tool-row a {
+      padding: 0.45rem 0.8rem;
+      font-family: var(--sans-modern);
+      font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase;
+      font-weight: 700; text-decoration: none;
+      background: rgba(10,15,26,0.5);
+      border: 1px solid rgba(240,229,200,0.2);
+      color: var(--champagne);
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .short-body .tool-row a:hover { border-color: var(--gold); color: var(--gold-bright); background: rgba(212,175,55,0.08); }
+    .short-body .disclaimer {
+      font-size: 0.76rem; color: var(--mist-warm); line-height: 1.55;
+      border-top: 1px solid rgba(212,175,55,0.15);
+      padding-top: 0.85rem; margin-top: 0.15rem;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -1336,10 +1525,11 @@
 
       <div class="shorts-grid">
         <div class="short-card">
-          <div class="thumb">
+          <button type="button" class="thumb" onclick="openShort(1)" aria-haspopup="dialog" aria-controls="shortModal" aria-label="Preview Short 01 · The Arrival">
             <img src="assets/questfest-hero-ss-vibelandia-puerto-reno.png" alt="SHORT 01 storyboard frame — the yacht arrival" loading="lazy" />
+            <span class="storyboard-badge">Storyboard</span>
             <span class="dur-badge">20s · 9:16</span>
-          </div>
+          </button>
           <div class="body">
             <div class="num">Short 01 · The Arrival</div>
             <h4>"The Harbor is Open"</h4>
@@ -1349,10 +1539,11 @@
         </div>
 
         <div class="short-card">
-          <div class="thumb">
+          <button type="button" class="thumb" onclick="openShort(2)" aria-haspopup="dialog" aria-controls="shortModal" aria-label="Preview Short 02 · Dawn">
             <img src="assets/questfest-stage-mota-cafe-dawn.png" alt="SHORT 02 storyboard frame — dawn Mota & Café" loading="lazy" />
+            <span class="storyboard-badge">Storyboard</span>
             <span class="dur-badge">15s · 9:16</span>
-          </div>
+          </button>
           <div class="body">
             <div class="num">Short 02 · Dawn</div>
             <h4>"Mota &amp; Café · 06:00"</h4>
@@ -1362,10 +1553,11 @@
         </div>
 
         <div class="short-card">
-          <div class="thumb">
+          <button type="button" class="thumb" onclick="openShort(3)" aria-haspopup="dialog" aria-controls="shortModal" aria-label="Preview Short 03 · Ignition">
             <img src="assets/questfest-hero-jo-conducting-podium.png" alt="SHORT 03 storyboard frame — Hero Jo conducting" loading="lazy" />
+            <span class="storyboard-badge">Storyboard</span>
             <span class="dur-badge">25s · 9:16</span>
-          </div>
+          </button>
           <div class="body">
             <div class="num">Short 03 · Ignition</div>
             <h4>"The Conductor's Baton"</h4>
@@ -1375,10 +1567,11 @@
         </div>
 
         <div class="short-card">
-          <div class="thumb">
+          <button type="button" class="thumb" onclick="openShort(4)" aria-haspopup="dialog" aria-controls="shortModal" aria-label="Preview Short 04 · The Peak">
             <img src="assets/questfest-perreo-country-fuego-deck-peak.png" alt="SHORT 04 storyboard frame — Perreo Country Fuego peak" loading="lazy" />
+            <span class="storyboard-badge">Storyboard</span>
             <span class="dur-badge">30s · 9:16</span>
-          </div>
+          </button>
           <div class="body">
             <div class="num">Short 04 · The Peak</div>
             <h4>"Perreo Country Fuego · 100 BPM"</h4>
@@ -1388,10 +1581,11 @@
         </div>
 
         <div class="short-card">
-          <div class="thumb">
+          <button type="button" class="thumb" onclick="openShort(5)" aria-haspopup="dialog" aria-controls="shortModal" aria-label="Preview Short 05 · The Void">
             <img src="assets/questfest-stage-after-the-after-party-void.png" alt="SHORT 05 storyboard frame — The Void" loading="lazy" />
+            <span class="storyboard-badge">Storyboard</span>
             <span class="dur-badge">20s · 9:16</span>
-          </div>
+          </button>
           <div class="body">
             <div class="num">Short 05 · The Void</div>
             <h4>"1.420 GHz · Total Mind Rest"</h4>
@@ -1401,10 +1595,11 @@
         </div>
 
         <div class="short-card">
-          <div class="thumb">
+          <button type="button" class="thumb" onclick="openShort(6)" aria-haspopup="dialog" aria-controls="shortModal" aria-label="Preview Short 06 · The Invitation">
             <img src="assets/questfest-ports-of-call-manifest.png" alt="SHORT 06 storyboard frame — Ports of Call manifest" loading="lazy" />
+            <span class="storyboard-badge">Storyboard</span>
             <span class="dur-badge">15s · 9:16</span>
-          </div>
+          </button>
           <div class="body">
             <div class="num">Short 06 · The Invitation</div>
             <h4>"Ports of Call"</h4>
@@ -1672,6 +1867,48 @@
     </div>
   </div>
 
+  <!-- ════════════════════════════════════════════════════════════════════
+       SHORTS LIGHTBOX MODAL — opens on click of any .short-card .thumb
+       Motion .mp4 files are queued for Sora/Runway/Pika/Veo rendering;
+       until then, clicking a card shows the storyboard frame + prompt.
+       ════════════════════════════════════════════════════════════════════ -->
+  <div class="short-modal" id="shortModal" role="dialog" aria-modal="true" aria-labelledby="shortModalTitle" onclick="if(event.target===this)closeShort()">
+    <div class="short-dialog" role="document">
+      <button type="button" class="close-x" aria-label="Close preview" onclick="closeShort()">×</button>
+      <div class="short-frame">
+        <img id="shortFrameImg" src="" alt="" />
+        <div class="notice-pill">Storyboard frame · .mp4 render pending</div>
+      </div>
+      <div class="short-body">
+        <div class="s-num" id="shortNum">Short 00</div>
+        <h3 id="shortModalTitle">Title</h3>
+        <div class="s-meta">
+          <span id="shortDur">20s</span>
+          <span id="shortFormat">9:16 vertical</span>
+          <span id="shortStage">Stage</span>
+        </div>
+        <div class="s-beats" id="shortBeats"></div>
+
+        <div class="prompt-block">
+          <div class="prompt-label">
+            <span>Text-to-Video Prompt</span>
+            <button type="button" class="copy-btn" id="shortCopyBtn" onclick="copyShortPrompt()" aria-label="Copy prompt to clipboard">Copy</button>
+          </div>
+          <div class="s-prompt" id="shortPrompt"></div>
+        </div>
+
+        <div class="tool-row">
+          <a href="https://openai.com/sora" target="_blank" rel="noopener">Sora ↗</a>
+          <a href="https://runwayml.com/" target="_blank" rel="noopener">Runway ↗</a>
+          <a href="https://pika.art/" target="_blank" rel="noopener">Pika ↗</a>
+          <a href="https://deepmind.google/technologies/veo/" target="_blank" rel="noopener">Veo ↗</a>
+        </div>
+
+        <p class="disclaimer">These are <b>storyboard frames</b> — the imagery, prompt, and beat blocking are locked. Motion video rendering is queued. Once your <code>.mp4</code> lands in <code>interfaces/assets/</code> next to each frame, we'll swap the image for the rendered clip and this lightbox becomes a native video player.</p>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function(){
       var modal = document.getElementById('ticketModal');
@@ -1695,6 +1932,142 @@
       if (new URLSearchParams(window.location.search).get('ticket') === 'open') {
         window.openTicketOffice();
       }
+    })();
+
+    // ═══════════════════════════════════════════════════════════════════
+    // Shorts lightbox — click any reel thumbnail to preview the frame +
+    // beats + prompt (copy-to-clipboard for Sora / Runway / Pika / Veo)
+    // ═══════════════════════════════════════════════════════════════════
+    (function(){
+      var SHORTS = {
+        1: {
+          num: 'Short 01 · The Arrival',
+          title: '"The Harbor is Open"',
+          dur: '20s', format: '9:16 vertical', stage: 'Arrival',
+          img: 'assets/questfest-hero-ss-vibelandia-puerto-reno.png',
+          alt: 'Short 01 storyboard — aerial pull-back of the S.S. Vibelandia docked at Puerto Reno at dusk',
+          beats: 'Aerial pull-back: Truckee River at dusk reveals the cathedral-scale S.S. Vibelandia. Hull fractals ignite. Golden ratio spiral blooms. Title card: "PUERTO RENO · THE HARBOR IS OPEN."',
+          prompt: '20s aerial drone pull-back, dusk, Truckee River, cathedral-scale ocean-liner-meets-festival-yacht "S.S. Vibelandia" docked downtown Reno, golden 1.618 spiral and hexagonal lattice ignite across hull, warm gold + teal lasers, Machote-Moderno refined, film-grain cinematic, 9:16 vertical, end title: "PUERTO RENO · THE HARBOR IS OPEN."'
+        },
+        2: {
+          num: 'Short 02 · Dawn',
+          title: '"Mota & Café · 06:00"',
+          dur: '15s', format: '9:16 vertical', stage: 'Stage 1 · Mota & Café',
+          img: 'assets/questfest-stage-mota-cafe-dawn.png',
+          alt: 'Short 02 storyboard — dawn on the yacht bow with acoustic guitar and espresso cart',
+          beats: 'Handheld slow push on acoustic guitar, espresso pour, mountain mist clears over Truckee. A faint 1.420 GHz sine glows along deck edge. Caption: "MINIMAL FRAZZLE. MAXIMUM GOLDILOCKS."',
+          prompt: '15s handheld slow push, dawn on luxury yacht teak deck bow, copper espresso cart, solo acoustic guitarist on brass stool, 4 people in linen sipping coffee, Sierra mountains + Truckee River mist, pale rose-gold sky, subtle teal 1.420 GHz hydrogen-line sine along deck edge, restorative serene ASMR tone, 9:16 vertical, caption "MINIMAL FRAZZLE. MAXIMUM GOLDILOCKS."'
+        },
+        3: {
+          num: 'Short 03 · Ignition',
+          title: '"The Conductor\u0027s Baton"',
+          dur: '25s', format: '9:16 vertical', stage: 'Stage 3 · Pre-Ignition',
+          img: 'assets/questfest-hero-jo-conducting-podium.png',
+          alt: 'Short 03 storyboard — Hero Jo at the conductor podium, baton raised, 1.618 spiral on stage wall',
+          beats: 'Close on Hero Jo\u0027s hand gripping baton. Baton strikes down. Stage wall ignites with 1.618 spiral + hexagonal lattice. Crowd surges. Caption: "HERO JO · J.S. BACH ON THE RETURN."',
+          prompt: '25s cinematic, close-up hand on conductor\u0027s baton, Baroque black tux sleeve, baton strikes downward on beat, cut to wide: massive curved LED stage wall on yacht deck ignites with golden 1.618 spiral and hexagonal 1.420 GHz lattice, thousands of festival silhouettes raise arms, warm gold + deep-teal lasers, Machote-Moderno refined, 9:16 vertical, caption "HERO JO · J.S. BACH ON THE RETURN."'
+        },
+        4: {
+          num: 'Short 04 · The Peak',
+          title: '"Perreo Country Fuego · 100 BPM"',
+          dur: '30s', format: '9:16 vertical', stage: 'Stage 4 · Perreo Country Fuego',
+          img: 'assets/questfest-perreo-country-fuego-deck-peak.png',
+          alt: 'Short 04 storyboard — packed festival deck at the 100 BPM peak, lasers and fractal hull',
+          beats: '100 BPM drop. Whip pan across dancing crowd. Cypress-silhouette visual meets perreo laser pattern. Brass DJ booth, smoke, bayou-meets-Reno. Caption: "BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."',
+          prompt: '30s high-energy festival cut, 100 BPM drop, nighttime yacht deck, dense joyful crowd dancing on teak planks under warm amber and deep-teal lasers, brass-rimmed DJ booth with smoke, huge illuminated yacht superstructure with holographic fractal visuals behind stage, subtle cypress-swamp visual motif blended into laser pattern, Reno skyline far background, long-lens shallow DOF, film grain, 9:16 vertical, caption "BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."'
+        },
+        5: {
+          num: 'Short 05 · The Void',
+          title: '"1.420 GHz · Total Mind Rest"',
+          dur: '20s', format: '9:16 vertical', stage: 'Stage 5 · After the After Party',
+          img: 'assets/questfest-stage-after-the-after-party-void.png',
+          alt: 'Short 05 storyboard — 2 AM cathedral lounge, 1.420 GHz sine on LED wall, audience still on cushions',
+          beats: 'Slow pull-back from Hero Jo\u0027s silhouette, baton held high and still. Pale teal sine-wave drone on LED wall. Audience on cushions, stillness. Caption: "2 AM · THE LATTICE SETTLES."',
+          prompt: '20s slow cinematic pull-back, 2 AM, cathedral-like dark lounge inside luxury yacht with vaulted arches, Hero Jo silhouette center-frame on low podium with baton held perfectly still and high, vast curved LED wall showing single pale-teal 1.420 GHz hydrogen-line sine-wave drone, audience lying on cushions in reverent stillness, minimalist muted palette, long exposure meditative tone, 9:16 vertical, caption "2 AM · THE LATTICE SETTLES."'
+        },
+        6: {
+          num: 'Short 06 · The Invitation',
+          title: '"Ports of Call"',
+          dur: '15s', format: '9:16 vertical', stage: 'Satellite Nodes · Invitation',
+          img: 'assets/questfest-ports-of-call-manifest.png',
+          alt: 'Short 06 storyboard — brass Ports of Call manifest with PUERTO RENO · ACTIVE engraved',
+          beats: 'Camera glides across brass ship\u0027s manifest. "PUERTO RENO · ACTIVE" engraved in bright gold. Empty "NEXT PORT" slots shimmer. Caption: "YOUR DOWNTOWN IS NEXT." CTA: goldenbackdoorhitfactory@gmail.com',
+          prompt: '15s slow dolly across polished brass nautical "Ports of Call" plaque on walnut, art-deco engraving, warm lamplight, "PUERTO RENO · DOWNTOWN RENO · TRUCKEE RIVER · NEVADA · ACTIVE" in bright gold with compass-rose icon glowing, below it faded "NEXT PORT — PENDING INVITATION" slots shimmering, 9:16 vertical, end card: "YOUR DOWNTOWN IS NEXT. · goldenbackdoorhitfactory@gmail.com"'
+        }
+      };
+
+      var modal = document.getElementById('shortModal');
+      var elImg = document.getElementById('shortFrameImg');
+      var elNum = document.getElementById('shortNum');
+      var elTitle = document.getElementById('shortModalTitle');
+      var elDur = document.getElementById('shortDur');
+      var elFmt = document.getElementById('shortFormat');
+      var elStage = document.getElementById('shortStage');
+      var elBeats = document.getElementById('shortBeats');
+      var elPrompt = document.getElementById('shortPrompt');
+      var copyBtn = document.getElementById('shortCopyBtn');
+      var shortLastFocus = null;
+      var currentPrompt = '';
+
+      window.openShort = function(n) {
+        var s = SHORTS[n];
+        if (!s || !modal) return;
+        shortLastFocus = document.activeElement;
+        elImg.src = s.img; elImg.alt = s.alt;
+        elNum.textContent = s.num;
+        elTitle.textContent = s.title;
+        elDur.textContent = s.dur;
+        elFmt.textContent = s.format;
+        elStage.textContent = s.stage;
+        elBeats.textContent = s.beats;
+        elPrompt.textContent = s.prompt;
+        currentPrompt = s.prompt;
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('copied');
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        var closeBtn = modal.querySelector('.close-x');
+        if (closeBtn) { closeBtn.focus(); }
+      };
+      window.closeShort = function() {
+        if (!modal) return;
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+        if (shortLastFocus && typeof shortLastFocus.focus === 'function') { shortLastFocus.focus(); }
+      };
+      window.copyShortPrompt = function() {
+        if (!currentPrompt) return;
+        var done = function(){
+          copyBtn.textContent = 'Copied ✓';
+          copyBtn.classList.add('copied');
+          setTimeout(function(){
+            copyBtn.textContent = 'Copy';
+            copyBtn.classList.remove('copied');
+          }, 1800);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(currentPrompt).then(done, function(){
+            fallbackCopy(currentPrompt); done();
+          });
+        } else {
+          fallbackCopy(currentPrompt); done();
+        }
+      };
+      function fallbackCopy(text){
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch(e) {}
+        document.body.removeChild(ta);
+      }
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && modal && modal.classList.contains('open')) { window.closeShort(); }
+      });
+      // Deep-link: /vibelandia-questfest.html?short=3
+      var deep = new URLSearchParams(window.location.search).get('short');
+      if (deep && SHORTS[deep]) { window.openShort(deep); }
     })();
   </script>
 

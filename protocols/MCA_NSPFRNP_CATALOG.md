@@ -370,7 +370,7 @@ Related protocols: `HH_AWARENESS_AI_OS_NSPFRNP_IRREDUCIBLE_MINIMUM_PROTOCOL_SPEC
 - **$16.18/mo — GA ACCESS / GA Residency** — Local Anchor. Total monthly access to the Holographic AI Theater Catalog; Sovereign Vault key.
 - **$161.80 — Day Pass + Bike** — Urban Navigator. 24-hour frequency jump. Physical bike rental for the Art Banksyesque Quest across the Puerto Reno Node.
 - **$1,618.00 — Bachstage Pass** — Resonant Insider. 4-Night Residency. Reno bike, exclusive QUESTFEST merchandise, curated menus (Bison, Elk, Wild Salmon), specialized drinks, Thursday "Pimp Your Bike" Pop-Up Clinic, Customized Pop-Up Map & Schedule.
-- **$16,180.00 — Golden Bachstage** — Chairman Experience. 4-Night Sovereign Elite Goldilocks Weekend. Full-Time Private Valet, premium thermal Soaks, Customized Pop-Up Map & Daily Schedule, **Lifetime Sovereign status**, absolute sanctuary.
+- **$16,180.00 — Golden Bachstage Pass** — Chairman Experience. 4-Night Sovereign Elite Goldilocks Weekend. Full-Time Private Valet, premium thermal Soaks, Customized Pop-Up Map & Daily Schedule, **Lifetime Sovereign status**, absolute sanctuary.
 
 All four tiers calibrated to the 1.618 geometry (each tier = prior × 10; the $ amount itself encodes the Constant). Fair Exchange Clause in effect at every tier.
 

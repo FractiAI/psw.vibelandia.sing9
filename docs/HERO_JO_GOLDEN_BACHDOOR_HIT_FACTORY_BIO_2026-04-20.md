@@ -85,7 +85,7 @@ Tune in, like, comment, share, and follow us here and on our social media. Suppo
 - **GA ACCESS — $16.18/mo** · Total access to the growing Holographic AI Theater Catalog. Your key to the Sovereign Vault, purging the noise of the old world daily.
 - **DAY PASS + BIKE — $161.80** · 24-hour frequency jump. Includes physical bike rental for the Art Banksyesque Quest across the Puerto Reno Node.
 - **BACHSTAGE PASS — $1,618.00** · 4-Night Residency. All-inclusive: Reno bike use, exclusive QUESTFEST merchandise, curated menus (Bison, Elk, Wild Salmon), specialized drinks, and holographic experiences. Includes entry to the Thursday **"Pimp Your Bike" Pop-Up Clinic** — bringing the 1.618 aesthetic to your personal ride. Customized Pop-Up Map & Schedule tailored to your 4-day flow.
-- **GOLDEN BACHSTAGE — $16,180.00** · **The Chairman Experience.** 4-Night Sovereign Elite Goldilocks Weekend with total environmental immersion in our nautical-inspired sanctuary. Full-Time Private Valet service, premium thermal Soaks, your own Customized Pop-Up Map & Daily Schedule. **Lifetime Sovereign status** and absolute sanctuary.
+- **GOLDEN BACHSTAGE PASS — $16,180.00** · **The Chairman Experience.** 4-Night Sovereign Elite Goldilocks Weekend with total environmental immersion in our nautical-inspired sanctuary. Full-Time Private Valet service, premium thermal Soaks, your own Customized Pop-Up Map & Daily Schedule. **Lifetime Sovereign status** and absolute sanctuary.
 
 ---
 

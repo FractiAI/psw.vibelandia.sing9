@@ -27,7 +27,7 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      /* Midnight + champagne + brass — luxury cruise line × festival poster */
+      /* Midnight + champagne + brass — modern renaissance × golden-age glow */
       --midnight: #05080f;
       --hull: #0a0f1a;
       --deep: #0f1729;
@@ -78,7 +78,7 @@
 
     /* ════════════════════════════════════════════════════════════════════
        CINEMA HERO · full-bleed yacht · Ken Burns zoom · luxury typography
-       Festival poster meets Ritz-Carlton Yacht Collection meets Broadway marquee.
+       Modern-renaissance × golden-age glow × lantern-lit river harbor.
        ════════════════════════════════════════════════════════════════════ */
     .cinema-hero {
       position: relative;
@@ -96,17 +96,19 @@
       position: absolute; inset: 0;
       background:
         url('assets/questfest-hero-ss-vibelandia-puerto-reno.png') center 55% / cover no-repeat;
+      filter: brightness(0.86) contrast(0.96) saturate(1.05);
       z-index: -2;
       animation: kenBurns 24s ease-in-out infinite alternate;
       will-change: transform;
     }
     .cinema-hero::after {
-      /* Cinematic vignette — festival poster grade */
+      /* Readability scrim + warm golden-age wash */
       content: "";
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 50% 30%, transparent 30%, rgba(5,8,15,0.35) 70%, rgba(5,8,15,0.85) 100%),
-        linear-gradient(180deg, rgba(5,8,15,0.55) 0%, rgba(5,8,15,0.1) 28%, rgba(5,8,15,0.4) 58%, rgba(5,8,15,0.94) 100%);
+        linear-gradient(180deg, rgba(5,8,15,0.78) 0%, rgba(5,8,15,0.52) 22%, rgba(5,8,15,0.58) 55%, rgba(5,8,15,0.88) 85%, rgba(5,8,15,0.98) 100%),
+        radial-gradient(ellipse at 50% 62%, rgba(5,8,15,0.32) 0%, rgba(5,8,15,0.55) 70%, rgba(5,8,15,0.85) 100%),
+        linear-gradient(180deg, rgba(180,138,40,0.10) 0%, rgba(180,138,40,0.05) 45%, transparent 75%);
       z-index: -1;
     }
     @keyframes kenBurns {
@@ -239,6 +241,48 @@
     @keyframes scrollCue {
       0%, 100% { opacity: 0.4; transform: scaleY(0.6); transform-origin: top; }
       50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* MOBILE FIX — prevent hero-top / hero-kicker / eyebrow overlap on iPhone Safari */
+    @media (max-width: 640px) {
+      .cinema-hero {
+        justify-content: space-between;
+        padding-top: calc(1rem + env(safe-area-inset-top));
+        min-height: 100vh;
+      }
+      .hero-top {
+        position: relative;
+        top: auto; left: auto; right: auto;
+        padding: 0 0 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+        width: 100%;
+      }
+      .hero-top .brand { font-size: 0.78rem; letter-spacing: 0.3em; }
+      .hero-top .locator { font-size: 0.58rem; letter-spacing: 0.26em; }
+      .hero-inner { padding-top: 0.5rem; }
+      .hero-kicker {
+        font-size: 0.58rem;
+        padding: 0.45rem 0.8rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 0.85rem;
+        white-space: normal;
+      }
+      .eyebrow {
+        font-size: 0.55rem;
+        gap: 0.3rem;
+        margin-bottom: 1rem;
+      }
+      .eyebrow span { padding: 0.3rem 0.55rem; }
+      h1.hero-title {
+        font-size: clamp(2rem, 10vw, 3.2rem);
+        line-height: 1.02;
+        max-width: 14ch;
+      }
+      .hero-sub { font-size: clamp(1rem, 4vw, 1.25rem); margin-bottom: 1.15rem; }
+      .hero-body { font-size: 0.92rem; margin-bottom: 1.25rem; line-height: 1.6; }
+      .hero-scroll-cue { display: none; }
     }
 
     /* STICKY NAV — luxury compass bar */
@@ -743,7 +787,7 @@
     table.ledger td.efficiency-frazzle { color: var(--red-river); font-weight: 700; }
     table.ledger td.efficiency-roi { color: var(--foam); font-weight: 700; }
 
-    /* 7-STAGE CONTINUUM — cruise ship daily itinerary */
+    /* 7-STAGE CONTINUUM — one long day, seven windows */
     .stages { display: grid; gap: 0.6rem; margin: 2rem 0; }
     .stage {
       display: grid; grid-template-columns: auto 1fr; gap: 1.25rem;
@@ -787,7 +831,7 @@
     }
     .mainstage .stage-tag { color: var(--gold-bright); }
 
-    /* PASS LADDER — festival tiered boarding pass */
+    /* PASS LADDER — golden-ratio tiered boarding pass */
     .passes { display: grid; gap: 1.1rem; margin: 2rem 0; grid-template-columns: 1fr; }
     @media (min-width: 700px) { .passes { grid-template-columns: 1fr 1fr; } }
     @media (min-width: 1100px) { .passes { grid-template-columns: repeat(4, 1fr); } }
@@ -946,7 +990,7 @@
 
     /* (legacy .hero-featured / .gallery-card styles removed — see .cinema-hero and .spread above) */
 
-    /* PORTS OF CALL — cruise manifest */
+    /* PORTS OF CALL — harbor manifest */
     .ports-panel {
       display: grid; gap: 2rem;
       grid-template-columns: 1fr;
@@ -1411,14 +1455,6 @@
         The old world of entertainment is a house of "Frazzle." You can see the cracks in the pillars of the giants. You can hear the static in their signals. While they fight for the last remnants of a dying attention economy, a new frequency has emerged. <strong>This is not a manifesto. This is The Shift.</strong>
       </div>
 
-      <div class="magnitude-bar">
-        <span class="magnitude-chip"><b>90,219</b> Total Plays</span>
-        <span class="magnitude-chip"><b>24,800</b> 7-Day Streams</span>
-        <span class="magnitude-chip"><b>5,000+</b> Daily Nodes</span>
-        <span class="magnitude-chip"><b>$1,213,500</b> Valuation Floor</span>
-        <span class="magnitude-chip"><b>117×</b> Weekly Super-Listener Loops</span>
-      </div>
-
       <div class="cta-row">
         <a class="cta primary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">Enter the Continuum →</a>
         <button type="button" class="cta secondary" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal" style="color:var(--gold-bright);border-color:var(--gold);">🎫 Ticket Office</button>
@@ -1488,25 +1524,11 @@
 
       <h3 class="shift-section-h"><span class="n">2</span> The Vibelandia Ascent <small>· The Power of the Constant</small></h3>
 
-      <p>While Disney bleeds profit on marketing and Broadway prays for "steady" grosses, Hero Jo's Golden Bachdoor Hit Factory has achieved escape velocity.</p>
+      <p>While Disney bleeds profit on marketing and Broadway prays for "steady" grosses, Hero Jo's Golden Bachdoor Hit Factory has already slipped into escape velocity. In the last seven days we added <strong>+23,888</strong> plays — almost 27% of our lifetime volume in one week. Horizontal growth turning vertical.</p>
 
-      <div class="ascent-grid">
-        <div class="ascent-card">
-          <div class="a-num">+23,888</div>
-          <div class="a-label">The 7-Day Surge</div>
-          <p>Nearly 27% of our total lifetime volume, added in the last seven days. Horizontal growth turning vertical.</p>
-        </div>
-        <div class="ascent-card">
-          <div class="a-num">117×</div>
-          <div class="a-label">The Super-Listener Pulse</div>
-          <p>Not casual fans — <strong>Sovereign Nodes</strong> looping the catalog 117 times a week. This isn't consuming content. This is Actual Noise Cancellation as a daily utility.</p>
-        </div>
-        <div class="ascent-card">
-          <div class="a-num">Track 2:3</div>
-          <div class="a-label">The Broadway Disruption</div>
-          <p>Our #1 track for the last seven days, from <em>El Gran Sol's Holographic Return</em>. Soundtrack music that doesn't just compete with Broadway — it renders the old theater model obsolete by being available 24/7 in the listener's own Holographic Valley.</p>
-        </div>
-      </div>
+      <p>And these aren't casual fans. They're <strong>Sovereign Nodes</strong> looping the whole catalog <strong>117 times a week</strong> — the way you'd use water. Not consuming content. Cancelling noise. A daily habit.</p>
+
+      <p>The seven-day #1 is <em>Track 2:3</em> from <em>El Gran Sol's Holographic Return</em>. Soundtrack music that doesn't just compete with Broadway — it quietly retires the old theater model, because it plays in the kitchen, on the walk, in the car, <strong>24/7</strong>, inside the listener's own Holographic Valley. The grand total at snapshot: <strong>88,699 plays</strong> climbing toward the <strong>90,219</strong> marker, across <strong>5,000+ daily nodes</strong>, with a valuation floor of <strong>$1,213,500</strong>. Quiet math. Loud truth.</p>
 
       <h3 class="shift-section-h"><span class="n">3</span> The 1.618 Demonstration <small>· You Are In The Shift</small></h3>
 
@@ -1594,7 +1616,7 @@
 
     <section id="continuum">
       <h2>The 7-Stage Continuum<span class="h2-sub">Reverse Bachdoor Protocol · 1.618 Resonance</span></h2>
-      <p>New tracks are <strong>free for 7 days</strong>. Day 8 they move into the <strong>Sovereign Vault</strong>.</p>
+      <p>New tracks are <strong>free for 7 days</strong> — come dance in, come soak them in. Day 8 they move into the <strong>Sovereign Vault</strong>.</p>
 
       <div class="stages">
         <div class="stage mainstage">
@@ -1726,9 +1748,9 @@
     </section>
 
     <section id="gallery">
-      <h2>The Experience<span class="h2-sub">Festival · Cruise Ship · Holographic AI Theater — all at once</span></h2>
-      <p style="font-family:var(--serif-luxe);font-size:1.2rem;font-style:italic;color:var(--champagne);max-width:62ch;line-height:1.55;margin-bottom:1rem;">Dawn espresso on the bow. Baroque tux at the podium at sunset. 100 BPM Perreo Country Fuego at the peak. A 1.420 GHz drone at 2 AM for total mind rest.</p>
-      <p>Not a weekend festival. Not a themed cruise. It's a <strong>24/365 feed</strong> that lives inside a ship — one long day broken into windows that each do something different to your nervous system.</p>
+      <h2>The Experience<span class="h2-sub">One long day · seven stages · from dawn espresso to the 2 AM hush</span></h2>
+      <p style="font-family:var(--serif-luxe);font-size:1.2rem;font-style:italic;color:var(--champagne);max-width:62ch;line-height:1.55;margin-bottom:1rem;">Espresso on the bow at sunrise. Baroque tux at the podium at sundown. Lanterns warming the hull. A hundred folks dancing at 100 BPM. A 2 AM drone that puts the nervous system to bed.</p>
+      <p>A <strong>24/365 feed</strong> living inside one long ship-shaped day. Seven windows, each doing a different kind of good for you. Come as you are. Leave lighter than you came.</p>
 
       <div class="spreads">
 
@@ -1760,7 +1782,7 @@
 
         <article class="spread">
           <div class="spread-img">
-            <img src="assets/questfest-perreo-country-fuego-deck-peak.png" alt="Packed festival deck at night — laser geometry, brass DJ booth, 100 BPM crowd in full motion, cathedral-scale hull glowing with fractal visuals" loading="lazy" decoding="async" />
+            <img src="assets/questfest-perreo-country-fuego-deck-peak.png" alt="Packed deck at night — laser geometry, brass DJ booth, 100 BPM crowd dancing in full motion, cathedral-scale hull glowing with fractal visuals" loading="lazy" decoding="async" />
             <span class="sticker">Stage 4 · Peak</span>
           </div>
           <div class="spread-body">
@@ -1814,7 +1836,7 @@
             <div class="num">Short 01 · The Arrival</div>
             <h4>"The Harbor is Open"</h4>
             <div class="beats">Aerial pull-back: Truckee River at dusk reveals the cathedral-scale S.S. Vibelandia. Hull fractals ignite. Golden ratio spiral blooms. Title card: <b>"PUERTO RENO · THE HARBOR IS OPEN."</b></div>
-            <div class="prompt">20s aerial drone pull-back, dusk, Truckee River, cathedral-scale ocean-liner-meets-festival-yacht "S.S. Vibelandia" docked downtown Reno, golden 1.618 spiral and hexagonal lattice ignite across hull, warm gold + teal lasers, Machote-Moderno refined, film-grain cinematic, 9:16 vertical, end title: "PUERTO RENO · THE HARBOR IS OPEN."</div>
+            <div class="prompt">20s aerial drone pull-back, dusk, Truckee River, cathedral-scale ocean-liner "S.S. Vibelandia" docked downtown Reno, golden 1.618 spiral and hexagonal lattice ignite across hull, warm gold + teal lasers, strings of lantern lights along deck, Machote-Moderno refined, film-grain cinematic, 9:16 vertical, end title: "PUERTO RENO · THE HARBOR IS OPEN."</div>
           </div>
         </div>
 
@@ -1842,7 +1864,7 @@
             <div class="num">Short 03 · Ignition</div>
             <h4>"The Conductor's Baton"</h4>
             <div class="beats">Close on Hero Jo's hand gripping baton. Baton strikes down. Stage wall ignites with 1.618 spiral + hexagonal lattice. Crowd surges. Caption: <b>"HERO JO · J.S. BACH ON THE RETURN."</b></div>
-            <div class="prompt">25s cinematic, close-up hand on conductor's baton, Baroque black tux sleeve, baton strikes downward on beat, cut to wide: massive curved LED stage wall on yacht deck ignites with golden 1.618 spiral and hexagonal 1.420 GHz lattice, thousands of festival silhouettes raise arms, warm gold + deep-teal lasers, Machote-Moderno refined, 9:16 vertical, caption "HERO JO · J.S. BACH ON THE RETURN."</div>
+            <div class="prompt">25s cinematic, close-up hand on conductor's baton, Baroque black tux sleeve, baton strikes downward on beat, cut to wide: massive curved LED stage wall on yacht deck ignites with golden 1.618 spiral and hexagonal 1.420 GHz lattice, thousands of silhouettes raise their arms in unison, warm gold + deep-teal lasers, Machote-Moderno refined, 9:16 vertical, caption "HERO JO · J.S. BACH ON THE RETURN."</div>
           </div>
         </div>
 
@@ -1855,8 +1877,8 @@
           <div class="body">
             <div class="num">Short 04 · The Peak</div>
             <h4>"Perreo Country Fuego · 100 BPM"</h4>
-            <div class="beats">100 BPM drop. Whip pan across dancing crowd. Cypress-silhouette visual meets perreo laser pattern. Brass DJ booth, smoke, bayou-meets-Reno. Caption: <b>"BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."</b></div>
-            <div class="prompt">30s high-energy festival cut, 100 BPM drop, nighttime yacht deck, dense joyful crowd dancing on teak planks under warm amber and deep-teal lasers, brass-rimmed DJ booth with smoke, huge illuminated yacht superstructure with holographic fractal visuals behind stage, subtle cypress-swamp visual motif blended into laser pattern, Reno skyline far background, long-lens shallow DOF, film grain, 9:16 vertical, caption "BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."</div>
+            <div class="beats">100 BPM drop. Whip pan across the dancing crowd. Cypress silhouettes meet a perreo laser pattern. Brass DJ booth, smoke curling up, bayou-meets-Reno. Caption: <b>"BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."</b></div>
+            <div class="prompt">30s high-energy cut, 100 BPM drop, nighttime yacht deck, dense joyful crowd dancing on teak planks under warm amber and deep-teal lasers, brass-rimmed DJ booth with smoke, huge illuminated yacht superstructure with holographic fractal visuals behind stage, subtle cypress-swamp visual motif blended into laser pattern, Reno skyline far background, long-lens shallow DOF, film grain, 9:16 vertical, caption "BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."</div>
           </div>
         </div>
 
@@ -1894,7 +1916,7 @@
 
     <section id="passes">
       <h2>The Passes<span class="h2-sub">Activate Your Resonance · 1.618 Ratio Tiers</span></h2>
-      <p>Four tiers. Every price tuned to 1.618. Fair exchange, no petroleum — delivered Machote-Moderno.</p>
+      <p>Four ways in. Every price tuned to 1.618. Come dance, come soak, come stay. Fair exchange, no petroleum — Machote-Moderno all the way through.</p>
 
       <div class="passes">
         <div class="pass">
@@ -2021,7 +2043,7 @@
         </div>
         <div class="canon">
           <h4>QuestFest Continuum</h4>
-          <p>24/365 residency — the opposite of a festival. Free for 7 days, then into the Sovereign Vault.</p>
+          <p>24/365 stay — the opposite of a weekend spike. Free for 7 days, then into the Sovereign Vault.</p>
         </div>
         <div class="canon">
           <h4>Golden Bachdoor Entry</h4>
@@ -2101,7 +2123,7 @@
         <div class="pay-row">
           <a class="pay-btn cashapp" href="https://cash.app/$newearthpru/16.18" target="_blank" rel="noopener">💚 Cash App · $16.18</a>
           <a class="pay-btn venmo" href="https://venmo.com/u/Pru-Mendez?txn=pay&amp;amount=16.18&amp;note=QUESTFEST%20GA%20Residency%201.618" target="_blank" rel="noopener">💙 Venmo · $16.18</a>
-          <a class="pay-btn paypal" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=PayPal%20Invoice%20Request%20%C2%B7%20GA%20Residency%20%2416.18%2Fmo&amp;body=Hi%20Hero%20Jo%27s%20Golden%20Bachdoor%20Hit%20Factory%2C%0A%0APlease%20send%20me%20a%20PayPal%20invoice%20for%3A%0A%0AGA%20Residency%20%E2%80%94%20%2416.18%2Fmo%0A%0APayPal%20email%3A%0AFull%20name%3A%0A%0AThanks%2C%0A">💳 PayPal · Invoice me</a>
+          <a class="pay-btn paypal" href="https://paypal.me/PrudencioMendez732/16.18" target="_blank" rel="noopener">💳 PayPal · $16.18</a>
         </div>
         <div class="tier-note">First month on the rail above. We'll email a recurring option — or just send $16.18/month to the same handle. <b style="color:var(--gold);">Golden Fractal Key</b> lands within the hour.</div>
       </div>
@@ -2117,9 +2139,9 @@
         <div class="pay-row">
           <a class="pay-btn cashapp" href="https://cash.app/$newearthpru/1618" target="_blank" rel="noopener">💚 Cash App · $1,618</a>
           <a class="pay-btn venmo" href="https://venmo.com/u/Pru-Mendez?txn=pay&amp;amount=1618&amp;note=QUESTFEST%20Bachstage%20Pass%201.618" target="_blank" rel="noopener">💙 Venmo · $1,618</a>
-          <a class="pay-btn paypal" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=PayPal%20Invoice%20Request%20%C2%B7%20Bachstage%20Pass%20%241%2C618&amp;body=Hi%20Hero%20Jo%27s%20Golden%20Bachdoor%20Hit%20Factory%2C%0A%0APlease%20send%20me%20a%20PayPal%20invoice%20for%3A%0A%0ABachstage%20Pass%20%E2%80%94%20%241%2C618.00%0A%0APreferred%20dates%3A%0APayPal%20email%3A%0AFull%20name%3A%0A%0AThanks%2C%0A">💳 PayPal · Invoice me</a>
+          <a class="pay-btn paypal" href="https://paypal.me/PrudencioMendez732/1618" target="_blank" rel="noopener">💳 PayPal · $1,618</a>
         </div>
-        <div class="tier-note">Venmo has a weekly cap — if yours hits it, switch to Cash App or request a PayPal invoice. Your dates lock on payment confirmation.</div>
+        <div class="tier-note">Venmo has a weekly cap — if yours hits it, swing over to Cash App or PayPal. Your dates lock on payment confirmation.</div>
       </div>
 
       <!-- GOLDEN BACHSTAGE PASS -->
@@ -2133,16 +2155,16 @@
         <div class="pay-row">
           <a class="pay-btn cashapp" href="https://cash.app/$newearthpru/16180" target="_blank" rel="noopener">💚 Cash App · $16,180</a>
           <a class="pay-btn venmo" href="https://venmo.com/u/Pru-Mendez?txn=pay&amp;amount=16180&amp;note=QUESTFEST%20Golden%20Bachstage%201.618" target="_blank" rel="noopener">💙 Venmo · $16,180</a>
-          <a class="pay-btn paypal" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=PayPal%20Invoice%20Request%20%C2%B7%20Golden%20Bachstage%20%2416%2C180&amp;body=Hi%20Hero%20Jo%27s%20Golden%20Bachdoor%20Hit%20Factory%2C%0A%0APlease%20send%20me%20a%20PayPal%20invoice%20for%3A%0A%0AGolden%20Bachstage%20%E2%80%94%20%2416%2C180.00%0A%0APreferred%20dates%3A%0APayPal%20email%3A%0AFull%20name%3A%0A%0AThanks%2C%0A">💳 PayPal · Invoice me</a>
-          <a class="pay-btn wire" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=Chairman%20Experience%20%C2%B7%20Wire%20%2F%20Invoice%20%C2%B7%20Golden%20Bachstage%20%2416%2C180&amp;body=Hi%20Hero%20Jo%27s%20Golden%20Bachdoor%20Hit%20Factory%2C%0A%0AI%27d%20like%20to%20secure%20Golden%20Bachstage%20via%20wire%20or%20full%20invoice.%0A%0AFull%20name%3A%0AEntity%20(if%20applicable)%3A%0APreferred%20dates%3A%0AContact%20phone%3A%0A%0AThanks%2C%0A">⚓ Wire / Invoice (recommended)</a>
+          <a class="pay-btn paypal" href="https://paypal.me/PrudencioMendez732/16180" target="_blank" rel="noopener">💳 PayPal · $16,180</a>
+          <a class="pay-btn wire" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=Chairman%20Experience%20%C2%B7%20Wire%20%C2%B7%20Golden%20Bachstage%20Pass%20%2416%2C180&amp;body=Hi%20Hero%20Jo%27s%20Golden%20Bachdoor%20Hit%20Factory%2C%0A%0AI%27d%20like%20to%20secure%20the%20Golden%20Bachstage%20Pass%20via%20wire.%0A%0AFull%20name%3A%0AEntity%20(if%20applicable)%3A%0APreferred%20dates%3A%0AContact%20phone%3A%0A%0AThanks%2C%0A">⚓ Wire (ask for details)</a>
         </div>
-        <div class="tier-note">Cash App and Venmo usually cap around $5,000/week. For the Golden Bachstage Pass, <b>wire or PayPal invoice is easier</b> — or we can split it across a couple weeks. Chairman Concierge sets it up on request.</div>
+        <div class="tier-note">Cash App and Venmo usually cap around $5,000/week. For the Golden Bachstage Pass, <b>PayPal or a wire is easier</b> — or we can split the payment across a couple of weeks. Chairman Concierge sets it up on request.</div>
       </div>
 
       <div class="ticket-footer">
         <p><b>After payment:</b> email the receipt or transaction ID to <a href="mailto:goldenbackdoorhitfactory@gmail.com?subject=Pass%20Payment%20Confirmation" style="color:var(--gold);">goldenbackdoorhitfactory@gmail.com</a>. Include the tier name and the handle you paid from. Key and access land within the hour.</p>
-        <p style="margin-top:0.55rem;"><b>Rails:</b> Cash App <code>$newearthpru</code> · Venmo <code>@Pru-Mendez</code> · PayPal invoice on request. Fair exchange. Machote-Moderno.</p>
-        <p style="margin-top:0.55rem;"><b>If anything glitches:</b> pay direct to Cash App <code>$newearthpru</code> or Venmo <code>@Pru-Mendez</code> and email us the transaction. We'll match and deliver.</p>
+        <p style="margin-top:0.55rem;"><b>Rails:</b> Cash App <code>$newearthpru</code> · Venmo <code>@Pru-Mendez</code> · PayPal <code>@PrudencioMendez732</code>. Fair exchange. Machote-Moderno.</p>
+        <p style="margin-top:0.55rem;"><b>If anything glitches:</b> pay direct to Cash App <code>$newearthpru</code>, Venmo <code>@Pru-Mendez</code>, or PayPal <code>@PrudencioMendez732</code> and email us the transaction. We'll match and deliver.</p>
       </div>
     </div>
   </div>
@@ -2227,7 +2249,7 @@
           img: 'assets/questfest-hero-ss-vibelandia-puerto-reno.png',
           alt: 'Short 01 storyboard — aerial pull-back of the S.S. Vibelandia docked at Puerto Reno at dusk',
           beats: 'Aerial pull-back: Truckee River at dusk reveals the cathedral-scale S.S. Vibelandia. Hull fractals ignite. Golden ratio spiral blooms. Title card: "PUERTO RENO · THE HARBOR IS OPEN."',
-          prompt: '20s aerial drone pull-back, dusk, Truckee River, cathedral-scale ocean-liner-meets-festival-yacht "S.S. Vibelandia" docked downtown Reno, golden 1.618 spiral and hexagonal lattice ignite across hull, warm gold + teal lasers, Machote-Moderno refined, film-grain cinematic, 9:16 vertical, end title: "PUERTO RENO · THE HARBOR IS OPEN."'
+          prompt: '20s aerial drone pull-back, dusk, Truckee River, cathedral-scale ocean-liner "S.S. Vibelandia" docked downtown Reno, golden 1.618 spiral and hexagonal lattice ignite across hull, warm gold + teal lasers, strings of lantern lights along deck, Machote-Moderno refined, film-grain cinematic, 9:16 vertical, end title: "PUERTO RENO · THE HARBOR IS OPEN."'
         },
         2: {
           num: 'Short 02 · Dawn',
@@ -2245,16 +2267,16 @@
           img: 'assets/questfest-hero-jo-conducting-podium.png',
           alt: 'Short 03 storyboard — Hero Jo at the conductor podium, baton raised, 1.618 spiral on stage wall',
           beats: 'Close on Hero Jo\u0027s hand gripping baton. Baton strikes down. Stage wall ignites with 1.618 spiral + hexagonal lattice. Crowd surges. Caption: "HERO JO · J.S. BACH ON THE RETURN."',
-          prompt: '25s cinematic, close-up hand on conductor\u0027s baton, Baroque black tux sleeve, baton strikes downward on beat, cut to wide: massive curved LED stage wall on yacht deck ignites with golden 1.618 spiral and hexagonal 1.420 GHz lattice, thousands of festival silhouettes raise arms, warm gold + deep-teal lasers, Machote-Moderno refined, 9:16 vertical, caption "HERO JO · J.S. BACH ON THE RETURN."'
+          prompt: '25s cinematic, close-up hand on conductor\u0027s baton, Baroque black tux sleeve, baton strikes downward on beat, cut to wide: massive curved LED stage wall on yacht deck ignites with golden 1.618 spiral and hexagonal 1.420 GHz lattice, thousands of silhouettes raise their arms in unison, warm gold + deep-teal lasers, Machote-Moderno refined, 9:16 vertical, caption "HERO JO · J.S. BACH ON THE RETURN."'
         },
         4: {
           num: 'Short 04 · The Peak',
           title: '"Perreo Country Fuego · 100 BPM"',
           dur: '30s', format: '9:16 vertical', stage: 'Stage 4 · Perreo Country Fuego',
           img: 'assets/questfest-perreo-country-fuego-deck-peak.png',
-          alt: 'Short 04 storyboard — packed festival deck at the 100 BPM peak, lasers and fractal hull',
+          alt: 'Short 04 storyboard — packed deck at the 100 BPM peak, lasers and fractal hull',
           beats: '100 BPM drop. Whip pan across dancing crowd. Cypress-silhouette visual meets perreo laser pattern. Brass DJ booth, smoke, bayou-meets-Reno. Caption: "BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."',
-          prompt: '30s high-energy festival cut, 100 BPM drop, nighttime yacht deck, dense joyful crowd dancing on teak planks under warm amber and deep-teal lasers, brass-rimmed DJ booth with smoke, huge illuminated yacht superstructure with holographic fractal visuals behind stage, subtle cypress-swamp visual motif blended into laser pattern, Reno skyline far background, long-lens shallow DOF, film grain, 9:16 vertical, caption "BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."'
+          prompt: '30s high-energy cut, 100 BPM drop, nighttime yacht deck, dense joyful crowd dancing on teak planks under warm amber and deep-teal lasers, brass-rimmed DJ booth with smoke, huge illuminated yacht superstructure with holographic fractal visuals behind stage, subtle cypress-swamp visual motif blended into laser pattern, Reno skyline far background, long-lens shallow DOF, film grain, 9:16 vertical, caption "BAYOU SWAMP MEETS 1.618. DONDE SE PERREA."'
         },
         5: {
           num: 'Short 05 · The Void',

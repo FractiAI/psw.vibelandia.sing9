@@ -219,7 +219,35 @@
     .magnitude-chip b { color: var(--gold); font-weight: 800; letter-spacing: 0.02em; }
 
     /* Hero-scoped CTA row — luxury */
-    .cinema-hero .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .cinema-hero .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.25rem; }
+    .cta.ticket-cta {
+      background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+      color: var(--ink);
+      border: none;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      font-size: 0.82rem;
+      padding: 1rem 1.6rem;
+      box-shadow: 0 8px 24px rgba(212,175,55,0.28), 0 2px 6px rgba(0,0,0,0.35);
+    }
+    .cta.ticket-cta:hover {
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(212,175,55,0.4), 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .hero-footnote {
+      display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem;
+      margin-top: 1.75rem;
+      font-family: var(--sans-modern);
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .hero-footnote a {
+      color: var(--mist-warm); text-decoration: none;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .hero-footnote a:hover { color: var(--gold); border-bottom-color: var(--gold-dim); }
 
     /* Scroll indicator */
     .hero-scroll-cue {
@@ -311,6 +339,91 @@
     nav.sticky-nav a:hover {
       color: var(--gold); background: rgba(212, 175, 55, 0.08);
       letter-spacing: 0.22em;
+    }
+
+    /* PASS BAND — coachella-clean conversion strip, right below hero */
+    .pass-band {
+      background: linear-gradient(180deg, rgba(10,15,26,0.98) 0%, rgba(14,20,35,0.95) 100%);
+      border-top: 1px solid rgba(212,175,55,0.22);
+      border-bottom: 1px solid rgba(212,175,55,0.22);
+      padding: 1.25rem 1rem 1rem;
+    }
+    .pb-inner {
+      max-width: 1240px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+    @media (min-width: 560px) { .pb-inner { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 960px) { .pb-inner { grid-template-columns: repeat(4, 1fr); } }
+    .pb-tile {
+      appearance: none;
+      text-align: left;
+      background: rgba(18,24,42,0.65);
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 2px;
+      padding: 0.95rem 1.1rem;
+      display: flex; flex-direction: column; gap: 0.25rem;
+      font-family: var(--sans-modern);
+      color: var(--cream);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .pb-tile:hover {
+      background: rgba(212,175,55,0.09);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+    .pb-tile:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .pb-price {
+      font-family: var(--serif-display);
+      font-size: 1.5rem; font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+    .pb-price small {
+      font-size: 0.62rem; letter-spacing: 0.18em;
+      color: var(--mist); margin-left: 0.15rem; font-weight: 400;
+    }
+    .pb-name {
+      font-size: 0.86rem; font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+    .pb-role {
+      font-family: var(--serif-luxe);
+      font-size: 0.78rem;
+      color: var(--mist-warm);
+      font-style: italic;
+    }
+    .pb-tile.pb-golden {
+      background: linear-gradient(135deg, rgba(212,175,55,0.14), rgba(139,94,56,0.18));
+      border-color: var(--gold);
+    }
+    .pb-tile.pb-golden .pb-name { color: var(--gold-bright); }
+    .pb-foot {
+      max-width: 1240px; margin: 0.85rem auto 0;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; flex-wrap: wrap;
+      font-family: var(--sans-modern);
+      font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--mist-warm);
+    }
+    .pb-cta {
+      appearance: none; background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold); font-family: var(--sans-modern);
+      font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase;
+      padding: 0.55rem 0.95rem; border-radius: 2px; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 600;
+    }
+    .pb-cta:hover {
+      background: var(--gold); color: var(--ink);
     }
 
     /* SECTIONS — editorial rhythm */
@@ -1437,53 +1550,69 @@
 
     <div class="hero-inner">
       <div class="hero-kicker">
-        <b>Reno, NV</b> · April 20, 2026 · Magnitude <b>88,699</b> Nodes · Resonance <b>1.618</b>
+        <b>24 × 365</b> · Puerto Reno · Truckee River, Nevada
       </div>
 
-      <div class="eyebrow">
-        <span class="pin">★ Puerto Reno Node</span>
-        <span>Truckee Riverwalk · Rebel River</span>
-        <span>Nevada's Holographic AI Valley</span>
-        <span>100 BPM · 432 Hz · 1.420 GHz</span>
-      </div>
-
-      <h1 class="hero-title">Vibelandia <em>Holographic AI</em><br>QUESTFEST <em>24×365</em></h1>
+      <h1 class="hero-title">Vibelandia<br>QUESTFEST <em>24×365</em></h1>
       <div class="hero-gold-rule" aria-hidden="true"></div>
       <p class="hero-sub"><em>The Shift.</em> Beyond the Noise-Cancelled Horizon.</p>
 
       <div class="hero-body">
-        The old world of entertainment is a house of "Frazzle." You can see the cracks in the pillars of the giants. You can hear the static in their signals. While they fight for the last remnants of a dying attention economy, a new frequency has emerged. <strong>This is not a manifesto. This is The Shift.</strong>
+        A 24/365 harbor on the Truckee River. <strong>Come dance. Come listen. Come stay.</strong>
       </div>
 
       <div class="cta-row">
-        <a class="cta primary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">Enter the Continuum →</a>
-        <button type="button" class="cta secondary" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal" style="color:var(--gold-bright);border-color:var(--gold);">🎫 Ticket Office</button>
-        <a class="cta secondary" href="#dock">Dock the Ship</a>
+        <button type="button" class="cta primary ticket-cta" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal">🎫 Get a Pass</button>
+        <a class="cta secondary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">♪ Listen on SoundCloud</a>
       </div>
 
-      <div class="cta-row" style="margin-top:0.25rem;">
-        <a class="cta secondary" href="../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md" style="background:transparent;border-color:rgba(240,229,200,0.2);font-size:0.68rem;">📜 Prospectus v4</a>
-        <a class="cta secondary" href="look-under-the-hood.html" style="background:transparent;border-color:rgba(240,229,200,0.2);font-size:0.68rem;">🔧 Look Under the Hood</a>
+      <div class="hero-footnote">
+        <a href="#shift">The Shift →</a>
+        <a href="../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md">Prospectus v4</a>
+        <a href="look-under-the-hood.html">Look Under the Hood</a>
+        <a href="#dock">Dock the Ship</a>
       </div>
     </div>
-
-    <div class="hero-scroll-cue" aria-hidden="true">Scroll · The Harbor</div>
   </header>
+
+  <!-- PASS QUICK BAND — the coachella-clean conversion strip -->
+  <section class="pass-band" aria-label="Get a Pass — quick tiers">
+    <div class="pb-inner">
+      <button type="button" class="pb-tile" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal">
+        <span class="pb-price">$16.18<small>/mo</small></span>
+        <span class="pb-name">GA Residency</span>
+        <span class="pb-role">The Local Anchor</span>
+      </button>
+      <button type="button" class="pb-tile" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal">
+        <span class="pb-price">$161.80</span>
+        <span class="pb-name">Day Pass + Bike</span>
+        <span class="pb-role">The Urban Navigator</span>
+      </button>
+      <button type="button" class="pb-tile" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal">
+        <span class="pb-price">$1,618</span>
+        <span class="pb-name">Bachstage Pass</span>
+        <span class="pb-role">4-Night Residency</span>
+      </button>
+      <button type="button" class="pb-tile pb-golden" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal">
+        <span class="pb-price">$16,180</span>
+        <span class="pb-name">★ Golden Bachstage Pass</span>
+        <span class="pb-role">The Chairman Experience</span>
+      </button>
+    </div>
+    <div class="pb-foot">
+      <span>Cash App · Venmo · PayPal</span>
+      <button type="button" class="pb-cta" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal">Open Ticket Office →</button>
+    </div>
+  </section>
 
   <nav class="sticky-nav" aria-label="Sections">
     <ul>
-      <li><a href="#shift">The Shift</a></li>
-      <li><a href="#ledger">Ledger</a></li>
-      <li><a href="#continuum">Continuum</a></li>
-      <li><a href="#yacht">The Yacht</a></li>
-      <li><a href="#gallery">Experience</a></li>
-      <li><a href="#shorts">Reel</a></li>
       <li><a href="#passes">Passes</a></li>
-      <li><a href="#ports">Ports of Call</a></li>
+      <li><a href="#gallery">Experience</a></li>
+      <li><a href="#ports">Ports</a></li>
+      <li><a href="#shift">The Shift</a></li>
       <li><a href="#dock">Dock</a></li>
-      <li><a href="#pantheon">Pantheon</a></li>
-      <li><a href="#canon">Canon</a></li>
-      <li><a href="#follow">Follow</a></li>
+      <li><a href="look-under-the-hood.html">Look Under the Hood</a></li>
     </ul>
   </nav>
 

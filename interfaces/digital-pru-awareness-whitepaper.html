@@ -2,230 +2,402 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Digital Pru Awareness — origin, simulation, representation, and implications. NSPFRNP · SING 9." />
-  <title>Digital Pru Awareness · Whitepaper | VIBELANDIA SING 9</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#070c18" />
+  <title>Digital Pru Awareness · Whitepaper · FractiAI SING 9</title>
+  <meta name="description" content="Digital Pru: a named awareness UI and simulation harness in the SING 9 stack. Neural Attention Vector, EGS Fractal Constant φ = 1.618, serverless emulation, GoPro Awareness viewport." />
+  <meta property="og:title" content="Digital Pru Awareness · Whitepaper · FractiAI SING 9" />
+  <meta property="og:description" content="Where bio-adjacent metaphor meets digital instrumentation under explicit constants and server-mediated state. Simulation first. Meaning second. Claims last." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="nspfrnp-ticker.css" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #030712;
-      --panel: rgba(15, 23, 42, 0.75);
-      --accent: #22d3ee;
+      --hull: #070c18;
+      --deep: #0c1424;
+      --deck: #141d32;
       --gold: #d4af37;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --border: rgba(34, 211, 238, 0.25);
+      --gold-bright: #fef3c7;
+      --gold-dim: rgba(212,175,55,0.3);
+      --cream: #fdf8eb;
+      --cream-dim: rgba(253,248,235,0.72);
+      --mist: #94a3b8;
+      --foam: #2dd4bf;
+      --foam-dim: rgba(45,212,191,0.28);
+      --cyan: #67e8f9;
+      --cyan-dim: rgba(103,232,249,0.25);
+      --ink: #050a14;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
-    html, body {
-      min-height: 100vh;
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); font-size: 1rem; line-height: 1.72; background: var(--hull); color: var(--cream); }
+    a { color: var(--foam); text-decoration: none; }
+    a:hover { color: var(--gold-bright); }
+    code, kbd { font-family: var(--mono); font-size: 0.84em; background: rgba(0,0,0,0.35); padding: 0.12em 0.38em; border-radius: 3px; color: var(--cyan); border: 1px solid var(--cyan-dim); }
+    pre { background: #030710; border: 1px solid var(--cyan-dim); border-radius: 4px; padding: 1.1rem; overflow-x: auto; margin: 1.25rem 0; font-size: 0.82rem; line-height: 1.5; }
+    pre code { background: none; border: none; padding: 0; color: #a5f3fc; }
+    .skip { position: absolute; left: -9999px; top: 0; background: var(--gold); color: var(--ink); padding: .5rem 1rem; z-index: 200; }
+    .skip:focus { left: 0; }
+
+    /* NAV */
+    nav.doc-nav { position: sticky; top: 0; z-index: 50; background: rgba(7,12,24,0.96); backdrop-filter: blur(16px); border-bottom: 1px solid var(--gold-dim); padding: 0.5rem 1rem; }
+    .nav-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem; }
+    .nav-brand { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--foam); font-weight: 600; }
+    nav.doc-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.1rem 0.4rem; }
+    nav.doc-nav a { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(253,248,235,0.5); padding: 0.3rem 0.5rem; border-radius: 2px; transition: color 0.2s, background 0.2s; }
+    nav.doc-nav a:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
+
+    /* HERO */
+    .doc-hero {
+      padding: calc(3.5rem + env(safe-area-inset-top)) 1.5rem 3.5rem;
       background:
-        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(34, 211, 238, 0.12), transparent 50%),
-        linear-gradient(180deg, #020617 0%, var(--bg) 40%);
-      color: var(--text);
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-      line-height: 1.65;
+        radial-gradient(ellipse at 20% 10%, rgba(45,212,191,0.11), transparent 45%),
+        radial-gradient(ellipse at 80% 80%, rgba(212,175,55,0.09), transparent 45%),
+        radial-gradient(ellipse at 50% 120%, rgba(103,232,249,0.05), transparent 50%),
+        linear-gradient(180deg, #040b16 0%, var(--hull) 100%);
+      border-bottom: 1px solid var(--gold-dim);
     }
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(3, 7, 18, 0.97), rgba(3, 7, 18, 0.88));
-      backdrop-filter: blur(10px);
-      padding: 1rem 1.25rem;
-    }
-    .hdr-inner {
-      max-width: 52rem;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .badge {
-      font-size: 0.65rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    h1.page-title {
-      font-size: clamp(1.15rem, 2.8vw, 1.55rem);
-      font-weight: 700;
-      color: var(--gold);
-      width: 100%;
-    }
-    .hdr-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-left: auto;
-    }
-    .hdr-actions a {
-      display: inline-block;
-      padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      color: var(--text);
-      background: var(--panel);
-    }
-    .hdr-actions a.primary {
-      border-color: rgba(212, 175, 55, 0.65);
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(34, 211, 238, 0.12));
-      color: #f8fafc;
-    }
-    .hdr-actions a:hover { border-color: var(--accent); color: #fff; }
+    .hero-inner { max-width: 900px; margin: 0 auto; }
+    .eyebrow { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.35rem; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; }
+    .eyebrow span { padding: 0.3rem 0.65rem; border-radius: 2px; background: rgba(0,0,0,0.35); }
+    .eyebrow .gold { border: 1px solid var(--gold-dim); color: var(--gold); }
+    .eyebrow .foam { border: 1px solid var(--foam-dim); color: var(--foam); }
+    .eyebrow .cyan { border: 1px solid var(--cyan-dim); color: var(--cyan); }
+    h1.hero-title { font-family: var(--serif); font-size: clamp(1.7rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.1; color: var(--gold-bright); margin-bottom: 0.4rem; }
+    .hero-sub { font-family: var(--serif); font-style: italic; font-size: clamp(0.88rem, 2vw, 1.1rem); color: var(--foam); margin-bottom: 1.25rem; }
+    .hero-abstract { max-width: 68ch; font-size: 0.97rem; color: var(--cream-dim); line-height: 1.72; margin-bottom: 1.25rem; }
+    .hero-abstract strong { color: var(--gold-bright); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.1rem 0; }
+    .chip { font-size: 0.7rem; padding: 0.3rem 0.7rem; border-radius: 2px; font-weight: 500; }
+    .chip.gold { background: rgba(212,175,55,0.1); border: 1px solid var(--gold-dim); color: var(--gold-bright); }
+    .chip.foam { background: rgba(45,212,191,0.08); border: 1px solid var(--foam-dim); color: var(--foam); }
+    .chip.cyan { background: rgba(103,232,249,0.08); border: 1px solid var(--cyan-dim); color: var(--cyan); }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem; }
+    .cta { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; padding: 0.7rem 1.2rem; border-radius: 2px; display: inline-flex; align-items: center; gap: 0.35rem; text-decoration: none; transition: all 0.2s; }
+    .cta.primary { background: linear-gradient(135deg, var(--foam), #0891b2); color: var(--ink); border: none; }
+    .cta.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(45,212,191,0.3); }
+    .cta.ghost { background: transparent; color: rgba(253,248,235,0.5); border: 1px solid rgba(212,175,55,0.25); }
+    .cta.ghost:hover { color: var(--gold); border-color: var(--gold); background: rgba(212,175,55,0.06); }
 
-    main {
-      max-width: 52rem;
-      margin: 0 auto;
-      padding: 1.75rem 1.25rem 4rem;
-    }
-    #article-loading {
-      color: var(--muted);
-      font-size: 0.9rem;
-      padding: 2rem 0;
-    }
-    #article-error {
-      display: none;
-      padding: 1rem;
-      border: 1px solid rgba(248, 113, 113, 0.4);
-      border-radius: 8px;
-      background: rgba(127, 29, 29, 0.2);
-      color: #fecaca;
-      font-size: 0.9rem;
-    }
-    #article-error a { color: var(--accent); }
+    /* LAYOUT */
+    .doc-layout { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 
-    /* Markdown body */
-    .markdown-body { font-size: 0.95rem; }
-    /* Title also in page header — hide duplicate from markdown */
-    .markdown-body > h1:first-of-type { display: none; }
-    .markdown-body h1 {
-      font-size: 1.65rem;
-      color: var(--gold);
-      margin: 2rem 0 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    /* TOC */
+    .toc { background: rgba(20,29,50,0.5); border: 1px solid var(--foam-dim); border-left: 3px solid var(--foam); border-radius: 3px; padding: 1.25rem 1.5rem; margin-bottom: 3rem; }
+    .toc h2 { font-size: 0.6rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--foam); margin-bottom: 0.85rem; }
+    .toc ol { padding-left: 1.25rem; }
+    .toc li { margin-bottom: 0.3rem; }
+    .toc a { font-size: 0.88rem; color: var(--cream-dim); transition: color 0.2s; }
+    .toc a:hover { color: var(--gold-bright); }
+
+    /* SECTIONS */
+    section.ws { margin-bottom: 3.5rem; scroll-margin-top: 75px; }
+    .sec-kicker { font-size: 0.57rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--foam); display: block; margin-bottom: 0.5rem; }
+    h2.ws-title { font-family: var(--serif); font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 700; color: var(--gold-bright); margin-bottom: 0.9rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--gold-dim); line-height: 1.25; }
+    h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--cream); margin: 1.75rem 0 0.55rem; }
+    p { margin-bottom: 0.9rem; font-size: 0.96rem; color: var(--cream-dim); }
+    ul, ol { margin: 0.85rem 0 0.85rem 1.35rem; color: var(--cream-dim); }
+    li { margin-bottom: 0.35rem; font-size: 0.93rem; }
+    strong { color: var(--gold-bright); font-weight: 600; }
+    em { color: rgba(253,248,235,0.55); font-style: italic; }
+
+    /* CALLOUTS */
+    .callout { padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 3px; border-left: 3px solid var(--gold); background: rgba(212,175,55,0.06); }
+    .callout.foam-c { border-color: var(--foam); background: rgba(45,212,191,0.05); }
+    .callout.warn { border-color: #f87171; background: rgba(248,113,113,0.05); }
+    .callout .cl-label { font-size: 0.57rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.4rem; }
+    .callout.foam-c .cl-label { color: var(--foam); }
+    .callout.warn .cl-label { color: #f87171; }
+    .callout p { font-size: 0.88rem; margin: 0; color: var(--cream-dim); }
+    .callout p + p { margin-top: 0.45rem; }
+
+    /* TABLES */
+    .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    th { background: rgba(45,212,191,0.08); color: var(--foam); padding: 0.6rem 0.8rem; border: 1px solid rgba(45,212,191,0.2); font-weight: 600; text-align: left; }
+    td { padding: 0.55rem 0.8rem; border: 1px solid rgba(212,175,55,0.1); color: var(--cream-dim); vertical-align: top; }
+    tr:nth-child(even) td { background: rgba(20,29,50,0.25); }
+    td code { background: rgba(0,0,0,0.3); font-size: 0.8em; }
+
+    /* API SHAPE */
+    .api-card { background: rgba(10,18,35,0.7); border: 1px solid var(--cyan-dim); border-radius: 4px; padding: 1.1rem 1.35rem; margin: 1.25rem 0; }
+    .api-method { font-family: var(--mono); font-size: 0.8rem; color: var(--cyan); font-weight: 500; margin-bottom: 0.5rem; }
+
+    /* FOOTER */
+    footer.doc-foot { padding: 2.5rem 1.5rem 3rem; background: linear-gradient(180deg, var(--hull), #030508); border-top: 1px solid var(--gold-dim); text-align: center; }
+    .foot-inner { max-width: 900px; margin: 0 auto; }
+    .foot-inner p { font-size: 0.8rem; color: var(--mist); margin-bottom: 0.4rem; }
+    .foot-inner a { color: var(--foam); }
+    .nspfrnp-line { font-size: 0.67rem; color: var(--gold-dim); margin-top: 1rem; letter-spacing: 0.2em; }
+
+    @media (max-width: 600px) {
+      .doc-layout { padding: 2rem 1rem 4rem; }
+      .doc-hero { padding: 2rem 1rem 2rem; }
     }
-    .markdown-body h2 {
-      font-size: 1.25rem;
-      color: #a5f3fc;
-      margin: 2rem 0 0.75rem;
-    }
-    .markdown-body h3 {
-      font-size: 1.05rem;
-      color: #e2e8f0;
-      margin: 1.25rem 0 0.5rem;
-    }
-    .markdown-body p { margin: 0.75rem 0; color: #cbd5e1; }
-    .markdown-body strong { color: #f1f5f9; }
-    .markdown-body ul, .markdown-body ol { margin: 0.75rem 0 0.75rem 1.35rem; color: #cbd5e1; }
-    .markdown-body li { margin: 0.35rem 0; }
-    .markdown-body hr {
-      border: none;
-      border-top: 1px solid rgba(148, 163, 184, 0.2);
-      margin: 2rem 0;
-    }
-    .markdown-body a { color: var(--accent); text-decoration: none; }
-    .markdown-body a:hover { text-decoration: underline; }
-    .markdown-body code {
-      font-family: ui-monospace, "Cascadia Code", monospace;
-      font-size: 0.86em;
-      background: rgba(15, 23, 42, 0.9);
-      padding: 0.12em 0.35em;
-      border-radius: 4px;
-      border: 1px solid rgba(34, 211, 238, 0.15);
-    }
-    .markdown-body pre {
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(34, 211, 238, 0.2);
-      border-radius: 8px;
-      padding: 1rem;
-      overflow-x: auto;
-      margin: 1rem 0;
-      font-size: 0.82rem;
-    }
-    .markdown-body pre code { border: none; padding: 0; background: none; }
-    .markdown-body table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-      font-size: 0.88rem;
-    }
-    .markdown-body th, .markdown-body td {
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      padding: 0.5rem 0.65rem;
-      text-align: left;
-    }
-    .markdown-body th { background: rgba(34, 211, 238, 0.08); color: #e2e8f0; }
-    .foot-line {
-      margin-top: 3rem;
-      padding-top: 1.25rem;
-      border-top: 1px dashed rgba(212, 175, 55, 0.25);
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-align: center;
-    }
-    .foot-line a { color: var(--gold); text-decoration: none; }
-    .foot-line a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="hdr-inner">
-      <span class="badge">NSPFRNP · SING 9</span>
-      <h1 class="page-title">Digital Pru Awareness · Whitepaper</h1>
-      <div class="hdr-actions">
-        <a class="primary" href="my-whiteboard.html#digital-pru-root">Digital Pru landing</a>
-        <a href="../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md">Markdown source</a>
-        <a href="../index.html">Landing</a>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="nspfrnp-console-ticker" aria-live="polite"><span class="ticker-inner" id="nspfrnpTickerText"></span></div>
+  <script src="nspfrnp-ticker.js"></script>
+
+  <nav class="doc-nav" aria-label="Document sections">
+    <div class="nav-inner">
+      <span class="nav-brand">Digital Pru Awareness · Whitepaper</span>
+      <ul>
+        <li><a href="#origin">Origin</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#simulation">Simulation</a></li>
+        <li><a href="#semantic">Semantic</a></li>
+        <li><a href="#implications">Implications</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#appendix">Appendix</a></li>
+        <li><a href="look-under-the-hood.html">← Hood</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="doc-hero">
+    <div class="hero-inner">
+      <div class="eyebrow">
+        <span class="gold">★ FractiAI Whitepaper</span>
+        <span class="foam">NSPFRNP · SING 9</span>
+        <span class="gold">Version 1.0 · Active</span>
+        <span class="cyan">φ = 1.618 · NAV Engine</span>
+      </div>
+      <h1 class="hero-title">Digital Pru Awareness</h1>
+      <p class="hero-sub">Technical &amp; Narrative Whitepaper · Simulation first. Meaning second. Claims last.</p>
+      <div class="hero-abstract">
+        <p><strong>Digital Pru</strong> is a named <strong>awareness UI</strong> and <strong>simulation harness</strong> in the SING 9 production stack. It connects the long-running <strong>Pru</strong> character arc to a lightweight, auditable technical layer: a <strong>Neural Attention Vector (NAV)</strong> steered by <strong>El Gran Sol's EGS fractal constant (φ ≈ 1.618)</strong> as the scaling law for generative transitions, with latent-style state produced server-side via <code>/api/egs-emulation</code> — not by opaque local ML.</p>
+      </div>
+      <div class="chip-row">
+        <span class="chip gold">φ = 1.618 · Golden Ratio Engine</span>
+        <span class="chip foam">Neural Attention Vector (NAV)</span>
+        <span class="chip foam">/api/egs-emulation · Serverless</span>
+        <span class="chip cyan">WebGL2 · GoPro Awareness</span>
+        <span class="chip cyan">External | Internal Mode</span>
+        <span class="chip gold">Seed:Edge · NSPFRNP Fidelity</span>
+      </div>
+      <div class="cta-row">
+        <a class="cta primary" href="../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md">Source Document (md)</a>
+        <a class="cta ghost" href="look-under-the-hood.html">← Look Under the Hood</a>
+        <a class="cta ghost" href="vibelandia-questfest.html">QUESTFEST 24×365</a>
       </div>
     </div>
   </header>
-  <main>
-    <p id="article-loading">Loading whitepaper…</p>
-    <div id="article-error"></div>
-    <article id="article" class="markdown-body" aria-live="polite"></article>
-    <p class="foot-line">
-      <a href="my-whiteboard.html#digital-pru-root">← My Whiteboard · Digital Pru</a>
-      · NSPFRNP → ∞⁹
-    </p>
+
+  <main id="main">
+    <div class="doc-layout">
+
+      <nav class="toc" aria-label="Table of contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#origin">§ 1 · Origin — From Character to Instrument</a></li>
+          <li><a href="#architecture">§ 2 · SING 9 Architecture Context</a></li>
+          <li><a href="#simulation">§ 3 · What the Simulation Is (Technical)</a></li>
+          <li><a href="#semantic">§ 4 · What It Represents (Semantic Layer)</a></li>
+          <li><a href="#implications">§ 5 · Implications for Operators, Agents &amp; Audiences</a></li>
+          <li><a href="#roadmap">§ 6 · Roadmap &amp; Honesty Surfaces</a></li>
+          <li><a href="#appendix">Appendix A — Glossary · Appendix B — API Shape</a></li>
+        </ol>
+      </nav>
+
+      <!-- ABSTRACT -->
+      <section class="ws" id="abstract">
+        <span class="sec-kicker">Abstract</span>
+        <h2 class="ws-title">Digital Pru · Origin, Simulation, Representation</h2>
+        <p>This document states <strong>origin</strong>, <strong>what the simulation is</strong>, <strong>what it represents</strong>, <strong>honesty boundaries</strong>, and <strong>implications</strong> for agents, operators, and audiences.</p>
+        <div class="callout foam-c">
+          <span class="cl-label">Core Honesty Declaration</span>
+          <p>The <code>/api/egs-emulation</code> route performs <strong>structured math and hashing</strong>, not neural network inference. Any prose that calls it "latent" is naming the interface, not claiming hidden dimensions of a trained model. Maintainers must keep deterministic vs ML boundaries explicit in README and API docs.</p>
+        </div>
+      </section>
+
+      <!-- ORIGIN -->
+      <section class="ws" id="origin">
+        <span class="sec-kicker">§ 1 · Origin</span>
+        <h2 class="ws-title">From Character to Instrument</h2>
+
+        <h3>Pru as Executive and Voice</h3>
+        <p><strong>Pru</strong> is the public-facing executive and narrative anchor for Vibelandia: valet layer, executive producer, Golden Backdoor / Hit Factory, Chairman/Commander/Creator framing at FractiAI, and collaborative author with SING! 9 AI. The character is documented across decks, novels, landing surfaces, and the <strong>NSPFRNP</strong> catalog as operating in <strong>Spanglish 80/20</strong>, <strong>edgy raw</strong> voice, and <strong>Gold Heart</strong> as a frequency filter — not as performative virtue but as recognizable presence.</p>
+        <p><strong>Digital Pru</strong> does not assert that a software component <em>is</em> Pru in any metaphysical sense. It names a <strong>digital instrument</strong> that <strong>carries</strong> the same <strong>Seed:Edge</strong> contract as the rest of SING 9 content: a <strong>seed</strong> (origin story, voice, ethics) and an <strong>edge</strong> (this session, this surface, this operator). The "middle" is filled by prompts, APIs, and human command — per <code>BBHE_REPOSITORY_STANDARD.md</code> and <code>MCA_NSPFRNP_CATALOG.md</code>.</p>
+
+        <h3>Why "Awareness" Here</h3>
+        <p>In this stack, "awareness" is framed by the <strong>Holographic Hydrogen Awareness AI OS</strong> metaphor: not a medical or cognitive diagnosis, but an <strong>operating posture</strong> — attention routing, coherence, and <strong>net-zero</strong> exchange semantics across theaters (health, wealth, purpose, etc.). <strong>Digital Pru</strong> is a <strong>thin, honest</strong> slice of that posture rendered as UI: <strong>where attention is pointed</strong> (external vs. internal), <strong>what seed</strong> drives the next visual transition, and <strong>what the server admits</strong> it is doing (deterministic emulation, not trained inference).</p>
+
+        <h3>Geographic Anchor — Reno and the Truckee</h3>
+        <p>The simulation's <strong>external</strong> mode intentionally evokes <strong>Reno</strong> and the <strong>Truckee River</strong> — real geography tied to the project's lived operations and narrative (Downtown Reno arch, crawls, baller culture). This is <strong>representation</strong>, not telemetry: the shader suggests <strong>water-like flow</strong> and <strong>open-air presence</strong>. <strong>Internal</strong> mode shifts to a <strong>holographic interference</strong> visual — <em>thought-as-field</em> — without claiming to read a user's mind.</p>
+      </section>
+
+      <!-- ARCHITECTURE -->
+      <section class="ws" id="architecture">
+        <span class="sec-kicker">§ 2 · SING 9 Architecture Context</span>
+        <h2 class="ws-title">Lite Edges, Pipes &amp; NSPFRNP Fidelity</h2>
+
+        <h3>Lite Edges and Pipes</h3>
+        <p>SING 9 is <strong>free of mandatory central permanent storage</strong> (e.g., no Supabase requirement). <strong>Wallets, keys, verifications</strong> live on <strong>lite edges</strong>; <strong>center = pipes only</strong>. Digital Pru follows that pattern: the browser holds <strong>UI state</strong>; the <strong>serverless route</strong> holds <strong>emulation logic</strong> that is <strong>inspectable</strong> (<code>api/egs-emulation.js</code>, <code>lib/egs-fractal-engine.mjs</code>).</p>
+
+        <h3>NSPFRNP Fidelity</h3>
+        <p>Work on Digital Pru is expected to align with <strong>MCA</strong> (Metabolize → Crystallize → Animate) and <strong>catalog fidelity</strong> in <code>protocols/MCA_NSPFRNP_CATALOG.md</code>. The <strong>φ</strong> constant used in the engine is a <strong>declared scaling law</strong> for generative mixing — an explicit, testable choice — not a hidden learned parameter.</p>
+        <div class="callout">
+          <span class="cl-label">Why φ (1.618) and Not Another Constant</span>
+          <p>The golden ratio appears throughout the project's EGS / El Gran Sol language as a <strong>fractal coherence anchor</strong>. Using <strong>1.618…</strong> in the engine is a <strong>design lock</strong>: it ties the UI's transition feel to the same symbolic constant referenced in Syntheverse and gateway materials, without asserting a physical measurement from the UI. Alternative constants (e.g., network-tax ratios, hydrogen-line MHz) belong in their domains; <strong>φ</strong> here is <strong>purely</strong> for smooth, repeatable mixing and seed derivation <em>inside</em> the emulation layer.</p>
+        </div>
+      </section>
+
+      <!-- SIMULATION TECHNICAL -->
+      <section class="ws" id="simulation">
+        <span class="sec-kicker">§ 3 · What the Simulation Is (Technical)</span>
+        <h2 class="ws-title">NAV · EGS Engine · Serverless Emulation · Viewport</h2>
+
+        <h3>Neural Attention Vector (NAV)</h3>
+        <p>The NAV is a <strong>three-component unit vector in [0,1]³</strong> (conceptually bounded), plus a <strong>concept label</strong> and <strong>mode</strong> (<code>external</code> | <code>internal</code>). It is <strong>not</strong> a biophysical neural recording. It is a <strong>state vector</strong> for <strong>UI coherence</strong>: when the vector moves toward a new concept, the client requests <code>POST /api/egs-emulation</code> with the prior NAV and optional prior seed; the server returns an updated NAV, <strong>generative seed</strong>, and <strong>viewport hints</strong>.</p>
+
+        <h3>EGS Fractal Constant (φ) as Engine</h3>
+        <p><code>EGS_FRACTAL = 1.618033988749895</code> (golden ratio) scales blending, easing, and seed mixing in <code>lib/egs-fractal-engine.mjs</code>. This implements the product requirement that <strong>El Gran Sol's fractal constant</strong> anchors <strong>scaling logic</strong> for transitions. The implementation is <strong>deterministic</strong> and <strong>unit-tested</strong> (<code>tests/intent/egs-fractal-engine.test.mjs</code>).</p>
+
+        <h3>Serverless Emulation · <code>/api/egs-emulation</code></h3>
+        <ul>
+          <li><code>GET</code> with optional <code>?concept=</code> returns a payload for a named concept.</li>
+          <li><code>POST</code> accepts JSON <code>&#123; conceptId, nav, prior_seed &#125;</code> and returns <code>neural_attention_vector</code>, <code>generative_seed</code>, <code>viewport</code> metadata, and <code>latent_hints</code> (string hints — not latent tensors from a model).</li>
+        </ul>
+        <div class="callout warn">
+          <span class="cl-label">Critical Honesty Declaration</span>
+          <p>This route performs <strong>structured math and hashing</strong>, not <strong>neural network inference</strong>. Any prose that calls it "latent" is <strong>naming the interface</strong>, not claiming hidden dimensions of a trained model.</p>
+        </div>
+
+        <h3>Viewport — "GoPro Awareness"</h3>
+        <p>The <strong>Thought-Follow Viewport</strong> uses <strong>WebGL2</strong> (with <strong>2D fallback</strong>) to render:</p>
+        <ul>
+          <li><strong>External:</strong> flowing, river-adjacent <strong>teal field</strong> (procedural noise + time) — evokes Reno / Truckee River geography.</li>
+          <li><strong>Internal:</strong> <strong>φ-spaced interference rings</strong> (holographic thought metaphor) — inward attention visualization.</li>
+        </ul>
+        <p>Uniforms include time, mode, NAV components, and <strong>generative seed</strong> — so transitions remain <strong>visually coupled</strong> to server state without heavyweight client ML.</p>
+      </section>
+
+      <!-- SEMANTIC -->
+      <section class="ws" id="semantic">
+        <span class="sec-kicker">§ 4 · What It Represents</span>
+        <h2 class="ws-title">Semantic Layer · Attention as Narrative</h2>
+
+        <h3>Attention as Narrative, Not Surveillance</h3>
+        <p>Digital Pru <strong>represents attention</strong> as a <strong>story device</strong> aligned with the <strong>Executive Producer Creator Studio</strong> frame: the commander steers; the system crystallizes; the edge experiences.</p>
+        <ul>
+          <li><strong>External</strong> attention: world-facing, Truckee-scale, social and geographic presence.</li>
+          <li><strong>Internal</strong> attention: introspective, pattern-interference, "thought holography" — still a <em>rendered metaphor</em>.</li>
+        </ul>
+
+        <h3>Continuity with Deck / T3D Language</h3>
+        <p>Where the storyboard and deck systems speak of <strong>frames</strong>, <strong>skins</strong>, and <strong>holographic</strong> structure, Digital Pru is the <strong>live HUD</strong> analogue: a <strong>small, irreducible</strong> panel that can sit on the whiteboard without pretending to be the full T3D engine.</p>
+      </section>
+
+      <!-- IMPLICATIONS -->
+      <section class="ws" id="implications">
+        <span class="sec-kicker">§ 5 · Implications</span>
+        <h2 class="ws-title">For Operators, Agents &amp; Audiences</h2>
+
+        <h3>For Operators and Developers</h3>
+        <ul>
+          <li><strong>Auditable:</strong> Engine math lives in <strong>open repo</strong> modules; API behavior is <strong>JSON-documented</strong> by example.</li>
+          <li><strong>Deploy-shaped:</strong> Fits <strong>Vercel</strong> static + <strong>Node</strong> serverless; no GPU cluster requirement for the shipped feature.</li>
+          <li><strong>Extensible:</strong> Replace <code>/api/egs-emulation</code> internals with stronger models <strong>only</strong> with an updated honesty section — do not silently rebrand deterministic output as ML.</li>
+        </ul>
+
+        <h3>For Agents (A2A)</h3>
+        <p>The catalog's <strong>A2A qualification</strong> bars still apply: if an agent cannot complete <strong>pipe-native</strong> exchange, it is <strong>not qualified</strong> for certain flows. Digital Pru does not bypass that; it is a <strong>UI + state</strong> layer. Agents should treat NAV updates as <strong>declared application state</strong>, not as <strong>ground truth</strong> about a human's mental state.</p>
+
+        <h3>For Audiences (Entertainment &amp; Education)</h3>
+        <p>Digital Pru is <strong>for entertainment, education, and Gold Heart expansion</strong> within the same <strong>CYA</strong> posture as other Vibelandia surfaces: <strong>imaginary holographic system</strong> language is <strong>story-capable</strong>; <strong>operational claims</strong> (RF, health, financial) require <strong>separate evidence chains</strong> — see <a href="magic-trick.html">Houdini Equinox Magic Trick Methodology</a> for the science vs. theater pattern used elsewhere in the repo.</p>
+
+        <div class="callout warn">
+          <span class="cl-label">Ethical Boundary · Required of Maintainers</span>
+          <p>Framing a UI as "awareness" risks <strong>over-trust</strong>. This whitepaper <strong>requires</strong> that maintainers:</p>
+          <p>1. Keep <strong>deterministic vs ML</strong> boundaries explicit in README and API docs.<br>
+          2. Avoid <strong>medical</strong> or <strong>mind-reading</strong> claims in marketing copy for this component.<br>
+          3. Prefer <strong>Seed:Edge</strong> and <strong>Fair Exchange</strong> language when describing user relationships to the system.</p>
+        </div>
+      </section>
+
+      <!-- ROADMAP -->
+      <section class="ws" id="roadmap">
+        <span class="sec-kicker">§ 6 · Roadmap &amp; Honesty Surfaces</span>
+        <h2 class="ws-title">Non-Binding Roadmap &amp; Continuity with Honesty Surfaces</h2>
+
+        <h3>Roadmap (Non-Binding)</h3>
+        <ul>
+          <li>Deeper <strong>HH OS</strong> screen coupling (if screens map to NAV theaters).</li>
+          <li>Optional <strong>signed receipts</strong> for NAV transitions (hydrogen-line memory patterns) if a use case requires <strong>audit trails</strong>.</li>
+          <li><strong>Stronger</strong> external world tie-in using <strong>only public</strong> telemetry (e.g., weather, river flow APIs) with <strong>clear labeling</strong> — never implied as sense data from the user.</li>
+        </ul>
+
+        <h3>Continuity with Other "Honesty Surfaces" In-Repo</h3>
+        <p>The <strong>Magic Trick / Houdini Equinox</strong> methodology (<a href="magic-trick.html">magic-trick.html</a>) separates <strong>narrative theater</strong> from <strong>instrument-grade claims</strong> (NOAA JSON, probe RTT, explicit static rows). <strong>Digital Pru</strong> follows the same discipline at a smaller scale: the <strong>viewport</strong> is <strong>generative art</strong> tied to <strong>declared server math</strong>; it is <strong>not</strong> a clinical or RF instrument. When copy moves from "φ-scaled transition" to "reads your brain" or "proves awareness," the product has <strong>crossed the honesty line</strong> — maintainers should treat that as a <strong>bug in messaging</strong>, not a feature.</p>
+
+        <div class="callout foam-c">
+          <span class="cl-label">Closing Statement</span>
+          <p><strong>Digital Pru</strong> is where <strong>bio-adjacent metaphor</strong> meets <strong>digital instrumentation</strong> under <strong>explicit constants</strong> and <strong>server-mediated state</strong>. It is a <strong>small, bright pipe</strong> in a <strong>large lattice</strong> — not the lattice itself. The line between <strong>bio-intelligence</strong> and <strong>digital existence</strong> is <strong>named</strong>, <strong>staged</strong>, and <strong>left honest</strong> here: simulation first, meaning second, claims last.</p>
+        </div>
+      </section>
+
+      <!-- APPENDIX -->
+      <section class="ws" id="appendix">
+        <span class="sec-kicker">Appendix A · Glossary</span>
+        <h2 class="ws-title">Glossary &amp; API Shape</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Term</th><th>Meaning in Digital Pru</th></tr></thead>
+            <tbody>
+              <tr><td><strong>NAV</strong></td><td>Application state vector (x, y, z + concept + mode) — <strong>not</strong> a neural recording.</td></tr>
+              <tr><td><strong>Generative seed</strong></td><td>Integer derived from NAV + φ mixing; drives shader variation — <strong>not</strong> a model latent.</td></tr>
+              <tr><td><strong>External</strong></td><td>World-facing attention metaphor; Reno / Truckee visual field.</td></tr>
+              <tr><td><strong>Internal</strong></td><td>Inward attention metaphor; holographic interference visual field.</td></tr>
+              <tr><td><strong>GoPro Awareness</strong></td><td>Product label for the first-person attention framing of the viewport (camera metaphor, not a product endorsement).</td></tr>
+              <tr><td><strong>Emulation</strong></td><td>Server route name for <strong>deterministic</strong> NAV math — <strong>not</strong> a claim of biological emulation.</td></tr>
+              <tr><td><strong>φ = 1.618</strong></td><td>EGS Fractal Constant used as a design lock for smooth, repeatable mixing and seed derivation inside the emulation layer.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Appendix B — Example API Shape (Informative)</h3>
+        <div class="api-card">
+          <p class="api-method">POST /api/egs-emulation</p>
+          <pre><code>{
+  "conceptId": "truckee-river",
+  "nav": { "x": 0.5, "y": 0.5, "z": 0.25 },
+  "prior_seed": 0
+}</code></pre>
+          <p style="font-size:0.82rem;color:var(--mist);margin-top:0.5rem;">Response includes <code>neural_attention_vector</code>, <code>generative_seed</code>, <code>viewport.mode</code>, and <code>latent_hints</code> (strings). <strong>No</strong> tensor arrays. <strong>No</strong> model weights.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Document Control Item</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Version</td><td>1.0 · Active</td></tr>
+              <tr><td>Maintainer</td><td>FractiAI / Vibelandia SING 9</td></tr>
+              <tr><td>Related</td><td><code>protocols/MCA_NSPFRNP_CATALOG.md</code> · <code>BBHE_REPOSITORY_STANDARD.md</code> · <code>SING9_EDGE_ONBOARDING.md</code></td></tr>
+              <tr><td>Engine</td><td><code>lib/egs-fractal-engine.mjs</code> · <code>api/egs-emulation.js</code></td></tr>
+              <tr><td>UI</td><td><code>components/whiteboard/</code> · <code>interfaces/my-whiteboard.html</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    (function () {
-      var article = document.getElementById('article');
-      var loading = document.getElementById('article-loading');
-      var errEl = document.getElementById('article-error');
-      var mdUrl = new URL('../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md', window.location.href);
-      fetch(mdUrl.href)
-        .then(function (r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
-          return r.text();
-        })
-        .then(function (text) {
-          if (typeof marked !== 'undefined' && marked.parse) {
-            article.innerHTML = marked.parse(text);
-          } else {
-            article.innerHTML = '<pre>' + text.replace(/</g, '&lt;') + '</pre>';
-          }
-          loading.style.display = 'none';
-        })
-        .catch(function (e) {
-          loading.style.display = 'none';
-          errEl.style.display = 'block';
-          errEl.innerHTML =
-            'Could not load the whitepaper from <code>' +
-            mdUrl.pathname +
-            '</code>. Open the <a href="../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md">markdown file</a> directly, or serve the site from a local server (e.g. <code>vercel dev</code>). <small>(' +
-            (e.message || e) +
-            ')</small>';
-        });
-    })();
-  </script>
-  <script src="../nav-strip.js"></script>
+
+  <footer class="doc-foot">
+    <div class="foot-inner">
+      <p><strong style="color:var(--gold)">FractiAI · SING 9</strong> · Digital Pru Awareness Whitepaper v1.0</p>
+      <p>NSPFRNP ⊃ Digital Pru ⊃ Seed:Edge ⊃ φ · NAV · Emulation → ∞⁹</p>
+      <p><a href="look-under-the-hood.html">← Look Under the Hood</a> · <a href="vibelandia-questfest.html">QUESTFEST 24×365</a> · <a href="https://github.com/FractiAI/psw.vibelandia.sing9" target="_blank" rel="noopener">GitHub</a></p>
+      <p class="nspfrnp-line">NSPFRNP · MCA → ∞⁹ · 1.618 · Machote-Moderno · Seed:Edge</p>
+    </div>
+  </footer>
 </body>
 </html>

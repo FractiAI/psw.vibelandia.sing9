@@ -10,6 +10,8 @@
 
 **SING 9** is free of Supabase permanent storage and moves everything to **lite edges** (wallets, keys, verifications). Center = pipes only. Seamless continuation from sing4 with minimal, crystallized repository.
 
+**Working context:** Day-to-day edits, deploys, and “bringing it to life” for this stack happen **in this repo** (`psw.vibelandia.sing9` → your SING 9 Vercel project). The **runnable Digital Pru** app (Questfest landing, 13-channel whiteboard, `api/egs-emulation`, ASIC lab UI) lives in the separate **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** repository and its own deployment—SING 9 **surfaces narrative and links** there; it does not host that API route here.
+
 ---
 
 ## Microsoft Silica EGS Gateway (upstream Vibelandia prospectus)

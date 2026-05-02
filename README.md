@@ -87,17 +87,17 @@ npm test
 
 **A → Animate:** `npm test` (intent suite) stays green. NSPFRNP → ∞⁹
 
-- **Apr 2026 · Digital Pru awareness · My Whiteboard · EGS emulation API**
+- **Apr 2026 · May 2026 update · Digital Pru canonical repo (SING 9 = narrative only)**
 
-**M → Metabolize:** Ship a **Digital Pru** awareness strip on **My Whiteboard** with a **Neural Attention Vector** hook (`useAwarenessStream`), φ (**1.618**) scaling in **`lib/egs-fractal-engine.mjs`**, and **no heavy local inference** — NAV updates go to **`POST /api/egs-emulation`** (deterministic latent-style payload).
+**M → Metabolize:** **Runnable Digital Pru** (whiteboard bundle, **`/api/egs-emulation`**, Questfest landing, ASIC lab) is developed and deployed from **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)**. **SING 9** does **not** register **`api/egs-emulation.js`** on this Vercel project and does **not** run **`build:whiteboard`** in **`npm run build:static`**.
 
 **C → Crystallize:**
 
-- **`interfaces/my-whiteboard.html`** — Embeds **`#digital-pru-root`** plus bundled **`interfaces/bundles/digital-pru-whiteboard.{js,css}`**; toolbar button **📡 INVOKE DIGITAL PRU** opens a **PIP-style** panel (Framer Motion, holographic cyan glow) with **`DigitalPruViewport`** (WebGL2 shader: external = Reno/Truckee field, internal = holographic rings).
-- **`api/egs-emulation.js`** — Vercel Node serverless; **`nav-strip.js`** adds **📡 Digital Pru** → `#digital-pru-root` without stealing the Whiteboard active tab.
-- **Build:** **`npm run build:whiteboard`** (esbuild + Tailwind); **`npm run build:static`** runs it before **`vercel-static-output.mjs`**. Source: **`components/whiteboard/*.tsx`**.
+- **`interfaces/my-whiteboard.html`** — Community bulletin board only; **callout** links to the **live Digital Pru** deployment and GitHub repo.
+- **`nav-strip.js`** — **📡 Digital Pru** opens **`https://digital-pru.vercel.app/`** (adjust in source if your hostname differs).
+- **Optional local build:** **`npm run build:whiteboard`** still exists for maintainers syncing TSX sources into **`interfaces/bundles/`** when working against the standalone repo; it is **not** part of SING 9 production static output.
 
-**A → Animate:** Intent tests include **`tests/intent/egs-fractal-engine.test.mjs`**. **Whitepaper:** [`docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md`](docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md) · reader [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html); **📄 Whitepaper** on My Whiteboard Digital Pru strip + **index** row + footer link. NSPFRNP → ∞⁹
+**A → Animate:** Intent tests may still use **`lib/egs-fractal-engine.mjs`** in this tree. **Whitepaper reader** stays on SING 9: [`docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md`](docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md) · [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html). NSPFRNP → ∞⁹
 
 - **Apr 2026 · Syntheverse-Core sim · SPO-1 HowToo (ICE) · Digital gate pretests**
 

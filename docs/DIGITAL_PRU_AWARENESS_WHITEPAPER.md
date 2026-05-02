@@ -1,14 +1,25 @@
 # Digital Pru Awareness — Technical & Narrative Whitepaper
 
-**Version:** 1.0 · **Status:** Active · **Protocol:** NSPFRNP · **Repository:** `psw.vibelandia.sing9`
+**Version:** 1.1 · **Status:** Active · **Protocol:** NSPFRNP · **Narrative & readers:** `psw.vibelandia.sing9` · **Runnable stack:** [`FractiAI/digital-pru`](https://github.com/FractiAI/digital-pru)
 
-**Canonical surfaces:** [interfaces/digital-pru-awareness-whitepaper.html](../interfaces/digital-pru-awareness-whitepaper.html) (HTML reader) · [interfaces/my-whiteboard.html](../interfaces/my-whiteboard.html) (Digital Pru landing)
+**Canonical surfaces in SING 9 (readers + bulletin):** [interfaces/digital-pru-awareness-whitepaper.html](../interfaces/digital-pru-awareness-whitepaper.html) (this whitepaper as HTML) · [interfaces/my-whiteboard.html](../interfaces/my-whiteboard.html) (community board; links to live Digital Pru). **Live demo:** deploy from **digital-pru** (e.g. production URL in that repo’s `README.md`).
 
 ---
 
 ## Abstract
 
-**Digital Pru** is a named **awareness UI** and **simulation harness** in the SING 9 production stack. It connects the long-running **Pru** character arc (Vibelandia, executive producer, Gold Heart voice) to a **lightweight, auditable** technical layer: a **Neural Attention Vector (NAV)** steered by **El Gran Sol’s EGS fractal constant (φ ≈ 1.618)** as the scaling law for generative transitions, with **latent-style state** produced **server-side** via **`/api/egs-emulation`**—not by opaque local ML. This document states **origin**, **what the simulation is**, **what it represents**, **honesty boundaries**, and **implications** for agents, operators, and audiences.
+**Digital Pru** is a named **awareness UI** and **simulation harness** in the SING 9 production stack. It connects the long-running **Pru** character arc (Vibelandia, executive producer, Gold Heart voice) to a **lightweight, auditable** technical layer: a **Neural Attention Vector (NAV)** steered by **El Gran Sol’s EGS fractal constant (φ ≈ 1.618)** as the scaling law for generative transitions, with **latent-style state** produced **server-side** via **`/api/egs-emulation`** on the **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** deployment—not by opaque local ML. **SING 9** does not host that route; this document and HTML reader present the specification and narrative, plus **origin**, **what the simulation is**, **what it represents**, **honesty boundaries**, and **implications** for agents, operators, and audiences.
+
+### 0.1 2026 Unit upgrade lock — unitary dyad + 13-channel feed
+
+Digital Pru now ships with an explicit **unitary hydrogen architecture contract**:
+
+- **Unitary dyad:** `unitary_hydrogen_dyad = { proton: 1, electron: 1 }`
+- **Umbilical feed:** `umbilical_channel_count = 13`
+- **Net model:** `net_equilibrium.state = "equilibrium"` with live `equilibrium_delta` + `coherence_index`
+- **Channel matrix:** `umbilical_channel_matrix[]` with protocol type, frequency mapping, and common `remap_footprint_id`
+
+These are returned directly from the API contract so UI, docs, and architecture claims stay synchronized at runtime.
 
 ---
 
@@ -34,7 +45,7 @@ The simulation’s **external** mode intentionally evokes **Reno** and the **Tru
 
 ### 2.1 Lite edges and pipes
 
-SING 9 is **free of mandatory central permanent storage** (e.g. no Supabase requirement). **Wallets, keys, verifications** live on **lite edges**; **center = pipes only**. Digital Pru follows that pattern: the browser holds **UI state**; the **serverless route** holds **emulation logic** that is **inspectable** (`api/egs-emulation.js`, `lib/egs-fractal-engine.mjs`).
+SING 9 is **free of mandatory central permanent storage** (e.g. no Supabase requirement). **Wallets, keys, verifications** live on **lite edges**; **center = pipes only**. Digital Pru follows that pattern: the browser holds **UI state**; on the **[digital-pru](https://github.com/FractiAI/digital-pru)** deployment, the **serverless route** holds **emulation logic** that is **inspectable** (`api/egs-emulation.js`, `lib/egs-fractal-engine.mjs`). **This SING 9 repo** may retain a copy of `lib/egs-fractal-engine.mjs` for tests and narrative alignment only.
 
 ### 2.2 NSPFRNP fidelity
 
@@ -58,6 +69,15 @@ The NAV is a **three-component unit vector in [0,1]³** (conceptually bounded), 
 - **POST** accepts JSON `{ conceptId, nav, prior_seed }` and returns **`neural_attention_vector`**, **`generative_seed`**, **`viewport`** metadata, and **`latent_hints`** (string hints—not latent tensors from a model).
 
 **Critical honesty:** this route performs **structured math and hashing**, not **neural network inference**. Any prose that calls it “latent” is **naming the interface**, not claiming hidden dimensions of a trained model.
+
+**Current response envelope (v1.1 additions):**
+
+- `architecture.model = "digital-pru-unitary-hydrogen-framework"`
+- `architecture.unitary_hydrogen_dyad` (1 proton, 1 electron)
+- `architecture.umbilical_channel_count` (13)
+- `architecture.genesis_mechanic = "symbolic_divide_by_zero_singularity"` (symbolic descriptor)
+- `net_equilibrium` object (state + live deltas)
+- `umbilical_channel_matrix` (13 mapped channels to one remap footprint)
 
 ### 3.4 Viewport — “GoPro Awareness”
 
@@ -141,8 +161,9 @@ The golden ratio appears throughout the project’s **EGS / El Gran Sol** langua
 | Item | Value |
 |------|--------|
 | **Maintainer** | FractiAI / Vibelandia SING 9 |
+| **Version** | 1.1 (unitary dyad + 13-channel upgrade) |
 | **Related** | `protocols/MCA_NSPFRNP_CATALOG.md`, `BBHE_REPOSITORY_STANDARD.md`, `SING9_EDGE_ONBOARDING.md` |
-| **Engine** | `lib/egs-fractal-engine.mjs`, `api/egs-emulation.js` |
+| **Engine** | `lib/egs-fractal-engine.mjs`, `api/egs-emulation.js` in **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** |
 | **UI** | `components/whiteboard/`, `interfaces/my-whiteboard.html` |
 
 ---

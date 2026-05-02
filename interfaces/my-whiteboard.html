@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>My Whiteboard · Community bulletin board | VIBELANDIA SING 9</title>
-  <link rel="stylesheet" href="bundles/digital-pru-whiteboard.css" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -75,6 +74,30 @@
     .pru-note { font-size: 0.8rem; color: #94a3b8; margin-top: 0.5rem; }
     .foot { margin-top: 2rem; font-size: 0.8rem; color: #64748b; text-align: center; }
     .foot a { color: #d4af37; text-decoration: none; }
+    .dp-canonical {
+      margin-bottom: 1.5rem;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      border: 2px solid rgba(94, 234, 212, 0.45);
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.35), rgba(15, 23, 42, 0.85));
+    }
+    .dp-canonical h2 { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: #5eead4; margin: 0 0 0.5rem; }
+    .dp-canonical p { margin: 0 0 0.75rem; font-size: 0.9rem; line-height: 1.5; color: #e2e8f0; }
+    .dp-canonical .row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .dp-canonical a.cta {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid rgba(212, 175, 55, 0.55);
+      background: rgba(212, 175, 55, 0.12);
+      color: #fde68a;
+    }
+    .dp-canonical a.cta:hover { background: rgba(212, 175, 55, 0.22); }
+    .dp-canonical a.cta.gh { border-color: rgba(148, 163, 184, 0.5); color: #cbd5e1; background: rgba(15, 23, 42, 0.6); }
+    .dp-canonical .note { font-size: 0.75rem; color: #94a3b8; margin: 0; }
   </style>
 </head>
 <body>
@@ -86,10 +109,20 @@
     </div>
 
     <h1>My Whiteboard</h1>
-    <p class="sub">Community bulletin board · Vibelandia live · Dual payment rails where applicable.</p>
+    <p class="sub">Community bulletin board · Vibelandia live · Dual payment rails where applicable. Digital Pru demos run on the <strong>canonical repo</strong>, not this deploy.</p>
 
-    <div id="digital-pru-root"></div>
-    <script type="module" src="bundles/digital-pru-whiteboard.js"></script>
+    <aside class="dp-canonical" aria-label="Digital Pru canonical deployment">
+      <h2>Digital Pru · live stack</h2>
+      <p>
+        Runnable <strong>Questfest landing</strong>, <strong>13-channel whiteboard</strong>, <strong><code>/api/egs-emulation</code></strong>, and <strong>ASIC lab</strong>
+        are built and deployed from <strong>FractiAI/digital-pru</strong>. This SING 9 page is only the bulletin board and narrative cross-links.
+      </p>
+      <div class="row">
+        <a class="cta" href="https://digital-pru.vercel.app/" target="_blank" rel="noopener">Open live Digital Pru →</a>
+        <a class="cta gh" href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener">Source · FractiAI/digital-pru →</a>
+      </div>
+      <p class="note">Substitute your production hostname if it differs from <code>digital-pru.vercel.app</code>.</p>
+    </aside>
 
     <a href="vibelandia-sovereign-voyage.html" class="pin" style="display:block;margin-bottom:1.5rem;background:linear-gradient(135deg,rgba(45,212,191,0.14),rgba(6,24,38,0.92));border:2px solid rgba(45,212,191,0.5);border-radius:10px;padding:1rem 1.35rem;text-decoration:none;color:#e8e8e8;" onmouseover="this.style.background='linear-gradient(135deg,rgba(45,212,191,0.22),rgba(6,24,38,0.96))';this.style.borderColor='rgba(45,212,191,0.85)'" onmouseout="this.style.background='linear-gradient(135deg,rgba(45,212,191,0.14),rgba(6,24,38,0.92))';this.style.borderColor='rgba(45,212,191,0.5)'">
       <span class="title" style="color:#99f6e4;">Sovereign Voyage · Career pivot &amp; arrival gate</span>

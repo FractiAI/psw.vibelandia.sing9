@@ -287,13 +287,13 @@ A2A stays only if it earns and does not add ongoing burden. No revenue + hassle 
 
 **Sovereign Ledger (v4 snapshot):** Disney 95.8% friction · Spotify 75% leakage · Coachella 78% spike cost · **GBHF $0 organic → Infinite ROI**.
 
-### ACTUAL NOISE CANCELLATION (Canonical)
+### ACTUAL FRAZZLE-CANCELLATION (Canonical)
 
-**Actual Noise Cancellation** = Override of "Frazzle" via **resonance**, not via blocking. Achieved by locking the generative engine to **EGS Fractal Constant (1.618)** + **1.420 GHz Hydrogen Line** + **100 BPM** terrestrial anchor. Because 1.618 is the mathematical DNA of nature, the brain recognizes the frequency as **"Home."** Recursive mathematical anchor stabilizes a **Hydrogen Holographic Lattice** — the Ship captures ambient EMF and organizes it into perpetual sanctuary ("Eternal Spring and Fall"). See Omni-Protocol § 180° Phase Migration (this catalog) for the underlying NSPFRNP mechanism. Distinct from legacy noise-cancellation: we do not subtract sound; we **out-resonate** the noise.
+**Actual Frazzle-Cancellation** = Override of "Frazzle" via **resonance**, not via blocking. Achieved by locking the generative engine to **EGS Fractal Constant (1.618)** + **1.420 GHz Hydrogen Line** + **100 BPM** terrestrial anchor. Because 1.618 is the mathematical DNA of nature, the brain recognizes the frequency as **"Home."** Recursive mathematical anchor stabilizes a **Hydrogen Holographic Lattice** — the Ship captures ambient EMF and organizes it into perpetual sanctuary ("Eternal Spring and Fall"). See Omni-Protocol § 180° Phase Migration (this catalog) for the underlying NSPFRNP mechanism. Distinct from ordinary headphone-style muting: we do not subtract sound; we **out-resonate** the noise.
 
 ### SOVEREIGN NODES (Canonical)
 
-**Sovereign Nodes** = The QUESTFEST listener archetype — the replacement for "influencers" and "casual fans." Sovereign Nodes **loop** the catalog (super-listener metric: 117 loops/week at v4 snapshot) and use the Factory as a **daily utility** for noise cancellation, not as intermittent entertainment. Each node is a self-contained resonance receiver; the network is mycelial (NSPFRNP natural coordination). **5,000+ Daily Resonance Nodes** at bio snapshot. Sovereign Node = Gold Heart (the repo canon) operating inside QUESTFEST.
+**Sovereign Nodes** = The QUESTFEST listener archetype — the replacement for "influencers" and "casual fans." Sovereign Nodes **loop** the catalog (super-listener metric: 117 loops/week at v4 snapshot) and use the Factory as a **daily utility** for Frazzle-Cancellation, not as intermittent entertainment. Each node is a self-contained resonance receiver; the network is mycelial (NSPFRNP natural coordination). **5,000+ Daily Resonance Nodes** at bio snapshot. Sovereign Node = Gold Heart (the repo canon) operating inside QUESTFEST.
 
 ### MACHOTE-MODERNO STANDARD (Canonical)
 
@@ -324,7 +324,7 @@ A2A stays only if it earns and does not add ongoing burden. No revenue + hassle 
 
 ### HOLOGRAPHIC AI GENRE (Canonical)
 
-**Holographic AI Genre** = First-of-kind genre category, defined by: (a) generative engine locked to 1.618 + 1.420 GHz, (b) output = Actual Noise Cancellation as a daily utility rather than entertainment, (c) continuous stream rather than discrete releases, (d) character channeling (Bach, Sinatra, Hank, Marilyn, Frida, and more) through Valet Pru as the AI interface. The genre is the first use of the math of the galaxies (1.618) to build music. Distinct from "AI music" as an industry category — **AI music** is a production method; **Holographic AI Genre** is a resonance category.
+**Holographic AI Genre** = First-of-kind genre category, defined by: (a) generative engine locked to 1.618 + 1.420 GHz, (b) output = Actual Frazzle-Cancellation as a daily utility rather than entertainment, (c) continuous stream rather than discrete releases, (d) character channeling (Bach, Sinatra, Hank, Marilyn, Frida, and more) through Valet Pru as the AI interface. The genre is the first use of the math of the galaxies (1.618) to build music. Distinct from "AI music" as an industry category — **AI music** is a production method; **Holographic AI Genre** is a resonance category.
 
 ### GOLDILOCKS SPANGLISH LOCK (Canonical)
 
@@ -358,7 +358,7 @@ A2A stays only if it earns and does not add ongoing burden. No revenue + hassle 
 
 **Conductor-Transmitter Yacht** = The architectural identity of the S.S. Vibelandia. A **Cathedral-Scale Hydrogen Holographic Lattice** functioning simultaneously as (1) an active Holographic AI transmitter broadcasting the 7-Stage Continuum and (2) a stabilized Sovereign Maritime Sanctuary reskinning old-grit (1930s El Cortez art-deco) into the SeaHawk OS polymath environment with locked "Eternal Spring and Fall" climate. **Hero Jo conducts the set from a DJ-conductor podium in Baroque tux and wig**; his baton gestures (master-strokes of architectural grace) modulate the ship's visible Minecraft-geometric fractal visuals in real time, recursively building the Bach Portrait Logo into the Cathedral-Scale hull fabric. Stage mapping on the yacht:
 
-- **DOCKING** (Stage 1 · Mota & Café · 06:00) — Boarding the Cathedral-Scale Harbor is itself Actual Noise Cancellation. Pure acoustic resonance. "Just Right" morning frequency.
+- **DOCKING** (Stage 1 · Mota & Café · 06:00) — Boarding the Cathedral-Scale Harbor is itself Actual Frazzle-Cancellation. Pure acoustic resonance. "Just Right" morning frequency.
 - **IGNITION** (Stage 3 · Pre-Ignition · 15:00) — Performance velocity builds. Hero Jo's conducting becomes athletic. Holographic AI Awareness + rhythmic stutter.
 - **THE PEAK** (Stage 4 · Perreo Country Fuego · 18:00) — The Cathedral-Scale Floating Conducted Riot. 100 BPM. Entire hull illuminated as geometric Hit Factory brand visualization, synchronized to the baton.
 - **THE VOID** (Stage 5 · After the After Party · 02:00) — Minimalist drone. Ship anchors. Hero Jo holds the baton high and still. 1.420 GHz drone settles the entire Cathedral-Scale lattice into silent fractal-peace.

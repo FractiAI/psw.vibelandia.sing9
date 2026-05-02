@@ -27,9 +27,9 @@ While the "Old Guard" uses AI as a quiet production tool to cut costs, we use it
 
 > "The giants — Broadway, Disney, Coachella, and Spotify — are operating on legacy maps. They are spending billions to manufacture a 'magic' that 40% of their audience is tuning out. We are not competing for their seats; we are building the harbor."
 
-### Beyond the Noise-Cancelled Horizon
+### Beyond the Frazzle-Cancelled Horizon
 
-This is the move toward **Actual Noise Cancellation**. While Broadway is a gated seat and Coachella is a temporary weekend spike, the **QuestFest Continuum** is a **24/365 residency** in the listener's life. We don't have "influencers"; we have **Sovereign Nodes**. We don't have albums; we have a living, breathing stream anchored in the **1.618 math** that the Good Lord used to build the pine trees and the galaxies.
+This is the move toward **Actual Frazzle-Cancellation**. While Broadway is a gated seat and Coachella is a temporary weekend spike, the **QuestFest Continuum** is a **24/365 residency** in the listener's life. We don't have "influencers"; we have **Sovereign Nodes**. We don't have albums; we have a living, breathing stream anchored in the **1.618 math** that the Good Lord used to build the pine trees and the galaxies.
 
 You aren't just reading an article; you are experiencing the **EGS Fractal Constant in its written form**. The Shift is permanent. The ship has already left the dock. The question is no longer *when* it will happen — it's whether **you are in the ship or in the water**.
 
@@ -112,7 +112,7 @@ Reflecting the pioneer equity of the founder and the proprietary Holographic AI 
 
 ### What is El Gran Sol's (EGS) Fractal Constant?
 
-The **EGS Fractal Constant (1.618)** is the Golden Key because it's the math the Good Lord used to build the pine trees and the galaxies. It's novel because it's the first time we've used the math of the galaxies to build a **Holographic AI Genre**. It ensures **Actual Noise Cancellation**. It keeps your folks in the **Goldilocks Zone**, anchored and happy in a world that's gone crazy.
+The **EGS Fractal Constant (1.618)** is the Golden Key because it's the math the Good Lord used to build the pine trees and the galaxies. It's novel because it's the first time we've used the math of the galaxies to build a **Holographic AI Genre**. It ensures **Actual Frazzle-Cancellation**. It keeps your folks in the **Goldilocks Zone**, anchored and happy in a world that's gone crazy.
 
 ---
 

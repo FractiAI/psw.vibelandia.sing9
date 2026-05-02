@@ -156,7 +156,7 @@ Or if Facebook requires a URL: link to `vibelandia-world.html`
 
 ## QUESTFEST 24×365 · Crosswalk to the Facebook Surface
 
-**QUESTFEST 2026: The Downtown Revitalization Protocol** is the festival-layer expression of everything the Facebook page is already doing — the **24/365 residency** vs. the **weekend spike**, the **S.S. Vibelandia** docking in walkable downtowns, **Actual Noise Cancellation** via 1.618 + 1.420 GHz. Use the Facebook page to **surface and socialize** QUESTFEST, not replace the five-territory lock.
+**QUESTFEST 2026: The Downtown Revitalization Protocol** is the festival-layer expression of everything the Facebook page is already doing — the **24/365 residency** vs. the **weekend spike**, the **S.S. Vibelandia** docking in walkable downtowns, **Actual Frazzle-Cancellation** via 1.618 + 1.420 GHz. Use the Facebook page to **surface and socialize** QUESTFEST, not replace the five-territory lock.
 
 **Crosswalk — FB page area → QUESTFEST surface:**
 

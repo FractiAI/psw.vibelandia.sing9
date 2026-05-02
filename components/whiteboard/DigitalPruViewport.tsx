@@ -67,9 +67,19 @@ export interface DigitalPruViewportProps {
   nav: NeuralAttentionVector;
   generativeSeed: number;
   transitionEpoch: number;
+  equilibriumDelta: number;
+  coherenceIndex: number;
+  channelCount: number;
 }
 
-export function DigitalPruViewport({ nav, generativeSeed, transitionEpoch }: DigitalPruViewportProps) {
+export function DigitalPruViewport({
+  nav,
+  generativeSeed,
+  transitionEpoch,
+  equilibriumDelta,
+  coherenceIndex,
+  channelCount,
+}: DigitalPruViewportProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
   const startRef = useRef<number>(performance.now());
@@ -191,6 +201,9 @@ export function DigitalPruViewport({ nav, generativeSeed, transitionEpoch }: Dig
         </p>
         <p className="mt-1 truncate font-mono text-[11px] text-cyan-100/70">
           NAV · {nav.x.toFixed(3)} · {nav.y.toFixed(3)} · {nav.z.toFixed(3)} · {nav.conceptId}
+        </p>
+        <p className="mt-1 truncate font-mono text-[10px] text-cyan-100/60">
+          EQ · Δ {equilibriumDelta.toFixed(3)} · C {coherenceIndex.toFixed(3)} · CH {channelCount}
         </p>
       </div>
     </div>

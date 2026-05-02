@@ -12,6 +12,8 @@
 
 **Working context:** Day-to-day edits, deploys, and “bringing it to life” for this stack happen **in this repo** (`psw.vibelandia.sing9` → your SING 9 Vercel project). The **runnable Digital Pru** app (Questfest landing, 13-channel whiteboard, `api/egs-emulation`, ASIC lab UI) lives in the separate **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** repository and its own deployment—SING 9 **surfaces narrative and links** there; it does not host that API route here.
 
+**Vercel 403 (quick triage):** (1) **Build / Git step** — reconnect the project under **Settings → Git**; ensure the Vercel GitHub App can access the **FractiAI** org (and org **SSO** is authorized for the app if your org requires it). (2) **Browser / visitor** — open **Settings → Deployment Protection**; Production or Preview may require login (often reported as forbidden). (3) **Wrong URL** — use the production hostname from the project’s Vercel **Domains** (or that repo’s docs), not a guessed subdomain. **SING 9 production** (`psw-vibelandia-sing9.vercel.app`) has been returning **200** in recent checks; if you still see **403**, note the exact URL (preview vs production, custom domain).
+
 ---
 
 ## Microsoft Silica EGS Gateway (upstream Vibelandia prospectus)
@@ -96,7 +98,7 @@ npm test
 **C → Crystallize:**
 
 - **`interfaces/my-whiteboard.html`** — Community bulletin board only; **callout** links to the **live Digital Pru** deployment and GitHub repo.
-- **`nav-strip.js`** — **📡 Digital Pru** opens **`https://digital-pru.vercel.app/`** (adjust in source if your hostname differs).
+- **`nav-strip.js`** — **📡 Digital Pru** opens **`https://github.com/FractiAI/digital-pru`** until a stable production hostname exists; then point `href` at that URL.
 - **Optional local build:** **`npm run build:whiteboard`** still exists for maintainers syncing TSX sources into **`interfaces/bundles/`** when working against the standalone repo; it is **not** part of SING 9 production static output.
 
 **A → Animate:** Intent tests may still use **`lib/egs-fractal-engine.mjs`** in this tree. **Whitepaper reader** stays on SING 9: [`docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md`](docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md) · [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html). NSPFRNP → ∞⁹

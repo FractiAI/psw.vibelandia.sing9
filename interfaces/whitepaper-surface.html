@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#060b15" />
+  <title>Whitepaper Surface · Vibelandia SING 9</title>
+  <meta name="description" content="HTML whitepaper reader for SING 9 docs and technical papers." />
+  <style>
+    :root {
+      --bg: #060b15;
+      --panel: #0f172a;
+      --line: rgba(212, 175, 55, 0.28);
+      --gold: #d4af37;
+      --foam: #5eead4;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --max: 960px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1400px 700px at 15% -10%, rgba(94, 234, 212, 0.08), transparent 55%),
+        radial-gradient(1200px 700px at 90% 0%, rgba(212, 175, 55, 0.08), transparent 55%),
+        var(--bg);
+      line-height: 1.6;
+      padding-bottom: 3rem;
+    }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 1.25rem; }
+    .top {
+      display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem;
+      color: var(--muted); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .pill {
+      border: 1px solid var(--line); border-radius: 999px; padding: .24rem .6rem;
+      background: rgba(15, 23, 42, .7);
+    }
+    .hero {
+      border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; background: rgba(15, 23, 42, .72);
+      margin-bottom: 1rem;
+    }
+    h1 { margin: 0 0 .3rem; color: #f8e7b3; font-size: clamp(1.2rem, 2.6vw, 1.9rem); }
+    .meta { color: var(--muted); font-size: .86rem; }
+    .actions { margin-top: .75rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+    .btn {
+      text-decoration: none; color: #f8e7b3; border: 1px solid var(--line); padding: .46rem .72rem; border-radius: 8px;
+      background: rgba(2, 6, 23, .65); font-size: .8rem;
+    }
+    .btn:hover { border-color: rgba(212, 175, 55, .55); }
+    .card {
+      border: 1px solid rgba(94, 234, 212, .22); border-radius: 14px; background: rgba(2, 6, 23, .72);
+      padding: 1rem 1.1rem;
+    }
+    .status { color: var(--muted); font-size: .86rem; margin: 0; }
+    .content h1, .content h2, .content h3, .content h4 { color: #f8e7b3; margin-top: 1.2rem; margin-bottom: .55rem; }
+    .content p, .content li { color: var(--text); }
+    .content a { color: var(--foam); }
+    .content pre {
+      overflow: auto; background: rgba(15, 23, 42, .72); border: 1px solid rgba(94, 234, 212, .25);
+      border-radius: 10px; padding: .8rem;
+    }
+    .content code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .content table { width: 100%; border-collapse: collapse; display: block; overflow: auto; }
+    .content th, .content td { border: 1px solid rgba(148, 163, 184, .25); padding: .44rem .55rem; text-align: left; }
+    .content blockquote {
+      margin: 1rem 0; padding: .6rem .8rem; border-left: 3px solid var(--gold); background: rgba(212, 175, 55, .08);
+      color: #f1f5f9;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <span class="pill">Whitepaper Surface</span>
+      <span class="pill">NSPFRNP</span>
+      <span class="pill">HTML Reader</span>
+    </div>
+    <section class="hero">
+      <h1 id="title">Loading whitepaper…</h1>
+      <p class="meta" id="meta"></p>
+      <div class="actions">
+        <a id="openRaw" class="btn" href="#">Open source markdown</a>
+        <a class="btn" href="look-under-the-hood.html">Look Under the Hood</a>
+      </div>
+    </section>
+    <section class="card">
+      <p class="status" id="status">Fetching document...</p>
+      <article id="content" class="content"></article>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (function () {
+      const q = new URLSearchParams(window.location.search);
+      const doc = q.get('doc');
+      const title = q.get('title');
+      const titleEl = document.getElementById('title');
+      const metaEl = document.getElementById('meta');
+      const rawEl = document.getElementById('openRaw');
+      const statusEl = document.getElementById('status');
+      const contentEl = document.getElementById('content');
+
+      if (!doc || !doc.endsWith('.md')) {
+        titleEl.textContent = 'Missing whitepaper document path';
+        statusEl.textContent = 'Use ?doc=../docs/FILE.md';
+        rawEl.style.display = 'none';
+        return;
+      }
+
+      const safeTitle = title || doc.split('/').pop().replace(/\.md$/i, '').replace(/[_-]+/g, ' ');
+      titleEl.textContent = safeTitle;
+      metaEl.textContent = doc;
+      rawEl.href = doc;
+
+      fetch(doc)
+        .then((r) => {
+          if (!r.ok) throw new Error('not_found');
+          return r.text();
+        })
+        .then((md) => {
+          statusEl.remove();
+          if (window.marked && typeof window.marked.parse === 'function') {
+            contentEl.innerHTML = window.marked.parse(md);
+          } else {
+            // Fallback: still structured surface even if CDN fails.
+            contentEl.innerHTML = '<pre></pre>';
+            contentEl.querySelector('pre').textContent = md;
+          }
+        })
+        .catch(() => {
+          statusEl.textContent = 'Could not load document. Confirm the path is correct.';
+        });
+    })();
+  </script>
+</body>
+</html>

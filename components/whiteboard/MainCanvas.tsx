@@ -9,7 +9,16 @@ import { useAwarenessStream } from './useAwarenessStream';
  */
 export function MainCanvas() {
   const [pipOpen, setPipOpen] = useState(false);
-  const { nav, generativeSeed, transitioning, transitionEpoch, shiftTowardConcept } =
+  const {
+    nav,
+    generativeSeed,
+    transitioning,
+    transitionEpoch,
+    architecture,
+    netEquilibrium,
+    channelCount,
+    shiftTowardConcept,
+  } =
     useAwarenessStream();
   const bootedRef = useRef(false);
 
@@ -56,6 +65,18 @@ export function MainCanvas() {
         </a>
         .
       </p>
+      <div className="mb-3 flex flex-wrap gap-2 text-[10px]">
+        <span className="rounded border border-amber-400/30 bg-slate-950/70 px-2 py-1 text-amber-100/90">
+          Dyad: H({architecture?.unitary_hydrogen_dyad?.proton ?? 1}p +{' '}
+          {architecture?.unitary_hydrogen_dyad?.electron ?? 1}e)
+        </span>
+        <span className="rounded border border-cyan-400/30 bg-slate-950/70 px-2 py-1 text-cyan-100/90">
+          Umbilical channels: {channelCount}
+        </span>
+        <span className="rounded border border-violet-400/30 bg-slate-950/70 px-2 py-1 text-violet-100/90">
+          Net: {netEquilibrium?.state ?? architecture?.net_state ?? 'equilibrium'}
+        </span>
+      </div>
 
       <AnimatePresence>
         {pipOpen && (
@@ -96,6 +117,9 @@ export function MainCanvas() {
                 nav={nav}
                 generativeSeed={generativeSeed}
                 transitionEpoch={transitionEpoch}
+                equilibriumDelta={netEquilibrium?.equilibrium_delta ?? 0}
+                coherenceIndex={netEquilibrium?.coherence_index ?? 0}
+                channelCount={channelCount}
               />
             </div>
             <div className="flex flex-wrap gap-2 px-2 pb-2">

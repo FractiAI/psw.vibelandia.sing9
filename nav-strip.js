@@ -81,7 +81,7 @@
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
     /* Runnable stack: FractiAI/digital-pru — match never fires so Whiteboard stays active on SING 9 */
-    { label: '\uD83D\uDCE1 Digital Pru', href: 'https://digital-pru.vercel.app/', match: /my-whiteboard-digital-pru-anchor-only/ },
+    { label: '\uD83D\uDCE1 Digital Pru', href: 'https://github.com/FractiAI/digital-pru', match: /my-whiteboard-digital-pru-anchor-only/ },
     { label: 'Shop',              href: '/interfaces/machote-catalog.html',                   match: /machote-catalog/ },
     { label: 'Advertise',         href: '/interfaces/advertise.html',                         match: /advertise/ },
     { label: '\u2726 Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },

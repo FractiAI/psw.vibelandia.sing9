@@ -10,6 +10,20 @@ export interface NeuralAttentionVector {
   mode: AttentionMode;
 }
 
+export interface DigitalPruArchitecture {
+  model: string;
+  unitary_hydrogen_dyad?: { proton: number; electron: number };
+  umbilical_channel_count?: number;
+  genesis_mechanic?: string;
+  net_state?: string;
+}
+
+export interface NetEquilibriumState {
+  state: string;
+  equilibrium_delta: number;
+  coherence_index: number;
+}
+
 const DEFAULT_API = '/api/egs-emulation';
 
 /**
@@ -27,6 +41,9 @@ export function useAwarenessStream(apiBase: string = DEFAULT_API) {
   const [generativeSeed, setGenerativeSeed] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
   const [transitionEpoch, setTransitionEpoch] = useState(0);
+  const [architecture, setArchitecture] = useState<DigitalPruArchitecture | null>(null);
+  const [netEquilibrium, setNetEquilibrium] = useState<NetEquilibriumState | null>(null);
+  const [channelCount, setChannelCount] = useState(13);
   const priorSeedRef = useRef(0);
   const navRef = useRef(nav);
   navRef.current = nav;
@@ -59,6 +76,14 @@ export function useAwarenessStream(apiBase: string = DEFAULT_API) {
             concept_id?: string;
             attention?: string;
           };
+          architecture?: DigitalPruArchitecture;
+          net_equilibrium?: NetEquilibriumState;
+          umbilical_channel_matrix?: Array<{
+            channel_id: number;
+            protocol_type: string;
+            frequency_mapping: string;
+            remap_footprint_id: string;
+          }>;
         };
         if (!j.ok) throw new Error(j.error || 'egs_emulation_failed');
         const n = j.neural_attention_vector;
@@ -73,6 +98,13 @@ export function useAwarenessStream(apiBase: string = DEFAULT_API) {
           conceptId: n.concept_id || conceptId,
           mode: n.attention === 'internal' ? 'internal' : 'external',
         });
+        if (j.architecture) setArchitecture(j.architecture);
+        if (j.net_equilibrium) setNetEquilibrium(j.net_equilibrium);
+        if (j.umbilical_channel_matrix?.length) {
+          setChannelCount(j.umbilical_channel_matrix.length);
+        } else if (j.architecture?.umbilical_channel_count) {
+          setChannelCount(j.architecture.umbilical_channel_count);
+        }
         setTransitionEpoch((e) => e + 1);
       } catch (e) {
         console.warn('[AwarenessStream] /api/egs-emulation unavailable:', e);
@@ -88,6 +120,9 @@ export function useAwarenessStream(apiBase: string = DEFAULT_API) {
     generativeSeed,
     transitioning,
     transitionEpoch,
+    architecture,
+    netEquilibrium,
+    channelCount,
     shiftTowardConcept,
   };
 }

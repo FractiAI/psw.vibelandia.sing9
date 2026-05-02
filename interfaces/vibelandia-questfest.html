@@ -21,7 +21,7 @@
   <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/interfaces/vibelandia-questfest.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,500;1,700&family=Inter:wght@300;400;500;600;700;800&family=Italiana&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,500;1,700&family=Inter:wght@300;400;500;600;700;800&family=Italiana&display=swap">
   <link rel="preload" as="image" href="assets/questfest-hero-ss-vibelandia-puerto-reno.png" fetchpriority="high">
   <link rel="stylesheet" href="nspfrnp-ticker.css">
   <style>
@@ -32,6 +32,9 @@
       --hull: #0a0f1a;
       --deep: #0f1729;
       --deck: #162238;
+      --burgundy: #5d1f2f;
+      --verdigris: #2c7a73;
+      --parchment: #efe2bf;
       --gold: #d4af37;
       --gold-bright: #fef3c7;
       --gold-dim: rgba(212, 175, 55, 0.45);
@@ -49,12 +52,15 @@
 
       --serif-luxe: 'Playfair Display', 'Italiana', ui-serif, Georgia, 'Times New Roman', serif;
       --serif-display: 'Italiana', 'Playfair Display', ui-serif, Georgia, serif;
+      --serif-ornate: 'Cinzel Decorative', 'Playfair Display', ui-serif, Georgia, serif;
       --sans-modern: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
     html { scroll-behavior: smooth; background: var(--midnight); }
     body {
       font-family: var(--sans-modern);
       background:
+        radial-gradient(1800px 1200px at 14% -25%, rgba(93,31,47,0.18), transparent 60%),
+        radial-gradient(1500px 1000px at 90% -10%, rgba(44,122,115,0.12), transparent 62%),
         radial-gradient(1800px 900px at 18% -10%, rgba(212, 175, 55, 0.06), transparent 60%),
         radial-gradient(1400px 1000px at 90% 110%, rgba(45, 212, 191, 0.04), transparent 55%),
         linear-gradient(180deg, #05080f 0%, #0a0f1a 50%, #080c16 100%);
@@ -67,6 +73,30 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.33;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(239,226,191,0.05), transparent 32%),
+        radial-gradient(circle at 80% 65%, rgba(239,226,191,0.04), transparent 34%),
+        repeating-linear-gradient(118deg, rgba(212,175,55,0.02) 0 1px, transparent 1px 5px);
+      mix-blend-mode: screen;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(1400px 800px at 50% -10%, transparent 25%, rgba(0,0,0,0.26) 100%),
+        radial-gradient(900px 600px at 50% 112%, transparent 20%, rgba(0,0,0,0.22) 100%);
+    }
+    header, nav, main, footer { position: relative; z-index: 1; }
     a { color: var(--foam); }
     a:hover { color: var(--gold-bright); }
 
@@ -106,6 +136,7 @@
       content: "";
       position: absolute; inset: 0;
       background:
+        linear-gradient(120deg, rgba(93,31,47,0.2) 0%, transparent 38%, rgba(44,122,115,0.12) 100%),
         linear-gradient(180deg, rgba(5,8,15,0.78) 0%, rgba(5,8,15,0.52) 22%, rgba(5,8,15,0.58) 55%, rgba(5,8,15,0.88) 85%, rgba(5,8,15,0.98) 100%),
         radial-gradient(ellipse at 50% 62%, rgba(5,8,15,0.32) 0%, rgba(5,8,15,0.55) 70%, rgba(5,8,15,0.85) 100%),
         linear-gradient(180deg, rgba(180,138,40,0.10) 0%, rgba(180,138,40,0.05) 45%, transparent 75%);
@@ -117,6 +148,10 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .cinema-hero::before { animation: none; transform: scale(1.04); }
+      .skin-card:hover,
+      .pass:hover,
+      .hero-card:hover,
+      .spread:hover .spread-img img { transform: none; }
     }
 
     .hero-top {
@@ -167,7 +202,7 @@
       font-weight: 400; letter-spacing: 0.005em;
       color: var(--cream); line-height: 0.98;
       margin-bottom: 0.75rem;
-      text-shadow: 0 6px 40px rgba(0,0,0,0.7), 0 2px 10px rgba(0,0,0,0.5);
+      text-shadow: 0 6px 40px rgba(0,0,0,0.7), 0 2px 10px rgba(0,0,0,0.5), 0 0 18px rgba(212,175,55,0.18);
       max-width: 20ch;
     }
     h1.hero-title em {
@@ -181,7 +216,7 @@
       position: relative;
     }
     .hero-gold-rule::after {
-      content: "✦"; position: absolute; left: 88px; top: 50%;
+      content: "❦"; position: absolute; left: 88px; top: 50%;
       transform: translateY(-50%); color: var(--gold); font-size: 0.8rem;
     }
     .hero-sub {
@@ -442,6 +477,16 @@
       font-weight: 400;
       position: relative;
     }
+    h2::before {
+      content: "✦  ❦  ✦";
+      display: block;
+      font-family: var(--serif-ornate);
+      font-size: 0.58rem;
+      letter-spacing: 0.34em;
+      color: rgba(212,175,55,0.78);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
     h2::after {
       content: ""; display: block;
       width: 56px; height: 1px;
@@ -452,7 +497,7 @@
       display: block;
       font-family: var(--sans-modern);
       font-size: 0.68rem; color: var(--brass);
-      letter-spacing: 0.32em; text-transform: uppercase;
+      letter-spacing: 0.36em; text-transform: uppercase;
       font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.25rem;
     }
     h3 {
@@ -466,6 +511,23 @@
       font-size: 1.02rem; line-height: 1.72;
     }
     p strong { color: var(--gold-bright); font-weight: 600; }
+    section > p:first-of-type {
+      position: relative;
+      margin-bottom: 1.3rem;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(212,175,55,0.35);
+      color: #f2ead8;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+    }
+    section > p:first-of-type::first-letter {
+      float: left;
+      font-family: var(--serif-ornate);
+      font-size: 2.8em;
+      line-height: 0.84;
+      margin: 0.08em 0.14em 0 0;
+      color: var(--gold);
+      text-shadow: 0 2px 12px rgba(212,175,55,0.24), 0 2px 8px rgba(0,0,0,0.5);
+    }
 
     /* ════════════════════════════════════════════════════════════════════
        FULL-BLEED CINEMATIC IMAGE BANNER — section divider
@@ -530,6 +592,17 @@
       border-radius: 2px;
       overflow: hidden;
       box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      position: relative;
+    }
+    .spread::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(90deg, rgba(212,175,55,0.02) 0 1px, transparent 1px 8px),
+        linear-gradient(180deg, rgba(239,226,191,0.02), transparent 24%);
+      opacity: 0.7;
     }
     @media (min-width: 880px) {
       .spread { grid-template-columns: 1.4fr 1fr; }
@@ -976,6 +1049,25 @@
       text-transform: uppercase; font-weight: 700;
     }
     .pass.tier-golden .pass-name { color: var(--gold); }
+    .pass.skin-courtly {
+      background:
+        radial-gradient(120% 90% at 0% 0%, rgba(93,31,47,0.3), transparent 55%),
+        linear-gradient(180deg, rgba(15,23,41,0.85), rgba(10,15,26,0.95));
+    }
+    .pass.skin-merchant {
+      background:
+        radial-gradient(120% 90% at 100% 0%, rgba(44,122,115,0.22), transparent 58%),
+        linear-gradient(180deg, rgba(15,23,41,0.84), rgba(10,15,26,0.94));
+    }
+    .pass.skin-midnight {
+      background:
+        radial-gradient(140% 100% at 50% 0%, rgba(212,175,55,0.2), transparent 60%),
+        linear-gradient(180deg, rgba(17,25,43,0.92), rgba(8,12,22,0.98));
+    }
+    .pass.skin-gilded {
+      background:
+        linear-gradient(130deg, rgba(212,175,55,0.26), rgba(93,31,47,0.2) 40%, rgba(10,15,26,0.93) 100%);
+    }
     .pass-price {
       font-family: var(--serif-display);
       font-size: 2rem; color: var(--cream); font-weight: 400;
@@ -1008,6 +1100,16 @@
     .dock-panel::before {
       content: "⚓"; position: absolute; top: 1.1rem; right: 1.5rem;
       font-size: 2.4rem; color: var(--gold); opacity: 0.15;
+    }
+    .dock-panel::after {
+      content: "❦";
+      position: absolute;
+      bottom: 1rem;
+      left: 1.2rem;
+      font-family: var(--serif-ornate);
+      color: rgba(212,175,55,0.22);
+      font-size: 1.3rem;
+      letter-spacing: 0.2em;
     }
     .dock-panel h2 { margin-bottom: 1rem; }
 
@@ -1346,6 +1448,110 @@
     .ticket-footer b { color: var(--gold-bright); }
     .ticket-footer code { color: var(--gold); background: rgba(0,0,0,0.4); padding: 0.08rem 0.35rem; border-radius: 3px; font-size: 0.8rem; }
 
+    /* QUESTFEST SKINS — renaissance palette overlays */
+    .skins-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1.7rem;
+    }
+    @media (min-width: 700px) { .skins-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1100px) { .skins-grid { grid-template-columns: repeat(4, 1fr); } }
+    .skin-card {
+      padding: 1.2rem 1.15rem 1.25rem;
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 2px;
+      background: linear-gradient(180deg, rgba(15,23,41,0.7), rgba(10,15,26,0.92));
+      box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+    }
+    .skin-card .skin-tag {
+      font-family: var(--sans-modern);
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    .skin-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.18rem;
+      color: var(--cream);
+      font-family: var(--serif-display);
+      font-weight: 400;
+    }
+    .skin-card p {
+      margin-bottom: 0.8rem;
+      font-size: 0.87rem;
+      line-height: 1.62;
+      color: var(--rope);
+    }
+    .skin-chip-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skin-chip {
+      font-family: var(--sans-modern);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: 1px solid rgba(212,175,55,0.34);
+      color: var(--parchment);
+      padding: 0.32rem 0.55rem;
+      border-radius: 2px;
+      background: rgba(10,15,26,0.5);
+    }
+    .skin-card.skin-courtly {
+      background:
+        radial-gradient(100% 90% at 0% 0%, rgba(93,31,47,0.5), transparent 60%),
+        linear-gradient(180deg, rgba(15,23,41,0.74), rgba(10,15,26,0.95));
+    }
+    .skin-card.skin-merchant {
+      background:
+        radial-gradient(100% 90% at 100% 5%, rgba(44,122,115,0.45), transparent 62%),
+        linear-gradient(180deg, rgba(15,23,41,0.74), rgba(10,15,26,0.95));
+    }
+    .skin-card.skin-midnight {
+      background:
+        radial-gradient(120% 90% at 50% 0%, rgba(212,175,55,0.28), transparent 58%),
+        linear-gradient(180deg, rgba(17,25,43,0.92), rgba(8,12,22,0.99));
+    }
+    .skin-card.skin-gilded {
+      border-color: var(--gold);
+      box-shadow: 0 12px 38px rgba(212,175,55,0.22);
+      background:
+        linear-gradient(140deg, rgba(212,175,55,0.33), rgba(93,31,47,0.24) 35%, rgba(10,15,26,0.95) 100%);
+    }
+    .skin-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .skin-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.52), 0 0 16px rgba(212,175,55,0.18);
+    }
+    .tier-panel.skin-courtly {
+      background:
+        radial-gradient(100% 90% at 0% 0%, rgba(93,31,47,0.32), transparent 58%),
+        rgba(26,38,64,0.52);
+    }
+    .tier-panel.skin-midnight {
+      background:
+        radial-gradient(120% 90% at 50% 0%, rgba(212,175,55,0.16), transparent 56%),
+        rgba(26,38,64,0.5);
+    }
+    .tier-panel.golden.skin-gilded {
+      background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(93,31,47,0.2), rgba(10,15,26,0.8));
+    }
+    .tier-panel {
+      position: relative;
+      overflow: hidden;
+    }
+    .tier-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(120deg, transparent 0 64%, rgba(239,226,191,0.04) 100%);
+    }
+
     /* ════════════════════════════════════════════════════════════════════
        SHORTS LIGHTBOX — click any reel card to preview the frame +
        duration + beats + prompt (copy-to-clipboard for text-to-video tools)
@@ -1568,7 +1774,7 @@
 
       <div class="hero-footnote">
         <a href="#shift">The Shift →</a>
-        <a href="../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md">Prospectus v4</a>
+        <a href="prospectus-the-shift.html">Prospectus v4</a>
         <a href="look-under-the-hood.html">Look Under the Hood</a>
         <a href="#dock">Dock the Ship</a>
       </div>
@@ -1608,6 +1814,7 @@
   <nav class="sticky-nav" aria-label="Sections">
     <ul>
       <li><a href="#passes">Passes</a></li>
+      <li><a href="#skins">Skins</a></li>
       <li><a href="#gallery">Experience</a></li>
       <li><a href="#ports">Ports</a></li>
       <li><a href="#shift">The Shift</a></li>
@@ -1682,7 +1889,7 @@
         [1.1] Broadway League weekly grosses &amp; 2026 spring-season attendance; see prospectus v4 for sourced lock. ·
         [2.1] Disney FY2026 Q1 earnings; revenue ($25.9B) and operating-margin compression from content costs. ·
         [3.1, 3.2] Coachella 2026 sell-out analysis (industry commentary on "mental escape" / "vibes" framing). ·
-        Full sourced ledger lives in <a href="../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md" style="color:var(--gold);">docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md</a>.
+        Full sourced ledger lives in <a href="prospectus-the-shift.html" style="color:var(--gold);">the Shift prospectus surface</a>.
       </aside>
     </section>
 
@@ -1740,7 +1947,7 @@
       <p><strong>5-year view.</strong> AI music is projected at <strong>$5.1B by 2031</strong> (20.6% CAGR). We go from 90,219 nodes to tens of millions and the shift from centralized media to a 1.618 feed becomes obvious.</p>
       <p><strong>Valuation floor: $1,213,500.</strong> Pioneer equity for PL Taino plus a Holographic AI engine built at zero external cost.</p>
 
-      <p style="margin-top:1.5rem"><strong>Full prospectus (v4, April 20, 2026 · magnitude 88,699 thesis lock):</strong> <a href="../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md">docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md</a> · <strong>Official bio (magnitude 90,219 marketing tick):</strong> <a href="../docs/HERO_JO_GOLDEN_BACHDOOR_HIT_FACTORY_BIO_2026-04-20.md">docs/HERO_JO_GOLDEN_BACHDOOR_HIT_FACTORY_BIO_2026-04-20.md</a></p>
+      <p style="margin-top:1.5rem"><strong>Full prospectus (v4, April 20, 2026 · magnitude 88,699 thesis lock):</strong> <a href="prospectus-the-shift.html">Shift prospectus surface</a> · <strong>Official bio (magnitude 90,219 marketing tick):</strong> <a href="whitepaper-surface.html?doc=../docs/HERO_JO_GOLDEN_BACHDOOR_HIT_FACTORY_BIO_2026-04-20.md&title=Hero%20Jo%20Golden%20Bachdoor%20Bio">Hero Jo bio surface</a></p>
     </section>
 
     <section id="continuum">
@@ -1880,6 +2087,7 @@
       <h2>The Experience<span class="h2-sub">One long day · seven stages · from dawn espresso to the 2 AM hush</span></h2>
       <p style="font-family:var(--serif-luxe);font-size:1.2rem;font-style:italic;color:var(--champagne);max-width:62ch;line-height:1.55;margin-bottom:1rem;">Espresso on the bow at sunrise. Baroque tux at the podium at sundown. Lanterns warming the hull. A hundred folks dancing at 100 BPM. A 2 AM drone that puts the nervous system to bed.</p>
       <p>A <strong>24/365 feed</strong> living inside one long ship-shaped day. Seven windows, each doing a different kind of good for you. Come as you are. Leave lighter than you came.</p>
+      <p>Two rider energies move together in the same lane: some attendees arrive dressed as their chosen <strong>holographic self</strong> for that moment, on pimped-out bikes with over-ear headphones; others roll in quietly on unpimped bikes, earbuds in, normal clothes to blend into the city flow. Both are fully, unmistakably <strong>QUESTFEST</strong>.</p>
 
       <div class="spreads">
 
@@ -1918,7 +2126,7 @@
             <div class="s-tag">Perreo Country Fuego · <em style="font-style:normal;">The Peak</em></div>
             <h3>The Peak <em>— 100 BPM</em></h3>
             <div class="s-window">18:00 – 02:00 · Bayou swamp × 1.618 × perreo fuego</div>
-            <p class="s-copy">Deck at maximum burn. The whole hull lights up in sync with the baton. Donde se vibea. Donde se perrea. Donde se bolea. Everyone dancing. Everyone anchored.</p>
+            <p class="s-copy">Deck at maximum burn. The whole hull lights up in sync with the baton. Holographic riders flex custom looks, chromed bikes, and full-can headphones while stealth riders keep it low-key with plain fits, earbuds, and city-ready bikes. Donde se vibea. Donde se perrea. Donde se bolea. Everyone dancing. Everyone anchored.</p>
           </div>
         </article>
 
@@ -2048,25 +2256,25 @@
       <p>Four ways in. Every price tuned to 1.618. Come dance, come soak, come stay. Fair exchange, no petroleum — Machote-Moderno all the way through.</p>
 
       <div class="passes">
-        <div class="pass">
+        <div class="pass skin-courtly">
           <div class="pass-price">$16.18<small style="font-size:0.72rem; color:var(--mist); font-weight:400">/mo</small></div>
           <div class="pass-name">GA Residency</div>
           <div class="pass-role">The Local Anchor.</div>
           <div class="pass-body">Monthly access to the full catalog. Key to the <strong>Sovereign Vault</strong>. Daily noise cancellation.</div>
         </div>
-        <div class="pass">
+        <div class="pass skin-merchant">
           <div class="pass-price">$161.80</div>
           <div class="pass-name">Day Pass + Bike</div>
           <div class="pass-role">The Urban Navigator.</div>
           <div class="pass-body">24-hour frequency jump. Includes a bike to ride Puerto Reno and run the <strong>Art Banksyesque Quest</strong>.</div>
         </div>
-        <div class="pass">
+        <div class="pass skin-midnight">
           <div class="pass-price">$1,618.00</div>
           <div class="pass-name">Bachstage Pass</div>
           <div class="pass-role">The Resonant Insider.</div>
           <div class="pass-body">Four nights. <strong>The Soaks</strong>. Bison, Elk, Wild Salmon menus. A custom pop-up map tuned to your week. Thursday <strong>"Pimp Your Bike"</strong> clinic. QUESTFEST merch.</div>
         </div>
-        <div class="pass tier-golden">
+        <div class="pass tier-golden skin-gilded">
           <div class="pass-price">$16,180.00</div>
           <div class="pass-name">Golden Bachstage Pass</div>
           <div class="pass-role">The Chairman Experience.</div>
@@ -2077,6 +2285,38 @@
       <div class="cta-row" style="margin-top:1.25rem;">
         <button type="button" class="cta ticket" onclick="openTicketOffice()" aria-haspopup="dialog" aria-controls="ticketModal">🎫 Ticket Office · Venmo · PayPal · Cash App</button>
         <a class="cta secondary" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE">Box Office · Email</a>
+      </div>
+    </section>
+
+    <section id="skins">
+      <h2>Renaissance Skins<span class="h2-sub">Curated Looks for Landing and Pass Experience</span></h2>
+      <p>QUESTFEST now carries a Renaissance layer in both the landing presentation and pass skins: velvet dusk, brass parchment, cathedral midnight, and gilded sovereign. Same signal, different visual drape.</p>
+
+      <div class="skins-grid">
+        <article class="skin-card skin-courtly">
+          <div class="skin-tag">Skin 01</div>
+          <h3>Courtly Velvet</h3>
+          <p>Burgundy undertones with warm gold highlights for opening beats, introductions, and social handoff moments.</p>
+          <div class="skin-chip-row"><span class="skin-chip">velvet dusk</span><span class="skin-chip">rose-gold</span><span class="skin-chip">ceremonial</span></div>
+        </article>
+        <article class="skin-card skin-merchant">
+          <div class="skin-tag">Skin 02</div>
+          <h3>Merchant Atlas</h3>
+          <p>Verdigris overlays over brass ink for navigational states, city manifests, and cartographic info blocks.</p>
+          <div class="skin-chip-row"><span class="skin-chip">verdigris</span><span class="skin-chip">map room</span><span class="skin-chip">harbor</span></div>
+        </article>
+        <article class="skin-card skin-midnight">
+          <div class="skin-tag">Skin 03</div>
+          <h3>Cathedral Midnight</h3>
+          <p>Dark chapel blues and candle-gold emphasis tuned for immersive listening, stage previews, and short-form reels.</p>
+          <div class="skin-chip-row"><span class="skin-chip">candlelight</span><span class="skin-chip">deep nave</span><span class="skin-chip">immersive</span></div>
+        </article>
+        <article class="skin-card skin-gilded">
+          <div class="skin-tag">Skin 04</div>
+          <h3>Sovereign Gilded</h3>
+          <p>Gold-heavy ceremonial skin for premium tiers and signature CTAs where conversion meets prestige.</p>
+          <div class="skin-chip-row"><span class="skin-chip">gilded</span><span class="skin-chip">chairman</span><span class="skin-chip">fractal key</span></div>
+        </article>
       </div>
     </section>
 
@@ -2175,6 +2415,10 @@
           <p>24/365 stay — the opposite of a weekend spike. Free for 7 days, then into the Sovereign Vault.</p>
         </div>
         <div class="canon">
+          <h4>Dual Presence Protocol</h4>
+          <p>QuestFest welcomes visible expression and quiet integration at equal magnitude: holographic personas with pimped bikes and headphones, and low-profile participants with earbuds, unpimped bikes, and normal clothing. Different aesthetics, same resonance contract.</p>
+        </div>
+        <div class="canon">
           <h4>Golden Bachdoor Entry</h4>
           <p>The bypass around Spotify cages and Broadway gates. Listener to Factory, direct. The pass ladder isn't a gate — it's a handshake.</p>
         </div>
@@ -2242,7 +2486,7 @@
       </div>
 
       <!-- GA RESIDENCY -->
-      <div class="tier-panel">
+      <div class="tier-panel skin-courtly">
         <div class="tier-hd">
           <span class="tier-name">GA Residency · The Local Anchor</span>
           <span class="tier-price">$16.18<small>/mo</small></span>
@@ -2258,7 +2502,7 @@
       </div>
 
       <!-- BACHSTAGE PASS -->
-      <div class="tier-panel">
+      <div class="tier-panel skin-midnight">
         <div class="tier-hd">
           <span class="tier-name">Bachstage Pass · The Resonant Insider</span>
           <span class="tier-price">$1,618.00</span>
@@ -2274,7 +2518,7 @@
       </div>
 
       <!-- GOLDEN BACHSTAGE PASS -->
-      <div class="tier-panel golden">
+      <div class="tier-panel golden skin-gilded">
         <div class="tier-hd">
           <span class="tier-name">★ Golden Bachstage Pass · The Chairman Experience</span>
           <span class="tier-price">$16,180.00</span>

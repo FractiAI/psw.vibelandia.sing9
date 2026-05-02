@@ -15234,7 +15234,14 @@ function compile(gl, type, src) {
   }
   return sh;
 }
-function DigitalPruViewport({ nav, generativeSeed, transitionEpoch }) {
+function DigitalPruViewport({
+  nav,
+  generativeSeed,
+  transitionEpoch,
+  equilibriumDelta,
+  coherenceIndex,
+  channelCount
+}) {
   const canvasRef = (0, import_react24.useRef)(null);
   const rafRef = (0, import_react24.useRef)(0);
   const startRef = (0, import_react24.useRef)(performance.now());
@@ -15353,6 +15360,14 @@ function DigitalPruViewport({ nav, generativeSeed, transitionEpoch }) {
         nav.z.toFixed(3),
         " \xB7 ",
         nav.conceptId
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("p", { className: "mt-1 truncate font-mono text-[10px] text-cyan-100/60", children: [
+        "EQ \xB7 \u0394 ",
+        equilibriumDelta.toFixed(3),
+        " \xB7 C ",
+        coherenceIndex.toFixed(3),
+        " \xB7 CH ",
+        channelCount
       ] })
     ] })
   ] });
@@ -15372,6 +15387,9 @@ function useAwarenessStream(apiBase = DEFAULT_API) {
   const [generativeSeed, setGenerativeSeed] = (0, import_react25.useState)(0);
   const [transitioning, setTransitioning] = (0, import_react25.useState)(false);
   const [transitionEpoch, setTransitionEpoch] = (0, import_react25.useState)(0);
+  const [architecture, setArchitecture] = (0, import_react25.useState)(null);
+  const [netEquilibrium, setNetEquilibrium] = (0, import_react25.useState)(null);
+  const [channelCount, setChannelCount] = (0, import_react25.useState)(13);
   const priorSeedRef = (0, import_react25.useRef)(0);
   const navRef = (0, import_react25.useRef)(nav);
   navRef.current = nav;
@@ -15406,6 +15424,13 @@ function useAwarenessStream(apiBase = DEFAULT_API) {
           conceptId: n.concept_id || conceptId,
           mode: n.attention === "internal" ? "internal" : "external"
         });
+        if (j.architecture) setArchitecture(j.architecture);
+        if (j.net_equilibrium) setNetEquilibrium(j.net_equilibrium);
+        if (j.umbilical_channel_matrix?.length) {
+          setChannelCount(j.umbilical_channel_matrix.length);
+        } else if (j.architecture?.umbilical_channel_count) {
+          setChannelCount(j.architecture.umbilical_channel_count);
+        }
         setTransitionEpoch((e) => e + 1);
       } catch (e) {
         console.warn("[AwarenessStream] /api/egs-emulation unavailable:", e);
@@ -15420,6 +15445,9 @@ function useAwarenessStream(apiBase = DEFAULT_API) {
     generativeSeed,
     transitioning,
     transitionEpoch,
+    architecture,
+    netEquilibrium,
+    channelCount,
     shiftTowardConcept
   };
 }
@@ -15428,7 +15456,16 @@ function useAwarenessStream(apiBase = DEFAULT_API) {
 var import_jsx_runtime7 = __toESM(require_jsx_runtime());
 function MainCanvas() {
   const [pipOpen, setPipOpen] = (0, import_react26.useState)(false);
-  const { nav, generativeSeed, transitioning, transitionEpoch, shiftTowardConcept } = useAwarenessStream();
+  const {
+    nav,
+    generativeSeed,
+    transitioning,
+    transitionEpoch,
+    architecture,
+    netEquilibrium,
+    channelCount,
+    shiftTowardConcept
+  } = useAwarenessStream();
   const bootedRef = (0, import_react26.useRef)(false);
   (0, import_react26.useEffect)(() => {
     if (!pipOpen) {
@@ -15474,6 +15511,24 @@ function MainCanvas() {
       ),
       "."
     ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-3 flex flex-wrap gap-2 text-[10px]", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "rounded border border-amber-400/30 bg-slate-950/70 px-2 py-1 text-amber-100/90", children: [
+        "Dyad: H(",
+        architecture?.unitary_hydrogen_dyad?.proton ?? 1,
+        "p +",
+        " ",
+        architecture?.unitary_hydrogen_dyad?.electron ?? 1,
+        "e)"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "rounded border border-cyan-400/30 bg-slate-950/70 px-2 py-1 text-cyan-100/90", children: [
+        "Umbilical channels: ",
+        channelCount
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "rounded border border-violet-400/30 bg-slate-950/70 px-2 py-1 text-violet-100/90", children: [
+        "Net: ",
+        netEquilibrium?.state ?? architecture?.net_state ?? "equilibrium"
+      ] })
+    ] }),
     /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(AnimatePresence, { children: pipOpen && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
       motion.div,
       {
@@ -15513,7 +15568,10 @@ function MainCanvas() {
             {
               nav,
               generativeSeed,
-              transitionEpoch
+              transitionEpoch,
+              equilibriumDelta: netEquilibrium?.equilibrium_delta ?? 0,
+              coherenceIndex: netEquilibrium?.coherence_index ?? 0,
+              channelCount
             }
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex flex-wrap gap-2 px-2 pb-2", children: [

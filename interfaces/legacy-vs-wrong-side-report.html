@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0f1a" />
+  <title>Big Shows vs. Wrong Side · Plain-English Report · QUESTFEST</title>
+  <meta name="description" content="No fancy words required. Compare Broadway, Coachella, Nashville, Burning Man money-machines to Hero Jo's Wrong Side of Town and SS VIBELANDIA QUESTFEST — plus full Renaissance skins." />
+  <meta property="og:title" content="Big Shows vs. Wrong Side · Plain Report" />
+  <meta property="og:description" content="Trailer-park English. Swamp English. How the big stages milk the crowd vs. how the Sonic Ship runs in Puerto Reno." />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://psw-vibelandia-sing9.vercel.app/interfaces/assets/questfest-hero-ss-vibelandia-puerto-reno.png" />
+  <meta property="og:url" content="https://psw-vibelandia-sing9.vercel.app/interfaces/legacy-vs-wrong-side-report.html" />
+  <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/interfaces/legacy-vs-wrong-side-report.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;0,900;1,500;1,700&family=Inter:wght@300;400;500;600;700;800&family=Italiana&display=swap">
+  <link rel="preload" as="image" href="assets/questfest-hero-ss-vibelandia-puerto-reno.png" fetchpriority="high">
+  <link rel="stylesheet" href="nspfrnp-ticker.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --midnight: #05080f;
+      --hull: #0a0f1a;
+      --deep: #0f1729;
+      --burgundy: #5d1f2f;
+      --verdigris: #2c7a73;
+      --parchment: #efe2bf;
+      --gold: #d4af37;
+      --gold-bright: #fef3c7;
+      --gold-dim: rgba(212, 175, 55, 0.45);
+      --champagne: #f0e5c8;
+      --brass: #c9a34a;
+      --cream: #fef8e7;
+      --foam: #2dd4bf;
+      --rope: #f5f0e6;
+      --mist: #94a3b8;
+      --mist-warm: #c4b895;
+      --ink: #0a0f1a;
+      --serif-luxe: 'Playfair Display', 'Italiana', ui-serif, Georgia, serif;
+      --serif-display: 'Italiana', 'Playfair Display', ui-serif, Georgia, serif;
+      --serif-ornate: 'Cinzel Decorative', 'Playfair Display', ui-serif, Georgia, serif;
+      --sans-modern: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; background: var(--midnight); }
+    body.report-page {
+      font-family: var(--sans-modern);
+      background:
+        radial-gradient(1800px 1200px at 14% -25%, rgba(93,31,47,0.18), transparent 60%),
+        radial-gradient(1500px 1000px at 90% -10%, rgba(44,122,115,0.12), transparent 62%),
+        linear-gradient(180deg, #05080f 0%, #0a0f1a 50%, #080c16 100%);
+      background-attachment: fixed;
+      color: var(--rope);
+      min-height: 100vh;
+      line-height: 1.65;
+      font-size: 1.05rem;
+      -webkit-font-smoothing: antialiased;
+    }
+    .report-page a { color: var(--foam); }
+    .report-page a:hover { color: var(--gold-bright); }
+    .skip { position: absolute; left: -9999px; top: 0; background: var(--gold); color: var(--ink); padding: 0.5rem 1rem; z-index: 100; }
+    .skip:focus { left: 0; }
+
+    .report-hero {
+      position: relative;
+      min-height: min(88vh, 720px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: calc(2rem + env(safe-area-inset-top)) 1.5rem 2.5rem;
+      isolation: isolate;
+      border-bottom: 1px solid var(--gold-dim);
+    }
+    .report-hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: url('assets/questfest-hero-ss-vibelandia-puerto-reno.png') center 55% / cover no-repeat;
+      filter: brightness(0.84) contrast(0.96) saturate(1.05);
+      z-index: -2;
+      animation: kenBurns 24s ease-in-out infinite alternate;
+    }
+    .report-hero::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(5,8,15,0.78) 0%, rgba(5,8,15,0.48) 30%, rgba(5,8,15,0.72) 100%),
+        radial-gradient(ellipse at 50% 70%, rgba(5,8,15,0.5) 0%, rgba(5,8,15,0.9) 100%);
+      z-index: -1;
+    }
+    @keyframes kenBurns {
+      0% { transform: scale(1.04) translate(0, 0); }
+      100% { transform: scale(1.1) translate(-1%, -0.6%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .report-hero::before, .skin-card:hover .skin-card-visual img { animation: none; transform: scale(1.04); }
+      .skin-card:hover { transform: none; }
+    }
+
+    .report-hero .hero-top {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: calc(1.1rem + env(safe-area-inset-top)) 1.5rem 0.5rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      align-items: center;
+      font-family: var(--sans-modern);
+      z-index: 2;
+    }
+    .report-hero .brand {
+      font-family: var(--serif-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--champagne);
+    }
+    .report-hero .brand b { color: var(--gold); }
+    .hero-inner { position: relative; max-width: 1200px; margin: 0 auto; width: 100%; z-index: 1; }
+
+    .report-hero h1 {
+      font-family: var(--serif-display);
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.05;
+      margin-bottom: 0.75rem;
+      max-width: 22ch;
+      text-shadow: 0 4px 28px rgba(0,0,0,0.75);
+    }
+    .report-hero h1 em { color: var(--gold); font-family: var(--serif-luxe); font-style: italic; }
+
+    .deck-tag {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(212,175,55,0.4);
+      background: rgba(10,15,26,0.55);
+      font-size: 0.65rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--foam);
+      font-weight: 700;
+    }
+
+    .report-hero .lead {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      color: var(--rope);
+      max-width: 48ch;
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.65);
+    }
+    .report-hero .lead strong { color: var(--gold-bright); }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.4rem;
+      font-family: var(--sans-modern);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all 0.25s;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+    }
+    .cta.primary {
+      background: linear-gradient(135deg, var(--gold), var(--cream), #c9a227);
+      color: var(--ink);
+      border: 1px solid var(--gold);
+      box-shadow: 0 6px 20px rgba(212,175,55,0.28);
+    }
+    .cta.primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .cta.secondary {
+      background: rgba(10,15,26,0.65);
+      color: var(--champagne);
+      border: 1px solid rgba(240,229,200,0.35);
+    }
+    .cta.secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold-bright);
+    }
+
+    nav.sticky-nav {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(5, 8, 15, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+      padding: 0.55rem 1rem;
+    }
+    nav.sticky-nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      justify-content: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    nav.sticky-nav a {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mist-warm);
+      text-decoration: none;
+      padding: 0.4rem 0.65rem;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    nav.sticky-nav a:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
+
+    main { position: relative; z-index: 1; }
+
+    .report-page section {
+      padding: 3.25rem 1.5rem;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .report-page section.wide { max-width: 1180px; }
+
+    .report-page h2 {
+      font-family: var(--serif-display);
+      font-size: clamp(1.65rem, 3.8vw, 2.35rem);
+      color: var(--cream);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.12;
+    }
+    .report-page h2::before {
+      content: "✦  ❦  ✦";
+      display: block;
+      font-family: var(--serif-ornate);
+      font-size: 0.55rem;
+      letter-spacing: 0.34em;
+      color: rgba(212,175,55,0.75);
+      margin-bottom: 0.45rem;
+    }
+    .report-page h3 {
+      font-family: var(--serif-luxe);
+      font-size: 1.2rem;
+      color: var(--gold-bright);
+      margin: 1.75rem 0 0.5rem;
+    }
+    .report-page p, .report-page li {
+      color: #e8e2d6;
+      margin-bottom: 0.9rem;
+      line-height: 1.72;
+      font-size: 1.05rem;
+    }
+    .report-page ul, .report-page ol { padding-left: 1.35rem; margin-bottom: 1rem; }
+    .report-page li { margin-bottom: 0.55rem; }
+
+    .plain-box {
+      background: rgba(10,15,26,0.65);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-left: 4px solid var(--foam);
+      padding: 1.25rem 1.35rem;
+      border-radius: 0 2px 2px 0;
+      margin: 1.25rem 0;
+    }
+    .plain-box h3 { margin-top: 0; color: var(--foam); font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--sans-modern); font-weight: 800; }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+    @media (min-width: 800px) {
+      .compare-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .compare-card {
+      padding: 1.2rem 1.3rem;
+      border-radius: 2px;
+      border: 1px solid rgba(212,175,55,0.28);
+      background: linear-gradient(180deg, rgba(15,23,41,0.65), rgba(10,15,26,0.92));
+    }
+    .compare-card.bad {
+      border-color: rgba(220, 38, 38, 0.35);
+      background: linear-gradient(180deg, rgba(60,20,28,0.35), rgba(10,15,26,0.92));
+    }
+    .compare-card.good {
+      border-color: rgba(45, 212, 191, 0.4);
+      background: linear-gradient(180deg, rgba(12, 40, 42, 0.4), rgba(10,15,26,0.92));
+    }
+    .compare-card h3 {
+      font-family: var(--sans-modern);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      color: var(--champagne);
+    }
+    .compare-card.bad h3 { color: #fca5a5; }
+    .compare-card.good h3 { color: var(--foam); }
+
+    .layers-ol {
+      list-style: none;
+      padding: 0;
+      counter-reset: layer;
+    }
+    .layers-ol li {
+      counter-increment: layer;
+      position: relative;
+      padding: 0.65rem 0 0.65rem 2.5rem;
+      border-bottom: 1px solid rgba(212,175,55,0.12);
+    }
+    .layers-ol li::before {
+      content: counter(layer);
+      position: absolute;
+      left: 0;
+      top: 0.65rem;
+      width: 1.65rem;
+      height: 1.65rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+
+    .swamp-quote {
+      font-family: var(--serif-luxe);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--champagne);
+      margin: 1.5rem 0;
+      padding: 1rem 1.25rem;
+      border: 1px dashed rgba(212,175,55,0.35);
+      background: rgba(5,8,15,0.45);
+    }
+
+    /* Skins — full QUESTFEST experience skins */
+    .skins-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 700px) { .skins-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1100px) { .skins-grid { grid-template-columns: repeat(4, 1fr); } }
+    .skin-card {
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 2px;
+      background: linear-gradient(180deg, rgba(15,23,41,0.7), rgba(10,15,26,0.92));
+      box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .skin-card-visual { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+    .skin-card-visual::after {
+      content: "";
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, transparent 25%, rgba(5,8,15,0.15) 55%, rgba(5,8,15,0.88) 100%);
+    }
+    .skin-card-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+    .skin-card:hover .skin-card-visual img { transform: scale(1.07); }
+    .skin-card-inner { padding: 1.05rem 1.15rem 1.2rem; }
+    .skin-card .skin-tag {
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    .skin-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.1rem;
+      color: var(--cream);
+      font-family: var(--serif-display);
+      font-weight: 400;
+    }
+    .skin-card p { font-size: 0.86rem; margin-bottom: 0.75rem; color: var(--rope); line-height: 1.6; }
+    .skin-chip-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skin-chip {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid rgba(212,175,55,0.34);
+      color: var(--parchment);
+      padding: 0.3rem 0.5rem;
+      border-radius: 2px;
+      background: rgba(10,15,26,0.5);
+    }
+    .skin-card.skin-courtly {
+      background:
+        radial-gradient(100% 90% at 0% 0%, rgba(93,31,47,0.5), transparent 60%),
+        linear-gradient(180deg, rgba(15,23,41,0.74), rgba(10,15,26,0.95));
+    }
+    .skin-card.skin-merchant {
+      background:
+        radial-gradient(100% 90% at 100% 5%, rgba(44,122,115,0.45), transparent 62%),
+        linear-gradient(180deg, rgba(15,23,41,0.74), rgba(10,15,26,0.95));
+    }
+    .skin-card.skin-midnight {
+      background:
+        radial-gradient(120% 90% at 50% 0%, rgba(212,175,55,0.28), transparent 58%),
+        linear-gradient(180deg, rgba(17,25,43,0.92), rgba(8,12,22,0.99));
+    }
+    .skin-card.skin-gilded {
+      border-color: var(--gold);
+      box-shadow: 0 12px 38px rgba(212,175,55,0.22);
+      background:
+        linear-gradient(140deg, rgba(212,175,55,0.33), rgba(93,31,47,0.24) 35%, rgba(10,15,26,0.95) 100%);
+    }
+    .skin-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.52), 0 0 16px rgba(212,175,55,0.18);
+    }
+
+    footer.footer-main {
+      margin-top: 2rem;
+      padding: 3rem 1.5rem;
+      background: linear-gradient(180deg, #060a12 0%, #020408 100%);
+      border-top: 1px solid var(--gold-dim);
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--mist-warm);
+    }
+    footer.footer-main .stamp {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+    footer.footer-main a { color: var(--champagne); }
+  </style>
+</head>
+<body class="report-page">
+  <a href="#main" class="skip">Skip to report</a>
+
+  <div class="nspfrnp-console-ticker" aria-live="polite"><span class="ticker-inner" id="nspfrnpTickerText"></span></div>
+  <script src="nspfrnp-ticker.js"></script>
+
+  <header class="report-hero" role="banner">
+    <div class="hero-top">
+      <div class="brand"><b>Hero Jo&apos;s</b> · Golden Bachdoor Hit Factory</div>
+      <div class="brand" style="letter-spacing:0.2em;">Plain report · no BS</div>
+    </div>
+    <div class="hero-inner">
+      <span class="deck-tag">Read this on your phone at the laundromat</span>
+      <h1>Big-money shows <em>vs.</em> the Wrong Side</h1>
+      <p class="lead">Broadway, desert raves, country royalty, Hollywood — they ain&apos;t evil, but they&apos;re built to <strong>pack you in, bleed your wallet, and forget your name</strong>. This page breaks down how that machine runs next to <strong>SS VIBELANDIA QUESTFEST</strong> in Puerto Reno: the Sonic Ship, <strong>Wrong Side of Town: The Musical</strong>, and the deal where you can <strong>actually land inside the lyrics</strong>.</p>
+      <div class="cta-row">
+        <a class="cta primary" href="vibelandia-questfest.html#pioneers">Hop to pioneer money →</a>
+        <a class="cta secondary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">Play the sets →</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sticky-nav" aria-label="On this page">
+    <ul>
+      <li><a href="#scenes">Big stages</a></li>
+      <li><a href="#ship">Our ship</a></li>
+      <li><a href="#lyrics">Lyrics</a></li>
+      <li><a href="#layers">13 differences</a></li>
+      <li><a href="#reno">Reno play</a></li>
+      <li><a href="#skins">Skins</a></li>
+      <li><a href="vibelandia-questfest.html">Home</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <section id="intro">
+      <h2>Who this is for</h2>
+      <p>If you grew up on food stamps, live in a trailer, love the swamp, the desert, the back row, the parking-lot party — <strong>this is your Cliff Notes</strong>. You don&apos;t need a degree. You need to know who&apos;s running a <strong>squeeze</strong> on you and who&apos;s offering a <strong>fair handshake</strong>.</p>
+    </section>
+
+    <section id="scenes">
+      <h2>The big stages in normal human words (2026)</h2>
+
+      <h3>Broadway</h3>
+      <p>Big revivals like <strong>Chess</strong> with Aaron Tveit, gritty plays like <strong>Dog Day Afternoon</strong> with Jon Bernthal, and star drops like <strong>Megan Thee Stallion</strong> in <strong>Moulin Rouge!</strong> — it&apos;s still <strong>a seat, a ticket, a wall</strong>. You clap, you leave, you&apos;re not in the script unless you&apos;re already famous.</p>
+
+      <h3>Nashville &amp; LA</h3>
+      <p>Outlaw-adjacent fire like <strong>Ben Chapman</strong> (Opry, Peach Jam, bar truth) and story nights like <strong>Ashley McBryde</strong> at <strong>Chief&apos;s</strong> get <strong>closer to the bone</strong> — but it&apos;s still <strong>weekend tickets</strong> and <strong>somebody else&apos;s tour calendar</strong>. Hollywood keeps cranking <strong>pretty faces for streamers</strong> (think Jacob Elordi-type packaging) — <strong>pretty don&apos;t mean you&apos;re in the writers&apos; room.</strong></p>
+
+      <h3>Coachella</h3>
+      <p>2026 headliners <strong>Sabrina Carpenter</strong>, <strong>Justin Bieber</strong>, <strong>Karol G</strong> — that&apos;s <strong>pop gravity</strong>. They&apos;ll give you <strong>shade tents, water, cooling</strong> so you don&apos;t pass out. That&apos;s nice. It&apos;s also <strong>so you can last long enough to buy more</strong>. It&apos;s maintenance for a machine — not the same as <strong>tuning your head</strong>.</p>
+
+      <h3>Burning Man (&quot;Axis Mundi&quot;)</h3>
+      <p>2026 theme is the <strong>world tree</strong> — connect, build, gift. That&apos;s <strong>beautiful</strong> and closer to us in spirit. Still: <strong>one week</strong>, <strong>hard trip</strong>, <strong>gate drama</strong>. We&apos;re the <strong>harbor that don&apos;t close</strong>.</p>
+    </section>
+
+    <section id="ship">
+      <h2>What we run instead</h2>
+      <div class="compare-grid">
+        <div class="compare-card bad">
+          <h3>Legacy nodes (typical)</h3>
+          <p><strong>When:</strong> their dates.<br>
+             <strong>Where:</strong> their building or their polo field.<br>
+             <strong>You:</strong> a body in a headcount.<br>
+             <strong>Your money:</strong> ticket, beer, shirt — mostly <strong>non-refundable</strong>.</p>
+        </div>
+        <div class="compare-card good">
+          <h3>SS VIBELANDIA QUESTFEST</h3>
+          <p><strong>When:</strong> <strong>24×365</strong> — Puerto Reno / downtown hologram vibe.<br>
+             <strong>How you listen:</strong> phone + <strong>13-channel Sonic Pipe</strong> (layers of story, not one flat feed).<br>
+             <strong>Show:</strong> <em>Wrong Side of Town: The Musical</em>.<br>
+             <strong>Tuning:</strong> <strong>El Gran Sol golden key (1.618)</strong> + <strong>hydrogen-line hum (1.420 GHz)</strong> as the <strong>backbone</strong>, not a marketing sticker.<br>
+             <strong>Vibe:</strong> <strong>Actual Frazzle-Cancellation</strong> = we call out the <strong>static in your skull</strong> and mix against it.<br>
+             <strong>Money:</strong> <strong>Fair Exchange</strong> — you pay direct; if we miss, we <strong>talk refund</strong>; if we hit, <strong>tip love</strong> is cool.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="lyrics">
+      <h2>Lyrics &amp; songs: factory cattle vs. the Sonic Ship</h2>
+      <div class="plain-box">
+        <h3>The short version</h3>
+        <p>Major studios and festival acts are graded on <strong>streams, clears, and corporate sync</strong>. Hooks get <strong>truncated for TikTok</strong>. Writers are a <strong>room</strong>; you&apos;re a <strong>listener SKU</strong>.</p>
+        <p><strong>Wrong Side</strong> is built backwards from that: <strong>Reno swamp</strong>, <strong>outcasts</strong>, <strong>perreo</strong>, <strong>messy truth</strong>. The &quot;Right Side&quot; in the tale is <strong>glass towers, oil smoke, polished lies</strong> — <strong>petroleum vampires on the other bank</strong>. The <strong>Sonic Pipe</strong> is the <strong>outcast rig</strong>. Lines like <strong>&quot;Bayou swamp meets 1.618&quot;</strong> and <strong>&quot;Donde se perrea&quot;</strong> ain&apos;t focus-grouped — they&apos;re <strong>deck energy</strong>. Pioneer lanes let your <strong>name ride in the wax</strong> ($100 shout), your <strong>whole custom track</strong> ($1k), or a <strong>9-song city arc</strong> ($10k) — <strong>you&apos;re Cast</strong>, not <strong>crowd filler</strong>.</p>
+      </div>
+      <p class="swamp-quote">&ldquo;All was an illusion. Dark is light. Light is dark. Where the outcasts gather, the true system is born.&rdquo;</p>
+    </section>
+
+    <section id="layers">
+      <h2>13 ways the old game plays you — and we don&apos;t</h2>
+      <p>Every line is <strong>plain English</strong>. Same count as our <strong>13 layers</strong> on purpose.</p>
+      <ol class="layers-ol">
+        <li><strong>Their clock, not yours.</strong> They sell <strong>one weekend</strong>. We run <strong>all year</strong>.</li>
+        <li><strong>You gotta travel to them.</strong> We meet you in the <strong>pocket</strong> — earbuds, bus seat, porch.</li>
+        <li><strong>Show ends; story dies.</strong> Our tale stays <strong>open</strong>; pioneers <strong>patch in</strong>.</li>
+        <li><strong>You&apos;re &quot;fan #8,432.&quot;</strong> Here you can be <strong>in the credits of the song</strong>.</li>
+        <li><strong>Loud for likes.</strong> We tune on <strong>golden ratio + hydrogen</strong> discipline — <strong>less cheap noise</strong>.</li>
+        <li><strong>Dopamine treadmill.</strong> We name <strong>frazzle</strong> and try to <strong>strip it</strong> in the mix.</li>
+        <li><strong>Ticket math traps you.</strong> <strong>Fair Exchange</strong> says <strong>talk it out</strong> if the soul didn&apos;t land.</li>
+        <li><strong>Oil-and-fly-in carbon hangovers.</strong> We still live in the real world — but we <strong>call the oil-side vampires what they are</strong> in the story.</li>
+        <li><strong>VIP ladders insult you quietly.</strong> Our ladder is <strong>creative roles</strong>: shout, track, city arc.</li>
+        <li><strong>City used as backdrop.</strong> <strong>Puerto Reno / Holographic AI Valley</strong> is the <strong>home port</strong>, not a one-off flyer.</li>
+        <li><strong>AI hype for suits.</strong> We wear <strong>Holographic AI Valley</strong> as <strong>neighborhood identity</strong>, not a press release.</li>
+        <li><strong>Sponsor lounge &quot;commons.&quot;</strong> Our commons is the <strong>Pipe</strong> — listeners as <strong>crew</strong>.</li>
+        <li><strong>Myth for one week.</strong> Axis Mundi is dope; we want <strong>daily practice</strong> — <strong>dock mentality</strong>.</li>
+      </ol>
+    </section>
+
+    <section id="reno">
+      <h2>How Reno pulls their crowds without kissing the ring</h2>
+      <ul>
+        <li><strong>Desert week overlap:</strong> when Coachella&apos;s hot, run <strong>&quot;Wrong Side oasis&quot;</strong> listens — <strong>same phones, our 13 lanes</strong>.</li>
+        <li><strong>Honest comparisons:</strong> share this page — <strong>no shame in being broke</strong>, only in being <strong>fooled twice</strong>.</li>
+        <li><strong>Cast roll receipts:</strong> show who got <strong>voiced into the track</strong> — proof beats hype.</li>
+        <li><strong>Ear test:</strong> A/B clips — <strong>flat loud trash</strong> vs. <strong>1.618-staged</strong> — let people <strong>feel</strong> it.</li>
+        <li><strong>Chief&apos;s-size rooms:</strong> borrow the <strong>small-room honesty</strong> of Nashville residencies — <strong>but keep the harbor open 24×365 online</strong>.</li>
+      </ul>
+      <p><strong>Bottom line:</strong> Big stages sell <strong>being there</strong>. We sell <strong>being inside the signal</strong> — <strong>Wrong Side</strong> light is <strong>honest light</strong> next to polished lie towers.</p>
+      <div class="cta-row" style="margin-top:1.25rem;">
+        <a class="cta primary" href="vibelandia-questfest.html">Back to QUESTFEST landing →</a>
+        <a class="cta secondary" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL">Email ACTIVATE →</a>
+      </div>
+    </section>
+
+    <section class="wide" id="skins">
+      <h2>Full experience skins</h2>
+      <p>Renaissance looks for the landing and pass tiers — <strong>same signal</strong>, different <strong>drape</strong>. These are the four QUESTFEST skins, cards and all.</p>
+      <div class="skins-grid">
+        <article class="skin-card skin-courtly">
+          <div class="skin-card-visual">
+            <img src="assets/questfest-hero-ss-vibelandia-puerto-reno.png" width="640" height="400" alt="Courtly Velvet: yacht at Puerto Reno dusk" loading="lazy" decoding="async" />
+          </div>
+          <div class="skin-card-inner">
+            <div class="skin-tag">Skin 01</div>
+            <h3>Courtly Velvet</h3>
+            <p>Burgundy undertones, warm gold — openings, intros, hand-off moments.</p>
+            <div class="skin-chip-row"><span class="skin-chip">velvet dusk</span><span class="skin-chip">rose-gold</span><span class="skin-chip">ceremonial</span></div>
+          </div>
+        </article>
+        <article class="skin-card skin-merchant">
+          <div class="skin-card-visual">
+            <img src="assets/questfest-ports-of-call-manifest.png" width="640" height="400" alt="Merchant Atlas: brass ports manifest" loading="lazy" decoding="async" />
+          </div>
+          <div class="skin-card-inner">
+            <div class="skin-tag">Skin 02</div>
+            <h3>Merchant Atlas</h3>
+            <p>Verdigris on brass — maps, manifests, where the ship docks next.</p>
+            <div class="skin-chip-row"><span class="skin-chip">verdigris</span><span class="skin-chip">map room</span><span class="skin-chip">harbor</span></div>
+          </div>
+        </article>
+        <article class="skin-card skin-midnight">
+          <div class="skin-card-visual">
+            <img src="assets/questfest-stage-after-the-after-party-void.png" width="640" height="400" alt="Cathedral Midnight: void stage hydrogen glow" loading="lazy" decoding="async" />
+          </div>
+          <div class="skin-card-inner">
+            <div class="skin-tag">Skin 03</div>
+            <h3>Cathedral Midnight</h3>
+            <p>Deep nave blues, candle gold — late listens, stillness, reels.</p>
+            <div class="skin-chip-row"><span class="skin-chip">candlelight</span><span class="skin-chip">deep nave</span><span class="skin-chip">immersive</span></div>
+          </div>
+        </article>
+        <article class="skin-card skin-gilded">
+          <div class="skin-card-visual">
+            <img src="assets/questfest-perreo-country-fuego-deck-peak.png" width="640" height="400" alt="Sovereign Gilded: peak deck perreo country" loading="lazy" decoding="async" />
+          </div>
+          <div class="skin-card-inner">
+            <div class="skin-tag">Skin 04</div>
+            <h3>Sovereign Gilded</h3>
+            <p>Gold-heavy — premium tiers, chairman energy, big CTA moments.</p>
+            <div class="skin-chip-row"><span class="skin-chip">gilded</span><span class="skin-chip">chairman</span><span class="skin-chip">fractal key</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-main">
+    <div class="stamp">Golden Bachdoor Hit Factory · Puerto Reno</div>
+    <p><a href="vibelandia-questfest.html">QUESTFEST home</a> · <a href="vibelandia-questfest.html#pioneers">Pioneer tiers</a> · <a href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">SoundCloud</a></p>
+    <p style="margin-top:0.75rem;font-size:0.82rem;">Wrong Side of Town: The Musical · SS VIBELANDIA · Holographic AI Valley</p>
+  </footer>
+</body>
+</html>

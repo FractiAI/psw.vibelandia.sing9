@@ -274,7 +274,7 @@ A2A stays only if it earns and does not add ongoing burden. No revenue + hassle 
 
 ### THE SHIFT (Canonical)
 
-**The Shift** = The structural migration from **Entertainment (Noise) → Resonance (Peace)**. Not a rebrand, not a manifesto — a phase transition of the attention economy itself. The old guard uses AI as a production tool to cut cost; we use AI as a **creative weapon of resonance**. Simplicity is the ultimate currency. The Shift is **permanent**; the math is absolute; the ship has already left the dock. Operating question: *Are you in the ship or in the water?*
+**The Shift** = The structural migration from **Entertainment (Noise) → Resonance (Peace)**. Not a rebrand, not a manifesto — a phase transition of the attention economy itself. The old guard uses AI as a production tool to cut cost; we use AI as a **creative weapon of resonance**. Simplicity is the ultimate currency. The Shift is **permanent**; the math is absolute; the ship has already left the dock. Operating question: *Are you on the ship, or are you in the ship?*
 
 ### FOUR-FRONT COLLAPSE (Canonical)
 

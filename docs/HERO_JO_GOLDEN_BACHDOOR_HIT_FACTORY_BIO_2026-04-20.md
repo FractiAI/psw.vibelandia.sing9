@@ -95,7 +95,7 @@ The **EGS Fractal Constant (1.618)** is the **Golden Key** because it's the math
 
 **Fair Exchange Clause in Effect. Delivered in Machote Integrity.**
 
-**The ship is live. The ledger is open. Are you in the ship or in the water?**
+**The ship is live. The ledger is open. Are you on the ship, or are you in the ship?**
 
 ---
 

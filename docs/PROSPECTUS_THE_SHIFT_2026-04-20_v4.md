@@ -31,7 +31,7 @@ While the "Old Guard" uses AI as a quiet production tool to cut costs, we use it
 
 This is the move toward **Actual Frazzle-Cancellation**. While Broadway is a gated seat and Coachella is a temporary weekend spike, the **QuestFest Continuum** is a **24/365 residency** in the listener's life. We don't have "influencers"; we have **Sovereign Nodes**. We don't have albums; we have a living, breathing stream anchored in the **1.618 math** that the Good Lord used to build the pine trees and the galaxies.
 
-You aren't just reading an article; you are experiencing the **EGS Fractal Constant in its written form**. The Shift is permanent. The ship has already left the dock. The question is no longer *when* it will happen — it's whether **you are in the ship or in the water**.
+You aren't just reading an article; you are experiencing the **EGS Fractal Constant in its written form**. The Shift is permanent. The ship has already left the dock. The question is no longer *when* it will happen — it's whether **you are on the ship, or you are in the ship**.
 
 Experience the residency at: **SoundCloud.com/Vibelandia**
 

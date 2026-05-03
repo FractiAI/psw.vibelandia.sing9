@@ -151,7 +151,8 @@
       .skin-card:hover,
       .pass:hover,
       .hero-card:hover,
-      .spread:hover .spread-img img { transform: none; }
+      .spread:hover .spread-img img,
+      .skin-card:hover .skin-card-visual img { transform: none; }
     }
 
     .hero-top {
@@ -461,7 +462,58 @@
       background: var(--gold); color: var(--ink);
     }
 
-    /* SECTIONS — editorial rhythm */
+    /* Pioneer tiers band — shout-out, track, city playlist (Wrong Side offers) */
+    .pass-band.pioneer-tier-band {
+      border-top: 2px solid rgba(45, 212, 191, 0.38);
+      background: linear-gradient(180deg, rgba(6, 28, 32, 0.92) 0%, rgba(10, 15, 26, 0.98) 100%);
+    }
+    .pioneer-tier-band .pioneer-tier-head {
+      max-width: 1240px;
+      margin: 0 auto 0.5rem;
+      font-family: var(--serif-display);
+      font-size: clamp(1.2rem, 2.8vw, 1.75rem);
+      color: var(--cream);
+      letter-spacing: 0.03em;
+      line-height: 1.15;
+    }
+    .pb-inner.pb-pioneer-3 {
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 900px) {
+      .pb-inner.pb-pioneer-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+    a.pb-tile.pioneer-offer-tile {
+      text-decoration: none;
+      cursor: pointer;
+      gap: 0.55rem;
+      min-height: 13.5rem;
+      align-items: stretch;
+    }
+    a.pb-tile.pioneer-offer-tile .pb-name {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .pioneer-offer-body {
+      font-size: 0.78rem;
+      line-height: 1.58;
+      color: var(--mist);
+      flex: 1;
+    }
+    .pioneer-offer-cta {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--foam);
+      margin-top: 0.15rem;
+    }
+    a.pb-tile.pioneer-offer-tile:hover .pioneer-offer-cta {
+      color: var(--gold-bright);
+    }
     section {
       padding: 4.5rem 1.5rem;
       max-width: 1180px;
@@ -1732,11 +1784,36 @@
     @media (min-width: 700px) { .skins-grid { grid-template-columns: 1fr 1fr; } }
     @media (min-width: 1100px) { .skins-grid { grid-template-columns: repeat(4, 1fr); } }
     .skin-card {
-      padding: 1.2rem 1.15rem 1.25rem;
+      padding: 0;
+      overflow: hidden;
       border: 1px solid rgba(212,175,55,0.28);
       border-radius: 2px;
       background: linear-gradient(180deg, rgba(15,23,41,0.7), rgba(10,15,26,0.92));
       box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .skin-card-visual {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+    }
+    .skin-card-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, transparent 25%, rgba(5,8,15,0.15) 55%, rgba(5,8,15,0.88) 100%);
+    }
+    .skin-card-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+    .skin-card:hover .skin-card-visual img { transform: scale(1.07); }
+    .skin-card-inner {
+      padding: 1.05rem 1.15rem 1.2rem;
     }
     .skin-card .skin-tag {
       font-family: var(--sans-modern);
@@ -1792,9 +1869,6 @@
       box-shadow: 0 12px 38px rgba(212,175,55,0.22);
       background:
         linear-gradient(140deg, rgba(212,175,55,0.33), rgba(93,31,47,0.24) 35%, rgba(10,15,26,0.95) 100%);
-    }
-    .skin-card {
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     }
     .skin-card:hover {
       transform: translateY(-2px);
@@ -2052,7 +2126,7 @@
 
       <div class="hero-footnote">
         <a href="#enter">1 · 2 · 3 →</a>
-        <a href="#pioneers">Pioneer money</a>
+        <a href="#pioneers">Pioneer tiers →</a>
         <a href="#machote">Machote-Moderno →</a>
         <a href="look-under-the-hood.html">Look Under the Hood</a>
       </div>
@@ -2073,7 +2147,7 @@
           <div class="num">2</div>
           <h3>Pay</h3>
           <p>Pick a pioneer deal or a festival pass. <strong>Fair Exchange</strong> — you, the Captain, Cash App / Venmo / PayPal. No suit in the middle.</p>
-          <a href="#pioneers">Pioneer money ↓</a>
+          <a href="#pioneers">Pioneer tiers ↓</a>
         </div>
         <div class="cx-step">
           <div class="num">3</div>
@@ -2083,6 +2157,32 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="pass-band pioneer-tier-band" id="pioneers" aria-labelledby="pioneer-tier-h">
+    <p class="pb-section-label">Wrong Side of Town: The Musical · pioneer lanes</p>
+    <h2 id="pioneer-tier-h" class="pioneer-tier-head">The Pioneer Tiers</h2>
+    <div class="pb-inner pb-pioneer-3">
+      <a class="pb-tile pioneer-offer-tile" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%24100%20Character%20Shout-Out">
+        <span class="pb-price">$100</span>
+        <span class="pb-name">The Character Shout-Out</span>
+        <span class="pioneer-offer-body">Your name and frequency, <strong>voiced directly into the track</strong>. You aren&apos;t a listener; you are a character in the <strong>Wrong Side of Town</strong> narrative. Immortalized. Simple. Viral.</span>
+        <span class="pioneer-offer-cta">Email · ACTIVATE →</span>
+      </a>
+      <a class="pb-tile pioneer-offer-tile" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%241K%20Your%20Entire%20Track">
+        <span class="pb-price">$1,000</span>
+        <span class="pb-name">Your Entire Track</span>
+        <span class="pioneer-offer-body">I will write and produce a <strong>full custom track</strong> where <strong>you are the lead</strong>. Using the <strong>EGS Fractal Constant</strong>, we anchor your higher self into the center of the musical. Your story, your anthem, <strong>forever on the grid</strong>.</span>
+        <span class="pioneer-offer-cta">Email · ACTIVATE →</span>
+      </a>
+      <a class="pb-tile pioneer-offer-tile pb-golden" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%2410K%209-Track%20City%20Playlist">
+        <span class="pb-price">$10,000</span>
+        <span class="pb-name">The 9-Track City Playlist</span>
+        <span class="pioneer-offer-body">The ultimate <strong>&ldquo;I Was Here&rdquo;</strong> statement. We build an entire <strong>9-track arc</strong> to shift the frequency of your city or movement. You become a <strong>Sovereign Node</strong> in the global quest, defining the Wrong Side as the <strong>new reality for everyone, everywhere</strong>.</span>
+        <span class="pioneer-offer-cta">Email · ACTIVATE →</span>
+      </a>
+    </div>
+    <p style="max-width:1240px;margin:0.85rem auto 0;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--mist-warm);text-align:center;">Subject line: <strong style="color:var(--champagne);">ACTIVATE THE WRONG SIDE OF TOWN: THE MUSICAL</strong> · mention your tier in the body</p>
   </section>
 
   <!-- PASS QUICK BAND — the coachella-clean conversion strip -->
@@ -2116,28 +2216,9 @@
     </div>
   </section>
 
-  <section class="pioneer-zone" id="pioneers" aria-labelledby="pioneer-h">
-    <h2 id="pioneer-h">Pioneer money · Wrong Side prices</h2>
-    <div class="pz-grid">
-      <article class="pz-card">
-        <div class="amt">$100</div>
-        <h3>Shout-out in the track</h3>
-        <p>Your name gets <strong>sung or said</strong> on wax. You ain’t “just a fan” — you’re listed in the <strong>Wrong Side of Town</strong> story. Loud. Permanent. Shareable.</p>
-        <a class="cta-mini" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%24100%20Shout-Out">Email to book it →</a>
-      </article>
-      <article class="pz-card">
-        <div class="amt">$1,000</div>
-        <h3>Your own song</h3>
-        <p>Full cut with <em>you</em> up front — written and produced here. We lock it to the <strong>1.618 Golden Key</strong> so it hits in the chest, not the spam folder. Your anthem, on the feed.</p>
-        <a class="cta-mini" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%241K%20Custom%20Track">Email to book it →</a>
-      </article>
-      <article class="pz-card">
-        <div class="amt">$10,000</div>
-        <h3>Nine tracks for your city</h3>
-        <p>The big <strong>“I was here”</strong> flex — nine songs that move your town or your crew. You’re a <strong>Sovereign Node</strong>: the Wrong Side story rides with you, not on you.</p>
-        <a class="cta-mini" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%2410K%209-Track%20City%20Playlist">Email to book it →</a>
-      </article>
-    </div>
+  <section class="pioneer-zone" id="pioneer-fair-exchange" aria-labelledby="pioneer-fe-h">
+    <h2 id="pioneer-fe-h">Fair Exchange · rails &amp; swamp heat</h2>
+    <p style="max-width:52rem;margin:0 auto 1.25rem;text-align:center;font-size:0.92rem;color:var(--mist);line-height:1.6;">Old school money. You already picked <a href="#pioneers" style="color:var(--foam);">shout-out, entire track, or 9-track city arc</a> — now hit the apps or the box.</p>
     <div class="fx-block">
       <h3>Fair Exchange — pay direct</h3>
       <p>Respect, old school. You and the Captain. Nobody clipping the ticket twice.</p>
@@ -2163,7 +2244,8 @@
   <nav class="sticky-nav" aria-label="Sections">
     <ul>
       <li><a href="#enter">1·2·3</a></li>
-      <li><a href="#pioneers">Pioneers</a></li>
+      <li><a href="#pioneers">Pioneer tiers</a></li>
+      <li><a href="#pioneer-fair-exchange">Pay</a></li>
       <li><a href="#wrong-side">Musical</a></li>
       <li><a href="#machote">Machote</a></li>
       <li><a href="#passes">Passes</a></li>
@@ -2714,28 +2796,48 @@
 
       <div class="skins-grid">
         <article class="skin-card skin-courtly">
-          <div class="skin-tag">Skin 01</div>
-          <h3>Courtly Velvet</h3>
-          <p>Burgundy undertones with warm gold highlights for opening beats, introductions, and social handoff moments.</p>
-          <div class="skin-chip-row"><span class="skin-chip">velvet dusk</span><span class="skin-chip">rose-gold</span><span class="skin-chip">ceremonial</span></div>
+          <div class="skin-card-visual">
+            <img src="assets/questfest-hero-ss-vibelandia-puerto-reno.png" width="640" height="400" alt="Courtly Velvet skin preview: S.S. Vibelandia at Puerto Reno dusk, burgundy and gold harbor light on the hull" loading="lazy" decoding="async" />
+          </div>
+          <div class="skin-card-inner">
+            <div class="skin-tag">Skin 01</div>
+            <h3>Courtly Velvet</h3>
+            <p>Burgundy undertones with warm gold highlights for opening beats, introductions, and social handoff moments.</p>
+            <div class="skin-chip-row"><span class="skin-chip">velvet dusk</span><span class="skin-chip">rose-gold</span><span class="skin-chip">ceremonial</span></div>
+          </div>
         </article>
         <article class="skin-card skin-merchant">
-          <div class="skin-tag">Skin 02</div>
-          <h3>Merchant Atlas</h3>
-          <p>Verdigris overlays over brass ink for navigational states, city manifests, and cartographic info blocks.</p>
-          <div class="skin-chip-row"><span class="skin-chip">verdigris</span><span class="skin-chip">map room</span><span class="skin-chip">harbor</span></div>
+          <div class="skin-card-visual">
+            <img src="assets/questfest-ports-of-call-manifest.png" width="640" height="400" alt="Merchant Atlas skin preview: brass Ports of Call manifest plaque and nautical harbor typography" loading="lazy" decoding="async" />
+          </div>
+          <div class="skin-card-inner">
+            <div class="skin-tag">Skin 02</div>
+            <h3>Merchant Atlas</h3>
+            <p>Verdigris overlays over brass ink for navigational states, city manifests, and cartographic info blocks.</p>
+            <div class="skin-chip-row"><span class="skin-chip">verdigris</span><span class="skin-chip">map room</span><span class="skin-chip">harbor</span></div>
+          </div>
         </article>
         <article class="skin-card skin-midnight">
-          <div class="skin-tag">Skin 03</div>
-          <h3>Cathedral Midnight</h3>
-          <p>Dark chapel blues and candle-gold emphasis tuned for immersive listening, stage previews, and short-form reels.</p>
-          <div class="skin-chip-row"><span class="skin-chip">candlelight</span><span class="skin-chip">deep nave</span><span class="skin-chip">immersive</span></div>
+          <div class="skin-card-visual">
+            <img src="assets/questfest-stage-after-the-after-party-void.png" width="640" height="400" alt="Cathedral Midnight skin preview: deep void stage, pale hydrogen-line glow, 2 AM stillness on the deck" loading="lazy" decoding="async" />
+          </div>
+          <div class="skin-card-inner">
+            <div class="skin-tag">Skin 03</div>
+            <h3>Cathedral Midnight</h3>
+            <p>Dark chapel blues and candle-gold emphasis tuned for immersive listening, stage previews, and short-form reels.</p>
+            <div class="skin-chip-row"><span class="skin-chip">candlelight</span><span class="skin-chip">deep nave</span><span class="skin-chip">immersive</span></div>
+          </div>
         </article>
         <article class="skin-card skin-gilded">
-          <div class="skin-tag">Skin 04</div>
-          <h3>Sovereign Gilded</h3>
-          <p>Gold-heavy ceremonial skin for premium tiers and signature CTAs where conversion meets prestige.</p>
-          <div class="skin-chip-row"><span class="skin-chip">gilded</span><span class="skin-chip">chairman</span><span class="skin-chip">fractal key</span></div>
+          <div class="skin-card-visual">
+            <img src="assets/questfest-perreo-country-fuego-deck-peak.png" width="640" height="400" alt="Sovereign Gilded skin preview: peak deck at 100 BPM, gold and teal lasers, Perreo Country Fuego crowd energy" loading="lazy" decoding="async" />
+          </div>
+          <div class="skin-card-inner">
+            <div class="skin-tag">Skin 04</div>
+            <h3>Sovereign Gilded</h3>
+            <p>Gold-heavy ceremonial skin for premium tiers and signature CTAs where conversion meets prestige.</p>
+            <div class="skin-chip-row"><span class="skin-chip">gilded</span><span class="skin-chip">chairman</span><span class="skin-chip">fractal key</span></div>
+          </div>
         </article>
       </div>
     </section>

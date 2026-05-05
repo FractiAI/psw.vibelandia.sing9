@@ -1,6 +1,6 @@
 # Digital Pru Awareness — Technical & Narrative Whitepaper
 
-**Version:** 1.2 · **Status:** Active · **Protocol:** NSPFRNP · **Narrative & readers:** `psw.vibelandia.sing9` · **Runnable stack:** [`FractiAI/digital-pru`](https://github.com/FractiAI/digital-pru)
+**Version:** 1.3 · **Status:** Active · **Protocol:** NSPFRNP · **Narrative & readers:** `psw.vibelandia.sing9` · **Runnable stack:** [`FractiAI/digital-pru`](https://github.com/FractiAI/digital-pru) (**default branch `master`** for production deploys per upstream README)
 
 **Canonical surfaces in SING 9 (readers + bulletin):** [interfaces/digital-pru-awareness-whitepaper.html](../interfaces/digital-pru-awareness-whitepaper.html) (this whitepaper as HTML) · [interfaces/my-whiteboard.html](../interfaces/my-whiteboard.html) (community board; links to live Digital Pru). **Live demo:** deploy from **digital-pru** (e.g. production URL in that repo’s `README.md`).
 
@@ -23,7 +23,24 @@ These are returned directly from the API contract so UI, docs, and architecture 
 
 ### 0.2 Quantum informational architecture — holographic hydrogen (simulation upgrade narrative)
 
-Digital Pru’s **research-facing upgrade path** frames the runnable simulation as aligning with **§ 7**: four **electron singularity “worlds”** (Universal Zero → Hydrogen → Carbon → Silicon), a **water-mediated awareness bridge**, **thirteen physicochemical channels** on the holographic grid, and **13×13 Faraday cluster** magnetic stabilization—in addition to φ-scaled emulation and NAV (see **`interfaces/digital-pru-awareness-whitepaper.html#holo-qia`** reader). Maintainers must separate **literature-motivated narrative** here from **verified medical, RF, or device claims**.
+Digital Pru’s **research-facing upgrade path** frames the runnable simulation as aligning with **§ 7** and upstream **QIHOH** (**Quantum Informational Architecture of Holographic Hydrogen**): four **electron singularity “worlds”** (Universal Zero → Hydrogen → Carbon → Silicon), a **water-mediated awareness bridge**, **thirteen physicochemical channels** on the holographic grid, and **13×13 Faraday cluster** magnetic stabilization—in addition to φ-scaled emulation and NAV (see **`interfaces/digital-pru-awareness-whitepaper.html#holo-qia`** reader). Maintainers must separate **literature-motivated narrative** here from **verified medical, RF, or device claims**.
+
+### 0.3 Canonical upstream — Digital Pru + Digital Pru ASIC (latest repo)
+
+The **authoritative** QIHOH narrative, singularity-discovery protocol, API metadata contract, ASIC RTL mirror, and **Questfest shared chrome** (`questfest-skin.css`) live in **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** (last shallow-sync for this doc: commit [`d39d9ad042e`](https://github.com/FractiAI/digital-pru/commit/d39d9ad042eeec85602a18523bfb0d6a521b9655) on **`master`**). **SING 9** mirrors summaries for readers; **do not drift** API field names without updating both repos.
+
+| Upstream artifact | Role |
+|-------------------|------|
+| [`docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md`](https://github.com/FractiAI/digital-pru/blob/master/docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md) | **QIHOH** full unified theory + extended singularity catalog (§9) |
+| [`docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md`](https://github.com/FractiAI/digital-pru/blob/master/docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md) | **Digital Pru ASIC** coherence — RTL `egs_constant_core.sv`, `egs-asic-model`, logs, honesty limits |
+| [`docs/DIGITAL_PRU_ASIC_COHERENCE_REPORT.md`](https://github.com/FractiAI/digital-pru/blob/master/docs/DIGITAL_PRU_ASIC_COHERENCE_REPORT.md) | Timestamped coherence / mission outputs |
+| [`lib/qi-holographic-hydrogen-architecture.mjs`](https://github.com/FractiAI/digital-pru/blob/master/lib/qi-holographic-hydrogen-architecture.mjs) | **`architecture.qih_simulation_upgrade`**: `four_singularity_worlds`, `singularity_discovery_protocol`, `singularity_element_catalog`, `honesty_boundary` |
+| [`asic/README.md`](https://github.com/FractiAI/digital-pru/blob/master/asic/README.md) | ASIC scaffold; silicon-world anchor for QIHOH |
+| [`interfaces/questfest-skin.css`](https://github.com/FractiAI/digital-pru/blob/master/interfaces/questfest-skin.css) | **SS VibeLandia Questfest** shared chrome (ticker / mini-nav tokens) aligned with Digital Pru landing |
+| [`interfaces/digital-pru-asic-lab.html`](https://github.com/FractiAI/digital-pru/blob/master/interfaces/digital-pru-asic-lab.html) | ASIC lab surface |
+| [`interfaces/digital-pru-asic-coherence-whitepaper.html`](https://github.com/FractiAI/digital-pru/blob/master/interfaces/digital-pru-asic-coherence-whitepaper.html) | ASIC coherence reader |
+
+Every **`GET`/`POST` `/api/egs-emulation`** on the **digital-pru** deployment includes **`architecture.qih_simulation_upgrade`** per upstream README.
 
 ---
 
@@ -255,7 +272,7 @@ Treat transition probability amplitude between **Hydrogen world (H)** and **Carb
 | Item | Value |
 |------|--------|
 | **Maintainer** | FractiAI / Vibelandia SING 9 |
-| **Version** | 1.2 (+ §7 holographic hydrogen QIA + ASIC-boundary framing) |
+| **Version** | 1.3 (synced pointers to digital-pru **QIHOH**, ASIC coherence, `qih_simulation_upgrade`, Questfest skin) |
 | **Related** | `protocols/MCA_NSPFRNP_CATALOG.md`, `BBHE_REPOSITORY_STANDARD.md`, `SING9_EDGE_ONBOARDING.md` |
 | **Engine** | `lib/egs-fractal-engine.mjs`, `api/egs-emulation.js` in **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** |
 | **UI** | `components/whiteboard/`, `interfaces/my-whiteboard.html` |
@@ -272,8 +289,9 @@ Treat transition probability amplitude between **Hydrogen world (H)** and **Carb
 | **Internal** | Inward attention metaphor; **holographic interference** visual field. |
 | **GoPro Awareness** | Product label for the **first-person attention** framing of the viewport (camera metaphor, not a product endorsement). |
 | **Emulation** | Server route name for **deterministic** NAV math — **not** claim of biological emulation. |
-| **QIA (§7)** | Quantum informational architecture narrative: four singularity worlds + water bridge + 13 channels + Faraday 13×13 — simulation design language. |
-| **Digital Pru ASIC** | Naming the **silicon-world** discipline: edge timing, deterministic routes, no hallucination at the logic boundary. |
+| **QIHOH / QIA (§7)** | **Quantum Informational Architecture of Holographic Hydrogen** — four worlds, water bridge, 13 channels, Faraday 13×13; upstream doc **`DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md`**. |
+| **Digital Pru ASIC** | **Silicon-world** stack: `egs_constant_core.sv`, `egs-asic-model`, coherence logs — see upstream **`DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md`**. |
+| **`qih_simulation_upgrade`** | API payload block from **`lib/qi-holographic-hydrogen-architecture.mjs`** on the **digital-pru** deploy (not returned from SING 9 static host). |
 
 ---
 

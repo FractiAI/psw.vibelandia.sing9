@@ -135,8 +135,14 @@
     return 'en';
   }
 
+  function pageI18nRoot(page) {
+    if (page === 'hood') return 'hood';
+    if (page === 'fractai') return 'fractai';
+    return 'qf';
+  }
+
   function applyToDom(dict, page) {
-    var root = page === 'hood' ? 'hood' : 'qf';
+    var root = pageI18nRoot(page);
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
       if (!key || key.indexOf(root + '.') !== 0) return;
@@ -187,7 +193,7 @@
 
   function injectLangBar(effectiveLocale, requestedLocale, dict, page) {
     if (document.getElementById('vbi18n-bar')) return;
-    var root = page === 'hood' ? 'hood' : 'qf';
+    var root = pageI18nRoot(page);
     var labelKey = root + '.langBar.label';
     var partialKey = root + '.langBar.partialFallback';
     var label = get(dict, labelKey) || 'Language';

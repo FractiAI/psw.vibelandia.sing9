@@ -80,8 +80,8 @@
     { label: '\uD83D\uDD25 MELTGATE',       href: '/interfaces/goliath-watch.html',                     match: /goliath-watch/, hot: true },
     { label: 'Vibers',            href: '/interfaces/vibers-menu.html',                       match: /vibers-menu/ },
     { label: my('Whiteboard'),    href: '/interfaces/my-whiteboard.html',                     match: /my-whiteboard/ },
-    /* Runnable stack: FractiAI/digital-pru — match never fires so Whiteboard stays active on SING 9 */
-    { label: '\uD83D\uDCE1 Digital Pru', href: 'https://github.com/FractiAI/digital-pru', match: /my-whiteboard-digital-pru-anchor-only/ },
+    /* Digital Pru reader on this deploy (standalone GitHub repo may 404 if private) */
+    { label: '\uD83D\uDCE1 Digital Pru', href: '/interfaces/digital-pru-awareness-whitepaper.html', match: /digital-pru-awareness-whitepaper/ },
     { label: 'Shop',              href: '/interfaces/machote-catalog.html',                   match: /machote-catalog/ },
     { label: 'Advertise',         href: '/interfaces/advertise.html',                         match: /advertise/ },
     { label: '\u2726 Prospectus',      href: '/interfaces/prospectus-fractiai.html',                match: /prospectus-/, pros: true },

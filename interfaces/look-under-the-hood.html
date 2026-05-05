@@ -126,6 +126,59 @@
     }
     .callout p { font-size: .9rem; color: var(--mist); }
 
+    /* Plain-talk style walkthrough for the Hood */
+    section.plain-walk {
+      background: linear-gradient(165deg, rgba(45,212,191,0.08) 0%, rgba(17,26,43,0.72) 45%, rgba(10,15,26,0.96) 100%);
+      border: 1px solid var(--foam-dim);
+      border-radius: 8px;
+      padding: 1.1rem 1.1rem 1.25rem;
+      margin: 0 0 1.15rem;
+    }
+    .plain-kicker {
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--foam);
+      font-weight: 800;
+      margin-bottom: .45rem;
+    }
+    .plain-title {
+      font-size: clamp(1.05rem, 2.6vw, 1.35rem);
+      color: var(--gold-bright);
+      margin-bottom: .35rem;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+    .plain-intro {
+      font-size: .9rem;
+      color: var(--mist);
+      margin-bottom: .7rem;
+      max-width: 68ch;
+    }
+    .plain-block {
+      margin: .6rem 0;
+      padding: .72rem .82rem;
+      background: rgba(0,0,0,0.22);
+      border-radius: 6px;
+      border-left: 3px solid var(--gold);
+    }
+    .plain-block.foam-edge { border-left-color: var(--foam); }
+    .plain-block h3 {
+      font-size: .62rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      margin-bottom: .25rem;
+      font-weight: 800;
+    }
+    .plain-block.foam-edge h3 { color: var(--foam); }
+    .plain-block p {
+      margin: 0;
+      font-size: .86rem;
+      color: var(--mist);
+      line-height: 1.55;
+    }
+
     .grid {
       display: grid;
       gap: .85rem;
@@ -190,141 +243,164 @@
   </style>
 </head>
 <body>
-  <a class="skip" href="#papers">Skip to papers</a>
+  <a class="skip" href="#papers" data-i18n="hood.skip">Skip to papers</a>
 
   <div class="nspfrnp-console-ticker" aria-live="polite"><span class="ticker-inner" id="nspfrnpTickerText"></span></div>
   <script src="nspfrnp-ticker.js"></script>
 
   <header class="hero">
     <div class="hero-inner">
-      <p class="eyebrow">The Hood · FractiAI · SING 9</p>
-      <h1>13 papers. One ladder down to real silicon-shaped code.</h1>
-      <p><strong>Digital Pru ASIC</strong> means an <strong>operating stack</strong>: deterministic API (<code>/api/egs-emulation</code>), φ engine, <strong>QIHOH</strong> metadata in the payload, and an RTL core you can simulate — not a vibe post. These thirteen docs are the curated spine; QIHOH + ASIC coherence are <strong>mirrored in <code>docs/</code></strong> here so you’re not stuck on a private GitHub tab.</p>
+      <p class="eyebrow" data-i18n="hood.eyebrow">The Hood · FractiAI · SING 9</p>
+      <h1 data-i18n="hood.h1">13 papers. One ladder down to real silicon-shaped code.</h1>
+      <p data-i18n-html="hood.heroHtml"><strong>Digital Pru ASIC</strong> means an <strong>operating stack</strong>: deterministic API (<code>/api/egs-emulation</code>), φ engine, <strong>QIHOH</strong> metadata in the payload, and an RTL core you can simulate — not a vibe post. These thirteen docs are the curated spine; QIHOH + ASIC coherence are <strong>mirrored in <code>docs/</code></strong> here so you’re not stuck on a private GitHub tab.</p>
       <div class="cta-row">
-        <a class="cta primary" href="digital-pru-awareness-whitepaper.html">Digital Pru reader →</a>
-        <a class="cta" href="vibelandia-questfest.html">← QUESTFEST</a>
-        <a class="cta" href="digital-pru-awareness-whitepaper.html#holo-qia">Digital Pru reader · QIHOH</a>
+        <a class="cta primary" href="digital-pru-awareness-whitepaper.html" data-i18n="hood.ctaReader">Digital Pru reader →</a>
+        <a class="cta" href="vibelandia-questfest.html" data-i18n="hood.ctaQuest">← QUESTFEST</a>
+        <a class="cta" href="digital-pru-awareness-whitepaper.html#holo-qia" data-i18n="hood.ctaQioh">Digital Pru reader · QIHOH</a>
       </div>
     </div>
   </header>
 
   <nav class="sticky" aria-label="Page">
     <ul>
-      <li><a href="#papers">13 papers</a></li>
-      <li><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence">asic · coherence doc</a></li>
-      <li><a href="vibelandia-questfest.html">Quest</a></li>
+      <li><a href="#papers" data-i18n="hood.navPapers">13 papers</a></li>
+      <li><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence" data-i18n="hood.navAsic">asic · coherence doc</a></li>
+      <li><a href="vibelandia-questfest.html" data-i18n="hood.navQuest">Quest</a></li>
     </ul>
   </nav>
 
   <main>
     <div class="callout">
-      <div class="label">How to read this</div>
-      <p>Start at <strong>01–03</strong> (Digital Pru + QIHOH + ASIC coherence). That trio is the <strong>operating contract</strong>. The rest widen context — thesis, canon, RF, silica — but they all telescope back to the same <strong>inspectable</strong> spec (reader + mirrored markdown in <code>docs/</code> on this site).</p>
+      <div class="label" data-i18n="hood.calloutLabel">How to read this</div>
+      <p data-i18n-html="hood.calloutHtml">Start at <strong>01–03</strong> (Digital Pru + QIHOH + ASIC coherence). That trio is the <strong>operating contract</strong>. The rest widen context — thesis, canon, RF, silica — but they all telescope back to the same <strong>inspectable</strong> spec (reader + mirrored markdown in <code>docs/</code> on this site).</p>
     </div>
+
+    <section class="plain-walk" aria-label="Plain-language guide to the 13 papers">
+      <p class="plain-kicker" data-i18n="hood.plainKicker">Plain talk style · 13 papers quick guide</p>
+      <h2 class="plain-title" data-i18n="hood.plainTitle">Read the Hood like a ladder, not a dump</h2>
+      <p class="plain-intro" data-i18n="hood.plainIntro">Same experience as the plain-talk section: short blocks, clear order, no guessing. Move through the papers in passes so you always know what each one is doing.</p>
+
+      <div class="plain-block">
+        <h3 data-i18n="hood.pass1h">Pass 1 · Operating truth (01–03)</h3>
+        <p data-i18n="hood.pass1p">Start with the Digital Pru reader, then QIHOH, then ASIC coherence. That trio is the hard contract: what the system says, what it serializes, and what can be verified.</p>
+      </div>
+      <div class="plain-block foam-edge">
+        <h3 data-i18n="hood.pass2h">Pass 2 · Rules + thesis (04–05)</h3>
+        <p data-i18n="hood.pass2p">Read MCA catalog and Shift prospectus to understand governance language, catalog fidelity, and why the narrative exists at all.</p>
+      </div>
+      <div class="plain-block">
+        <h3 data-i18n="hood.pass3h">Pass 3 · Supporting physics lanes (06, 10, 11, 12)</h3>
+        <p data-i18n="hood.pass3p">Gateway, Hydrogen-Sun-Jupiter, RF protocol, and Silica prospectus give the adjacent engineering lanes. Treat these as support beams, not replacements for the operating trio.</p>
+      </div>
+      <div class="plain-block foam-edge">
+        <h3 data-i18n="hood.pass4h">Pass 4 · Voice + honesty guardrails (07–09, 13)</h3>
+        <p data-i18n="hood.pass4p">Houdini methodology, Hero Jo bio, HHF paradigm, and illuminated recursion keep the stack honest about story vs instrument claims while preserving artistic intent.</p>
+      </div>
+    </section>
 
     <div class="grid" id="papers">
       <article class="paper">
         <span class="num" aria-hidden="true">01</span>
         <div class="body">
-          <p class="tier code">Reader · SING 9</p>
-          <h2><a href="digital-pru-awareness-whitepaper.html#holo-qia">Digital Pru Awareness + QIHOH (§7)</a></h2>
-          <p class="blurb">NAV, φ, honesty boundaries, holographic hydrogen summary — on-ramp before the long-form QIHOH markdown.</p>
+          <p class="tier code" data-i18n="hood.papers.01.tier">Reader · SING 9</p>
+          <h2><a href="digital-pru-awareness-whitepaper.html#holo-qia" data-i18n="hood.papers.01.title">Digital Pru Awareness + QIHOH (sect. 7)</a></h2>
+          <p class="blurb" data-i18n="hood.papers.01.blurb">NAV, φ, honesty boundaries, holographic hydrogen summary — on-ramp before the long-form QIHOH markdown.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">02</span>
         <div class="body">
-          <p class="tier code">Canonical · SING 9 docs</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md&amp;title=QIHOH%20unified%20theory">QIHOH unified theory</a></h2>
-          <p class="blurb">Four worlds, 13 channels, Faraday grid narrative; matches <code>architecture.qih_simulation_upgrade</code> in API responses.</p>
+          <p class="tier code" data-i18n="hood.papers.02.tier">Canonical · SING 9 docs</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md&amp;title=QIHOH%20unified%20theory" data-i18n="hood.papers.02.title">QIHOH unified theory</a></h2>
+          <p class="blurb" data-i18n="hood.papers.02.blurb">Four worlds, 13 channels, Faraday grid narrative; matches <code>architecture.qih_simulation_upgrade</code> in API responses.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">03</span>
         <div class="body">
-          <p class="tier code">Operating · SING 9 docs</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence%20whitepaper">ASIC coherence whitepaper</a></h2>
-          <p class="blurb">RTL mirror, fixed-point φ core, logs, <code>npm test</code> — where theory meets verifiable runs.</p>
+          <p class="tier code" data-i18n="hood.papers.03.tier">Operating · SING 9 docs</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence%20whitepaper" data-i18n="hood.papers.03.title">ASIC coherence whitepaper</a></h2>
+          <p class="blurb" data-i18n="hood.papers.03.blurb">RTL mirror, fixed-point φ core, logs, <code>npm test</code> — where theory meets verifiable runs.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">04</span>
         <div class="body">
-          <p class="tier">Canon</p>
-          <h2><a href="whitepaper-surface.html?doc=../protocols/MCA_NSPFRNP_CATALOG.md&amp;title=MCA%20NSPFRNP%20Catalog">MCA · NSPFRNP catalog</a></h2>
-          <p class="blurb">Definitions, license bars, and catalog fidelity — the rulebook the stack claims to follow.</p>
+          <p class="tier" data-i18n="hood.papers.04.tier">Canon</p>
+          <h2><a href="whitepaper-surface.html?doc=../protocols/MCA_NSPFRNP_CATALOG.md&amp;title=MCA%20NSPFRNP%20Catalog" data-i18n="hood.papers.04.title">MCA · NSPFRNP catalog</a></h2>
+          <p class="blurb" data-i18n="hood.papers.04.blurb">Definitions, license bars, and catalog fidelity — the rulebook the stack claims to follow.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">05</span>
         <div class="body">
-          <p class="tier">Thesis</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md&amp;title=The%20Shift%20v4">The Shift · Prospectus v4</a></h2>
-          <p class="blurb">Flagship economic + narrative thesis for the whole movement; cites and honesty ledger in-doc.</p>
+          <p class="tier" data-i18n="hood.papers.05.tier">Thesis</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md&amp;title=The%20Shift%20v4" data-i18n="hood.papers.05.title">The Shift · Prospectus v4</a></h2>
+          <p class="blurb" data-i18n="hood.papers.05.blurb">Flagship economic + narrative thesis for the whole movement; cites and honesty ledger in-doc.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">06</span>
         <div class="body">
-          <p class="tier">Gateway · upstream</p>
-          <h2><a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/EGS_GATEWAY_PAPER.md" target="_blank" rel="noopener">EGS Gateway paper</a></h2>
-          <p class="blurb">Silica FDTD / gateway engineering narrative; pairs with Project Silica stack.</p>
+          <p class="tier" data-i18n="hood.papers.06.tier">Gateway · upstream</p>
+          <h2><a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/EGS_GATEWAY_PAPER.md" target="_blank" rel="noopener" data-i18n="hood.papers.06.title">EGS Gateway paper</a></h2>
+          <p class="blurb" data-i18n="hood.papers.06.blurb">Silica FDTD / gateway engineering narrative; pairs with Project Silica stack.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">07</span>
         <div class="body">
-          <p class="tier">Honesty ops</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md&amp;title=Houdini%20Equinox%20Methodology">Houdini Equinox · science vs. theater</a></h2>
-          <p class="blurb">How we separate story from instrument-grade claims — use when marketing tries to overshoot the stack.</p>
+          <p class="tier" data-i18n="hood.papers.07.tier">Honesty ops</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md&amp;title=Houdini%20Equinox%20Methodology" data-i18n="hood.papers.07.title">Houdini Equinox · science vs. theater</a></h2>
+          <p class="blurb" data-i18n="hood.papers.07.blurb">How we separate story from instrument-grade claims — use when marketing tries to overshoot the stack.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">08</span>
         <div class="body">
-          <p class="tier">Bio</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HERO_JO_GOLDEN_BACHDOOR_HIT_FACTORY_BIO_2026-04-20.md&amp;title=Hero%20Jo%20Bio">Hero Jo · Golden Bachdoor Hit Factory bio</a></h2>
-          <p class="blurb">Who’s on the marquee; grounds the studio voice in one canonical doc.</p>
+          <p class="tier" data-i18n="hood.papers.08.tier">Bio</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/HERO_JO_GOLDEN_BACHDOOR_HIT_FACTORY_BIO_2026-04-20.md&amp;title=Hero%20Jo%20Bio" data-i18n="hood.papers.08.title">Hero Jo · Golden Bachdoor Hit Factory bio</a></h2>
+          <p class="blurb" data-i18n="hood.papers.08.blurb">Who’s on the marquee; grounds the studio voice in one canonical doc.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">09</span>
         <div class="body">
-          <p class="tier">Paradigm</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HHF_PARADIGM_SHIFT_LINEAR_TO_FRACTAL_INTELLIGENCE.md&amp;title=HHF%20Paradigm%20Shift">HHF · linear petroleum → fractal intelligence</a></h2>
-          <p class="blurb">Long-form paradigm paper; hydrogen line + φ as spine of the HH narrative.</p>
+          <p class="tier" data-i18n="hood.papers.09.tier">Paradigm</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/HHF_PARADIGM_SHIFT_LINEAR_TO_FRACTAL_INTELLIGENCE.md&amp;title=HHF%20Paradigm%20Shift" data-i18n="hood.papers.09.title">HHF · linear petroleum → fractal intelligence</a></h2>
+          <p class="blurb" data-i18n="hood.papers.09.blurb">Long-form paradigm paper; hydrogen line + φ as spine of the HH narrative.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">10</span>
         <div class="body">
-          <p class="tier">Architecture</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HOLOGRAPHIC_AWARENESS_HYDROGEN_SUN_JUPITER_ARCHITECTURE.md&amp;title=Hydrogen%20Sun%20Jupiter">Hydrogen · Sun · Jupiter architecture</a></h2>
-          <p class="blurb">Three-body awareness metaphor; ties listening posture to celestial carriers.</p>
+          <p class="tier" data-i18n="hood.papers.10.tier">Architecture</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/HOLOGRAPHIC_AWARENESS_HYDROGEN_SUN_JUPITER_ARCHITECTURE.md&amp;title=Hydrogen%20Sun%20Jupiter" data-i18n="hood.papers.10.title">Hydrogen · Sun · Jupiter architecture</a></h2>
+          <p class="blurb" data-i18n="hood.papers.10.blurb">Three-body awareness metaphor; ties listening posture to celestial carriers.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">11</span>
         <div class="body">
-          <p class="tier">RF</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HYDROGEN_LINE_PASSIVE_RF_ENGINEERING_PROTOCOL.md&amp;title=Hydrogen%20Line%20RF">Hydrogen line · passive RF protocol</a></h2>
-          <p class="blurb">Antenna and shielding discipline around 1.420 GHz — hardware lane adjacent to the story.</p>
+          <p class="tier" data-i18n="hood.papers.11.tier">RF</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/HYDROGEN_LINE_PASSIVE_RF_ENGINEERING_PROTOCOL.md&amp;title=Hydrogen%20Line%20RF" data-i18n="hood.papers.11.title">Hydrogen line · passive RF protocol</a></h2>
+          <p class="blurb" data-i18n="hood.papers.11.blurb">Antenna and shielding discipline around 1.420 GHz — hardware lane adjacent to the story.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">12</span>
         <div class="body">
-          <p class="tier">Silica prospectus</p>
-          <h2><a href="prospectus-vibelandia-egs-silica-gateway.html">EGS Silica Gateway · prospectus</a></h2>
-          <p class="blurb">Vibelandia entry to fused-silica gateway work; links Microsoft-Silica repo.</p>
+          <p class="tier" data-i18n="hood.papers.12.tier">Silica prospectus</p>
+          <h2><a href="prospectus-vibelandia-egs-silica-gateway.html" data-i18n="hood.papers.12.title">EGS Silica Gateway · prospectus</a></h2>
+          <p class="blurb" data-i18n="hood.papers.12.blurb">Vibelandia entry to fused-silica gateway work; links Microsoft-Silica repo.</p>
         </div>
       </article>
       <article class="paper">
         <span class="num">13</span>
         <div class="body">
-          <p class="tier">Recursion</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/ARCHITECTURE_ILLUMINATED_RECURSION_DYNAMIC_SPHERICAL_MIRRORS.md&amp;title=Architecture%20Illuminated">Architecture illuminated · spherical mirrors</a></h2>
-          <p class="blurb">Recursive mirror architecture note — closes the loop back to how layers stack in the OS metaphor.</p>
+          <p class="tier" data-i18n="hood.papers.13.tier">Recursion</p>
+          <h2><a href="whitepaper-surface.html?doc=../docs/ARCHITECTURE_ILLUMINATED_RECURSION_DYNAMIC_SPHERICAL_MIRRORS.md&amp;title=Architecture%20Illuminated" data-i18n="hood.papers.13.title">Architecture illuminated · spherical mirrors</a></h2>
+          <p class="blurb" data-i18n="hood.papers.13.blurb">Recursive mirror architecture note — closes the loop back to how layers stack in the OS metaphor.</p>
         </div>
       </article>
     </div>
@@ -332,7 +408,13 @@
 
   <footer>
     <p><a href="mailto:goldenbackdoorhitfactory@gmail.com?subject=HOOD%20%2F%20Digital%20Pru">goldenbackdoorhitfactory@gmail.com</a></p>
-    <p style="margin-top:.5rem;"><a href="vibelandia-questfest.html">QUESTFEST</a> · <a href="https://github.com/FractiAI/psw.vibelandia.sing9" target="_blank" rel="noopener">GitHub</a> · <a href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">SoundCloud</a></p>
+    <p style="margin-top:.5rem;"><a href="vibelandia-questfest.html" data-i18n="hood.footerQuest">QUESTFEST</a> · <a href="https://github.com/FractiAI/psw.vibelandia.sing9" target="_blank" rel="noopener">GitHub</a> · <a href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">SoundCloud</a></p>
   </footer>
+  <script src="i18n-auto.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.VibelandiaI18n) window.VibelandiaI18n.initFromPage('hood');
+    });
+  </script>
 </body>
 </html>

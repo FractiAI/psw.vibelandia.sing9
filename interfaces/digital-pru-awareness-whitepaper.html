@@ -134,6 +134,38 @@
     .foot-inner a { color: var(--foam); }
     .nspfrnp-line { font-size: 0.67rem; color: var(--gold-dim); margin-top: 1rem; letter-spacing: 0.2em; }
 
+    /* Plain-language walkthrough */
+    section.plain-walk {
+      background: linear-gradient(165deg, rgba(45,212,191,0.07) 0%, rgba(20,29,50,0.6) 45%, rgba(7,12,24,0.95) 100%);
+      border: 1px solid var(--foam-dim);
+      border-radius: 6px;
+      padding: 1.5rem 1.5rem 1.75rem;
+      margin-bottom: 3rem;
+      scroll-margin-top: 75px;
+    }
+    section.plain-walk > h2.ws-title { border-bottom-color: var(--foam-dim); }
+    .plain-block {
+      margin: 1.15rem 0;
+      padding: 0.95rem 1.1rem;
+      background: rgba(0,0,0,0.22);
+      border-radius: 4px;
+      border-left: 3px solid var(--gold);
+    }
+    .plain-block.foam-edge { border-left-color: var(--foam); }
+    .plain-block h3 {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      margin: 0 0 0.5rem;
+      font-weight: 700;
+    }
+    .plain-block.foam-edge h3 { color: var(--foam); }
+    .plain-block p { margin: 0; font-size: 0.94rem; line-height: 1.65; color: var(--cream-dim); }
+    .plain-block p + p { margin-top: 0.55rem; }
+    .plain-block strong { color: var(--cream); }
+
     @media (max-width: 600px) {
       .doc-layout { padding: 2rem 1rem 4rem; }
       .doc-hero { padding: 2rem 1rem 2rem; }
@@ -153,6 +185,7 @@
     <div class="nav-inner">
       <span class="nav-brand">Digital Pru Awareness · Whitepaper</span>
       <ul>
+        <li><a href="#plain-walkthrough">Plain tour</a></li>
         <li><a href="#origin">Origin</a></li>
         <li><a href="#architecture">Architecture</a></li>
         <li><a href="#simulation">Simulation</a></li>
@@ -195,7 +228,8 @@
         <span class="chip gold">Seed:Edge · NSPFRNP Fidelity</span>
       </div>
       <div class="cta-row">
-        <a class="cta primary" href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md&title=Digital%20Pru%20Awareness%20Whitepaper">Canonical source surface</a>
+        <a class="cta primary" href="#plain-walkthrough">Start · plain English tour</a>
+        <a class="cta ghost" href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_AWARENESS_WHITEPAPER.md&title=Digital%20Pru%20Awareness%20Whitepaper">Canonical markdown surface</a>
         <a class="cta ghost" href="look-under-the-hood.html">← Look Under the Hood</a>
         <a class="cta ghost" href="vibelandia-questfest.html">QUESTFEST 24×365</a>
       </div>
@@ -208,6 +242,7 @@
       <nav class="toc" aria-label="Table of contents">
         <h2>Contents</h2>
         <ol>
+          <li><a href="#plain-walkthrough"><strong>Plain English · full stack tour</strong></a></li>
           <li><a href="#abstract">Abstract</a></li>
           <li><a href="#origin">§ 1 · Origin</a></li>
           <li><a href="#architecture">§ 2 · SING 9 Architecture</a></li>
@@ -219,6 +254,73 @@
           <li><a href="#appendix">Appendix A · B · C</a></li>
         </ol>
       </nav>
+
+      <!-- PLAIN ENGLISH WALKTHROUGH -->
+      <section class="ws plain-walk" id="plain-walkthrough">
+        <span class="sec-kicker">Read this first</span>
+        <h2 class="ws-title">Digital Pru in plain English</h2>
+        <p style="font-size:1rem;color:var(--cream-dim);max-width:68ch;margin-bottom:1.25rem;">Below is the same system the long document unpacks — just in everyday language. Each block is one moving part. When you want receipts, jump to the linked section or the Hood.</p>
+
+        <div class="plain-block">
+          <h3>1 · What it is</h3>
+          <p><strong>Digital Pru</strong> is a small, honest <strong>control panel</strong> for attention in the Vibelandia story: where you’re looking (out at the world vs. inward), what “scene” you’re in, and what the server returns as the next beat. It is <strong>not</strong> claiming to read your mind or diagnose you.</p>
+        </div>
+        <div class="plain-block foam-edge">
+          <h3>2 · NAV (Neural Attention Vector)</h3>
+          <p>Think of a <strong>simple state</strong>: a direction in 3D (for math), plus a label and a mode — <strong>external</strong> (river / world) or <strong>internal</strong> (rings / “thought as field”). The word “neural” is a <strong>name</strong>, not a brain scan. It’s UI state dressed for the lore.</p>
+          <p>Deep dive → <a href="#simulation">§ 3 · Simulation</a>.</p>
+        </div>
+        <div class="plain-block">
+          <h3>3 · φ (about 1.618)</h3>
+          <p>The <strong>golden ratio</strong> is the project’s chosen <strong>rhythm knob</strong>: how blends and transitions mix so they feel coherent and repeatable. It’s a <strong>design lock</strong> tied to El Gran Sol / EGS language — not a claim that your phone measured physics from your body.</p>
+          <p>Deep dive → <a href="#architecture">§ 2 · Architecture</a> (why φ).</p>
+        </div>
+        <div class="plain-block foam-edge">
+          <h3>4 · The API · <code>/api/egs-emulation</code></h3>
+          <p>You send where you are (concept + NAV); the server sends back <strong>updated NAV</strong>, a <strong>seed</strong> for visuals, and text <strong>hints</strong>. Under the hood it’s <strong>deterministic math and hashing</strong> — rules you could audit — <strong>not</strong> a hidden big ML model pretending to be “latent space.” If copy says “latent,” it means <strong>interface shape</strong>, not neuroscience.</p>
+          <p>Deep dive → <a href="#simulation">§ 3</a> and <a href="#appendix">Appendix · API shape</a>.</p>
+        </div>
+        <div class="plain-block">
+          <h3>5 · The viewport (what you see)</h3>
+          <p><strong>External:</strong> flowing teal-ish field — Truckee / Reno <strong>mood</strong>, not live satellite data.<br /><strong>Internal:</strong> interference rings — a <strong>metaphor</strong> for inward focus. WebGL draws it; the look is tied to the server seed so picture and state stay married.</p>
+          <p>Deep dive → <a href="#simulation">§ 3 · Viewport</a>.</p>
+        </div>
+        <div class="plain-block foam-edge">
+          <h3>6 · Thirteen channels</h3>
+          <p><strong>13</strong> is a deliberate <strong>parallel bundle</strong> in the story: like thirteen lanes of metadata that stay in sync with the simulation upgrade (umbilical / catalog language). It matches the QUESTFEST “thirteen channels” talk — one story, many parallel feeds.</p>
+          <p>Deep dive → <a href="#holo-qia">§ 7 · QIHOH</a> (channels and grid).</p>
+        </div>
+        <div class="plain-block">
+          <h3>7 · QIHOH (long name, simple idea)</h3>
+          <p><strong>QIHOH</strong> is the <strong>big narrative physics frame</strong> for the upgrade: four “worlds” (ground → hydrogen → carbon-life metaphor → silicon chips), <strong>water</strong> as the bridge between them, and <strong>13 × 13</strong> language for stabilization. It’s how we <strong>talk about</strong> stacking story and silicon — rich metaphor, not a device approval.</p>
+          <p>Plain detail still too spicy? Read the mirrored markdown → <a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md&amp;title=QIHOH%20unified%20theory">QIHOH theory</a>. Full narrative section → <a href="#holo-qia">§ 7</a>.</p>
+        </div>
+        <div class="plain-block foam-edge">
+          <h3>8 · <code>architecture.qih_simulation_upgrade</code></h3>
+          <p>On the <strong>Digital Pru deployment</strong>, API responses can carry an extra JSON block: honesty boundaries, singularity catalog pointers, upgrade metadata. It’s the <strong>machine-readable</strong> side of QIHOH — so clients and auditors see what story the server admits it’s telling.</p>
+          <p>Deep dive → <a href="#holo-qia">§ 7</a> callout + long-form docs.</p>
+        </div>
+        <div class="plain-block">
+          <h3>9 · Digital Pru ASIC</h3>
+          <p><strong>ASIC</strong> here means: the same honesty contract, expressed as <strong>silicon-shaped discipline</strong> — RTL-shaped mirror, timing talk, “no hallucination at the gate” energy. It’s the <strong>chip-world</strong> corner of the same metaphor stack; tests and logs matter.</p>
+          <p>Read → <a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence">ASIC coherence whitepaper</a> · <a href="look-under-the-hood.html">Hood</a>.</p>
+        </div>
+        <div class="plain-block foam-edge">
+          <h3>10 · Honesty boundaries</h3>
+          <p>We separate <strong>story</strong> from <strong>instrument claims</strong>. No medical diagnosis, no “we read your thoughts,” no fake ML. If marketing overshoots the stack, that’s a <strong>bug in messaging</strong>, not a feature.</p>
+          <p>Deep dive → <a href="#implications">§ 5</a> · <a href="#roadmap">§ 6</a> · <a href="plain-machote-moderno-reno-swamp.html">Machote &amp; Reno (plain)</a>.</p>
+        </div>
+        <div class="plain-block">
+          <h3>11 · Two homes for the code</h3>
+          <p><strong>This page</strong> (SING 9) holds the reader, mirrors, and static truth. The <strong>runnable</strong> whiteboard + API + Questfest chrome lives on a <strong>separate Digital Pru deploy</strong> (not this static host). If a GitHub link 404s, the spec on this site is still the map.</p>
+          <p>Links → <a href="look-under-the-hood.html">Hood · 13 papers</a> · <a href="vibelandia-questfest.html">QUESTFEST</a>.</p>
+        </div>
+
+        <div class="callout foam-c" style="margin-top:1.5rem;margin-bottom:0;">
+          <span class="cl-label">Then what?</span>
+          <p>Scroll to <a href="#abstract"><strong>Abstract</strong></a> for the formal version, or use the table of contents. The plain tour and the technical paper are the <strong>same machine</strong> — two zoom levels.</p>
+        </div>
+      </section>
 
       <!-- ABSTRACT -->
       <section class="ws" id="abstract">

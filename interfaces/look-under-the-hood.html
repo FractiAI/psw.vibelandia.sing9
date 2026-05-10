@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#070c18" />
-  <title>Under the Hood · smooth SING 9 flow</title>
-  <meta name="description" content="A smooth Under the Hood flow for SS Vibelandia: 13 channels, 4 electron states, and optional deep reads." />
-  <meta property="og:title" content="Under the Hood · smooth SING 9 flow" />
-  <meta property="og:description" content="Trailer-trash plainspeak walkthrough: ride the sonic pipe first, open papers only when you want deeper detail." />
+  <title>Under the Hood · VALETPRU-ASIC — talk is cheap, show the code</title>
+  <meta name="description" content="Plain English: talk is cheap. Look under the hood at the operational VALETPRU-ASIC that runs the code — then optional docs if you want the long read." />
+  <meta property="og:title" content="Under the Hood · VALETPRU-ASIC runs the code" />
+  <meta property="og:description" content="Talk is cheap. Open the hood: operational VALETPRU-ASIC, real checks, optional deep documents." />
   <meta property="og:type" content="website" />
   <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/interfaces/look-under-the-hood.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -267,6 +267,20 @@
     }
     footer a { font-weight: 600; }
 
+    .hood-amp {
+      margin-top: 1.1rem;
+      padding: 1rem 1.15rem;
+      border: 1px solid var(--gold-dim);
+      border-left: 4px solid var(--gold);
+      background: rgba(212,175,55,0.09);
+      border-radius: 4px;
+      font-size: clamp(1rem, 2.5vw, 1.12rem);
+      color: var(--cream);
+      line-height: 1.55;
+      max-width: 68ch;
+    }
+    .hood-amp strong { color: var(--gold-bright); font-weight: 700; }
+
     @media (max-width: 600px) {
       main { padding: 1.25rem 1rem 3rem; }
       section.plain-walk { padding: 1.1rem 1rem 1.25rem; }
@@ -274,19 +288,21 @@
   </style>
 </head>
 <body>
-  <a class="skip" href="#papers" data-i18n="hood.skip">Skip to papers</a>
+  <a class="skip" href="#papers" data-i18n="hood.skip">Skip to documents</a>
 
   <div class="nspfrnp-console-ticker" aria-live="polite"><span class="ticker-inner" id="nspfrnpTickerText"></span></div>
   <script src="nspfrnp-ticker.js"></script>
 
   <header class="hero">
     <div class="hero-inner">
-      <p class="eyebrow" data-i18n="hood.eyebrow">SS Vibelandia · Under the Hood</p>
-      <h1 data-i18n="hood.h1">13 channels · 4 electron states · one smooth pipe</h1>
-      <p class="hero-lede" data-i18n-html="hood.heroHtml"><strong>Under the Hood</strong> now reads like QUESTFEST: plain language, smooth Reno swamp flow, and no forced techie detours. You can ride the 13-channel map without opening any paper. If you want depth, open the links as optional deep reads.</p>
+      <p class="eyebrow" data-i18n="hood.eyebrow">Under the Hood · SS Vibelandia</p>
+      <h1 data-i18n="hood.h1">Talk is cheap. Open the hood.</h1>
+      <div class="hood-amp" role="note" data-i18n-html="hood.ampHtml"><strong>Talk is cheap.</strong> Look under the hood at the <strong>operational VALETPRU-ASIC</strong> — the part of the stack that <strong>runs the code</strong> you can check, not just the story on the poster.</div>
+      <p class="hero-lede" data-i18n-html="hood.heroHtml">Big festivals run on big talk. <strong>This page is the opposite:</strong> short, plain words, then the <strong>VALETPRU-ASIC presentation</strong> on this site — how it is built and proven. To <strong>run</strong> the interactable stack, use <strong>FractiAI/digital-pru</strong> on GitHub. The document list below is optional.</p>
       <div class="cta-row">
-        <a class="cta primary" href="#plain-guide" data-i18n="hood.ctaPlainTour">Take the smooth flow</a>
-        <a class="cta primary" href="digital-pru-awareness-whitepaper.html" data-i18n="hood.ctaReader">VALETPRU-ASIC reader</a>
+        <a class="cta primary" href="digital-pru-awareness-whitepaper.html#meet-digital-pru-asic" data-i18n="hood.ctaReader">Open the VALETPRU-ASIC page</a>
+        <a class="cta" href="talk-is-cheap.html" data-i18n="hood.ctaTalkCheap">Talk is cheap (tiny hub)</a>
+        <a class="cta primary" href="#plain-guide" data-i18n="hood.ctaPlainTour">Why this page exists</a>
         <a class="cta" href="valetpru-agent-mode.html">Meet VALETPRU-AGENT</a>
         <a class="cta" href="vibelandia-questfest.html" data-i18n="hood.ctaQuest">QUESTFEST</a>
       </div>
@@ -295,39 +311,37 @@
 
   <nav class="sticky" aria-label="Page">
     <ul>
-      <li><a href="#plain-guide" data-i18n="hood.navGuide">Smooth guide</a></li>
-      <li><a href="#papers" data-i18n="hood.navPapers">Deep reads</a></li>
-      <li><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence" data-i18n="hood.navAsic">Core coherence note</a></li>
-      <li><a href="vibelandia-questfest.html" data-i18n="hood.navQuest">Quest</a></li>
+      <li><a href="digital-pru-awareness-whitepaper.html#meet-digital-pru-asic" data-i18n="hood.navReader">ASIC page</a></li>
+      <li><a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener" data-i18n="hood.navDigitalPruGh">Run on GitHub</a></li>
+      <li><a href="#plain-guide" data-i18n="hood.navGuide">Plain explanation</a></li>
+      <li><a href="#papers" data-i18n="hood.navPapers">Extra documents</a></li>
+      <li><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence" data-i18n="hood.navAsic">Bench / tests note</a></li>
+      <li><a href="vibelandia-questfest.html" data-i18n="hood.navQuest">QUESTFEST</a></li>
     </ul>
   </nav>
 
   <main>
-    <section class="plain-walk" id="plain-guide" aria-label="Smooth guide to the under the hood flow">
-      <p class="plain-kicker" data-i18n="hood.plainKicker">Read this first</p>
-      <h2 class="plain-title" data-i18n="hood.plainTitle">How to ride the sonic pipe</h2>
-      <p class="plain-intro" data-i18n="hood.plainIntro">Keep it simple: 13 channels carried through 4 electron states. You do not have to open every document. This page is the main experience; links are optional detail layers.</p>
+    <section class="plain-walk" id="plain-guide" aria-label="Plain explanation">
+      <p class="plain-kicker" data-i18n="hood.plainKicker">In everyday words</p>
+      <h2 class="plain-title" data-i18n="hood.plainTitle">What you are actually looking at</h2>
+      <p class="plain-intro" data-i18n-html="hood.plainIntro">Anyone can <strong>say</strong> their stack is “holographic” or “awareness-grade.” This lane is for <strong>showing</strong> the work in writing and panels on this site. VALETPRU-ASIC is our name for that <strong>chip-shaped discipline</strong>. To <strong>run</strong> labs and APIs yourself, use <a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener">FractiAI/digital-pru</a> on GitHub.</p>
 
       <div class="plain-block">
-        <h3 data-i18n="hood.pass1h">State 1 · ignition (channels 01-03)</h3>
-        <p data-i18n="hood.pass1p">Meet the live engine story in plain talk first: reader, coherence posture, and public contract language. This is where vibe and verification first lock together.</p>
+        <h3 data-i18n="hood.pass1h">The ASIC is the part you can kick</h3>
+        <p data-i18n-html="hood.pass1p">Think of VALETPRU-ASIC as the <strong>adult table</strong> for the project: not the poster art, the <strong>RTL core, tests, and evidence trail</strong>. If it does not run in the simulator or show up in the coherence notes, we do not get to call it “operational” here.</p>
       </div>
       <div class="plain-block foam-edge">
-        <h3 data-i18n="hood.pass2h">State 2 · metabolize (channels 04-06)</h3>
-        <p data-i18n="hood.pass2p">House rules, main story arc, and gateway posture. This state keeps the mission coherent while the stack expands.</p>
+        <h3 data-i18n="hood.pass2h">Start with the ASIC page, not the pile of PDFs</h3>
+        <p data-i18n-html="hood.pass2p">Open the <strong><a href="digital-pru-awareness-whitepaper.html#meet-digital-pru-asic">VALETPRU-ASIC presentation</a></strong> first — plain tour, chip panel, bench links. That is the <strong>main read</strong> on this site. Want to <strong>interact</strong>? Go to <a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener"><strong>FractiAI/digital-pru</strong></a>.</p>
       </div>
       <div class="plain-block">
-        <h3 data-i18n="hood.pass3h">State 3 · crystallize (channels 07-10)</h3>
-        <p data-i18n="hood.pass3p">Methods, bio-story, paradigm shift, and sky-map metaphors. This is where language and structure harden into shared rhythm.</p>
-      </div>
-      <div class="plain-block foam-edge">
-        <h3 data-i18n="hood.pass4h">State 4 · animate (channels 11-13 + layer notes)</h3>
-        <p data-i18n="hood.pass4p">RF protocol, silica lane, recursion mirror note, then three nodal lattice layers (A/B/C). Layer C adds the genomic architecture lane with the 13 hydrogen-holographic gifts framing. Optional deep read 18 carries the latest PEFF / quantum genomic validation for VALETPRU-ASIC (ILL + FHE v2.0 track) — metabolize → crystallize → animate closes here with simulator-kickable proof on the reader.</p>
+        <h3 data-i18n="hood.pass3h">The list below is optional</h3>
+        <p data-i18n-html="hood.pass3p">The numbered links are <strong>extra documents</strong> — theory, prospectus, lattice notes, the lot. You never need them to get the point. They are here when you want to <strong>read the long version</strong> on one topic.</p>
       </div>
     </section>
 
-    <h2 class="papers-head" id="papers" data-i18n="hood.papersHead">Optional deep reads</h2>
-    <p class="papers-sub" data-i18n="hood.papersSub">Tap any lane when you want deeper detail. You can still complete the full experience without opening these.</p>
+    <h2 class="papers-head" id="papers" data-i18n="hood.papersHead">Extra documents (only if you want them)</h2>
+    <p class="papers-sub" data-i18n-html="hood.papersSub"><strong>Talk is cheap.</strong> If you already opened the <strong>ASIC presentation page</strong>, you have the heart of it. Tap below only for longer files — or use <a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener">digital-pru on GitHub</a> to run the stack.</p>
     <div class="papers-list">
       <article class="paper">
         <span class="num" aria-hidden="true">01</span>
@@ -470,7 +484,7 @@
         <div class="body">
           <p class="tier" data-i18n="hood.papers.18.tier">VALETPRU-ASIC · latest</p>
           <h2><a href="whitepaper-surface.html?doc=../docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md&amp;title=Quantum%20genomic%20VALETPRU-ASIC" data-i18n="hood.papers.18.title">Quantum genomic integration · PEFF · EGS lattice validation</a></h2>
-          <p class="blurb" data-i18n="hood.papers.18.blurb">PEFF-aligned EGS nodal lattice: Y proton emitter, X electron mirror / SAOS, phosphorus coherence bridge, ILL RIX + FHE updates. Pairs with the VALETPRU reader hardware panel — theory meets simulator-kickable RTL.</p>
+          <p class="blurb" data-i18n="hood.papers.18.blurb">PEFF-aligned EGS nodal lattice: Y proton emitter, X electron mirror / SAOS, phosphorus coherence bridge, ILL RIX + FHE updates. Pairs with the on-site ASIC presentation panel; runnable exploration on FractiAI/digital-pru.</p>
         </div>
       </article>
     </div>

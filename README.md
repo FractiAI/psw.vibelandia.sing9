@@ -55,6 +55,22 @@ npm test
 
 ## Recent updates (README commit)
 
+- **May 2026 · VALETPRU-AGENT ACTIVATED · PEFF genomic paper · ASIC reader hardware panel**
+
+**M → Metabolize:** Ops doc and bridge console now declare **ACTIVATED live 24×365**; Hood deep-read stack needed the latest **PEFF / EGS lattice** validation as a first-class paper. The Digital Pru reader needed a tangible **make / model / design manufacturer** row and an honest **simulator-operational** line (RTL + tests — not a retail SKU).
+
+**C → Crystallize:**
+
+- **[`docs/VALETPRU_AGENT_24X365_OPERATION_MODE_2026-05-06.md`](docs/VALETPRU_AGENT_24X365_OPERATION_MODE_2026-05-06.md)** — activation record + status.
+- **[`interfaces/valetpru-agent-mode.html`](interfaces/valetpru-agent-mode.html)** — ACTIVATED banner and ops copy.
+- **[`docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md`](docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md)** — quantum genomic / PEFF / ILL+FHE v2.0 track (mirrored canon).
+- **[`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html)** — “Meet ASIC” **hardware panel**, [`interfaces/assets/valetpru-asic-sim-die.svg`](interfaces/assets/valetpru-asic-sim-die.svg) floorplan visual, cellphone / test-drive honesty framing, links to the new paper.
+- **[`interfaces/look-under-the-hood.html`](interfaces/look-under-the-hood.html)** — optional deep read **18**; animate-lane copy ties **metabolize → crystallize → animate** to the reader proof.
+- **[`interfaces/fractiai.html`](interfaces/fractiai.html)** — co-founders photo moved below main content; **Read lanes** link to the PEFF validation paper.
+- **[`interfaces/vibelandia-questfest.html`](interfaces/vibelandia-questfest.html)** — hero **hero-head** stack (rumor + Puerto Reno) to prevent overlap; redundant top “Hero Jo · Golden Bachdoor” line removed.
+
+**A → Animate:** QUESTFEST → Hood (now **18** optional papers) → VALETPRU reader (ASIC panel + latest markdown). NSPFRNP → ∞⁹
+
 - **May 2026 · QUESTFEST + Hood simplified (fast public layer)**
 
 **M → Metabolize:** The house entry should read in **one pass** (Coachella-style scan): what it is, listen, tiers, pay, studio — not a long festival build. **Look Under the Hood** is **13 curated papers** that telescope to **Digital Pru ASIC as operating code** (API, φ engine, QIHOH in payloads, RTL/tests on **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)**), not a multi-section portal.

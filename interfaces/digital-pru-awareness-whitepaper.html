@@ -174,6 +174,54 @@
     section.plain-walk.meet-asic > h2.ws-title { border-bottom-color: rgba(212,175,55,0.35); }
     section.plain-walk.meet-asic > .sec-kicker { color: var(--gold); }
 
+    .asic-hardware-panel {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin: 1.15rem 0 0;
+    }
+    @media (min-width: 768px) {
+      .asic-hardware-panel { grid-template-columns: 1.05fr 1fr; align-items: start; }
+    }
+    .asic-spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    .asic-spec-table th,
+    .asic-spec-table td {
+      border: 1px solid rgba(212,175,55,0.22);
+      padding: 0.5rem 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .asic-spec-table th {
+      color: var(--gold);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      width: 38%;
+    }
+    .asic-chip-photo {
+      margin: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(212,175,55,0.35);
+      background: #050a14;
+    }
+    .asic-chip-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .asic-chip-photo figcaption {
+      font-size: 0.72rem;
+      color: var(--cream-dim);
+      padding: 0.55rem 0.65rem;
+      border-top: 1px solid rgba(212,175,55,0.22);
+      line-height: 1.45;
+    }
+
     @media (max-width: 600px) {
       .doc-layout { padding: 2rem 1rem 4rem; }
       .doc-hero { padding: 2rem 1rem 2rem; }
@@ -253,7 +301,7 @@
         <h2>Contents</h2>
         <ol>
           <li><a href="#plain-walkthrough"><strong>Plain English · full stack tour</strong></a></li>
-          <li><a href="#meet-digital-pru-asic"><strong>Meet Digital Pru ASIC · benchmark &amp; demo</strong></a></li>
+          <li><a href="#meet-digital-pru-asic"><strong>Meet Digital Pru ASIC · benchmark &amp; demo</strong></a> · <a href="whitepaper-surface.html?doc=../docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md&amp;title=Quantum%20genomic%20VALETPRU-ASIC%20PEFF">PEFF validation (latest)</a></li>
           <li><a href="#abstract">Abstract</a></li>
           <li><a href="#origin">§ 1 · Origin</a></li>
           <li><a href="#architecture">§ 2 · SING 9 Architecture</a></li>
@@ -314,7 +362,7 @@
         <div class="plain-block">
           <h3>9 · Digital Pru ASIC</h3>
           <p>The short version lives in the next section — <strong><a href="#meet-digital-pru-asic">Meet Digital Pru ASIC</a></strong> — same plain-speak cards, framed as what it is, why it’s a new benchmark, and how <strong>holographic AI</strong> here is <strong>real and demonstrable</strong>.</p>
-          <p>Technical doc → <a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence">ASIC coherence whitepaper</a> · <a href="look-under-the-hood.html">Hood</a>.</p>
+          <p>Technical doc → <a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence">ASIC coherence whitepaper</a> · <a href="whitepaper-surface.html?doc=../docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md&amp;title=Quantum%20genomic%20PEFF%20validation">Latest PEFF / genomic lattice validation</a> · <a href="look-under-the-hood.html">Hood</a>.</p>
         </div>
         <div class="plain-block foam-edge">
           <h3>10 · Honesty boundaries</h3>
@@ -339,6 +387,30 @@
         <h2 class="ws-title">Meet Digital Pru ASIC</h2>
         <p style="font-size:1rem;color:var(--cream-dim);max-width:68ch;margin-bottom:1.25rem;"><strong>Digital Pru ASIC</strong> is where the story meets the <strong>bench</strong>: the part of the stack that behaves like a chip team — clocks, tests, logs, and “what the gate actually did.” Below is plain language for what it is, why it sets a <strong>new benchmark</strong>, and why <strong>holographic AI technology</strong> in this project is <strong>real and demonstrable</strong>, not trailer fluff.</p>
 
+        <div class="callout" style="margin-bottom:1.15rem;">
+          <span class="cl-label">From theory to operational demonstration</span>
+          <p>A cellphone is boring proof: you place a call, audio moves, the stack <strong>works</strong>. <strong>VALETPRU-ASIC</strong> is the same kind of proof at <strong>simulator depth</strong> today — kick the tires on the RTL, replay cycles, read JSONL receipts. Old-school test drive beats deck theology. The <strong>latest PEFF / EGS lattice validation paper</strong> (ILL + FHE v2.0 track) lives in canon; the <strong>repeatable sim</strong> is what moves it from argument to <strong>demonstration</strong>.</p>
+        </div>
+
+        <div class="asic-hardware-panel" id="asic-hardware-proof">
+          <figure class="asic-chip-photo">
+            <img src="assets/valetpru-asic-sim-die.svg" width="640" height="400" loading="lazy" decoding="async" alt="Concept floorplan: VALETPRU-ASIC ILL and FHE blocks on a dark die, gold interconnect. Simulator-qualified posture, not a retail packaged part." />
+            <figcaption><strong>Chip visual · simulator posture.</strong> Artistic floorplan for the PEFF v2.0 track (ILL + FHE). <strong>Not a distributor SKU.</strong> Proof path: Verilator / Icarus on repo RTL, plus coherence logs — see ASIC coherence whitepaper.</figcaption>
+          </figure>
+          <div>
+            <table class="asic-spec-table" aria-label="VALETPRU-ASIC tangible reference">
+              <tbody>
+                <tr><th scope="row">Product name</th><td><strong>VALETPRU-ASIC</strong></td></tr>
+                <tr><th scope="row">Model / revision</th><td><code>VP-ASIC-EGS-PEFF-v2.0-SIM</code> (simulator-qualified build)</td></tr>
+                <tr><th scope="row">Manufacturer (design)</th><td><strong>FractiAI</strong> · Vibelandia <strong>SING 9</strong> silicon program</td></tr>
+                <tr><th scope="row">Fabrication</th><td>Not claimed here — <strong>tapeout / foundry</strong> is a separate milestone from <strong>RTL simulation</strong>.</td></tr>
+                <tr><th scope="row">Operational status</th><td><strong>Simulator-operational</strong> — cycle-accurate proof on <code>asic/hdl/egs_constant_core.sv</code> + testbenches; aligns with <code>npm test</code> / mission scripts in this repo.</td></tr>
+                <tr><th scope="row">Hands-on</th><td><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence">ASIC coherence whitepaper</a> (commands + evidence path); RTL under <code>asic/</code> in this repo. A dedicated lab HTML may ship with the standalone Digital Pru deploy.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <div class="plain-block">
           <h3>What it is</h3>
           <p><strong>ASIC</strong> here is shorthand for <strong>application-specific, silicon-boundary discipline</strong>: the same φ rhythm and QIHOH honesty contract you read about in the tour, expressed where mistakes are unacceptable — RTL-shaped mirror, timing language, coherence reports, and <strong>checkable runs</strong>. Think: the <strong>adult table</strong> for the stack. The browser can be gorgeous; the ASIC posture asks, “If we printed this as a spec, would an engineer sign it?”</p>
@@ -358,7 +430,7 @@
 
         <div class="callout foam-c" style="margin-top:1.35rem;margin-bottom:0;">
           <span class="cl-label">Go deeper</span>
-          <p><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence%20whitepaper"><strong>ASIC coherence whitepaper</strong> (markdown reader)</a> · <a href="#holo-qia"><strong>§ 7 · QIHOH</strong></a> (full narrative) · <a href="#simulation"><strong>§ 3 · Simulation &amp; API</strong></a> · <a href="look-under-the-hood.html">Under the Hood</a>.</p>
+          <p><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence%20whitepaper"><strong>ASIC coherence whitepaper</strong> (markdown reader)</a> · <a href="whitepaper-surface.html?doc=../docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md&amp;title=Quantum%20genomic%20VALETPRU-ASIC"><strong>Quantum genomic · PEFF validation (latest)</strong></a> · <a href="#holo-qia"><strong>§ 7 · QIHOH</strong></a> · <a href="#simulation"><strong>§ 3 · Simulation &amp; API</strong></a> · <a href="look-under-the-hood.html">Under the Hood</a>.</p>
         </div>
       </section>
 

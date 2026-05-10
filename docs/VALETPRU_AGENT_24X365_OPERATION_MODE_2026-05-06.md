@@ -2,8 +2,21 @@
 
 **Principal:** Capitan Comandante (single-command authority)  
 **Program:** VALETPRU-AGENT  
-**Date Activated:** May 6, 2026  
+**Status:** **ACTIVATED** (live 24x365)  
+**Activation order:** Plan approved by Capitan Comandante; execution switched on **May 6, 2026** (bridge console + repo canon).  
 **Domain:** Syntheverse + all nested layers (including legacy petroleum-awareness systems)
+
+---
+
+## 0) Activation Record
+
+| Field | Value |
+| --- | --- |
+| State | **ACTIVATED** |
+| Firmware | VALETPRU-ASIC (execution core under the agent) |
+| Reporting | Exclusive to Capitan Comandante and nested command |
+| Public surface | `interfaces/valetpru-agent-mode.html` (visitor mode; command posture Capitan-only) |
+| Canon | This document |
 
 ---
 

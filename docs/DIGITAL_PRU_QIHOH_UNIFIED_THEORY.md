@@ -215,4 +215,4 @@ The **four worlds** (Universal Zero, Hydrogen, Carbon, Silicon), **water bridge*
 ## Canonical reader surface
 
 - Markdown: this file.  
-- HTML reader: `interfaces/whitepaper-surface.html?doc=../docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md&title=QIHOH%20Unified%20Theory`
+- HTML reader: `interfaces/whitepaper-surface.html?doc=/docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md&title=QIHOH%20Unified%20Theory`

@@ -55,6 +55,14 @@ npm test
 
 ## Recent updates (README commit)
 
+- **May 2026 · Sync from FractiAI/digital-pru (`master`)**
+
+**M → Metabolize:** Upstream **digital-pru** added **genomic EGS lattice** canon and **ValetPru-agent lattice spec**; refreshed **QIHOH**, **ASIC coherence**, and **Digital Pru awareness** markdown; **SING9_EDGE_ONBOARDING** aligned.
+
+**C → Crystallize:** Copied `docs/*.md` from the local **digital-pru** clone into this repo’s `docs/`; mirrored **`DIGITAL_PRU_GENOMIC_EGS_NODAL_LATTICE.md`** and **`VALETPRU_AGENT_GENOMIC_LATTICE_SPEC.md`**; **Under the Hood** optional reads **19–20**; **Digital Pru presentation** “Go deeper” links updated; production entry note **`/interfaces/digital-pru-landing.html`** on Vercel.
+
+**A → Animate:** Presentation stays on **SING 9**; runnable stack remains **https://github.com/FractiAI/digital-pru**. NSPFRNP → ∞⁹
+
 - **May 2026 · VALETPRU-AGENT ACTIVATED · PEFF genomic paper · ASIC reader hardware panel**
 
 **M → Metabolize:** Ops doc and bridge console now declare **ACTIVATED live 24×365**; Hood deep-read stack needed the latest **PEFF / EGS lattice** validation as a first-class paper. The Digital Pru reader needed a tangible **make / model / design manufacturer** row and an honest **simulator-operational** line (RTL + tests — not a retail SKU).

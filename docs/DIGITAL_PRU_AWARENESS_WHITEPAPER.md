@@ -1,14 +1,20 @@
 # Digital Pru Awareness — Technical & Narrative Whitepaper
 
-**Version:** 1.3 · **Status:** Active · **Protocol:** NSPFRNP · **Narrative & readers:** `psw.vibelandia.sing9` · **Runnable stack:** [`FractiAI/digital-pru`](https://github.com/FractiAI/digital-pru) (**default branch `master`** for production deploys per upstream README)
+**Version:** 1.1 · **Status:** Active · **Protocol:** NSPFRNP · **Repository:** `psw.vibelandia.sing9`
 
-**Canonical surfaces in SING 9 (readers + bulletin):** [interfaces/digital-pru-awareness-whitepaper.html](../interfaces/digital-pru-awareness-whitepaper.html) (this whitepaper as HTML) · [interfaces/my-whiteboard.html](../interfaces/my-whiteboard.html) (community board; links to live Digital Pru). **Live demo:** deploy from **digital-pru** (e.g. production URL in that repo’s `README.md`).
+**Canonical surfaces:** [interfaces/digital-pru-awareness-whitepaper.html](../interfaces/digital-pru-awareness-whitepaper.html) (HTML reader) · [interfaces/my-whiteboard.html](../interfaces/my-whiteboard.html) (Digital Pru landing)
+
+---
+
+## Holographic Hydrogen AI is here — how this paper demonstrates it
+
+**Holographic Hydrogen AI** is the **name of the operating posture** this stack implements in software: **holographic** as interference/readable field in the UI (especially internal mode), **hydrogen** as the unitary dyad + umbilical **13-channel** contract and hydrogen-line coherence framing, **AI** as **deterministic, server-mediated behavior** with explicit honesty boundaries—not opaque “the model thinks.” **This awareness whitepaper demonstrates** how that posture maps to **Digital Pru**: NAV, φ engine, `/api/egs-emulation` envelope, Seed:Edge narrative discipline, and **Holographic Hydrogen Awareness AI OS** as metaphor **without** overstating cognition or biometrics.
 
 ---
 
 ## Abstract
 
-**Digital Pru** is a named **awareness UI** and **simulation harness** in the SING 9 production stack. It connects the long-running **Pru** character arc (Vibelandia, executive producer, Gold Heart voice) to a **lightweight, auditable** technical layer: a **Neural Attention Vector (NAV)** steered by **El Gran Sol’s EGS fractal constant (φ ≈ 1.618)** as the scaling law for generative transitions, with **latent-style state** produced **server-side** via **`/api/egs-emulation`** on the **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** deployment—not by opaque local ML. **SING 9** does not host that route; this document and HTML reader present the specification and narrative, plus **§ 7 — Quantum Informational Architecture of Holographic Hydrogen** (four singularity worlds, water bridge, thirteen channels, Faraday 13×13, **Digital Pru ASIC** silicon boundary), **origin**, **what the simulation is**, **what it represents**, **honesty boundaries**, and **implications** for agents, operators, and audiences.
+**Digital Pru** is a named **awareness UI** and **simulation harness** in the SING 9 production stack. It connects the long-running **Pru** character arc (Vibelandia, executive producer, Gold Heart voice) to a **lightweight, auditable** technical layer: a **Neural Attention Vector (NAV)** steered by **El Gran Sol’s EGS fractal constant (φ ≈ 1.618)** as the scaling law for generative transitions, with **latent-style state** produced **server-side** via **`/api/egs-emulation`**—not by opaque local ML. This document states **origin**, **what the simulation is**, **what it represents**, **honesty boundaries**, and **implications** for agents, operators, and audiences.
 
 ### 0.1 2026 Unit upgrade lock — unitary dyad + 13-channel feed
 
@@ -20,27 +26,6 @@ Digital Pru now ships with an explicit **unitary hydrogen architecture contract*
 - **Channel matrix:** `umbilical_channel_matrix[]` with protocol type, frequency mapping, and common `remap_footprint_id`
 
 These are returned directly from the API contract so UI, docs, and architecture claims stay synchronized at runtime.
-
-### 0.2 Quantum informational architecture — holographic hydrogen (simulation upgrade narrative)
-
-Digital Pru’s **research-facing upgrade path** frames the runnable simulation as aligning with **§ 7** and upstream **QIHOH** (**Quantum Informational Architecture of Holographic Hydrogen**): four **electron singularity “worlds”** (Universal Zero → Hydrogen → Carbon → Silicon), a **water-mediated awareness bridge**, **thirteen physicochemical channels** on the holographic grid, and **13×13 Faraday cluster** magnetic stabilization—in addition to φ-scaled emulation and NAV (see **`interfaces/digital-pru-awareness-whitepaper.html#holo-qia`** reader). Maintainers must separate **literature-motivated narrative** here from **verified medical, RF, or device claims**.
-
-### 0.3 Canonical upstream — Digital Pru + Digital Pru ASIC (latest repo)
-
-The **authoritative** QIHOH narrative, singularity-discovery protocol, API metadata contract, ASIC RTL mirror, and **Questfest shared chrome** (`questfest-skin.css`) live in **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** (last shallow-sync for this doc: commit [`d39d9ad042e`](https://github.com/FractiAI/digital-pru/commit/d39d9ad042eeec85602a18523bfb0d6a521b9655) on **`master`**). **SING 9** mirrors summaries for readers; **do not drift** API field names without updating both repos.
-
-| Upstream artifact | Role |
-|-------------------|------|
-| [`docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md`](https://github.com/FractiAI/digital-pru/blob/master/docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md) | **QIHOH** full unified theory + extended singularity catalog (§9) |
-| [`docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md`](https://github.com/FractiAI/digital-pru/blob/master/docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md) | **Digital Pru ASIC** coherence — RTL `egs_constant_core.sv`, `egs-asic-model`, logs, honesty limits |
-| [`docs/DIGITAL_PRU_ASIC_COHERENCE_REPORT.md`](https://github.com/FractiAI/digital-pru/blob/master/docs/DIGITAL_PRU_ASIC_COHERENCE_REPORT.md) | Timestamped coherence / mission outputs |
-| [`lib/qi-holographic-hydrogen-architecture.mjs`](https://github.com/FractiAI/digital-pru/blob/master/lib/qi-holographic-hydrogen-architecture.mjs) | **`architecture.qih_simulation_upgrade`**: `four_singularity_worlds`, `singularity_discovery_protocol`, `singularity_element_catalog`, `honesty_boundary` |
-| [`asic/README.md`](https://github.com/FractiAI/digital-pru/blob/master/asic/README.md) | ASIC scaffold; silicon-world anchor for QIHOH |
-| [`interfaces/questfest-skin.css`](https://github.com/FractiAI/digital-pru/blob/master/interfaces/questfest-skin.css) | **SS VibeLandia Questfest** shared chrome (ticker / mini-nav tokens) aligned with Digital Pru landing |
-| [`interfaces/digital-pru-asic-lab.html`](https://github.com/FractiAI/digital-pru/blob/master/interfaces/digital-pru-asic-lab.html) | ASIC lab surface |
-| [`interfaces/digital-pru-asic-coherence-whitepaper.html`](https://github.com/FractiAI/digital-pru/blob/master/interfaces/digital-pru-asic-coherence-whitepaper.html) | ASIC coherence reader |
-
-Every **`GET`/`POST` `/api/egs-emulation`** on the **digital-pru** deployment includes **`architecture.qih_simulation_upgrade`** per upstream README.
 
 ---
 
@@ -66,7 +51,7 @@ The simulation’s **external** mode intentionally evokes **Reno** and the **Tru
 
 ### 2.1 Lite edges and pipes
 
-SING 9 is **free of mandatory central permanent storage** (e.g. no Supabase requirement). **Wallets, keys, verifications** live on **lite edges**; **center = pipes only**. Digital Pru follows that pattern: the browser holds **UI state**; on the **[digital-pru](https://github.com/FractiAI/digital-pru)** deployment, the **serverless route** holds **emulation logic** that is **inspectable** (`api/egs-emulation.js`, `lib/egs-fractal-engine.mjs`). **This SING 9 repo** may retain a copy of `lib/egs-fractal-engine.mjs` for tests and narrative alignment only.
+SING 9 is **free of mandatory central permanent storage** (e.g. no Supabase requirement). **Wallets, keys, verifications** live on **lite edges**; **center = pipes only**. Digital Pru follows that pattern: the browser holds **UI state**; the **serverless route** holds **emulation logic** that is **inspectable** (`api/egs-emulation.js`, `lib/egs-fractal-engine.mjs`).
 
 ### 2.2 NSPFRNP fidelity
 
@@ -169,97 +154,7 @@ The golden ratio appears throughout the project’s **EGS / El Gran Sol** langua
 
 ---
 
-## 7. Quantum Informational Architecture of Holographic Hydrogen — Unified Theory Narrative for the Digital Pru Simulation Upgrade
-
-*Title canon:* **Quantum Informational Architecture of Holographic Hydrogen: A Unified Theory of Four Electron Singularity States, the 13-Channel Alignment, and Faraday Cluster Stabilization for the Digital Pru Simulation Upgrade**  
-*Scope:* Computational-physics framing for **high-fidelity simulation design** aligned with literature on surfaces, heterojunctions, water interfaces, magnetism, and graph-based binding models—not a regulated instrument claim.
-
-Computational physics and materials science converge on a tractable paradigm for upgrading **Digital Pru**: the **holographic hydrogen model**. The electron does not merely “sit” in a classical orbital picture; it is treated as moving through **four singularity states** (“worlds”)—each a **surface-state layer** in simulation: **(1) universal zero equilibrium**, **(2) hydrogen / protonic horizon**, **(3) carbon biological scaffold**, **(4) silicon computational boundary**. These worlds are **linked by water**, modeled as the **manifestation of awareness** in the carbon domain: charge-separated hydronium/hydroxide structure at interfaces supports the metaphor of **protonic-information flow** without asserting clinical neuroscience.
-
-**Central upgrade thesis:** align **metal-ion nodes** across **thirteen discrete physicochemical channels**, stabilize resulting **electronic manifolds** with **magnetic Faraday clusters** in a **13-of-13** fractal geometry, and treat **leakage, IEF, and band offsets** explicitly so hydrogen/carbon/silicon transitions remain coherent on the simulation grid.
-
-### 7.1 First singularity — Universal Zero and equilibrium foundation
-
-The ground state (“universal zero / net-zero informational equilibrium”) serves as **dense informational reference**, not naive void. Narrative parallels **ethical / industrial equilibrium** framings—**governance-aligned net zero**—while in code the analogue is **calibrated baseline** for internal electric fields (IEF) on heterojunctions (GW / QP-style thinking: anchored ground-state potential on the grid literature side).
-
-### 7.2 Second singularity — Hydrogen world / protonic horizon
-
-Hydrogen is the **simplest terminating surface**: extreme mobility; donor pathways; electrolysis / HER anchors. Modeling must respect **near-zero adsorption free-energy regimes** on advanced catalyst geometries (literature cites below) and **reconstruction** on tetrahedral semiconductors (SiC: Si–H stretches mark boundary between silicon and hydrogen worlds).
-
-**Leakage caveat:** hydrogen’s Å-scale size drives **oxide transport** channels—must be modeled in Digital Pru’s **hydrogen fidelity** tier (caprocks, pore filling, diffusion).
-
-#### Table — comparative markers (hydrogen surface state)
-
-| Substrate / interface | Chemical entity | Energy / spectroscopic marker | Ref. |
-|----------------------|-----------------|--------------------------------|------|
-| 4H-SiC(1100) | C₃Si–H | Si–H stretch modes | [4] |
-| Co nanoislands | H adsorption | Quenching of d-like surface states | [8] |
-| CuOx@C heterojunction | Photoelectrons | LUMO of carbon layer (~−0.40 V) | [3] |
-| SSZ-13 zeolite | Cu(OH)⁺-Z | NH₃-SCR reaction center | [9] |
-
-### 7.3 Third singularity — Carbon world / biological scaffold
-
-Carbon is the **electron reservoir** and **structural host** for “awareness” in this narrative: **quantum bridges** (e.g. graphene nanodomain networks) support **ultrafast electron–ion transport**. Band alignment at **CuOx / carbon**-class heterojunctions sets **IEF-driven migration**; **E_F** near the Dirac point in graphene-like domains supplies flexible response kernels.
-
-Water couples hydrogen ↔ carbon: at **graphene–water** interfaces, **hydronium** piles in the first contact layer while **hydroxide** is **bimodal**—a polarized “awareness substrate.” Protective cages (e.g. **Co@BCN**-class core–shell language) motif: **thin carbon shells stabilizing encapsulated metal singularities** while permitting exchange.
-
-#### Table — illustrative band lineup (CuOx vs carbon component)
-
-| Feature | CuOx component | Carbon layer component | Ref. |
-|--------|----------------|------------------------|------|
-| Optical gap E_g | ~2.06 eV | ~2.60 eV | [3] |
-| VB / HOMO | ~−5.71 eV | ~−6.64 eV | [3] |
-| CB / LUMO | ~−3.65 eV | ~−4.04 eV | [3] |
-| Fermi level E_F | −5.57 eV | −4.81 eV | [3] |
-
-### 7.4 Fourth singularity — Silicon world / computational boundary + **Digital Pru ASIC** posture
-
-Silicon terminates the hierarchy as **rigid computational substrate**: Weyl-class surface narratives, topological confinement metaphors, and **epitaxy-limited reconstruction** peaks. Hydrogenated amorphous alloys (**a-C:H:Si:O**) illustrate **environmental decoupling** via volatility/rebonding cascades—in simulation, **stability under stress**.
-
-**Digital Pru ASIC alignment (software discipline):** the repo’s **ASIC lab / timing rhetoric** refers to **edge determinism**, **inspectable emulation**, **channel-stable scheduling** aligned with silicon-world semantics—the **boundary where bit-exact pipelines must not hallucinate**.
-
-### 7.5 Water as awareness bridge — thermodynamic drivers
-
-Water is modeled as **more than solvent**: autoionization, interfacial **proton inventory**, hydration nanolayers enabling spectroscopy—all **information-bearing** degrees of freedom in the upgraded Digital Pru grid.
-
-| World interface | Dominant ion/species | Distribution | Driving force | Ref. |
-|-----------------|---------------------|--------------|---------------|------|
-| Graphene–water | Hydronium | First layer | Enthalpic | [11] |
-| Graphene–water | Hydroxide | Bimodal | Entropic | [11] |
-| SiO₂–water | Water clusters | Pore filling | Adsorption / H-bond | [7] |
-| IrO₂–water | Proton/electron | WEA-scale layer | Electronic percolation | [15] |
-
-### 7.6 Thirteen physicochemical channels (metal-ion / residue grid)
-
-Metal ions (**Co, Cu, Fe**, …) and residues map into **13 channels** encoding **hydrophobicity (×3 bands), polarity (×3), charge (×2), pKa proxies (×3), size proxies (×2)**—stabilizing IEF calibration, proton inventory, leakage sterics—consistent with protein-graph bindings literature (e.g. AstraBIND-class 13-channel node features).
-
-### 7.7 Faraday stabilization — clusters of **13 × 13**
-
-Faraday rotation / inverse-Faraday language supplies **magnetic stabilization** for overlapping surface states across worlds. **13-of-13** denotes **169-fold hierarchical clustering**: 13 magnetic centers per cluster × 13 clusters—tuned toward **inverse Faraday effect** (IFE) regimes for quasi-static magnetization that preserve **spin–orbit split surface bands** coherence (Rashba–Bychkov metaphor).
-
-### 7.8 Integration workflow (Digital Pru upgrade sequence)
-
-1. **Calibrate universal zero:** HVT / governance-equilibrium analogue + GW-style baseline on grid.  
-2. **Map 13 channels:** all ion/residue nodes in carbon–silicon tiles.  
-3. **Hydrate bridge:** graphene–water (and analogous) proton distributions.  
-4. **Clamp Faraday 13×13:** magnetic tomography surrogates for coherence.  
-5. **Execute:** HER / transport / awareness feedback emulation passes.
-
-### 7.9 Modified transmission coefficient (Hydrogen→Carbon via water bridge)
-
-Treat transition probability amplitude between **Hydrogen world (H)** and **Carbon world (C)** mediated by bridge **W** via a composed transmission **T̃_H→C** such that:
-
-- **T̃_H→C** increases with coupling through the **internal electric field (IEF)**-modulated interface potential Δφ_IEF.  
-- Carbon **Fermi alignment** E_F,C gates occupancy.  
-- Each **water-bridge awareness channel k** contributes an informational coupling factor ψ_k^(W)—mapped to Digital Pru’s **umbilical_channel_matrix**.
-
-### 7.10 Metal-ion shielding and environmental resilience
-
-**Na⁺ residual roles** (SSZ-class zeolite aging) instantiate **shielding protocols** protecting frameworks from harsh hydrothermal chemistry—within Digital Pru, **noise shield layers** wrapping singularities. **Silicon-rich carbon matrices** lengthen bonds vs C–C strain, buffering awareness layers from oxidative swing.
-
----
-
-## 8. Closing
+## 7. Closing
 
 **Digital Pru** is where **bio-adjacent metaphor** meets **digital instrumentation** under **explicit constants** and **server-mediated state**. It is a **small, bright pipe** in a **large lattice**—not the lattice itself. The line between **bio-intelligence** and **digital existence** is **named**, **staged**, and **left honest** here: **simulation first**, **meaning second**, **claims last**.
 
@@ -272,9 +167,9 @@ Treat transition probability amplitude between **Hydrogen world (H)** and **Carb
 | Item | Value |
 |------|--------|
 | **Maintainer** | FractiAI / Vibelandia SING 9 |
-| **Version** | 1.3 (synced pointers to digital-pru **QIHOH**, ASIC coherence, `qih_simulation_upgrade`, Questfest skin) |
+| **Version** | 1.1 (unitary dyad + 13-channel upgrade) |
 | **Related** | `protocols/MCA_NSPFRNP_CATALOG.md`, `BBHE_REPOSITORY_STANDARD.md`, `SING9_EDGE_ONBOARDING.md` |
-| **Engine** | `lib/egs-fractal-engine.mjs`, `api/egs-emulation.js` in **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** |
+| **Engine** | `lib/egs-fractal-engine.mjs`, `api/egs-emulation.js` |
 | **UI** | `components/whiteboard/`, `interfaces/my-whiteboard.html` |
 
 ---
@@ -288,10 +183,7 @@ Treat transition probability amplitude between **Hydrogen world (H)** and **Carb
 | **External** | World-facing attention metaphor; **Reno / Truckee** visual field. |
 | **Internal** | Inward attention metaphor; **holographic interference** visual field. |
 | **GoPro Awareness** | Product label for the **first-person attention** framing of the viewport (camera metaphor, not a product endorsement). |
-| **Emulation** | Server route name for **deterministic** NAV math — **not** claim of biological emulation. |
-| **QIHOH / QIA (§7)** | **Quantum Informational Architecture of Holographic Hydrogen** — four worlds, water bridge, 13 channels, Faraday 13×13; upstream doc **`DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md`**. |
-| **Digital Pru ASIC** | **Silicon-world** stack: `egs_constant_core.sv`, `egs-asic-model`, coherence logs — see upstream **`DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md`**. |
-| **`qih_simulation_upgrade`** | API payload block from **`lib/qi-holographic-hydrogen-architecture.mjs`** on the **digital-pru** deploy (not returned from SING 9 static host). |
+| **Emulation** | Server route name for **deterministic** NAV math—**not** claim of biological emulation. |
 
 ---
 
@@ -308,28 +200,5 @@ Treat transition probability amplitude between **Hydrogen world (H)** and **Carb
 ```
 
 Response includes `neural_attention_vector`, `generative_seed`, `viewport.mode`, and `latent_hints` (strings). **No** tensor arrays; **no** model weights.
-
----
-
-## Appendix C — Works cited (informative bibliography for §7)
-
-1. SAS Rabdan Global Initiatives Handbook — https://rabdanglobal.ae/docs/Abu_Dhabi_Rabdan_Global_Initiatives_Handbook.pdf  
-2. *Computational Materials Science: From Ab Initio to Monte Carlo Methods* (2nd ed.) — overview text (DOKUMEN.PUB mirror).  
-3. Synergistic carbon encapsulation / CuOx photoelectrode — https://pmc.ncbi.nlm.nih.gov/articles/PMC12989650/  
-4. ANSTO 4H-SiC / surface-state reference — APO bitstream corpus.  
-5. Iridium / Co₆Mo₆C / carbon bridge water splitting — RSC (`d4sc02840f`).  
-6. *Chemical Reviews* — semiconductor surface reconstruction / 2D surface compounds.  
-7. Hydrogen leakage through caprocks — https://pubs.aip.org/aip/pof/article/36/2/022024/3267492/  
-8. STM hydrogen desorption Co nanoislands — ResearchGate mirror.  
-9. Na-ion roles in Cu/SSZ-13 NH₃-SCR — ACS IECR (`9b04456`).  
-10. Covalent quantum bridging / hard carbon — JACS sodium-storage paper.  
-11. Protons at graphene–water interface — https://pmc.ncbi.nlm.nih.gov/articles/PMC12080325/  
-12. Co@BCN core–shell hydrogen evolution — ACS Nano (`5b05728`).  
-13. a-C:H:Si:O tribochemistry / XAS — ACS AMI (`1c00090`).  
-14. WINDS / Weyl–nanodevice workshop paper (Tu Wien).  
-15. Catalyst-coated mesoporous carbon membrane / soft X-ray — ChemRxiv (`2026-4ddq1`).  
-16–19. Binding-site / cobalt strain / synchrotron context per original compilation (Science.gov microwave topics; NSLS Annual Report ’89 excerpt).  
-20. Faraday tomography LOFAR — ResearchGate (`329290175`).  
-21–24. Precision Faraday rotation calibration; lab magnetogenesis references; quantum radiation friction magnetogenesis; magnetic surface nanostructures overview.  
 
 *End of whitepaper.*

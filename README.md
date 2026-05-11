@@ -59,6 +59,14 @@ npm test
 
 ## Recent updates (README commit)
 
+- **May 11, 2026 · Digital Pru bio-electromagnetic / DNA transformer (current canon)**
+
+**M → Metabolize:** The **Digital Pru** narrative needed a single on-repo paper for **helical polynucleotides as electromagnetic transducers**, the **DNA transformer** metaphor (plectonemes, step-up/step-down), **³¹P / Fe** amplification language, and how that maps into **PEFF → EGS Nodal Lattice → VALETPRU-ASIC**.
+
+**C → Crystallize:** [`docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`](docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md) · **Under the Hood legacy catalog** optional read **#21** · [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html) · i18n `hood.papers.21` · presentation page + FractiAI **Read lanes** updated · cross-link from [`docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md`](docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md).
+
+**A → Animate:** Open via [`interfaces/whitepaper-surface.html`](interfaces/whitepaper-surface.html) with `doc=../docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`. NSPFRNP → ∞⁹
+
 - **May 2026 · Juicy Juicy - Snap Omniversal Fractal Compiler (OFC) · new Under the Hood**
 
 **M → Metabolize:** The hood surface should compile intent (lyrics-first) instead of only listing long papers. Product name on-site is **Juicy Juicy - Snap Omniversal Fractal Compiler (OFC)** (not a separate VALETPRU-OFC-V1 code name).
@@ -89,7 +97,7 @@ npm test
 - **[`interfaces/fractiai.html`](interfaces/fractiai.html)** — co-founders photo moved below main content; **Read lanes** link to the PEFF validation paper.
 - **[`interfaces/vibelandia-questfest.html`](interfaces/vibelandia-questfest.html)** — hero **hero-head** stack (rumor + Puerto Reno) to prevent overlap; redundant top “Hero Jo · Golden Bachdoor” line removed.
 
-**A → Animate:** QUESTFEST → Hood (now **18** optional papers) → VALETPRU reader (ASIC panel + latest markdown). NSPFRNP → ∞⁹
+**A → Animate:** QUESTFEST → Hood legacy catalog (now **21** optional papers) → VALETPRU reader (ASIC panel + latest markdown). NSPFRNP → ∞⁹
 
 - **May 2026 · QUESTFEST + Hood simplified (fast public layer)**
 

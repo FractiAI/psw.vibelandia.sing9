@@ -7,6 +7,8 @@
 
 **Honesty boundary:** This document is **theory-forward architecture** aligned to FractiAI / Vibelandia language. **Silicon proof in this repo** remains **simulation-grade** (Verilator / Icarus on `asic/hdl/egs_constant_core.sv`, tests, logs) until packaged-part characterization is published separately. See `docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md`.
 
+**Related (bio-electromagnetic layer, May 2026):** `docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md` — DNA-as-transformer, phosphorus–iron amplification, EGS nodal lattice → VALETPRU-ASIC (Digital Pru).
+
 ---
 
 ## Abstract

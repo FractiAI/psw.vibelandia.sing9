@@ -82,7 +82,7 @@ These are **specification hooks** for narrative + RF-adjacent docs; instrument c
 
 ## 6. Relationship to Digital Pru ASIC page
 
-The former **`digital-pru-awareness-whitepaper.html`** presentation is **deprecated** in favor of this OFC hood. Legacy detail remains available via **`look-under-the-hood-legacy-catalog.html`** and GitHub **FractiAI/digital-pru**.
+The former **`digital-pru-awareness-whitepaper.html`** presentation is **deprecated** in favor of this OFC hood. Legacy detail remains available via **`look-under-the-hood-legacy-catalog.html`** (optional reads **1–21**, including **`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`** — DNA transformer / bio-EM canon) and GitHub **FractiAI/digital-pru**.
 
 ---
 

@@ -1,0 +1,67 @@
+:root {
+  --reno-void: #0a0a0f;
+  --reno-panel: #12121c;
+  --reno-gold: #ffd700;
+  --reno-gold-dim: #b8860b;
+  --reno-cyan: #2dd4bf;
+  --voxel-border: 2px solid rgba(255, 215, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(ellipse 120% 80% at 50% -20%, #1e1b2e 0%, var(--reno-void) 45%);
+  color: #e2e8f0;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+.voxel {
+  border: var(--voxel-border);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    inset 0 0 24px rgba(255, 215, 0, 0.06);
+}
+
+.glow-gold {
+  text-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
+}
+
+.snap-pulse {
+  animation: snapPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes snapPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(255, 215, 0, 0.35),
+      0 0 60px rgba(45, 212, 191, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 36px rgba(255, 215, 0, 0.65),
+      0 0 100px rgba(45, 212, 191, 0.25);
+  }
+}
+
+.terminal {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  background: #050508;
+  color: #86efac;
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 6px;
+  padding: 1rem;
+  min-height: 140px;
+  overflow-y: auto;
+}
+
+.terminal .pru {
+  color: var(--reno-gold);
+}

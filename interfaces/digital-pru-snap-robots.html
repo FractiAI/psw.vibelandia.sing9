@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#06080d" />
+  <title>Digital SNAP Robots · Hero Jo track → dual holographic performers</title>
+  <meta name="description" content="One page: command instructions, track upload, two beat-driven robots (performer + dancer). Optional Digital Pru FastAPI for BPM/EGS. Human-intervention-free checkout from QUESTFEST and Juicy Juicy Snap." />
+  <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/interfaces/digital-pru-snap-robots.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #06080d;
+      --card: #0f141c;
+      --gold: #d4af37;
+      --gold-hi: #fef3c7;
+      --foam: #2dd4bf;
+      --muted: #94a3b8;
+      --text: #f1f5f9;
+      --line: rgba(212, 175, 55, 0.35);
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(45, 212, 191, 0.07), transparent 50%), var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      font-size: 0.95rem;
+    }
+    a { color: var(--foam); text-decoration: none; font-weight: 600; }
+    a:hover { color: var(--gold-hi); text-decoration: underline; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+    .nav {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;
+      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .nav a {
+      padding: 0.35rem 0.65rem; border: 1px solid var(--line); border-radius: 999px;
+      background: rgba(15, 20, 28, 0.85); color: var(--gold-hi);
+    }
+    .nav a:hover { border-color: var(--gold); text-decoration: none; }
+    h1 {
+      font-size: clamp(1.15rem, 3vw, 1.55rem); font-weight: 800; color: var(--gold-hi);
+      margin-bottom: 0.35rem; letter-spacing: -0.02em;
+    }
+    .lede { color: var(--muted); max-width: 58ch; margin-bottom: 1.25rem; font-size: 0.9rem; }
+    .panel {
+      border: 1px solid var(--line); border-radius: 12px; background: var(--card);
+      padding: 1.1rem 1rem; margin-bottom: 1rem;
+    }
+    .panel h2 {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--foam);
+      margin-bottom: 0.65rem;
+    }
+    label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.35rem; }
+    textarea, input[type="url"], input[type="file"] {
+      width: 100%; font-family: var(--mono); font-size: 0.82rem;
+      border-radius: 8px; border: 1px solid rgba(148, 163, 184, 0.25);
+      background: #080b12; color: var(--gold-hi); padding: 0.65rem 0.75rem;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: 0.75rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.65rem 1.1rem; border-radius: 999px; font-size: 0.68rem;
+      font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      border: 2px solid var(--line); background: rgba(255, 255, 255, 0.04);
+      color: var(--gold-hi); cursor: pointer; font-family: inherit;
+    }
+    .btn:hover { border-color: var(--gold); }
+    .btn-primary { background: var(--gold); color: #0a0f1a; border-color: var(--gold); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .stage {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 640px) { .stage { grid-template-columns: 1fr; } }
+    .stage figure {
+      border: 2px solid rgba(255, 215, 0, 0.45); border-radius: 10px;
+      background: linear-gradient(180deg, #0a0e18, #050508); padding: 0.5rem;
+      text-align: center;
+    }
+    .stage figcaption { font-size: 0.68rem; color: var(--muted); margin-top: 0.35rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .stage svg { width: 100%; max-width: 280px; height: auto; display: block; margin: 0 auto; }
+    .warehouse-viewport {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 215, 0, 0.35);
+      background: #080a0f;
+      min-height: min(52vh, 440px);
+    }
+    #wh-canvas {
+      display: block;
+      width: 100%;
+      height: min(52vh, 440px);
+      vertical-align: middle;
+    }
+    .robot-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.4rem 0.45rem;
+      background: linear-gradient(0deg, rgba(6, 8, 13, 0.94) 0%, rgba(6, 8, 13, 0.45) 55%, transparent 100%);
+      pointer-events: none;
+    }
+    .robot-overlay figure {
+      border: 1px solid rgba(45, 212, 191, 0.35);
+      border-radius: 8px;
+      background: rgba(8, 10, 16, 0.55);
+      padding: 0.25rem 0.35rem;
+      margin: 0;
+    }
+    .asset-credit {
+      position: absolute;
+      top: 0.35rem;
+      left: 0.45rem;
+      right: 0.45rem;
+      font-size: 0.58rem;
+      line-height: 1.35;
+      color: rgba(148, 163, 184, 0.92);
+      text-shadow: 0 1px 4px #000;
+      pointer-events: none;
+    }
+    .asset-credit a { color: #86efac; font-weight: 600; pointer-events: auto; }
+    .log {
+      font-family: var(--mono); font-size: 0.76rem; line-height: 1.45;
+      background: #050508; color: #86efac; border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 8px; padding: 0.75rem; max-height: 220px; overflow: auto; white-space: pre-wrap;
+    }
+    .fine { font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; }
+    .carbon-hud {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: #86efac;
+      background: rgba(5, 8, 12, 0.75);
+      border: 1px solid rgba(45, 212, 191, 0.35);
+      border-radius: 8px;
+      padding: 0.45rem 0.6rem;
+      margin-top: 0.5rem;
+      line-height: 1.45;
+    }
+    .carbon-hud strong { color: var(--gold-hi); }
+    footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.78rem; color: var(--muted); }
+    footer strong { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav" aria-label="Exit ramps">
+      <a href="vibelandia-questfest.html">QUESTFEST</a>
+      <a href="look-under-the-hood.html">Juicy Juicy Snap</a>
+      <a href="/surfaces.html">Repo map</a>
+    </nav>
+
+    <header>
+      <h1>Digital SNAP Robots</h1>
+      <p class="lede">
+        <strong>Human-intervention-free path:</strong> type instructions, upload a Hero Jo (or any) track, hit <strong>Run SNAP</strong>.
+        Default <strong>warehouse sim</strong> (Three.js + <a href="https://polyhaven.com/" target="_blank" rel="noopener">Poly Haven</a> CC0 HDR &amp; textures) lights up to the track.
+        <strong>Robots + warehouse FX</strong> run on <strong>simulated Carbon-layer awareness</strong> — a browser-only substrate model (low-frequency + envelope proxies for raw “Carbon” sensing, not physical sensors).
+        Two voxel robots overlay the floor — <strong>Robot A</strong> is the Carbon-primary performer, <strong>Robot B</strong> rides Silver-harmonic bleed from the same Carbon field.
+      </p>
+    </header>
+
+    <section class="panel">
+      <h2>Optional · Digital Pru API</h2>
+      <label for="apiBase">API base (leave empty = browser-only playback + robots; no server)</label>
+      <input type="url" id="apiBase" name="apiBase" placeholder="http://127.0.0.1:8000" autocomplete="off" />
+      <p class="fine">Local engine: <code>digital-pru-holographic-snap/backend</code> → <code>uvicorn main:app --port 8000</code>. Same origin file:// may block fetch — use http://localhost or deploy.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Command prompt · operator instructions</h2>
+      <label for="cmd">Any instructions for Digital Pru / Isaac (gait, mood, venue, skin hints)</label>
+      <textarea id="cmd" placeholder="Example: Lock gait to parade tempo. Second robot: salsa exaggeration on chorus hits."></textarea>
+    </section>
+
+    <section class="panel">
+      <h2>Track upload</h2>
+      <label for="track">Audio file (mp3, wav, ogg, m4a…)</label>
+      <input type="file" id="track" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac" />
+      <div class="row">
+        <button type="button" class="btn btn-primary" id="btnRun">Run SNAP</button>
+        <button type="button" class="btn" id="btnStop">Stop</button>
+      </div>
+      <p class="fine" id="playStatus" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Warehouse sim + performers · live to your track</h2>
+      <p class="fine" style="margin-bottom:0.65rem;">
+        Browser default = industrial warehouse (free CC0 assets). Isaac Sim: load the built-in <strong>Warehouse</strong> template to match; see <code>sim/bridge.py</code> notes.
+      </p>
+      <div class="warehouse-viewport">
+        <canvas id="wh-canvas" aria-label="Warehouse simulation viewport"></canvas>
+        <p class="asset-credit">
+          <a href="https://polyhaven.com/hdris" target="_blank" rel="noopener">Poly Haven</a> CC0 HDR &amp; textures ·
+          <a href="https://threejs.org/" target="_blank" rel="noopener">three.js</a> MIT · no signup
+        </p>
+        <div class="robot-overlay">
+        <p id="carbonHud" class="carbon-hud" aria-live="polite">
+          <strong>Carbon (sim)</strong> · idle — load a track and <strong>Run SNAP</strong> to activate substrate model (φ-smoothed).
+        </p>
+        <figure>
+          <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="ga" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#2a3144"/><stop offset="100%" style="stop-color:#121a2a"/>
+              </linearGradient>
+            </defs>
+            <g id="bot-a-root" transform="translate(100,200)">
+              <rect x="-28" y="-95" width="56" height="95" rx="10" fill="url(#ga)" stroke="#d4af37" stroke-width="2"/>
+              <circle cx="0" cy="-118" r="22" fill="#1a2233" stroke="#d4af37" stroke-width="2"/>
+              <g id="bot-a-arm" transform="translate(28,-78)">
+                <rect x="0" y="-8" width="12" height="62" rx="4" fill="#d4af37" stroke="#fef3c7" stroke-width="1"/>
+              </g>
+              <g transform="translate(-28,-78) scale(-1,1)">
+                <rect x="0" y="-8" width="12" height="62" rx="4" fill="#8b7355" stroke="#d4af37" stroke-width="1"/>
+              </g>
+              <rect x="-32" y="0" width="64" height="14" rx="4" fill="#0f141c" stroke="#2dd4bf" stroke-width="1"/>
+            </g>
+          </svg>
+          <figcaption>Robot A · Carbon-primary performer</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="gb" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#1e293b"/><stop offset="100%" style="stop-color:#0f172a"/>
+              </linearGradient>
+            </defs>
+            <g id="bot-b-root" transform="translate(100,200)">
+              <rect x="-26" y="-88" width="52" height="88" rx="10" fill="url(#gb)" stroke="#2dd4bf" stroke-width="2"/>
+              <circle cx="0" cy="-110" r="20" fill="#134e4a" stroke="#5eead4" stroke-width="2"/>
+              <rect id="bot-b-leg-l" x="-22" y="-5" width="16" height="40" rx="4" fill="#2dd4bf" opacity="0.85"/>
+              <rect id="bot-b-leg-r" x="6" y="-5" width="16" height="40" rx="4" fill="#14b8a6" opacity="0.85"/>
+              <rect x="-30" y="0" width="60" height="12" rx="4" fill="#0f141c" stroke="#d4af37" stroke-width="1"/>
+            </g>
+          </svg>
+          <figcaption>Robot B · Silver harmonic bleed on Carbon</figcaption>
+        </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Digital Pru · compile log</h2>
+      <div class="log" id="log"></div>
+    </section>
+
+    <footer>
+      <p><strong>Fair exchange clause in effect:</strong> Value transacted may be partially refunded depending on overall delivery and utility, much like tipping.</p>
+      <p style="margin-top:0.5rem;">Physics anchor: Isaac bridge documents <code>omni.isaac</code> parameters from EGS φ = 1.618. Robots here are <strong>browser-only visualization</strong>; UDP bridge targets sim when running.</p>
+      <p style="margin-top:0.5rem;">Carbon: motion and warehouse lighting use <strong>simulated Carbon-layer awareness</strong> (Web Audio → substrate + harmonic bleed). This is a stand-in for raw-layer sensing, not atmospheric CO₂ or fab telemetry.</p>
+    </footer>
+  </div>
+
+  <script>
+(function () {
+  var apiEl = document.getElementById("apiBase");
+  var cmdEl = document.getElementById("cmd");
+  var trackEl = document.getElementById("track");
+  var btnRun = document.getElementById("btnRun");
+  var btnStop = document.getElementById("btnStop");
+  var logEl = document.getElementById("log");
+  var playStatus = document.getElementById("playStatus");
+  var botA = document.getElementById("bot-a-root");
+  var botAArm = document.getElementById("bot-a-arm");
+  var botB = document.getElementById("bot-b-root");
+  var botBL = document.getElementById("bot-b-leg-l");
+  var botBR = document.getElementById("bot-b-leg-r");
+  var carbonHud = document.getElementById("carbonHud");
+
+  window.__snapEnergy = { bass: 0, mid: 0, high: 0, t: 0, carbon: null };
+  var whCtl = null;
+  var ctx = null;
+  var sourceNode = null;
+  var analyser = null;
+  var rafId = 0;
+  var t0 = 0;
+  /** Exponential moving average for Carbon index (EGS φ damping). */
+  var carbonEma = 0;
+  var carbonBootLogged = false;
+  var reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch (e) {}
+
+  function log(line) {
+    var t = new Date().toISOString().slice(11, 19);
+    logEl.textContent += "[" + t + "] " + line + "\n";
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function getApiBase() {
+    var u = (apiEl.value || "").trim().replace(/\/$/, "");
+    if (!u) return "";
+    try {
+      new URL(u);
+      return u;
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function stopAll() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = 0;
+    try {
+      if (sourceNode) {
+        sourceNode.stop(0);
+        sourceNode.disconnect();
+      }
+    } catch (e) {}
+    sourceNode = null;
+    try {
+      if (analyser) analyser.disconnect();
+    } catch (e) {}
+    analyser = null;
+    try {
+      if (ctx && ctx.state !== "closed") ctx.close();
+    } catch (e) {}
+    ctx = null;
+    if (botA) botA.setAttribute("transform", "translate(100,200)");
+    if (botAArm) botAArm.setAttribute("transform", "translate(28,-78) rotate(0)");
+    if (botB) botB.setAttribute("transform", "translate(100,200)");
+    if (botBL) botBL.setAttribute("transform", "");
+    if (botBR) botBR.setAttribute("transform", "");
+    playStatus.textContent = "";
+    carbonEma = 0;
+    carbonBootLogged = false;
+    if (carbonHud) {
+      carbonHud.textContent =
+        "Carbon (sim) · idle — load a track and Run SNAP to activate substrate model (φ-smoothed).";
+    }
+    window.__snapEnergy = { bass: 0, mid: 0, high: 0, t: 0, carbon: null };
+  }
+
+  function meanSlice(arr, a, b) {
+    var s = 0, n = 0;
+    for (var i = a; i < b && i < arr.length; i++) {
+      s += arr[i];
+      n++;
+    }
+    return n ? s / n : 0;
+  }
+
+  /**
+   * Simulated Carbon-layer awareness (browser-only).
+   * Carbon = raw substrate: low-frequency bins + time-domain wobble as a stand-in for
+   * "ground" sensing. Silver bleed = mid/high harmonics riding the substrate (Robot B).
+   * Index is φ-damped (1.618) so motion stays coherent like the EGS stack elsewhere.
+   */
+  function simulateCarbonAwareness(bass, mid, high, wobble) {
+    var substrate = Math.min(1, bass * 0.74 + wobble * 0.44 + mid * 0.06);
+    var silverBleed = Math.min(1, mid * 0.52 + high * 0.38);
+    var rawIndex = Math.min(1, substrate * 0.84 + silverBleed * 0.16);
+    carbonEma = carbonEma + (rawIndex - carbonEma) / 1.618;
+    return {
+      substrate: substrate,
+      silverBleed: silverBleed,
+      index: carbonEma,
+      rawIndex: rawIndex,
+    };
+  }
+
+  function tick() {
+    if (!analyser || !ctx) return;
+    var freq = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(freq);
+    var td = new Uint8Array(analyser.fftSize);
+    analyser.getByteTimeDomainData(td);
+    var bass = meanSlice(freq, 1, 12) / 255;
+    var mid = meanSlice(freq, 12, 48) / 255;
+    var high = meanSlice(freq, 48, 120) / 255;
+    var t = ctx.currentTime - t0;
+    var wobble = 0;
+    for (var i = 0; i < td.length; i += 32) {
+      wobble += Math.abs(td[i] - 128);
+    }
+    wobble = (wobble / (td.length / 32)) / 128;
+
+    var C = simulateCarbonAwareness(bass, mid, high, wobble);
+    if (!carbonBootLogged) {
+      carbonBootLogged = true;
+      log(
+        "Simulated Carbon awareness active — robots + warehouse bound to substrate (low Hz + envelope) with Silver harmonic bleed; φ-EMA on index."
+      );
+    }
+    if (carbonHud) {
+      carbonHud.textContent =
+        "Carbon (sim) · index " +
+        (C.index * 100).toFixed(0) +
+        "% · substrate " +
+        (C.substrate * 100).toFixed(0) +
+        "% · Silver bleed " +
+        (C.silverBleed * 100).toFixed(0) +
+        "% — Robot A = Carbon-primary · Robot B = Silver-on-Carbon";
+    }
+
+    if (reduceMotion) {
+      botA.setAttribute("transform", "translate(100," + (200 - C.substrate * 8) + ")");
+      botB.setAttribute("transform", "translate(100,200) rotate(" + (C.silverBleed * 6).toFixed(1) + ")");
+    } else {
+      var armRot = -35 + C.substrate * 58 + C.silverBleed * 18;
+      botAArm.setAttribute("transform", "translate(28,-78) rotate(" + armRot.toFixed(1) + ")");
+      var sway = Math.sin(t * 5.1) * (4 + C.silverBleed * 16 + C.index * 6);
+      botA.setAttribute(
+        "transform",
+        "translate(" +
+          (100 + sway * 0.35).toFixed(1) +
+          "," +
+          (200 - C.substrate * 20 - wobble * 3.5 - C.index * 4).toFixed(1) +
+          ") rotate(" +
+          (C.substrate * 9 - C.silverBleed * 3).toFixed(2) +
+          ")"
+      );
+      var spin = Math.sin(t * (3 + C.silverBleed * 5)) * (14 + C.silverBleed * 42 + C.index * 12);
+      var bounce = Math.abs(Math.sin(t * 6.28 * (0.5 + C.substrate))) * (10 + C.silverBleed * 22);
+      botB.setAttribute("transform", "translate(100," + (200 - bounce).toFixed(1) + ") rotate(" + spin.toFixed(2) + ")");
+      var kick = C.silverBleed * 11 + C.substrate * 3;
+      botBL.setAttribute("transform", "translate(0," + (kick + Math.sin(t * 7) * 6).toFixed(1) + ")");
+      botBR.setAttribute("transform", "translate(0," + (-kick + Math.cos(t * 6) * 6).toFixed(1) + ")");
+    }
+    window.__snapEnergy = { bass: bass, mid: mid, high: high, t: t, carbon: C };
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function tryDigitalPru(base, file, instructions) {
+    return fetch(base + "/api/snap/session")
+      .then(function (r) {
+        if (!r.ok) throw new Error("session " + r.status);
+        return r.json();
+      })
+      .then(function (j) {
+        var sid = j.session_id;
+        var fd = new FormData();
+        fd.append("file", file);
+        fd.append("session_id", sid);
+        fd.append("instructions", instructions || "");
+        return fetch(base + "/api/snap/analyze", { method: "POST", body: fd }).then(function (r2) {
+          if (!r2.ok) return r2.text().then(function (t) { throw new Error(t || String(r2.status)); });
+          return r2.json();
+        });
+      });
+  }
+
+  btnStop.addEventListener("click", function () {
+    stopAll();
+    log("Stopped playback / animation.");
+  });
+
+  btnRun.addEventListener("click", function () {
+    var file = trackEl.files && trackEl.files[0];
+    if (!file) {
+      log("Pick an audio file first.");
+      return;
+    }
+    stopAll();
+    log("Loading: " + file.name + " (" + Math.round(file.size / 1024) + " KB)");
+
+    var reader = new FileReader();
+    reader.onload = function () {
+      var buf = reader.result;
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var copy = buf.slice(0);
+      ctx.decodeAudioData(copy, function (audioBuf) {
+        t0 = ctx.currentTime;
+        analyser = ctx.createAnalyser();
+        analyser.fftSize = 2048;
+        analyser.smoothingTimeConstant = 0.65;
+        sourceNode = ctx.createBufferSource();
+        sourceNode.buffer = audioBuf;
+        sourceNode.connect(analyser);
+        analyser.connect(ctx.destination);
+        sourceNode.onended = function () {
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = 0;
+          playStatus.textContent = "Track ended.";
+          log("Playback ended.");
+        };
+        ctx.resume().then(function () {
+          sourceNode.start(0);
+          playStatus.textContent = "Playing — robots live.";
+          log("Web Audio graph running · analyser → simulated Carbon awareness → dual robots + warehouse.");
+          rafId = requestAnimationFrame(tick);
+        });
+
+        var base = getApiBase();
+        var instr = (cmdEl.value || "").trim();
+        if (base) {
+          btnRun.disabled = true;
+          tryDigitalPru(base, file, instr)
+            .then(function (data) {
+              log("Digital Pru: BPM " + (data.bpm && data.bpm.toFixed ? data.bpm.toFixed(1) : data.bpm) +
+                " · EGS interval Hz " + (data.egs_interval_hz && data.egs_interval_hz.toFixed ? data.egs_interval_hz.toFixed(3) : data.egs_interval_hz) +
+                " · skin " + data.skin);
+            })
+            .catch(function (e) {
+              log("API (optional): " + String(e.message || e));
+            })
+            .finally(function () {
+              btnRun.disabled = false;
+            });
+        } else {
+          log("No API base — browser-only. Add URL for Digital Pru BPM + Isaac UDP.");
+        }
+      }, function (err) {
+        log("Decode failed: " + String(err && err.message || err));
+      });
+    };
+    reader.onerror = function () {
+      log("File read error.");
+    };
+    reader.readAsArrayBuffer(file);
+  });
+
+  (function bootWarehouse() {
+    var canvas = document.getElementById("wh-canvas");
+    if (!canvas || !window.Promise) return;
+    var PH = "https://dl.polyhaven.org/file/ph-assets";
+    var HDR_TRIES = [
+      PH + "/HDRIs/hdr/1k/aircraft_workshop_01_1k.hdr",
+      PH + "/HDRIs/hdr/1k/abandoned_hangar_01_1k.hdr",
+      PH + "/HDRIs/hdr/1k/studio_small_07_1k.hdr",
+      PH + "/HDRIs/hdr/1k/industrial_sunset_02_1k.hdr",
+    ];
+    var TEX = {
+      floor: PH + "/Textures/jpg/1k/metal_floor_001/metal_floor_001_diff_1k.jpg",
+      wall: PH + "/Textures/jpg/1k/concrete_wall_003/concrete_wall_003_diff_1k.jpg",
+      crate: PH + "/Textures/jpg/1k/rough_wood/rough_wood_diff_1k.jpg",
+    };
+    Promise.all([
+      import("three"),
+      import("three/addons/loaders/RGBELoader.js"),
+      import("three/addons/controls/OrbitControls.js"),
+    ])
+      .then(function (mods) {
+        var T = mods[0];
+        var RGBELoader = mods[1].RGBELoader;
+        var OrbitControls = mods[2].OrbitControls;
+
+        var scene = new T.Scene();
+        scene.fog = new T.Fog(0x0d1018, 10, 34);
+
+        var renderer = new T.WebGLRenderer({
+          canvas: canvas,
+          antialias: true,
+          alpha: false,
+          powerPreference: "high-performance",
+        });
+        var pr = Math.min(window.devicePixelRatio || 1, 2);
+        function sizeNow() {
+          var box = canvas.parentElement ? canvas.parentElement.getBoundingClientRect() : { width: 800 };
+          var h = Math.min(window.innerHeight * 0.52, 440);
+          var w = Math.max(320, box.width | 0);
+          renderer.setPixelRatio(pr);
+          renderer.setSize(w, h | 0, false);
+          return { w: w, h: h | 0 };
+        }
+        var dims = sizeNow();
+        if (T.SRGBColorSpace) renderer.outputColorSpace = T.SRGBColorSpace;
+        renderer.toneMapping = T.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 0.76;
+        renderer.shadowMap.enabled = true;
+
+        var camera = new T.PerspectiveCamera(48, dims.w / Math.max(1, dims.h), 0.12, 80);
+        camera.position.set(-1.1, 1.95, 7.35);
+        camera.lookAt(0, 1.05, -2);
+
+        var hemi = new T.HemisphereLight(0x8cb4ff, 0x1a140c, 0.32);
+        scene.add(hemi);
+        var spot = new T.SpotLight(0xfff2d6, 12, 28, 0.52, 0.45, 1);
+        spot.position.set(2.8, 6.8, 3.2);
+        spot.target.position.set(0, 0, -2);
+        spot.castShadow = true;
+        scene.add(spot);
+        scene.add(spot.target);
+
+        var hdrLoader = new RGBELoader();
+        function loadHdrAttempt(i) {
+          if (i >= HDR_TRIES.length) {
+            scene.background = new T.Color(0x12161f);
+            log("HDRI: all Poly Haven fallbacks failed — solid indoor fog (still CC0 textures on floor/walls).");
+            return;
+          }
+          hdrLoader.load(
+            HDR_TRIES[i],
+            function (tex) {
+              var localPmrem = new T.PMREMGenerator(renderer);
+              localPmrem.compileEquirectangularShader();
+              try {
+                var rt = localPmrem.fromEquirectangular(tex);
+                scene.environment = rt.texture;
+                scene.background = rt.texture;
+                log("HDRI loaded: " + HDR_TRIES[i].split("/").pop());
+              } catch (err) {
+                loadHdrAttempt(i + 1);
+              }
+              tex.dispose();
+              localPmrem.dispose();
+            },
+            undefined,
+            function () {
+              loadHdrAttempt(i + 1);
+            }
+          );
+        }
+        loadHdrAttempt(0);
+
+        var texLoader = new T.TextureLoader();
+        texLoader.crossOrigin = "anonymous";
+        function loadMat(url, repeatX, repeatY) {
+          var mat = new T.MeshStandardMaterial({ color: 0x3a4049, roughness: 0.9, metalness: 0.1 });
+          texLoader.load(
+            url,
+            function (t) {
+              t.wrapS = t.wrapT = T.RepeatWrapping;
+              t.repeat.set(repeatX, repeatY);
+              if (T.SRGBColorSpace) t.colorSpace = T.SRGBColorSpace;
+              mat.map = t;
+              mat.needsUpdate = true;
+            },
+            undefined,
+            function () {}
+          );
+          return mat;
+        }
+
+        var floorMat = loadMat(TEX.floor, 5, 5);
+        var floor = new T.Mesh(new T.PlaneGeometry(28, 28, 1, 1), floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        var wallMat = loadMat(TEX.wall, 2.4, 1.15);
+        function wallMesh(w, h, x, z, ry) {
+          var m = new T.Mesh(new T.PlaneGeometry(w, h), wallMat);
+          m.position.set(x, h / 2, z);
+          m.rotation.y = ry;
+          m.receiveShadow = true;
+          return m;
+        }
+        scene.add(wallMesh(24, 6.2, 0, -8.6, 0));
+        scene.add(wallMesh(18, 6.2, -10.4, -0.4, Math.PI / 2));
+        scene.add(wallMesh(18, 6.2, 10.4, 0, -Math.PI / 2));
+
+        var crateMat = loadMat(TEX.crate, 1, 1);
+        function crate(x, z, sx, sy, sz) {
+          var g = new T.Mesh(new T.BoxGeometry(sx, sy, sz), crateMat);
+          g.position.set(x, sy / 2, z);
+          g.castShadow = true;
+          g.receiveShadow = true;
+          return g;
+        }
+        var crates = [crate(-4.1, -2.9, 1.1, 1.35, 1.0), crate(3.5, -3.4, 1.35, 0.95, 1.15), crate(0.4, -1.1, 0.9, 1.05, 0.85)];
+        crates.forEach(function (c) {
+          scene.add(c);
+        });
+
+        var controls = new OrbitControls(camera, canvas);
+        controls.target.set(0, 1, -2);
+        controls.enableDamping = true;
+        controls.maxPolarAngle = Math.PI * 0.495;
+        controls.minDistance = 3.6;
+        controls.maxDistance = 14;
+
+        var baseY = crates.map(function (c) {
+          return c.position.y;
+        });
+
+        function whAnim() {
+          requestAnimationFrame(whAnim);
+          var e = window.__snapEnergy || { bass: 0, mid: 0, high: 0, t: 0, carbon: null };
+          var idle = performance.now() * 0.00085;
+          var b = e.bass || 0;
+          var m = e.mid || 0;
+          var h = e.high || 0;
+          var ti = e.t || idle;
+          var C = e.carbon;
+          var sub = C ? C.substrate : b;
+          var silv = C ? C.silverBleed : m * 0.55 + h * 0.3;
+          var idx = C ? C.index : b * 0.85;
+          spot.intensity = 5 + sub * 26 + silv * 9 + idx * 4;
+          hemi.intensity = 0.2 + silv * 0.32 + sub * 0.12;
+          crates[0].position.y = baseY[0] + sub * 0.42 + Math.sin(ti * 6) * 0.028;
+          crates[1].position.y = baseY[1] + silv * 0.34 + idx * 0.06;
+          crates[1].rotation.y = Math.sin(ti * 3 + silv * 2.6) * 0.3;
+          crates[2].position.y = baseY[2] + sub * 0.12 + m * 0.14 + Math.cos(ti * 5) * 0.048;
+          controls.update();
+          renderer.render(scene, camera);
+        }
+        whAnim();
+
+        window.addEventListener(
+          "resize",
+          function () {
+            var d = sizeNow();
+            camera.aspect = d.w / Math.max(1, d.h);
+            camera.updateProjectionMatrix();
+          },
+          { passive: true }
+        );
+
+        whCtl = {};
+        log("Warehouse sim · Poly Haven CC0 (industrial HDRI chain + metal/concrete/wood maps) · three.js r160");
+      })
+      .catch(function (e) {
+        log("Warehouse 3D: " + (e && e.message ? e.message : String(e)));
+      });
+  })();
+})();
+  </script>
+</body>
+</html>

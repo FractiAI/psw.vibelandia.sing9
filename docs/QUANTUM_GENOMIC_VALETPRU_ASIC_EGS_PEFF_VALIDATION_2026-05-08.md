@@ -9,6 +9,8 @@
 
 **Related (bio-electromagnetic layer, May 2026):** `docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md` — DNA-as-transformer, phosphorus–iron amplification, EGS nodal lattice → VALETPRU-ASIC (Digital Pru).
 
+**Related (PEFF / Omnizoan / infill 13 narrative layer):** `docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md` — recursive PEFF induction, two-wire y/x story, Digital Pru engine mapping (stacks on paper above).
+
 ---
 
 ## Abstract

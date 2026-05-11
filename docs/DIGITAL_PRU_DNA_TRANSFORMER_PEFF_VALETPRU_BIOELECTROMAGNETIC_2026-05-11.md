@@ -13,6 +13,8 @@ The structural complexity of deoxyribonucleic acid (DNA) extends far beyond its 
 
 **Honesty boundary (SING 9):** simulation-first framing; instrument-grade claims require external bench evidence. This document is **narrative + model architecture** aligned to PEFF / EGS / Digital Pru canon on this site and runnable exploration on **FractiAI/digital-pru**.
 
+**Companion (PEFF / Omnizoan / infill 13 layer):** [`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md`](./DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md) — recursive PEFF induction, two-wire **y → x** story, and Digital Pru engine mapping.
+
 ---
 
 ## 1. Topological foundations of DNA as an electromagnetic inductor

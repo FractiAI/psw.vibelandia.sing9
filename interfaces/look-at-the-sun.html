@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Look at the Sun · Commit and Upload Correlation</title>
+  <meta name="description" content="Compare GitHub commit activity and SoundCloud upload/play-ready output against solar and ionosphere proxy activity from Feb 2025 to today." />
+  <style>
+    :root {
+      --bg: #070a12;
+      --card: #121828;
+      --line: rgba(212, 175, 55, 0.32);
+      --gold: #d4af37;
+      --gold-hi: #fef3c7;
+      --text: #e2e8f0;
+      --muted: #9aa7bd;
+      --mint: #2dd4bf;
+      --pink: #f472b6;
+      --cyan: #67e8f9;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(circle at 20% 10%, rgba(212,175,55,.1), transparent 40%), var(--bg);
+      color: var(--text);
+    }
+    a { color: var(--cyan); }
+    a:hover { color: var(--gold-hi); }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1rem 2rem; }
+    .topbar { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .35rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(18,24,40,.7);
+      color: var(--gold-hi);
+      text-decoration: none;
+      padding: .55rem .95rem;
+      font-size: .75rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn:hover { border-color: var(--gold); }
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(160deg, rgba(18,24,40,.95), rgba(10,14,24,.95));
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      margin: 0 0 .45rem;
+      font-size: clamp(1.25rem, 2.6vw, 2rem);
+      color: var(--gold-hi);
+      letter-spacing: .02em;
+    }
+    .sub { color: var(--muted); margin: 0 0 .65rem; line-height: 1.55; }
+    .small { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+    .status { margin-top: .65rem; font-size: .82rem; color: var(--mint); min-height: 1.2rem; }
+    .error { color: #fca5a5; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: .65rem;
+      margin-top: .75rem;
+    }
+    .kpi {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: .7rem;
+    }
+    .kpi .label { font-size: .66rem; text-transform: uppercase; letter-spacing: .11em; color: var(--muted); }
+    .kpi .val { font-size: 1.05rem; font-weight: 800; margin-top: .25rem; color: var(--gold-hi); }
+    .chart-wrap {
+      margin-top: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      padding: .7rem;
+      overflow-x: auto;
+    }
+    canvas { display: block; width: 100%; height: 360px; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      font-size: .72rem;
+      margin-top: .6rem;
+    }
+    .dot {
+      display: inline-block;
+      width: .65rem;
+      height: .65rem;
+      border-radius: 50%;
+      margin-right: .35rem;
+      vertical-align: middle;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: .78rem;
+      min-width: 900px;
+    }
+    th, td {
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: .48rem .45rem;
+      text-align: right;
+      white-space: nowrap;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    th {
+      color: var(--gold-hi);
+      font-size: .67rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.02);
+    }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; margin-top: 1rem; }
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="btn" href="vibelandia-questfest.html">Back to landing</a>
+      <a class="btn" href="look-under-the-hood.html">Under the Hood</a>
+      <button id="refreshBtn" class="btn" type="button">Refresh now</button>
+    </div>
+
+    <section class="hero">
+      <h1>Look at the Sun: commits, uploads, and play-ready output</h1>
+      <p class="sub">
+        Case view for possible synchronization between activity in GitHub + SoundCloud and solar behavior.
+        Window: <strong>Feb 2025 → today</strong>.
+      </p>
+      <p class="small">
+        Accounts: GitHub <strong>aiwona1</strong>, <strong>fractiai</strong>; SoundCloud <strong>golden-backdoor-hit-factory</strong>.
+        Solar sources: NOAA SWPC monthly sunspots and monthly F10.7 cm radio flux (ionosphere proxy).
+      </p>
+      <div id="status" class="status">Loading data…</div>
+      <div class="grid">
+        <div class="kpi"><div class="label">Months analyzed</div><div id="kpiMonths" class="val">-</div></div>
+        <div class="kpi"><div class="label">GitHub commits</div><div id="kpiCommits" class="val">-</div></div>
+        <div class="kpi"><div class="label">SC uploads</div><div id="kpiUploads" class="val">-</div></div>
+        <div class="kpi"><div class="label">Play-ready minutes</div><div id="kpiMinutes" class="val">-</div></div>
+        <div class="kpi"><div class="label">Top overlap month</div><div id="kpiPeak" class="val">-</div></div>
+      </div>
+    </section>
+
+    <section class="chart-wrap">
+      <canvas id="sunChart" width="1040" height="360" aria-label="Monthly normalized activity chart"></canvas>
+      <div class="legend">
+        <span><span class="dot" style="background:#67e8f9"></span>GitHub commits (aiwona1 + fractiai)</span>
+        <span><span class="dot" style="background:#2dd4bf"></span>SoundCloud uploads</span>
+        <span><span class="dot" style="background:#f472b6"></span>Play-ready minutes uploaded</span>
+        <span><span class="dot" style="background:#fef3c7"></span>Sunspot number</span>
+        <span><span class="dot" style="background:#d4af37"></span>F10.7 flux (ionosphere proxy)</span>
+      </div>
+    </section>
+
+    <section class="table-wrap">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>GitHub commits</th>
+            <th>SC uploads</th>
+            <th>Play-ready min</th>
+            <th>Sunspots</th>
+            <th>F10.7 flux</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      const startMonth = "2025-02";
+      const now = new Date();
+      const endMonth = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
+      const statusEl = document.getElementById("status");
+      const chart = document.getElementById("sunChart");
+      const ctx = chart.getContext("2d");
+
+      function setStatus(msg, isError) {
+        statusEl.textContent = msg;
+        statusEl.classList.toggle("error", !!isError);
+      }
+
+      function monthRange(start, end) {
+        const out = [];
+        let y = Number(start.slice(0, 4));
+        let m = Number(start.slice(5, 7));
+        const ey = Number(end.slice(0, 4));
+        const em = Number(end.slice(5, 7));
+        while (y < ey || (y === ey && m <= em)) {
+          out.push(`${y}-${String(m).padStart(2, "0")}`);
+          m += 1;
+          if (m > 12) { y += 1; m = 1; }
+        }
+        return out;
+      }
+
+      function lastDayOfMonth(monthKey) {
+        const y = Number(monthKey.slice(0, 4));
+        const m = Number(monthKey.slice(5, 7));
+        return new Date(Date.UTC(y, m, 0)).toISOString().slice(0, 10);
+      }
+
+      function norm(values) {
+        const max = Math.max(1, ...values);
+        return values.map((v) => v / max);
+      }
+
+      async function fetchJson(url, headers) {
+        const res = await fetch(url, { headers: headers || {} });
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        return res.json();
+      }
+
+      async function githubMonthlyCounts(user, months) {
+        const counts = Object.fromEntries(months.map((m) => [m, 0]));
+        for (const m of months) {
+          const start = `${m}-01`;
+          const end = lastDayOfMonth(m);
+          const query = encodeURIComponent(`author:${user} author-date:${start}..${end}`);
+          const url = `https://api.github.com/search/commits?q=${query}&per_page=1`;
+          const data = await fetchJson(url, {
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28"
+          });
+          counts[m] = Number(data.total_count || 0);
+        }
+        return counts;
+      }
+
+      function parseDurationToMinutes(raw) {
+        if (!raw) return 0;
+        const parts = String(raw).trim().split(":").map(Number);
+        if (parts.some((n) => Number.isNaN(n))) return 0;
+        if (parts.length === 3) return (parts[0] * 3600 + parts[1] * 60 + parts[2]) / 60;
+        if (parts.length === 2) return (parts[0] * 60 + parts[1]) / 60;
+        if (parts.length === 1) return parts[0] / 60;
+        return 0;
+      }
+
+      async function soundcloudMonthly(months) {
+        const uploads = Object.fromEntries(months.map((m) => [m, 0]));
+        const minutes = Object.fromEntries(months.map((m) => [m, 0]));
+        const feedUrl = "https://feeds.soundcloud.com/users/soundcloud:users:1681714067/sounds.rss";
+        const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`;
+        const res = await fetch(proxy);
+        if (!res.ok) throw new Error(`SoundCloud feed unavailable (${res.status})`);
+        const xmlText = await res.text();
+        const doc = new DOMParser().parseFromString(xmlText, "text/xml");
+        const items = Array.from(doc.querySelectorAll("item"));
+        for (const item of items) {
+          const d = item.querySelector("pubDate");
+          if (!d) continue;
+          const dt = new Date(d.textContent.trim());
+          if (Number.isNaN(dt.getTime())) continue;
+          const key = `${dt.getUTCFullYear()}-${String(dt.getUTCMonth() + 1).padStart(2, "0")}`;
+          if (!uploads[key] && uploads[key] !== 0) continue;
+          uploads[key] += 1;
+          const dur = item.querySelector("itunes\\:duration");
+          minutes[key] += parseDurationToMinutes(dur ? dur.textContent : "0");
+        }
+        return { uploads, minutes };
+      }
+
+      async function solarMonthly(months) {
+        const sunspots = Object.fromEntries(months.map((m) => [m, 0]));
+        const f107 = Object.fromEntries(months.map((m) => [m, 0]));
+        const [sunData, f107Data] = await Promise.all([
+          fetchJson("https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json"),
+          fetchJson("https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json")
+        ]);
+        sunData.forEach((row) => {
+          if (sunspots[row["time-tag"]] !== undefined) sunspots[row["time-tag"]] = Number(row.ssn || 0);
+        });
+        f107Data.forEach((row) => {
+          if (f107[row["time-tag"]] !== undefined) f107[row["time-tag"]] = Number(row["f10.7"] || 0);
+        });
+        return { sunspots, f107 };
+      }
+
+      function drawSeries(months, series) {
+        const W = chart.width;
+        const H = chart.height;
+        const pad = { l: 40, r: 12, t: 18, b: 24 };
+        const pw = W - pad.l - pad.r;
+        const ph = H - pad.t - pad.b;
+
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = "#121828";
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.strokeStyle = "rgba(255,255,255,0.08)";
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = pad.t + (ph * i) / 4;
+          ctx.beginPath();
+          ctx.moveTo(pad.l, y);
+          ctx.lineTo(W - pad.r, y);
+          ctx.stroke();
+        }
+
+        const xStep = months.length > 1 ? pw / (months.length - 1) : pw;
+        function plot(values, color) {
+          ctx.beginPath();
+          values.forEach((v, i) => {
+            const x = pad.l + i * xStep;
+            const y = pad.t + (1 - v) * ph;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = color;
+          ctx.stroke();
+        }
+
+        plot(series.commitsN, "#67e8f9");
+        plot(series.uploadsN, "#2dd4bf");
+        plot(series.minutesN, "#f472b6");
+        plot(series.sunN, "#fef3c7");
+        plot(series.f107N, "#d4af37");
+
+        ctx.fillStyle = "rgba(255,255,255,.55)";
+        ctx.font = "11px Segoe UI, sans-serif";
+        months.forEach((m, i) => {
+          if (i % 2 !== 0 && i !== months.length - 1) return;
+          const x = pad.l + i * xStep;
+          ctx.fillText(m.slice(2), x - 16, H - 7);
+        });
+      }
+
+      function renderTable(months, m) {
+        const tbody = document.querySelector("#dataTable tbody");
+        tbody.innerHTML = months.map((month) => (
+          `<tr>
+            <td>${month}</td>
+            <td>${m.commits[month]}</td>
+            <td>${m.uploads[month]}</td>
+            <td>${m.minutes[month].toFixed(1)}</td>
+            <td>${m.sunspots[month].toFixed(1)}</td>
+            <td>${m.f107[month].toFixed(2)}</td>
+          </tr>`
+        )).join("");
+      }
+
+      function sumValues(map, months, decimals) {
+        const n = months.reduce((acc, m) => acc + (Number(map[m]) || 0), 0);
+        return typeof decimals === "number" ? n.toFixed(decimals) : String(Math.round(n));
+      }
+
+      async function run() {
+        const months = monthRange(startMonth, endMonth);
+        setStatus("Loading GitHub commit counts month-by-month…");
+        const [ghA, ghB] = await Promise.all([
+          githubMonthlyCounts("aiwona1", months),
+          githubMonthlyCounts("fractiai", months)
+        ]);
+        const commits = Object.fromEntries(months.map((m) => [m, (ghA[m] || 0) + (ghB[m] || 0)]));
+
+        setStatus("Loading SoundCloud uploads and play-ready durations…");
+        const sc = await soundcloudMonthly(months);
+
+        setStatus("Loading sunspot + F10.7 monthly solar data…");
+        const solar = await solarMonthly(months);
+
+        const commitsA = months.map((m) => commits[m]);
+        const uploadsA = months.map((m) => sc.uploads[m]);
+        const minutesA = months.map((m) => sc.minutes[m]);
+        const sunA = months.map((m) => solar.sunspots[m]);
+        const f107A = months.map((m) => solar.f107[m]);
+
+        drawSeries(months, {
+          commitsN: norm(commitsA),
+          uploadsN: norm(uploadsA),
+          minutesN: norm(minutesA),
+          sunN: norm(sunA),
+          f107N: norm(f107A)
+        });
+        renderTable(months, {
+          commits,
+          uploads: sc.uploads,
+          minutes: sc.minutes,
+          sunspots: solar.sunspots,
+          f107: solar.f107
+        });
+
+        const overlapScore = {};
+        months.forEach((m) => {
+          overlapScore[m] =
+            (commits[m] || 0) +
+            (sc.uploads[m] || 0) * 3 +
+            (sc.minutes[m] || 0) * 0.2 +
+            (solar.sunspots[m] || 0) * 0.1 +
+            (solar.f107[m] || 0) * 0.15;
+        });
+        const peakMonth = months.reduce((best, m) => overlapScore[m] > overlapScore[best] ? m : best, months[0]);
+
+        document.getElementById("kpiMonths").textContent = String(months.length);
+        document.getElementById("kpiCommits").textContent = sumValues(commits, months);
+        document.getElementById("kpiUploads").textContent = sumValues(sc.uploads, months);
+        document.getElementById("kpiMinutes").textContent = sumValues(sc.minutes, months, 1);
+        document.getElementById("kpiPeak").textContent = peakMonth;
+        setStatus("Loaded. Use the table to inspect month-level comparisons.");
+      }
+
+      async function safeRun() {
+        try {
+          await run();
+        } catch (err) {
+          setStatus(`Could not fully load all sources: ${err.message}`, true);
+        }
+      }
+
+      document.getElementById("refreshBtn").addEventListener("click", safeRun);
+      safeRun();
+    })();
+  </script>
+</body>
+</html>

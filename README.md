@@ -12,6 +12,8 @@
 
 **Working context:** Day-to-day edits, deploys, and “bringing it to life” for this stack happen **in this repo** (`psw.vibelandia.sing9` → your SING 9 Vercel project). The **runnable Digital Pru** app (Questfest landing, 13-channel whiteboard, `api/egs-emulation`, ASIC lab UI) lives in the separate **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** repository and its own deployment—SING 9 **surfaces narrative and links** there; it does not host that API route here.
 
+**Under the Hood** is now **[Juicy Juicy - Snap Omniversal Fractal Compiler (OFC)](interfaces/look-under-the-hood.html)** — prompt in, Snap compile, copy-paste **Juicy Juicy** output plus firmware-template and Hit Factory score JSON. Canon whitepaper: [`docs/JJ_SNAP_OFC_WHITEPAPER.md`](docs/JJ_SNAP_OFC_WHITEPAPER.md). Repo lanes: [`lyrics/`](lyrics/) · [`engine/ofc-snap.js`](engine/ofc-snap.js) · [`vessels/`](vessels/) · [`agents/`](agents/) · [`tracks/`](tracks/) · [`README.JJ`](README.JJ). The long [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html) reader is **deprecated** (banner on page); the previous Hood document list lives at [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html).
+
 **Vercel 403 (quick triage):** (1) **Build / Git step** — reconnect the project under **Settings → Git**; ensure the Vercel GitHub App can access the **FractiAI** org (and org **SSO** is authorized for the app if your org requires it). (2) **Browser / visitor** — open **Settings → Deployment Protection**; Production or Preview may require login (often reported as forbidden). (3) **Wrong URL** — use the production hostname from the project’s Vercel **Domains** (or that repo’s docs), not a guessed subdomain. **SING 9 production** (`psw-vibelandia-sing9.vercel.app`) has been returning **200** in recent checks; if you still see **403**, note the exact URL (preview vs production, custom domain).
 
 ---
@@ -55,9 +57,17 @@ npm test
 
 ## Recent updates (README commit)
 
+- **May 2026 · Juicy Juicy - Snap Omniversal Fractal Compiler (OFC) · new Under the Hood**
+
+**M → Metabolize:** The hood surface should compile intent (lyrics-first) instead of only listing long papers. Product name on-site is **Juicy Juicy - Snap Omniversal Fractal Compiler (OFC)** (not a separate VALETPRU-OFC-V1 code name).
+
+**C → Crystallize:** [`interfaces/look-under-the-hood.html`](interfaces/look-under-the-hood.html) replaced with the OFC UI + [`engine/ofc-snap.js`](engine/ofc-snap.js); [`docs/JJ_SNAP_OFC_WHITEPAPER.md`](docs/JJ_SNAP_OFC_WHITEPAPER.md); folders `lyrics/`, `engine/`, `vessels/`, `agents/`, `tracks/` and [`README.JJ`](README.JJ). Prior Hood index preserved at [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html). [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html) marked deprecated with CTA back to OFC. Redirect stubs: [`interfaces/juicy-juicy-snap-ofc.html`](interfaces/juicy-juicy-snap-ofc.html), [`interfaces/valetpru-ofc-v1.html`](interfaces/valetpru-ofc-v1.html). QUESTFEST copy and [`surfaces.html`](surfaces.html) hub labels updated.
+
+**A → Animate:** [`interfaces/vibelandia-questfest.html`](interfaces/vibelandia-questfest.html) + [`interfaces/i18n/en.json`](interfaces/i18n/en.json) point primary “Under the Hood” entry at the OFC page. NSPFRNP → ∞⁹
+
 - **May 2026 · Sync from FractiAI/digital-pru (`master`)**
 
-**M → Metabolize:** Upstream **digital-pru** added **genomic EGS lattice** canon and **ValetPru-agent lattice spec**; refreshed **QIHOH**, **ASIC coherence**, and **Digital Pru awareness** markdown; **SING9_EDGE_ONBOARDING** aligned.
+**M → Metabolize:** Upstream **digital-pru** (`master`) added **genomic EGS lattice** canon and **ValetPru-agent lattice spec**; refreshed **QIHOH**, **ASIC coherence**, and **Digital Pru awareness** markdown in `docs/` (plus **coherence report** + **edge brochure** copies).
 
 **C → Crystallize:** Copied `docs/*.md` from the local **digital-pru** clone into this repo’s `docs/`; mirrored **`DIGITAL_PRU_GENOMIC_EGS_NODAL_LATTICE.md`** and **`VALETPRU_AGENT_GENOMIC_LATTICE_SPEC.md`**; **Under the Hood** optional reads **19–20**; **Digital Pru presentation** “Go deeper” links updated; production entry note **`/interfaces/digital-pru-landing.html`** on Vercel.
 

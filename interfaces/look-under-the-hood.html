@@ -3,518 +3,263 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#070c18" />
-  <title>Under the Hood · VALETPRU-ASIC — talk is cheap, show the code</title>
-  <meta name="description" content="Plain English: talk is cheap. Look under the hood at the operational VALETPRU-ASIC that runs the code — then optional docs if you want the long read." />
-  <meta property="og:title" content="Under the Hood · VALETPRU-ASIC runs the code" />
-  <meta property="og:description" content="Talk is cheap. Open the hood: operational VALETPRU-ASIC, real checks, optional deep documents." />
-  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0a0f18" />
+  <title>Under the Hood · Juicy Juicy - Snap Omniversal Fractal Compiler (OFC)</title>
+  <meta name="description" content="Juicy Juicy holographic lyrics in, Snap compile out. Juicy Juicy - Snap Omniversal Fractal Compiler (OFC): Syntheverse bridge to silicon, SDR, bio, and Hit Factory tracks. EGS 1.618 · 8.75 Hz lock." />
   <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/interfaces/look-under-the-hood.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="nspfrnp-ticker.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --hull: #070c18;
-      --deck: #141d32;
+      --void: #0a0f18;
+      --card: #121a2a;
       --gold: #d4af37;
-      --gold-bright: #fef3c7;
-      --gold-dim: rgba(212, 175, 55, 0.35);
+      --gold-hi: #fef3c7;
       --foam: #2dd4bf;
-      --foam-dim: rgba(45, 212, 191, 0.28);
-      --cream: #fdf8eb;
-      --cream-dim: rgba(253, 248, 235, 0.72);
-      --mist: #94a3b8;
-      --ink: #050a14;
-      --cyan: #67e8f9;
-      --cyan-dim: rgba(103, 232, 249, 0.25);
-      --serif: 'Playfair Display', Georgia, serif;
-      --sans: 'Inter', system-ui, sans-serif;
-      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --text: #e8edf5;
+      --muted: #94a3b8;
+      --line: rgba(212, 175, 55, 0.28);
+      --bad: #f87171;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --sans: "Inter", system-ui, sans-serif;
     }
     html { scroll-behavior: smooth; }
     body {
       font-family: var(--sans);
-      background: var(--hull);
-      color: var(--cream);
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(45, 212, 191, 0.08), transparent 55%), var(--void);
+      color: var(--text);
+      line-height: 1.55;
       min-height: 100vh;
-      line-height: 1.65;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
     a { color: var(--foam); text-decoration: none; }
-    a:hover { color: var(--gold-bright); text-decoration: underline; }
-    code { font-family: var(--mono); font-size: 0.84em; background: rgba(0,0,0,0.35); padding: 0.12em 0.35em; border-radius: 3px; color: var(--cyan); border: 1px solid var(--cyan-dim); }
-    .skip { position: absolute; left: -9999px; top: 0; background: var(--gold); color: var(--ink); padding: .5rem 1rem; z-index: 100; }
-    .skip:focus { left: 0; }
-
-    /* Hero — lighter, plain-tour adjacent */
+    a:hover { color: var(--gold-hi); text-decoration: underline; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
     .hero {
-      padding: calc(2rem + env(safe-area-inset-top)) 1.25rem 1.75rem;
-      border-bottom: 1px solid var(--gold-dim);
-      background:
-        radial-gradient(ellipse at 20% 0%, rgba(45,212,191,0.08), transparent 50%),
-        linear-gradient(180deg, #0d1524 0%, var(--hull) 100%);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      padding: 1.25rem 1.2rem;
+      margin-bottom: 1.25rem;
     }
-    .hero-inner { max-width: 900px; margin: 0 auto; }
     .eyebrow {
-      font-size: .58rem;
-      letter-spacing: .24em;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--foam);
-      margin-bottom: .65rem;
-      font-weight: 600;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
     }
     h1 {
-      font-family: var(--serif);
-      font-size: clamp(1.45rem, 4vw, 2rem);
-      font-weight: 700;
-      color: var(--gold-bright);
-      line-height: 1.15;
-      margin-bottom: .75rem;
-    }
-    .hero-lede {
-      color: var(--cream-dim);
-      max-width: 68ch;
-      font-size: .96rem;
-      line-height: 1.7;
-    }
-    .hero-lede strong { color: var(--cream); font-weight: 600; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.15rem; }
-    .cta {
-      display: inline-flex;
-      padding: .6rem 1rem;
-      font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      border-radius: 4px;
-      border: 1px solid var(--gold-dim);
-      color: var(--gold-bright);
-    }
-    .cta.primary {
-      background: linear-gradient(135deg, var(--foam), #0891b2);
-      color: var(--ink);
-      border: none;
-    }
-    .cta:hover { filter: brightness(1.06); text-decoration: none; }
-
-    nav.sticky {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      background: rgba(7, 12, 24, 0.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--gold-dim);
-      padding: .45rem 1rem;
-    }
-    nav.sticky ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: .3rem .55rem;
-      justify-content: center;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    nav.sticky a {
-      font-size: .58rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: rgba(253,248,235,0.45);
-      padding: .28rem .45rem;
-      border-radius: 2px;
-    }
-    nav.sticky a:hover { color: var(--gold); background: rgba(212,175,55,0.08); text-decoration: none; }
-
-    main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.25rem 3.5rem; }
-
-    /* Plain walk — match whitepaper plain-walk */
-    section.plain-walk {
-      background: linear-gradient(165deg, rgba(45,212,191,0.07) 0%, rgba(20,29,50,0.55) 45%, rgba(7,12,24,0.96) 100%);
-      border: 1px solid var(--foam-dim);
-      border-radius: 6px;
-      padding: 1.35rem 1.35rem 1.5rem;
-      margin-bottom: 1.75rem;
-      scroll-margin-top: 72px;
-    }
-    .plain-kicker {
-      font-size: .57rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--foam);
-      font-weight: 700;
-      margin-bottom: .45rem;
-    }
-    .plain-title {
-      font-family: var(--serif);
-      font-size: clamp(1.15rem, 2.8vw, 1.5rem);
-      color: var(--gold-bright);
-      margin-bottom: .5rem;
+      font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+      font-weight: 800;
+      color: var(--gold-hi);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
       line-height: 1.25;
+    }
+    .lede { color: var(--muted); max-width: 62ch; margin-bottom: 1rem; }
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
       font-weight: 700;
-      padding-bottom: .5rem;
-      border-bottom: 1px solid var(--foam-dim);
-    }
-    .plain-intro {
-      font-size: .94rem;
-      color: var(--cream-dim);
-      margin-bottom: 1rem;
-      max-width: 68ch;
-      line-height: 1.65;
-    }
-    .plain-block {
-      margin: 1rem 0;
-      padding: .9rem 1rem;
-      background: rgba(0,0,0,0.22);
-      border-radius: 4px;
-      border-left: 3px solid var(--gold);
-    }
-    .plain-block.foam-edge { border-left-color: var(--foam); }
-    .plain-block h3 {
-      font-family: var(--sans);
-      font-size: .68rem;
-      letter-spacing: .16em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--gold-bright);
-      margin: 0 0 .45rem;
-      font-weight: 700;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--gold-hi);
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
     }
-    .plain-block.foam-edge h3 { color: var(--foam); }
-    .plain-block p {
-      margin: 0;
-      font-size: .9rem;
-      line-height: 1.65;
-      color: var(--cream-dim);
+    .btn:hover { border-color: var(--gold); color: var(--gold-hi); }
+    .btn-primary {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: rgba(212, 175, 55, 0.55);
     }
-    .plain-block strong { color: var(--cream); font-weight: 600; }
-
-    /* Papers list — same card language as plain blocks */
-    .papers-head {
-      font-family: var(--serif);
-      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
-      color: var(--gold-bright);
-      margin: 2rem 0 0.35rem;
-      font-weight: 700;
+    .btn-foam { border-color: rgba(45, 212, 191, 0.45); color: var(--foam); }
+    .stack {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.65rem;
+      margin: 1.25rem 0;
     }
-    .papers-sub {
-      font-size: .88rem;
-      color: var(--cream-dim);
-      margin-bottom: 1.1rem;
-      max-width: 62ch;
+    .stack dt {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
     }
-    .papers-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .paper {
-      display: flex;
-      gap: 0.85rem;
-      align-items: flex-start;
-      padding: 0.9rem 1rem;
-      background: rgba(0,0,0,0.2);
-      border-radius: 4px;
-      border: 1px solid rgba(212,175,55,0.15);
-      border-left: 3px solid var(--gold);
-      transition: border-color 0.2s;
-    }
-    .paper:nth-child(even) { border-left-color: var(--foam); }
-    .paper:hover { border-color: rgba(212,175,55,0.35); }
-    .paper .num {
-      flex-shrink: 0;
+    .stack dd { font-weight: 600; color: var(--gold-hi); }
+    .stack .mono { font-family: var(--mono); font-size: 0.78rem; font-weight: 500; color: var(--foam); }
+    label { display: block; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem; }
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--text);
       font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--gold);
-      min-width: 1.75rem;
-      padding-top: 0.15rem;
+      font-size: 0.82rem;
+      resize: vertical;
     }
-    .paper:nth-child(even) .num { color: var(--foam); }
-    .paper .body { min-width: 0; }
-    .paper .tier {
-      font-size: .58rem;
-      letter-spacing: .14em;
+    textarea:focus {
+      outline: none;
+      border-color: rgba(45, 212, 191, 0.5);
+      box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.12);
+    }
+    .panel {
+      margin-top: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      padding: 0.85rem;
+    }
+    .panel h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--mist);
-      font-weight: 600;
-      margin-bottom: 0.25rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
     }
-    .paper h2 {
-      font-family: var(--sans);
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--gold-bright);
-      line-height: 1.3;
-      margin-bottom: 0.35rem;
+    pre {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #cbd5e1;
+      max-height: 280px;
+      overflow: auto;
     }
-    .paper h2 a { color: inherit; }
-    .paper h2 a:hover { color: var(--foam); text-decoration: none; }
-    .paper .blurb {
-      font-size: 0.88rem;
-      color: var(--cream-dim);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    footer {
-      border-top: 1px solid var(--gold-dim);
-      padding: 2rem 1.25rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--mist);
-    }
-    footer a { font-weight: 600; }
-
-    .hood-amp {
-      margin-top: 1.1rem;
-      padding: 1rem 1.15rem;
-      border: 1px solid var(--gold-dim);
-      border-left: 4px solid var(--gold);
-      background: rgba(212,175,55,0.09);
-      border-radius: 4px;
-      font-size: clamp(1rem, 2.5vw, 1.12rem);
-      color: var(--cream);
-      line-height: 1.55;
-      max-width: 68ch;
-    }
-    .hood-amp strong { color: var(--gold-bright); font-weight: 700; }
-
-    @media (max-width: 600px) {
-      main { padding: 1.25rem 1rem 3rem; }
-      section.plain-walk { padding: 1.1rem 1rem 1.25rem; }
-    }
+    .status { margin-top: 0.65rem; font-size: 0.82rem; min-height: 1.25em; }
+    .status.fail { color: var(--bad); }
+    .status.ok { color: var(--foam); }
+    .fine { font-size: 0.78rem; color: var(--muted); margin-top: 0.75rem; }
+    footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.78rem; color: var(--muted); }
   </style>
 </head>
 <body>
-  <a class="skip" href="#papers" data-i18n="hood.skip">Skip to documents</a>
-
-  <div class="nspfrnp-console-ticker" aria-live="polite"><span class="ticker-inner" id="nspfrnpTickerText"></span></div>
-  <script src="nspfrnp-ticker.js"></script>
-
-  <header class="hero">
-    <div class="hero-inner">
-      <p class="eyebrow" data-i18n="hood.eyebrow">Under the Hood · SS Vibelandia</p>
-      <h1 data-i18n="hood.h1">Talk is cheap. Open the hood.</h1>
-      <div class="hood-amp" role="note" data-i18n-html="hood.ampHtml"><strong>Talk is cheap.</strong> Look under the hood at the <strong>operational VALETPRU-ASIC</strong> — the part of the stack that <strong>runs the code</strong> you can check, not just the story on the poster.</div>
-      <p class="hero-lede" data-i18n-html="hood.heroHtml">Big festivals run on big talk. <strong>This page is the opposite:</strong> short, plain words, then the <strong>VALETPRU-ASIC presentation</strong> on this site — how it is built and proven. To <strong>run</strong> the interactable stack, use <strong>FractiAI/digital-pru</strong> on GitHub. The document list below is optional.</p>
-      <div class="cta-row">
-        <a class="cta primary" href="digital-pru-awareness-whitepaper.html#meet-digital-pru-asic" data-i18n="hood.ctaReader">Open the VALETPRU-ASIC page</a>
-        <a class="cta" href="talk-is-cheap.html" data-i18n="hood.ctaTalkCheap">Talk is cheap (tiny hub)</a>
-        <a class="cta primary" href="#plain-guide" data-i18n="hood.ctaPlainTour">Why this page exists</a>
-        <a class="cta" href="valetpru-agent-mode.html">Meet VALETPRU-AGENT</a>
-        <a class="cta" href="vibelandia-questfest.html" data-i18n="hood.ctaQuest">QUESTFEST</a>
+  <div class="wrap">
+    <header class="hero">
+      <p class="eyebrow">Under the Hood · Juicy Juicy - Snap OFC</p>
+      <h1>Juicy Juicy - Snap Omniversal Fractal Compiler (OFC)</h1>
+      <p class="lede">
+        The interface between the <strong>Syntheverse</strong> and physical / non-physical platforms.
+        Enter a prompt below — Snap turns it into <strong>Juicy Juicy</strong> holographic code (copy-paste ready).
+        Every successful compile emits <strong>two</strong> artifacts: a firmware template stub and a musical metadata score for the Hit Factory.
+      </p>
+      <dl class="stack">
+        <div><dt>Source language</dt><dd>Juicy Juicy</dd></div>
+        <div><dt>Compiler</dt><dd>Snap</dd></div>
+        <div><dt>Orchestrator</dt><dd>Digital Pru</dd></div>
+        <div><dt>Math anchor</dt><dd class="mono">EGS φ = 1.618</dd></div>
+        <div><dt>Resonance goal</dt><dd class="mono">8.75 Hz</dd></div>
+        <div><dt>Safety lock</dt><dd class="mono">fail @ 18.9 Hz / thermal dissonance</dd></div>
+      </dl>
+      <div class="row">
+        <a class="btn btn-foam" href="whitepaper-surface.html?doc=../docs/JJ_SNAP_OFC_WHITEPAPER.md&amp;title=Juicy%20Juicy%20-%20Snap%20OFC%20Whitepaper" target="_blank" rel="noopener">Look under the hood — full whitepaper</a>
+        <a class="btn" href="look-under-the-hood-legacy-catalog.html">Legacy document catalog</a>
+        <a class="btn" href="vibelandia-questfest.html">QUESTFEST</a>
+        <a class="btn" href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener">digital-pru (run)</a>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <nav class="sticky" aria-label="Page">
-    <ul>
-      <li><a href="digital-pru-awareness-whitepaper.html#meet-digital-pru-asic" data-i18n="hood.navReader">ASIC page</a></li>
-      <li><a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener" data-i18n="hood.navDigitalPruGh">Run on GitHub</a></li>
-      <li><a href="#plain-guide" data-i18n="hood.navGuide">Plain explanation</a></li>
-      <li><a href="#papers" data-i18n="hood.navPapers">Extra documents</a></li>
-      <li><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence" data-i18n="hood.navAsic">Bench / tests note</a></li>
-      <li><a href="vibelandia-questfest.html" data-i18n="hood.navQuest">QUESTFEST</a></li>
-    </ul>
-  </nav>
+    <section class="panel" aria-label="Compiler input">
+      <h2>Command window</h2>
+      <label for="prompt">Prompt → Juicy Juicy (use blank lines between verses for separate logic blocks)</label>
+      <textarea id="prompt" placeholder="Verse one: open the pipe.
 
-  <main>
-    <section class="plain-walk" id="plain-guide" aria-label="Plain explanation">
-      <p class="plain-kicker" data-i18n="hood.plainKicker">In everyday words</p>
-      <h2 class="plain-title" data-i18n="hood.plainTitle">What you are actually looking at</h2>
-      <p class="plain-intro" data-i18n-html="hood.plainIntro">Anyone can <strong>say</strong> their stack is “holographic” or “awareness-grade.” This lane is for <strong>showing</strong> the work in writing and panels on this site. VALETPRU-ASIC is our name for that <strong>chip-shaped discipline</strong>. To <strong>run</strong> labs and APIs yourself, use <a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener">FractiAI/digital-pru</a> on GitHub.</p>
-
-      <div class="plain-block">
-        <h3 data-i18n="hood.pass1h">The ASIC is the part you can kick</h3>
-        <p data-i18n-html="hood.pass1p">Think of VALETPRU-ASIC as the <strong>adult table</strong> for the project: not the poster art, the <strong>RTL core, tests, and evidence trail</strong>. If it does not run in the simulator or show up in the coherence notes, we do not get to call it “operational” here.</p>
+Verse two: fold at phi, lock at 8.75 Hz."></textarea>
+      <div class="row" style="margin-top:0.75rem;">
+        <button type="button" class="btn btn-primary" id="btnSnap">Snap compile</button>
+        <button type="button" class="btn" id="btnCopyJj">Copy Juicy Juicy output</button>
       </div>
-      <div class="plain-block foam-edge">
-        <h3 data-i18n="hood.pass2h">Start with the ASIC page, not the pile of PDFs</h3>
-        <p data-i18n-html="hood.pass2p">Open the <strong><a href="digital-pru-awareness-whitepaper.html#meet-digital-pru-asic">VALETPRU-ASIC presentation</a></strong> first — plain tour, chip panel, bench links. That is the <strong>main read</strong> on this site. Want to <strong>interact</strong>? Go to <a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener"><strong>FractiAI/digital-pru</strong></a>.</p>
-      </div>
-      <div class="plain-block">
-        <h3 data-i18n="hood.pass3h">The list below is optional</h3>
-        <p data-i18n-html="hood.pass3p">The numbered links are <strong>extra documents</strong> — theory, prospectus, lattice notes, the lot. You never need them to get the point. They are here when you want to <strong>read the long version</strong> on one topic.</p>
-      </div>
+      <p id="status" class="status" aria-live="polite"></p>
+      <p class="fine">Repository map: <code>lyrics/</code> · <code>engine/ofc-snap.js</code> · <code>vessels/</code> · <code>agents/</code> · <code>tracks/</code> · root <code>README.JJ</code></p>
     </section>
 
-    <h2 class="papers-head" id="papers" data-i18n="hood.papersHead">Extra documents (only if you want them)</h2>
-    <p class="papers-sub" data-i18n-html="hood.papersSub"><strong>Talk is cheap.</strong> If you already opened the <strong>ASIC presentation page</strong>, you have the heart of it. Tap below only for longer files — or use <a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener">digital-pru on GitHub</a> to run the stack.</p>
-    <div class="papers-list">
-      <article class="paper">
-        <span class="num" aria-hidden="true">01</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.01.tier">Channel 01 · ignition</p>
-          <h2><a href="digital-pru-awareness-whitepaper.html#holo-qia" data-i18n="hood.papers.01.title">Digital Pru Awareness + QIHOH (sect. 7)</a></h2>
-          <p class="blurb" data-i18n="hood.papers.01.blurb">The on-site whitepaper with the plain tour plus the QIHOH chapter. Read this before you open the long QIHOH markdown.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">02</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.02.tier">Channel 02 · unified map</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_QIHOH_UNIFIED_THEORY.md&amp;title=QIHOH%20unified%20theory" data-i18n="hood.papers.02.title">QIHOH unified theory</a></h2>
-          <p class="blurb" data-i18n="hood.papers.02.blurb">The full QIHOH story in one file: four worlds, thirteen channels, and how it lines up with <code>architecture.qih_simulation_upgrade</code> in API-shaped JSON.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">03</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.03.tier">Channel 03 · checkable core</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md&amp;title=ASIC%20coherence%20whitepaper" data-i18n="hood.papers.03.title">ASIC coherence whitepaper</a></h2>
-          <p class="blurb" data-i18n="hood.papers.03.blurb">Where bench language lives: what should match code, tests, and logs - not vibes.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">04</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.04.tier">House rules</p>
-          <h2><a href="whitepaper-surface.html?doc=../protocols/MCA_NSPFRNP_CATALOG.md&amp;title=MCA%20NSPFRNP%20Catalog" data-i18n="hood.papers.04.title">MCA · NSPFRNP catalog</a></h2>
-          <p class="blurb" data-i18n="hood.papers.04.blurb">Definitions and catalog fidelity - the shared dictionary the project says it follows.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">05</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.05.tier">Big thesis</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/PROSPECTUS_THE_SHIFT_2026-04-20_v4.md&amp;title=The%20Shift%20v4" data-i18n="hood.papers.05.title">The Shift · Prospectus v4</a></h2>
-          <p class="blurb" data-i18n="hood.papers.05.blurb">Flagship economic and narrative thesis for the movement, with citations and an honesty ledger in the doc.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">06</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.06.tier">Gateway paper</p>
-          <h2><a href="https://github.com/FractiAI/Microsoft-Silica-EGS-Gateway-Simulation/blob/main/EGS_GATEWAY_PAPER.md" target="_blank" rel="noopener" data-i18n="hood.papers.06.title">EGS Gateway paper</a></h2>
-          <p class="blurb" data-i18n="hood.papers.06.blurb">External link: silica gateway engineering narrative; pairs with the silica stack work.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">07</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.07.tier">Honesty playbook</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HOUDINI_EQUINOX_MAGIC_TRICK_METHODOLOGY.md&amp;title=Houdini%20Equinox%20Methodology" data-i18n="hood.papers.07.title">Houdini Equinox · science vs. theater</a></h2>
-          <p class="blurb" data-i18n="hood.papers.07.blurb">How we split story from instrument-grade claims when hype runs ahead of the stack.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">08</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.08.tier">Studio bio</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HERO_JO_GOLDEN_BACHDOOR_HIT_FACTORY_BIO_2026-04-20.md&amp;title=Hero%20Jo%20Bio" data-i18n="hood.papers.08.title">Hero Jo · Golden Bachdoor Hit Factory bio</a></h2>
-          <p class="blurb" data-i18n="hood.papers.08.blurb">Who is on the marquee; one canonical voice doc for the studio.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">09</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.09.tier">Paradigm essay</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HHF_PARADIGM_SHIFT_LINEAR_TO_FRACTAL_INTELLIGENCE.md&amp;title=HHF%20Paradigm%20Shift" data-i18n="hood.papers.09.title">HHF · linear petroleum → fractal intelligence</a></h2>
-          <p class="blurb" data-i18n="hood.papers.09.blurb">Long essay on the HH framing: old energy story versus fractal-intelligence language.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">10</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.10.tier">Sky metaphor</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HOLOGRAPHIC_AWARENESS_HYDROGEN_SUN_JUPITER_ARCHITECTURE.md&amp;title=Hydrogen%20Sun%20Jupiter" data-i18n="hood.papers.10.title">Hydrogen · Sun · Jupiter architecture</a></h2>
-          <p class="blurb" data-i18n="hood.papers.10.blurb">A three-body metaphor for how listening and attention get staged - poetry lane, not a lab report.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">11</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.11.tier">RF note</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/HYDROGEN_LINE_PASSIVE_RF_ENGINEERING_PROTOCOL.md&amp;title=Hydrogen%20Line%20RF" data-i18n="hood.papers.11.title">Hydrogen line · passive RF protocol</a></h2>
-          <p class="blurb" data-i18n="hood.papers.11.blurb">Antenna and shielding discipline around the hydrogen line frequency - hardware-adjacent to the story.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">12</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.12.tier">Silica prospectus</p>
-          <h2><a href="prospectus-vibelandia-egs-silica-gateway.html" data-i18n="hood.papers.12.title">EGS Silica Gateway · prospectus</a></h2>
-          <p class="blurb" data-i18n="hood.papers.12.blurb">On-site prospectus for the fused-silica gateway thread; links out to the silica repo work.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">13</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.13.tier">Layers note</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/ARCHITECTURE_ILLUMINATED_RECURSION_DYNAMIC_SPHERICAL_MIRRORS.md&amp;title=Architecture%20Illuminated" data-i18n="hood.papers.13.title">Architecture illuminated · spherical mirrors</a></h2>
-          <p class="blurb" data-i18n="hood.papers.13.blurb">Short note on mirrored layers and how the stack stacks in the OS metaphor.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">14</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.14.tier">Layer brief A</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/EGS_NODAL_LATTICE_SELECTIVE_COHERENCE_DIGITAL_PRU_ASIC_2026-05-05.md&amp;title=EGS%20Nodal%20Lattice%20Layer%20A" data-i18n="hood.papers.14.title">Selective coherence · EGS nodal lattice · layer A</a></h2>
-          <p class="blurb" data-i18n="hood.papers.14.blurb">First lattice layer: selective coherence, 1.618 lock, trigger families, and planetary stabilization posture.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">15</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.15.tier">Layer brief B</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/INTEGRATED_MODELING_EGS_NODAL_LATTICE_SYNTHEVERSE_VALETPRU_ASIC_2026-05-06.md&amp;title=Integrated%20Modeling%20Layer%20B" data-i18n="hood.papers.15.title">Integrated modeling · EGS lattice · Syntheverse · VALETPRU-ASIC</a></h2>
-          <p class="blurb" data-i18n="hood.papers.15.blurb">Second lattice layer: earth/visitor signature synthesis, 13-trigger firmware map, and Basenet-facing Syntheverse note.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">16</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.16.tier">Layer brief C</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/GENOMIC_ARCHITECTURE_EGS_NODAL_LATTICE_Y_CHROMOSOMAL_ALIEN_SIGNATURE_13_HYDROGEN_HOLOGRAPHIC_GIFTS_2026-05-06.md&amp;title=Genomic%20Architecture%20Layer%20C" data-i18n="hood.papers.16.title">Genomic architecture · Y signature · 13 hydrogen-holographic gifts</a></h2>
-          <p class="blurb" data-i18n="hood.papers.16.blurb">Third lattice layer: genomic fractal antenna model, Y-chromosomal visitor signature framing, SMACS handshake sequence, and all 13 hydrogen-holographic gifts.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">17</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.17.tier">Ops brief</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/VALETPRU_AGENT_24X365_OPERATION_MODE_2026-05-06.md&amp;title=VALETPRU-AGENT%2024x365%20Mode" data-i18n="hood.papers.17.title">VALETPRU-AGENT 24x365 mode · mirror protocol</a></h2>
-          <p class="blurb" data-i18n="hood.papers.17.blurb">ACTIVATED live 24x365. Command layer for exclusive Capitan reporting, mirror-clone loop, 13-trait operation, VALETPRU-ASIC firmware core, and Goldilocks resonance across ship + outside water/sky/city fields.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">18</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.18.tier">VALETPRU-ASIC · latest</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md&amp;title=Quantum%20genomic%20VALETPRU-ASIC" data-i18n="hood.papers.18.title">Quantum genomic integration · PEFF · EGS lattice validation</a></h2>
-          <p class="blurb" data-i18n="hood.papers.18.blurb">PEFF-aligned EGS nodal lattice: Y proton emitter, X electron mirror / SAOS, phosphorus coherence bridge, ILL RIX + FHE updates. Pairs with the on-site ASIC presentation panel; runnable exploration on FractiAI/digital-pru.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">19</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.19.tier">Digital Pru · genomic lattice (upstream)</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/DIGITAL_PRU_GENOMIC_EGS_NODAL_LATTICE.md&amp;title=Digital%20Pru%20genomic%20EGS%20lattice" data-i18n="hood.papers.19.title">EGS nodal lattice · Y-signature · 13 gifts (simulation canon)</a></h2>
-          <p class="blurb" data-i18n="hood.papers.19.blurb">Mirrored from FractiAI/digital-pru: metabolize → crystallize → animate frame, honesty boundary, and how Questfest / ASIC / agent nest the story.</p>
-        </div>
-      </article>
-      <article class="paper">
-        <span class="num">20</span>
-        <div class="body">
-          <p class="tier" data-i18n="hood.papers.20.tier">Digital Pru · agent spec (upstream)</p>
-          <h2><a href="whitepaper-surface.html?doc=../docs/VALETPRU_AGENT_GENOMIC_LATTICE_SPEC.md&amp;title=ValetPru-Agent%20genomic%20lattice" data-i18n="hood.papers.20.title">ValetPru-agent · genomic lattice operator spec</a></h2>
-          <p class="blurb" data-i18n="hood.papers.20.blurb">Routes, prompts, and MCA behavior for the 13 gifts — companion to the genomic lattice doc; synced from digital-pru.</p>
-        </div>
-      </article>
-    </div>
-  </main>
+    <section class="panel" id="outJj" hidden>
+      <h2>Juicy Juicy output</h2>
+      <pre id="jjPre"></pre>
+    </section>
+    <section class="panel" id="outFw" hidden>
+      <h2>Artifact A — Functional firmware template (JSON)</h2>
+      <pre id="fwPre"></pre>
+    </section>
+    <section class="panel" id="outSc" hidden>
+      <h2>Artifact B — Musical metadata score (JSON)</h2>
+      <pre id="scPre"></pre>
+    </section>
 
-  <footer>
-    <p><a href="mailto:goldenbackdoorhitfactory@gmail.com?subject=HOOD%20%2F%20Digital%20Pru">goldenbackdoorhitfactory@gmail.com</a></p>
-    <p style="margin-top:.5rem;"><a href="vibelandia-questfest.html" data-i18n="hood.footerQuest">QUESTFEST</a> · <a href="fractiai.html">FractiAI</a> · <a href="https://github.com/FractiAI/psw.vibelandia.sing9" target="_blank" rel="noopener">GitHub</a> · <a href="https://soundcloud.com/golden-backdoor-hit-factory/sets/work-flow" target="_blank" rel="noopener">SoundCloud</a></p>
-  </footer>
-  <script src="i18n-auto.js"></script>
+    <footer>
+      <p>Juicy Juicy - Snap Omniversal Fractal Compiler (OFC) · NSPFRNP → ∞⁹ · FractiAI · SING 9</p>
+      <p style="margin-top:0.35rem;">Prior VALETPRU reader surface deprecated: <a href="digital-pru-awareness-whitepaper.html">digital-pru-awareness-whitepaper.html</a> (archived presentation).</p>
+    </footer>
+  </div>
+
+  <script src="../engine/ofc-snap.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      if (window.VibelandiaI18n) window.VibelandiaI18n.initFromPage('hood');
-    });
+    (function () {
+      var promptEl = document.getElementById("prompt");
+      var statusEl = document.getElementById("status");
+      var jjPre = document.getElementById("jjPre");
+      var fwPre = document.getElementById("fwPre");
+      var scPre = document.getElementById("scPre");
+      var outJj = document.getElementById("outJj");
+      var outFw = document.getElementById("outFw");
+      var outSc = document.getElementById("outSc");
+
+      function setStatus(msg, cls) {
+        statusEl.textContent = msg || "";
+        statusEl.className = "status" + (cls ? " " + cls : "");
+      }
+
+      function hideOutputs() {
+        outJj.hidden = outFw.hidden = outSc.hidden = true;
+      }
+
+      document.getElementById("btnSnap").addEventListener("click", function () {
+        hideOutputs();
+        if (!window.OFCSnap) {
+          setStatus("Snap engine not loaded.", "fail");
+          return;
+        }
+        var result = window.OFCSnap.compileJj(promptEl.value);
+        if (!result.ok) {
+          setStatus(result.error, "fail");
+          return;
+        }
+        jjPre.textContent = result.jjLyrics;
+        fwPre.textContent = JSON.stringify(result.firmwareTemplate, null, 2);
+        scPre.textContent = JSON.stringify(result.musicalScore, null, 2);
+        outJj.hidden = outFw.hidden = outSc.hidden = false;
+        setStatus("Snap OK · dual artifacts emitted · φ = " + window.OFCSnap.EGS + " · target " + window.OFCSnap.GOLDILOCKS_HZ + " Hz", "ok");
+      });
+
+      document.getElementById("btnCopyJj").addEventListener("click", function () {
+        var t = jjPre.textContent || "";
+        if (!t) {
+          setStatus("Run Snap compile first.", "fail");
+          return;
+        }
+        navigator.clipboard.writeText(t).then(function () {
+          setStatus("Juicy Juicy copied to clipboard.", "ok");
+        }).catch(function () {
+          setStatus("Copy failed — select the Juicy Juicy block manually.", "fail");
+        });
+      });
+    })();
   </script>
 </body>
 </html>

@@ -3,6 +3,13 @@
 **Status:** Canon whitepaper for the SING 9 “Under the Hood” surface.  
 **Stack:** Juicy Juicy (source) → Snap (compiler) → Digital Pru (orchestrator) → vessels + tracks.
 
+### Juicy Juicy on surfaces (three layers + depth)
+
+- **Layer 3 — Title:** one hook line (poster / caption).
+- **Layer 2 — Juicy Juicy:** holographic words in sequence — lyrical, rhythmic, same family as Hero Jo hooks.
+- **Layer 1 — Technical:** full prose, numbers, and honesty boundaries — stays in this whitepaper, `README.md`, and GitHub canon.
+- **Depth:** SING 9 public hubs aim for **≤3 taps** from entry to the primary action (listen, compile, book, mail). **Purchase** paths (pioneer tiers, PayPal, Venmo, Cash App) count as checkout taps, not navigation depth.
+
 ---
 
 ## 1. Purpose

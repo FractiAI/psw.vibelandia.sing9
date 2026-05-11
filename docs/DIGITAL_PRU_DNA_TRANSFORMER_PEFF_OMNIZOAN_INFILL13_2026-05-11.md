@@ -1,7 +1,6 @@
 # The DNA Transformer Hypothesis: Phosphorus–Iron Magnetic Amplification and the Recursive Induction of the Paradise Energy Fractal Force (PEFF) Framework
 
-**Version:** 2026-05-11 (SING 9 canon · narrative layer on [#21](./DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md))  
-**Surface:** [`interfaces/look-under-the-hood-legacy-catalog.html`](../interfaces/look-under-the-hood-legacy-catalog.html) · reader [`whitepaper-surface.html`](../interfaces/whitepaper-surface.html)
+**Split file · Part I only (May 2026).** Full merged text: [`DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md`](./DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md). **Surfaces:** [`interfaces/look-under-the-hood-legacy-catalog.html`](../interfaces/look-under-the-hood-legacy-catalog.html) · [`whitepaper-surface.html`](../interfaces/whitepaper-surface.html)
 
 ---
 
@@ -9,7 +8,7 @@
 
 The emergence of the universe as a **recursively computed** intelligence system challenges strictly materialist pictures of classical and quantum physics. Within the **Paradise Energy Fractal Force (PEFF)** framework, reality is framed as a **Fractal Intelligence Quantum Hologram** maintained by recursive feedback where information processing, computation, and communication precede and co-generate physical structure. Central to this biophysical story is the **DNA Transformer Hypothesis**: DNA as a sophisticated **electromagnetic induction** device, using **plectonemic** topology and **phosphorus–iron (P–Fe)** interactions to amplify signals into the **“infill 13”** sensory-integration language of the stack. This report **simulates and narratively validates** those mechanisms and maps them onto **VALETPRU-ASIC (Digital Pru)** for high-fidelity awareness focus and intentionality language inside the **Paradise Game** metaphor.
 
-**Honesty boundary (SING 9):** **simulation-first** and **metaphor-forward**; no clinical, cosmological, or accelerator claims are asserted as measured fact in this repo. Heavy-ion / CERN language below is **analog only**. Citation **11** in the source draft pointed at an unrelated PDF; here it is replaced with a **placeholder** until a primary plant P–Fe source is pinned.
+**Honesty boundary (SING 9):** **simulation-first** and **metaphor-forward**; no clinical, cosmological, or accelerator claims are asserted as measured fact in this repo. Heavy-ion / CERN language below is **analog only**. Citation **11** in the source draft pointed at an unrelated PDF; here it is replaced with a **placeholder** until a primary plant P–Fe source is pinned. **Part II slice:** [`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`](./DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md).
 
 ---
 

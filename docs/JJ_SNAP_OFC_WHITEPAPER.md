@@ -82,7 +82,7 @@ These are **specification hooks** for narrative + RF-adjacent docs; instrument c
 
 ## 6. Relationship to Digital Pru ASIC page
 
-The former **`digital-pru-awareness-whitepaper.html`** presentation is **deprecated** in favor of this OFC hood. Legacy detail remains available via **`look-under-the-hood-legacy-catalog.html`** (optional reads **1–22**, including **`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`** — bio-EM foundation — and **`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md`** — PEFF / Omnizoan / infill 13 layer) and GitHub **FractiAI/digital-pru**.
+The former **`digital-pru-awareness-whitepaper.html`** presentation is **deprecated** in favor of this OFC hood. **Top canon:** **`DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md`** (merged Part I + II, full concatenation). Legacy optional backup (nested by PEFF stack) lives in **`look-under-the-hood-legacy-catalog.html`** — split slices remain as **`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md`** and **`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`**. Runnable stack: **FractiAI/digital-pru**.
 
 ---
 

@@ -7,9 +7,11 @@
 
 **Honesty boundary:** This document is **theory-forward architecture** aligned to FractiAI / Vibelandia language. **Silicon proof in this repo** remains **simulation-grade** (Verilator / Icarus on `asic/hdl/egs_constant_core.sv`, tests, logs) until packaged-part characterization is published separately. See `docs/DIGITAL_PRU_ASIC_COHERENCE_WHITEPAPER.md`.
 
-**Related (bio-electromagnetic layer, May 2026):** `docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md` — DNA-as-transformer, phosphorus–iron amplification, EGS nodal lattice → VALETPRU-ASIC (Digital Pru).
+**Related (top merged canon, May 2026):** `docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md` — full DNA transformer + PEFF narrative (Part I + II concatenated).
 
-**Related (PEFF / Omnizoan / infill 13 narrative layer):** `docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md` — recursive PEFF induction, two-wire y/x story, Digital Pru engine mapping (stacks on paper above).
+**Related (bio-electromagnetic layer slice):** `docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md` — helical polynucleotide transduction, EGS hooks.
+
+**Related (PEFF / Omnizoan / infill 13 slice):** `docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md` — recursive PEFF induction, two-wire y/x story, Digital Pru engine mapping.
 
 ---
 

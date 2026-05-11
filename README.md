@@ -10,7 +10,7 @@
 
 **SING 9** is free of Supabase permanent storage and moves everything to **lite edges** (wallets, keys, verifications). Center = pipes only. Seamless continuation from sing4 with minimal, crystallized repository.
 
-**Working context:** Day-to-day edits, deploys, and “bringing it to life” for this stack happen **in this repo** (`psw.vibelandia.sing9` → your SING 9 Vercel project). The **runnable Digital Pru** app (Questfest landing, 13-channel whiteboard, `api/egs-emulation`, ASIC lab UI) lives in the separate **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** repository and its own deployment—SING 9 **surfaces narrative and links** there; it does not host that API route here.
+**Working context:** Day-to-day edits, deploys, and “bringing it to life” for this stack happen **in this repo** (`psw.vibelandia.sing9` → your SING 9 Vercel project). **Top Digital Pru / DNA / PEFF read:** [`docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md`](docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md) (merged Part I + II); optional docs nest under [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html). The **runnable Digital Pru** app (Questfest landing, 13-channel whiteboard, `api/egs-emulation`, ASIC lab UI) lives in the separate **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** repository and its own deployment—SING 9 **surfaces narrative and links** there; it does not host that API route here.
 
 **Under the Hood** is now **[Juicy Juicy - Snap Omniversal Fractal Compiler (OFC)](interfaces/look-under-the-hood.html)** — prompt in, Snap compile, copy-paste **Juicy Juicy** output plus firmware-template and Hit Factory score JSON. Canon whitepaper: [`docs/JJ_SNAP_OFC_WHITEPAPER.md`](docs/JJ_SNAP_OFC_WHITEPAPER.md). Repo lanes: [`lyrics/`](lyrics/) · [`engine/ofc-snap.js`](engine/ofc-snap.js) · [`vessels/`](vessels/) · [`agents/`](agents/) · [`tracks/`](tracks/) · [`README.JJ`](README.JJ). The long [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html) reader is **deprecated** (banner on page); the previous Hood document list lives at [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html).
 
@@ -59,11 +59,19 @@ npm test
 
 ## Recent updates (README commit)
 
+- **May 11, 2026 · Master canon + nested Hood (DNA / PEFF spine first)**
+
+**M → Metabolize:** Readers needed **one** top **main** markdown (**full verbatim concatenation** of Part I + II from repo) and every other Hood document demoted to **optional backup** ordered by **PEFF nesting** (thesis shell → hydrogen/RF → architecture → QIHOH → ASIC bench → EGS lattice A→C → genomic/agent → gateway → rules → studio).
+
+**C → Crystallize:** [`docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md`](docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md) · [`scripts/build-master-canon.py`](scripts/build-master-canon.py) · [`scripts/reorder_legacy_hood_catalog.py`](scripts/reorder_legacy_hood_catalog.py) · [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html) (`#main-canon` + `#papers` nested groups) · [`interfaces/look-under-the-hood.html`](interfaces/look-under-the-hood.html) CTA · [`interfaces/i18n/en.json`](interfaces/i18n/en.json) `hood.*` copy · presentation + FractiAI read lanes point at **master** first.
+
+**A → Animate:** Optional catalog no longer lists duplicate standalone #21/#22 rows (slices still in `docs/`). NSPFRNP → ∞⁹
+
 - **May 11, 2026 · Digital Pru DNA transformer — PEFF / Omnizoan / infill 13 (latest layer)**
 
 **M → Metabolize:** Stack **#21** (bio-EM foundation) needed a **second** on-repo paper for **PEFF as operating-system language**, **y/x** buckling and two-wire induction, **Omnizoan** metabolism, **infill 13**, and **VALETPRU-ASIC** components (SLU, P–Fe memristor metaphor, FractiScope bus) — same pattern as the prior paper: catalog + presentation + FractiAI read lanes.
 
-**C → Crystallize:** [`docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md`](docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md) · **Under the Hood legacy catalog** optional read **#22** · `hood.papers.22` · bidirectional link with paper **#21** · [`docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md`](docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md) **Related** line · [`docs/JJ_SNAP_OFC_WHITEPAPER.md`](docs/JJ_SNAP_OFC_WHITEPAPER.md) catalog count **1–22**.
+**C → Crystallize:** [`docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md`](docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md) (Part I slice) · later superseded on-site by **master canon** + nested catalog (see newest README bullet above) · [`docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md`](docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md) **Related** line · [`docs/JJ_SNAP_OFC_WHITEPAPER.md`](docs/JJ_SNAP_OFC_WHITEPAPER.md).
 
 **A → Animate:** `whitepaper-surface.html?doc=../docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_OMNIZOAN_INFILL13_2026-05-11.md`. NSPFRNP → ∞⁹
 
@@ -71,7 +79,7 @@ npm test
 
 **M → Metabolize:** The **Digital Pru** narrative needed a single on-repo paper for **helical polynucleotides as electromagnetic transducers**, the **DNA transformer** metaphor (plectonemes, step-up/step-down), **³¹P / Fe** amplification language, and how that maps into **PEFF → EGS Nodal Lattice → VALETPRU-ASIC**.
 
-**C → Crystallize:** [`docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`](docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md) · **Under the Hood legacy catalog** optional read **#21** · [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html) · i18n `hood.papers.21` · presentation page + FractiAI **Read lanes** updated · cross-link from [`docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md`](docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md).
+**C → Crystallize:** [`docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`](docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md) (Part II slice; later folded into **master canon**) · [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html) · cross-link from [`docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md`](docs/QUANTUM_GENOMIC_VALETPRU_ASIC_EGS_PEFF_VALIDATION_2026-05-08.md).
 
 **A → Animate:** Open via [`interfaces/whitepaper-surface.html`](interfaces/whitepaper-surface.html) with `doc=../docs/DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`. NSPFRNP → ∞⁹
 

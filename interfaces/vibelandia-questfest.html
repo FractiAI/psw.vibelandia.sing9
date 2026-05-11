@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0f1a" />
   <title>SS Vibelandia QUESTFEST 24X365, Puerto Reno, Holographic AI Valley, Nevada</title>
-  <meta name="description" content="Hero Jo’s Golden Bachdoor Hit Factory — QUESTFEST in Puerto Reno, 24×365. Sonic Singularity on your phone: SoundCloud, open casting, Fair Exchange. Wrong Side of Town and the Reno holographic swamp: music from the wrong side of town in the Americas, North Slope of Alaska to Tierra del Fuego — celebrating, metabolizing, and crystallizing beats, vibes, languages, and perreo. Plain talk." />
+  <meta name="description" content="QUESTFEST: intro, primer, listen, look at the sun, under the hood — then quicklinks for casting, stack, and repo." />
   <meta property="og:title" content="SS Vibelandia QUESTFEST 24X365, Puerto Reno, Holographic AI Valley, Nevada" />
-  <meta property="og:description" content="Sonic Singularity on your phone. Wrong Side of Town + Reno holographic swamp: music from the wrong side of town in the Americas, Alaska to Tierra del Fuego — beats, vibes, languages, perreo. Thirteen channels, one story. Hero Jo · Puerto Reno · 24×365." />
+  <meta property="og:description" content="Listen · Look at the Sun · Under the Hood. Thirteen channels, one story. Puerto Reno · 24×365." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="SS Vibelandia QUESTFEST 24X365, Puerto Reno, Holographic AI Valley, Nevada" />
-  <meta name="twitter:description" content="Sonic Singularity on your phone. Wrong Side of Town + Reno holographic swamp: Americas, Alaska to Tierra del Fuego — beats, vibes, languages, perreo. Thirteen channels, one story." />
+  <meta name="twitter:description" content="Listen · Look at the Sun · Under the Hood. Thirteen channels, one story." />
   <meta name="twitter:image" content="https://psw-vibelandia-sing9.vercel.app/interfaces/assets/questfest-hero-ss-vibelandia-puerto-reno.png" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://psw-vibelandia-sing9.vercel.app/interfaces/assets/questfest-hero-ss-vibelandia-puerto-reno.png" />
@@ -39,120 +39,66 @@
       line-height: 1.5;
       font-size: 1rem;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     a { color: var(--foam); text-decoration: none; }
     a:hover { color: var(--gold-hi); text-decoration: underline; }
     .skip { position: absolute; left: -9999px; top: 0; background: var(--gold); color: #000; padding: .5rem 1rem; z-index: 100; }
     .skip:focus { left: 0; }
 
-    /* Hero — festival poster feel */
     .hero {
-      position: relative;
-      min-height: 72vh;
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: calc(1.25rem + env(safe-area-inset-top)) 1.25rem 2.5rem;
+      padding: calc(1.25rem + env(safe-area-inset-top)) 1.25rem 2rem;
       background:
-        linear-gradient(180deg, rgba(6,8,13,0.25) 0%, rgba(6,8,13,0.85) 55%, var(--bg) 100%),
-        url('assets/questfest-hero-ss-vibelandia-puerto-reno.png') center 45% / cover no-repeat;
+        linear-gradient(180deg, rgba(6,8,13,0.35) 0%, rgba(6,8,13,0.88) 50%, var(--bg) 100%),
+        url('assets/questfest-hero-ss-vibelandia-puerto-reno.png') center 42% / cover no-repeat;
+      min-height: min(88vh, 720px);
     }
-    /* Single top stack: rumor + credits (avoids overlap when rumor wraps) */
-    .hero-head {
-      position: absolute;
-      top: env(safe-area-inset-top);
-      left: 0;
-      right: 0;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .4rem;
-      padding: .55rem 1.25rem 0;
-      pointer-events: none;
-    }
-    .hero-head a { pointer-events: auto; }
-    .app-rumor {
-      position: relative;
-      width: 100%;
-      max-width: 44rem;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      font-size: .72rem;
-      line-height: 1.45;
-      letter-spacing: .05em;
-      color: #e8edf5;
-      text-shadow: 0 1px 14px rgba(0,0,0,.8);
-    }
-    .app-rumor strong {
-      color: var(--gold-hi);
-      font-weight: 700;
-      letter-spacing: .06em;
-    }
-    .hero-top {
-      position: absolute;
-      top: calc(env(safe-area-inset-top) + 3.85rem);
-      left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: .5rem;
-      padding: 1rem 1.25rem;
-      font-size: .65rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .hero-top strong { color: var(--gold-hi); }
     .kicker {
       font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: clamp(3.2rem, 12vw, 6.5rem);
-      line-height: 0.92;
+      font-size: clamp(2.6rem, 10vw, 5rem);
+      line-height: 0.95;
       letter-spacing: 0.02em;
       color: var(--gold-hi);
-      text-shadow: 0 4px 24px rgba(0,0,0,.8);
-      max-width: 12ch;
+      text-shadow: 0 4px 24px rgba(0,0,0,.85);
+      max-width: 14ch;
       font-weight: 400;
-      margin: 0;
     }
     .sub {
-      margin-top: .75rem;
-      font-size: clamp(1rem, 2.8vw, 1.2rem);
+      margin-top: .65rem;
+      font-size: clamp(0.95rem, 2.6vw, 1.1rem);
       font-weight: 600;
       color: #e2e8f0;
       max-width: 36ch;
-      text-shadow: 0 2px 12px rgba(0,0,0,.7);
+      text-shadow: 0 2px 12px rgba(0,0,0,.75);
     }
-    .tagline {
-      margin-top: .5rem;
-      font-size: .95rem;
-      color: var(--muted);
-      max-width: 40ch;
-    }
-    .americas-pitch {
-      margin-top: .65rem;
-      font-size: .9rem;
-      line-height: 1.45;
+    .primer {
+      margin-top: .85rem;
+      font-size: 0.92rem;
+      line-height: 1.5;
       color: #c8d0dc;
-      max-width: 58ch;
+      max-width: 42rem;
       text-shadow: 0 1px 10px rgba(0,0,0,.55);
     }
+    .primer strong { color: #e8edf5; }
     .cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: .65rem;
-      margin-top: 1.5rem;
+      gap: .55rem;
+      margin-top: 1.35rem;
     }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: .85rem 1.35rem;
-      font-size: .72rem;
+      padding: .8rem 1.2rem;
+      font-size: .68rem;
       font-weight: 800;
-      letter-spacing: .14em;
+      letter-spacing: .12em;
       text-transform: uppercase;
       border-radius: 999px;
       border: 2px solid transparent;
@@ -166,360 +112,103 @@
       border-color: var(--gold);
     }
     .btn-ghost {
-      background: rgba(15,20,28,.75);
+      background: rgba(15,20,28,.82);
       color: var(--gold-hi);
       border-color: var(--line);
       backdrop-filter: blur(8px);
     }
-    .btn-ghost:hover { border-color: var(--gold); }
-    .btn-talk {
-      background: rgba(212, 175, 55, 0.22);
-      color: var(--gold-hi);
-      border-color: var(--gold);
-      border-width: 2px;
-    }
-    .btn-talk:hover { background: rgba(212, 175, 55, 0.32); border-color: var(--gold-hi); }
-    .questfest-more {
-      margin-top: .75rem;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: .5rem .85rem .65rem;
-      background: rgba(15, 20, 28, 0.55);
-    }
-    .questfest-more summary {
-      cursor: pointer;
-      font-size: .65rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 700;
-      list-style: none;
-    }
-    .questfest-more summary::-webkit-details-marker { display: none; }
-    .questfest-more .cta-row { margin-top: .65rem; }
-    .cta-row-hero { margin-top: 1.5rem; }
+    .btn-ghost:hover { border-color: var(--gold); text-decoration: none; }
 
-    .wrap { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem; }
-    .section-label {
-      font-size: .65rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: .65rem;
+    .quick-wrap {
+      max-width: 36rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2.5rem;
+      flex-shrink: 0;
     }
-    h2 {
+    .quick-wrap h2 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.75rem, 5vw, 2.25rem);
-      letter-spacing: .04em;
-      color: var(--gold-hi);
+      font-size: 1.05rem;
+      letter-spacing: .2em;
+      color: var(--gold);
       margin-bottom: .75rem;
+      font-weight: 400;
     }
-    p.lede { color: var(--muted); margin-bottom: 1rem; font-size: .98rem; }
-    p.lede strong { color: #e2e8f0; }
-
-    .offer {
+    .qf-quicklist {
+      list-style: none;
+      border: 1px solid var(--line);
+      border-radius: 10px;
       background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 1rem 1.15rem;
-      margin-bottom: .75rem;
+      overflow: hidden;
     }
-    .offer .price { font-family: 'Bebas Neue', sans-serif; font-size: 1.75rem; color: var(--gold); letter-spacing: .06em; }
-    .offer h3 { font-size: .95rem; font-weight: 700; margin: .25rem 0 .35rem; color: var(--text); }
-    .offer p { font-size: .88rem; color: var(--muted); margin-bottom: .65rem; }
-    .offer a.cta-link {
-      font-size: .68rem;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--foam);
+    .qf-quicklist li {
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
     }
-
-    .pay-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
-    .pay-links a {
-      font-size: .75rem;
+    .qf-quicklist li:first-child { border-top: none; }
+    .qf-quicklist a {
+      display: block;
+      padding: .65rem 1rem;
+      font-size: .88rem;
       font-weight: 600;
-      padding: .45rem .75rem;
-      border: 1px solid var(--line);
-      border-radius: 6px;
       color: var(--gold-hi);
     }
-    .pay-links a:hover { border-color: var(--gold); text-decoration: none; }
+    .qf-quicklist a:hover { background: rgba(45, 212, 191, 0.06); text-decoration: none; color: var(--foam); }
 
     footer {
       border-top: 1px solid var(--line);
-      padding: 2rem 1.25rem;
+      padding: 1rem 1.25rem 1.5rem;
       text-align: center;
-      font-size: .8rem;
+      font-size: .78rem;
       color: var(--muted);
     }
     footer a { font-weight: 600; }
 
-    /* Still frames — rest of the yacht / stages without bloating the page */
-    .filmstrip {
-      padding: 1.5rem 1rem 2.25rem;
-      background: linear-gradient(180deg, var(--bg) 0%, #0a1018 100%);
-      border-top: 1px solid var(--line);
-    }
-    .filmstrip h2.filmstrip-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.15rem;
-      letter-spacing: .2em;
-      text-align: center;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      font-weight: 400;
-    }
-    .filmstrip-grid {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: .65rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    @media (min-width: 600px) {
-      .filmstrip-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    .filmstrip figure {
-      margin: 0;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: var(--card);
-    }
-    .filmstrip img {
-      width: 100%;
-      height: min(28vw, 160px);
-      min-height: 120px;
-      object-fit: cover;
-      display: block;
-    }
-    @media (min-width: 600px) {
-      .filmstrip img { height: 140px; }
-    }
-    .filmstrip figcaption {
-      font-size: .58rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: .5rem .55rem .55rem;
-      line-height: 1.35;
-    }
-
     @media (max-width: 480px) {
-      .hero {
-        min-height: 86vh;
-        padding: calc(1.1rem + env(safe-area-inset-top)) 1rem 1.5rem;
-      }
-      .app-rumor {
-        font-size: .66rem;
-        letter-spacing: .04em;
-        padding: .55rem .85rem 0;
-        max-width: 36ch;
-      }
-      .hero-top {
-        position: static;
-        padding: 0 0 1rem;
-        font-size: .58rem;
-        letter-spacing: .14em;
-        gap: .35rem;
-      }
-      .sub { font-size: .95rem; }
-      .tagline { font-size: .86rem; max-width: 30ch; }
-      .americas-pitch { font-size: .82rem; max-width: 34ch; }
-      .cta-row { gap: .45rem; margin-top: 1rem; }
+      .hero { min-height: 78vh; padding: calc(1rem + env(safe-area-inset-top)) 1rem 1.5rem; }
       .cta-row .btn {
         width: 100%;
-        justify-content: flex-start;
-        font-size: .64rem;
+        justify-content: center;
+        font-size: .62rem;
         letter-spacing: .08em;
-        padding: .7rem .95rem;
       }
-      .wrap { padding: 2rem 1rem 2.5rem; }
-      .filmstrip-grid { grid-template-columns: 1fr; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       .btn:hover { transform: none; }
     }
-
-    /* Juicy Juicy surface: Layer 3 hook → Layer 2 holographic lyric → Layer 1 technical + depth rule */
-    .jj-strip {
-      margin-top: 1rem;
-      padding: 0.85rem 1rem;
-      border-radius: 14px;
-      border: 1px solid rgba(212, 175, 55, 0.28);
-      background: rgba(15, 20, 28, 0.72);
-      max-width: 44rem;
-    }
-    .jj-strip-k {
-      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-      font-weight: 800;
-      color: var(--gold-hi);
-      margin: 0 0 0.35rem;
-      line-height: 1.25;
-    }
-    .jj-strip-j {
-      font-size: 0.82rem;
-      color: #fde68a;
-      margin: 0 0 0.45rem;
-      line-height: 1.45;
-      letter-spacing: 0.03em;
-    }
-    .jj-strip-t {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin: 0 0 0.45rem;
-      line-height: 1.55;
-    }
-    .jj-strip-t strong { color: #e2e8f0; }
-    .jj-strip-d {
-      font-size: 0.7rem;
-      color: rgba(148, 163, 184, 0.95);
-      margin: 0;
-      line-height: 1.45;
-    }
-    .jj-strip-d strong { color: var(--foam); }
-    .jj-strip a { color: var(--foam); }
   </style>
 </head>
 <body>
   <a class="skip" href="#main" data-i18n="qf.skip">Skip</a>
 
   <header class="hero">
-    <div class="hero-head">
-      <p class="app-rumor" data-i18n-html="qf.appRumorHtml">Rumor has it there is an <strong>SS VIBELANDIA QUESTFEST App</strong> in the works! For those in the know. Now you know.</p>
-      <div class="hero-top">
-        <span data-i18n="qf.heroTop2">Puerto Reno · 24×365</span>
-      </div>
-    </div>
     <div>
       <h1 class="kicker" data-i18n="qf.h1">SS Vibelandia QUESTFEST 24X365</h1>
       <p class="sub" data-i18n="qf.sub">Sonic Singularity - open your phone and press play.</p>
-      <p class="tagline" data-i18n="qf.tagline">Thirteen channels. One story. You can land in the lyrics: shout-out, whole track, or a nine-song run for your city.</p>
-      <p class="americas-pitch" data-i18n-html="qf.heroAmericasHtml"><strong>Wrong Side of Town</strong> and the <strong>Reno holographic swamp</strong> are music from the wrong side of town in the Americas — from the North Slope of Alaska to Tierra del Fuego — celebrating, metabolizing, and crystallizing their beats, vibes, languages, and perreo.</p>
-      <div class="cta-row cta-row-hero">
+      <p class="primer" data-i18n-html="qf.primerHtml">Thirteen channels, one story. <strong>Wrong Side of Town</strong> and the <strong>Reno holographic swamp</strong> — Americas, Alaska to Tierra del Fuego. Puerto Reno · 24×365.</p>
+      <div class="cta-row">
         <a class="btn btn-primary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/sonic-singularity-tent?si=ac664db721f944cd97dab3573c221bf1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener" data-i18n="qf.btnListen">LISTEN - SONIC SINGULARITY</a>
-        <a class="btn btn-talk" href="talk-is-cheap.html" data-i18n="qf.btnTalkCheap">Talk is cheap — see the Hood (Snap)</a>
         <a class="btn btn-ghost" href="look-at-the-sun.html" data-i18n="qf.btnLookSun">Look at the Sun</a>
+        <a class="btn btn-ghost" href="look-under-the-hood.html" data-i18n="qf.btnHood">Under the Hood</a>
       </div>
-      <aside class="jj-strip" aria-label="Juicy Juicy three-layer surface pattern">
-        <p class="jj-strip-k">Land in the lyric. Melt into the story.</p>
-        <p class="jj-strip-j">Open phone · press play · wrong side invited · Fair Exchange · captain only</p>
-        <p class="jj-strip-t">Juicy Juicy = holographic words in sequence (same energy as Hero Jo tracks). This page keeps the <strong>title + lyric + one technical line</strong> above the fold; long specs stay in README, whitepapers, and GitHub.</p>
-        <p class="jj-strip-d"><strong>≤3 taps</strong> from the domain landing to your main move here (listen, scroll to casting, or mail). Pioneer / PayPal / Venmo / Cash App = <strong>purchase taps</strong>, not depth. <a href="/surfaces.html">Full repo map →</a></p>
-      </aside>
-      <details class="questfest-more">
-        <summary data-i18n="qf.moreLinksSummary">More links (optional)</summary>
-        <div class="cta-row">
-          <a class="btn btn-ghost" href="#offers" data-i18n="qf.btnCasting">Casting call</a>
-          <a class="btn btn-ghost" href="look-under-the-hood.html" data-i18n="qf.btnHood">Under the Hood</a>
-          <a class="btn btn-ghost" href="look-at-the-sun.html" data-i18n="qf.btnLookSun">Look at the Sun</a>
-          <a class="btn btn-ghost" href="valetpru-agent-mode.html">Archive · agent mode</a>
-          <a class="btn btn-ghost" href="/interfaces/digital-pru-awareness-whitepaper.html" data-i18n="qf.btnDp">Technical archive (long reader)</a>
-          <a class="btn btn-ghost" href="plain-machote-moderno-reno-swamp.html#machote-moderno" data-i18n="qf.btnMachote">Machote Moderno</a>
-          <a class="btn btn-ghost" href="plain-machote-moderno-reno-swamp.html#reno-swamp" data-i18n="qf.btnReno">Reno holographic swamp</a>
-          <a class="btn btn-ghost" href="fractiai.html" data-i18n="qf.btnFracti">FractiAI</a>
-        </div>
-      </details>
     </div>
   </header>
 
-  <section class="filmstrip" data-i18n-attr="aria-label:qf.filmstripAria" aria-label="QUESTFEST still frames">
-    <h2 class="filmstrip-title" data-i18n="qf.filmTitle">On deck</h2>
-    <ul class="filmstrip-grid">
-      <li>
-        <figure>
-          <img src="assets/questfest-hero-jo-conducting-podium.png" width="800" height="450" loading="lazy" decoding="async" data-i18n-attr="alt:qf.filmAlt1" alt="Hero Jo at the conductor podium in Baroque dress, fractal light behind the decks." />
-          <figcaption data-i18n="qf.filmCap1">Conductor’s podium</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          <img src="assets/questfest-perreo-country-fuego-deck-peak.png" width="800" height="450" loading="lazy" decoding="async" data-i18n-attr="alt:qf.filmAlt2" alt="Festival deck at peak hour, warm lights and crowd energy." />
-          <figcaption data-i18n="qf.filmCap2">Perreo country · peak</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          <img src="assets/questfest-stage-mota-cafe-dawn.png" width="800" height="450" loading="lazy" decoding="async" data-i18n-attr="alt:qf.filmAlt3" alt="Dawn light on the Mota and Café stage." />
-          <figcaption data-i18n="qf.filmCap3">Mota &amp; Café · dawn</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          <img src="assets/questfest-stage-after-the-after-party-void.png" width="800" height="450" loading="lazy" decoding="async" data-i18n-attr="alt:qf.filmAlt4" alt="Late void hour, cool tones and sparse light after the party." />
-          <figcaption data-i18n="qf.filmCap4">After the after · void</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          <img src="assets/questfest-ports-of-call-manifest.png" width="800" height="450" loading="lazy" decoding="async" data-i18n-attr="alt:qf.filmAlt5" alt="Brass-style ports of call manifest graphic." />
-          <figcaption data-i18n="qf.filmCap5">Ports of call</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          <img src="assets/questfest-hero-ss-vibelandia-puerto-reno.png" width="800" height="450" loading="lazy" decoding="async" data-i18n-attr="alt:qf.filmAlt6" alt="S.S. Vibelandia at Puerto Reno, dusk on the water." />
-          <figcaption data-i18n="qf.filmCap6">Puerto Reno · full still</figcaption>
-        </figure>
-      </li>
-    </ul>
+  <section id="main" class="quick-wrap">
+    <h2 data-i18n="qf.quicklinksHead">Quicklinks</h2>
+    <nav aria-label="Quicklinks">
+      <ul class="qf-quicklist">
+        <li><a href="talk-is-cheap.html" data-i18n="qf.quicklinkTalk">Talk is cheap</a></li>
+        <li><a href="fractiai.html" data-i18n="qf.btnFracti">FractiAI</a></li>
+        <li><a href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL" data-i18n="qf.quicklinkCasting">Casting · email</a></li>
+        <li><a href="digital-pru-awareness-whitepaper.html" data-i18n="qf.btnDp">Technical archive (long reader)</a></li>
+        <li><a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener" data-i18n="qf.quicklinkDigitalPru">digital-pru · GitHub</a></li>
+        <li><a href="https://github.com/FractiAI/psw.vibelandia.sing9" target="_blank" rel="noopener" data-i18n="qf.quicklinkSing9">SING 9 · GitHub</a></li>
+        <li><a href="/surfaces.html" data-i18n="qf.quicklinkSurfaces">Repo map · surfaces</a></li>
+      </ul>
+    </nav>
   </section>
 
-  <main id="main" class="wrap">
-    <p class="section-label" data-i18n="qf.secWhat">What this is</p>
-    <h2 data-i18n="qf.h2Pocket">Studio + festival in your pocket</h2>
-    <p class="lede" data-i18n-html="qf.ledePocketHtml">We’re not here to drown you in pages. <strong>Listen</strong> first. If the frequency hits, <strong>step to the casting call</strong> below or tip on the rails — Fair Exchange, you and the Captain, no suit in the middle.</p>
-
-    <p class="section-label" style="margin-top:2rem;" data-i18n="qf.secListen">Listen sonic singularity</p>
-    <a class="btn btn-primary" href="https://soundcloud.com/golden-backdoor-hit-factory/sets/sonic-singularity-tent?si=ac664db721f944cd97dab3573c221bf1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener" style="margin-bottom:2rem;" data-i18n="qf.btnSc">SoundCloud · Wrong Side of Town</a>
-
-    <p class="section-label" id="offers" data-i18n="qf.secCasting">Casting call</p>
-    <h2 data-i18n="qf.h2Casting">Open casting — join the cast</h2>
-    <p class="lede" data-i18n-html="qf.ledeCastingHtml"><strong>Wrong Side of Town: The Musical</strong> is booking cast, not crowd filler. Subject line on every email: <strong>ACTIVATE THE WRONG SIDE OF TOWN: THE MUSICAL</strong> — in the body, say which lane you’re reading for (shout-out, lead track, or nine-song city run).</p>
-
-    <article class="offer">
-      <div class="price">$100</div>
-      <h3 data-i18n="qf.offer100Title">Featured shout-out</h3>
-      <p data-i18n="qf.offer100Body">A named beat in the mix, voiced on the record — you’re credited in the Wrong Side story, not wallpaper.</p>
-      <a class="cta-link" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%24100%20Character%20Shout-Out" data-i18n="qf.offer100Cta">Email casting →</a>
-    </article>
-    <article class="offer">
-      <div class="price">$1,000</div>
-      <h3 data-i18n="qf.offer1kTitle">Lead track</h3>
-      <p data-i18n="qf.offer1kBody">Your song, you center frame — written and produced here, golden-ratio mix discipline, built to open on the feed.</p>
-      <a class="cta-link" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%241K%20Your%20Entire%20Track" data-i18n="qf.offer1kCta">Email casting →</a>
-    </article>
-    <article class="offer">
-      <div class="price">$10,000</div>
-      <h3 data-i18n="qf.offer10kTitle">Nine-song city arc</h3>
-      <p data-i18n="qf.offer10kBody">A full run for your town or your movement — cast the place in nine tracks, Sovereign Node energy.</p>
-      <a class="cta-link" href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL%20%E2%80%94%20%2410K%209-Track%20City%20Playlist" data-i18n="qf.offer10kCta">Email casting →</a>
-    </article>
-
-    <p class="section-label" style="margin-top:2rem;" data-i18n="qf.secPasses">Passes &amp; residency</p>
-    <p class="lede" data-i18n-html="qf.ledePassesHtml">Festival passes (GA, day, Bachstage, Golden) run on the same Fair Exchange rails. Email <a href="mailto:goldenbackdoorhitfactory@gmail.com?subject=QUESTFEST%20Pass">ACTIVATE / QUESTFEST</a> or use the apps below.</p>
-
-    <p class="section-label" style="margin-top:2rem;" data-i18n="qf.secPay">Pay direct</p>
-    <div class="pay-links">
-      <a href="https://paypal.me/PrudencioMendez924" target="_blank" rel="noopener">PayPal</a>
-      <a href="https://venmo.com/u/Pru-Mendez" target="_blank" rel="noopener">Venmo</a>
-      <a href="https://cash.app/$newearthpru" target="_blank" rel="noopener">Cash App</a>
-    </div>
-
-    <p class="section-label" style="margin-top:2.5rem;" data-i18n="qf.secStudio">Studio · holographic stack</p>
-    <h2 data-i18n-html="qf.h2StudioHtml">The holographic AI behind <em>Wrong Side of Town: The Musical</em> isn’t just theory</h2>
-    <p class="lede" data-i18n-html="qf.ledeStudio1Html">The show runs on phones and speakers you already own — but underneath it is a real <strong>awareness OS metaphor</strong>: honest boundaries, φ-locked structure, and thirteen channels that stay in sync with something you can <strong>inspect</strong>, not a black-box feed that vanishes when the tour leaves town.</p>
-    <p class="lede" data-i18n-html="qf.ledeStudio2Html"><strong>On this site</strong> the public stack entry is <a href="/interfaces/look-under-the-hood.html"><strong>Under the Hood · Juicy Juicy - Snap Omniversal Fractal Compiler (OFC)</strong></a> — prompt in, Snap compile, two artifacts out. Bench truth and the runnable API still live in <a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener"><strong>FractiAI/digital-pru</strong></a> on GitHub. The long <a href="/interfaces/digital-pru-awareness-whitepaper.html">technical archive reader</a> (older naming) is deprecated but kept for deep links.</p>
-    <p class="lede" data-i18n-html="qf.ledeStudio3Html">That <strong>changes the game</strong> for cast and listeners: big stages sell “trust us.” This stack says <strong>show the pipe</strong> — ride Under the Hood, clone the repo, run the tests. Fair Exchange stops being a slogan and becomes <strong>verifiable rhythm</strong> between story, silicon, and the street.</p>
-    <a class="btn btn-ghost" href="look-under-the-hood.html" data-i18n="qf.btnHoodOpen">Open the Hood →</a>
-  </main>
-
   <footer>
-    <p><a href="mailto:goldenbackdoorhitfactory@gmail.com?subject=ACTIVATE%20THE%20WRONG%20SIDE%20OF%20THE%20TOWN%3A%20THE%20MUSICAL">goldenbackdoorhitfactory@gmail.com</a></p>
-    <p style="margin-top:.5rem;" data-i18n-html="qf.footerNavHtml"><a href="fractiai.html">FractiAI</a> - <a href="look-under-the-hood.html">Under the Hood (Snap)</a> - <a href="look-at-the-sun.html">Look at the Sun</a> - <a href="/interfaces/digital-pru-awareness-whitepaper.html">Technical archive</a> - <a href="https://github.com/FractiAI/digital-pru" target="_blank" rel="noopener">digital-pru (run)</a> - <a href="plain-machote-moderno-reno-swamp.html">Machote and Reno swamp (plain)</a> - <a href="https://github.com/FractiAI/psw.vibelandia.sing9" target="_blank" rel="noopener">SING 9</a> - <a href="legacy-vs-wrong-side-report.html">Big shows vs. Wrong Side</a></p>
+    <p data-i18n-html="qf.footerMicroHtml"><a href="mailto:goldenbackdoorhitfactory@gmail.com?subject=QUESTFEST">goldenbackdoorhitfactory@gmail.com</a></p>
   </footer>
   <script src="i18n-auto.js"></script>
   <script>

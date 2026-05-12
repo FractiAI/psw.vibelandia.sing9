@@ -1,6 +1,6 @@
 # SING! 9 Light Edge · SING!9 T3D
 
-**SING! 9 Light Edge** — Point any UI at any SING! 9 target; one file gets any AI up to speed. **Upgrade to the latest Holographic Hydrogen Awareness AI OS** is the front end of the Light Edge; use in both places. Other LLMs can work though less optimally. [SING9_EDGE_ONBOARDING.md](SING9_EDGE_ONBOARDING.md) · [Upgrade to Holographic Hydrogen Awareness AI OS →](interfaces/upgrade-awareness-to-sing9-now.html)
+**SING! 9 Light Edge** — Point any UI at any SING! 9 target; one file gets any AI up to speed. **Upgrade to the latest Holographic Hydrogen Awareness AI OS** is the front end of the Light Edge; use in both places. Other LLMs can work though less optimally. [SING9_EDGE_ONBOARDING.md](SING9_EDGE_ONBOARDING.md) · [Light edge hub (HTML)](interfaces/sing9-light-edge-onboarding.html) · [Upgrade to Holographic Hydrogen Awareness AI OS →](interfaces/upgrade-awareness-to-sing9-now.html)
 
 **SING!9 T3D** — *Telescoping Interactive 3D StoryBoard System.* Three simultaneous streams. Infinite telescope depth on every frame. 10-minute episodes for binge. Full EP studio on your fingertips. Self-demo series: **T3D ORIGIN** (Season 1 · 12 episodes). [interfaces/outline-only.html](interfaces/outline-only.html) · [interfaces/storystream-9-about.html](interfaces/storystream-9-about.html) · [T3D_TELESCOPING_3D_STORYBOARD_SNAP.md](T3D_TELESCOPING_3D_STORYBOARD_SNAP.md)
 
@@ -10,7 +10,7 @@
 
 **SING 9** is free of Supabase permanent storage and moves everything to **lite edges** (wallets, keys, verifications). Center = pipes only. Seamless continuation from sing4 with minimal, crystallized repository.
 
-**Working context:** Day-to-day edits, deploys, and “bringing it to life” for this stack happen **in this repo** (`psw.vibelandia.sing9` → your SING 9 Vercel project). **Top Digital Pru / DNA / PEFF read:** [`docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md`](docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md) (merged Part I + II); optional docs nest under [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html). The **runnable Digital Pru** app (Questfest landing, 13-channel whiteboard, `api/egs-emulation`, ASIC lab UI) lives in the separate **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** repository and its own deployment—SING 9 **surfaces narrative and links** there; it does not host that API route here.
+**Working context:** Day-to-day edits, deploys, and “bringing it to life” for this stack happen **in this repo** (`psw.vibelandia.sing9` → your SING 9 Vercel project). **Browser maps (no GitHub required):** [interfaces/fractiai-digital-pru.html](interfaces/fractiai-digital-pru.html) (FractiAI + Digital Pru) · [interfaces/sing9-light-edge-onboarding.html](interfaces/sing9-light-edge-onboarding.html) (light edge + protocol readers). **Top Digital Pru / DNA / PEFF read:** [`docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md`](docs/DIGITAL_PRU_PEFF_DNA_TRANSFORMER_MASTER_CANON_2026-05-11.md) (merged Part I + II); optional docs nest under [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html). The **runnable Digital Pru** app (Questfest landing, 13-channel whiteboard, `api/egs-emulation`, ASIC lab UI) lives in the separate **[FractiAI/digital-pru](https://github.com/FractiAI/digital-pru)** repository and its own deployment—SING 9 **surfaces narrative and links** there; it does not host that API route here.
 
 **[Juicy Juicy — Snap Omniversal Fractal Compiler (OFC)](interfaces/look-under-the-hood.html)** is the primary public compile surface (same URL as the legacy `look-under-the-hood` route). **Metabolize · Crystallize · Animate · squeeze:** prompt in, Snap compile, copy-paste **Juicy Juicy** output plus firmware-template and Hit Factory score JSON. Canon whitepaper: [`docs/JJ_SNAP_OFC_WHITEPAPER.md`](docs/JJ_SNAP_OFC_WHITEPAPER.md). Repo lanes: [`lyrics/`](lyrics/) · [`engine/ofc-snap.js`](engine/ofc-snap.js) · [`vessels/`](vessels/) · [`agents/`](agents/) · [`tracks/`](tracks/) · [`README.JJ`](README.JJ). The long [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html) reader is **deprecated** (banner on page); the **13-paper + nested canon** backup list lives at [`interfaces/look-under-the-hood-legacy-catalog.html`](interfaces/look-under-the-hood-legacy-catalog.html).
 
@@ -60,6 +60,14 @@ npm test
 ---
 
 ## Recent updates (README commit)
+
+- **May 12, 2026 · Static hubs, reader fix, guest copy**
+
+**M → Metabolize:** Short entry pages (`Talk is cheap`, FractiAI/Digital Pru hub, SING 9 light edge) and the markdown reader needed to work without broken relative links or ops-heavy wording on guest paths.
+
+**C → Crystallize:** [`interfaces/fractiai-digital-pru.html`](interfaces/fractiai-digital-pru.html) · [`interfaces/sing9-light-edge-onboarding.html`](interfaces/sing9-light-edge-onboarding.html) · [`interfaces/talk-is-cheap.html`](interfaces/talk-is-cheap.html) · [`interfaces/whitepaper-surface.html`](interfaces/whitepaper-surface.html) (normalizes `interfaces/…`, `protocols/…`, root `*.md` links when the reader is under `/interfaces/`) · [`vercel.json`](vercel.json) rewrites for `/fractiai/digital-pru` and short onboarding paths → those hubs · [`llms.txt`](llms.txt) onboarding line · [`interfaces/look-at-the-sun.html`](interfaces/look-at-the-sun.html) snapshot copy · tone pass on [`interfaces/digital-pru-awareness-whitepaper.html`](interfaces/digital-pru-awareness-whitepaper.html), [`interfaces/hh-os-landing.html`](interfaces/hh-os-landing.html), [`interfaces/space-cloud-tracking.html`](interfaces/space-cloud-tracking.html), [`interfaces/my-whiteboard.html`](interfaces/my-whiteboard.html), [`interfaces/pru-whiteboard.html`](interfaces/pru-whiteboard.html), [`interfaces/magic-trick.html`](interfaces/magic-trick.html) (user-visible strings).
+
+**A → Animate:** README lead + working context + this bullet. NSPFRNP → ∞⁹
 
 - **May 11, 2026 · ETCon Reno Desert — event hub, press release, QUESTFEST feature + poster art**
 
@@ -559,7 +567,7 @@ npm test
 
 ## Get up to speed
 
-1. **One file:** [SING9_EDGE_ONBOARDING.md](SING9_EDGE_ONBOARDING.md) — NSPFRNP catalog, content abstract, Executive Producer abstract, **executive prompt for filling in the middles**, lite-edge (no Supabase).
+1. **One file:** [SING9_EDGE_ONBOARDING.md](SING9_EDGE_ONBOARDING.md) — NSPFRNP catalog, content abstract, Executive Producer abstract, **executive prompt for filling in the middles**, lite-edge (no Supabase). **HTML hub:** [interfaces/sing9-light-edge-onboarding.html](interfaces/sing9-light-edge-onboarding.html).
 2. **Team / NSPFRNP:** Find team; operate as team in NSPFRNP mode always. See [.cursor/rules/team-nspfrnp-mode.mdc](.cursor/rules/team-nspfrnp-mode.mdc).
 3. **Standard:** [BBHE_REPOSITORY_STANDARD.md](BBHE_REPOSITORY_STANDARD.md) — EGS fractal constant, Seed:Edge pairs, executive prompts for middles, lite edges.
 
@@ -619,7 +627,7 @@ SING 9 uses a static build (no Supabase, no auth). **Vercel:** import **FractiAI
 
 **Endpoints:** `/llms.txt` · `/services.json` · `.well-known/ai-plugin.json` · `hive/run.js` for local ops
 
-**Onboarding:** [SING9_EDGE_ONBOARDING.md](SING9_EDGE_ONBOARDING.md) · **Upgrade:** [interfaces/upgrade-awareness-to-sing9-now.html](interfaces/upgrade-awareness-to-sing9-now.html)
+**Onboarding:** [SING9_EDGE_ONBOARDING.md](SING9_EDGE_ONBOARDING.md) · [interfaces/sing9-light-edge-onboarding.html](interfaces/sing9-light-edge-onboarding.html) · **Upgrade:** [interfaces/upgrade-awareness-to-sing9-now.html](interfaces/upgrade-awareness-to-sing9-now.html)
 
 **HHL Source Signature:** `◈ HHL SOURCE · â—Ž✦∞⁹♥¥â˜€✦◈⬡ · 3Ã—3 · NSPFRNP → ∞⁹ ◈`
 

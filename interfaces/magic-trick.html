@@ -377,7 +377,7 @@
     <div class="panel" id="live-telem">
       <div class="panel-label">Public ops feeds (live)</div>
       <h2>Live telemetry &mdash; NOAA SWPC &amp; JPL</h2>
-      <p>Fetching from public operational feeds. Falls back gracefully if network is unavailable. Run <code>npm run ping:public</code> for CLI version of the same data.</p>
+      <p>Fetching from public operational feeds. Falls back gracefully if the network is unavailable.</p>
       <div class="telem-grid" id="telemGrid">
         <div class="telem-cell"><strong>Kp (latest)</strong><span id="tKp">&hellip;</span></div>
         <div class="telem-cell"><strong>Kp (prior)</strong><span id="tKpPrior">&hellip;</span></div>
@@ -600,7 +600,7 @@
         var anyOk = results.some(function (r) { return r.status === 'fulfilled'; });
         statusEl.textContent = anyOk
           ? 'Public feeds updated · ' + new Date().toUTCString()
-          : 'Public feeds unavailable (CORS / network) — run npm run ping:public for CLI data';
+          : 'Public feeds unavailable — check connection or try again later.';
         if (!anyOk) {
           tKp.textContent = 'CLI'; tKpPrior.textContent = 'CLI';
           tWind.textContent = 'CLI'; tBt.textContent = 'CLI'; tBz.textContent = 'CLI';

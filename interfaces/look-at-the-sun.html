@@ -173,7 +173,7 @@
         We line that up with <strong>sunspots</strong> and <strong>F10.7</strong> — the monthly number NOAA publishes for 10.7&nbsp;cm solar flux. F10.7 is the usual stand-in for <strong>how much EUV is hitting the ionosphere</strong>, so it moves with the slow solar cycle much like sunspots.
       </p>
       <p>
-        Everything below is <strong>frozen</strong> in <a href="look-at-the-sun-study.json"><code>look-at-the-sun-study.json</code></a>. Refresh with <code>npm run build:sun-study</code>. Your browser does not call GitHub, SoundCloud, or NOAA to view this page.
+        Charts and tables load from a <strong>saved snapshot</strong> on this site (<a href="look-at-the-sun-study.json"><code>look-at-the-sun-study.json</code></a>). This page does not call GitHub, SoundCloud, or NOAA in your browser.
       </p>
       <div id="status" class="status">Loading…</div>
     </section>
@@ -349,8 +349,7 @@
         if (data.sources) {
           const gh = (data.sources.githubRepos || []).join(", ");
           let tail =
-            "Data sources in the JSON: <code>" + gh + "</code> · SoundCloud RSS · NOAA monthly sunspots + F10.7. " +
-            "Rebuild: <code>npm run build:sun-study</code>.";
+            "Data sources in the JSON: <code>" + gh + "</code> · SoundCloud RSS · NOAA monthly sunspots + F10.7.";
           if (data.sources.ionosphereNote) {
             tail += " " + data.sources.ionosphereNote;
           }
@@ -365,7 +364,7 @@
         })
         .then(renderFromStudy)
         .catch((err) => {
-          setStatus("Missing look-at-the-sun-study.json — run npm run build:sun-study", true);
+          setStatus("Snapshot file missing — try again later or open the JSON link above.", true);
           findingsHeadline.textContent = "No snapshot";
           findingsLede.innerHTML = "";
           findingsLede.hidden = true;

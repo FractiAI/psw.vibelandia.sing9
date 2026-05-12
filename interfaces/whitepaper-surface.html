@@ -94,6 +94,28 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
+    /**
+     * Normalize repo-style links when this reader is served from /interfaces/.
+     */
+    function normalizeRepoLinks(container) {
+      if (!container || !container.querySelectorAll) return;
+      container.querySelectorAll('a[href]').forEach(function (a) {
+        var href = a.getAttribute('href');
+        if (!href || href.charAt(0) === '#' || href.indexOf('mailto:') === 0) return;
+        if (/^https?:\/\//i.test(href)) return;
+        if (href.charAt(0) === '/') return;
+        if (href.indexOf('../') === 0 || href.indexOf('./') === 0) return;
+        var next = href;
+        if (href.indexOf('interfaces/') === 0) next = '/' + href;
+        else if (href.indexOf('protocols/') === 0) next = '/' + href;
+        else if (href.indexOf('docs/') === 0) next = '/' + href;
+        else if (href.indexOf('data/') === 0) next = '/' + href;
+        else if (href.indexOf('public/') === 0) next = '/' + href;
+        else if (/^[^/]+\.(md|markdown)$/i.test(href)) next = '/' + href;
+        if (next !== href) a.setAttribute('href', next);
+      });
+    }
+
     (function () {
       const q = new URLSearchParams(window.location.search);
       const doc = q.get('doc');
@@ -125,6 +147,7 @@
           statusEl.remove();
           if (window.marked && typeof window.marked.parse === 'function') {
             contentEl.innerHTML = window.marked.parse(md);
+            normalizeRepoLinks(contentEl);
           } else {
             // Fallback: still structured surface even if CDN fails.
             contentEl.innerHTML = '<pre></pre>';

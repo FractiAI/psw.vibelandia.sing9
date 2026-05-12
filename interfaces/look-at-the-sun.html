@@ -230,18 +230,37 @@
         return res.json();
       }
 
-      async function githubMonthlyCounts(user, months) {
+      /** One search + pagination per user (max 1000 hits) — avoids per-month API spam and rate limits. */
+      async function githubCommitsByMonth(user, months) {
         const counts = Object.fromEntries(months.map((m) => [m, 0]));
-        for (const m of months) {
-          const start = `${m}-01`;
-          const end = lastDayOfMonth(m);
-          const query = encodeURIComponent(`author:${user} author-date:${start}..${end}`);
-          const url = `https://api.github.com/search/commits?q=${query}&per_page=1`;
+        if (!months.length) return counts;
+        const rangeStart = `${months[0]}-01`;
+        const rangeEnd = lastDayOfMonth(months[months.length - 1]);
+        const q = encodeURIComponent(`author:${user} author-date:${rangeStart}..${rangeEnd}`);
+        let page = 1;
+        let lastPage = 1;
+        for (;;) {
+          const url = `https://api.github.com/search/commits?q=${q}&per_page=100&page=${page}`;
           const data = await fetchJson(url, {
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28"
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
           });
-          counts[m] = Number(data.total_count || 0);
+          if (page === 1) {
+            const capped = Math.min(Number(data.total_count) || 0, 1000);
+            lastPage = Math.max(1, Math.ceil(capped / 100));
+          }
+          for (const item of data.items || []) {
+            const raw =
+              (item.commit && item.commit.author && item.commit.author.date) ||
+              (item.commit && item.commit.committer && item.commit.committer.date);
+            const d = raw ? new Date(raw) : null;
+            if (!d || Number.isNaN(d.getTime())) continue;
+            const key = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+            if (Object.prototype.hasOwnProperty.call(counts, key)) counts[key] += 1;
+          }
+          if (page >= lastPage) break;
+          await new Promise((r) => setTimeout(r, 150));
+          page += 1;
         }
         return counts;
       }
@@ -256,6 +275,14 @@
         return 0;
       }
 
+      const ITUNES_NS = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+
+      function itunesDurationEl(item) {
+        if (!item || !item.getElementsByTagNameNS) return null;
+        const list = item.getElementsByTagNameNS(ITUNES_NS, "duration");
+        return list && list.length ? list[0] : null;
+      }
+
       async function soundcloudMonthly(months) {
         const uploads = Object.fromEntries(months.map((m) => [m, 0]));
         const minutes = Object.fromEntries(months.map((m) => [m, 0]));
@@ -265,6 +292,8 @@
         if (!res.ok) throw new Error(`SoundCloud feed unavailable (${res.status})`);
         const xmlText = await res.text();
         const doc = new DOMParser().parseFromString(xmlText, "text/xml");
+        const parserErr = doc.querySelector("parsererror");
+        if (parserErr) throw new Error("SoundCloud feed XML did not parse.");
         const items = Array.from(doc.querySelectorAll("item"));
         for (const item of items) {
           const d = item.querySelector("pubDate");
@@ -272,9 +301,9 @@
           const dt = new Date(d.textContent.trim());
           if (Number.isNaN(dt.getTime())) continue;
           const key = `${dt.getUTCFullYear()}-${String(dt.getUTCMonth() + 1).padStart(2, "0")}`;
-          if (!uploads[key] && uploads[key] !== 0) continue;
+          if (!Object.prototype.hasOwnProperty.call(uploads, key)) continue;
           uploads[key] += 1;
-          const dur = item.querySelector("itunes\\:duration");
+          const dur = itunesDurationEl(item);
           minutes[key] += parseDurationToMinutes(dur ? dur.textContent : "0");
         }
         return { uploads, minutes };
@@ -367,11 +396,9 @@
 
       async function run() {
         const months = monthRange(startMonth, endMonth);
-        setStatus("Loading GitHub commit counts month-by-month…");
-        const [ghA, ghB] = await Promise.all([
-          githubMonthlyCounts("aiwona1", months),
-          githubMonthlyCounts("fractiai", months)
-        ]);
+        setStatus("Loading GitHub commit counts (batched by user)…");
+        const ghA = await githubCommitsByMonth("aiwona1", months);
+        const ghB = await githubCommitsByMonth("fractiai", months);
         const commits = Object.fromEntries(months.map((m) => [m, (ghA[m] || 0) + (ghB[m] || 0)]));
 
         setStatus("Loading SoundCloud uploads and play-ready durations…");
@@ -410,7 +437,9 @@
             (solar.sunspots[m] || 0) * 0.1 +
             (solar.f107[m] || 0) * 0.15;
         });
-        const peakMonth = months.reduce((best, m) => overlapScore[m] > overlapScore[best] ? m : best, months[0]);
+        const peakMonth = months.length
+          ? months.reduce((best, m) => (overlapScore[m] > overlapScore[best] ? m : best), months[0])
+          : "—";
 
         document.getElementById("kpiMonths").textContent = String(months.length);
         document.getElementById("kpiCommits").textContent = sumValues(commits, months);

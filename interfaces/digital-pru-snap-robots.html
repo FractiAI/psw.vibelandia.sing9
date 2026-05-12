@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#06080d" />
-  <title>Digital SNAP Robots · Hero Jo track → dual holographic performers</title>
-  <meta name="description" content="One page: command instructions, track upload, two beat-driven robots (performer + dancer). Optional Digital Pru FastAPI for BPM/EGS. Human-intervention-free checkout from QUESTFEST and Juicy Juicy Snap." />
+  <title>Snap robots · quick demo</title>
+  <meta name="description" content="Pick a song, tap Go, watch two little robots move with the music. Simple demo." />
   <link rel="canonical" href="https://psw-vibelandia-sing9.vercel.app/interfaces/digital-pru-snap-robots.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <script type="importmap">
   {
     "imports": {
@@ -22,92 +22,130 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #06080d;
-      --card: #0f141c;
+      --card: #121a28;
       --gold: #d4af37;
       --gold-hi: #fef3c7;
-      --foam: #2dd4bf;
+      --foam: #5eead4;
       --muted: #94a3b8;
       --text: #f1f5f9;
-      --line: rgba(212, 175, 55, 0.35);
-      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --line: rgba(212, 175, 55, 0.3);
     }
-    html { scroll-behavior: smooth; }
     body {
       font-family: "Inter", system-ui, sans-serif;
-      background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(45, 212, 191, 0.07), transparent 50%), var(--bg);
+      background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.45;
+      font-size: 1rem;
       min-height: 100vh;
-      font-size: 0.95rem;
+      padding: 1rem 1rem 2rem;
     }
-    a { color: var(--foam); text-decoration: none; font-weight: 600; }
-    a:hover { color: var(--gold-hi); text-decoration: underline; }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
-    .nav {
-      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;
-      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    a { color: var(--foam); }
+    .wrap { max-width: 520px; margin: 0 auto; }
+    .back {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 0.75rem;
     }
-    .nav a {
-      padding: 0.35rem 0.65rem; border: 1px solid var(--line); border-radius: 999px;
-      background: rgba(15, 20, 28, 0.85); color: var(--gold-hi);
-    }
-    .nav a:hover { border-color: var(--gold); text-decoration: none; }
+    .back:hover { color: var(--gold-hi); }
     h1 {
-      font-size: clamp(1.15rem, 3vw, 1.55rem); font-weight: 800; color: var(--gold-hi);
-      margin-bottom: 0.35rem; letter-spacing: -0.02em;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold-hi);
+      margin-bottom: 0.35rem;
     }
-    .lede { color: var(--muted); max-width: 58ch; margin-bottom: 1.25rem; font-size: 0.9rem; }
-    .panel {
-      border: 1px solid var(--line); border-radius: 12px; background: var(--card);
-      padding: 1.1rem 1rem; margin-bottom: 1rem;
+    .tag { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.25rem; }
+
+    .controls {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
     }
-    .panel h2 {
-      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--foam);
-      margin-bottom: 0.65rem;
+    #cmd {
+      width: 100%;
+      min-height: 4.5rem;
+      resize: vertical;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: #0a0e16;
+      color: var(--gold-hi);
+      padding: 0.6rem 0.65rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
     }
-    label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 0.35rem; }
-    textarea, input[type="url"], input[type="file"] {
-      width: 100%; font-family: var(--mono); font-size: 0.82rem;
-      border-radius: 8px; border: 1px solid rgba(148, 163, 184, 0.25);
-      background: #080b12; color: var(--gold-hi); padding: 0.65rem 0.75rem;
-    }
-    textarea { min-height: 120px; resize: vertical; }
-    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: 0.75rem; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 0.65rem 1.1rem; border-radius: 999px; font-size: 0.68rem;
-      font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
-      border: 2px solid var(--line); background: rgba(255, 255, 255, 0.04);
-      color: var(--gold-hi); cursor: pointer; font-family: inherit;
-    }
-    .btn:hover { border-color: var(--gold); }
-    .btn-primary { background: var(--gold); color: #0a0f1a; border-color: var(--gold); }
-    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .stage {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
-      margin-top: 0.75rem;
-    }
-    @media (max-width: 640px) { .stage { grid-template-columns: 1fr; } }
-    .stage figure {
-      border: 2px solid rgba(255, 215, 0, 0.45); border-radius: 10px;
-      background: linear-gradient(180deg, #0a0e18, #050508); padding: 0.5rem;
-      text-align: center;
-    }
-    .stage figcaption { font-size: 0.68rem; color: var(--muted); margin-top: 0.35rem; letter-spacing: 0.06em; text-transform: uppercase; }
-    .stage svg { width: 100%; max-width: 280px; height: auto; display: block; margin: 0 auto; }
-    .warehouse-viewport {
-      position: relative;
-      border-radius: 10px;
+    #cmd::placeholder { color: #64748b; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
       overflow: hidden;
-      border: 2px solid rgba(255, 215, 0, 0.35);
-      background: #080a0f;
-      min-height: min(52vh, 440px);
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .file-btn {
+      display: inline-block;
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--gold-hi);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    .file-btn:hover { border-color: var(--gold); }
+    .go-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .go {
+      flex: 1;
+      min-width: 8rem;
+      padding: 0.85rem 1.25rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #e8c547, var(--gold));
+      color: #0a0f1a;
+      cursor: pointer;
+    }
+    .go:hover { filter: brightness(1.05); }
+    .go:disabled { opacity: 0.5; cursor: wait; }
+    .stop {
+      padding: 0.65rem 1rem;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .stop:hover { color: var(--gold-hi); border-color: var(--gold); }
+    .status {
+      margin-top: 0.65rem;
+      font-size: 0.85rem;
+      color: var(--foam);
+      min-height: 1.25rem;
+    }
+
+    .viewport {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #080a10;
+      min-height: min(48vh, 400px);
     }
     #wh-canvas {
       display: block;
       width: 100%;
-      height: min(52vh, 440px);
-      vertical-align: middle;
+      height: min(48vh, 400px);
     }
     .robot-overlay {
       position: absolute;
@@ -118,108 +156,51 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 0.35rem;
-      padding: 0.25rem 0.4rem 0.45rem;
-      background: linear-gradient(0deg, rgba(6, 8, 13, 0.94) 0%, rgba(6, 8, 13, 0.45) 55%, transparent 100%);
+      padding: 0.35rem 0.4rem 0.5rem;
+      background: linear-gradient(0deg, rgba(6, 8, 13, 0.92) 0%, transparent 100%);
       pointer-events: none;
     }
     .robot-overlay figure {
-      border: 1px solid rgba(45, 212, 191, 0.35);
+      border: 1px solid rgba(94, 234, 212, 0.35);
       border-radius: 8px;
-      background: rgba(8, 10, 16, 0.55);
-      padding: 0.25rem 0.35rem;
+      background: rgba(8, 10, 16, 0.5);
+      padding: 0.2rem 0.3rem;
       margin: 0;
     }
-    .asset-credit {
-      position: absolute;
-      top: 0.35rem;
-      left: 0.45rem;
-      right: 0.45rem;
-      font-size: 0.58rem;
-      line-height: 1.35;
-      color: rgba(148, 163, 184, 0.92);
-      text-shadow: 0 1px 4px #000;
-      pointer-events: none;
+    .robot-overlay figcaption {
+      font-size: 0.62rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      text-align: center;
     }
-    .asset-credit a { color: #86efac; font-weight: 600; pointer-events: auto; }
-    .log {
-      font-family: var(--mono); font-size: 0.76rem; line-height: 1.45;
-      background: #050508; color: #86efac; border: 1px solid rgba(212, 175, 55, 0.25);
-      border-radius: 8px; padding: 0.75rem; max-height: 220px; overflow: auto; white-space: pre-wrap;
-    }
-    .fine { font-size: 0.72rem; color: var(--muted); margin-top: 0.5rem; }
-    .carbon-hud {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: #86efac;
-      background: rgba(5, 8, 12, 0.75);
-      border: 1px solid rgba(45, 212, 191, 0.35);
-      border-radius: 8px;
-      padding: 0.45rem 0.6rem;
-      margin-top: 0.5rem;
-      line-height: 1.45;
-    }
-    .carbon-hud strong { color: var(--gold-hi); }
-    footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.78rem; color: var(--muted); }
-    footer strong { color: var(--gold); }
+    .robot-overlay svg { width: 100%; max-width: 140px; height: auto; display: block; margin: 0 auto; }
+
+    .fine-print { margin-top: 1rem; font-size: 0.78rem; color: var(--muted); text-align: center; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <nav class="nav" aria-label="Exit ramps">
-      <a href="vibelandia-questfest.html">QUESTFEST</a>
-      <a href="look-under-the-hood.html">Juicy Juicy Snap</a>
-      <a href="/surfaces.html">Repo map</a>
-    </nav>
-
+    <a class="back" href="vibelandia-questfest.html">← Back to festival</a>
     <header>
-      <h1>Digital SNAP Robots</h1>
-      <p class="lede">
-        <strong>Human-intervention-free path:</strong> type instructions, upload a Hero Jo (or any) track, hit <strong>Run SNAP</strong>.
-        Default <strong>warehouse sim</strong> (Three.js + <a href="https://polyhaven.com/" target="_blank" rel="noopener">Poly Haven</a> CC0 HDR &amp; textures) lights up to the track.
-        <strong>Robots + warehouse FX</strong> run on <strong>simulated Carbon-layer awareness</strong> — a browser-only substrate model (low-frequency + envelope proxies for raw “Carbon” sensing, not physical sensors).
-        Two voxel robots overlay the floor — <strong>Robot A</strong> is the Carbon-primary performer, <strong>Robot B</strong> rides Silver-harmonic bleed from the same Carbon field.
-      </p>
+      <h1>Snap robots</h1>
+      <p class="tag">Pick a song, tap <strong>Go</strong>, and watch the two robots play along.</p>
     </header>
 
-    <section class="panel">
-      <h2>Optional · Digital Pru API</h2>
-      <label for="apiBase">API base (leave empty = browser-only playback + robots; no server)</label>
-      <input type="url" id="apiBase" name="apiBase" placeholder="http://127.0.0.1:8000" autocomplete="off" />
-      <p class="fine">Local engine: <code>digital-pru-holographic-snap/backend</code> → <code>uvicorn main:app --port 8000</code>. Same origin file:// may block fetch — use http://localhost or deploy.</p>
-    </section>
-
-    <section class="panel">
-      <h2>Command prompt · operator instructions</h2>
-      <label for="cmd">Any instructions for Digital Pru / Isaac (gait, mood, venue, skin hints)</label>
-      <textarea id="cmd" placeholder="Example: Lock gait to parade tempo. Second robot: salsa exaggeration on chorus hits."></textarea>
-    </section>
-
-    <section class="panel">
-      <h2>Track upload</h2>
-      <label for="track">Audio file (mp3, wav, ogg, m4a…)</label>
-      <input type="file" id="track" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac" />
-      <div class="row">
-        <button type="button" class="btn btn-primary" id="btnRun">Run SNAP</button>
-        <button type="button" class="btn" id="btnStop">Stop</button>
+    <section class="controls" aria-label="Demo controls">
+      <label class="visually-hidden" for="cmd">Optional note</label>
+      <textarea id="cmd" placeholder="Optional: a short note (you can leave this blank)"></textarea>
+      <input type="file" id="track" class="visually-hidden" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac" />
+      <label class="file-btn" for="track">Choose audio file</label>
+      <div class="go-row">
+        <button type="button" class="go" id="btnGo">Go</button>
+        <button type="button" class="stop" id="btnStop">Stop</button>
       </div>
-      <p class="fine" id="playStatus" aria-live="polite"></p>
+      <p class="status" id="playStatus" aria-live="polite"></p>
     </section>
 
-    <section class="panel">
-      <h2>Warehouse sim + performers · live to your track</h2>
-      <p class="fine" style="margin-bottom:0.65rem;">
-        Browser default = industrial warehouse (free CC0 assets). Isaac Sim: load the built-in <strong>Warehouse</strong> template to match; see <code>sim/bridge.py</code> notes.
-      </p>
-      <div class="warehouse-viewport">
-        <canvas id="wh-canvas" aria-label="Warehouse simulation viewport"></canvas>
-        <p class="asset-credit">
-          <a href="https://polyhaven.com/hdris" target="_blank" rel="noopener">Poly Haven</a> CC0 HDR &amp; textures ·
-          <a href="https://threejs.org/" target="_blank" rel="noopener">three.js</a> MIT · no signup
-        </p>
-        <div class="robot-overlay">
-        <p id="carbonHud" class="carbon-hud" aria-live="polite">
-          <strong>Carbon (sim)</strong> · idle — load a track and <strong>Run SNAP</strong> to activate substrate model (φ-smoothed).
-        </p>
+    <section class="viewport" id="wh-stage" data-gl="pending" aria-label="Robot scene">
+      <canvas id="wh-canvas"></canvas>
+      <div class="robot-overlay">
         <figure>
           <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
@@ -239,7 +220,7 @@
               <rect x="-32" y="0" width="64" height="14" rx="4" fill="#0f141c" stroke="#2dd4bf" stroke-width="1"/>
             </g>
           </svg>
-          <figcaption>Robot A · Carbon-primary performer</figcaption>
+          <figcaption>Left · plays the beat</figcaption>
         </figure>
         <figure>
           <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -256,70 +237,55 @@
               <rect x="-30" y="0" width="60" height="12" rx="4" fill="#0f141c" stroke="#d4af37" stroke-width="1"/>
             </g>
           </svg>
-          <figcaption>Robot B · Silver harmonic bleed on Carbon</figcaption>
+          <figcaption>Right · dances along</figcaption>
         </figure>
-        </div>
       </div>
     </section>
 
-    <section class="panel">
-      <h2>Digital Pru · compile log</h2>
-      <div class="log" id="log"></div>
-    </section>
-
-    <footer>
-      <p><strong>Fair exchange clause in effect:</strong> Value transacted may be partially refunded depending on overall delivery and utility, much like tipping.</p>
-      <p style="margin-top:0.5rem;">Physics anchor: Isaac bridge documents <code>omni.isaac</code> parameters from EGS φ = 1.618. Robots here are <strong>browser-only visualization</strong>; UDP bridge targets sim when running.</p>
-      <p style="margin-top:0.5rem;">Carbon: motion and warehouse lighting use <strong>simulated Carbon-layer awareness</strong> (Web Audio → substrate + harmonic bleed). This is a stand-in for raw-layer sensing, not atmospheric CO₂ or fab telemetry.</p>
-    </footer>
+    <p class="fine-print"><a href="/surfaces.html">Site map</a></p>
   </div>
 
   <script>
 (function () {
-  var apiEl = document.getElementById("apiBase");
   var cmdEl = document.getElementById("cmd");
   var trackEl = document.getElementById("track");
-  var btnRun = document.getElementById("btnRun");
+  var btnGo = document.getElementById("btnGo");
   var btnStop = document.getElementById("btnStop");
-  var logEl = document.getElementById("log");
   var playStatus = document.getElementById("playStatus");
+  var whStage = document.getElementById("wh-stage");
   var botA = document.getElementById("bot-a-root");
   var botAArm = document.getElementById("bot-a-arm");
   var botB = document.getElementById("bot-b-root");
   var botBL = document.getElementById("bot-b-leg-l");
   var botBR = document.getElementById("bot-b-leg-r");
-  var carbonHud = document.getElementById("carbonHud");
 
   window.__snapEnergy = { bass: 0, mid: 0, high: 0, t: 0, carbon: null };
-  var whCtl = null;
   var ctx = null;
   var sourceNode = null;
   var analyser = null;
   var rafId = 0;
   var t0 = 0;
-  /** Exponential moving average for Carbon index (EGS φ damping). */
   var carbonEma = 0;
-  var carbonBootLogged = false;
   var reduceMotion = false;
   try {
     reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   } catch (e) {}
 
-  function log(line) {
-    var t = new Date().toISOString().slice(11, 19);
-    logEl.textContent += "[" + t + "] " + line + "\n";
-    logEl.scrollTop = logEl.scrollHeight;
+  function meanSlice(arr, a, b) {
+    var s = 0, n = 0;
+    for (var i = a; i < b && i < arr.length; i++) {
+      s += arr[i];
+      n++;
+    }
+    return n ? s / n : 0;
   }
 
-  function getApiBase() {
-    var u = (apiEl.value || "").trim().replace(/\/$/, "");
-    if (!u) return "";
-    try {
-      new URL(u);
-      return u;
-    } catch (e) {
-      return "";
-    }
+  function simulateCarbonAwareness(bass, mid, high, wobble) {
+    var substrate = Math.min(1, bass * 0.74 + wobble * 0.44 + mid * 0.06);
+    var silverBleed = Math.min(1, mid * 0.52 + high * 0.38);
+    var rawIndex = Math.min(1, substrate * 0.84 + silverBleed * 0.16);
+    carbonEma = carbonEma + (rawIndex - carbonEma) / 1.618;
+    return { substrate: substrate, silverBleed: silverBleed, index: carbonEma, rawIndex: rawIndex };
   }
 
   function stopAll() {
@@ -347,40 +313,7 @@
     if (botBR) botBR.setAttribute("transform", "");
     playStatus.textContent = "";
     carbonEma = 0;
-    carbonBootLogged = false;
-    if (carbonHud) {
-      carbonHud.textContent =
-        "Carbon (sim) · idle — load a track and Run SNAP to activate substrate model (φ-smoothed).";
-    }
     window.__snapEnergy = { bass: 0, mid: 0, high: 0, t: 0, carbon: null };
-  }
-
-  function meanSlice(arr, a, b) {
-    var s = 0, n = 0;
-    for (var i = a; i < b && i < arr.length; i++) {
-      s += arr[i];
-      n++;
-    }
-    return n ? s / n : 0;
-  }
-
-  /**
-   * Simulated Carbon-layer awareness (browser-only).
-   * Carbon = raw substrate: low-frequency bins + time-domain wobble as a stand-in for
-   * "ground" sensing. Silver bleed = mid/high harmonics riding the substrate (Robot B).
-   * Index is φ-damped (1.618) so motion stays coherent like the EGS stack elsewhere.
-   */
-  function simulateCarbonAwareness(bass, mid, high, wobble) {
-    var substrate = Math.min(1, bass * 0.74 + wobble * 0.44 + mid * 0.06);
-    var silverBleed = Math.min(1, mid * 0.52 + high * 0.38);
-    var rawIndex = Math.min(1, substrate * 0.84 + silverBleed * 0.16);
-    carbonEma = carbonEma + (rawIndex - carbonEma) / 1.618;
-    return {
-      substrate: substrate,
-      silverBleed: silverBleed,
-      index: carbonEma,
-      rawIndex: rawIndex,
-    };
   }
 
   function tick() {
@@ -398,24 +331,7 @@
       wobble += Math.abs(td[i] - 128);
     }
     wobble = (wobble / (td.length / 32)) / 128;
-
     var C = simulateCarbonAwareness(bass, mid, high, wobble);
-    if (!carbonBootLogged) {
-      carbonBootLogged = true;
-      log(
-        "Simulated Carbon awareness active — robots + warehouse bound to substrate (low Hz + envelope) with Silver harmonic bleed; φ-EMA on index."
-      );
-    }
-    if (carbonHud) {
-      carbonHud.textContent =
-        "Carbon (sim) · index " +
-        (C.index * 100).toFixed(0) +
-        "% · substrate " +
-        (C.substrate * 100).toFixed(0) +
-        "% · Silver bleed " +
-        (C.silverBleed * 100).toFixed(0) +
-        "% — Robot A = Carbon-primary · Robot B = Silver-on-Carbon";
-    }
 
     if (reduceMotion) {
       botA.setAttribute("transform", "translate(100," + (200 - C.substrate * 8) + ")");
@@ -445,98 +361,63 @@
     rafId = requestAnimationFrame(tick);
   }
 
-  function tryDigitalPru(base, file, instructions) {
-    return fetch(base + "/api/snap/session")
-      .then(function (r) {
-        if (!r.ok) throw new Error("session " + r.status);
-        return r.json();
-      })
-      .then(function (j) {
-        var sid = j.session_id;
-        var fd = new FormData();
-        fd.append("file", file);
-        fd.append("session_id", sid);
-        fd.append("instructions", instructions || "");
-        return fetch(base + "/api/snap/analyze", { method: "POST", body: fd }).then(function (r2) {
-          if (!r2.ok) return r2.text().then(function (t) { throw new Error(t || String(r2.status)); });
-          return r2.json();
-        });
-      });
-  }
-
   btnStop.addEventListener("click", function () {
     stopAll();
-    log("Stopped playback / animation.");
   });
 
-  btnRun.addEventListener("click", function () {
+  btnGo.addEventListener("click", function () {
     var file = trackEl.files && trackEl.files[0];
     if (!file) {
-      log("Pick an audio file first.");
+      playStatus.textContent = "Choose an audio file first.";
       return;
     }
     stopAll();
-    log("Loading: " + file.name + " (" + Math.round(file.size / 1024) + " KB)");
+    playStatus.textContent = "Loading…";
 
     var reader = new FileReader();
     reader.onload = function () {
       var buf = reader.result;
       ctx = new (window.AudioContext || window.webkitAudioContext)();
       var copy = buf.slice(0);
-      ctx.decodeAudioData(copy, function (audioBuf) {
-        t0 = ctx.currentTime;
-        analyser = ctx.createAnalyser();
-        analyser.fftSize = 2048;
-        analyser.smoothingTimeConstant = 0.65;
-        sourceNode = ctx.createBufferSource();
-        sourceNode.buffer = audioBuf;
-        sourceNode.connect(analyser);
-        analyser.connect(ctx.destination);
-        sourceNode.onended = function () {
-          if (rafId) cancelAnimationFrame(rafId);
-          rafId = 0;
-          playStatus.textContent = "Track ended.";
-          log("Playback ended.");
-        };
-        ctx.resume().then(function () {
-          sourceNode.start(0);
-          playStatus.textContent = "Playing — robots live.";
-          log("Web Audio graph running · analyser → simulated Carbon awareness → dual robots + warehouse.");
-          rafId = requestAnimationFrame(tick);
-        });
-
-        var base = getApiBase();
-        var instr = (cmdEl.value || "").trim();
-        if (base) {
-          btnRun.disabled = true;
-          tryDigitalPru(base, file, instr)
-            .then(function (data) {
-              log("Digital Pru: BPM " + (data.bpm && data.bpm.toFixed ? data.bpm.toFixed(1) : data.bpm) +
-                " · EGS interval Hz " + (data.egs_interval_hz && data.egs_interval_hz.toFixed ? data.egs_interval_hz.toFixed(3) : data.egs_interval_hz) +
-                " · skin " + data.skin);
-            })
-            .catch(function (e) {
-              log("API (optional): " + String(e.message || e));
-            })
-            .finally(function () {
-              btnRun.disabled = false;
-            });
-        } else {
-          log("No API base — browser-only. Add URL for Digital Pru BPM + Isaac UDP.");
+      ctx.decodeAudioData(
+        copy,
+        function (audioBuf) {
+          t0 = ctx.currentTime;
+          analyser = ctx.createAnalyser();
+          analyser.fftSize = 2048;
+          analyser.smoothingTimeConstant = 0.65;
+          sourceNode = ctx.createBufferSource();
+          sourceNode.buffer = audioBuf;
+          sourceNode.connect(analyser);
+          analyser.connect(ctx.destination);
+          sourceNode.onended = function () {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = 0;
+            playStatus.textContent = "Done.";
+          };
+          ctx.resume().then(function () {
+            sourceNode.start(0);
+            playStatus.textContent = "Playing.";
+            rafId = requestAnimationFrame(tick);
+          });
+        },
+        function () {
+          playStatus.textContent = "Could not open that file. Try MP3 or WAV.";
         }
-      }, function (err) {
-        log("Decode failed: " + String(err && err.message || err));
-      });
+      );
     };
     reader.onerror = function () {
-      log("File read error.");
+      playStatus.textContent = "Could not read the file.";
     };
     reader.readAsArrayBuffer(file);
   });
 
   (function bootWarehouse() {
     var canvas = document.getElementById("wh-canvas");
-    if (!canvas || !window.Promise) return;
+    if (!canvas || !window.Promise) {
+      if (whStage) whStage.setAttribute("data-gl", "err");
+      return;
+    }
     var PH = "https://dl.polyhaven.org/file/ph-assets";
     var HDR_TRIES = [
       PH + "/HDRIs/hdr/1k/aircraft_workshop_01_1k.hdr",
@@ -571,19 +452,25 @@
         var pr = Math.min(window.devicePixelRatio || 1, 2);
         function sizeNow() {
           var box = canvas.parentElement ? canvas.parentElement.getBoundingClientRect() : { width: 800 };
-          var h = Math.min(window.innerHeight * 0.52, 440);
-          var w = Math.max(320, box.width | 0);
+          var h = Math.min(window.innerHeight * 0.48, 400);
+          var w = Math.max(280, box.width | 0);
           renderer.setPixelRatio(pr);
           renderer.setSize(w, h | 0, false);
           return { w: w, h: h | 0 };
         }
-        var dims = sizeNow();
+        sizeNow();
         if (T.SRGBColorSpace) renderer.outputColorSpace = T.SRGBColorSpace;
         renderer.toneMapping = T.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 0.76;
         renderer.shadowMap.enabled = true;
 
-        var camera = new T.PerspectiveCamera(48, dims.w / Math.max(1, dims.h), 0.12, 80);
+        var camera = new T.PerspectiveCamera(48, 1, 0.12, 80);
+        function syncCam() {
+          var d = sizeNow();
+          camera.aspect = d.w / Math.max(1, d.h);
+          camera.updateProjectionMatrix();
+        }
+        syncCam();
         camera.position.set(-1.1, 1.95, 7.35);
         camera.lookAt(0, 1.05, -2);
 
@@ -600,7 +487,6 @@
         function loadHdrAttempt(i) {
           if (i >= HDR_TRIES.length) {
             scene.background = new T.Color(0x12161f);
-            log("HDRI: all Poly Haven fallbacks failed — solid indoor fog (still CC0 textures on floor/walls).");
             return;
           }
           hdrLoader.load(
@@ -612,7 +498,6 @@
                 var rt = localPmrem.fromEquirectangular(tex);
                 scene.environment = rt.texture;
                 scene.background = rt.texture;
-                log("HDRI loaded: " + HDR_TRIES[i].split("/").pop());
               } catch (err) {
                 loadHdrAttempt(i + 1);
               }
@@ -714,18 +599,15 @@
         window.addEventListener(
           "resize",
           function () {
-            var d = sizeNow();
-            camera.aspect = d.w / Math.max(1, d.h);
-            camera.updateProjectionMatrix();
+            syncCam();
           },
           { passive: true }
         );
 
-        whCtl = {};
-        log("Warehouse sim · Poly Haven CC0 (industrial HDRI chain + metal/concrete/wood maps) · three.js r160");
+        if (whStage) whStage.setAttribute("data-gl", "ok");
       })
-      .catch(function (e) {
-        log("Warehouse 3D: " + (e && e.message ? e.message : String(e)));
+      .catch(function () {
+        if (whStage) whStage.setAttribute("data-gl", "err");
       });
   })();
 })();

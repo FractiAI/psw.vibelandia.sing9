@@ -170,7 +170,7 @@
       <h1>Look at the Sun</h1>
       <p>
         Each month we count: <strong>Git commits</strong> on two repos, <strong>new SoundCloud tracks</strong> from the RSS feed, and <strong>minutes of audio</strong> from episode lengths.
-        We line that up with <strong>sunspots</strong> and <strong>F10.7</strong> — the monthly number NOAA publishes for 10.7&nbsp;cm solar flux. F10.7 is the usual stand-in for <strong>how much EUV is hitting the ionosphere</strong>, so it moves with the slow solar cycle much like sunspots.
+        We line that up with <strong>sunspots</strong> and <strong>F10.7</strong> — the monthly number NOAA publishes for 10.7&nbsp;cm solar flux. F10.7 is the usual stand-in for <strong>how much EUV is hitting the ionosphere</strong>, so it moves with the slow solar cycle much like sunspots. <strong>Current calendar month:</strong> if NOAA has not released that row yet, the table shows a dash — not zero.
       </p>
       <p>
         Charts and tables load from a <strong>saved snapshot</strong> on this site (<a href="look-at-the-sun-study.json"><code>look-at-the-sun-study.json</code></a>). This page does not call GitHub, SoundCloud, or NOAA in your browser.
@@ -194,7 +194,7 @@
         <span><span class="dot" style="background:#d4af37"></span>Ionosphere driver (F10.7, sfu)</span>
       </div>
       <p class="iono-note">
-        <strong>Ionosphere note:</strong> we do not plot a separate Kp line here (that needs a different archive than this small JSON). F10.7 is still the right <strong>monthly</strong> companion to sunspots for “how hot the radio Sun is” for the ionosphere on average.
+        <strong>Ionosphere note:</strong> we do not plot a separate Kp line here (that needs a different archive than this small JSON). F10.7 is still the right <strong>monthly</strong> companion to sunspots for “how hot the radio Sun is” for the ionosphere on average. Empty cells mean NOAA has not posted that month yet — they are not zero flux.
       </p>
     </section>
 
@@ -234,8 +234,14 @@
       }
 
       function norm(values) {
-        const max = Math.max(1, ...values);
-        return values.map((v) => v / max);
+        const finite = values
+          .map((v) => (v == null ? NaN : Number(v)))
+          .filter((n) => Number.isFinite(n));
+        const max = finite.length ? Math.max(...finite) : 1;
+        return values.map((v) => {
+          const n = v == null ? NaN : Number(v);
+          return Number.isFinite(n) ? n / max : NaN;
+        });
       }
 
       function liteFormat(s) {
@@ -267,11 +273,20 @@
         const xStep = months.length > 1 ? pw / (months.length - 1) : pw;
         function plot(values, color) {
           ctx.beginPath();
+          let penDown = false;
           values.forEach((v, i) => {
+            if (!Number.isFinite(v)) {
+              penDown = false;
+              return;
+            }
             const x = pad.l + i * xStep;
             const y = pad.t + (1 - v) * ph;
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
+            if (!penDown) {
+              ctx.moveTo(x, y);
+              penDown = true;
+            } else {
+              ctx.lineTo(x, y);
+            }
           });
           ctx.lineWidth = 2;
           ctx.strokeStyle = color;
@@ -294,6 +309,10 @@
       }
 
       function renderTable(months, m) {
+        function fmtSunIon(v, decimals) {
+          if (v == null || !Number.isFinite(Number(v))) return "—";
+          return Number(v).toFixed(decimals);
+        }
         const tbody = document.querySelector("#dataTable tbody");
         tbody.innerHTML = months.map((month) => (
           `<tr>
@@ -301,8 +320,8 @@
             <td>${m.commits[month]}</td>
             <td>${m.uploads[month]}</td>
             <td>${Number(m.minutes[month]).toFixed(1)}</td>
-            <td>${Number(m.sunspots[month]).toFixed(1)}</td>
-            <td>${Number(m.f107[month]).toFixed(2)}</td>
+            <td>${fmtSunIon(m.sunspots[month], 1)}</td>
+            <td>${fmtSunIon(m.f107[month], 2)}</td>
           </tr>`
         )).join("");
       }
@@ -352,6 +371,9 @@
             "Data sources in the JSON: <code>" + gh + "</code> · SoundCloud RSS · NOAA monthly sunspots + F10.7.";
           if (data.sources.ionosphereNote) {
             tail += " " + data.sources.ionosphereNote;
+          }
+          if (data.sources.lastNoaaMonth) {
+            tail += " Latest paired NOAA month: <strong>" + data.sources.lastNoaaMonth + "</strong>.";
           }
           methodNote.innerHTML = tail;
         }

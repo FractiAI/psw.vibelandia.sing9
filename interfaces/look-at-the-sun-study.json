@@ -36,7 +36,7 @@
     "2026-02": 265,
     "2026-03": 324,
     "2026-04": 30,
-    "2026-05": 46
+    "2026-05": 48
   },
   "uploads": {
     "2025-02": 0,
@@ -90,7 +90,7 @@
     "2026-02": 78.2,
     "2026-03": 85.9,
     "2026-04": 79.3,
-    "2026-05": 0
+    "2026-05": null
   },
   "f107": {
     "2025-02": 184.31,
@@ -108,18 +108,18 @@
     "2026-02": 135.93,
     "2026-03": 130.66,
     "2026-04": 120.01,
-    "2026-05": 0
+    "2026-05": null
   },
   "findings": {
     "headline": "What we found",
-    "lede": "From **2025-02** to **2026-05**: commits run hottest in **2026-03** (324), and SoundCloud dated drops peak in **2026-04** (335). The **Sun panel** is different: monthly sunspots **fell** from **156** to **0**, and **F10.7** — the same-row **ionosphere / EUV** yardstick NOAA ships with sunspots — goes **184 → 0** sfu. Those two curves usually **walk together** on the slow cycle; here they **soften** while your studio lines spike, so **do not read the Sun as the throttle for shipping** on this sheet. If the **last** Sun/F10.7 cells are **0**, SWPC may not have finalized that month yet.",
+    "lede": "From **2025-02** to **2026-05**: commits run hottest in **2026-03** (324), and SoundCloud dated drops peak in **2026-04** (335). The **Sun panel** is different: Over **2025-02**–**2026-04** (latest paired NOAA month): monthly sunspots **fell** from **156** to **79**, and **F10.7** — the same-row **ionosphere / EUV** yardstick — runs **184 → 120** sfu. Those two curves usually **walk together** on the slow cycle; here they **soften** while your studio lines spike, so **do not read the Sun as the throttle for shipping** on this sheet. Calendar months after **2026-04** stay **empty** until SWPC publishes the official monthly sunspot + F10.7 row (they are **not** zero flux).",
     "bullets": [
-      "**GitHub (669 commits):** counts are only **fractiai/psw.vibelandia.sing9 and AiwonA1/JWST-SMACS-0723**. They tell you when those two repos actually moved.",
+      "**GitHub (671 commits):** counts are only **fractiai/psw.vibelandia.sing9 and AiwonA1/JWST-SMACS-0723**. They tell you when those two repos actually moved.",
       "**SoundCloud (500 drops, 2028.7 minutes):** dates come from the public RSS. The feed **caps at 500 episodes**, so older history can look like silence — that is a **feed limit**, not proof nobody uploaded.",
-      "**Sun + ionosphere:** **Sunspots** are the classic monthly sun-strength number. **F10.7** is posted on the same monthly row and is the usual **radio-Sun / ionosphere heating** yardstick; it **tracks the cycle with** sunspots. Use both as **background weather**, not as a reason your mixtape shipped."
+      "**Sun + ionosphere:** **Sunspots** are the classic monthly sun-strength number. **F10.7** is posted on the same monthly row and is the usual **radio-Sun / ionosphere heating** yardstick; it **tracks the cycle with** sunspots. Trailing months without an NOAA row stay **null** (shown as a dash on the page) — not zero flux. Use both as **background weather**, not as a reason your mixtape shipped."
     ],
     "totals": {
-      "commits": 669,
+      "commits": 671,
       "uploads": 500,
       "minutes": 2028.7
     }
@@ -132,6 +132,7 @@
     "soundcloudFeed": "https://feeds.soundcloud.com/users/soundcloud:users:1681714067/sounds.rss",
     "noaaSunspots": "https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json",
     "noaaF107": "https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json",
-    "ionosphereNote": "F10.7 (10.7 cm flux) is the monthly field NOAA publishes alongside sunspots; it is the usual stand-in for EUV-driven ionospheric heating on slow, monthly scales. Kp is not included here (needs a different archive than this small JSON)."
+    "lastNoaaMonth": "2026-04",
+    "ionosphereNote": "F10.7 (10.7 cm flux) is the monthly field NOAA publishes alongside sunspots; it is the usual stand-in for EUV-driven ionospheric heating on slow, monthly scales. Months after the latest NOAA row are omitted (null), not zero. Kp is not included here (needs a different archive than this small JSON)."
   }
 }

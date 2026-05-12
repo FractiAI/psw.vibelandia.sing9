@@ -156,39 +156,85 @@ async function soundcloudMonthlyFromFeed(months) {
   return { uploads, minutes };
 }
 
+function maxIsoMonth(rows) {
+  let m = null;
+  for (const row of rows) {
+    const t = row["time-tag"];
+    if (typeof t === "string" && /^\d{4}-\d{2}$/.test(t) && (!m || t > m)) m = t;
+  }
+  return m;
+}
+
+/** Last calendar month where NOAA has published both SSN and F10.7 (same-row monthly indices). */
+function lastPairedNoaaMonth(sunData, f107Data) {
+  const a = maxIsoMonth(sunData);
+  const b = maxIsoMonth(f107Data);
+  if (!a) return b;
+  if (!b) return a;
+  return a < b ? a : b;
+}
+
 async function solarMonthly(months) {
-  const sunspots = Object.fromEntries(months.map((k) => [k, 0]));
-  const f107 = Object.fromEntries(months.map((k) => [k, 0]));
+  const sunspots = Object.fromEntries(months.map((k) => [k, null]));
+  const f107 = Object.fromEntries(months.map((k) => [k, null]));
   const [sunData, f107Data] = await Promise.all([
     fetchJsonAny("https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json"),
     fetchJsonAny("https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json"),
   ]);
+  const lastNoaa = lastPairedNoaaMonth(sunData, f107Data);
+
   sunData.forEach((row) => {
-    if (sunspots[row["time-tag"]] !== undefined) sunspots[row["time-tag"]] = Number(row.ssn || 0);
+    const t = row["time-tag"];
+    if (!Object.prototype.hasOwnProperty.call(sunspots, t)) return;
+    const v = Number(row.ssn);
+    sunspots[t] = Number.isFinite(v) ? v : null;
   });
   f107Data.forEach((row) => {
-    if (f107[row["time-tag"]] !== undefined) f107[row["time-tag"]] = Number(row["f10.7"] || 0);
+    const t = row["time-tag"];
+    if (!Object.prototype.hasOwnProperty.call(f107, t)) return;
+    const v = Number(row["f10.7"]);
+    f107[t] = Number.isFinite(v) ? v : null;
   });
-  return { sunspots, f107 };
+  return { sunspots, f107, lastNoaaMonth: lastNoaa };
 }
 
 function sum(map, months) {
   return months.reduce((a, k) => a + (Number(map[k]) || 0), 0);
 }
 
+function monthsWithPairedSolar(months, sunspots, f107) {
+  return months.filter((mo) => {
+    const s = sunspots[mo];
+    const f = f107[mo];
+    return Number.isFinite(s) && Number.isFinite(f);
+  });
+}
+
 function buildFindings(months, commits, uploads, minutes, sunspots, f107, sources) {
   const first = months[0];
   const last = months[months.length - 1];
 
-  const s0 = sunspots[first] ?? 0;
-  const s1 = sunspots[last] ?? 0;
-  const f0 = f107[first] ?? 0;
-  const f1 = f107[last] ?? 0;
+  const solarMonths = monthsWithPairedSolar(months, sunspots, f107);
+  const sFirst = solarMonths[0] || first;
+  const sLast = solarMonths[solarMonths.length - 1] || last;
+  const s0 = solarMonths.length && Number.isFinite(sunspots[sFirst]) ? sunspots[sFirst] : 0;
+  const s1 = solarMonths.length && Number.isFinite(sunspots[sLast]) ? sunspots[sLast] : 0;
+  const f0 = solarMonths.length && Number.isFinite(f107[sFirst]) ? f107[sFirst] : 0;
+  const f1 = solarMonths.length && Number.isFinite(f107[sLast]) ? f107[sLast] : 0;
 
   const sunMove =
-    s1 > s0 + 8 ? "climbed" : s1 < s0 - 8 ? "fell" : "wandered in the middle";
+    solarMonths.length === 0
+      ? "n/a"
+      : s1 > s0 + 8
+        ? "climbed"
+        : s1 < s0 - 8
+          ? "fell"
+          : "wandered in the middle";
 
-  const solarTailBlank = s1 === 0 && f1 === 0;
+  const lastNoaa = sources.lastNoaaMonth || sLast;
+  const hasIncompleteSolarTail = Boolean(lastNoaa && last > lastNoaa);
+  const solarTailBlank =
+    solarMonths.length > 0 && s1 === 0 && f1 === 0 && sLast === lastNoaa;
 
   let maxCommitMo = months[0];
   let maxCommitV = -1;
@@ -225,12 +271,23 @@ function buildFindings(months, commits, uploads, minutes, sunspots, f107, source
       : "SoundCloud shows almost no dated drops in this window";
 
   const headline = "What we found";
-  const lede = `From **${first}** to **${last}**: ${commitPhrase}, and ${uploadPhrase}. The **Sun panel** is different: monthly sunspots **${sunMove}** from **${s0.toFixed(0)}** to **${s1.toFixed(0)}**, and **F10.7** — the same-row **ionosphere / EUV** yardstick NOAA ships with sunspots — goes **${f0.toFixed(0)} → ${f1.toFixed(0)}** sfu. Those two curves usually **walk together** on the slow cycle; here they **soften** while your studio lines spike, so **do not read the Sun as the throttle for shipping** on this sheet.${solarTailBlank ? " If the **last** Sun/F10.7 cells are **0**, SWPC may not have finalized that month yet." : ""}`;
+  const solarWindow =
+    solarMonths.length === 0
+      ? "NOAA monthly sunspot / F10.7 rows did not load for this window."
+      : `Over **${sFirst}**–**${sLast}** (latest paired NOAA month): monthly sunspots **${sunMove}** from **${s0.toFixed(0)}** to **${s1.toFixed(0)}**, and **F10.7** — the same-row **ionosphere / EUV** yardstick — runs **${f0.toFixed(0)} → ${f1.toFixed(0)}** sfu.`;
+
+  const tailNote = hasIncompleteSolarTail
+    ? ` Calendar months after **${lastNoaa}** stay **empty** until SWPC publishes the official monthly sunspot + F10.7 row (they are **not** zero flux).`
+    : solarTailBlank
+      ? " The **last** published month still shows **0 / 0** — that can be a true solar-minimum pocket or a provisional row; cross-check SWPC if it looks off."
+      : "";
+
+  const lede = `From **${first}** to **${last}**: ${commitPhrase}, and ${uploadPhrase}. The **Sun panel** is different: ${solarWindow} Those two curves usually **walk together** on the slow cycle; here they **soften** while your studio lines spike, so **do not read the Sun as the throttle for shipping** on this sheet.${tailNote}`;
 
   const bullets = [
     `**GitHub (${totalCommits} commits):** counts are only **${repoPlain}**. They tell you when those two repos actually moved.`,
     `**SoundCloud (${totalUploads} drops, ${totalMin.toFixed(1)} minutes):** dates come from the public RSS. The feed **caps at 500 episodes**, so older history can look like silence — that is a **feed limit**, not proof nobody uploaded.`,
-    `**Sun + ionosphere:** **Sunspots** are the classic monthly sun-strength number. **F10.7** is posted on the same monthly row and is the usual **radio-Sun / ionosphere heating** yardstick; it **tracks the cycle with** sunspots. Use both as **background weather**, not as a reason your mixtape shipped.`,
+    `**Sun + ionosphere:** **Sunspots** are the classic monthly sun-strength number. **F10.7** is posted on the same monthly row and is the usual **radio-Sun / ionosphere heating** yardstick; it **tracks the cycle with** sunspots. Trailing months without an NOAA row stay **null** (shown as a dash on the page) — not zero flux. Use both as **background weather**, not as a reason your mixtape shipped.`,
   ];
 
   return {
@@ -252,7 +309,7 @@ const months = monthRange(START, endMonth);
 console.log("Months:", months.length, months[0], "→", months[months.length - 1]);
 
 const solar = await solarMonthly(months);
-console.log("NOAA OK");
+console.log("NOAA OK", "last paired month:", solar.lastNoaaMonth);
 
 let commits = Object.fromEntries(months.map((k) => [k, 0]));
 try {
@@ -283,8 +340,9 @@ const sources = {
   soundcloudFeed: "https://feeds.soundcloud.com/users/soundcloud:users:1681714067/sounds.rss",
   noaaSunspots: "https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json",
   noaaF107: "https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json",
+  lastNoaaMonth: solar.lastNoaaMonth || null,
   ionosphereNote:
-    "F10.7 (10.7 cm flux) is the monthly field NOAA publishes alongside sunspots; it is the usual stand-in for EUV-driven ionospheric heating on slow, monthly scales. Kp is not included here (needs a different archive than this small JSON).",
+    "F10.7 (10.7 cm flux) is the monthly field NOAA publishes alongside sunspots; it is the usual stand-in for EUV-driven ionospheric heating on slow, monthly scales. Months after the latest NOAA row are omitted (null), not zero. Kp is not included here (needs a different archive than this small JSON).",
 };
 
 const findings = buildFindings(months, commits, sc.uploads, sc.minutes, solar.sunspots, solar.f107, sources);

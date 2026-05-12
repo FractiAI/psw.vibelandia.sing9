@@ -8,7 +8,7 @@
 
 The emergence of the universe as a **recursively computed** intelligence system challenges strictly materialist pictures of classical and quantum physics. Within the **Paradise Energy Fractal Force (PEFF)** framework, reality is framed as a **Fractal Intelligence Quantum Hologram** maintained by recursive feedback where information processing, computation, and communication precede and co-generate physical structure. Central to this biophysical story is the **DNA Transformer Hypothesis**: DNA as a sophisticated **electromagnetic induction** device, using **plectonemic** topology and **phosphorus–iron (P–Fe)** interactions to amplify signals into the **“infill 13”** sensory-integration language of the stack. This report **simulates and narratively validates** those mechanisms and maps them onto **VALETPRU-ASIC (Digital Pru)** for high-fidelity awareness focus and intentionality language inside the **Paradise Game** metaphor.
 
-**Honesty boundary (SING 9):** **simulation-first** and **metaphor-forward**; no clinical, cosmological, or accelerator claims are asserted as measured fact in this repo. Heavy-ion / CERN language below is **analog only**. Citation **11** in the source draft pointed at an unrelated PDF; here it is replaced with a **placeholder** until a primary plant P–Fe source is pinned. **Part II slice:** [`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`](./DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md).
+**Honesty boundary (SING 9):** **simulation-first** and **metaphor-forward**; no clinical, cosmological, or accelerator claims are asserted as measured fact in this repo. Heavy-ion / CERN language below is **analog only**. **Citation 11** cites primary **rice root** work on **iron and callose homeostasis under low phosphorus** (DOI below); it grounds only the **plant P–Fe co-regulation** lane in the validation table, not a claim that DNA behaves as rice root tissue. **Part II slice:** [`DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md`](./DIGITAL_PRU_DNA_TRANSFORMER_PEFF_VALETPRU_BIOELECTROMAGNETIC_2026-05-11.md).
 
 ---
 
@@ -137,7 +137,7 @@ Within PEFF language, the **DNA transformer** converts **y** (torsional storage)
 8. Industrial energy technology conference (PDF context in source) — INIS: https://inis.iaea.org/records/fc824-7fs88/files/25030881.pdf  
 9. Counterintuitive DNA sequence dependence in supercoiling-induced melting — PLOS ONE: https://journals.plos.org/plosone/article/figures?id=10.1371/journal.pone.0141576  
 10. Falsifiability of the PEFF-based 7D game system (PDF) — Zenodo: https://zenodo.org/records/16794470  
-11. **Placeholder:** primary literature on **phosphorus–iron co-homeostasis** under P stress in plants (e.g. rice roots) — *replace draft’s unrelated URL with vetted DOI.*  
+11. Ding *et al.*, “Iron and callose homeostatic regulation in rice roots under low phosphorus” — *BMC Plant Biology* **18**, 326 (2018). DOI: https://doi.org/10.1186/s12870-018-1486-z · https://bmcplantbiol.biomedcentral.com/articles/10.1186/s12870-018-1486-z  
 12. Omniversal science and technology — Zenodo: https://zenodo.org/records/17628039  
 13. First images of the Paradise particles and Paradise energy (PDF) — Zenodo: https://zenodo.org/records/14640152  
 14. PEFF reframing E = mc² (PDF) — Zenodo: https://zenodo.org/records/17333594  

@@ -1,7 +1,6 @@
 /**
- * One-shot: NOAA solar JSON + SoundCloud RSS (direct HTTPS) + GitHub commits
- * (REST list, two flagship repos — no Search API).
- * Writes interfaces/look-at-the-sun-study.json for static look-at-the-sun.html.
+ * NOAA solar (daily SSN + monthly F10.7 expanded to days) + SoundCloud RSS + GitHub commits,
+ * aligned on UTC weeks (Monday start). Writes interfaces/look-at-the-sun-study.json.
  *
  * Usage: node scripts/build-look-at-the-sun-study.mjs
  */
@@ -13,27 +12,66 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(__dirname, "..", "interfaces", "look-at-the-sun-study.json");
 
-const START = "2025-02";
+/** First calendar month included (UTC); weeks begin on the Monday of/on-before the 1st. */
+const START_MONTH = "2025-02";
 
-/** Repos whose default-branch commits are summed by calendar month (proxy for “studio pulse”). */
 const GITHUB_REPOS = [
   ["fractiai", "psw.vibelandia.sing9"],
   ["AiwonA1", "JWST-SMACS-0723"],
+  ["AiwonA1", "L4-L7-Fractal-Self-Awareness-Intelligence-Router"],
+  ["AiwonA1", "fractiverse-router"],
+  ["AiwonA1", "FractiAgent-1.0"],
+  ["AiwonA1", "FractiData-1.0"],
+  ["AiwonA1", "ParadiseWorld-1.0-AI-Game"],
+  ["AiwonA1", "EnterpriseWorld-7DAI-Superintelligence"],
+  ["AiwonA1", "Omniverse-for-Digital-Assistants-and-Agents"],
+  ["AiwonA1", "HydrogenHolographPilot"],
+  ["AiwonA1", "FractalHydrogenHolography-Validation"],
+  ["AiwonA1", "Syntheverse-Hydrogen-Holographic-RAG"],
+  ["AiwonA1", "Syntheverse-"],
 ];
 
-function monthRange(start, end) {
+function parseMonthStartUtc(isoMonth) {
+  const [y, mo] = isoMonth.split("-").map(Number);
+  return new Date(Date.UTC(y, mo - 1, 1));
+}
+
+function utcDateOnly(d) {
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+}
+
+/** Monday 00:00 UTC of the week containing `d` (Monday is start of week). */
+function utcMondayOfWeek(d) {
+  const x = utcDateOnly(d);
+  const dow = x.getUTCDay(); // 0 Sun … 6 Sat
+  const daysFromMon = (dow + 6) % 7;
+  x.setUTCDate(x.getUTCDate() - daysFromMon);
+  return x;
+}
+
+function addUtcDays(d, n) {
+  const x = new Date(d);
+  x.setUTCDate(x.getUTCDate() + n);
+  return x;
+}
+
+function toYyyyMm(d) {
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+function toYyyyMmDd(d) {
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}-${String(d.getUTCDate()).padStart(2, "0")}`;
+}
+
+/** Sorted Monday keys `YYYY-MM-DD` from chart start through end (inclusive). */
+function enumerateWeekPeriods(startMonth, endExclusiveUtc) {
+  const start0 = parseMonthStartUtc(startMonth);
+  let mon = utcMondayOfWeek(start0);
+  const endDay = utcDateOnly(endExclusiveUtc);
   const out = [];
-  let y = Number(start.slice(0, 4));
-  let m = Number(start.slice(5, 7));
-  const ey = Number(end.slice(0, 4));
-  const em = Number(end.slice(5, 7));
-  while (y < ey || (y === ey && m <= em)) {
-    out.push(`${y}-${String(m).padStart(2, "0")}`);
-    m += 1;
-    if (m > 12) {
-      y += 1;
-      m = 1;
-    }
+  while (mon <= endDay) {
+    out.push(toYyyyMmDd(mon));
+    mon = addUtcDays(mon, 7);
   }
   return out;
 }
@@ -51,7 +89,7 @@ function githubHeaders() {
 
 async function fetchJsonAny(url) {
   const res = await fetch(url, {
-    headers: { "User-Agent": "psw-vibelandia-sing9-study-builder" },
+    headers: { "User-Agent": "psw-vibelandia.sing9-study-builder" },
   });
   if (!res.ok) throw new Error(`${url} → ${res.status}`);
   return res.json();
@@ -69,21 +107,36 @@ function parseNextUrl(linkHeader) {
   return null;
 }
 
-async function githubCommitsFromRepo(owner, repo, months) {
-  const counts = Object.fromEntries(months.map((k) => [k, 0]));
-  if (!months.length) return counts;
-  const since = `${months[0]}-01T00:00:00Z`;
-  let url = `https://api.github.com/repos/${owner}/${repo}/commits?per_page=100&since=${encodeURIComponent(since)}`;
+function monthBefore(isoMonth) {
+  const [y, mo] = isoMonth.split("-").map(Number);
+  let yy = y;
+  let mm = mo - 1;
+  if (mm < 1) {
+    yy -= 1;
+    mm = 12;
+  }
+  return `${yy}-${String(mm).padStart(2, "0")}`;
+}
+
+function monthStartIso(isoMonth) {
+  return `${isoMonth}-01T00:00:00Z`;
+}
+
+async function githubCommitsFromRepo(owner, repo, periodSet, sinceIso) {
+  const counts = Object.fromEntries([...periodSet].map((k) => [k, 0]));
+  if (!periodSet.size) return counts;
+  let url = `https://api.github.com/repos/${owner}/${repo}/commits?per_page=100&since=${encodeURIComponent(sinceIso)}`;
   for (let guard = 0; guard < 400; guard++) {
     const res = await fetch(url, { headers: githubHeaders() });
+    if (res.status === 409 || res.status === 404) return counts;
     if (!res.ok) throw new Error(`${owner}/${repo} → ${res.status}`);
     const arr = await res.json();
     if (!Array.isArray(arr) || arr.length === 0) break;
     for (const c of arr) {
-      const raw = c.commit?.committer?.date || c.commit?.author?.date;
+      const raw = c.commit?.author?.date || c.commit?.committer?.date;
       const d = raw ? new Date(raw) : null;
       if (!d || Number.isNaN(d.getTime())) continue;
-      const key = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+      const key = toYyyyMmDd(utcMondayOfWeek(d));
       if (Object.prototype.hasOwnProperty.call(counts, key)) counts[key] += 1;
     }
     const next = parseNextUrl(res.headers.get("link"));
@@ -118,7 +171,7 @@ async function fetchTextHttps(url) {
     https
       .get(
         url,
-        { headers: { "User-Agent": "psw-vibelandia-sing9-study-builder" } },
+        { headers: { "User-Agent": "psw-vibelandia.sing9-study-builder" } },
         (res) => {
           if (res.statusCode && res.statusCode >= 400) {
             reject(new Error(`HTTP ${res.statusCode}`));
@@ -133,9 +186,9 @@ async function fetchTextHttps(url) {
   });
 }
 
-async function soundcloudMonthlyFromFeed(months) {
-  const uploads = Object.fromEntries(months.map((k) => [k, 0]));
-  const minutes = Object.fromEntries(months.map((k) => [k, 0]));
+async function soundcloudWeeklyFromFeed(periodSet) {
+  const uploads = Object.fromEntries([...periodSet].map((k) => [k, 0]));
+  const minutes = Object.fromEntries([...periodSet].map((k) => [k, 0]));
   const feedUrl =
     "https://feeds.soundcloud.com/users/soundcloud:users:1681714067/sounds.rss";
   const xml = await fetchTextHttps(feedUrl);
@@ -147,7 +200,7 @@ async function soundcloudMonthlyFromFeed(months) {
     if (!pub) continue;
     const dt = new Date(pub[1].trim());
     if (Number.isNaN(dt.getTime())) continue;
-    const key = `${dt.getUTCFullYear()}-${String(dt.getUTCMonth() + 1).padStart(2, "0")}`;
+    const key = toYyyyMmDd(utcMondayOfWeek(dt));
     if (!Object.prototype.hasOwnProperty.call(uploads, key)) continue;
     uploads[key] += 1;
     const durM = block.match(/<itunes:duration>\s*([^<]+)\s*<\/itunes:duration>/i);
@@ -157,15 +210,14 @@ async function soundcloudMonthlyFromFeed(months) {
 }
 
 function maxIsoMonth(rows) {
-  let m = null;
+  let mx = null;
   for (const row of rows) {
     const t = row["time-tag"];
-    if (typeof t === "string" && /^\d{4}-\d{2}$/.test(t) && (!m || t > m)) m = t;
+    if (typeof t === "string" && /^\d{4}-\d{2}$/.test(t) && (!mx || t > mx)) mx = t;
   }
-  return m;
+  return mx;
 }
 
-/** Last calendar month where NOAA has published both SSN and F10.7 (same-row monthly indices). */
 function lastPairedNoaaMonth(sunData, f107Data) {
   const a = maxIsoMonth(sunData);
   const b = maxIsoMonth(f107Data);
@@ -174,56 +226,116 @@ function lastPairedNoaaMonth(sunData, f107Data) {
   return a < b ? a : b;
 }
 
-async function solarMonthly(months) {
-  const sunspots = Object.fromEntries(months.map((k) => [k, null]));
-  const f107 = Object.fromEntries(months.map((k) => [k, null]));
-  const [sunData, f107Data] = await Promise.all([
-    fetchJsonAny("https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json"),
-    fetchJsonAny("https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json"),
-  ]);
-  const lastNoaa = lastPairedNoaaMonth(sunData, f107Data);
-
-  sunData.forEach((row) => {
+/** Monthly F10.7 from solar-cycle JSON (same source as before). */
+async function monthlyF107Map() {
+  const rows = await fetchJsonAny(
+    "https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json"
+  );
+  const map = {};
+  rows.forEach((row) => {
     const t = row["time-tag"];
-    if (!Object.prototype.hasOwnProperty.call(sunspots, t)) return;
-    const v = Number(row.ssn);
-    sunspots[t] = Number.isFinite(v) ? v : null;
-  });
-  f107Data.forEach((row) => {
-    const t = row["time-tag"];
-    if (!Object.prototype.hasOwnProperty.call(f107, t)) return;
+    if (typeof t !== "string" || !/^\d{4}-\d{2}$/.test(t)) return;
     const v = Number(row["f10.7"]);
-    f107[t] = Number.isFinite(v) ? v : null;
+    map[t] = Number.isFinite(v) ? v : null;
   });
-  return { sunspots, f107, lastNoaaMonth: lastNoaa };
+  return map;
 }
 
-function sum(map, months) {
-  return months.reduce((a, k) => a + (Number(map[k]) || 0), 0);
+/** Daily SWPC sunspot number → map `YYYY-MM-DD` (UTC day of Obsdate) → number */
+async function dailySsnByDay() {
+  const rows = await fetchJsonAny(
+    "https://services.swpc.noaa.gov/json/solar-cycle/swpc_observed_ssn.json"
+  );
+  const byDay = {};
+  for (const row of rows) {
+    const raw = row.Obsdate;
+    if (!raw) continue;
+    const d = new Date(raw);
+    if (Number.isNaN(d.getTime())) continue;
+    const key = toYyyyMmDd(utcDateOnly(d));
+    const v = Number(row.swpc_ssn);
+    if (Number.isFinite(v)) byDay[key] = v;
+  }
+  return byDay;
 }
 
-function monthsWithPairedSolar(months, sunspots, f107) {
-  return months.filter((mo) => {
-    const s = sunspots[mo];
-    const f = f107[mo];
+/**
+ * For each UTC calendar day in [startDay, endDay], weekly buckets:
+ * - sunspots: mean of daily SWPC SSN where present
+ * - f107: mean of daily values where each day uses its month’s published F10.7 (null if month unpublished)
+ */
+function weeklySolarFromDays(periods, monthlyF107, dailySsn, lastNoaaMonth) {
+  if (!periods.length) {
+    return {
+      sunspots: {},
+      f107: {},
+      lastNoaaMonth,
+    };
+  }
+  const startDay = new Date(`${periods[0]}T12:00:00Z`);
+  const endDay = new Date(`${periods[periods.length - 1]}T12:00:00Z`);
+  endDay.setUTCDate(endDay.getUTCDate() + 6);
+
+  const acc = {};
+  for (const p of periods) {
+    acc[p] = { ssn: [], f107: [] };
+  }
+
+  for (let d = utcDateOnly(startDay); d <= endDay; d = addUtcDays(d, 1)) {
+    const dayKey = toYyyyMmDd(d);
+    const monKey = toYyyyMm(d);
+    const wk = toYyyyMmDd(utcMondayOfWeek(d));
+    if (!acc[wk]) continue;
+
+    if (Object.prototype.hasOwnProperty.call(dailySsn, dayKey)) {
+      acc[wk].ssn.push(dailySsn[dayKey]);
+    }
+
+    if (lastNoaaMonth && monKey > lastNoaaMonth) {
+      /* omit — no published monthly row */
+    } else {
+      const fv = monthlyF107[monKey];
+      if (Number.isFinite(fv)) acc[wk].f107.push(fv);
+    }
+  }
+
+  const sunspots = {};
+  const f107 = {};
+  for (const p of periods) {
+    const { ssn, f107: fa } = acc[p];
+    sunspots[p] = ssn.length ? ssn.reduce((a, b) => a + b, 0) / ssn.length : null;
+    f107[p] = fa.length ? fa.reduce((a, b) => a + b, 0) / fa.length : null;
+  }
+
+  return { sunspots, f107, lastNoaaMonth };
+}
+
+function sum(map, keys) {
+  return keys.reduce((a, k) => a + (Number(map[k]) || 0), 0);
+}
+
+function periodsWithPairedSolar(periods, sunspots, f107) {
+  return periods.filter((p) => {
+    const s = sunspots[p];
+    const f = f107[p];
     return Number.isFinite(s) && Number.isFinite(f);
   });
 }
 
-function buildFindings(months, commits, uploads, minutes, sunspots, f107, sources) {
-  const first = months[0];
-  const last = months[months.length - 1];
+function buildFindings(periods, commits, uploads, minutes, sunspots, f107, sources) {
+  const first = periods[0];
+  const last = periods[periods.length - 1];
 
-  const solarMonths = monthsWithPairedSolar(months, sunspots, f107);
-  const sFirst = solarMonths[0] || first;
-  const sLast = solarMonths[solarMonths.length - 1] || last;
-  const s0 = solarMonths.length && Number.isFinite(sunspots[sFirst]) ? sunspots[sFirst] : 0;
-  const s1 = solarMonths.length && Number.isFinite(sunspots[sLast]) ? sunspots[sLast] : 0;
-  const f0 = solarMonths.length && Number.isFinite(f107[sFirst]) ? f107[sFirst] : 0;
-  const f1 = solarMonths.length && Number.isFinite(f107[sLast]) ? f107[sLast] : 0;
+  const solarP = periodsWithPairedSolar(periods, sunspots, f107);
+  const sFirst = solarP[0] || first;
+  const sLast = solarP[solarP.length - 1] || last;
+  const s0 = solarP.length && Number.isFinite(sunspots[sFirst]) ? sunspots[sFirst] : 0;
+  const s1 = solarP.length && Number.isFinite(sunspots[sLast]) ? sunspots[sLast] : 0;
+  const f0 = solarP.length && Number.isFinite(f107[sFirst]) ? f107[sFirst] : 0;
+  const f1 = solarP.length && Number.isFinite(f107[sLast]) ? f107[sLast] : 0;
 
   const sunMove =
-    solarMonths.length === 0
+    solarP.length === 0
       ? "n/a"
       : s1 > s0 + 8
         ? "climbed"
@@ -231,63 +343,61 @@ function buildFindings(months, commits, uploads, minutes, sunspots, f107, source
           ? "fell"
           : "wandered in the middle";
 
-  const lastNoaa = sources.lastNoaaMonth || sLast;
-  const hasIncompleteSolarTail = Boolean(lastNoaa && last > lastNoaa);
-  const solarTailBlank =
-    solarMonths.length > 0 && s1 === 0 && f1 === 0 && sLast === lastNoaa;
+  const lastNoaa = sources.lastNoaaMonth;
+  const endCalMonth = toYyyyMm(addUtcDays(new Date(`${last}T12:00:00Z`), 6));
+  const hasIncompleteSolarTail = Boolean(lastNoaa && endCalMonth > lastNoaa);
 
-  let maxCommitMo = months[0];
+  let maxCommitP = periods[0];
   let maxCommitV = -1;
-  months.forEach((mo) => {
-    const v = commits[mo] || 0;
+  periods.forEach((p) => {
+    const v = commits[p] || 0;
     if (v > maxCommitV) {
       maxCommitV = v;
-      maxCommitMo = mo;
+      maxCommitP = p;
     }
   });
 
-  let maxUploadMo = months[0];
+  let maxUploadP = periods[0];
   let maxUploadV = -1;
-  months.forEach((mo) => {
-    const v = uploads[mo] || 0;
+  periods.forEach((p) => {
+    const v = uploads[p] || 0;
     if (v > maxUploadV) {
       maxUploadV = v;
-      maxUploadMo = mo;
+      maxUploadP = p;
     }
   });
 
-  const totalCommits = sum(commits, months);
-  const totalUploads = sum(uploads, months);
-  const totalMin = sum(minutes, months);
-  const repoPlain = sources.githubRepos.join(" and ");
+  const totalCommits = sum(commits, periods);
+  const totalUploads = sum(uploads, periods);
+  const totalMin = sum(minutes, periods);
+  const nRepos = sources.githubRepos.length;
+  const repoPlain = sources.githubRepos.join(", ");
 
   const commitPhrase =
     maxCommitV > 0
-      ? `commits run hottest in **${maxCommitMo}** (${maxCommitV})`
+      ? `commits peak in the week of **${maxCommitP}** (${maxCommitV})`
       : "Git shows almost no commits in this window";
   const uploadPhrase =
     maxUploadV > 0
-      ? `SoundCloud dated drops peak in **${maxUploadMo}** (${maxUploadV})`
+      ? `SoundCloud dated drops peak in the week of **${maxUploadP}** (${maxUploadV})`
       : "SoundCloud shows almost no dated drops in this window";
 
   const headline = "What we found";
   const solarWindow =
-    solarMonths.length === 0
-      ? "NOAA monthly sunspot / F10.7 rows did not load for this window."
-      : `Over **${sFirst}**–**${sLast}** (latest paired NOAA month): monthly sunspots **${sunMove}** from **${s0.toFixed(0)}** to **${s1.toFixed(0)}**, and **F10.7** — the same-row **ionosphere / EUV** yardstick — runs **${f0.toFixed(0)} → ${f1.toFixed(0)}** sfu.`;
+    solarP.length === 0
+      ? "NOAA / SWPC solar rows did not line up for this window."
+      : `Across **${sFirst}**–**${sLast}** (UTC weeks with both sunspot and F10.7 coverage): weekly mean sunspot number **${sunMove}** from **${s0.toFixed(1)}** to **${s1.toFixed(1)}**, and weekly mean **F10.7** (from published monthly values) **${f0.toFixed(1)} → ${f1.toFixed(1)}** sfu.`;
 
   const tailNote = hasIncompleteSolarTail
-    ? ` Calendar months after **${lastNoaa}** stay **empty** until SWPC publishes the official monthly sunspot + F10.7 row (they are **not** zero flux).`
-    : solarTailBlank
-      ? " The **last** published month still shows **0 / 0** — that can be a true solar-minimum pocket or a provisional row; cross-check SWPC if it looks off."
-      : "";
+    ? ` Weeks after the last published NOAA month (**${lastNoaa}**) keep **F10.7** empty until that month exists — not zero flux.`
+    : "";
 
-  const lede = `From **${first}** to **${last}**: ${commitPhrase}, and ${uploadPhrase}. The **Sun panel** is different: ${solarWindow} Those two curves usually **walk together** on the slow cycle; here they **soften** while your studio lines spike, so **do not read the Sun as the throttle for shipping** on this sheet.${tailNote}`;
+  const lede = `From **${first}** through **${last}** (UTC Monday weeks): ${commitPhrase}, and ${uploadPhrase}. The **Sun / ionosphere panel** uses the same weeks: ${solarWindow} Same caveats as always: **do not read the Sun as the throttle for shipping** on this sheet.${tailNote}`;
 
   const bullets = [
-    `**GitHub (${totalCommits} commits):** counts are only **${repoPlain}**. They tell you when those two repos actually moved.`,
-    `**SoundCloud (${totalUploads} drops, ${totalMin.toFixed(1)} minutes):** dates come from the public RSS. The feed **caps at 500 episodes**, so older history can look like silence — that is a **feed limit**, not proof nobody uploaded.`,
-    `**Sun + ionosphere:** **Sunspots** are the classic monthly sun-strength number. **F10.7** is posted on the same monthly row and is the usual **radio-Sun / ionosphere heating** yardstick; it **tracks the cycle with** sunspots. Trailing months without an NOAA row stay **null** (shown as a dash on the page) — not zero flux. Use both as **background weather**, not as a reason your mixtape shipped.`,
+    `**GitHub (${totalCommits} commits):** summed by UTC week (Monday) across **${nRepos}** public repos: ${repoPlain}.`,
+    `**SoundCloud (${totalUploads} drops, ${totalMin.toFixed(1)} minutes):** RSS pubDate bucketed the same way. The feed **caps at 500 episodes**, so older weeks can look empty — a **feed limit**, not proof of silence.`,
+    `**Sun:** weekly mean of **SWPC daily** sunspot numbers (\`swpc_observed_ssn.json\`) for days in that week. **Ionosphere (F10.7):** each UTC day carries its calendar month’s published NOAA monthly F10.7; the week is the **mean** of those daily values (constant within a month, so cross-month weeks blend honestly). Trailing weeks without a published month stay **null** (dash) — not zero.`,
   ];
 
   return {
@@ -303,18 +413,42 @@ function buildFindings(months, commits, uploads, minutes, sunspots, f107, source
 }
 
 const now = new Date();
-const endMonth = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
-const months = monthRange(START, endMonth);
+const endExclusive = addUtcDays(utcDateOnly(now), 1);
+const periods = enumerateWeekPeriods(START_MONTH, endExclusive);
+const periodSet = new Set(periods);
 
-console.log("Months:", months.length, months[0], "→", months[months.length - 1]);
+const sinceMonth = monthBefore(START_MONTH);
+const githubSince = monthStartIso(sinceMonth);
 
-const solar = await solarMonthly(months);
-console.log("NOAA OK", "last paired month:", solar.lastNoaaMonth);
+console.log("Weeks:", periods.length, periods[0], "→", periods[periods.length - 1]);
 
-let commits = Object.fromEntries(months.map((k) => [k, 0]));
+const [monthlyF107Rows, dailySsn] = await Promise.all([
+  fetchJsonAny("https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json"),
+  dailySsnByDay(),
+]);
+
+const monthlySunRows = await fetchJsonAny(
+  "https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json"
+);
+const lastNoaaMonth = lastPairedNoaaMonth(monthlySunRows, monthlyF107Rows);
+console.log("NOAA last paired month:", lastNoaaMonth);
+
+const monthlyF107 = {};
+monthlyF107Rows.forEach((row) => {
+  const t = row["time-tag"];
+  if (typeof t === "string" && /^\d{4}-\d{2}$/.test(t)) {
+    const v = Number(row["f10.7"]);
+    monthlyF107[t] = Number.isFinite(v) ? v : null;
+  }
+});
+
+const solar = weeklySolarFromDays(periods, monthlyF107, dailySsn, lastNoaaMonth);
+console.log("Solar weekly OK");
+
+let commits = Object.fromEntries(periods.map((k) => [k, 0]));
 try {
   for (const [owner, repo] of GITHUB_REPOS) {
-    const part = await githubCommitsFromRepo(owner, repo, months);
+    const part = await githubCommitsFromRepo(owner, repo, periodSet, githubSince);
     commits = mergeCounts(commits, part);
     console.log("GitHub OK", `${owner}/${repo}`);
     await new Promise((r) => setTimeout(r, 200));
@@ -325,33 +459,38 @@ try {
 
 let sc;
 try {
-  sc = await soundcloudMonthlyFromFeed(months);
+  sc = await soundcloudWeeklyFromFeed(periodSet);
   console.log("SoundCloud OK");
 } catch (e) {
   console.warn("SoundCloud:", e.message);
   sc = {
-    uploads: Object.fromEntries(months.map((k) => [k, 0])),
-    minutes: Object.fromEntries(months.map((k) => [k, 0])),
+    uploads: Object.fromEntries(periods.map((k) => [k, 0])),
+    minutes: Object.fromEntries(periods.map((k) => [k, 0])),
   };
 }
 
 const sources = {
+  granularity: "week",
+  weekAnchor: "UTC Monday 00:00 (period key is that Monday’s date, YYYY-MM-DD)",
   githubRepos: GITHUB_REPOS.map(([o, r]) => `${o}/${r}`),
   soundcloudFeed: "https://feeds.soundcloud.com/users/soundcloud:users:1681714067/sounds.rss",
-  noaaSunspots: "https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json",
-  noaaF107: "https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json",
-  lastNoaaMonth: solar.lastNoaaMonth || null,
+  noaaDailySsn: "https://services.swpc.noaa.gov/json/solar-cycle/swpc_observed_ssn.json",
+  noaaMonthlyF107: "https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json",
+  noaaMonthlySunspots: "https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json",
+  lastNoaaMonth: lastNoaaMonth || null,
   ionosphereNote:
-    "F10.7 (10.7 cm flux) is the monthly field NOAA publishes alongside sunspots; it is the usual stand-in for EUV-driven ionospheric heating on slow, monthly scales. Months after the latest NOAA row are omitted (null), not zero. Kp is not included here (needs a different archive than this small JSON).",
+    "Weekly F10.7 here is derived from NOAA’s published **monthly** 10.7 cm flux: each day in a month is assigned that month’s value, then averaged over the UTC week. That aligns the ionosphere driver on the same Monday-week axis as daily sunspot means and Git events. It is not sub-monthly true daily F10.7.",
 };
 
-const findings = buildFindings(months, commits, sc.uploads, sc.minutes, solar.sunspots, solar.f107, sources);
+const findings = buildFindings(periods, commits, sc.uploads, sc.minutes, solar.sunspots, solar.f107, sources);
 
 const snapshot = {
   generatedAt: new Date().toISOString().slice(0, 10),
-  startMonth: START,
-  endMonth,
-  months,
+  granularity: "week",
+  startMonth: START_MONTH,
+  startPeriod: periods[0],
+  endPeriod: periods[periods.length - 1],
+  periods,
   commits,
   uploads: sc.uploads,
   minutes: sc.minutes,

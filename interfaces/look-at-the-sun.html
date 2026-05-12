@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Look at the Sun · plain readout</title>
-  <meta name="description" content="Monthly snapshot: GitHub commits, SoundCloud drops, play-ready minutes, sunspots, and F10.7 (ionosphere driver). Short findings first; chart and table from JSON." />
+  <meta name="description" content="Weekly (UTC Monday) snapshot: GitHub commits, SoundCloud drops, play-ready minutes, mean daily sunspots, and mean F10.7 from published monthly values. Findings, chart, and table from JSON." />
   <style>
     :root {
       --bg: #070a12;
@@ -104,7 +104,7 @@
       overflow-x: auto;
       margin-bottom: 1rem;
     }
-    canvas { display: block; width: 100%; height: 320px; }
+    canvas { display: block; width: 100%; height: 340px; min-width: 720px; }
     .legend {
       display: flex;
       flex-wrap: wrap;
@@ -169,8 +169,8 @@
     <section class="intro">
       <h1>Look at the Sun</h1>
       <p>
-        Each month we count: <strong>Git commits</strong> on two repos, <strong>new SoundCloud tracks</strong> from the RSS feed, and <strong>minutes of audio</strong> from episode lengths.
-        We line that up with <strong>sunspots</strong> and <strong>F10.7</strong> — the monthly number NOAA publishes for 10.7&nbsp;cm solar flux. F10.7 is the usual stand-in for <strong>how much EUV is hitting the ionosphere</strong>, so it moves with the slow solar cycle much like sunspots. <strong>Current calendar month:</strong> if NOAA has not released that row yet, the table shows a dash — not zero.
+        Each <strong>UTC week</strong> (Monday start; the table column is that Monday’s date): we sum <strong>Git commits</strong> across the fixed public repo list in <code>sources.githubRepos</code>, count <strong>SoundCloud drops</strong> and <strong>play-ready minutes</strong> from the RSS <code>pubDate</code>, and plot <strong>sun</strong> and <strong>ionosphere</strong> on the <strong>same weeks</strong>.
+        <strong>Sun:</strong> mean of SWPC <strong>daily</strong> sunspot numbers for days in the week. <strong>F10.7:</strong> each day is assigned its calendar month’s <strong>published NOAA monthly</strong> 10.7&nbsp;cm flux, then we average across the week (so cross-month weeks blend; it is not sub-monthly observed daily F10.7). Weeks after the latest published NOAA month show a dash for F10.7 — not zero flux.
       </p>
       <p>
         Charts and tables load from a <strong>saved snapshot</strong> on this site (<a href="look-at-the-sun-study.json"><code>look-at-the-sun-study.json</code></a>). This page does not call GitHub, SoundCloud, or NOAA in your browser.
@@ -185,16 +185,16 @@
     </section>
 
     <section class="chart-wrap">
-      <canvas id="sunChart" width="920" height="320" aria-label="Monthly series chart"></canvas>
+      <canvas id="sunChart" width="1100" height="340" aria-label="Weekly series chart"></canvas>
       <div class="legend">
-        <span><span class="dot" style="background:#67e8f9"></span>Git commits</span>
-        <span><span class="dot" style="background:#2dd4bf"></span>SoundCloud drops</span>
-        <span><span class="dot" style="background:#f472b6"></span>Play-ready minutes</span>
-        <span><span class="dot" style="background:#fef3c7"></span>Sun (monthly sunspot number)</span>
-        <span><span class="dot" style="background:#d4af37"></span>Ionosphere driver (F10.7, sfu)</span>
+        <span><span class="dot" style="background:#67e8f9"></span>Git commits / week</span>
+        <span><span class="dot" style="background:#2dd4bf"></span>SC drops / week</span>
+        <span><span class="dot" style="background:#f472b6"></span>Play minutes / week</span>
+        <span><span class="dot" style="background:#fef3c7"></span>Sun (mean daily SSN)</span>
+        <span><span class="dot" style="background:#d4af37"></span>Ionosphere (mean monthly F10.7 / day)</span>
       </div>
       <p class="iono-note">
-        <strong>Ionosphere note:</strong> we do not plot a separate Kp line here (that needs a different archive than this small JSON). F10.7 is still the right <strong>monthly</strong> companion to sunspots for “how hot the radio Sun is” for the ionosphere on average. Empty cells mean NOAA has not posted that month yet — they are not zero flux.
+        <strong>Ionosphere note:</strong> weekly F10.7 is built from NOAA’s <strong>monthly</strong> published flux, so it cannot resolve storm-scale Kp swings. It does sit on the <strong>same Monday-week axis</strong> as commits, playtime, and mean daily sunspots — useful for “slow background vs studio bursts,” not minute-by-minute propagation.
       </p>
     </section>
 
@@ -202,7 +202,7 @@
       <table id="dataTable">
         <thead>
           <tr>
-            <th>Month</th>
+            <th>Week (UTC Mon)</th>
             <th>Git commits</th>
             <th>SC drops</th>
             <th>Minutes</th>
@@ -250,10 +250,10 @@
           .replace(/`([^`]+)`/g, "<code>$1</code>");
       }
 
-      function drawSeries(months, series) {
+      function drawSeries(periods, series) {
         const W = chart.width;
         const H = chart.height;
-        const pad = { l: 36, r: 10, t: 14, b: 22 };
+        const pad = { l: 36, r: 10, t: 14, b: 28 };
         const pw = W - pad.l - pad.r;
         const ph = H - pad.t - pad.b;
 
@@ -270,7 +270,8 @@
           ctx.stroke();
         }
 
-        const xStep = months.length > 1 ? pw / (months.length - 1) : pw;
+        const n = periods.length;
+        const xStep = n > 1 ? pw / (n - 1) : pw;
         function plot(values, color) {
           ctx.beginPath();
           let penDown = false;
@@ -300,39 +301,45 @@
         plot(series.f107N, "#d4af37");
 
         ctx.fillStyle = "rgba(255,255,255,.5)";
-        ctx.font = "10px Segoe UI, sans-serif";
-        months.forEach((m, i) => {
-          if (i % 2 !== 0 && i !== months.length - 1) return;
+        ctx.font = "9px Segoe UI, sans-serif";
+        const labelStep = n <= 24 ? 2 : n <= 48 ? 4 : 6;
+        periods.forEach((p, i) => {
+          if (i % labelStep !== 0 && i !== n - 1) return;
           const x = pad.l + i * xStep;
-          ctx.fillText(m.slice(2), x - 14, H - 6);
+          const short = p.slice(5);
+          ctx.fillText(short, x - 10, H - 6);
         });
       }
 
-      function renderTable(months, m) {
+      function renderTable(periods, m) {
         function fmtSunIon(v, decimals) {
           if (v == null || !Number.isFinite(Number(v))) return "—";
           return Number(v).toFixed(decimals);
         }
         const tbody = document.querySelector("#dataTable tbody");
-        tbody.innerHTML = months.map((month) => (
+        tbody.innerHTML = periods.map((period) => (
           `<tr>
-            <td>${month}</td>
-            <td>${m.commits[month]}</td>
-            <td>${m.uploads[month]}</td>
-            <td>${Number(m.minutes[month]).toFixed(1)}</td>
-            <td>${fmtSunIon(m.sunspots[month], 1)}</td>
-            <td>${fmtSunIon(m.f107[month], 2)}</td>
+            <td>${period}</td>
+            <td>${m.commits[period]}</td>
+            <td>${m.uploads[period]}</td>
+            <td>${Number(m.minutes[period]).toFixed(1)}</td>
+            <td>${fmtSunIon(m.sunspots[period], 1)}</td>
+            <td>${fmtSunIon(m.f107[period], 2)}</td>
           </tr>`
         )).join("");
       }
 
       function renderFromStudy(data) {
-        const months = data.months;
-        const commits = data.commits;
-        const uploads = data.uploads;
-        const minutes = data.minutes;
-        const sunspots = data.sunspots;
-        const f107 = data.f107;
+        const periods = data.periods || data.months || [];
+        if (!periods.length) {
+          setStatus("Snapshot has no timeline.", true);
+          return;
+        }
+        const commits = data.commits || {};
+        const uploads = data.uploads || {};
+        const minutes = data.minutes || {};
+        const sunspots = data.sunspots || {};
+        const f107 = data.f107 || {};
 
         if (data.findings) {
           findingsHeadline.textContent = data.findings.headline || "What we found";
@@ -348,32 +355,36 @@
           findingsTop.hidden = false;
         }
 
-        const commitsA = months.map((m) => commits[m]);
-        const uploadsA = months.map((m) => uploads[m]);
-        const minutesA = months.map((m) => minutes[m]);
-        const sunA = months.map((m) => sunspots[m]);
-        const f107A = months.map((m) => f107[m]);
+        const commitsA = periods.map((p) => commits[p]);
+        const uploadsA = periods.map((p) => uploads[p]);
+        const minutesA = periods.map((p) => minutes[p]);
+        const sunA = periods.map((p) => sunspots[p]);
+        const f107A = periods.map((p) => f107[p]);
 
-        drawSeries(months, {
+        drawSeries(periods, {
           commitsN: norm(commitsA),
           uploadsN: norm(uploadsA),
           minutesN: norm(minutesA),
           sunN: norm(sunA),
           f107N: norm(f107A),
         });
-        renderTable(months, { commits, uploads, minutes, sunspots, f107 });
+        renderTable(periods, { commits, uploads, minutes, sunspots, f107 });
 
-        setStatus("Loaded snapshot dated " + (data.generatedAt || "?") + ".");
+        const g = data.granularity === "week" ? "Weekly" : "Series";
+        setStatus("Loaded " + g + " snapshot dated " + (data.generatedAt || "?") + ".");
 
         if (data.sources) {
           const gh = (data.sources.githubRepos || []).join(", ");
           let tail =
-            "Data sources in the JSON: <code>" + gh + "</code> · SoundCloud RSS · NOAA monthly sunspots + F10.7.";
+            "Data sources in the JSON: <code>" + gh + "</code> · SoundCloud RSS · SWPC daily SSN · NOAA monthly F10.7 (expanded to days, then weekly mean).";
+          if (data.sources.weekAnchor) {
+            tail += " <strong>Week:</strong> " + String(data.sources.weekAnchor).replace(/</g, "") + ".";
+          }
           if (data.sources.ionosphereNote) {
             tail += " " + data.sources.ionosphereNote;
           }
           if (data.sources.lastNoaaMonth) {
-            tail += " Latest paired NOAA month: <strong>" + data.sources.lastNoaaMonth + "</strong>.";
+            tail += " Latest paired NOAA month (for published F10.7 rows): <strong>" + data.sources.lastNoaaMonth + "</strong>.";
           }
           methodNote.innerHTML = tail;
         }

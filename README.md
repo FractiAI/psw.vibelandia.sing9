@@ -61,6 +61,14 @@ npm test
 
 ## Recent updates (README commit)
 
+- **May 11, 2026 · ETCon Reno Desert — event hub, press release, QUESTFEST feature + poster art**
+
+**M → Metabolize:** UFO/ET and Rat Pack lanes needed a single **ETCon** surface (pass desk, pricing, Valet Pru routing) plus a **press release** and a **visible FEATURE** on QUESTFEST so the countdown shows up at the dock, not only in the catalog.
+
+**C → Crystallize:** [`interfaces/etcon-reno-desert.html`](interfaces/etcon-reno-desert.html) (May 28–31, 2026 · Bachstage passes · Golden Bachdoor upgrade · `pru@fractiai.com`) · [`interfaces/press-release-etcon-reno-desert-may-2026.html`](interfaces/press-release-etcon-reno-desert-may-2026.html) · [`interfaces/assets/etcon-reno-desert-poster.png`](interfaces/assets/etcon-reno-desert-poster.png) (shared poster asset for OG + landing — swap file in place for official ETCon canvas) · top row in [`interfaces/press-releases.html`](interfaces/press-releases.html) · FEATURE card + **ETCon** quicklink on [`interfaces/vibelandia-questfest.html`](interfaces/vibelandia-questfest.html) · i18n `qf.etcon*` / `qf.quicklinkEtcon` in [`interfaces/i18n/en.json`](interfaces/i18n/en.json).
+
+**A → Animate:** QUESTFEST stacks **ETCon** above the 30-day showdown teaser; readers tap straight into the event hub or press. NSPFRNP → ∞⁹
+
 - **May 11, 2026 · Press room + FEATURE teaser + Digital SNAP Robots + Playwright e2e + Digital Pru Snap stack**
 
 **M → Metabolize:** Public surfaces needed a **press catalog**, a **teaser** for the latest release, the **checkout Snap Robots** lane, and **automated UI smoke tests** so shipping stays intervention-light.

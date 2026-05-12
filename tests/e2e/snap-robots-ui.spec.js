@@ -7,7 +7,7 @@ test.describe("Snap robots demo (interfaces/digital-pru-snap-robots.html)", () =
   });
 
   test("heading, controls, canvas, dual robots, Go and Stop", async ({ page }) => {
-    await expect(page.getByRole("heading", { level: 1, name: /Snap robots/i })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: /Digital Pru.*sim command deck/i })).toBeVisible();
     await expect(page.locator("#cmd")).toBeVisible();
     await expect(page.locator("#track")).toBeVisible();
     await expect(page.locator("#wh-canvas")).toBeVisible();

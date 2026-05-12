@@ -57,6 +57,29 @@
     }
     .tag { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.25rem; }
 
+    .explain {
+      margin-bottom: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      background: rgba(15, 20, 32, 0.75);
+    }
+    .explain h2 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--gold-hi);
+      margin-bottom: 0.55rem;
+      letter-spacing: 0.01em;
+    }
+    .explain p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.55rem;
+      line-height: 1.58;
+    }
+    .explain p:last-child { margin-bottom: 0; }
+    .explain strong { color: var(--text); font-weight: 600; }
+
     .controls {
       background: var(--card);
       border: 1px solid var(--line);
@@ -161,10 +184,11 @@
       pointer-events: none;
     }
     .robot-overlay figure {
-      border: 1px solid rgba(94, 234, 212, 0.35);
-      border-radius: 8px;
-      background: rgba(8, 10, 16, 0.5);
-      padding: 0.2rem 0.3rem;
+      border: 1px solid rgba(180, 190, 210, 0.28);
+      border-radius: 10px;
+      background: linear-gradient(165deg, rgba(28, 36, 52, 0.92) 0%, rgba(12, 16, 26, 0.88) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 18px rgba(0, 0, 0, 0.35);
+      padding: 0.25rem 0.35rem 0.3rem;
       margin: 0;
     }
     .robot-overlay figcaption {
@@ -186,6 +210,15 @@
       <p class="tag">Pick a song, tap <strong>Go</strong>, and watch the two robots play along.</p>
     </header>
 
+    <section class="explain" aria-labelledby="explain-title">
+      <h2 id="explain-title">What you’re looking at (straight talk)</h2>
+      <p><strong>The picture:</strong> You picked a real audio file on your device. The page plays it in the browser, listens to its loudness and tone in real time, and uses that signal to move two small robot figures in front — arms, heads, bounce, legs — while a simple 3D “warehouse” behind them breathes with the same beat. No app store, no login, no server required for the demo itself.</p>
+      <p><strong>What’s actually being demonstrated:</strong> Sound in → numbers out → motion and lighting out. That pipeline is the same idea behind music games, concert visuals, motion-capture previews, and future machines that need to “feel” rhythm without a person wiring every frame by hand. Here it’s proven in one lightweight web page.</p>
+      <p><strong>What’s a little new about it:</strong> Most people only see either a flashy visualizer or a heavy game. This is the middle path: readable characters plus a real space, both driven by the same live audio analysis, shipped as static files anyone can open. That’s unusually portable for how much is going on.</p>
+      <p><strong>Put the achievement in perspective:</strong> Big studios spend piles of money on toolchains to do versions of this. You’re looking at a pocket-sized slice — not Hollywood — but the stack is honest: decode audio, analyze spectrum, choreograph SVG, render WebGL, keep it smooth on a normal phone or laptop. That’s the hard part boiled down to something you can fork and build on.</p>
+      <p><strong>Why it matters for people:</strong> When listening can steer motion and space in real time, you open doors for dance teaching aids, accessible “feel the music” feedback, rehearsal rigs, kid-friendly instruments, and eventually helper robots that move with human timing instead of random twitching. The catch for mankind is the same as always: tools like this should amplify human choice and creativity — who controls the signal, who gets credit, who stays in the loop — not replace the person on stage.</p>
+    </section>
+
     <section class="controls" aria-label="Demo controls">
       <label class="visually-hidden" for="cmd">Optional note</label>
       <textarea id="cmd" placeholder="Optional: a short note (you can leave this blank)"></textarea>
@@ -204,40 +237,73 @@
         <figure>
           <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
-              <linearGradient id="ga" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#2a3144"/><stop offset="100%" style="stop-color:#121a2a"/>
+              <linearGradient id="ga" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3d4a62"/><stop offset="45%" stop-color="#252d3d"/><stop offset="100%" stop-color="#121820"/>
               </linearGradient>
+              <linearGradient id="gmetal" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#e8d89a"/><stop offset="50%" stop-color="#b8942f"/><stop offset="100%" stop-color="#6b5a2a"/>
+              </linearGradient>
+              <radialGradient id="gvisor" cx="35%" cy="30%" r="65%">
+                <stop offset="0%" stop-color="#7dd3fc"/><stop offset="55%" stop-color="#0c4a6e"/><stop offset="100%" stop-color="#020617"/>
+              </radialGradient>
             </defs>
             <g id="bot-a-root" transform="translate(100,200)">
-              <rect x="-28" y="-95" width="56" height="95" rx="10" fill="url(#ga)" stroke="#d4af37" stroke-width="2"/>
-              <circle cx="0" cy="-118" r="22" fill="#1a2233" stroke="#d4af37" stroke-width="2"/>
-              <g id="bot-a-arm" transform="translate(28,-78)">
-                <rect x="0" y="-8" width="12" height="62" rx="4" fill="#d4af37" stroke="#fef3c7" stroke-width="1"/>
+              <rect x="-32" y="0" width="64" height="14" rx="5" fill="#0c1018" stroke="#3d4d60" stroke-width="1"/>
+              <g id="bot-a-upper">
+                <rect x="-28" y="-95" width="56" height="95" rx="12" fill="url(#ga)" stroke="#c9a227" stroke-width="1.5"/>
+                <rect x="-10" y="-78" width="20" height="28" rx="4" fill="#0f172a" stroke="#334155" stroke-width="0.75" opacity="0.9"/>
+                <circle cx="-28" cy="-78" r="5" fill="#475569" stroke="#94a3b8" stroke-width="0.75"/>
+                <g id="bot-a-head" transform="translate(0,-118)">
+                  <circle cx="0" cy="0" r="22" fill="#1e293b" stroke="#d4af37" stroke-width="1.5"/>
+                  <ellipse cx="0" cy="1" rx="16" ry="9" fill="url(#gvisor)" opacity="0.92"/>
+                  <ellipse cx="-6" cy="2" rx="3.2" ry="2.2" fill="#e0f2fe" opacity="0.55"/>
+                  <ellipse cx="6" cy="2" rx="3.2" ry="2.2" fill="#e0f2fe" opacity="0.55"/>
+                </g>
+                <g id="bot-a-arm" transform="translate(28,-78)">
+                  <circle cx="0" cy="0" r="5" fill="#64748b" stroke="#cbd5e1" stroke-width="0.75"/>
+                  <rect x="0" y="-6" width="13" height="58" rx="5" fill="url(#gmetal)" stroke="#fef3c7" stroke-width="0.75"/>
+                </g>
+                <g id="bot-a-arm-l" transform="translate(-28,-78) scale(-1,1)">
+                  <circle cx="0" cy="0" r="5" fill="#64748b" stroke="#cbd5e1" stroke-width="0.75"/>
+                  <rect x="0" y="-6" width="13" height="58" rx="5" fill="#78716c" stroke="#d4af37" stroke-width="0.75"/>
+                </g>
               </g>
-              <g transform="translate(-28,-78) scale(-1,1)">
-                <rect x="0" y="-8" width="12" height="62" rx="4" fill="#8b7355" stroke="#d4af37" stroke-width="1"/>
-              </g>
-              <rect x="-32" y="0" width="64" height="14" rx="4" fill="#0f141c" stroke="#2dd4bf" stroke-width="1"/>
             </g>
           </svg>
-          <figcaption>Left · plays the beat</figcaption>
+          <figcaption>Left · keeps time</figcaption>
         </figure>
         <figure>
           <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
-              <linearGradient id="gb" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#1e293b"/><stop offset="100%" style="stop-color:#0f172a"/>
+              <linearGradient id="gb" x1="0%" y1="0%" x2="80%" y2="100%">
+                <stop offset="0%" stop-color="#334155"/><stop offset="100%" stop-color="#0f172a"/>
               </linearGradient>
+              <radialGradient id="gvisorB" cx="40%" cy="28%" r="70%">
+                <stop offset="0%" stop-color="#5eead4"/><stop offset="100%" stop-color="#042f2e"/>
+              </radialGradient>
             </defs>
             <g id="bot-b-root" transform="translate(100,200)">
-              <rect x="-26" y="-88" width="52" height="88" rx="10" fill="url(#gb)" stroke="#2dd4bf" stroke-width="2"/>
-              <circle cx="0" cy="-110" r="20" fill="#134e4a" stroke="#5eead4" stroke-width="2"/>
-              <rect id="bot-b-leg-l" x="-22" y="-5" width="16" height="40" rx="4" fill="#2dd4bf" opacity="0.85"/>
-              <rect id="bot-b-leg-r" x="6" y="-5" width="16" height="40" rx="4" fill="#14b8a6" opacity="0.85"/>
-              <rect x="-30" y="0" width="60" height="12" rx="4" fill="#0f141c" stroke="#d4af37" stroke-width="1"/>
+              <rect x="-30" y="0" width="60" height="12" rx="5" fill="#0c1018" stroke="#3d5c5a" stroke-width="1"/>
+              <g id="bot-b-torso">
+                <rect x="-26" y="-88" width="52" height="82" rx="12" fill="url(#gb)" stroke="#2dd4bf" stroke-width="1.25"/>
+                <rect x="-8" y="-72" width="16" height="22" rx="3" fill="#0f172a" opacity="0.85"/>
+                <circle cx="-26" cy="-72" r="4" fill="#475569" stroke="#64748b" stroke-width="0.6"/>
+                <circle cx="26" cy="-72" r="4" fill="#475569" stroke="#64748b" stroke-width="0.6"/>
+                <g id="bot-b-head" transform="translate(0,-110)">
+                  <circle cx="0" cy="0" r="20" fill="#134e4a" stroke="#5eead4" stroke-width="1.25"/>
+                  <ellipse cx="0" cy="0" rx="14" ry="10" fill="url(#gvisorB)" opacity="0.9"/>
+                  <ellipse cx="-5" cy="1" rx="2.8" ry="2" fill="#ccfbf1" opacity="0.5"/>
+                  <ellipse cx="5" cy="1" rx="2.8" ry="2" fill="#ccfbf1" opacity="0.5"/>
+                </g>
+              </g>
+              <g id="bot-b-pelvis">
+                <ellipse cx="0" cy="-8" rx="14" ry="6" fill="#1e293b" stroke="#475569" stroke-width="0.75"/>
+                <rect id="bot-b-leg-l" x="-22" y="-8" width="15" height="42" rx="5" fill="#115e59" stroke="#2dd4bf" stroke-width="0.75" opacity="0.95"/>
+                <rect id="bot-b-leg-r" x="7" y="-8" width="15" height="42" rx="5" fill="#0f766e" stroke="#5eead4" stroke-width="0.75" opacity="0.95"/>
+              </g>
             </g>
           </svg>
-          <figcaption>Right · dances along</figcaption>
+          <figcaption>Right · moves with the melody</figcaption>
         </figure>
       </div>
     </section>
@@ -247,25 +313,51 @@
 
   <script>
 (function () {
-  var cmdEl = document.getElementById("cmd");
   var trackEl = document.getElementById("track");
   var btnGo = document.getElementById("btnGo");
   var btnStop = document.getElementById("btnStop");
   var playStatus = document.getElementById("playStatus");
   var whStage = document.getElementById("wh-stage");
   var botA = document.getElementById("bot-a-root");
+  var botAUpper = document.getElementById("bot-a-upper");
+  var botAHead = document.getElementById("bot-a-head");
   var botAArm = document.getElementById("bot-a-arm");
+  var botAArmL = document.getElementById("bot-a-arm-l");
   var botB = document.getElementById("bot-b-root");
+  var botBTorso = document.getElementById("bot-b-torso");
+  var botBHead = document.getElementById("bot-b-head");
+  var botBPelvis = document.getElementById("bot-b-pelvis");
   var botBL = document.getElementById("bot-b-leg-l");
   var botBR = document.getElementById("bot-b-leg-r");
 
-  window.__snapEnergy = { bass: 0, mid: 0, high: 0, t: 0, carbon: null };
+  window.__snapEnergy = { bass: 0, mid: 0, high: 0, t: 0, carbon: null, kick: 0 };
   var ctx = null;
   var sourceNode = null;
   var analyser = null;
   var rafId = 0;
   var t0 = 0;
   var carbonEma = 0;
+  var prevRawBass = 0;
+  var smooth = {
+    bass: 0,
+    mid: 0,
+    high: 0,
+    sub: 0,
+    arm: 0,
+    armL: 0,
+    nodA: 0,
+    nodB: 0,
+    swayX: 0,
+    swayY: 0,
+    bodyA: 0,
+    bounceB: 0,
+    tiltB: 0,
+    torsoB: 0,
+    headB: 0,
+    legL: 0,
+    legR: 0,
+    kick: 0,
+  };
   var reduceMotion = false;
   try {
     reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -280,11 +372,20 @@
     return n ? s / n : 0;
   }
 
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function smoothToward(cur, target, up, down) {
+    var rate = target > cur ? up : down;
+    return lerp(cur, target, rate);
+  }
+
   function simulateCarbonAwareness(bass, mid, high, wobble) {
-    var substrate = Math.min(1, bass * 0.74 + wobble * 0.44 + mid * 0.06);
-    var silverBleed = Math.min(1, mid * 0.52 + high * 0.38);
-    var rawIndex = Math.min(1, substrate * 0.84 + silverBleed * 0.16);
-    carbonEma = carbonEma + (rawIndex - carbonEma) / 1.618;
+    var substrate = Math.min(1, bass * 0.62 + wobble * 0.28 + mid * 0.12);
+    var silverBleed = Math.min(1, mid * 0.55 + high * 0.32);
+    var rawIndex = Math.min(1, substrate * 0.78 + silverBleed * 0.22);
+    carbonEma = carbonEma + (rawIndex - carbonEma) / 3.35;
     return { substrate: substrate, silverBleed: silverBleed, index: carbonEma, rawIndex: rawIndex };
   }
 
@@ -307,13 +408,24 @@
     } catch (e) {}
     ctx = null;
     if (botA) botA.setAttribute("transform", "translate(100,200)");
+    if (botAUpper) botAUpper.setAttribute("transform", "translate(0,-86) rotate(0) translate(0,86)");
+    if (botAHead) botAHead.setAttribute("transform", "translate(0,-118) rotate(0)");
     if (botAArm) botAArm.setAttribute("transform", "translate(28,-78) rotate(0)");
+    if (botAArmL) botAArmL.setAttribute("transform", "translate(-28,-78) scale(-1,1) rotate(0)");
     if (botB) botB.setAttribute("transform", "translate(100,200)");
+    if (botBTorso) botBTorso.setAttribute("transform", "translate(0,-10) rotate(0) translate(0,10)");
+    if (botBHead) botBHead.setAttribute("transform", "translate(0,-110) rotate(0)");
+    if (botBPelvis) botBPelvis.setAttribute("transform", "translate(0,0)");
     if (botBL) botBL.setAttribute("transform", "");
     if (botBR) botBR.setAttribute("transform", "");
     playStatus.textContent = "";
     carbonEma = 0;
-    window.__snapEnergy = { bass: 0, mid: 0, high: 0, t: 0, carbon: null };
+    prevRawBass = 0;
+    smooth = {
+      bass: 0, mid: 0, high: 0, sub: 0, arm: 0, armL: 0, nodA: 0, nodB: 0,
+      swayX: 0, swayY: 0, bodyA: 0, bounceB: 0, tiltB: 0, torsoB: 0, headB: 0, legL: 0, legR: 0, kick: 0,
+    };
+    window.__snapEnergy = { bass: 0, mid: 0, high: 0, t: 0, carbon: null, kick: 0 };
   }
 
   function tick() {
@@ -322,42 +434,104 @@
     analyser.getByteFrequencyData(freq);
     var td = new Uint8Array(analyser.fftSize);
     analyser.getByteTimeDomainData(td);
-    var bass = meanSlice(freq, 1, 12) / 255;
-    var mid = meanSlice(freq, 12, 48) / 255;
-    var high = meanSlice(freq, 48, 120) / 255;
+    var rawSub = meanSlice(freq, 1, 7) / 255;
+    var rawBass = meanSlice(freq, 7, 24) / 255;
+    var rawMid = meanSlice(freq, 24, 72) / 255;
+    var rawHigh = meanSlice(freq, 72, 160) / 255;
     var t = ctx.currentTime - t0;
     var wobble = 0;
     for (var i = 0; i < td.length; i += 32) {
       wobble += Math.abs(td[i] - 128);
     }
     wobble = (wobble / (td.length / 32)) / 128;
+
+    smooth.sub = smoothToward(smooth.sub, rawSub, 0.55, 0.12);
+    smooth.bass = smoothToward(smooth.bass, rawBass, 0.38, 0.1);
+    smooth.mid = smoothToward(smooth.mid, rawMid, 0.22, 0.08);
+    smooth.high = smoothToward(smooth.high, rawHigh, 0.2, 0.08);
+
+    var kickRaw = Math.max(0, rawBass - prevRawBass - 0.018) * 4.2;
+    prevRawBass = lerp(prevRawBass, rawBass, 0.35);
+    smooth.kick = smoothToward(smooth.kick, Math.min(1, kickRaw * 2.2), 0.55, 0.18);
+
+    var bass = smooth.bass;
+    var mid = smooth.mid;
+    var high = smooth.high;
+    var sub = smooth.sub;
     var C = simulateCarbonAwareness(bass, mid, high, wobble);
 
+    var pulse = 1.65 + sub * 2.8 + mid * 1.4;
+    var phase = t * pulse;
+
     if (reduceMotion) {
-      botA.setAttribute("transform", "translate(100," + (200 - C.substrate * 8) + ")");
-      botB.setAttribute("transform", "translate(100,200) rotate(" + (C.silverBleed * 6).toFixed(1) + ")");
+      botA.setAttribute("transform", "translate(100," + (200 - C.substrate * 6) + ")");
+      if (botAUpper) botAUpper.setAttribute("transform", "translate(0,-86) rotate(0) translate(0,86)");
+      if (botAHead) botAHead.setAttribute("transform", "translate(0,-118) rotate(0)");
+      if (botAArm) botAArm.setAttribute("transform", "translate(28,-78) rotate(" + (smooth.sub * 20).toFixed(1) + ")");
+      if (botAArmL) botAArmL.setAttribute("transform", "translate(-28,-78) scale(-1,1) rotate(" + (smooth.sub * 16).toFixed(1) + ")");
+      botB.setAttribute("transform", "translate(100,200) rotate(" + (C.silverBleed * 4).toFixed(1) + ")");
+      if (botBTorso) botBTorso.setAttribute("transform", "translate(0,-10) rotate(0) translate(0,10)");
+      if (botBHead) botBHead.setAttribute("transform", "translate(0,-110) rotate(0)");
+      if (botBL) botBL.setAttribute("transform", "");
+      if (botBR) botBR.setAttribute("transform", "");
     } else {
-      var armRot = -35 + C.substrate * 58 + C.silverBleed * 18;
-      botAArm.setAttribute("transform", "translate(28,-78) rotate(" + armRot.toFixed(1) + ")");
-      var sway = Math.sin(t * 5.1) * (4 + C.silverBleed * 16 + C.index * 6);
+      var armTarget = -18 + sub * 48 + bass * 38 + mid * 14 + Math.sin(phase * 2) * (6 * mid + 4 * bass);
+      smooth.arm = smoothToward(smooth.arm, armTarget, 0.28, 0.14);
+      botAArm.setAttribute("transform", "translate(28,-78) rotate(" + smooth.arm.toFixed(2) + ")");
+      var armLTarget = armTarget * 0.88 + Math.sin(phase * 1.05 + 0.5) * (5 * mid);
+      smooth.armL = smoothToward(smooth.armL, armLTarget, 0.2, 0.11);
+      if (botAArmL) {
+        botAArmL.setAttribute("transform", "translate(-28,-78) scale(-1,1) rotate(" + smooth.armL.toFixed(2) + ")");
+      }
+
+      var counter = smooth.arm * -0.14;
+      botAUpper.setAttribute(
+        "transform",
+        "translate(0,-86) rotate(" + counter.toFixed(2) + ") translate(0,86)"
+      );
+
+      var nodATarget = Math.sin(phase * 1.85) * (4 + bass * 14 + sub * 10);
+      smooth.nodA = smoothToward(smooth.nodA, nodATarget, 0.35, 0.2);
+      botAHead.setAttribute("transform", "translate(0,-118) rotate(" + smooth.nodA.toFixed(2) + ")");
+
+      var swayTargetX = Math.sin(phase * 0.95) * (5 + mid * 10) + Math.sin(phase * 2.1 + 0.4) * (bass * 4);
+      var swayTargetY = -bass * 9 - sub * 6 - Math.abs(Math.sin(phase)) * (mid * 5);
+      smooth.swayX = smoothToward(smooth.swayX, swayTargetX, 0.14, 0.1);
+      smooth.swayY = smoothToward(smooth.swayY, swayTargetY, 0.16, 0.12);
+      var bodyATarget = Math.sin(phase * 0.55) * (3 + bass * 7) + sub * 4 - mid * 2;
+      smooth.bodyA = smoothToward(smooth.bodyA, bodyATarget, 0.12, 0.1);
       botA.setAttribute(
         "transform",
-        "translate(" +
-          (100 + sway * 0.35).toFixed(1) +
-          "," +
-          (200 - C.substrate * 20 - wobble * 3.5 - C.index * 4).toFixed(1) +
-          ") rotate(" +
-          (C.substrate * 9 - C.silverBleed * 3).toFixed(2) +
-          ")"
+        "translate(" + (100 + smooth.swayX).toFixed(2) + "," + (200 + smooth.swayY).toFixed(2) + ") rotate(" + smooth.bodyA.toFixed(2) + ")"
       );
-      var spin = Math.sin(t * (3 + C.silverBleed * 5)) * (14 + C.silverBleed * 42 + C.index * 12);
-      var bounce = Math.abs(Math.sin(t * 6.28 * (0.5 + C.substrate))) * (10 + C.silverBleed * 22);
-      botB.setAttribute("transform", "translate(100," + (200 - bounce).toFixed(1) + ") rotate(" + spin.toFixed(2) + ")");
-      var kick = C.silverBleed * 11 + C.substrate * 3;
-      botBL.setAttribute("transform", "translate(0," + (kick + Math.sin(t * 7) * 6).toFixed(1) + ")");
-      botBR.setAttribute("transform", "translate(0," + (-kick + Math.cos(t * 6) * 6).toFixed(1) + ")");
+
+      var bounceTarget = Math.abs(Math.sin(phase)) * (sub * 14 + bass * 11 + smooth.kick * 22);
+      smooth.bounceB = smoothToward(smooth.bounceB, bounceTarget, 0.42, 0.2);
+      var tiltTarget = Math.sin(phase * 0.88) * (5 + mid * 9) + Math.sin(phase * 1.4 + 1) * (high * 4);
+      smooth.tiltB = smoothToward(smooth.tiltB, tiltTarget, 0.12, 0.1);
+      botB.setAttribute(
+        "transform",
+        "translate(100," + (200 - smooth.bounceB).toFixed(2) + ") rotate(" + smooth.tiltB.toFixed(2) + ")"
+      );
+
+      var torsoTarget = Math.sin(phase * 0.72 + 0.3) * (4 + mid * 8);
+      smooth.torsoB = smoothToward(smooth.torsoB, torsoTarget, 0.15, 0.12);
+      botBTorso.setAttribute(
+        "transform",
+        "translate(0,-10) rotate(" + smooth.torsoB.toFixed(2) + ") translate(0,10)"
+      );
+
+      var headBTarget = Math.sin(phase * 1.2 + 0.8) * (6 + high * 10) + bass * -3;
+      smooth.headB = smoothToward(smooth.headB, headBTarget, 0.22, 0.16);
+      botBHead.setAttribute("transform", "translate(0,-110) rotate(" + smooth.headB.toFixed(2) + ")");
+
+      var legSwing = Math.sin(phase * 1.05) * (2.5 + mid * 5 + bass * 3);
+      smooth.legL = smoothToward(smooth.legL, legSwing, 0.2, 0.15);
+      smooth.legR = smoothToward(smooth.legR, -legSwing * 0.92, 0.2, 0.15);
+      botBL.setAttribute("transform", "translate(0," + smooth.legL.toFixed(2) + ")");
+      botBR.setAttribute("transform", "translate(0," + smooth.legR.toFixed(2) + ")");
     }
-    window.__snapEnergy = { bass: bass, mid: mid, high: high, t: t, carbon: C };
+    window.__snapEnergy = { bass: bass, mid: mid, high: high, t: t, carbon: C, kick: smooth.kick };
     rafId = requestAnimationFrame(tick);
   }
 
@@ -385,7 +559,7 @@
           t0 = ctx.currentTime;
           analyser = ctx.createAnalyser();
           analyser.fftSize = 2048;
-          analyser.smoothingTimeConstant = 0.65;
+          analyser.smoothingTimeConstant = 0.78;
           sourceNode = ctx.createBufferSource();
           sourceNode.buffer = audioBuf;
           sourceNode.connect(analyser);
@@ -461,7 +635,14 @@
         sizeNow();
         if (T.SRGBColorSpace) renderer.outputColorSpace = T.SRGBColorSpace;
         renderer.toneMapping = T.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 0.76;
+        renderer.toneMappingExposure = 0.84;
+
+        var fillKey = new T.DirectionalLight(0xc5d4f5, 0.38);
+        fillKey.position.set(-9, 11, 5);
+        scene.add(fillKey);
+        var rim = new T.DirectionalLight(0x7ee8dc, 0.26);
+        rim.position.set(8, 5, -10);
+        scene.add(rim);
         renderer.shadowMap.enabled = true;
 
         var camera = new T.PerspectiveCamera(48, 1, 0.12, 80);
@@ -474,9 +655,9 @@
         camera.position.set(-1.1, 1.95, 7.35);
         camera.lookAt(0, 1.05, -2);
 
-        var hemi = new T.HemisphereLight(0x8cb4ff, 0x1a140c, 0.32);
+        var hemi = new T.HemisphereLight(0xa8c4ff, 0x1c1812, 0.36);
         scene.add(hemi);
-        var spot = new T.SpotLight(0xfff2d6, 12, 28, 0.52, 0.45, 1);
+        var spot = new T.SpotLight(0xfff5e6, 9.5, 30, 0.48, 0.42, 1);
         spot.position.set(2.8, 6.8, 3.2);
         spot.target.position.set(0, 0, -2);
         spot.castShadow = true;
@@ -514,8 +695,13 @@
 
         var texLoader = new T.TextureLoader();
         texLoader.crossOrigin = "anonymous";
-        function loadMat(url, repeatX, repeatY) {
-          var mat = new T.MeshStandardMaterial({ color: 0x3a4049, roughness: 0.9, metalness: 0.1 });
+        function loadMat(url, repeatX, repeatY, opts) {
+          opts = opts || {};
+          var mat = new T.MeshStandardMaterial({
+            color: opts.color !== undefined ? opts.color : 0x3d4558,
+            roughness: opts.roughness !== undefined ? opts.roughness : 0.48,
+            metalness: opts.metalness !== undefined ? opts.metalness : 0.48,
+          });
           texLoader.load(
             url,
             function (t) {
@@ -531,13 +717,13 @@
           return mat;
         }
 
-        var floorMat = loadMat(TEX.floor, 5, 5);
+        var floorMat = loadMat(TEX.floor, 5, 5, { color: 0x384454, roughness: 0.34, metalness: 0.64 });
         var floor = new T.Mesh(new T.PlaneGeometry(28, 28, 1, 1), floorMat);
         floor.rotation.x = -Math.PI / 2;
         floor.receiveShadow = true;
         scene.add(floor);
 
-        var wallMat = loadMat(TEX.wall, 2.4, 1.15);
+        var wallMat = loadMat(TEX.wall, 2.4, 1.15, { color: 0x4a5262, roughness: 0.74, metalness: 0.14 });
         function wallMesh(w, h, x, z, ry) {
           var m = new T.Mesh(new T.PlaneGeometry(w, h), wallMat);
           m.position.set(x, h / 2, z);
@@ -549,7 +735,7 @@
         scene.add(wallMesh(18, 6.2, -10.4, -0.4, Math.PI / 2));
         scene.add(wallMesh(18, 6.2, 10.4, 0, -Math.PI / 2));
 
-        var crateMat = loadMat(TEX.crate, 1, 1);
+        var crateMat = loadMat(TEX.crate, 1, 1, { color: 0x2e3644, roughness: 0.46, metalness: 0.66 });
         function crate(x, z, sx, sy, sz) {
           var g = new T.Mesh(new T.BoxGeometry(sx, sy, sz), crateMat);
           g.position.set(x, sy / 2, z);
@@ -585,12 +771,13 @@
           var sub = C ? C.substrate : b;
           var silv = C ? C.silverBleed : m * 0.55 + h * 0.3;
           var idx = C ? C.index : b * 0.85;
-          spot.intensity = 5 + sub * 26 + silv * 9 + idx * 4;
-          hemi.intensity = 0.2 + silv * 0.32 + sub * 0.12;
-          crates[0].position.y = baseY[0] + sub * 0.42 + Math.sin(ti * 6) * 0.028;
-          crates[1].position.y = baseY[1] + silv * 0.34 + idx * 0.06;
-          crates[1].rotation.y = Math.sin(ti * 3 + silv * 2.6) * 0.3;
-          crates[2].position.y = baseY[2] + sub * 0.12 + m * 0.14 + Math.cos(ti * 5) * 0.048;
+          var kick = e.kick || 0;
+          spot.intensity = 4.2 + sub * 18 + silv * 7 + idx * 3 + kick * 9;
+          hemi.intensity = 0.24 + silv * 0.26 + sub * 0.1 + kick * 0.12;
+          crates[0].position.y = baseY[0] + sub * 0.14 + kick * 0.055 + Math.sin(ti * (1.8 + m * 3.2)) * 0.021;
+          crates[1].position.y = baseY[1] + silv * 0.22 + idx * 0.04 + kick * 0.038;
+          crates[1].rotation.y = Math.sin(ti * (1.35 + silv * 1.6) + m * 0.8) * 0.17;
+          crates[2].position.y = baseY[2] + sub * 0.1 + m * 0.1 + Math.cos(ti * (2.1 + b * 2.2)) * 0.03 + kick * 0.028;
           controls.update();
           renderer.render(scene, camera);
         }

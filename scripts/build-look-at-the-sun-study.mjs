@@ -177,69 +177,66 @@ function sum(map, months) {
 }
 
 function buildFindings(months, commits, uploads, minutes, sunspots, f107, sources) {
-  const overlap = {};
-  months.forEach((mo) => {
-    overlap[mo] =
-      (commits[mo] || 0) +
-      (uploads[mo] || 0) * 3 +
-      (minutes[mo] || 0) * 0.2 +
-      (sunspots[mo] || 0) * 0.1 +
-      (f107[mo] || 0) * 0.15;
-  });
-  const peak = months.length
-    ? months.reduce((best, mo) => (overlap[mo] > overlap[best] ? mo : best), months[0])
-    : "—";
-
-  const topCommits = [...months]
-    .map((mo) => ({ mo, n: commits[mo] || 0 }))
-    .sort((a, b) => b.n - a.n)
-    .slice(0, 3)
-    .filter((x) => x.n > 0);
-
-  const topUploadMo = months.length
-    ? months.reduce((best, mo) => ((uploads[mo] || 0) > (uploads[best] || 0) ? mo : best), months[0])
-    : "—";
-  const topUploadN = uploads[topUploadMo] || 0;
-
   const first = months[0];
   const last = months[months.length - 1];
+
   const s0 = sunspots[first] ?? 0;
   const s1 = sunspots[last] ?? 0;
   const f0 = f107[first] ?? 0;
   const f1 = f107[last] ?? 0;
-  const solarTrend =
-    s1 > s0 + 5
-      ? "rose"
-      : s1 < s0 - 5
-        ? "eased"
-        : "stayed mid-band";
 
-  const solarIncomplete = s1 === 0 && f1 === 0;
+  const sunMove =
+    s1 > s0 + 8 ? "climbed" : s1 < s0 - 8 ? "fell" : "wandered in the middle";
+
+  const solarTailBlank = s1 === 0 && f1 === 0;
+
+  let maxCommitMo = months[0];
+  let maxCommitV = -1;
+  months.forEach((mo) => {
+    const v = commits[mo] || 0;
+    if (v > maxCommitV) {
+      maxCommitV = v;
+      maxCommitMo = mo;
+    }
+  });
+
+  let maxUploadMo = months[0];
+  let maxUploadV = -1;
+  months.forEach((mo) => {
+    const v = uploads[mo] || 0;
+    if (v > maxUploadV) {
+      maxUploadV = v;
+      maxUploadMo = mo;
+    }
+  });
 
   const totalCommits = sum(commits, months);
   const totalUploads = sum(uploads, months);
   const totalMin = sum(minutes, months);
-  const repoLine = sources.githubRepos.map((r) => `\`${r}\``).join(" + ");
+  const repoPlain = sources.githubRepos.join(" and ");
 
-  const commitBurst = topCommits[0]
-    ? `Git commit heat concentrates in **${topCommits[0].mo}** (${topCommits[0].n})${topCommits[1] ? ` and **${topCommits[1].mo}** (${topCommits[1].n})` : ""}.`
-    : "Git commits are flat in-window for the counted repos.";
+  const commitPhrase =
+    maxCommitV > 0
+      ? `commits run hottest in **${maxCommitMo}** (${maxCommitV})`
+      : "Git shows almost no commits in this window";
+  const uploadPhrase =
+    maxUploadV > 0
+      ? `SoundCloud dated drops peak in **${maxUploadMo}** (${maxUploadV})`
+      : "SoundCloud shows almost no dated drops in this window";
 
-  const lede = `**What this page does:** it stacks SoundCloud catalog gravity, GitHub merge velocity on two flagship repos, and NOAA’s **monthly** sunspot / F10.7 panel on one calendar — then **judge alignment honestly**. **Interpretation here:** studio-side work **surges in early 2026** — ${commitBurst} Uploads peak in **${topUploadMo}** (${topUploadN} drops inside the RSS window) while solar indices **${solarTrend}** from SSN **${s0.toFixed(0)} → ${s1.toFixed(0)}** (F10.7 **${f0.toFixed(0)} → ${f1.toFixed(0)}**). That pattern reads as **throughput decoupled from monthly sunspot level** on this slice — useful before anyone claims “sun-driven shipping.”${solarIncomplete ? " **Caveat:** the last month often shows **0** in SWPC JSON until the row finalizes — don’t treat trailing solar cells as gospel." : ""} RSS only exposes the **latest 500** episodes, so pre-burst months can look artificially empty; zeros there are a **coverage artifact**, not proof of silence.`;
+  const headline = "What we found";
+  const lede = `From **${first}** to **${last}**: ${commitPhrase}, and ${uploadPhrase}. The **Sun panel** is different: monthly sunspots **${sunMove}** from **${s0.toFixed(0)}** to **${s1.toFixed(0)}**, and **F10.7** — the same-row **ionosphere / EUV** yardstick NOAA ships with sunspots — goes **${f0.toFixed(0)} → ${f1.toFixed(0)}** sfu. Those two curves usually **walk together** on the slow cycle; here they **soften** while your studio lines spike, so **do not read the Sun as the throttle for shipping** on this sheet.${solarTailBlank ? " If the **last** Sun/F10.7 cells are **0**, SWPC may not have finalized that month yet." : ""}`;
 
   const bullets = [
-    `**Evidence lane 1 — code:** **${totalCommits}** commits summed across ${repoLine} (GitHub REST, paginated). That is a **repeatable proxy** for “did the engineering floor light up?” — not total GitHub activity universe-wide.`,
-    `**Evidence lane 2 — catalog:** **${totalUploads}** SoundCloud items dated inside the window plus **${totalMin.toFixed(1)}** play-ready minutes from \`itunes:duration\`. Interpreting silence before the feed window is **invalid**; interpreting the April/May stack-up is **valid** where dates land inside the slice.`,
-    `**Evidence lane 3 — Sun:** NOAA monthly SSN **${solarTrend}** across **${first}→${last}**; F10.7 tracks the same slow cycle as a coarse ionosphere proxy. Use it as **context**, not a release scheduler.`,
-    `**Composite index (transparent toy):** weighted mix of commits, uploads, minutes, and mild solar terms peaks in **${peak}** — that only means “lines stacked high that month on this formula,” **not** causation.`,
-    "This JSON is a **frozen snapshot**. Regenerate with `node scripts/build-look-at-the-sun-study.mjs`, commit, redeploy. **Correlation ≠ causation.**",
+    `**GitHub (${totalCommits} commits):** counts are only **${repoPlain}**. They tell you when those two repos actually moved.`,
+    `**SoundCloud (${totalUploads} drops, ${totalMin.toFixed(1)} minutes):** dates come from the public RSS. The feed **caps at 500 episodes**, so older history can look like silence — that is a **feed limit**, not proof nobody uploaded.`,
+    `**Sun + ionosphere:** **Sunspots** are the classic monthly sun-strength number. **F10.7** is posted on the same monthly row and is the usual **radio-Sun / ionosphere heating** yardstick; it **tracks the cycle with** sunspots. Use both as **background weather**, not as a reason your mixtape shipped.`,
   ];
 
   return {
-    headline: "Analysis: throughput sprint vs. cooling monthly solar (same calendar).",
+    headline,
     lede,
     bullets,
-    peakMonth: peak,
     totals: {
       commits: totalCommits,
       uploads: totalUploads,
@@ -286,6 +283,8 @@ const sources = {
   soundcloudFeed: "https://feeds.soundcloud.com/users/soundcloud:users:1681714067/sounds.rss",
   noaaSunspots: "https://services.swpc.noaa.gov/json/solar-cycle/sunspots.json",
   noaaF107: "https://services.swpc.noaa.gov/json/solar-cycle/f10-7cm-flux.json",
+  ionosphereNote:
+    "F10.7 (10.7 cm flux) is the monthly field NOAA publishes alongside sunspots; it is the usual stand-in for EUV-driven ionospheric heating on slow, monthly scales. Kp is not included here (needs a different archive than this small JSON).",
 };
 
 const findings = buildFindings(months, commits, sc.uploads, sc.minutes, solar.sunspots, solar.f107, sources);

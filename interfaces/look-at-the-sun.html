@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Look at the Sun · static study (Feb 2025 → today)</title>
-  <meta name="description" content="Frozen monthly snapshot: GitHub commits on two flagship repos, SoundCloud uploads, play-ready minutes from RSS, NOAA sunspots and F10.7. Findings at top; chart and table load from bundled JSON." />
+  <title>Look at the Sun · analysis first (static study)</title>
+  <meta name="description" content="Look at the Sun: analysis-first static study — how GitHub + SoundCloud throughput lines up (or not) with NOAA monthly sunspots and F10.7. Executive read at top; chart and table from bundled JSON." />
   <style>
     :root {
       --bg: #070a12;
@@ -71,12 +71,44 @@
     .findings-top li { margin-bottom: .45rem; }
     .findings-top li:last-child { margin-bottom: 0; }
     .findings-top strong { color: var(--text); font-weight: 600; }
+    .findings-top .findings-lede {
+      margin: 0 0 .75rem;
+      font-size: .93rem;
+      line-height: 1.62;
+      color: #c8d4e8;
+      font-weight: 500;
+    }
+    .findings-top .findings-lede strong { color: var(--gold-hi); font-weight: 700; }
+    .findings-top .findings-tag {
+      display: inline-block;
+      margin: 0 0 .55rem;
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--mint);
+    }
     .findings-top code {
       font-size: .78em;
       background: rgba(0,0,0,.35);
       padding: .08rem .28rem;
       border-radius: 4px;
       color: var(--mint);
+    }
+    .rollup {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(160deg, rgba(18,24,40,.92), rgba(10,14,24,.94));
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .rollup h2 {
+      margin: 0 0 .65rem;
+      font-size: .8rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 800;
     }
     .hero {
       border: 1px solid var(--line);
@@ -177,7 +209,9 @@
     </div>
 
     <section id="findingsTop" class="findings-top" hidden aria-labelledby="findingsHeadline">
+      <span class="findings-tag">Analysis · read first</span>
       <h2 id="findingsHeadline"></h2>
+      <p id="findingsLede" class="findings-lede" hidden></p>
       <ul id="findingsList"></ul>
     </section>
 
@@ -194,7 +228,11 @@
         Solar = NOAA SWPC monthly sunspots + F10.7.
       </p>
       <div id="status" class="status">Loading snapshot…</div>
-      <div class="grid">
+    </section>
+
+    <section class="rollup" aria-labelledby="rollupHead">
+      <h2 id="rollupHead">Evidence roll-up · same window</h2>
+      <div class="grid" style="margin-top:0">
         <div class="kpi"><div class="label">Months analyzed</div><div id="kpiMonths" class="val">-</div></div>
         <div class="kpi"><div class="label">GitHub commits</div><div id="kpiCommits" class="val">-</div></div>
         <div class="kpi"><div class="label">SC uploads (in window)</div><div id="kpiUploads" class="val">-</div></div>
@@ -240,6 +278,7 @@
       const ctx = chart.getContext("2d");
       const findingsTop = document.getElementById("findingsTop");
       const findingsHeadline = document.getElementById("findingsHeadline");
+      const findingsLede = document.getElementById("findingsLede");
       const findingsList = document.getElementById("findingsList");
       const methodNote = document.getElementById("methodNote");
 
@@ -338,6 +377,14 @@
 
         if (data.findings) {
           findingsHeadline.textContent = data.findings.headline || "Findings";
+          const lede = data.findings.lede || "";
+          if (lede) {
+            findingsLede.innerHTML = liteFormat(lede);
+            findingsLede.hidden = false;
+          } else {
+            findingsLede.innerHTML = "";
+            findingsLede.hidden = true;
+          }
           findingsList.innerHTML = (data.findings.bullets || []).map((b) => `<li>${liteFormat(b)}</li>`).join("");
           findingsTop.hidden = false;
         }
@@ -395,6 +442,8 @@
         .catch((err) => {
           setStatus("Missing or invalid look-at-the-sun-study.json — run: npm run build:sun-study", true);
           findingsHeadline.textContent = "Snapshot not found";
+          findingsLede.innerHTML = "";
+          findingsLede.hidden = true;
           findingsList.innerHTML = "<li>" + err.message + "</li>";
           findingsTop.hidden = false;
         });

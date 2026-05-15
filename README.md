@@ -18,6 +18,8 @@
 
 **Vercel 403 (quick triage):** (1) **Build / Git step** — reconnect the project under **Settings → Git**; ensure the Vercel GitHub App can access the **FractiAI** org (and org **SSO** is authorized for the app if your org requires it). (2) **Browser / visitor** — open **Settings → Deployment Protection**; Production or Preview may require login (often reported as forbidden). (3) **Wrong URL** — use the production hostname from the project’s Vercel **Domains** (or that repo’s docs), not a guessed subdomain. **SING 9 production** (`psw-vibelandia-sing9.vercel.app`) has been returning **200** in recent checks; if you still see **403**, note the exact URL (preview vs production, custom domain).
 
+**(4) Duplicate SING 13 deploy / wrong repo link:** **SING 9** (`psw.vibelandia.sing9`) must deploy only to **`psw-vibelandia-sing9.vercel.app`**. The QUESTFEST edge lives in **[FractiAI/psw.vibelandia.sing13](https://github.com/FractiAI/psw.vibelandia.sing13)** and should deploy only to **`psw-vibelandia-sing13.vercel.app`**. If a mistaken link created an extra project (for example **`psw-vibelandia-sing13-nine.vercel.app`**), fix it in Vercel only: open the **wrong** project → **Settings → Git** → **Disconnect** this repository if it points at `sing9`; optionally **Delete Project** on the stray app; ensure **GitHub → sing13** connects only to the canonical **`psw-vibelandia-sing13`** project. Clear GitHub secret **`VERCEL_DEPLOY_HOOK`** on **this** repo if it was pasted from the wrong Vercel project (see [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)).
+
 ---
 
 ## Microsoft Silica EGS Gateway (upstream Vibelandia prospectus)
